@@ -63,8 +63,19 @@
 		    // City of Victoria existing bike routes KML
             var existingRoutesLayer = new google.maps.KmlLayer({
               url: 'http://www.victoria.ca/assets/City~Hall/Forms~Publications/BikeRoutes.kmz',
-              suppressInfoWindows: true, //This line removes the default info window
-              map: map 
+              //suppressInfoWindows: true, //Suppress the rendering of info windows when layer features are clicked
+              map: map,
+              preserveViewport: true 
+              
+            });
+
+            // City of Victoria bike racks KML
+            var existingRoutesLayer = new google.maps.KmlLayer({
+              url: 'http://www.victoria.ca/assets/City~Hall/Forms~Publications/BikeRacks.kmz',
+              //suppressInfoWindows: true, //Suppress the rendering of info windows when layer features are clicked
+              map: map,
+              preserveViewport: true // 
+
             });
             // existingRoutesLayer.setMap(map)
 
