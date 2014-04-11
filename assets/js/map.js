@@ -256,10 +256,6 @@
 			hflayer.setMap(hflayer.getMap() ? null : map);
 		}
 
-		// TODO
-		// function changeRadius() {
-		//   heatmap.set('radius', heatmap.get('radius') ? null : 20);
-		// }
 
 		google.maps.event.addDomListener(window, 'load', initialize);
 

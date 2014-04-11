@@ -5,9 +5,9 @@
 	  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 	  <meta name="Description" content="Track Bike Accidents in Victoria" />
 	  
-	  <link href="assets/css/style.css" rel="stylesheet">
 	  <!-- Bootstrap. Compiled and minified CSS -->
       <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+      <link href="assets/css/style.css" rel="stylesheet">
 
 	  <title>Bike Accidents in Victoria</title>
 
@@ -20,14 +20,15 @@
 	<body onload="initialize()">
 	
 	  <div id="panel">
-	    <button onclick="toggleUserData(); toggleICBC()" class="btn btn-primary">Toggle</button>
-		<button onclick="toggleUserData()" class="btn btn-success">Citizen Data</button>
+	    <button onclick="toggleUserData(); toggleICBC()" class="btn btn-primary pull-left">Toggle</button>
+		<button onclick="toggleUserData()" class="btn btn-success pull-left">Citizen Data</button>
 		<!-- The next commented out line is a button to toggle a heatmap -->
-		<!-- <button onclick="toggleHeatmap()" class="btn btn-success">Toggle User Data Heatmap</button> -->
-		<button onclick="toggleICBC()" class="btn btn-success">ICBC Data</button>
+		<!-- <button onclick="toggleHeatmap()" class="btn btn-success pull-left">Toggle User Data Heatmap</button> -->
+		<button onclick="toggleICBC()" class="btn btn-success pull-left">ICBC Data</button>
 
 		<button onclick="toggleICBCHM()" class="btn btn-danger pull-right">Toggle ICBC heatmap</button>
-		<button onclick="changeRadius()" class="btn btn-danger pull-right">Change Radius</button>
+		<!-- <button onclick="changeOpacity()" class="btn btn-danger pull-right">Change Opacity</button> -->
+		<!-- <button onclick="changeRadius()" class="btn btn-danger pull-right">Change Radius</button> -->
 	  </div>
 	  <div id="map_canvas"></div>
 
