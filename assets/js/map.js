@@ -11,6 +11,7 @@
 		var UserPts = new Array;
 		var pointArray;
 		var heatmap;
+		var existingRoutesLayer;
 		var flayer;
 		var hflayer;
 		var markers = []
@@ -58,7 +59,15 @@
 		
 			//Create map object	
 			map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-		 
+		    
+		    // City of Victoria existing bike routes KML
+            var existingRoutesLayer = new google.maps.KmlLayer({
+              url: 'http://www.victoria.ca/assets/City~Hall/Forms~Publications/BikeRoutes.kmz',
+              suppressInfoWindows: true, //This line removes the default info window
+              map: map 
+            });
+            // existingRoutesLayer.setMap(map)
+
 			// Add bike trails layer from google
 			var bikeLayer = new google.maps.BicyclingLayer(); 	
 			bikeLayer.setMap(map);
@@ -214,26 +223,6 @@
 		function toggleHeatmap() {
 			heatmap.setMap(heatmap.getMap() ? null : map);
 		}
-
-		// function changeGradient() {
-		//   var gradient = [
-		//     'rgba(0, 255, 255, 0)',
-		//     'rgba(0, 255, 255, 1)',
-		//     'rgba(0, 191, 255, 1)',
-		//     'rgba(0, 127, 255, 1)',
-		//     'rgba(0, 63, 255, 1)',
-		//     'rgba(0, 0, 255, 1)',
-		//     'rgba(0, 0, 223, 1)',
-		//     'rgba(0, 0, 191, 1)',
-		//     'rgba(0, 0, 159, 1)',
-		//     'rgba(0, 0, 127, 1)',
-		//     'rgba(63, 0, 91, 1)',
-		//     'rgba(127, 0, 63, 1)',
-		//     'rgba(191, 0, 31, 1)',
-		//     'rgba(255, 0, 0, 1)'
-		//   ]
-		//   heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
-		// }
 		
 		// Removes the markers from the map, but keeps them in the array.
 		function toggleUserData() {
@@ -267,6 +256,7 @@
 			hflayer.setMap(hflayer.getMap() ? null : map);
 		}
 
+		// TODO
 		// function changeRadius() {
 		//   heatmap.set('radius', heatmap.get('radius') ? null : 20);
 		// }
