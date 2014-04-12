@@ -22,6 +22,126 @@
 			size: new google.maps.Size(150,100)
 			});
 		
+				// This function creates the map
+		function initialize() {
+				
+		//Map options, where to centre the map, map type, and zoom
+		  var myLatLng = new google.maps.LatLng(48.43, -123.3657);
+		  var mapOptions = {
+			  zoom: 13,
+			  //Center is set to victoria
+			  center: myLatLng,
+			  mapTypeControl: true,
+			  mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+			  navigationControl: true,
+			  //Map type
+			  mapTypeId: google.maps.MapTypeId.ROADMAP
+		  }
+				
+				//Create map object	
+				map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+				    
+				   // City of Victoria existing bike routes KML
+		           var existingRoutesLayer = new google.maps.KmlLayer({
+		             url: 'http://www.victoria.ca/assets/City~Hall/Forms~Publications/BikeRoutes.kmz',
+		             //suppressInfoWindows: true, //Suppress the rendering of info windows when layer features are clicked
+		            map: map,
+		            preserveViewport: true 
+		              
+		          });
+
+		          // City of Victoria bike racks KML
+		          var existingRoutesLayer = new google.maps.KmlLayer({
+		            url: 'http://www.victoria.ca/assets/City~Hall/Forms~Publications/BikeRacks.kmz',
+		            //suppressInfoWindows: true, //Suppress the rendering of info windows when layer features are clicked
+		            map: map,
+		            suppressInfoWindows: true,
+		            preserveViewport: true // 
+
+		          });
+
+					// Add bike trails layer from google
+					var bikeLayer = new google.maps.BicyclingLayer(); 	
+					bikeLayer.setMap(map);
+				  
+					//This varialble holds the state of the fusion tables heatmap
+					tfToggle = false;
+					
+					//ICBC data fusion layer
+					flayer = new google.maps.FusionTablesLayer({
+						query: {
+						  select: 'Coords',
+						  from: '1WDge-1KzFL09clevuULwEP63ucgI6aAvwKnChGM'
+						},
+						
+						//Controls the heatmap of the ICBC layer
+						//The heatmap is controlled by a button
+						heatmap: {
+							enabled: false
+						}
+						
+					});
+					
+					//ICBC data fusion layer heatmap
+					hflayer = new google.maps.FusionTablesLayer({
+						query: {
+						select: 'Coords',
+						from: '1WDge-1KzFL09clevuULwEP63ucgI6aAvwKnChGM'
+						},
+						
+						//Controls the heatmap of the ICBC layer
+						heatmap: {
+							enabled: true
+						}
+						
+					});
+
+					//Closes any existing infowindows when the map is clicked
+					google.maps.event.addListener(map, 'click', function() {
+						infowindow.close();
+						}); 
+				
+					//Create a variable for the directions service to allow road/trail selection
+					//This is used to jump to the nearest road or trail when the map is clicked
+					var directionsService = new google.maps.DirectionsService();
+				
+					//call function to create marker when map is clicked
+					google.maps.event.addListener(map, 'click', function(event) {
+						//Location of click variable
+						var replatlng = event.latLng
+						//html link to google form for the infowindow
+						//The form is pre-filled with the location from the map
+						var html = "<a href='https://docs.google.com/forms/d/1ZK0R36K2_XCJfw_OBrk8pNxxXOo2fP9XLoDtmHHGLOk/viewform?entry.1855664511&entry.611983853&entry.361318600="+replatlng+"'>Click to Report an Accident</a><br /><b></b>";
+						
+						//Create a request to get the closest road/path to the click on the map
+						var request = {
+							origin:event.latLng, 
+							destination:event.latLng,
+							//The walking mode allows the markers to snap to paths and roads
+							travelMode: google.maps.DirectionsTravelMode.WALKING
+							};			
+						
+						//Check if the location clicked is acceptable, if not snap to the nearest path or road and create a marker
+						directionsService.route(request, function(response, status) {
+							if (status == google.maps.DirectionsStatus.OK) {
+								marker = createMarker(response.routes[0].legs[0].start_location, "name", html);
+							}
+						});
+						
+						//Clear any previously existing markers	left from clicking
+						if (marker) {
+							marker.setMap(null);
+							marker = null;
+							}
+					});
+					
+					//This segment creates markers from the spreadsheet data, accessing the json output script from google drive
+					//Once this script initializes it sends data to the callback function
+					var scriptElement = document.createElement('script');
+					scriptElement.src = DATA_SERVICE_URL;
+					document.getElementsByTagName('head')[0].appendChild(scriptElement);						
+				}
+
 		//A function to create the marker and set up the event window function 
 		//This function is for clicking on the map to create markers
 		//This is the window for submitting data
@@ -40,126 +160,6 @@
 				google.maps.event.trigger(marker, 'click');    
 				return marker;
 			}
-		 
-		// This function creates the map
-		function initialize() {
-		
-			//Map options, where to centre the map, map type, and zoom
-			var myLatLng = new google.maps.LatLng(48.43, -123.3657);
-			var mapOptions = {
-				zoom: 13,
-				//Center is set to victoria
-				center: myLatLng,
-				mapTypeControl: true,
-				mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
-				navigationControl: true,
-				//Map type
-				mapTypeId: google.maps.MapTypeId.ROADMAP
-			}
-		
-			//Create map object	
-			map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-		    
-		    // City of Victoria existing bike routes KML
-            var existingRoutesLayer = new google.maps.KmlLayer({
-              url: 'http://www.victoria.ca/assets/City~Hall/Forms~Publications/BikeRoutes.kmz',
-              //suppressInfoWindows: true, //Suppress the rendering of info windows when layer features are clicked
-              map: map,
-              preserveViewport: true 
-              
-            });
-
-            // City of Victoria bike racks KML
-            var existingRoutesLayer = new google.maps.KmlLayer({
-              url: 'http://www.victoria.ca/assets/City~Hall/Forms~Publications/BikeRacks.kmz',
-              //suppressInfoWindows: true, //Suppress the rendering of info windows when layer features are clicked
-              map: map,
-              preserveViewport: true // 
-
-            });
-            // existingRoutesLayer.setMap(map)
-
-			// Add bike trails layer from google
-			var bikeLayer = new google.maps.BicyclingLayer(); 	
-			bikeLayer.setMap(map);
-		  
-			//This varialble holds the state of the fusion tables heatmap
-			tfToggle = false;
-			
-			//ICBC data fusion layer
-			flayer = new google.maps.FusionTablesLayer({
-				query: {
-				  select: 'Coords',
-				  from: '1WDge-1KzFL09clevuULwEP63ucgI6aAvwKnChGM'
-				},
-				
-				//Controls the heatmap of the ICBC layer
-				//The heatmap is controlled by a button
-				heatmap: {
-					enabled: false
-				}
-				
-			});
-			
-			//ICBC data fusion layer heatmap
-			hflayer = new google.maps.FusionTablesLayer({
-				query: {
-				select: 'Coords',
-				from: '1WDge-1KzFL09clevuULwEP63ucgI6aAvwKnChGM'
-				},
-				
-				//Controls the heatmap of the ICBC layer
-				heatmap: {
-					enabled: true
-				}
-				
-			});
-
-			//Closes any existing infowindows when the map is clicked
-			google.maps.event.addListener(map, 'click', function() {
-				infowindow.close();
-				}); 
-		
-			//Create a variable for the directions service to allow road/trail selection
-			//This is used to jump to the nearest road or trail when the map is clicked
-			var directionsService = new google.maps.DirectionsService();
-		
-			//call function to create marker when map is clicked
-			google.maps.event.addListener(map, 'click', function(event) {
-				//Location of click variable
-				var replatlng = event.latLng
-				//html link to google form for the infowindow
-				//The form is pre-filled with the location from the map
-				var html = "<a href='https://docs.google.com/forms/d/1ZK0R36K2_XCJfw_OBrk8pNxxXOo2fP9XLoDtmHHGLOk/viewform?entry.1855664511&entry.611983853&entry.361318600="+replatlng+"'>Click to Report an Accident</a><br /><b></b>";
-				
-				//Create a request to get the closest road/path to the click on the map
-				var request = {
-					origin:event.latLng, 
-					destination:event.latLng,
-					//The walking mode allows the markers to snap to paths and roads
-					travelMode: google.maps.DirectionsTravelMode.WALKING
-					};			
-				
-				//Check if the location clicked is acceptable, if not snap to the nearest path or road and create a marker
-				directionsService.route(request, function(response, status) {
-					if (status == google.maps.DirectionsStatus.OK) {
-						marker = createMarker(response.routes[0].legs[0].start_location, "name", html);
-					}
-				});
-				
-				//Clear any previously existing markers	left from clicking
-				if (marker) {
-					marker.setMap(null);
-					marker = null;
-					}
-			});
-			
-			//This segment creates markers from the spreadsheet data, accessing the json output script from google drive
-			//Once this script initializes it sends data to the callback function
-			var scriptElement = document.createElement('script');
-			scriptElement.src = DATA_SERVICE_URL;
-			document.getElementsByTagName('head')[0].appendChild(scriptElement);						
-		}
 		
 		//This function is running off of data from a script in the google drive responses spreadsheet
 		function callback(data) {
