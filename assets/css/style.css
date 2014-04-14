@@ -54,6 +54,22 @@ body {
 	height: 100%;
 	width: 100%;
 }
+#panel {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 13px;
+	color: #FFFFF0;
+	position: absolute;
+	right: 1em;
+	top: 1em;
+	width: 20%;
+	/*height: 100%;*/
+	margin-bottom: 0;
+	padding-right: 5px;
+	padding-left: 5px;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	z-index: 5;
+}
 
 button {
   margin: 0 5px;
