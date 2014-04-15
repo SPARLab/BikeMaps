@@ -278,6 +278,12 @@
         }
 
         //Geolocation - TODO: Break out into own script later
+
+        function success(position) {
+             var lat = position.coords.latitude;
+             var long = position.coords.longitude;
+        }
+        
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(success);
         } else {
