@@ -277,6 +277,12 @@
         	existingRacksLayer.setMap(existingRacksLayer.getMap() ? null : map);
         }
 
+        //Geolocation - TODO: Break out into own script later
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(success);
+        } else {
+          error('Geo Location is not supported');
+        }
 
 		google.maps.event.addDomListener(window, 'load', initialize);
 
