@@ -290,6 +290,13 @@
           error('Geo Location is not supported');
         }
 
+        function success(position) {
+             var lat = position.coords.latitude;
+             var long = position.coords.longitude;
+        }
+
+        //End Geolocation
+
 		google.maps.event.addDomListener(window, 'load', initialize);
 
 		
