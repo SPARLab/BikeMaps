@@ -13,29 +13,6 @@
         <!-- Tag to include nav_bar.html code with index template -->
         {% include 'mapApp/nav_bar.html' %}
 
-        <!-- <div class="main-content">
-
-            <h1>Victoria Bike Incidents</h1>
-
-            <div class="map"; style='border:2px black solid; width: 100%; height: 500px; '>
-                <center>
-                    <h1> MAP HERE</h1>
-
-                    {% if incidents %}
-                        <h2>All incidents (date reported) (Placeholder dummy)</h2>
-                        <ul>
-                        {% for incident in incidents %}
-                            <li>{{ incident.person }} -- {{ incident.rep_date }}</li>
-                        {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p>Something's not working || No data in database</p>
-                    {% endif %}
-
-                </center>
-            </div>
-
-        </div> -->
 
 
             <div id="panel">
@@ -56,6 +33,24 @@
 
 
 
+        <div class="database testing">
+            <div style='border:2px black solid; width: 100%;'>
+                <center>
+                    {% if incidents %}
+                        <h2>All incidents (date reported) (Placeholder dummy)</h2>
+                        <ul>
+                        {% for incident in incidents %}
+                            <li>{{ incident.person }} -- {{ incident.rep_date }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Something's not working || No data in database</p>
+                    {% endif %}
+
+                </center>
+            </div>
+
+        </div>
 
 
 

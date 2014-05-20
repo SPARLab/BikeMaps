@@ -59,15 +59,15 @@ WSGI_APPLICATION = 'VicBikeMap.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 
-        # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        # 'NAME': 'geodjango',
-        # 'USER': 'shanely',
-        # 'PASSWORD': 'spatial',
-        # 'HOST': '127.0.0.1',
-        # 'PORT': '5432',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'geodjango',
+        'USER': 'shanley',
+        'PASSWORD': 'spatial',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
