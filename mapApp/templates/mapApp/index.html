@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Loads bootstrap, js, css, and metadata tags -->
+        {% include 'mapApp/header.html' %}
+
+    </head>
+
+    <body>
+        <!-- onload="initialize()"> -->
+
+        <!-- Tag to include nav_bar.html code with index template -->
+        {% include 'mapApp/nav_bar.html' %}
+
+        <!-- <div class="main-content">
+
+            <h1>Victoria Bike Incidents</h1>
+
+            <div class="map"; style='border:2px black solid; width: 100%; height: 500px; '>
+                <center>
+                    <h1> MAP HERE</h1>
+
+                    {% if incidents %}
+                        <h2>All incidents (date reported) (Placeholder dummy)</h2>
+                        <ul>
+                        {% for incident in incidents %}
+                            <li>{{ incident.person }} -- {{ incident.rep_date }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Something's not working || No data in database</p>
+                    {% endif %}
+
+                </center>
+            </div>
+
+        </div> -->
+
+
+            <div id="panel">
+                <button onclick="toggleUserData(); toggleICBC()" class="btn btn-primary pull-left btn-block">Toggle</button>
+                <button onclick="toggleUserData()" class="btn btn-success pull-left btn-block">Citizen Data</button>
+                <!-- The next commented out line is a button to toggle a heatmap -->
+                <!-- <button onclick="toggleHeatmap()" class="btn btn-success pull-left btn-block">Toggle User Data Heatmap</button> -->
+            <button onclick="toggleICBC()" class="btn btn-success pull-left btn-block">ICBC Data</button>
+
+                <button onclick="toggleICBCHM()" class="btn btn-danger pull-left btn-block">Toggle ICBC heatmap</button>
+                <button onclick="toggleBikeRacks()" class="btn btn-success pull-left btn-block">Bike Racks</button>
+                <!-- <button id="KMLlayers1" onclick="toggleLayer(1)" class="btn btn-success pull-right">Bike Racks</button> -->
+
+        </div>
+            
+            <div id="map_canvas"></div>
+
+
+
+
+
+
+
+        <!-- Button trigger form modal (move to map popup and autosubmit location) -->
+        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#incidentForm">
+            Report an incident
+        </button>
+
+        {% include 'mapApp/incident_form.html' %}
+
+    </body>
+</html>
