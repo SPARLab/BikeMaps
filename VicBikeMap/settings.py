@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
     'mapApp'
 )
 
@@ -59,15 +60,16 @@ WSGI_APPLICATION = 'VicBikeMap.wsgi.application'
 
 DATABASES = {
     'default': {
+        # SQLite settings for non-spatial development server
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 
+        # PostgreSQL database connection on Taylor's Windows computer
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'geodjango',
-        'USER': 'shanley',
-        'PASSWORD': 'spatial',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': 'bikeDB',
+        'USER': 'postgres',
+
+        
     }
 }
 
