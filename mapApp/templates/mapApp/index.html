@@ -40,7 +40,7 @@
                         <h2>All incidents (date reported) (Placeholder dummy)</h2>
                         <ul>
                         {% for incident in incidents %}
-                            <li>{{ incident.person }} -- {{ incident.rep_date }}</li>
+                            <li>{{ incident.report_date }} - {{ incident.point}}</li>
                         {% endfor %}
                         </ul>
                     {% else %}

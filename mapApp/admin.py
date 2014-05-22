@@ -1,22 +1,22 @@
 from django.contrib import admin
 
 # Register your models here.
-from mapApp.models import Incident, Person
+from mapApp.models import Incident
 
-class PersonStacked(admin.StackedInline):
-    model = Person
-    verbose_name_plural = "Person"
+# class PersonStacked(admin.StackedInline):
+#     model = Person
+#     verbose_name_plural = "Person"
 
 class IncidentAdmin(admin.ModelAdmin):
 #     fieldsets = [
 #         (None,               {'fields': ['question']}),
 #         ('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
 #     ]
-    inlines = [PersonStacked]
+    # inlines = [PersonStacked]
 
 #     list_display = ('question', 'pub_date', 'was_published_recently')
-    list_filter = ['rep_date']
+    list_filter = ['report_date']
     
-    # search_fields = ['rep_date']
+    # search_fields = ['report_date']
 
 admin.site.register(Incident, IncidentAdmin)

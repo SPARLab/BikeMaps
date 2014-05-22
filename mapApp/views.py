@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 
-from mapApp.models import Incident, Person
+from mapApp.models import Incident
 
 def index(request):
 	context = {'incidents': Incident.objects.all()}
