@@ -112,8 +112,9 @@ class Incident(models.Model):
     incident_detail = models.TextField('Brief description of the incident', max_length=300, blank=True, null=True) #(optional)
 
     # Spatial fields
-    point = models.PointField()
     # Default CRS -> WGS84
+    point = models.PointField('Location')
+
     objects = models.GeoManager() # Required to conduct geographic queries
 
 
@@ -137,6 +138,14 @@ class Incident(models.Model):
     sex = models.CharField(max_length=1, choices=(('M', 'Male'), ('F', 'Female')), blank=True, null=True)
     regular_cyclist = models.NullBooleanField('Regular cyclist (cycled >=52 times/y')
 
+
+    def was_published_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(weeks=1) <= self.report_date < now
+
+    was_published_recently.admin_order_field = 'report_date'
+    was_published_recently.boolean = True
+    was_published_recently.short_description = 'Reported this week?'
 
     def __unicode__(self):
         return unicode(self.incident_date)
