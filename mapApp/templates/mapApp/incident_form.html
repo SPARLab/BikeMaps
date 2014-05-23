@@ -1,21 +1,40 @@
-<!-- Modal -->
-<div class="modal fade" id="incidentForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Load Crispy-froms form template renderer -->
+{% load crispy_forms_tags %}
+
+<!-- Modal form -->
+<div class="modal fade" id="incidentForm" tabindex="-1" role="dialog" aria-labelledby="incidentForm" aria-hidden="false">
     <div class="modal-dialog">
         <div class="modal-content">
+            
+
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="incidentForm">Submit an incident report</h4>
             </div>
-            <div class="modal-body">
-                <form>
-                    {% csrf_token %}
-                    <p>...</p>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Submit</button>
-            </div>
+        
+
+            <form action="{% url 'mapApp:index' %}" method="post" class="form">
+                <div class="modal-body">
+                        {% crispy form %}
+
+                </div>
+
+
+                <div class="modal-footer">
+<!-- Progress bar   
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ completion_p }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ completion_p }}%;">
+                            <span class="sr-only">{{ completion_p }}% Complete</span>
+                        </div>
+                    </div>
+ -->                   
+ 
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+
+
         </div>
     </div>
 </div>

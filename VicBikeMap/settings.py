@@ -37,7 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.gis',
+    'django.contrib.gis',   # geoDjango requirement
+    'crispy_forms',   # django-crispy-forms package to render bootstrap modelForms
     'mapApp'
 )
 
@@ -102,3 +103,5 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
     "django.core.context_processors.request"
 )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

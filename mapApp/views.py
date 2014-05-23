@@ -5,10 +5,36 @@ from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 
 from mapApp.models import Incident
+from mapApp.forms import IncidentForm
 
 def index(request):
-	context = {'incidents': Incident.objects.all()}
+	if request.method == 'GET':
+		form = IncidentForm()
+	else:
+		# After form post we are here
+		try:
+			pass
+			#	create object
+			#	redirect to index again or to "thank you" page
+			#	form = IncidentForm() # Clean form
+		except ():
+			form = IncidentForm(request.POST)	# Return form as it was
+			pass
+		else:
+			pass
+			# 	Display index with form open and error messages
+
+
+	context = {
+		'incidents': Incident.objects.all(),
+		"form": form, 	#the form to be rendered
+		"completion_p": 60,	#load bar percentage. Not implemented
+		# "next_action":
+	}
 	return render(request, 'mapApp/index.html', context)
+
+
+
 
 def about(request):
 	return render(request, 'mapApp/about.html')

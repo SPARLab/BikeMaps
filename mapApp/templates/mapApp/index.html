@@ -7,8 +7,6 @@
     </head>
 
     <body>
-        <!-- onload="initialize()"> -->
-
         <!-- Tag to include nav_bar.html code with index template -->
         {% include 'mapApp/nav_bar.html' %}
 
@@ -52,13 +50,9 @@
         </div>
 
 
-
         <!-- Button trigger form modal (move to map popup and autosubmit location) -->
-        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#incidentForm">
-            Report an incident
-        </button>
-
+        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#incidentForm">Report an incident</button>
         {% include 'mapApp/incident_form.html' %}
-
+   
     </body>
 </html>

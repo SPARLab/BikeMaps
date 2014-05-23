@@ -1,5 +1,6 @@
 from django.contrib.gis.db import models
 
+
 import datetime
 from django.utils import timezone
 
@@ -66,9 +67,9 @@ ROAD_COND_CHOICES = (
     ('Snowy','Snowy')
 )
 SIGHTLINES_CHOICES = (
-    ('Good', 'Good sightlines'),
-    ('Poor', 'Poor Sightlines'),
-    ('Don\'t Remember', 'Dont\'t Remember')
+    ('Good', 'Good'),
+    ('Poor', 'Poor'),
+    ('Don\'t Remember', 'Don\'t Remember')
 )
 BIKE_INFRASTRUCTURE_CHOICES = (
     ('None', 'None'),
@@ -104,39 +105,120 @@ AGE_CHOICES = (
 # Captures all data about the accident and environmental conditions when the bike incident occurred.
 class Incident(models.Model):
     # Required fields
-    report_date = models.DateTimeField('Date reported', auto_now_add=True) # Date is set automatically when object created
-    incident_date = models.DateTimeField('Date of incident')
+    report_date = models.DateTimeField(
+        'Date reported', 
+        auto_now_add=True   # Date is set automatically when object created
+    ) 
+    incident_date = models.DateTimeField(
+        'Date of incident'
+    )
 
-    incident_type = models.CharField(max_length=30, choices=INCIDENT_TYPE_CHOICES) # Ideally selecting this type will reduce the number of options for incident in the form
-    incident = models.CharField(max_length=100, choices=INCIDENT_CHOICES)
-    incident_detail = models.TextField('Brief description of the incident', max_length=300, blank=True, null=True) #(optional)
+    incident_type = models.CharField(
+        'What kind of incident was it?',
+        max_length=30, 
+        choices=INCIDENT_TYPE_CHOICES # Ideally selecting this type will reduce the number of options for incident in the form
+    ) 
+    incident = models.CharField(
+        'What happened?', 
+        max_length=100, 
+        choices=INCIDENT_CHOICES
+    )
+    incident_detail = models.TextField(
+        'Please give a brief description of the incident', 
+        max_length=300, 
+        blank=True, 
+        null=True
+    )
 
     # Spatial fields
     # Default CRS -> WGS84
-    point = models.PointField('Location')
-
+    point = models.PointField(
+        'Location', 
+        null=True
+    )
     objects = models.GeoManager() # Required to conduct geographic queries
 
 
     #### Move following to new models?
     # Trip and environment details (all optional)
-    trip_purpose = models.CharField(max_length=50, choices=PURPOSE_CHOICES, blank=True, null=True)
-    road_conditions = models.CharField(max_length=5, choices=ROAD_COND_CHOICES, blank=True, null=True)
-    sightlines = models.CharField(max_length=20, choices=SIGHTLINES_CHOICES, blank=True, null=True)
-    cars_on_roadside = models.NullBooleanField('Cars parked on roadside')
-    bike_infrastructure = models.CharField(max_length=20, choices=BIKE_INFRASTRUCTURE_CHOICES, blank=True, null=True)
-    bike_lights = models.CharField(max_length=200, choices=LIGHTS_CHOICES, blank=True, null=True)
-    terrain = models.CharField(max_length=20, choices=TERRAIN_CHOICES, blank=True, null=True)
-    helmet = models.NullBooleanField('Helmet worn')
+    trip_purpose = models.CharField(
+        'What was the purpose of your trip?', 
+        max_length=50, 
+        choices=PURPOSE_CHOICES, 
+        blank=True, 
+        null=True
+    )
+    road_conditions = models.CharField(
+        'What were the road conditions?', 
+        max_length=5, 
+        choices=ROAD_COND_CHOICES, 
+        blank=True, 
+        null=True
+    )
+    sightlines = models.CharField(
+        'How were the sight lines?', 
+        max_length=20, 
+        choices=SIGHTLINES_CHOICES, 
+        blank=True, 
+        null=True
+    )
+    cars_on_roadside = models.NullBooleanField(
+        'Were there cars parked on the roadside'
+    )
+    bike_infrastructure = models.CharField(
+        'What kind of bike infrastructure was there?', 
+        max_length=20, 
+        choices=BIKE_INFRASTRUCTURE_CHOICES, 
+        blank=True, 
+        null=True
+    )
+    bike_lights = models.CharField(
+        'Were you using bike lights?', 
+        max_length=200, 
+        choices=LIGHTS_CHOICES, 
+        blank=True, 
+        null=True
+    )
+    terrain = models.CharField(
+        'What was the terrain like?', 
+        max_length=20, 
+        choices=TERRAIN_CHOICES, 
+        blank=True, 
+        null=True
+    )
+    helmet = models.NullBooleanField(
+        'Were you wearing a helmet?'
+    )
 
     # Injury details (all optional)
-    injury = models.NullBooleanField('Medical attention was required')
-    injury_detail = models.TextField('Description of any injuries sustained', max_length=300, blank=True, null=True)
+    injury = models.NullBooleanField(
+        'Did you require medical attention after the incident?'
+    )
+    injury_detail = models.TextField(
+        'Describe any injuries you sustained', 
+        max_length=300, 
+        blank=True, 
+        null=True
+    )
 
     # Personal details about the participant (all optional)
-    age = models.CharField(max_length=15, choices=AGE_CHOICES, blank=True, null=True) 
-    sex = models.CharField(max_length=1, choices=(('M', 'Male'), ('F', 'Female')), blank=True, null=True)
-    regular_cyclist = models.NullBooleanField('Regular cyclist (cycled >=52 times/y')
+    age = models.CharField(
+        'Please tell us which age category you fit into', 
+        max_length=15, 
+        choices=AGE_CHOICES, 
+        blank=True, 
+        null=True
+    ) 
+    sex = models.CharField(
+        'Please select your sex', 
+        max_length=1, 
+        choices=(('M', 'Male'), ('F', 'Female')), 
+        blank=True, 
+        null=True
+    )
+    regular_cyclist = models.NullBooleanField(
+        'Do you ride a bike often? (52+ times/year)'
+    )
 
 
     def was_published_recently(self):
