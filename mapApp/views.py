@@ -3,27 +3,28 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ValidationError
 
 from mapApp.models import Incident
 from mapApp.forms import IncidentForm
 
 def index(request):
-	if request.method == 'GET':
-		form = IncidentForm()
-	else:
-		# After form post we are here
-		try:
-			pass
-			#	create object
+	if request.method == 'POST':
+		# After form submit we are here
+		form = IncidentForm(request.POST)
+		
+		if form.is_valid():
+			form.save()		# create object
 			#	redirect to index again or to "thank you" page
-			#	form = IncidentForm() # Clean form
-		except ():
-			form = IncidentForm(request.POST)	# Return form as it was
-			pass
+			form = IncidentForm() # Clean form
 		else:
-			pass
+			return HttpResponse(form.errors)	# List form errors (deb)
+			# error creating object
 			# 	Display index with form open and error messages
 
+	else:
+		form = IncidentForm()
+		pass
 
 	context = {
 		'incidents': Incident.objects.all(),

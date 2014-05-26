@@ -133,8 +133,7 @@ class Incident(models.Model):
     # Spatial fields
     # Default CRS -> WGS84
     point = models.PointField(
-        'Location', 
-        null=True
+        'Location'
     )
     objects = models.GeoManager() # Required to conduct geographic queries
 

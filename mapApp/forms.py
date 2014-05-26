@@ -17,7 +17,8 @@ class IncidentForm(forms.ModelForm):
                 Field('incident_date', placeholder='make this a datepicker'),
                 Field('incident_type'),
                 Field('incident'),
-                Field('incident_detail', placeholder='optional')
+                Field('incident_detail', placeholder='optional'),
+                # Field('point') # Delete this once map is implemented
             ),
             AccordionGroup(
                 'Trip',
