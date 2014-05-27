@@ -18,23 +18,21 @@ def index(request):
 			#	redirect to index again or to "thank you" page
 			form = IncidentForm() # Clean form
 		else:
-			return HttpResponse(form.errors)	# List form errors (deb)
-			# error creating object
+			errors = form.errors
 			# 	Display index with form open and error messages
 
 	else:
 		form = IncidentForm()
-		pass
+		errors = None
 
 	context = {
 		'incidents': Incident.objects.all(),
 		"form": form, 	#the form to be rendered
 		"completion_p": 60,	#load bar percentage. Not implemented
+		"error_message":errors
 		# "next_action":
 	}
 	return render(request, 'mapApp/index.html', context)
-
-
 
 
 def about(request):

@@ -3,41 +3,90 @@
     <head>
         <!-- Loads bootstrap, js, css, and metadata tags -->
         {% include 'mapApp/header.html' %}
+        {% load staticfiles %}
+        <!-- Load leaflet -->
+        <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
 
     </head>
 
     <body>
         <!-- Tag to include nav_bar.html code with index template -->
         {% include 'mapApp/nav_bar.html' %}
-
-
-
-            <div id="panel">
+        {% if error_message %} <strong>ERRORS IN SUBMISSION</strong><p>{{ error_message }}</p> {% endif %}
+        <!-- Google Maps was here -->
+        <div id="panel">
                 <button onclick="toggleUserData(); toggleICBC()" class="btn btn-primary pull-left btn-block">Toggle</button>
                 <button onclick="toggleUserData()" class="btn btn-success pull-left btn-block">Citizen Data</button>
                 <!-- The next commented out line is a button to toggle a heatmap -->
                 <!-- <button onclick="toggleHeatmap()" class="btn btn-success pull-left btn-block">Toggle User Data Heatmap</button> -->
-            <button onclick="toggleICBC()" class="btn btn-success pull-left btn-block">ICBC Data</button>
+                <button onclick="toggleICBC()" class="btn btn-success pull-left btn-block">ICBC Data</button>
 
                 <button onclick="toggleICBCHM()" class="btn btn-danger pull-left btn-block">Toggle ICBC heatmap</button>
                 <button onclick="toggleBikeRacks()" class="btn btn-success pull-left btn-block">Bike Racks</button>
                 <!-- <button id="KMLlayers1" onclick="toggleLayer(1)" class="btn btn-success pull-right">Bike Racks</button> -->
 
         </div>
+
+<!--    Google Maps         
+        <div id="map_canvas"></div>
+-->
+
+        <div id="map"></div>
+        <!-- Load Leaflet.js --> 
+        <script src="{% static 'leaflet/leaflet.js' %}"></script>
+        
+        <script>
+            var map = L.map('map').setView([48.455, -123.3], 13);
+
+            /* Render OSM Cycle Map */
+            // mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+            // ocmlink = '<a href="http://thunderforest.com/">Thunderforest</a>';
+            // L.tileLayer(
+            //     'http://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png', {
+            //     attribution: '&copy; '+mapLink+' Contributors & '+ocmlink,
+            //     maxZoom: 18,
+            //     }).addTo(map)
             
-            <div id="map_canvas"></div>
+            /* Render Mapbox tiles */
+            L.tileLayer('http://{s}.tiles.mapbox.com/v3/tayden.ibi2aoib/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                maxZoom: 18
+            }).addTo(map);
+
+            /* Add all user points with a popup */
+            {% for incident in incidents %}
+                var marker = L.marker([ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ]).addTo(map);
+                marker.bindPopup("<b>{{ incident.incident_type }}</b><br>{{ incident.incident_date }}.");
+            {% endfor %}
 
 
+            /* Create a popup when map is clicked */
+            var popup = L.popup();
+
+            function addNewPoint(e) {
+                popup
+                    .setLatLng(e.latlng)
+                    .setContent('<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#incidentForm">Add an incident</button> <br> You clicked the map at ' + e.latlng.toString())
+                    // .setContent("You clicked the map at " + e.latlng.toString())
+                    .openOn(map);
+            }
+
+            map.on('click', addNewPoint);
+
+
+        </script>
+
+        
 
 
         <div class="database testing">
             <div style='border:2px black solid; width: 100%;'>
                 <center>
                     {% if incidents %}
-                        <h2>All incidents (date reported) (Placeholder dummy)</h2>
+                        <h2>All incidents (For dev purposes)</h2>
                         <ul>
                         {% for incident in incidents %}
-                            <li>{{ incident.report_date }} - {{ incident.point}}</li>
+                            <li>{{ incident.report_date }} - {{ incident.incident_type }} - {{ incident.point.coords }}</li>
                         {% endfor %}
                         </ul>
                     {% else %}
