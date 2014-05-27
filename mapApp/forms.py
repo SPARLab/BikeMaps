@@ -17,8 +17,8 @@ class IncidentForm(forms.ModelForm):
                 Field('incident_date', placeholder='make this a datepicker'),
                 Field('incident_type'),
                 Field('incident'),
-                Field('incident_detail', placeholder='optional'),
-                # Field('point') # Delete this once map is implemented
+                Field('incident_detail', placeholder='optional', id="test"),
+                Field('point', type="hidden", id="point") # Need to pass point coords separately and convert to proper format in views
             ),
             AccordionGroup(
                 'Trip',

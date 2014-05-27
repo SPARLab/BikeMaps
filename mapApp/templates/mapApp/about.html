@@ -11,20 +11,25 @@
 		<h1> About VicBikeMap </h1>
 
 
-		    <div id="panel">
-                <button onclick="toggleUserData(); toggleICBC()" class="btn btn-primary pull-left btn-block">Toggle</button>
-                <button onclick="toggleUserData()" class="btn btn-success pull-left btn-block">Citizen Data</button>
-                <!-- The next commented out line is a button to toggle a heatmap -->
-                <!-- <button onclick="toggleHeatmap()" class="btn btn-success pull-left btn-block">Toggle User Data Heatmap</button> -->
-                <button onclick="toggleICBC()" class="btn btn-success pull-left btn-block">ICBC Data</button>
+         
+        <div class="database testing">
+            <div style='border:2px black solid; width: 100%;'>
+                <center>
+                    {% if incidents %}
+                        <h2>All incidents (For dev purposes)</h2>
+                        <ul>
+                        {% for incident in incidents %}
+                            <li>{{ incident.report_date }} - {{ incident.incident_type }} - {{ incident.point.coords }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Something's not working || No data in database</p>
+                    {% endif %}
 
-                <button onclick="toggleICBCHM()" class="btn btn-danger pull-left btn-block">Toggle ICBC heatmap</button>
-                <button onclick="toggleBikeRacks()" class="btn btn-success pull-left btn-block">Bike Racks</button>
-                <!-- <button id="KMLlayers1" onclick="toggleLayer(1)" class="btn btn-success pull-right">Bike Racks</button> -->
+                </center>
+            </div>
 
-        </div>
-            
-            <div id="map_canvas"></div>
+        </div> 
 
 
 	</body>
