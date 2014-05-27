@@ -24,6 +24,25 @@ function initialize(){
 	    	Imagery © <a href="http://mapbox.com">Mapbox</a>',
 	    maxZoom: 18
 	}).addTo(map);
+
+	toggleStravaHM();
+	
+}
+
+
+
+/* Create a popup when map is clicked with button to  */
+function addNewPoint(e) {
+	var popup = L.popup();
+    popup
+        .setLatLng(e.latlng)
+        // How to move this to index.html and pass as parameter?
+        .setContent('<button class="btn btn-primary btn-lg" data-toggle="modal" \
+        	data-target="#incidentForm">Add an incident</button>')
+        .openOn(map);
+
+    //Set point field in form to click location
+    document.getElementById("point").value = ('Point('+e.latlng.lng+' '+e.latlng.lat+')');
 }
 
 
@@ -32,16 +51,35 @@ function addPoint(latlng, blurb) {
     marker.bindPopup(blurb);
 }
 
-/* Create a popup when map is clicked with button to  */
-function addNewPoint(e) {
-	var popup = L.popup();
-    popup
-        .setLatLng(e.latlng)
-        .setContent('<button class="btn btn-primary btn-lg" data-toggle="modal" \
-        	data-target="#incidentForm">Add an incident</button>')
-        // .setContent("You clicked the map at " + e.latlng.toString())
-        .openOn(map);
 
-    //Set point field in form to click location
-    document.getElementById("point").value = ('Point('+e.latlng.lng+' '+e.latlng.lat+')');
+function toggleUserData() {
+	return
+}
+function toggleHeatmap() {
+	return
+} 
+
+function toggleICBC() {
+	return
+}
+function toggleICBCHM() {
+	return
+}
+
+function toggleBikeRacks() {
+	return
+}
+
+function toggleStravaHM() {
+	
+	L.tileLayer('http://gometry.strava.com/tiles/cycling/color1/{z}/{x}/{y}.png', {
+	    attribution: 'http://labs.strava.com/heatmap/',
+	    minZoom: 3,
+	    maxZoom: 17,
+	    opacity: 0.5
+	}).addTo(map);
+}
+
+function toggleUserData() {
+	return
 }
