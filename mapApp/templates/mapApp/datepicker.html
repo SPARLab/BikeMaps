@@ -1,0 +1,15 @@
+{% load crispy_forms_field %}
+<div id="div_{{ field.auto_id }}" class="clearfix control-group{% if field.errors %} error{% endif %}">
+	{% if field.label %}
+	    <label for="id_{{ field.id_for_label }}" class="control-label {% if field.field.required %}requiredField{% endif %}">
+	            {{ field.label|safe }}{% if field.field.required %}<span class="asteriskField">*</span>{% endif %}
+	    </label>
+	 {% endif %}
+	<div class="controls">
+		<div id="{{ field.auto_id }}" class="input-append date" data-date="{% now 'd-m-Y' %}" data-date-format="dd-mm-yyyy">
+	       	{% crispy_field field %}<span class="add-on"><i class="icon-calendar"></i></span>
+	       	{% include 'bootstrap/layout/field_errors.html' %}
+	    </div>
+                {% include 'bootstrap/layout/help_text.html' %}
+	</div>
+</div>
