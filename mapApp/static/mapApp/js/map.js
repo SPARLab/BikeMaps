@@ -6,28 +6,56 @@ var map;
 
 /* Create the map with a tile layer and set global variable map */
 function initialize(){
-	map = L.map('map').setView([48.455, -123.3], 13);
 
-	/* Render OSM Cycle Map */
-	// mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-	// ocmlink = '<a href="http://thunderforest.com/">Thunderforest</a>';
-	// L.tileLayer(
-	//     'http://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png', {
-	//     attribution: '&copy; '+mapLink+' Contributors & '+ocmlink,
-	//     maxZoom: 18,
-	//     }).addTo(map)
+	/* OSM Cycle Map basemap tile layer */
+	mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+	ocmlink = '<a href="http://thunderforest.com/">Thunderforest</a>';
+	var OCM = L.tileLayer(
+	    'http://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png', {
+	    attribution: '&copy; '+mapLink+' Contributors & '+ocmlink,
+	    maxZoom: 18,
+	    });
 
-	/* Render Mapbox tiles */
-	L.tileLayer('http://{s}.tiles.mapbox.com/v3/tayden.ibi2aoib/{z}/{x}/{y}.png', {
+	/* Mapbox basemap tile layer */
+	var mapBox = L.tileLayer('http://{s}.tiles.mapbox.com/v3/tayden.ibi2aoib/{z}/{x}/{y}.png', {
 	    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> \
 	    	contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, \
 	    	Imagery © <a href="http://mapbox.com">Mapbox</a>',
 	    maxZoom: 18
-	}).addTo(map);
-
-	toggleStravaHM();
+	});
 	
+	/* OSM Strava heatmap tile layer */
+	var stravaHM = L.tileLayer('http://gometry.strava.com/tiles/cycling/color1/{z}/{x}/{y}.png', {
+	    attribution: 'Heatmap &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
+	    minZoom: 3,
+	    maxZoom: 17,
+	    opacity: 0.5
+	});
+
+
+	/* Define which map tiles are basemaps */
+	var baseMaps = {
+		"MapBox": mapBox,
+		"Open Cycle Map": OCM
+	};
+
+	/* Define which map tiles are overlays */
+	var overlayMaps = {
+		"Strava heatmap": stravaHM
+	};
+	
+	/* Set map center, zoom, and default layers */
+	map = L.map('map', {
+		center: [48.455, -123.3],
+		zoom: 13,
+		layers: [mapBox, stravaHM]
+	});
+	
+	/* Create the control panel and render the map */
+	L.control.layers(baseMaps, overlayMaps).addTo(map);
+
 }
+
 
 
 
@@ -68,16 +96,6 @@ function toggleICBCHM() {
 
 function toggleBikeRacks() {
 	return
-}
-
-function toggleStravaHM() {
-	
-	L.tileLayer('http://gometry.strava.com/tiles/cycling/color1/{z}/{x}/{y}.png', {
-	    attribution: 'http://labs.strava.com/heatmap/',
-	    minZoom: 3,
-	    maxZoom: 17,
-	    opacity: 0.5
-	}).addTo(map);
 }
 
 function toggleUserData() {
