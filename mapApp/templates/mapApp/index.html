@@ -18,13 +18,13 @@
         <!-- Tag to include nav_bar.html code with index template -->
         {% include 'mapApp/nav_bar.html' %}
        
-        <!-- Modal form -->
+        <!-- Modal form popup -->
         {% include 'mapApp/incident_form.html' %}
         
         <!-- Leaflet map --> 
         <div id="map"></div>
 
-    
+        <!-- Scripts controlling rendering of map -->
         <script>
             // Create the map
             initialize();
@@ -46,6 +46,7 @@
 
 
 
+        
 
 
         <div id="panel">
