@@ -8,14 +8,9 @@ from django.utils import timezone
 ############
 # Response options for CharField data types
 # 
-INCIDENT_TYPE_CHOICES = (
-    ("collision","Collision"),
-    ("near miss","Near Miss"),
-    # ("theft","Theft"),
-    # ("hazard","Hazard"),
-)
-INCIDENT_CHOICES = (
-    # Collision
+
+# Collision
+COLLISION_TYPES = [
     ('Vehicle collision', 'Collision with a motor vehicle'),
     ('Vehicle door collision','Collision with an open vehicle door'),
     ('Surface feature collision','Collision with a surface feature (e.g., train tracks, pothole, rock)'),
@@ -23,8 +18,10 @@ INCIDENT_CHOICES = (
     ('Person/animal collision','Collision with other person or animal (i.e., cyclist, pedestrian, skater, dog)'),
     ('Fall trying to avoid collision','Fall while trying to avoid a collision'),
     ('Fall in other circumstances','Fall in other circumstances'),
-    
-    # Near miss
+]
+
+# Near miss
+NEAR_MISS_TYPES = [
     ('Vehicle near collision', 'Near collision with a motor vehicle'),
     ('Vehicle door near collision','Near collision with an open vehicle door'),
     ('Surface feature near collision','Near collision with a surface feature (e.g., train tracks, pothole, rock)'),
@@ -32,13 +29,21 @@ INCIDENT_CHOICES = (
     ('Person/animal near collision','Near collision with other person or animal (i.e., cyclist, pedestrian, skater, dog)'),
     ('Near fall trying to avoid collision','Near fall while trying to avoid a collisioin'),
     ('Near fall in other circumstances','Near fall due to other circumstances'),
-    
-    # # Theft
-    # ('Theft','Theft'),
-    
-    # # Hazard
-    # ('Hazard','Hazard')
-)
+]
+
+# Thef
+THEFT_TYPES = [
+    ('Theft','Theft'),
+]
+
+# Hazard
+HAZARD_TYPES = [
+    ('Hazard','Hazard')
+]
+
+INCIDENT_CHOICES = tuple(COLLISION_TYPES + NEAR_MISS_TYPES) #+ THEFT_TYPES + HAZARD_TYPES)
+
+
 PURPOSE_CHOICES = (
     ("Commute", "To/from work/school"), 
     ("Exercise or recreation", "Exercise or recreation"), 
@@ -113,11 +118,6 @@ class Incident(models.Model):
         'Date of incident'
     )
 
-    incident_type = models.CharField(
-        'What kind of incident was it?',
-        max_length=30, 
-        choices=INCIDENT_TYPE_CHOICES # Ideally selecting this type will reduce the number of options for incident in the form
-    ) 
     incident = models.CharField(
         'What happened?', 
         max_length=100, 
@@ -227,6 +227,21 @@ class Incident(models.Model):
     was_published_recently.admin_order_field = 'report_date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Reported this week?'
+
+    # A non elegant way to mach up self.incident to a generalized incident_type string
+    def incident_type(self):
+        TYPES = [
+            (COLLISION_TYPES, "Collision"), 
+            (NEAR_MISS_TYPES, "Near miss"), 
+            (THEFT_TYPES, "Theft"),
+            (HAZARD_TYPES, "Hazard")
+        ]
+
+        for (TYPE, typStr) in TYPES: # Loop through tuples in each TYPE
+            for tup in TYPE:
+                 if self.incident in tup:
+                    return typStr 
+                    
 
     def __unicode__(self):
         return unicode(self.incident_date)
