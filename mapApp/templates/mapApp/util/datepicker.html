@@ -1,5 +1,6 @@
 
 <!-- Util from http://www.malot.fr/bootstrap-datetimepicker/demo.php -->
+<!-- Help from https://gist.github.com/eguevara2012/2821026 -->
 
 <!DOCTYPE html>
 <html>
@@ -14,34 +15,34 @@
 
 {% load crispy_forms_field %}
 <div id="div_{{ field.auto_id }}" class="clearfix control-group{% if field.errors %} error{% endif %}">
+    
     {% if field.label %}
 	    <label for="id_{{ field.id_for_label }}" class="control-label {% if field.field.required %}requiredField{% endif %}">
-	            {{ field.label|safe }}{% if field.field.required %}<span class="asteriskField">*</span>{% endif %}
+	        {{ field.label|safe }}{% if field.field.required %}<span class="asteriskField">*</span>{% endif %}
 	    </label>
-	 {% endif %}
+	{% endif %}
 
-    <div class="input-group date form_datetime" data-date="{% now 'Y-m-d\TH:i:s\Z' %}" data-date-format="yyyy-mm-dd hh:ii" data-link-field="{{ field.auto_id }}" >
+    <div class="input-group date form_datetime" data-date="{% now 'Y-m-d\TH:i:s\Z' %}" data-link-field="{{ field.auto_id }}" >
         {% crispy_field field %}
         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-		<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+		<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+
     </div>
+		
 		{% include 'bootstrap/layout/field_errors.html' %}
     	{% include 'bootstrap/layout/help_text.html' %}
 
-	
-	<!-- <input type="hidden" id="dtp_input1" value="" /><br/> -->
 </div>
 
 
-<script type="text/javascript" src="{% static 'bootstrap/js/jquery/datepicker/jquery-1.8.3.min.js' %}" charset="UTF-8"></script>
+<script type="text/javascript" src="{% static 'bootstrap/js/datepicker/jquery/jquery-1.8.3.min.js' %}" charset="UTF-8"></script>
 <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'bootstrap/js/datepicker/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
 <script type="text/javascript" src="{% static 'bootstrap/js/datepicker/locales/bootstrap-datetimepicker.fr.js' %}" charset="UTF-8"></script>
 
 <script type="text/javascript">
     $('.form_datetime').datetimepicker({
-        //language:  'fr',
-		// format: "yyyy-mm-dd hh:ii",
+		format: "yyyy-mm-dd hh:ii",
 		showMeridian: true,       
 		weekStart: false,
 		todayBtn:  false,
@@ -49,6 +50,8 @@
 		todayHighlight: true,
 		startView: 3,
 		forceParse: false,
+		endDate: "{% now 'Y-m-d H:i' %}", // No reporting future dates
+		startDate: "-10y" //No reporting dates older than 10 years
 
     });
 </script>
