@@ -38,7 +38,6 @@
 <script type="text/javascript" src="{% static 'bootstrap/js/datepicker/jquery/jquery-1.8.3.min.js' %}" charset="UTF-8"></script>
 <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'bootstrap/js/datepicker/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
-<script type="text/javascript" src="{% static 'bootstrap/js/datepicker/locales/bootstrap-datetimepicker.fr.js' %}" charset="UTF-8"></script>
 
 <script type="text/javascript">
     $('.form_datetime').datetimepicker({
@@ -48,10 +47,10 @@
 		todayBtn:  false,
 		autoclose: true,
 		todayHighlight: true,
-		startView: 3,
+		startView: 2,
 		forceParse: false,
-		endDate: "{% now 'Y-m-d H:i' %}", // No reporting future dates
-		startDate: "-10y" //No reporting dates older than 10 years
+		endDate: "{% now 'Y-m-d H:i' %}", 	// No reporting future dates
+		startDate: "-10y" 					//No reporting dates older than 10 years
 
     });
 </script>
