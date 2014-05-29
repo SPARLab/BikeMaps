@@ -110,7 +110,7 @@ class Incident(models.Model):
         auto_now_add=True   # Date is set automatically when object created
     ) 
     incident_date = models.DateTimeField(
-        'Date of incident'
+        'When was the incident?'
     )
 
     incident_type = models.CharField(

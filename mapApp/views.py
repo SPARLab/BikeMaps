@@ -26,7 +26,7 @@ def index(request):
 			#	redirect to index again or to "thank you" page
 			form = IncidentForm() # Clean form
 		else:
-			errors = form.errors
+			pass
 			# 	Display index with form open and error messages
 
 	else:
@@ -35,8 +35,7 @@ def index(request):
 	context = {
 		'incidents': Incident.objects.all(),
 		"form": form, 	#the form to be rendered
-		"completion_p": 60,	#load bar percentage. Not implemented
-		# "next_action":
+		# "modal_open": 'hide'
 	}
 	return render(request, 'mapApp/index.html', context)
 

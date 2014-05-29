@@ -49,14 +49,14 @@
 <script type="text/javascript">
     $('.form_datetime').datetimepicker({
 		format: "yyyy-mm-dd hh:ii",
-		showMeridian: true,       
-		weekStart: false,
-		todayBtn:  false,
-		autoclose: true,
-		//todayHighlight: true,
+		showMeridian: 1,       
+		weekStart: 0,
+		// todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
 		startView: 2,
-		forceParse: true,
-		maxView: 2,
+		forceParse: 0,
+		maxView: 2,	// Should be changed to 3 when Calendar view 3 bug is resolved
 		endDate: "{% now 'Y-m-d\TH:i:s\Z' %}", 	// No reporting future dates
 		startDate: "-10y" 					//No reporting dates older than 10 years
 
