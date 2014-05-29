@@ -46,10 +46,10 @@
 		weekStart: false,
 		todayBtn:  false,
 		autoclose: true,
-		todayHighlight: true,
+		//todayHighlight: true,
 		startView: 2,
 		forceParse: false,
-		endDate: "{% now 'Y-m-d H:i' %}", 	// No reporting future dates
+		endDate: "{% now 'Y-m-d\TH:i:s\Z' %}", 	// No reporting future dates
 		startDate: "-10y" 					//No reporting dates older than 10 years
 
     });
