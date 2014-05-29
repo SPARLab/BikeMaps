@@ -144,12 +144,12 @@ function initialize(){
 
 /* Create a popup when map is clicked with button to  */
 function addNewPoint(e) {
-	var popup = L.popup();
+	var popup = L.popup({'closeOnClick': true, });
     popup
         .setLatLng(e.latlng)
         // How to move this to index.html and pass as parameter?
-        .setContent('<button class="btn btn-primary btn-lg" data-toggle="modal" \
-        	data-target="#incidentForm">Add an incident</button>')
+        .setContent('<button class="btn btn-link btn-lg" data-toggle="modal" \
+        	data-target="#incidentForm">Report an incident  <span class="glyphicon glyphicon-pushpin"></span></button>')
         .openOn(map);
 
     //Set point field in form to click location
