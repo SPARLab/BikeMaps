@@ -2,6 +2,13 @@
 <!-- Util from http://www.malot.fr/bootstrap-datetimepicker/demo.php -->
 <!-- Help from https://gist.github.com/eguevara2012/2821026 -->
 
+
+<!-- KNOWN ISSUES WHICH HAVE BEEN REPORTED:
+		Calendar view 3 displays wrong month selection and end date (displays 2 months previous)
+		Clicking navigation arrows in center of button has unexpected outcome
+
+-->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +29,7 @@
 	    </label>
 	{% endif %}
 
-    <div class="input-group date form_datetime" data-date="{% now 'Y-m-d\TH:i:s\Z' %}" data-link-field="{{ field.auto_id }}" >
+    <div class="input-group date form_datetime" data-date="{% now 'Y-m-d\TH:i:s\Z' %}" data-link-field="{{ field.auto_id }}%}" >
         {% crispy_field field %}
         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 		<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -48,7 +55,8 @@
 		autoclose: true,
 		//todayHighlight: true,
 		startView: 2,
-		forceParse: false,
+		forceParse: true,
+		maxView: 2,
 		endDate: "{% now 'Y-m-d\TH:i:s\Z' %}", 	// No reporting future dates
 		startDate: "-10y" 					//No reporting dates older than 10 years
 
