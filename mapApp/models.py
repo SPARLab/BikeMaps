@@ -31,7 +31,7 @@ NEAR_MISS_TYPES = [
     ('Near fall in other circumstances','Near fall due to other circumstances'),
 ]
 
-# Thef
+# Theft
 THEFT_TYPES = [
     ('Theft','Theft'),
 ]
@@ -45,9 +45,9 @@ INCIDENT_CHOICES = tuple(COLLISION_TYPES + NEAR_MISS_TYPES) #+ THEFT_TYPES + HAZ
 
 
 PURPOSE_CHOICES = (
-    ("Commute", "To/from work/school"), 
+    ("Commute", "To/from work or school"), 
     ("Exercise or recreation", "Exercise or recreation"), 
-    ("Social reason", "Social reason (e.g., movies, visit friends"), 
+    ("Social reason", "Social reason (e.g., movies, visit friends)"), 
     ("Personal business", "Personal business"),
     ("During work", "During work")
 )
@@ -191,7 +191,7 @@ class Incident(models.Model):
 
     # Injury details (all optional)
     injury = models.NullBooleanField(
-        'Did you require medical attention after the incident?'
+        'Did you require medical attention?'
     )
     injury_detail = models.TextField(
         'Describe any injuries you sustained', 

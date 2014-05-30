@@ -16,28 +16,28 @@ class IncidentForm(forms.ModelForm):
                 'Incident',
                 Field('incident_date', id="incident_date", template='mapApp/util/datepicker.html'),
                 Field('incident'),
+                Field('injury'),
+                # Field('injury_detail', placeholder='optional'),
+                Field('trip_purpose'),
                 Field('incident_detail', placeholder='optional'),
-                Field('point', type="hidden", id="point") # Need to pass point coords separately and convert to proper format in views
+                Field('point', type="hidden", id="point"), # Coords passed after click on map from static/mapApp/js/map.js
             ),
             AccordionGroup(
-                'Trip',
-                Field('trip_purpose'),
+                'Personal Details',
+                Field('age'),
+                Field('sex'),
+                Field('regular_cyclist'),
+                Field('helmet'),
+            ),
+            AccordionGroup(
+                'Conditions',
                 Field('road_conditions'),
                 Field('sightlines'),
                 Field('cars_on_roadside'),
                 Field('bike_infrastructure'),
                 Field('bike_lights'),
                 Field('terrain'),
-                Field('helmet')
             ),
-            AccordionGroup(
-                'Person',
-                Field('injury'),
-                Field('injury_detail', placeholder='optional'),
-                Field('age'),
-                Field('sex'),
-                Field('regular_cyclist')
-            )
         )
     )
 
