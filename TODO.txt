@@ -1,0 +1,22 @@
+* Add updated bike lanes KML
+* Implement About template
+* Change navbar and map layout on index
+* Upgrade Mac server
+* Put password protected preliminary site on the internet
+* Implement point clustering
+* Add police data layer
+* Turn user data into a layer
+* Add ICBC data
+* Add bike racks KML
+* Add bike lanes/routes KML
+* Add heatmap options for point layers
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
