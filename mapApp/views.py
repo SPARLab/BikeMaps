@@ -10,29 +10,28 @@ from mapApp.models import Incident
 from mapApp.forms import IncidentForm
 
 def index(request):
+	formErrors = False
+	form = IncidentForm()
+
 	if request.method == 'POST':
 		form = IncidentForm(request.POST)
 		
-		# Copy to allow mutation of value
-		form.data = form.data.copy()
-
 		# Convert string coords to valid geometry object
+		form.data = form.data.copy()	# Copy to allow mutation of value
+		#Try:?		
 		pnt = fromstr(form.data['point'])
 		form.data['point'] = GEOSGeometry(pnt)
-		
+		#Catch(failure)?
 
 		if form.is_valid():
-			form.save()		# create object
-			#	redirect to index again or to "thank you" page
-			return HttpResponseRedirect(reverse('mapApp:index'))
+			# create database entry
+			form.save()	
+			# redirect to clean index
+			return HttpResponseRedirect(reverse('mapApp:index')) 
+		
 		else:
+			# display modal with highlighted errors
 			formErrors = True
-			pass
-			# 	Display index with form open and error messages
-
-	else:
-		formErrors = False
-		form = IncidentForm()
 
 	context = {
 		'incidents': Incident.objects.all(),
@@ -40,7 +39,6 @@ def index(request):
 		"formErrors": formErrors
 	}
 	return render(request, 'mapApp/index.html', context)
-
 
 def about(request):
 	context = {

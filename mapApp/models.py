@@ -162,7 +162,8 @@ class Incident(models.Model):
         null=True
     )
     cars_on_roadside = models.NullBooleanField(
-        'Were there cars parked on the roadside'
+        'Were there cars parked on the roadside',
+        choices=((False, "No"),(True,"Yes")) # Without this, field has 'Unknown' for None rather than the desired "---------"
     )
     bike_infrastructure = models.CharField(
         'What kind of bike infrastructure was there?', 
@@ -186,12 +187,14 @@ class Incident(models.Model):
         null=True
     )
     helmet = models.NullBooleanField(
-        'Were you wearing a helmet?'
+        'Were you wearing a helmet?',
+        choices=((False, "No"),(True,"Yes")) # Without this, field has 'Unknown' for None rather than the desired "---------"
     )
 
     # Injury details (all optional)
     injury = models.NullBooleanField(
-        'Did you require medical attention?'
+        'Did you require medical attention?',
+        choices=((False, "No"),(True,"Yes")) # Without this, field has 'Unknown' for None rather than the desired "---------"
     )
     injury_detail = models.TextField(
         'Describe any injuries you sustained', 
@@ -216,7 +219,8 @@ class Incident(models.Model):
         null=True
     )
     regular_cyclist = models.NullBooleanField(
-        'Do you ride a bike often? (52+ times/year)'
+        'Do you ride a bike often? (52+ times/year)',
+        choices=((False, "No"),(True,"Yes")) # Without this, field has 'Unknown' for None rather than the desired "---------"
     )
 
 
