@@ -24,18 +24,20 @@ def index(request):
 		if form.is_valid():
 			form.save()		# create object
 			#	redirect to index again or to "thank you" page
-			form = IncidentForm() # Clean form
+			return HttpResponseRedirect(reverse('mapApp:index'))
 		else:
+			formErrors = True
 			pass
 			# 	Display index with form open and error messages
 
 	else:
+		formErrors = False
 		form = IncidentForm()
 
 	context = {
 		'incidents': Incident.objects.all(),
 		"form": form, 	#the form to be rendered
-		# "modal_open": 'hide'
+		"formErrors": formErrors
 	}
 	return render(request, 'mapApp/index.html', context)
 

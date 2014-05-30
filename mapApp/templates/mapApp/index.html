@@ -25,17 +25,23 @@
         <div id="map"></div>
 
         <!-- Scripts controlling rendering of map -->
-        <script>
+        <script type="text/javascript">
             // Create the map
             initialize();
 
             // Enable click to add point
             map.on('click', addNewPoint);
             
+            // Show the modal if there are errors in a form submit
+            {% if formErrors %}
+                $(window).load(function(){
+                        $('#incidentForm').modal('show');
+                });
+            {% endif %}
 
         </script>
 
-
+        <!-- Load the points from the database (CHANGE THIS METHOD?) -->
         {% for incident in incidents %}
             <script>
                 var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
@@ -43,26 +49,6 @@
                 addPoint( latlng, msg );
             </script>
         {% endfor %}
-
-
-
-
-
-<!-- 
-        <div id="panel">
-            <button onclick="toggleUserData(); toggleICBC()" class="btn btn-primary pull-left btn-block">Toggle</button>
-            <button onclick="toggleUserData()" class="btn btn-success pull-left btn-block">Citizen Data</button>
-            <button onclick="toggleHeatmap()" class="btn btn-success pull-left btn-block">Toggle User Data Heatmap</button>
-            <button onclick="toggleICBC()" class="btn btn-success pull-left btn-block">ICBC Data</button>
-
-            <button onclick="toggleICBCHM()" class="btn btn-danger pull-left btn-block">Toggle ICBC heatmap</button>
-            <button onclick="toggleBikeRacks()" class="btn btn-success pull-left btn-block">Bike Racks</button>
-            <button id="KMLlayers1" onclick="toggleLayer(1)" class="btn btn-success pull-right">Bike Racks</button>
-
-        </div> 
--->
-
-
 
    
     </body>
