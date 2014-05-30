@@ -149,7 +149,7 @@ function addNewPoint(e) {
         .setLatLng(e.latlng)
         // How to move this to index.html and pass as parameter?
         .setContent('<button class="btn btn-link btn-lg" data-toggle="modal" \
-        	data-target="#incidentForm">Report an incident  <span class="glyphicon glyphicon-pushpin"></span></button>')
+        	data-target="#incidentForm"><span class="glyphicon glyphicon-pushpin"></span></button>')
         .openOn(map);
 
     //Set point field in form to click location
