@@ -148,7 +148,7 @@ function addNewPoint(e) {
     popup
         .setLatLng(e.latlng)
         // How to move this to index.html and pass as parameter?
-        .setContent('<button class="btn btn-link btn-lg" data-toggle="modal" \
+        .setContent('<button class="btn btn-primary btn-lg" data-toggle="modal" \
         	data-target="#incidentForm"><span class="glyphicon glyphicon-pushpin"></span></button>')
         .openOn(map);
 
