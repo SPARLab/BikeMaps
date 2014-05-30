@@ -14,8 +14,7 @@ class IncidentForm(forms.ModelForm):
         Accordion(
             AccordionGroup(
                 'Incident',
-                Field('incident_date', readonly='readonly', id="incident_date", template='mapApp/util/datepicker.html'),
-                Field('incident_type'),
+                Field('incident_date', id="incident_date", template='mapApp/util/datepicker.html'),
                 Field('incident'),
                 Field('incident_detail', placeholder='optional'),
                 Field('point', type="hidden", id="point") # Need to pass point coords separately and convert to proper format in views

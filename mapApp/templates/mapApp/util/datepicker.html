@@ -5,7 +5,6 @@
 
 <!-- KNOWN ISSUES WHICH HAVE BEEN REPORTED:
 		Calendar view 3 displays wrong month selection and end date (displays 2 months previous)
-		Clicking navigation arrows in center of button has unexpected outcome
 
 -->
 
@@ -22,16 +21,15 @@
 
 {% load crispy_forms_field %}
 <div id="div_{{ field.auto_id }}" class="clearfix control-group{% if field.errors %} error{% endif %}">
-    
     {% if field.label %}
-	    <label for="id_{{ field.id_for_label }}" class="control-label {% if field.field.required %}requiredField{% endif %}">
-	        {{ field.label|safe }}{% if field.field.required %}<span class="asteriskField">*</span>{% endif %}
+	    <label for="id {{ field.id_for_label }}" class="control-label {% if field.field.required %}requiredField{% endif %}">
+	        {{ field.label|safe }}{% if field.field.required %}*{% endif %}
 	    </label>
 	{% endif %}
 
-    <div class="input-group date form_datetime" data-date="{% now 'Y-m-d\TH:i:s\Z' %}" data-link-field="{{ field.auto_id }}%}" >
+    <div class="input-group date form_datetime" data-date-format='yyyy-mm-dd hh:ii' data-link-field="{{ field.auto_id }}" >
         {% crispy_field field %}
-        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+        <!-- <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> -->
 		<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 
     </div>
@@ -42,24 +40,22 @@
 </div>
 
 
-<script type="text/javascript" src="{% static 'bootstrap/js/datepicker/jquery/jquery-1.8.3.min.js' %}" charset="UTF-8"></script>
+<script type="text/javascript" src="{% static 'bootstrap/js/datepicker/jquery/jquery-1.11.1.min.js' %}" charset="UTF-8"></script>
 <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'bootstrap/js/datepicker/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
 
 <script type="text/javascript">
     $('.form_datetime').datetimepicker({
-		format: "yyyy-mm-dd hh:ii",
-		showMeridian: 1,       
-		weekStart: 0,
-		// todayBtn:  1,
+		autoclose: 1,
+        todayBtn:  0,
 		autoclose: 1,
 		todayHighlight: 1,
+		maxView: 2,
 		startView: 2,
 		forceParse: 0,
-		maxView: 2,	// Should be changed to 3 when Calendar view 3 bug is resolved
-		endDate: "{% now 'Y-m-d\TH:i:s\Z' %}", 	// No reporting future dates
-		startDate: "-10y" 					//No reporting dates older than 10 years
-
+        showMeridian: 1,
+		startDate: "-10y",
+		endDate: "{% now 'Y-m-d\TH:i:s\Z' %}"
     });
 </script>
 
