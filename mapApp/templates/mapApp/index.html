@@ -15,6 +15,12 @@
 
 
     <body>
+        
+        <!-- <div class="page-header">
+            <h1>Example Header Text<small> and some subtext</small><h1>
+        </div> -->
+
+
         <!-- Tag to include nav_bar.html code with index template -->
         {% include 'mapApp/nav_bar.html' %}
        
@@ -22,7 +28,11 @@
         {% include 'mapApp/incident_form.html' %}
         
         <!-- Leaflet map --> 
-        <div id="map"></div>
+      
+        <div id="wrapper" class="container">
+            <div id="map"></div>
+        </div>
+     
 
         <!-- Scripts controlling rendering of map -->
         <script type="text/javascript">
@@ -42,7 +52,7 @@
 
         </script>
 
-        <!-- Load the points from the database (CHANGE THIS METHOD?) -->
+        <!-- Load the points from the database (CHANGE THIS METHOD SO POINTS BECOME A LAYER THAT CAN BE TOGGLED) -->
         {% for incident in incidents %}
             <script>
                 var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
@@ -51,5 +61,6 @@
             </script>
         {% endfor %}
    
+
     </body>
 </html>

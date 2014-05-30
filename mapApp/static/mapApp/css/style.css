@@ -50,10 +50,7 @@ body {
 	margin: 0px; 
 	padding: 0px;
 }
-#map_canvas {
-	height: 100%;
-	width: 100%;
-}
+
 #panel {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 13px;
@@ -80,9 +77,13 @@ textarea {
 }
 
 #map {
-	height: 100%;
-	width: 100%;
-	margin-left: auto;
-	margin-right: auto;
+	display: block;
+	position: absolute;
+	height: auto;
+	bottom: 0;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin-top:50px;
 
 }
