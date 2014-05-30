@@ -1608,16 +1608,16 @@
 		},
 		headTemplate:     '<thead>' +
 							  '<tr>' +
-							  '<th class="prev"><i class="icon-arrow-left"/></th>' +
+							  '<th class="prev"><i class="icon icon-arrow-left"/></th>' +
 							  '<th colspan="5" class="switch"></th>' +
-							  '<th class="next"><i class="icon-arrow-right"/></th>' +
+							  '<th class="next"><i class="icon icon-arrow-right"/></th>' +
 							  '</tr>' +
 			'</thead>',
 		headTemplateV3:   '<thead>' +
 							  '<tr>' +
-							  '<th class="prev"><span class="glyphicon glyphicon-arrow-left"></span> </th>' +
+							  '<th class="prev"><i class="glyphicon glyphicon-arrow-left"/> </th>' +
 							  '<th colspan="5" class="switch"></th>' +
-							  '<th class="next"><span class="glyphicon glyphicon-arrow-right"></span> </th>' +
+							  '<th class="next"><i class="glyphicon glyphicon-arrow-right"/> </th>' +
 							  '</tr>' +
 			'</thead>',
 		contTemplate:     '<tbody><tr><td colspan="7"></td></tr></tbody>',
