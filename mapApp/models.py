@@ -104,6 +104,11 @@ AGE_CHOICES = (
     (">70", "70 or over")
 )
 
+BOOLEAN_CHOICES = (
+    (True, "Yes"),
+    (False, "No")
+)
+
 ##########
 # Incident class.
 # Main class for Incident Report. Contains all required, non-required, and spatial fields. Setup to allow easy export to a singular shapefile.
@@ -163,7 +168,7 @@ class Incident(models.Model):
     )
     cars_on_roadside = models.NullBooleanField(
         'Were there cars parked on the roadside',
-        choices=((False, "No"),(True,"Yes")) # Without this, field has 'Unknown' for None rather than the desired "---------"
+        choices= BOOLEAN_CHOICES # Without this, field has 'Unknown' for None rather than the desired "---------"
     )
     bike_infrastructure = models.CharField(
         'What kind of bike infrastructure was there?', 
@@ -188,13 +193,13 @@ class Incident(models.Model):
     )
     helmet = models.NullBooleanField(
         'Were you wearing a helmet?',
-        choices=((False, "No"),(True,"Yes")) # Without this, field has 'Unknown' for None rather than the desired "---------"
+        choices= BOOLEAN_CHOICES # Without this, field has 'Unknown' for None rather than the desired "---------"
     )
 
     # Injury details (all optional)
     injury = models.NullBooleanField(
         'Did you require medical attention?',
-        choices=((False, "No"),(True,"Yes")) # Without this, field has 'Unknown' for None rather than the desired "---------"
+        choices= BOOLEAN_CHOICES # Without this, field has 'Unknown' for None rather than the desired "---------"
     )
     injury_detail = models.TextField(
         'Describe any injuries you sustained', 
@@ -220,7 +225,7 @@ class Incident(models.Model):
     )
     regular_cyclist = models.NullBooleanField(
         'Do you ride a bike often? (52+ times/year)',
-        choices=((False, "No"),(True,"Yes")) # Without this, field has 'Unknown' for None rather than the desired "---------"
+        choices= BOOLEAN_CHOICES # Without this, field has 'Unknown' for None rather than the desired "---------"
     )
 
 
