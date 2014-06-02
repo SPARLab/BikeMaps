@@ -8,28 +8,30 @@
 
     <body>
     	{% include 'mapApp/nav_bar.html' %}
-		<h1> About VicBikeMap </h1>
-
+		
+        <div class="page">
+            <h1> About VicBikeMap </h1>
 
          
-        <div class="database testing">
-            <div style='border:2px black solid; width: 100%;'>
-                <center>
-                    {% if incidents %}
-                        <h2>All incidents (For dev purposes)</h2>
-                        <ul>
-                        {% for incident in incidents %}
-                            <li>{{ incident.report_date }} - {{ incident.incident_type }} - {{ incident.point.coords }}</li>
-                        {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p>Something's not working || No data in database</p>
-                    {% endif %}
+            <div class="database testing">
+                <div style='border:2px black solid; width: 100%;'>
+                    <center>
+                        {% if incidents %}
+                            <h2>All incidents (For dev purposes)</h2>
+                            <ul>
+                            {% for incident in incidents %}
+                                <li>{{ incident.report_date }} - {{ incident.incident_type }} - {{ incident.point.coords }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Something's not working || No data in database</p>
+                        {% endif %}
 
-                </center>
-            </div>
+                    </center>
+                </div>
 
-        </div> 
+            </div> 
+        </div>
 
 
 	</body>

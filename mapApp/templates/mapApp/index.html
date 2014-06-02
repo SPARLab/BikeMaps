@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- Loads bootstrap, js, css, and metadata tags -->
         {% include 'mapApp/header.html' %}
+        
         {% load staticfiles %}
-        <!-- Load leaflet -->
+
+        
+        <!-- Load leaflet styles -->
         <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
 
         <!-- Load the leaflet map and functions -->
         <script src="{% static 'leaflet/leaflet.js' %}"></script>
         <script src="{% static 'mapApp/js/map.js' %}"></script>
     
+
     </head>
 
 
     <body>
-        
-        <!-- <div class="page-header">
-            <h1>Example Header Text<small> and some subtext</small><h1>
-        </div> -->
-
-
         <!-- Tag to include nav_bar.html code with index template -->
         {% include 'mapApp/nav_bar.html' %}
        
@@ -28,13 +25,11 @@
         {% include 'mapApp/incident_form.html' %}
         
         <!-- Leaflet map --> 
-      
-        <div id="wrapper" class="container">
-            <div id="map"></div>
-        </div>
+        <div id="map"></div>
+     
      
 
-        <!-- Scripts controlling rendering of map -->
+        <!-- Scripts controlling map -->
         <script type="text/javascript">
             // Create the map
             initialize();
@@ -45,7 +40,7 @@
             // Show the modal if there are errors in a form submit
             {% if formErrors %}
                 $(window).load(function(){
-                        $('#incidentForm').modal('show');
+                    $('#incidentForm').modal('show');
                 });
             {% endif %}
 

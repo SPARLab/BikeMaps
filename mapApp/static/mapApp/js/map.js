@@ -131,7 +131,7 @@ function initialize(){
 	map = L.map('map', {
 		center: [48.455, -123.3],
 		zoom: 13,
-		layers: [humanitarianOSM, stravaHM5] /* Layers to display on load */
+		layers: [mapbox, stravaHM5] /* Layers to display on load */
 	});
 	
 	/* Create the control panel and render the map */
