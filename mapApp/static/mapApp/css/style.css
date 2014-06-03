@@ -86,3 +86,7 @@ textarea {
 	margin-right: auto;
 
 }
+
+.accordion-toggle {
+	display: block;
+}
