@@ -184,3 +184,7 @@ function toggleBikeRacks() {
 function toggleUserData() {
 	return
 }
+
+function locateUser() {
+    this.map.locate({setView : true});
+}
