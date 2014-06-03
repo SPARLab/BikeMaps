@@ -1,6 +1,5 @@
 from django.contrib.gis.db import models
 
-
 import datetime
 from django.utils import timezone
 
@@ -254,3 +253,22 @@ class Incident(models.Model):
 
     def __unicode__(self):
         return unicode(self.incident_date)
+
+
+##########
+# PoliceData class.
+# Class to hold BikeCollisions_VicPD_2008to2012.shp data. Data must be imported by the script ...
+class PoliceData(models.Model):
+    on_street = models.CharField(max_length=30)
+    at_street= models.CharField(max_length=30)
+    fatal = models.CharField(max_length=30)
+    acc_date = models.DateField()
+    acc_time = models.CharField(max_length=30)
+    acc_type = models.CharField(max_length=30)
+    point = models.PointField(srid=4326)
+    objects = models.GeoManager()
+
+
+
+    def __unicode__(self):
+        return unicode(self.acc_date)

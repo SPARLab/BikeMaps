@@ -1,4 +1,3 @@
-* Add updated bike lanes KML
 * Implement About template
 * Change navbar and map layout on index
 * Upgrade Mac server

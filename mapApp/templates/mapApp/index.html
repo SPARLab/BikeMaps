@@ -55,6 +55,14 @@
                 addPoint( latlng, msg );
             </script>
         {% endfor %}
+
+        {% for incident in police_data %}
+            <script>
+                var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
+                var msg = "<b>{{ incident.on_street }}</b><br>{{ incident.acc_date }}.";
+                addPoint( latlng, msg );
+            </script>
+        {% endfor %}
    
 
     </body>
