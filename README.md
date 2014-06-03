@@ -10,12 +10,12 @@ A database driven webapp that allows users to submit bike accidents and near-mis
 
 #####Requirements
   + Python 2.7
-  + Django==1.6.4
+  + Django 1.6.4
   + PostgreSQL 9.3
   + PostGIS 2.1
-  + Pillow==2.4.0
-  + django-crispy-forms==1.4.0
-  + psycopg2==2.5.3
+  + Pillow 2.4.0
+  + django-crispy-forms 1.4.0
+  + psycopg2 2.5.3
 
 #####People
   + Dr. Trisalyn Nelson (Project Lead)
