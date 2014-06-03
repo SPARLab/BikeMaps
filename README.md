@@ -19,5 +19,5 @@ A database driven webapp that allows users to submit bike accidents and near-mis
 
 #####People
   + Dr. Trisalyn Nelson (Project Lead)
-  + Taylor Denouden (Web Developer)
-  + James Stephaniuk (Web Developer)
+  + Taylor Denouden (Developer)
+  + James Stephaniuk (Developer)
