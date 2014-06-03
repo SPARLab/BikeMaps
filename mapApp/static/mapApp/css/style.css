@@ -87,13 +87,6 @@ textarea {
 	margin-top:50px;
 }
 
-.page{
+.accordion-toggle {
 	display: block;
-	position: absolute;
-	height: auto;
-	bottom: 0;
-	top: 0;
-	left: 0;
-	right: 0;
-	margin-top:50px;
 }
