@@ -69,10 +69,13 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'bikeDB',
         'USER': 'postgres',
+        'PASSWORD': 'SUPER_SECRET'
 
         
     }
 }
+
+POSTGIS_VERSION = (2,1,3)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
