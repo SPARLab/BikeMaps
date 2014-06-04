@@ -14,8 +14,8 @@
 * 
 * 
 * 
-* 
-* 
-* 
+* SERVER SETUP
+* syncdb
+* Add police data to database --> run "python manage.py shell" and then in the shell, "execfile('./mapApp/scripts/loadPoliceData.py')"
 * 
 * 

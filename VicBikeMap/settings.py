@@ -67,12 +67,16 @@ DATABASES = {
 
         # PostgreSQL database connection on Taylor's Windows computer
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        # 'OPTIONS': {'charset': 'utf8mb4'},
         'NAME': 'bikeDB',
         'USER': 'postgres',
+        # 'PASSWORD': 'SUPER_SECRET'
 
         
     }
 }
+
+POSTGIS_VERSION = (2,1,3)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

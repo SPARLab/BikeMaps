@@ -1,5 +1,14 @@
 # .py script to populate database with police shp files. 
 
+# INSTRUCTIONS:
+# 
+# To execute, run "python manage.py shell" and then in the shell, "execfile('./mapApp/scripts/loadPoliceData.py')". 
+#	This will populate the database with the police data from the .shp file.
+# 
+# Data can then be dumped to stdout (or redirect) with "python manage.py dumpdata --format=xml mapApp.PoliceData > outFileName.xml"
+# 	If data is placed in file named /appName/fixtures and names initial_data.xml/json, it will be loaded when syncdb is executed.
+# 		If encoding errors arise, try changing the stated encoding in the xml document to utf-16.
+
 import os
 from django.contrib.gis.utils import LayerMapping
 from mapApp.models import PoliceData
