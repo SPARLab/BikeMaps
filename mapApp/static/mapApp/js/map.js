@@ -162,7 +162,7 @@ function mapClickPrompt(e) {
 
 function addPoint(latlng, blurb, dataSet) {
 	marker = L.marker(latlng);
-    // marker.bindPopup(blurb);
+    marker.bindPopup(blurb);
     dataSet.addLayer(marker);
 }
 
