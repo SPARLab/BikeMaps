@@ -11,8 +11,12 @@
 
         <!-- Load the leaflet map and functions -->
         <script src="{% static 'leaflet/leaflet.js' %}"></script>
-        <script src="{% static 'mapApp/js/map.js' %}"></script>
+
+        <link rel="stylesheet" href="{% static 'leaflet/leaflet-plugins/markercluster/dist/MarkerCluster.css' %}" />
+        <link rel="stylesheet" href="{% static 'leaflet/leaflet-plugins/markercluster/dist/MarkerCluster.Default.css' %}" />
+        <script src="{% static 'leaflet/leaflet-plugins/markercluster/dist/leaflet.markercluster-src.js' %}"></script>
     
+        <script src="{% static 'mapApp/js/map.js' %}"></script>
 
     </head>
 

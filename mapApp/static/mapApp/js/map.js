@@ -2,6 +2,8 @@
 
 // Global map object
 var map;
+var userData = new L.LayerGroup();
+var policeData = new L.MarkerClusterGroup();
 
 
 /* Create the map with a tile layer and set global variable map */
@@ -123,6 +125,7 @@ function initialize(){
 		"Strava heatmap 4": stravaHM4,
 		"Strava heatmap 5": stravaHM5,	// Good contrast against baseMaps
 		"Strava heatmap 6": stravaHM6,
+		"Police data": policeData,
 	}
 
 
@@ -157,8 +160,9 @@ function addNewPoint(e) {
 
 
 function addPoint(latlng, blurb) {
-	marker = L.marker(latlng).addTo(map);
-    marker.bindPopup(blurb);
+	marker = L.marker(latlng);
+    // marker.bindPopup(blurb);
+    policeData.addLayer(marker);
 }
 
 
