@@ -32,6 +32,22 @@
         <div id="map"></div>
      
      
+        <!-- Load the points from the database (CHANGE THIS METHOD SO POINTS BECOME A LAYER THAT CAN BE TOGGLED) -->
+        {% for incident in incidents %}
+            <script>
+                var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
+                var msg = "<b>{{ incident.incident_type }}</b><br>{{ incident.incident_date }}.";
+                addPoint( latlng, msg, userData );
+            </script>
+        {% endfor %}
+
+        {% for incident in police_data %}
+            <script>
+                var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
+                var msg = "<b>{{ incident.on_street }}</b><br>{{ incident.acc_date }}.";
+                addPoint( latlng, msg, policeData );
+            </script>
+        {% endfor %}
 
         <!-- Scripts controlling map -->
         <script type="text/javascript">
@@ -39,7 +55,7 @@
             initialize();
 
             // Enable click to add point
-            map.on('click', addNewPoint);
+            map.on('click', mapClickPrompt);
             
             // Show the modal if there are errors in a form submit
             {% if formErrors %}
@@ -51,22 +67,6 @@
 
         </script>
 
-        <!-- Load the points from the database (CHANGE THIS METHOD SO POINTS BECOME A LAYER THAT CAN BE TOGGLED) -->
-        {% for incident in incidents %}
-            <script>
-                var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
-                var msg = "<b>{{ incident.incident_type }}</b><br>{{ incident.incident_date }}.";
-                addPoint( latlng, msg );
-            </script>
-        {% endfor %}
-
-        {% for incident in police_data %}
-            <script>
-                var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
-                var msg = "<b>{{ incident.on_street }}</b><br>{{ incident.acc_date }}.";
-                addPoint( latlng, msg );
-            </script>
-        {% endfor %}
    
 
     </body>

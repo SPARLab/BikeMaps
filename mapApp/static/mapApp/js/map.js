@@ -2,7 +2,7 @@
 
 // Global map object
 var map;
-var userData = new L.LayerGroup();
+var userData = new L.MarkerClusterGroup();
 var policeData = new L.MarkerClusterGroup();
 
 
@@ -126,6 +126,7 @@ function initialize(){
 		"Strava heatmap 5": stravaHM5,	// Good contrast against baseMaps
 		"Strava heatmap 6": stravaHM6,
 		"Police data": policeData,
+		"User data":userData
 	}
 
 
@@ -134,7 +135,7 @@ function initialize(){
 	map = L.map('map', {
 		center: [48.455, -123.3],
 		zoom: 13,
-		layers: [mapbox, stravaHM5] /* Layers to display on load */
+		layers: [mapbox, userData, policeData, stravaHM5] /* Layers to display on load */
 	});
 	
 	/* Create the control panel and render the map */
@@ -146,7 +147,7 @@ function initialize(){
 
 
 /* Create a popup when map is clicked with button to add a new point  */
-function addNewPoint(e) {
+function mapClickPrompt(e) {
 	var popup = L.popup({'closeOnClick': true, });
     popup
         .setLatLng(e.latlng)
@@ -159,10 +160,10 @@ function addNewPoint(e) {
 }
 
 
-function addPoint(latlng, blurb) {
+function addPoint(latlng, blurb, dataSet) {
 	marker = L.marker(latlng);
     // marker.bindPopup(blurb);
-    policeData.addLayer(marker);
+    dataSet.addLayer(marker);
 }
 
 
