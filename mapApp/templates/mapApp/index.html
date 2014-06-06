@@ -41,8 +41,7 @@
             <script>
                 var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
                 var msg = "<b>{{ incident.incident_type }}</b><br>{{ incident.incident_date }}.";
-                addPoint( latlng, msg, userData );
-                addToHM( latlng, userHM );
+                addPoint( latlng, msg );
             </script>
         {% endfor %}
 
@@ -51,8 +50,7 @@
             <script>
                 var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
                 var msg = "<b>{{ incident.on_street }}</b><br>{{ incident.acc_date }}.";
-                addPoint( latlng, msg, policeData );
-                addToHM( latlng, policeHM );
+                addPoint( latlng, msg );
             </script>
         {% endfor %}
 

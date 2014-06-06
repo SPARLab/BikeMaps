@@ -1,22 +1,22 @@
 // Leaflet map code and functions
 
+/* GLOBAL VARIABLES */
+
 // Global map object
 var map;
-var userData = new L.MarkerClusterGroup();
-var policeData = new L.MarkerClusterGroup();
 
-var userHM = L.heatLayer([], {radius: 50, blur: 30});
-var policeHM = L.heatLayer([], {radius: 50, blur: 30});
+// Dynamically clustered point data layer
+var accidentPoints = new L.MarkerClusterGroup({maxClusterRadius: 50});
+
+// Heatmap layer corresponding to all accident data
+var heatMap = L.heatLayer([], {radius: 50, blur:20, opacity: 1});
+
+
 
 /* Create the map with a tile layer and set global variable map */
 function initialize(){
 
-
-	/* Used <http://josm.openstreetmap.de/wiki/Maps> for map tiles */
-
 /* BASEMAPS */
-	/* We don't need all of these. Just for visualization so we can pick a few */
-	
 	var openCycleMap = L.tileLayer(
 	    'http://tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
 	    attribution: '&copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
@@ -62,56 +62,20 @@ function initialize(){
 
 	/* Define which map tiles are basemaps */
 	var baseMaps = {
-		"Open Street Map": osmMapnik,			// Busy and uglier than similar MapQuest tiles
-		"Open Street Map B&W": osmMapnikBW,		// Maybe good for overlaying heatmaps etc
+		// "Open Street Map": osmMapnik,			// Busy and uglier than similar MapQuest tiles
+		// "Open Street Map B&W": osmMapnikBW,		// Maybe good for overlaying heatmaps etc
 		"Open Cycle Map": openCycleMap,			// Busy, lots of cycle infrastructure detail
-		"Humanitarian OSM": humanitarianOSM, 	// This one is nice, plain
+		// "Humanitarian OSM": humanitarianOSM, 	// This one is nice, plain
 		"Mapbox": mapbox,						// Plain, not sure if they charge for lots of access
 		"Mapbox Satellite": mapboxSat,			// Best satelite tiles I could find, needs road names overlay
-		"MapQuest OSM": mapQuest,				// Nice plain tiles
+		// "MapQuest OSM": mapQuest,				// Nice plain tiles
 	};
 
 
 
 /* OVERLAY MAPS */
-	
 	/* OSM Strava heatmap tile layer */
-	var stravaHM1 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color1/{z}/{x}/{y}.png', {
-	    attribution: 'Heatmap &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
-	    minZoom: 3,
-	    maxZoom: 17,
-	    opacity: 0.5
-	});
-
-	var stravaHM2 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color2/{z}/{x}/{y}.png', {
-	    attribution: 'Heatmap &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
-	    minZoom: 3,
-	    maxZoom: 17,
-	    opacity: 0.5
-	});
-
-	var stravaHM3 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color3/{z}/{x}/{y}.png', {
-	    attribution: 'Heatmap &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
-	    minZoom: 3,
-	    maxZoom: 17,
-	    opacity: 0.5
-	});
-
-	var stravaHM4 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color4/{z}/{x}/{y}.png', {
-	    attribution: 'Heatmap &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
-	    minZoom: 3,
-	    maxZoom: 17,
-	    opacity: 0.5
-	});
-
 	var stravaHM5 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
-	    attribution: 'Heatmap &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
-	    minZoom: 3,
-	    maxZoom: 17,
-	    opacity: 0.5
-	});
-
-	var stravaHM6 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color6/{z}/{x}/{y}.png', {
 	    attribution: 'Heatmap &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
 	    minZoom: 3,
 	    maxZoom: 17,
@@ -121,24 +85,17 @@ function initialize(){
 
 	/* Define which map tiles are overlays */
 	var overlayMaps = {
-		"Strava heatmap 1": stravaHM1,	// Seemingly more detail
-		"Strava heatmap 2": stravaHM2,	
-		"Strava heatmap 3": stravaHM3,
-		"Strava heatmap 4": stravaHM4,
-		"Strava heatmap 5": stravaHM5,	// Good contrast against baseMaps
-		"Strava heatmap 6": stravaHM6,
-		"Police data": policeData,
-		"User data": userData,
-		"Police Heatmap": policeHM,
-		"User Heatmap": userHM,
+		"Strava heatmap 5": stravaHM5,	// Good contrast against baseMapss
+		"Accident Points": accidentPoints,
+		"Accident Heat Map": heatMap,
 	}
 
 /* DEFAULTS AND PANEL */	
 	/* Set map center, zoom, default layers and render */
 	map = L.map('map', {
-		center: [48.455, -123.3],
-		zoom: 13,
-		layers: [mapbox, userData, policeData, stravaHM5] /* Layers to display on load */
+		center: [48.5, -123.3],
+		zoom: 11,
+		layers: [mapbox, accidentPoints, stravaHM5] /* Layers to display on load */
 	});
 	
 	/* Create the control panel */
@@ -163,16 +120,13 @@ function mapClickPrompt(e) {
 }
 
 
-function addPoint(latlng, msg, dataSet) {
+function addPoint(latlng, msg) {
+    heatMap.addLatLng(latlng);
+
 	marker = L.marker(latlng);
     marker.bindPopup(msg);
-    dataSet.addLayer(marker);
+    accidentPoints.addLayer(marker);
 }
-
-function addToHM(latlng, dataSet) {
-	dataSet.addLatLng(latlng);
-}
-
 
 function toggleICBC() {
 	return
