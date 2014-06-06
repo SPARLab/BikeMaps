@@ -12,13 +12,16 @@
         <!-- Load the leaflet map and functions -->
         <script src="{% static 'leaflet/leaflet.js' %}"></script>
 
+        <!-- Load the custom icon library -->
+        <script src="{% static 'leaflet/plugins/markers/maki/Leaflet.MakiMarkers.js' %}"></script>
+
         <!-- Load marker clustering -->
-        <link rel="stylesheet" href="{% static 'leaflet/leaflet-plugins/markercluster/dist/MarkerCluster.css' %}" />
-        <link rel="stylesheet" href="{% static 'leaflet/leaflet-plugins/markercluster/dist/MarkerCluster.Default.css' %}" />
-        <script src="{% static 'leaflet/leaflet-plugins/markercluster/dist/leaflet.markercluster-src.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'leaflet/plugins/layer/markercluster/MarkerCluster.css' %}" />
+        <link rel="stylesheet" href="{% static 'leaflet/plugins/layer/markercluster/MarkerCluster.Default.css' %}" />
+        <script src="{% static 'leaflet/plugins/layer/markercluster/leaflet.markercluster-src.js' %}"></script>
     
         <!-- Load heatmap -->
-        <script src="{% static 'leaflet/leaflet-plugins/heat/dist/leaflet-heat.js' %}"></script>
+        <script src="{% static 'leaflet/plugins/layer/heat/leaflet-heat.js' %}"></script>
 
         <!-- Load app js -->
         <script src="{% static 'mapApp/js/map.js' %}"></script>
@@ -41,7 +44,7 @@
             <script>
                 var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
                 var msg = "<b>{{ incident.incident_type }}</b><br>{{ incident.incident_date }}.";
-                addPoint( latlng, msg );
+                addPoint( latlng, msg, "{{incident.incident_type}}" );
             </script>
         {% endfor %}
 
@@ -50,7 +53,7 @@
             <script>
                 var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
                 var msg = "<b>{{ incident.on_street }}</b><br>{{ incident.acc_date }}.";
-                addPoint( latlng, msg );
+                addPoint( latlng, msg, "police" );
             </script>
         {% endfor %}
 

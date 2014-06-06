@@ -6,16 +6,17 @@
 var map;
 
 // Dynamically clustered point data layer
-var accidentPoints = new L.MarkerClusterGroup({maxClusterRadius: 50});
+var accidentPoints = new L.MarkerClusterGroup({maxClusterRadius: 50})  //, disableClusteringAtZoom: 16});
 
 // Heatmap layer corresponding to all accident data
 var heatMap = L.heatLayer([], {radius: 50, blur:20, opacity: 1});
 
-
+var bikeRedIcon = L.MakiMarkers.icon({icon: "bicycle", color:"#f00", size: "m"});
+var bikeYellowIcon = L.MakiMarkers.icon({icon: "bicycle", color:"#ff9f00", size: "m"});
+var policeIcon = L.MakiMarkers.icon({icon: "police", color:"0f4fa8", size: "m"});
 
 /* Create the map with a tile layer and set global variable map */
 function initialize(){
-
 /* BASEMAPS */
 	var openCycleMap = L.tileLayer(
 	    'http://tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
@@ -64,10 +65,10 @@ function initialize(){
 	var baseMaps = {
 		// "Open Street Map": osmMapnik,			// Busy and uglier than similar MapQuest tiles
 		// "Open Street Map B&W": osmMapnikBW,		// Maybe good for overlaying heatmaps etc
-		"Open Cycle Map": openCycleMap,			// Busy, lots of cycle infrastructure detail
 		// "Humanitarian OSM": humanitarianOSM, 	// This one is nice, plain
-		"Mapbox": mapbox,						// Plain, not sure if they charge for lots of access
-		"Mapbox Satellite": mapboxSat,			// Best satelite tiles I could find, needs road names overlay
+		"Map": mapbox,						// Plain, not sure if they charge for lots of access
+		// "Open Cycle Map": openCycleMap,			// Busy, lots of cycle infrastructure detail
+		"Satellite": mapboxSat,			// Best satelite tiles I could find, needs road names overlay
 		// "MapQuest OSM": mapQuest,				// Nice plain tiles
 	};
 
@@ -85,9 +86,9 @@ function initialize(){
 
 	/* Define which map tiles are overlays */
 	var overlayMaps = {
-		"Strava heatmap 5": stravaHM5,	// Good contrast against baseMapss
-		"Accident Points": accidentPoints,
-		"Accident Heat Map": heatMap,
+		"Accident heat map": heatMap,
+		"Accident points": accidentPoints,
+		"Ridership heat map": stravaHM5,	// Good contrast against baseMapss
 	}
 
 /* DEFAULTS AND PANEL */	
@@ -120,11 +121,22 @@ function mapClickPrompt(e) {
 }
 
 
-function addPoint(latlng, msg) {
+function addPoint(latlng, msg, type) {
     heatMap.addLatLng(latlng);
 
-	marker = L.marker(latlng);
+    var icon;
+    if (type == "police") {
+    	icon = policeIcon;
+    }
+    else if (type == "Collision") {
+    	icon = bikeRedIcon;
+    }
+    else {
+    	icon = bikeYellowIcon;
+    }
+	marker = L.marker(latlng, {icon: icon});
     marker.bindPopup(msg);
+    
     accidentPoints.addLayer(marker);
 }
 
