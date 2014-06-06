@@ -5,6 +5,8 @@ var map;
 var userData = new L.MarkerClusterGroup();
 var policeData = new L.MarkerClusterGroup();
 
+var userHM = L.heatLayer([], {radius: 50, blur: 30});
+var policeHM = L.heatLayer([], {radius: 50, blur: 30});
 
 /* Create the map with a tile layer and set global variable map */
 function initialize(){
@@ -126,19 +128,20 @@ function initialize(){
 		"Strava heatmap 5": stravaHM5,	// Good contrast against baseMaps
 		"Strava heatmap 6": stravaHM6,
 		"Police data": policeData,
-		"User data":userData
+		"User data": userData,
+		"Police Heatmap": policeHM,
+		"User Heatmap": userHM,
 	}
 
-
 /* DEFAULTS AND PANEL */	
-	/* Set map center, zoom, and default layers */
+	/* Set map center, zoom, default layers and render */
 	map = L.map('map', {
 		center: [48.455, -123.3],
 		zoom: 13,
 		layers: [mapbox, userData, policeData, stravaHM5] /* Layers to display on load */
 	});
 	
-	/* Create the control panel and render the map */
+	/* Create the control panel */
 	L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 }
@@ -160,32 +163,22 @@ function mapClickPrompt(e) {
 }
 
 
-function addPoint(latlng, blurb, dataSet) {
+function addPoint(latlng, msg, dataSet) {
 	marker = L.marker(latlng);
-    marker.bindPopup(blurb);
+    marker.bindPopup(msg);
     dataSet.addLayer(marker);
 }
 
-
-function toggleUserData() {
-	return
+function addToHM(latlng, dataSet) {
+	dataSet.addLatLng(latlng);
 }
-function toggleHeatmap() {
-	return
-} 
+
 
 function toggleICBC() {
 	return
 }
-function toggleICBCHM() {
-	return
-}
 
 function toggleBikeRacks() {
-	return
-}
-
-function toggleUserData() {
 	return
 }
 
