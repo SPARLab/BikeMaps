@@ -11,9 +11,9 @@ var accidentPoints = new L.MarkerClusterGroup({maxClusterRadius: 50})  //, disab
 // Heatmap layer corresponding to all accident data
 var heatMap = L.heatLayer([], {radius: 50, blur:20, opacity: 1});
 
-var bikeRedIcon = L.MakiMarkers.icon({icon: "bicycle", color:"#f00", size: "m"});
-var bikeYellowIcon = L.MakiMarkers.icon({icon: "bicycle", color:"#ff9f00", size: "m"});
-var policeIcon = L.MakiMarkers.icon({icon: "police", color:"0f4fa8", size: "m"});
+var bikeRedIcon = L.MakiMarkers.icon({icon: "bicycle", color:"#d9534f", size: "m"});
+var bikeYellowIcon = L.MakiMarkers.icon({icon: "bicycle", color:"#f0ad4e", size: "m"});
+var policeIcon = L.MakiMarkers.icon({icon: "police", color:"#428bca", size: "m"});
 
 /* Create the map with a tile layer and set global variable map */
 function initialize(){
@@ -25,7 +25,7 @@ function initialize(){
 	    });
 	
 	var mapbox = L.tileLayer('http://{s}.tiles.mapbox.com/v3/tayden.ibi2aoib/{z}/{x}/{y}.png', {
-	    attribution: 'Tiles Courtesy of <a href=https://www.mapbox.com/>Mapboxt</a>, \
+	    attribution: 'Tiles courtesy of <a href=https://www.mapbox.com/>Mapbox</a>, \
 	    	map data &copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors',
 	    maxZoom: 18
 	});
@@ -36,13 +36,13 @@ function initialize(){
 	});
 
     var mapboxSat = L.tileLayer('http://{s}.tiles.mapbox.com/v3/openstreetmap.map-4wvf9l0l/{z}/{x}/{y}.png', {
-    	attribution: 'Tiles Courtesy of <a href=https://www.mapbox.com/>Mapboxt</a>, \
+    	attribution: 'Tiles courtesy of <a href=https://www.mapbox.com/>Mapbox</a>, \
 	    	map data &copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors',
 	    maxZoom: 18
 	});
 
     var mapQuest = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
-	    attribution: 'Tiles Courtesy of <a href=https://open.mapquest.com/>MapQuest</a>, \
+	    attribution: 'Tiles courtesy of <a href=https://open.mapquest.com/>MapQuest</a>, \
 	    	map data &copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors',
 	    maxZoom: 18,
 	    subdomains: '1234' // Switch between subdomains {s} 1,2,3,4 instead of a,b,c
@@ -63,13 +63,13 @@ function initialize(){
 
 	/* Define which map tiles are basemaps */
 	var baseMaps = {
-		// "Open Street Map": osmMapnik,			// Busy and uglier than similar MapQuest tiles
-		// "Open Street Map B&W": osmMapnikBW,		// Maybe good for overlaying heatmaps etc
-		// "Humanitarian OSM": humanitarianOSM, 	// This one is nice, plain
-		"Map": mapbox,						// Plain, not sure if they charge for lots of access
-		// "Open Cycle Map": openCycleMap,			// Busy, lots of cycle infrastructure detail
-		"Satellite": mapboxSat,			// Best satelite tiles I could find, needs road names overlay
-		// "MapQuest OSM": mapQuest,				// Nice plain tiles
+		// "Open Street Map": osmMapnik,
+		// "Open Street Map B&W": osmMapnikBW,
+		// "Humanitarian OSM": humanitarianOSM,
+		"Map": mapbox,
+		// "Open Cycle Map": openCycleMap,
+		"Satellite": mapboxSat,
+		// "MapQuest OSM": mapQuest,
 	};
 
 
@@ -77,7 +77,7 @@ function initialize(){
 /* OVERLAY MAPS */
 	/* OSM Strava heatmap tile layer */
 	var stravaHM5 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
-	    attribution: 'Heatmap &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
+	    attribution: 'ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
 	    minZoom: 3,
 	    maxZoom: 17,
 	    opacity: 0.5

@@ -1,21 +1,27 @@
-* Implement About template
-* Change navbar and map layout on index
-* Upgrade Mac server
-* Put password protected preliminary site on the internet
-* Implement point clustering
-* Add police data layer
-* Turn user data into a layer
-* Add ICBC data
+TO DO
+
+* Add bike lanes kml
+* Add ICBC data 
 * Add bike racks KML
-* Add bike lanes/routes KML
-* Add heatmap options for point layers
+* Make nested layers panel for toggling specific layers or a group of layers
+* "Help" window - instructions for how to add point etc
+* Forum?
+* Social media buttons/links
+* Add route tracing functionality
+* Add GPS file upload for routes
+* Make navigation prettier
+* Implement About page
+* Implement Contacts page
+* Add bike-maps.org graphics
+* Change server domain name
+* Follow up with Strava
+* Have police data as a shp file layer instead of database fixture?
 * 
 * 
 * 
 * 
 * 
-* SERVER SETUP
-* syncdb
-* Add police data to database --> run "python manage.py shell" and then in the shell, "execfile('./mapApp/scripts/loadPoliceData.py')"
+* 
+* 
 * 
 * 
