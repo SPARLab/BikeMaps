@@ -27,6 +27,9 @@
 
         <!-- Load app js -->
         <script src="{% static 'mapApp/js/map.js' %}"></script>
+
+        <!-- GeoJSON sources -->
+            <script type="text/javascript" src="{% static 'mapApp/data/policeData.js' %}"></script>
     
     </head>
 
@@ -76,7 +79,7 @@
 
 
             // Shapefile layer for bike lanes
-            var bikeLanes = new L.Shapefile("{% static 'mapApp/data/bikeRoutes.zip' %}", {coordsToLatLng: '', onEachFeature:function(feature, layer) {
+            var bikeLanes = new L.Shapefile("{% static 'mapApp/data/bikeRoutes.zip' %}", {onEachFeature:function(feature, layer) {
                 if (feature.properties) {
                     layer.bindPopup(Object.keys(feature.properties).map(function(k){
                         return k + ": " + feature.properties[k] ;
@@ -87,16 +90,17 @@
             bikeLanes.addTo(map);
 
 
-            var poPo = new L.Shapefile("{% static 'mapApp/data/policeData.zip' %}", {coordsToLatLng: '', onEachFeature:function(feature, layer) {
-                if (feature.properties) {
-                    layer.bindPopup(Object.keys(feature.properties).map(function(k){
-                        return k + ": " + feature.properties[k] ;
-                    }).join("<br />"),{maxHeight:200});
+            var poPo = new L.geoJson(policeData, {
+                pointToLayer: function (feature, latlng){
+                    return L.marker(latlng, {icon: policeIcon});
+                },
+                onEachFeature: function(feature, layer) {
+                    layer.bindPopup(feature.properties.ON_STREET);
                 }
-            }});
-
-            poPo.addTo(map);
-
+            });
+            accidentPoints.addLayer(poPo);
+            
+            
         </script>
 
     </body>
