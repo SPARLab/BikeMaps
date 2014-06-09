@@ -11,6 +11,7 @@ var accidentPoints = new L.MarkerClusterGroup({maxClusterRadius: 50})  //, disab
 // Heatmap layer corresponding to all accident data
 var heatMap = L.heatLayer([], {radius: 50, blur:20, opacity: 1});
 
+// Custom icons (Using Maki icon symbols)
 var bikeRedIcon = L.MakiMarkers.icon({icon: "bicycle", color:"#d9534f", size: "m"});
 var bikeYellowIcon = L.MakiMarkers.icon({icon: "bicycle", color:"#f0ad4e", size: "m"});
 var policeIcon = L.MakiMarkers.icon({icon: "police", color:"#428bca", size: "m"});
@@ -67,7 +68,7 @@ function initialize(){
 		// "Open Street Map B&W": osmMapnikBW,
 		// "Humanitarian OSM": humanitarianOSM,
 		"Map": mapbox,
-		// "Open Cycle Map": openCycleMap,
+		"Open Cycle Map": openCycleMap,
 		"Satellite": mapboxSat,
 		// "MapQuest OSM": mapQuest,
 	};
@@ -88,7 +89,7 @@ function initialize(){
 	var overlayMaps = {
 		"Accident heat map": heatMap,
 		"Accident points": accidentPoints,
-		"Ridership heat map": stravaHM5,	// Good contrast against baseMapss
+		"Ridership heat map": stravaHM5,
 	}
 
 /* DEFAULTS AND PANEL */	

@@ -5,11 +5,8 @@
         
         {% load staticfiles %}
 
-        
-        <!-- Load leaflet styles -->
+        <!-- Load leaflet -->
         <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
-
-        <!-- Load the leaflet map and functions -->
         <script src="{% static 'leaflet/leaflet.js' %}"></script>
 
         <!-- Load the custom icon library -->
@@ -23,13 +20,14 @@
         <!-- Load heatmap -->
         <script src="{% static 'leaflet/plugins/layer/heat/leaflet-heat.js' %}"></script>
 
-        <!-- Load app js -->
-        <script src="{% static 'mapApp/js/map.js' %}"></script>
-
-        <!-- Load leaflet shapefile plugin -->
+        <!-- Load shapefile plugin -->
         <script src="{% static 'leaflet/plugins/layer/shapefile/shp.js' %}"></script>
         <script src="{% static 'leaflet/plugins/layer/shapefile/leaflet.shpfile.js' %}"></script>
 
+
+        <!-- Load app js -->
+        <script src="{% static 'mapApp/js/map.js' %}"></script>
+    
     </head>
 
 
@@ -76,6 +74,17 @@
                 });
             {% endif %}
 
+
+            // Shapefile layer for bike lanes
+            var bikeLanes = new L.Shapefile("{% static 'mapApp/data/COVBikeRoutes.zip' %}", {onEachFeature:function(feature, layer) {
+                if (feature.properties) {
+                    layer.bindPopup(Object.keys(feature.properties).map(function(k){
+                        return k + ": " + feature.properties[k] ;
+                    }).join("<br />"),{maxHeight:200});
+                }
+            }});
+
+            bikeLanes.addTo(map);
 
         </script>
 
