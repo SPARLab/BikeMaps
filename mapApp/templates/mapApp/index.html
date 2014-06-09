@@ -76,7 +76,7 @@
 
 
             // Shapefile layer for bike lanes
-            var bikeLanes = new L.Shapefile("{% static 'mapApp/data/COVBikeRoutes.zip' %}", {onEachFeature:function(feature, layer) {
+            var bikeLanes = new L.Shapefile("{% static 'mapApp/data/bikeRoutes.zip' %}", {coordsToLatLng: '', onEachFeature:function(feature, layer) {
                 if (feature.properties) {
                     layer.bindPopup(Object.keys(feature.properties).map(function(k){
                         return k + ": " + feature.properties[k] ;
