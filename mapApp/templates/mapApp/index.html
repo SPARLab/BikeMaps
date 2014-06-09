@@ -86,6 +86,17 @@
 
             bikeLanes.addTo(map);
 
+
+            var poPo = new L.Shapefile("{% static 'mapApp/data/policeData.zip' %}", {coordsToLatLng: '', onEachFeature:function(feature, layer) {
+                if (feature.properties) {
+                    layer.bindPopup(Object.keys(feature.properties).map(function(k){
+                        return k + ": " + feature.properties[k] ;
+                    }).join("<br />"),{maxHeight:200});
+                }
+            }});
+
+            poPo.addTo(map);
+
         </script>
 
     </body>
