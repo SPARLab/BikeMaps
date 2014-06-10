@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.contrib.gis.geos import GEOSGeometry, Point, fromstr
 
-from mapApp.models import Incident, PoliceData
+from mapApp.models import Incident
 from mapApp.forms import IncidentForm
 
 def index(request):
@@ -35,7 +35,6 @@ def index(request):
 
 	context = {
 		'incidents': Incident.objects.all(),
-		'police_data': PoliceData.objects.all(),
 		"form": form, 	#the form to be rendered
 		"formErrors": formErrors
 	}

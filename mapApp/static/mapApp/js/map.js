@@ -16,6 +16,18 @@ var bikeRedIcon = L.MakiMarkers.icon({icon: "bicycle", color:"#d9534f", size: "m
 var bikeYellowIcon = L.MakiMarkers.icon({icon: "bicycle", color:"#f0ad4e", size: "m"});
 var policeIcon = L.MakiMarkers.icon({icon: "police", color:"#428bca", size: "m"});
 
+
+var poPo = new L.geoJson(policeData, {
+                pointToLayer: function (feature, latlng){
+                    return L.marker(latlng, {icon: policeIcon});
+                },
+                onEachFeature: function(feature, layer) {
+                    layer.bindPopup(feature.properties.ON_STREET);
+                }
+            });
+            accidentPoints.addLayer(poPo);
+
+            
 /* Create the map with a tile layer and set global variable map */
 function initialize(){
 /* BASEMAPS */

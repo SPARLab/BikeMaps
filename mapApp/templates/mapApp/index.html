@@ -20,17 +20,14 @@
         <!-- Load heatmap -->
         <script src="{% static 'leaflet/plugins/layer/heat/leaflet-heat.js' %}"></script>
 
-        <!-- Load shapefile plugin -->
-        <script src="{% static 'leaflet/plugins/layer/shapefile/shp.js' %}"></script>
-        <script src="{% static 'leaflet/plugins/layer/shapefile/leaflet.shpfile.js' %}"></script>
+        <!-- GeoJSON sources -->
+        <script type="text/javascript" src="{% static 'mapApp/data/policeData.js' %}"></script>
+    
 
 
         <!-- Load app js -->
         <script src="{% static 'mapApp/js/map.js' %}"></script>
 
-        <!-- GeoJSON sources -->
-            <script type="text/javascript" src="{% static 'mapApp/data/policeData.js' %}"></script>
-    
     </head>
 
 
@@ -46,19 +43,10 @@
      
         <!-- Load user points from the database -->
         {% for incident in incidents %}
-            <script>
+            <script type="text/javascript">
                 var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
                 var msg = "<b>{{ incident.incident_type }}</b><br>{{ incident.incident_date }}.";
                 addPoint( latlng, msg, "{{incident.incident_type}}" );
-            </script>
-        {% endfor %}
-
-        <!-- Load police data points from the database -->
-        {% for incident in police_data %}
-            <script>
-                var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
-                var msg = "<b>{{ incident.on_street }}</b><br>{{ incident.acc_date }}.";
-                addPoint( latlng, msg, "police" );
             </script>
         {% endfor %}
 
@@ -77,30 +65,6 @@
                 });
             {% endif %}
 
-
-            // Shapefile layer for bike lanes
-            var bikeLanes = new L.Shapefile("{% static 'mapApp/data/bikeRoutes.zip' %}", {onEachFeature:function(feature, layer) {
-                if (feature.properties) {
-                    layer.bindPopup(Object.keys(feature.properties).map(function(k){
-                        return k + ": " + feature.properties[k] ;
-                    }).join("<br />"),{maxHeight:200});
-                }
-            }});
-
-            bikeLanes.addTo(map);
-
-
-            var poPo = new L.geoJson(policeData, {
-                pointToLayer: function (feature, latlng){
-                    return L.marker(latlng, {icon: policeIcon});
-                },
-                onEachFeature: function(feature, layer) {
-                    layer.bindPopup(feature.properties.ON_STREET);
-                }
-            });
-            accidentPoints.addLayer(poPo);
-            
-            
         </script>
 
     </body>
