@@ -79,7 +79,7 @@
         <script type="text/javascript">
             var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
             var msg = "<b>{{ incident.incident_type }}</b><br>{{ incident.incident_date }}.";
-            addPoint( latlng, msg, "{{incident.incident_type}}" );
+            getPoint( latlng, msg, "{{incident.incident_type}}" );
         </script>
     {% endfor %}
 
@@ -89,16 +89,17 @@
         initialize();
 
         // Enable click to add point
-        map.on('click', mapClickPrompt);
+        // map.on('click', mapClickPrompt);
+
         map.on('draw:created', function (e) {
             var type = e.layerType,
                 layer = e.layer;
-
+                // console.log(layer.getLatLng().lat);
             if (type === 'marker') {
-                mapClickPrompt(e);
+                setPoint(layer);
+                map.addLayer(layer);
             }
 
-            map.addLayer(layer);
         });
         
         // Show the modal if there are errors in a form submit

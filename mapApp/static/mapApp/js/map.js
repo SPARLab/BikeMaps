@@ -8,7 +8,7 @@ var map;
 // Dynamically clustered point data layer
 var accidentPoints = new L.MarkerClusterGroup({
 		maxClusterRadius: 50
-	}) //, disableClusteringAtZoom: 16});
+	}); //, disableClusteringAtZoom: 16});
 
 // Heatmap layer corresponding to all accident data
 var heatMap = L.heatLayer([], {
@@ -46,7 +46,6 @@ var policePoints = new L.geoJson(policeData, {
 		layer.bindPopup('<strong>' + feature.properties.ACC_DATE + '</strong><br>' + feature.properties.ACC_TYPE);
 	}
 });
-
 policePoints.addTo(accidentPoints);
 
 var bikeLanes = new L.geoJson(bikeRoutes, {
@@ -152,22 +151,22 @@ function initialize() {
 
 
 /* Create a popup when map is clicked with button to add a new point  */
-function mapClickPrompt(e) {
+function setPoint(layer) {
 	var popup = L.popup({
 		'closeOnClick': true,
 	});
 	popup
-		.setLatLng(e.latlng)
+		.setLatLng(layer.getLatLng())
 		.setContent('<button class="btn btn-primary btn-lg" data-toggle="modal" \
         	data-target="#incidentForm"><span class="glyphicon glyphicon-pushpin"></span></button>')
 		.openOn(map);
 
 	//Set point field in form to click location
-	document.getElementById("point").value = ('Point(' + e.latlng.lng + ' ' + e.latlng.lat + ')');
+	document.getElementById("point").value = ('Point(' + layer.getLatLng().lng + ' ' + layer.getLatLng().lat + ')');
 }
 
 
-function addPoint(latlng, msg, type) {
+function getPoint(latlng, msg, type) {
 	heatMap.addLatLng(latlng);
 
 	var icon;
