@@ -1,6 +1,5 @@
 TO DO
 
-* Add bike lanes kml
 * Add ICBC data 
 * Add bike racks KML
 * Make nested layers panel for toggling specific layers or a group of layers
@@ -14,9 +13,7 @@ TO DO
 * Implement Contacts page
 * Add bike-maps.org graphics
 * Change server domain name
-* Follow up with Strava
-* Have police data as a shp file layer instead of database fixture?
-* 
+* Add police GeoJSON to leaflet.heat layer
 * 
 * 
 * 

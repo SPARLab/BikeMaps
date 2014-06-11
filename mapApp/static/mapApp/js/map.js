@@ -43,7 +43,8 @@ var policePoints = new L.geoJson(policeData, {
 	onEachFeature: function(feature, layer) {
 		layer.bindPopup('<strong>' + feature.properties.ACC_DATE + '</strong><br>' + feature.properties.ACC_TYPE);
 	}
-}).addTo(accidentPoints);
+});
+policePoints.addTo(accidentPoints);
 
 var bikeLanes = new L.geoJson(bikeRoutes, {
 	style: function(feature) {
@@ -92,7 +93,6 @@ var drawnItems = new L.FeatureGroup();
 
 /* Create the map with a tile layer and set global variable map */
 function initialize() {
-	/* BASEMAPS */
 	var openCycleMap = L.tileLayer(
 		'http://tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
 			attribution: '&copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
@@ -111,16 +111,6 @@ function initialize() {
 		maxZoom: 18
 	});
 
-	/* Define which map tiles are basemaps */
-	var baseMaps = {
-		"Map": mapbox,
-		"Open Cycle Map": openCycleMap,
-		"Satellite": mapboxSat,
-	};
-
-
-	/* OVERLAY MAPS */
-	/* OSM Strava heatmap tile layer */
 	var stravaHM5 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
 		attribution: 'ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
 		minZoom: 3,
@@ -128,6 +118,12 @@ function initialize() {
 		opacity: 0.5
 	});
 
+	/* Define which map tiles are basemaps */
+	var baseMaps = {
+		"Map": mapbox,
+		"Open Cycle Map": openCycleMap,
+		"Satellite": mapboxSat,
+	};
 
 	/* Define which map tiles are overlays */
 	var overlayMaps = {
@@ -140,19 +136,12 @@ function initialize() {
 	/* DEFAULTS AND PANEL */
 	/* Set map center, zoom, default layers and render */
 	map = L.map('map', {
+		drawControl: true,
 		center: [48.5, -123.3],
 		zoom: 11,
 		layers: [mapbox, accidentPoints, bikeLanes],
 		/* Layers to display on load */
 	});
-
-	map.addLayer(drawnItems);
-	var drawControl = new L.Control.Draw({
-		edit: {
-			featureGroup: drawnItems
-		}
-	})
-	map.addControl(drawControl);
 
 	/* Create the control panel */
 	L.control.layers(baseMaps, overlayMaps).addTo(map);
@@ -186,7 +175,9 @@ function addPoint(latlng, msg, type) {
 	} else {
 		icon = bikeYellowIcon;
 	}
-	marker = L.marker(latlng, { icon: icon });
+	marker = L.marker(latlng, {
+		icon: icon
+	});
 	marker.bindPopup(msg);
 
 	accidentPoints.addLayer(marker);
