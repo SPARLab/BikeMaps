@@ -42,20 +42,20 @@
     <script src="{% static 'leaflet/plugins/layer/draw/src/ext/LineUtil.Intersect.js' %}"></script>
     <script src="{% static 'leaflet/plugins/layer/draw/src/ext/Polyline.Intersect.js' %}"></script>
     <script src="{% static 'leaflet/plugins/layer/draw/src/ext/Polygon.Intersect.js' %}"></script>
-
+    
     <script src="{% static 'leaflet/plugins/layer/draw/src/Control.Draw.js' %}"></script>
     <script src="{% static 'leaflet/plugins/layer/draw/src/Tooltip.js' %}"></script>
     <script src="{% static 'leaflet/plugins/layer/draw/src/Toolbar.js' %}"></script>
-
     <script src="{% static 'leaflet/plugins/layer/draw/src/draw/DrawToolbar.js' %}"></script>
+
     <script src="{% static 'leaflet/plugins/layer/draw/src/edit/EditToolbar.js' %}"></script>
     <script src="{% static 'leaflet/plugins/layer/draw/src/edit/handler/EditToolbar.Edit.js' %}"></script>
     <script src="{% static 'leaflet/plugins/layer/draw/src/edit/handler/EditToolbar.Delete.js' %}"></script>
 
-
     <!-- GeoJSON sources -->
     <script type="text/javascript" src="{% static 'mapApp/data/policeData.js' %}"></script> 
     <script type="text/javascript" src="{% static 'mapApp/data/bikeRoutes.js' %}"></script>
+    <script type="text/javascript" src="{% static 'mapApp/data/icbcData.js' %}"></script>
     
 
 
@@ -83,13 +83,12 @@
         </script>
     {% endfor %}
 
-
     <script type="text/javascript">
         // Create the map
         initialize();
 
         // Enable click to add point
-        // map.on('click', setPoint);
+        map.on('dblclick', setPoint);
 
         map.on('draw:created', function (e) {
             var type = e.layerType,

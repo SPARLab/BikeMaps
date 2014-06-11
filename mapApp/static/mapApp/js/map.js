@@ -12,27 +12,37 @@ var accidentPoints = new L.MarkerClusterGroup({
 
 // Heatmap layer corresponding to all accident data
 var heatMap = L.heatLayer([], {
-	radius: 50,
+	radius: 40,
 	blur: 20,
-	opacity: 1
+	opacity: 0
 });
 
 // Custom icons (Using Maki icon symbols)
 var bikeRedIcon = L.MakiMarkers.icon({
-	icon: "bicycle",
-	color: "#d9534f",
-	size: "m"
-});
-var bikeYellowIcon = L.MakiMarkers.icon({
-	icon: "bicycle",
-	color: "#f0ad4e",
-	size: "m"
-});
-var policeIcon = L.MakiMarkers.icon({
-	icon: "police",
-	color: "#428bca",
-	size: "m"
-});
+		icon: "bicycle",
+		color: "#d9534f",
+		size: "m"
+	}),
+	bikeYellowIcon = L.MakiMarkers.icon({
+		icon: "bicycle",
+		color: "#f0ad4e",
+		size: "m"
+	}),
+	bikeGreyIcon = L.MakiMarkers.icon({
+		icon: "bicycle",
+		color: "#999",
+		size: "m"
+	}),
+	policeIcon = L.MakiMarkers.icon({
+		icon: "police",
+		color: "#428bca",
+		size: "m"
+	}),
+	icbcIcon = L.MakiMarkers.icon({
+		icon: "police",
+		color: "#0f0",
+		size: "m"
+	});
 
 var policePoints = new L.geoJson(policeData, {
 	pointToLayer: function(feature, latlng) {
@@ -47,6 +57,20 @@ var policePoints = new L.geoJson(policeData, {
 	}
 });
 policePoints.addTo(accidentPoints);
+
+var icbcPoints = new L.geoJson(icbcData, {
+	pointToLayer: function(feature, latlng) {
+		heatMap.addLatLng(latlng);
+		
+		return L.marker(latlng, {
+			icon: icbcIcon
+		});
+	},
+	// onEachFeature: function(feature, layer) {
+		// layer.bindPopup('<strong>' + feature.properties.Month + ' ' + feature.properties.Year + '</strong><br>');
+	// }
+});
+icbcPoints.addTo(accidentPoints);
 
 var bikeLanes = new L.geoJson(bikeRoutes, {
 	style: function(feature) {
@@ -138,12 +162,38 @@ function initialize() {
 	/* DEFAULTS AND PANEL */
 	/* Set map center, zoom, default layers and render */
 	map = L.map('map', {
-		drawControl: true,
 		center: [48.5, -123.3],
 		zoom: 11,
-		layers: [mapbox, accidentPoints, bikeLanes],
+		layers: [mapbox, accidentPoints],
 		/* Layers to display on load */
 	});
+
+	L.drawLocal.draw.toolbar.buttons.marker = 'Add an incident marker';
+	L.drawLocal.draw.handlers.marker.tooltip.start = 'Click the location where the incident occurred';
+
+	L.drawLocal.draw.toolbar.buttons.polyline = 'Add your cycling route';
+
+
+	/* Create the drawing control */
+	map.addControl(new L.Control.Draw({
+		draw: {
+			polyline: {
+				shapeOptions: {
+					color: '#f357a1',
+					weight: 5
+				}
+			},
+			polygon: false,
+			rectangle: false,
+			circle: false,
+			marker: {
+				icon: bikeGreyIcon,
+				message: 'Add an incident boogly boogly boogly'
+			}
+		},
+		edit: false,
+	}));
+
 
 	/* Create the control panel */
 	L.control.layers(baseMaps, overlayMaps).addTo(map);
