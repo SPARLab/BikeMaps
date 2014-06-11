@@ -36,6 +36,8 @@ var policeIcon = L.MakiMarkers.icon({
 
 var policePoints = new L.geoJson(policeData, {
 	pointToLayer: function(feature, latlng) {
+		heatMap.addLatLng(latlng);
+		
 		return L.marker(latlng, {
 			icon: policeIcon
 		});
@@ -44,6 +46,7 @@ var policePoints = new L.geoJson(policeData, {
 		layer.bindPopup('<strong>' + feature.properties.ACC_DATE + '</strong><br>' + feature.properties.ACC_TYPE);
 	}
 });
+
 policePoints.addTo(accidentPoints);
 
 var bikeLanes = new L.geoJson(bikeRoutes, {
