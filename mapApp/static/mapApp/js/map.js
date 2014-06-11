@@ -34,7 +34,6 @@ var policeIcon = L.MakiMarkers.icon({
 	size: "m"
 });
 
-
 var policePoints = new L.geoJson(policeData, {
 	pointToLayer: function(feature, latlng) {
 		return L.marker(latlng, {
@@ -44,9 +43,7 @@ var policePoints = new L.geoJson(policeData, {
 	onEachFeature: function(feature, layer) {
 		layer.bindPopup('<strong>' + feature.properties.ACC_DATE + '</strong><br>' + feature.properties.ACC_TYPE);
 	}
-});
-
-accidentPoints.addLayer(policePoints);
+}).addTo(accidentPoints);
 
 var bikeLanes = new L.geoJson(bikeRoutes, {
 	style: function(feature) {
@@ -89,8 +86,7 @@ var bikeLanes = new L.geoJson(bikeRoutes, {
 	}
 });
 
-
-
+var drawnItems = new L.FeatureGroup();
 
 
 
@@ -109,48 +105,18 @@ function initialize() {
 		maxZoom: 18
 	});
 
-	var humanitarianOSM = L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-		attribution: '&copy <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, tiles courtesy of <a href=http://hot.openstreetmap.org/>Humanitarian OpenStreetMap Team</a>',
-		maxZoom: 20
-	});
-
 	var mapboxSat = L.tileLayer('http://{s}.tiles.mapbox.com/v3/openstreetmap.map-4wvf9l0l/{z}/{x}/{y}.png', {
 		attribution: 'Tiles courtesy of <a href=https://www.mapbox.com/>Mapbox</a>, \
 	    	map data &copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors',
 		maxZoom: 18
 	});
 
-	var mapQuest = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
-		attribution: 'Tiles courtesy of <a href=https://open.mapquest.com/>MapQuest</a>, \
-	    	map data &copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors',
-		maxZoom: 18,
-		subdomains: '1234' // Switch between subdomains {s} 1,2,3,4 instead of a,b,c
-	});
-
-
-	var osmMapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		attribution: '&copy <a href=https://openstreetmap.org/>OpenStreetMap</a> contributors, CC-BY-SA',
-		maxZoom: 19,
-	});
-
-
-	var osmMapnikBW = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
-		attribution: '&copy <a href=https://openstreetmap.org/>OpenStreetMap</a> contributors, CC-BY-SA',
-		maxZoom: 18,
-	});
-
-
 	/* Define which map tiles are basemaps */
 	var baseMaps = {
-		// "Open Street Map": osmMapnik,
-		// "Open Street Map B&W": osmMapnikBW,
-		// "Humanitarian OSM": humanitarianOSM,
 		"Map": mapbox,
 		"Open Cycle Map": openCycleMap,
 		"Satellite": mapboxSat,
-		// "MapQuest OSM": mapQuest,
 	};
-
 
 
 	/* OVERLAY MAPS */
@@ -165,10 +131,10 @@ function initialize() {
 
 	/* Define which map tiles are overlays */
 	var overlayMaps = {
-		"Accident heat map": heatMap,
 		"Accident points": accidentPoints,
-		"Ridership heat map": stravaHM5,
 		"Bike lanes": bikeLanes,
+		"Accident heat map": heatMap,
+		"Ridership heat map": stravaHM5,
 	}
 
 	/* DEFAULTS AND PANEL */
@@ -176,16 +142,21 @@ function initialize() {
 	map = L.map('map', {
 		center: [48.5, -123.3],
 		zoom: 11,
-		layers: [mapbox, accidentPoints, bikeLanes] /* Layers to display on load */
+		layers: [mapbox, accidentPoints, bikeLanes],
+		/* Layers to display on load */
 	});
+
+	map.addLayer(drawnItems);
+	var drawControl = new L.Control.Draw({
+		edit: {
+			featureGroup: drawnItems
+		}
+	})
+	map.addControl(drawControl);
 
 	/* Create the control panel */
 	L.control.layers(baseMaps, overlayMaps).addTo(map);
-
-
 }
-
-
 
 
 /* Create a popup when map is clicked with button to add a new point  */
@@ -215,9 +186,7 @@ function addPoint(latlng, msg, type) {
 	} else {
 		icon = bikeYellowIcon;
 	}
-	marker = L.marker(latlng, {
-		icon: icon
-	});
+	marker = L.marker(latlng, { icon: icon });
 	marker.bindPopup(msg);
 
 	accidentPoints.addLayer(marker);
