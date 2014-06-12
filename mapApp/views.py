@@ -6,39 +6,69 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.contrib.gis.geos import GEOSGeometry, Point, fromstr
 
-from mapApp.models import Incident
-from mapApp.forms import IncidentForm
+from mapApp.models import Incident, Route
+from mapApp.forms import IncidentForm, RouteForm
 
 def index(request):
-	formErrors = False
-	form = IncidentForm()
+	context = {
+		'incidents': Incident.objects.all(),
+		"incidentForm": IncidentForm(), 	#the form to be rendered
+		"incidentFormErrors": False,
+		"routeForm": RouteForm(),
+		"routeFormErrors": False
+	}
+	return render(request, 'mapApp/index.html', context)
 
+def postRoute(request):
 	if request.method == 'POST':
-		form = IncidentForm(request.POST)
+		routeForm = RouteForm(request.POST)
+
+		# Convert string coords to valid geometry object
+		routeForm.data = routeForm.data.copy()
+		routeForm.data['line'] = GEOSGeometry(routeForm.data['line'])
+
+		if routeForm.is_valid():
+			routeForm.save()	
+			return HttpResponseRedirect(reverse('mapApp:index')) 
+		else:
+			# Form is not valid, display modal with highlighted errors 
+			return render(request, 'mapApp/index.html', {
+				'incidents': Incident.objects.all(),
+				"incidentForm": IncidentForm(),
+				"incidentFormErrors": False,
+				"routeForm": routeForm,
+				"routeFormErrors": True
+			})
+	
+	else:
+		return HttpResponseRedirect(reverse('mapApp:index')) 
+
+def postIncident(request):
+	if request.method == 'POST':
+		incidentForm = IncidentForm(request.POST)
 		
 		# Convert string coords to valid geometry object
-		form.data = form.data.copy()	# Copy to allow mutation of value
-		#Try:?		
-		pnt = fromstr(form.data['point'])
-		form.data['point'] = GEOSGeometry(pnt)
-		#Catch(failure)?
+		incidentForm.data = incidentForm.data.copy()
+		incidentForm.data['point'] = GEOSGeometry(incidentForm.data['point'])
 
-		if form.is_valid():
-			# create database entry
-			form.save()	
-			# redirect to clean index
+		if incidentForm.is_valid():
+			incidentForm.save()	
 			return HttpResponseRedirect(reverse('mapApp:index')) 
 		
 		else:
-			# display modal with highlighted errors
-			formErrors = True
+			# Form is not valid, display modal with highlighted errors 
+			return render(request, 'mapApp/index.html', {
+				'incidents': Incident.objects.all(),
+				"incidentForm": incidentForm,
+				"incidentFormErrors": True,
+				"routeForm": RouteForm(),
+				"routeFormErrors": False
+			})
+	
+	else:
+		return HttpResponseRedirect(reverse('mapApp:index')) 
 
-	context = {
-		'incidents': Incident.objects.all(),
-		"form": form, 	#the form to be rendered
-		"formErrors": formErrors
-	}
-	return render(request, 'mapApp/index.html', context)
+
 
 def about(request):
 	context = {

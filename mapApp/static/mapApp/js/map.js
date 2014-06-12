@@ -171,7 +171,7 @@ function initialize() {
 
 	/* Create the drawing control */
 	L.drawLocal.draw.toolbar.buttons.marker = 'Add an incident marker';
-	L.drawLocal.draw.handlers.marker.tooltip.start = 'Click the location where the incident occurred';
+	L.drawLocal.draw.handlers.marker.tooltip.start = 'Place me where the incident occurred';
 	L.drawLocal.draw.toolbar.buttons.polyline = 'Add your cycling route';
 
 	map.addControl(new L.Control.Draw({
@@ -187,7 +187,6 @@ function initialize() {
 			circle: false,
 			marker: {
 				icon: bikeGreyIcon,
-				message: 'Add an incident boogly boogly boogly'
 			}
 		},
 		edit: false,

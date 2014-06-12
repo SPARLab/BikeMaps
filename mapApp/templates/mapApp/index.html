@@ -70,6 +70,7 @@
 
     <!-- Modal form popup -->
     {% include 'mapApp/incident_form.html' %}
+    {% include 'mapApp/route_form.html' %}
 
     <!-- Leaflet map --> 
     <div id="map"></div>
@@ -93,18 +94,29 @@
         map.on('draw:created', function (e) {
             var type = e.layerType,
                 layer = e.layer;
-                // console.log(layer.getLatLng().lat);
+            
             if (type === 'marker') {
-                document.getElementById("point").value = ('Point(' + layer.getLatLng().lng + ' ' + layer.getLatLng().lat + ')');               
+                document.getElementById("point").value = (JSON.stringify(layer.toGeoJSON().geometry));               
                 $('#incidentForm').modal('show');
+            }
+
+            if (type === 'polyline') {
+                document.getElementById("line").value = (JSON.stringify(layer.toGeoJSON().geometry));               
+                $('#routeForm').modal('show');
             }
 
         });
         
         // Show the modal if there are errors in a form submit
-        {% if formErrors %}
+        {% if incidentFormErrors %}
         $(window).load(function(){
             $('#incidentForm').modal('show');
+        });
+        {% endif %}
+
+        {% if routeFormErrors %}
+        $(window).load(function(){
+            $('#routeForm').modal('show');
         });
         {% endif %}
 

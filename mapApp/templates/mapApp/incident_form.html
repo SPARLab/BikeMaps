@@ -13,9 +13,9 @@
             </div>
         
 
-            <form action="{% url 'mapApp:index' %}" method="post" class="form">
+            <form action="{% url 'mapApp:postIncident' %}" method="post" class="form">
                 <div class="modal-body">
-                    {% crispy form %}
+                    {% crispy incidentForm %}
                 </div>
 
 

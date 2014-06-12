@@ -1,0 +1,30 @@
+<!-- Load Crispy-froms form template renderer -->
+{% load crispy_forms_tags %}
+
+<!-- Modal form -->
+<div class="modal fade" id="routeForm" tabindex="-1" role="dialog" aria-labelledby="routeForm" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="routeForm">Submit your cycling route</h4>
+            </div>
+        
+
+            <form action="{% url 'mapApp:postRoute' %}" method="post" class="form">
+                <div class="modal-body">
+                    {% crispy routeForm %}
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-default" onclick="$('#routeForm').modal('hide');$('.modal-backdrop').hide();">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            
+            </form>
+        </div>
+    </div>
+</div>

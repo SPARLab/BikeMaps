@@ -108,6 +108,13 @@ BOOLEAN_CHOICES = (
     (False, "No")
 )
 
+FREQUENCY_CHOICES = (
+    ("30-39", "5-7 days per week"),
+    ("60-69","3-4 days per week"),
+    ("50-59", "1-2 days per week"),
+    ("19-29","less than once a week"),
+)
+
 ##########
 # Incident class.
 # Main class for Incident Report. Contains all required, non-required, and spatial fields. Setup to allow easy export to a singular shapefile.
@@ -236,7 +243,7 @@ class Incident(models.Model):
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Reported this week?'
 
-    # A non elegant way to mach up self.incident to a generalized incident_type string
+    # A non elegant way to match up self.incident to a generalized incident_type string
     def incident_type(self):
         TYPES = [
             (COLLISION_TYPES, "Collision"), 
@@ -253,3 +260,42 @@ class Incident(models.Model):
 
     def __unicode__(self):
         return unicode(self.incident_date)
+
+
+##########
+# Routes class.
+# Main class for submitted routes.
+class Route(models.Model):
+    # Spatial fields
+    # Default CRS -> WGS84
+    line = models.LineStringField()
+    objects = models.GeoManager() # Required to conduct geographic queries
+
+    report_date = models.DateTimeField(
+    'Date reported', 
+    auto_now_add=True   # Date is set automatically when object created
+    ) 
+
+    trip_purpose = models.CharField(
+        'What was the purpose of your trip?', 
+        max_length=50, 
+        choices=PURPOSE_CHOICES, 
+    )
+
+    # Personal details about the participant (all optional)
+    frequency = models.CharField(
+        'How often do you ride this route per week?', 
+        max_length=15, 
+        choices=FREQUENCY_CHOICES
+    )
+
+    def was_published_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(weeks=1) <= self.report_date < now
+
+    was_published_recently.admin_order_field = 'report_date'
+    was_published_recently.boolean = True
+    was_published_recently.short_description = 'Reported this week?'
+
+    def __unicode__(self):
+        return unicode(self.trip_purpose)
