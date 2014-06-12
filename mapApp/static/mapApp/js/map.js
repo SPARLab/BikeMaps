@@ -1,24 +1,22 @@
 // Leaflet map code and functions
 
 /* GLOBAL VARIABLES */
+var map, //global map object
 
-// Global map object
-var map;
+	// Dynamically clustered point data layer
+	accidentPoints = new L.MarkerClusterGroup({
+		// maxClusterRadius: 50,
+		// disableClusteringAtZoom: 16});
+	}),
 
-// Dynamically clustered point data layer
-var accidentPoints = new L.MarkerClusterGroup({
-		maxClusterRadius: 50
-	}); //, disableClusteringAtZoom: 16});
+	// Heatmap layer corresponding to all accident data
+	heatMap = L.heatLayer([], {
+		radius: 40,
+		blur: 20,
+	}),
 
-// Heatmap layer corresponding to all accident data
-var heatMap = L.heatLayer([], {
-	radius: 40,
-	blur: 20,
-	opacity: 0
-});
-
-// Custom icons (Using Maki icon symbols)
-var bikeRedIcon = L.MakiMarkers.icon({
+	// Custom icons (Using Maki icon symbols)
+	bikeRedIcon = L.MakiMarkers.icon({
 		icon: "bicycle",
 		color: "#d9534f",
 		size: "m"
@@ -35,90 +33,87 @@ var bikeRedIcon = L.MakiMarkers.icon({
 	}),
 	policeIcon = L.MakiMarkers.icon({
 		icon: "police",
-		color: "#428bca",
+		color: "#004",
 		size: "m"
 	}),
 	icbcIcon = L.MakiMarkers.icon({
-		icon: "police",
-		color: "#0f0",
+		icon: "car",
+		color: "#20a5de",
 		size: "m"
 	});
-
-var policePoints = new L.geoJson(policeData, {
-	pointToLayer: function(feature, latlng) {
-		heatMap.addLatLng(latlng);
-		
-		return L.marker(latlng, {
-			icon: policeIcon
-		});
-	},
-	onEachFeature: function(feature, layer) {
-		layer.bindPopup('<strong>' + feature.properties.ACC_DATE + '</strong><br>' + feature.properties.ACC_TYPE);
-	}
-});
-policePoints.addTo(accidentPoints);
-
-var icbcPoints = new L.geoJson(icbcData, {
-	pointToLayer: function(feature, latlng) {
-		heatMap.addLatLng(latlng);
-		
-		return L.marker(latlng, {
-			icon: icbcIcon
-		});
-	},
-	// onEachFeature: function(feature, layer) {
-		// layer.bindPopup('<strong>' + feature.properties.Month + ' ' + feature.properties.Year + '</strong><br>');
-	// }
-});
-icbcPoints.addTo(accidentPoints);
-
-var bikeLanes = new L.geoJson(bikeRoutes, {
-	style: function(feature) {
-		switch (feature.properties.Descriptio) {
-			case 'Buffered Bike Lane':
-				return {
-					color: '#007f16', // Dark green
-				};
-			case 'Cycle Track*':
-				return {
-					color: '#259238', // Faded dark green
-					opacity: 0.8
-				};
-			case 'Multi-Use Trail':
-				return {
-					color: '#87a000', // Dark Yellow
-					opacity: 0.8
-				};
-			case 'Conventional Bike Lane':
-				return {
-					color: '#00c322', // Green
-					opacity: 0.8
-				};
-			case 'Priority Transit and Cycling Lanes*':
-				return {
-					color: '#05326d', // Dark blue
-					opacity: 0.8
-				};
-			case 'Signed Bike Route':
-				return {
-					color: '#0e51a7', // blue
-					opacity: 0.8
-				};
-			case 'Proposed Bicycle Network':
-				return {
-					color: '#ff9e00', // Faded green
-					opacity: 0.3
-				};
-		}
-	}
-});
-
-var drawnItems = new L.FeatureGroup();
-
 
 
 /* Create the map with a tile layer and set global variable map */
 function initialize() {
+	var policePoints = new L.geoJson(policeData, {
+		pointToLayer: function(feature, latlng) {
+			heatMap.addLatLng(latlng);
+			
+			return L.marker(latlng, {
+				icon: policeIcon
+			});
+		},
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup('<strong>' + feature.properties.ACC_DATE + '</strong><br>' + feature.properties.ACC_TYPE);
+		}
+	});
+	policePoints.addTo(accidentPoints);
+
+	var icbcPoints = new L.geoJson(icbcData, {
+		pointToLayer: function(feature, latlng) {
+			heatMap.addLatLng(latlng);
+			
+			return L.marker(latlng, {
+				icon: icbcIcon
+			});
+		},
+		// onEachFeature: function(feature, layer) {
+			// layer.bindPopup('<strong>' + feature.properties.Month + ' ' + feature.properties.Year + '</strong><br>');
+		// }
+	});
+	icbcPoints.addTo(accidentPoints);
+
+	var bikeLanes = new L.geoJson(bikeRoutes, {
+		style: function(feature) {
+			switch (feature.properties.Descriptio) {
+				case 'Buffered Bike Lane':
+					return {
+						color: '#007f16', // Dark green
+					};
+				case 'Cycle Track*':
+					return {
+						color: '#259238', // Faded dark green
+						opacity: 0.8
+					};
+				case 'Multi-Use Trail':
+					return {
+						color: '#87a000', // Dark Yellow
+						opacity: 0.8
+					};
+				case 'Conventional Bike Lane':
+					return {
+						color: '#00c322', // Green
+						opacity: 0.8
+					};
+				case 'Priority Transit and Cycling Lanes*':
+					return {
+						color: '#05326d', // Dark blue
+						opacity: 0.8
+					};
+				case 'Signed Bike Route':
+					return {
+						color: '#0e51a7', // blue
+						opacity: 0.8
+					};
+				case 'Proposed Bicycle Network':
+					return {
+						color: '#ff9e00', // Faded green
+						opacity: 0.3
+					};
+			}
+		}
+	});
+
 	var openCycleMap = L.tileLayer(
 		'http://tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
 			attribution: '&copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
@@ -144,6 +139,7 @@ function initialize() {
 		opacity: 0.5
 	});
 
+
 	/* Define which map tiles are basemaps */
 	var baseMaps = {
 		"Map": mapbox,
@@ -159,22 +155,25 @@ function initialize() {
 		"Ridership heat map": stravaHM5,
 	}
 
-	/* DEFAULTS AND PANEL */
-	/* Set map center, zoom, default layers and render */
+
+
+	/* DEFAULT LAYERS AND PANEL */
 	map = L.map('map', {
 		center: [48.5, -123.3],
 		zoom: 11,
 		layers: [mapbox, accidentPoints],
-		/* Layers to display on load */
 	});
 
-	L.drawLocal.draw.toolbar.buttons.marker = 'Add an incident marker';
-	L.drawLocal.draw.handlers.marker.tooltip.start = 'Click the location where the incident occurred';
 
-	L.drawLocal.draw.toolbar.buttons.polyline = 'Add your cycling route';
 
+	/* Create the control panel */
+	L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 	/* Create the drawing control */
+	L.drawLocal.draw.toolbar.buttons.marker = 'Add an incident marker';
+	L.drawLocal.draw.handlers.marker.tooltip.start = 'Click the location where the incident occurred';
+	L.drawLocal.draw.toolbar.buttons.polyline = 'Add your cycling route';
+
 	map.addControl(new L.Control.Draw({
 		draw: {
 			polyline: {
@@ -194,9 +193,6 @@ function initialize() {
 		edit: false,
 	}));
 
-
-	/* Create the control panel */
-	L.control.layers(baseMaps, overlayMaps).addTo(map);
 }
 
 
