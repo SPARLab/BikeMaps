@@ -13,10 +13,10 @@ var map, //global map object
 	heatMap = L.heatLayer([], {
 		radius: 40,
 		blur: 20,
-	}),
+	});
 
-	// Custom icons (Using Maki icon symbols)
-	bikeRedIcon = L.MakiMarkers.icon({
+/* ICON DEFINITIONS */
+var bikeRedIcon = L.MakiMarkers.icon({
 		icon: "bicycle",
 		color: "#d9534f",
 		size: "m"
@@ -45,131 +45,141 @@ var map, //global map object
 
 /* Create the map with a tile layer and set global variable map */
 function initialize() {
+	/* STATIC VECTOR DEFINITIONS */
 	var policePoints = new L.geoJson(policeData, {
-		pointToLayer: function(feature, latlng) {
-			heatMap.addLatLng(latlng);
-			
-			return L.marker(latlng, {
-				icon: policeIcon
-			});
-		},
-		onEachFeature: function(feature, layer) {
-			layer.bindPopup('<strong>' + feature.properties.ACC_DATE + '</strong><br>' + feature.properties.ACC_TYPE);
-		}
-	});
-	policePoints.addTo(accidentPoints);
+			pointToLayer: function(feature, latlng) {
+				heatMap.addLatLng(latlng);
 
-	var icbcPoints = new L.geoJson(icbcData, {
-		pointToLayer: function(feature, latlng) {
-			heatMap.addLatLng(latlng);
-			
-			return L.marker(latlng, {
-				icon: icbcIcon
-			});
-		},
-		// onEachFeature: function(feature, layer) {
-			// layer.bindPopup('<strong>' + feature.properties.Month + ' ' + feature.properties.Year + '</strong><br>');
-		// }
-	});
-	icbcPoints.addTo(accidentPoints);
-
-	var bikeLanes = new L.geoJson(bikeRoutes, {
-		style: function(feature) {
-			switch (feature.properties.Descriptio) {
-				case 'Buffered Bike Lane':
-					return {
-						color: '#007f16', // Dark green
-					};
-				case 'Cycle Track*':
-					return {
-						color: '#259238', // Faded dark green
-						opacity: 0.8
-					};
-				case 'Multi-Use Trail':
-					return {
-						color: '#87a000', // Dark Yellow
-						opacity: 0.8
-					};
-				case 'Conventional Bike Lane':
-					return {
-						color: '#00c322', // Green
-						opacity: 0.8
-					};
-				case 'Priority Transit and Cycling Lanes*':
-					return {
-						color: '#05326d', // Dark blue
-						opacity: 0.8
-					};
-				case 'Signed Bike Route':
-					return {
-						color: '#0e51a7', // blue
-						opacity: 0.8
-					};
-				case 'Proposed Bicycle Network':
-					return {
-						color: '#ff9e00', // Faded green
-						opacity: 0.3
-					};
+				return L.marker(latlng, {
+					icon: policeIcon
+				});
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup('<strong>' + feature.properties.ACC_DATE + '</strong><br>' + feature.properties.ACC_TYPE);
 			}
-		}
-	});
+		}).addTo(accidentPoints),
 
-	var openCycleMap = L.tileLayer(
-		'http://tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
-			attribution: '&copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
-			maxZoom: 18,
+
+		icbcPoints = new L.geoJson(icbcData, {
+			pointToLayer: function(feature, latlng) {
+				heatMap.addLatLng(latlng);
+
+				return L.marker(latlng, {
+					icon: icbcIcon
+				});
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup('<strong>' + feature.properties.Month + ' ' + feature.properties.Year + '</strong><br>');
+			}
+		}).addTo(accidentPoints),
+
+
+		bikeRacksVictoria = new L.geoJson(bikeRacks, {
+			pointToLayer: function(feature, latlng) {
+				heatMap.addLatLng(latlng);
+
+				return L.marker(latlng, {
+					icon: icbcIcon
+				});
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup('I\'m a bike rack!');
+			}
+		}),
+
+
+		bikeLanes = new L.geoJson(bikeRoutes, {
+			style: function(feature) {
+				switch (feature.properties.Descriptio) {
+					case 'Buffered Bike Lane':
+						return {
+							color: '#007f16', // Dark green
+						};
+					case 'Cycle Track*':
+						return {
+							color: '#259238', // Faded dark green
+							opacity: 0.8
+						};
+					case 'Multi-Use Trail':
+						return {
+							color: '#87a000', // Dark Yellow
+							opacity: 0.8
+						};
+					case 'Conventional Bike Lane':
+						return {
+							color: '#00c322', // Green
+							opacity: 0.8
+						};
+					case 'Priority Transit and Cycling Lanes*':
+						return {
+							color: '#05326d', // Dark blue
+							opacity: 0.8
+						};
+					case 'Signed Bike Route':
+						return {
+							color: '#0e51a7', // blue
+							opacity: 0.8
+						};
+					case 'Proposed Bicycle Network':
+						return {
+							color: '#ff9e00', // Faded green
+							opacity: 0.3
+						};
+				}
+			}
 		});
 
-	var mapbox = L.tileLayer('http://{s}.tiles.mapbox.com/v3/tayden.ibi2aoib/{z}/{x}/{y}.png', {
-		attribution: 'Tiles courtesy of <a href=https://www.mapbox.com/>Mapbox</a>, \
+	/* TILE LAYER DEFINITIONS */
+	var openCycleMap = L.tileLayer(
+			'http://tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
+				attribution: '&copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
+				maxZoom: 18,
+			}),
+
+		mapbox = L.tileLayer('http://{s}.tiles.mapbox.com/v3/tayden.ibi2aoib/{z}/{x}/{y}.png', {
+			attribution: 'Tiles courtesy of <a href=https://www.mapbox.com/>Mapbox</a>, \
 	    	map data &copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors',
-		maxZoom: 18
-	});
+			maxZoom: 18
+		}),
 
-	var mapboxSat = L.tileLayer('http://{s}.tiles.mapbox.com/v3/openstreetmap.map-4wvf9l0l/{z}/{x}/{y}.png', {
-		attribution: 'Tiles courtesy of <a href=https://www.mapbox.com/>Mapbox</a>, \
+		mapboxSat = L.tileLayer('http://{s}.tiles.mapbox.com/v3/openstreetmap.map-4wvf9l0l/{z}/{x}/{y}.png', {
+			attribution: 'Tiles courtesy of <a href=https://www.mapbox.com/>Mapbox</a>, \
 	    	map data &copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors',
-		maxZoom: 18
-	});
+			maxZoom: 18
+		}),
 
-	var stravaHM5 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
-		attribution: 'ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
-		minZoom: 3,
-		maxZoom: 17,
-		opacity: 0.5
-	});
+		stravaHM5 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
+			attribution: 'ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
+			minZoom: 3,
+			maxZoom: 17,
+			opacity: 0.5
+		});
 
-
-	/* Define which map tiles are basemaps */
-	var baseMaps = {
-		"Map": mapbox,
-		"Open Cycle Map": openCycleMap,
-		"Satellite": mapboxSat,
-	};
-
-	/* Define which map tiles are overlays */
-	var overlayMaps = {
-		"Accident points": accidentPoints,
-		"Bike lanes": bikeLanes,
-		"Accident heat map": heatMap,
-		"Ridership heat map": stravaHM5,
-	}
-
-
-
-	/* DEFAULT LAYERS AND PANEL */
+	
+	/* MAP INIT AND DEFAULT LAYERS */
 	map = L.map('map', {
 		center: [48.5, -123.3],
 		zoom: 11,
 		layers: [mapbox, accidentPoints],
 	});
 
-
-
-	/* Create the control panel */
+	/* LAYER CONTROL */
+	var baseMaps = {
+			"Map": mapbox,
+			"Open Cycle Map": openCycleMap,
+			"Satellite": mapboxSat,
+		},
+		overlayMaps = {
+			"Accident points": accidentPoints,
+			"Bike lanes": bikeLanes,
+			"Accident heat map": heatMap,
+			"Ridership heat map": stravaHM5,
+			"Bike Racks": bikeRacksVictoria,
+		};
 	L.control.layers(baseMaps, overlayMaps).addTo(map);
 
-	/* Create the drawing control */
+
+	/* DRAWING CONTROL */
 	L.drawLocal.draw.toolbar.buttons.marker = 'Add an incident marker';
 	L.drawLocal.draw.handlers.marker.tooltip.start = 'Place me where the incident occurred';
 	L.drawLocal.draw.toolbar.buttons.polyline = 'Add your cycling route';
