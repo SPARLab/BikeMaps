@@ -95,11 +95,11 @@ TERRAIN_CHOICES = (
 )
 AGE_CHOICES = (
     ("<19", "19 or under"),
-    ("19-29","19-29"),
-    ("30-39", "30-39"),
-    ("40-49", "40-49"),
-    ("50-59","50-59"),
-    ("60-69","60-69"),
+    ("19-29","19 - 29"),
+    ("30-39", "30 - 39"),
+    ("40-49", "40 - 49"),
+    ("50-59","50 - 59"),
+    ("60-69","60 - 69"),
     (">70", "70 or over")
 )
 
@@ -109,10 +109,11 @@ BOOLEAN_CHOICES = (
 )
 
 FREQUENCY_CHOICES = (
-    ("30-39", "5-7 days per week"),
-    ("60-69","3-4 days per week"),
-    ("50-59", "1-2 days per week"),
-    ("19-29","less than once a week"),
+    ("15+/wk", "15 or more"),
+    ("10-14/wk", "10 - 14"),
+    ("6-8/wk","6 - 8"),
+    ("2-4/wk", "2 - 4"),
+    ("<2/wk","less than twice a week"),
 )
 
 ##########
@@ -277,14 +278,14 @@ class Route(models.Model):
     ) 
 
     trip_purpose = models.CharField(
-        'What was the purpose of your trip?', 
+        'What is the reason you usually ride this route?', 
         max_length=50, 
         choices=PURPOSE_CHOICES, 
     )
 
     # Personal details about the participant (all optional)
     frequency = models.CharField(
-        'How often do you ride this route per week?', 
+        'How many times per week do you ride this route?', 
         max_length=15, 
         choices=FREQUENCY_CHOICES
     )

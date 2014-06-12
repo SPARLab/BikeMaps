@@ -194,23 +194,6 @@ function initialize() {
 
 }
 
-
-/* Create a popup when map is clicked with button to add a new point  */
-function setPoint(e) {
-	var popup = L.popup({
-		'closeOnClick': true,
-	});
-	popup
-		.setLatLng(e.latlng)
-		.setContent('<button class="btn btn-primary btn-lg" data-toggle="modal" \
-        	data-target="#incidentForm"><span class="glyphicon glyphicon-pushpin"></span></button>')
-		.openOn(map);
-
-	//Set point field in form to click location
-	document.getElementById("point").value = ('Point(' + e.latlng.lng + ' ' + e.latlng.lat + ')');
-}
-
-
 function getPoint(latlng, msg, type) {
 	heatMap.addLatLng(latlng);
 

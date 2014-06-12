@@ -88,9 +88,6 @@
         // Create the map
         initialize();
 
-        // Enable click to add point
-        map.on('dblclick', setPoint);
-
         map.on('draw:created', function (e) {
             var type = e.layerType,
                 layer = e.layer;
@@ -99,7 +96,6 @@
                 document.getElementById("point").value = (JSON.stringify(layer.toGeoJSON().geometry));               
                 $('#incidentForm').modal('show');
             }
-
             if (type === 'polyline') {
                 document.getElementById("line").value = (JSON.stringify(layer.toGeoJSON().geometry));               
                 $('#routeForm').modal('show');
