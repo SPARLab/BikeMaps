@@ -1,19 +1,16 @@
 TO DO
 
-* Add ICBC data 
 * Add bike racks KML
 * Make nested layers panel for toggling specific layers or a group of layers
 * "Help" window - instructions for how to add point etc
-* Forum?
 * Social media buttons/links
-* Add route tracing functionality
 * Add GPS file upload for routes
+* Forum? (see http://spirit-project.com/)
 * Make navigation prettier
 * Implement About page
 * Implement Contacts page
 * Add bike-maps.org graphics
 * Change server domain name
-* Add police GeoJSON to leaflet.heat layer
 * 
 * 
 * 
