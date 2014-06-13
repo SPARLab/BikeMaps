@@ -40,8 +40,17 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		icon: "car",
 		color: "#20a5de",
 		size: "m"
+	}),
+	bikeRackIcon = L.MakiMarkers.icon({
+		icon: "parking",
+		color: "#111",
+		size: "s"
+	}),
+	bikeRackIconAlt = L.MakiMarkers.icon({
+		icon: bikeRackIcon.options.icon,
+		color: "#333",
+		size: "m"
 	});
-
 
 /* Create the map with a tile layer and set global variable map */
 function initialize() {
@@ -74,18 +83,28 @@ function initialize() {
 		}).addTo(accidentPoints),
 
 
+		racksCluster = new L.MarkerClusterGroup({
+			maxClusterRadius: 20,
+			disableClusteringAtZoom: 18,
+			iconCreateFunction: function(cluster) {
+				if (cluster.getChildCount() != 1) {
+					return bikeRackIconAlt;
+				}
+				return bikeRackIcon;
+			},
+		}),
 		bikeRacksVictoria = new L.geoJson(bikeRacks, {
 			pointToLayer: function(feature, latlng) {
 				heatMap.addLatLng(latlng);
 
 				return L.marker(latlng, {
-					icon: icbcIcon
+					icon: bikeRackIcon
 				});
 			},
 			onEachFeature: function(feature, layer) {
-				layer.bindPopup('I\'m a bike rack!');
+				layer.bindPopup('Bike rack');
 			}
-		}),
+		}).addTo(racksCluster),
 
 
 		bikeLanes = new L.geoJson(bikeRoutes, {
@@ -174,7 +193,7 @@ function initialize() {
 			"Bike lanes": bikeLanes,
 			"Accident heat map": heatMap,
 			"Ridership heat map": stravaHM5,
-			"Bike Racks": bikeRacksVictoria,
+			"Bike Racks": racksCluster,
 		};
 	L.control.layers(baseMaps, overlayMaps).addTo(map);
 
