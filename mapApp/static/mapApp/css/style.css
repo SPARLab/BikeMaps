@@ -77,19 +77,19 @@ textarea {
 }
 
 #map {
-	display: inline-block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.content {
+	display: block;
 	position: absolute;
-	height: auto;
 	bottom: 0;
 	top: 0;
 	left: 0;
 	right: 0;
-	float: bottom;
-}
-
-.content {
-	display: inline-block;
-	float: top;
+	margin-top: 50px;
 }
 
 .accordion-toggle {

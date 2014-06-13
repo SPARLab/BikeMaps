@@ -75,25 +75,26 @@
 
 
     <div class='content'>
-        <div class="alert alert-success alert-dismissable flyover flyover-center">
+        <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <center><strong>Thank you!</strong> Top notch.</center>
         </div>
 
-    <!-- Leaflet map --> 
-    <div id="map"></div>
+        <!-- Leaflet map --> 
+        <div id="map"></div>
     </div>
+
 
     <!-- Load user points from the database -->
     {% for incident in incidents %}
-        <script type="text/javascript">
+        <script>
             var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
             var msg = "<b>{{ incident.incident_type }}</b><br>{{ incident.incident_date }}.";
             getPoint( latlng, msg, "{{incident.incident_type}}" );
         </script>
     {% endfor %}
 
-    <script type="text/javascript">
+    <script>
         // Create the map
         initialize();
 
