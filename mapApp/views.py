@@ -29,7 +29,7 @@ def postRoute(request):
 
 		if routeForm.is_valid():
 			routeForm.save()	
-			return HttpResponseRedirect(reverse('mapApp:index')) 
+			return HttpResponseRedirect(reverse('mapApp:thanks')) 
 		else:
 			# Form is not valid, display modal with highlighted errors 
 			return render(request, 'mapApp/index.html', {
@@ -41,7 +41,7 @@ def postRoute(request):
 			})
 	
 	else:
-		return HttpResponseRedirect(reverse('mapApp:index')) 
+		return HttpResponseRedirect(reverse('mapApp:thanks')) 
 
 def postIncident(request):
 	if request.method == 'POST':
@@ -66,9 +66,7 @@ def postIncident(request):
 			})
 	
 	else:
-		return HttpResponseRedirect(reverse('mapApp:index')) 
-
-
+		return HttpResponseRedirect(reverse('mapApp:thanks')) 
 
 def about(request):
 	context = {
@@ -77,8 +75,6 @@ def about(request):
 
 	return render(request, 'mapApp/about.html', context)
 
-def sponsors(request):
-	return render(request, 'mapApp/sponsors.html')
 
 def contact(request):
 	return render(request, 'mapApp/contact.html')

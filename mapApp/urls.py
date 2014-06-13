@@ -8,7 +8,6 @@ urlpatterns = patterns('',
 	url(r'^$', views.index, name='index'),
 	url(r'^contact/$', views.contact, name='contact'),
 	url(r'^about/$', views.about, name='about'),
-	url(r'^sponsors/$', views.sponsors, name='sponsors'),
 	url(r'^incident_submit/$', views.postIncident, name='postIncident'),
 	url(r'^route_submit/$', views.postRoute, name='postRoute'),
 	
