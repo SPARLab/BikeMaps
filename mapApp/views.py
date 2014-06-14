@@ -5,6 +5,7 @@ from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.contrib.gis.geos import GEOSGeometry, Point, fromstr
+from django.contrib import messages
 
 from mapApp.models import Incident, Route
 from mapApp.forms import IncidentForm, RouteForm
@@ -28,8 +29,9 @@ def postRoute(request):
 		routeForm.data['line'] = GEOSGeometry(routeForm.data['line'])
 
 		if routeForm.is_valid():
-			routeForm.save()	
-			return HttpResponseRedirect(reverse('mapApp:thanks')) 
+			routeForm.save()
+			messages.success(request, '<strong>Thank you!</strong> Your route was successfully added.')
+			return HttpResponseRedirect(reverse('mapApp:index')) 
 		else:
 			# Form is not valid, display modal with highlighted errors 
 			return render(request, 'mapApp/index.html', {
@@ -52,7 +54,8 @@ def postIncident(request):
 		incidentForm.data['point'] = GEOSGeometry(incidentForm.data['point'])
 
 		if incidentForm.is_valid():
-			incidentForm.save()	
+			incidentForm.save()
+			messages.success(request, '<strong>Thank you!</strong> Your incident marker was successfully added.')
 			return HttpResponseRedirect(reverse('mapApp:index')) 
 		
 		else:
