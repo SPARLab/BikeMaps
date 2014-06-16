@@ -23,36 +23,17 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav" role="navigation">
-          
-
-          <!-- Dropdown selector for maps. Acting buggy depending on which page you're on -->
-          <!-- 
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Maps <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="{{ index }}">Accidents</a></li>
-              <li class="divider"></li>
-              <li><a href="{{ index }}">Thefts</a></li>
-              <li class="divider"></li>
-              <li><a href="{{ index }}">Hazards</a></li>
-            </ul>
-          </li>
-          -->
 
         <li {% ifequal request.path index %} class="active" {% endifequal %}><a href="{{ index }}">Home</a></li>
-        <!-- 	Active hazard and theft links
-        <li><a>Hazards</a></li>
-        <li><a>Thefts</a></li>
-        <li {% ifequal request.path index %} class="active" {% endifequal %}><a href="{{ index }}">Hazards</a></li>
-        <li {% ifequal request.path index %} class="active" {% endifequal %}><a href="{{ index }}">Thefts</a></li>
-        -->
         <li {% ifequal request.path about %} class="active" {% endifequal %}><a href="{{ about }}">About</a></li>
-        <li {% ifequal request.path contact %} class="active" {% endifequal %}><a href="{{ contact }}">Contact</a></li>
+        <li><a>Forum</a></li>
       </ul>
       
 
       <ul class="nav navbar-nav navbar-right">
-      	<li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ admin }}">Admin</a></li> <!-- Probably should remove this -->
+        <li><a>Register</a></li>
+        <li><a>Login</a></li>
+        <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ admin }}"><small><span class="glyphicon glyphicon-eye-open"></span></small></a></li>
       </ul>
     
 

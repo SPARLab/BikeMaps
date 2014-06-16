@@ -151,30 +151,26 @@ function initialize() {
 		});
 
 	/* TILE LAYER DEFINITIONS */
-	var openCycleMap = L.tileLayer(
-			'http://tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
-				attribution: '&copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
-				maxZoom: 18,
-			}),
-
-		stravaHM5 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
+	var stravaHM5 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
 			attribution: 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
 			minZoom: 3,
 			maxZoom: 17,
 			opacity: 0.8
 		});
 
+		// Unused
 		mapquest = L.tileLayer('http://otile2.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
 			attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">, \
 	    	map data &copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors',
 			maxZoom: 18
 		}),
 
-		skobbler = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1112113120/10/{z}/{x}/{y}.png@2x', {
+		// Based on OSM data
+		skobbler = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/10/{z}/{x}/{y}.png@2x', {
 			attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
 		}),
 
-		skobblerNight = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1112113120/2/{z}/{x}/{y}.png@2x', {
+		skobblerNight = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/2/{z}/{x}/{y}.png@2x', {
 			attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
 		}),
 	
@@ -189,7 +185,6 @@ function initialize() {
 	var baseMaps = {
 			"Day": skobbler,
 			"Night": skobblerNight,
-			// "Open Cycle Map": openCycleMap,
 		},
 		overlayMaps = {
 			"Accident points": accidentPoints,
