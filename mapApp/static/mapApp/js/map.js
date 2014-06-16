@@ -253,6 +253,7 @@ function getPolyline(latlng, freq) {
 		width: 40,
 		opacity: 0.1,
 		lineCap: 'round',
+		clickable: false,
 	}));
 }
 
