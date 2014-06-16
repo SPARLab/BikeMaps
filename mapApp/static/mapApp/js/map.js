@@ -9,6 +9,8 @@ var map, //global map object
 		// disableClusteringAtZoom: 16});
 	}),
 
+	userRoutes = new L.LayerGroup([]);
+
 	// Heatmap layer corresponding to all accident data
 	heatMap = L.heatLayer([], {
 		radius: 40,
@@ -159,7 +161,7 @@ function initialize() {
 			attribution: 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
 			minZoom: 3,
 			maxZoom: 17,
-			opacity: 0.5
+			opacity: 0.8
 		});
 
 		mapquest = L.tileLayer('http://otile2.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
@@ -180,7 +182,7 @@ function initialize() {
 	map = L.map('map', {
 		center: [48.5, -123.3],
 		zoom: 11,
-		layers: [skobbler, accidentPoints],
+		layers: [skobbler, accidentPoints, userRoutes],
 	});
 
 	/* LAYER CONTROL */
@@ -191,10 +193,11 @@ function initialize() {
 		},
 		overlayMaps = {
 			"Accident points": accidentPoints,
-			"Bike lanes": bikeLanes,
 			"Accident heat map": heatMap,
-			"Ridership heat map": stravaHM5,
+			"User route heat map": userRoutes,
+			"Strava heat map": stravaHM5,
 			"Bike Racks": racksCluster,
+			"Bike lanes": bikeLanes,
 		};
 	L.control.layers(baseMaps, overlayMaps).addTo(map);
 
@@ -243,13 +246,16 @@ function getPoint(latlng, msg, type) {
 	accidentPoints.addLayer(marker);
 }
 
-function toggleICBC() {
-	return
+
+function getPolyline(latlng, freq) {
+	userRoutes.addLayer(L.polyline(latlng, {
+		color: 'red',
+		width: 40,
+		opacity: 0.1,
+		lineCap: 'round',
+	}));
 }
 
-function toggleBikeRacks() {
-	return
-}
 
 function locateUser() {
 	this.map.locate({

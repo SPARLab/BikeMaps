@@ -15,6 +15,8 @@ def index(request):
 		'incidents': Incident.objects.all(),
 		"incidentForm": IncidentForm(), 	#the form to be rendered
 		"incidentFormErrors": False,
+
+		"routes": Route.objects.all(),
 		"routeForm": RouteForm(),
 		"routeFormErrors": False
 	}
@@ -38,6 +40,8 @@ def postRoute(request):
 				'incidents': Incident.objects.all(),
 				"incidentForm": IncidentForm(),
 				"incidentFormErrors": False,
+
+				"routes": Route.objects.all(),
 				"routeForm": routeForm,
 				"routeFormErrors": True
 			})
@@ -64,6 +68,8 @@ def postIncident(request):
 				'incidents': Incident.objects.all(),
 				"incidentForm": incidentForm,
 				"incidentFormErrors": True,
+				
+				"routes": Route.objects.all(),
 				"routeForm": RouteForm(),
 				"routeFormErrors": False
 			})

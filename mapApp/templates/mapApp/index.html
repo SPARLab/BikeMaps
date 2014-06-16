@@ -84,10 +84,10 @@
                         </div>
                         {% endfor %}
                     {% endif %}
-                        <div class="alert alert-success alert-dismissable">
+                        <!-- <div class="alert alert-success alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <center><strong>Thank you!</strong><br>This message is for testing purposes</center>
-                        </div>
+                        </div> -->
                 </div>
             </div>
             <!-- Leaflet map --> 
@@ -102,6 +102,14 @@
             getPoint( latlng, msg, "{{incident.incident_type}}" );
         </script>
     {% endfor %}
+
+    <!-- Load user routes from the database -->
+    {% for route in routes %}
+        <script>
+            getPolyline( {{ route.latlngList }} );
+        </script>
+    {% endfor %}
+
 
     <script>
         $(window).load(function(){

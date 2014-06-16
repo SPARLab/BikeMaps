@@ -290,6 +290,10 @@ class Route(models.Model):
         choices=FREQUENCY_CHOICES
     )
 
+    # reverses latlngs and turns tuple of tuples into list of lists
+    def latlngList(self):
+        return list(list(latlng)[::-1] for latlng in self.line) 
+
     def was_published_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(weeks=1) <= self.report_date < now
@@ -299,4 +303,4 @@ class Route(models.Model):
     was_published_recently.short_description = 'Reported this week?'
 
     def __unicode__(self):
-        return unicode(self.trip_purpose)
+        return unicode(self.report_date)
