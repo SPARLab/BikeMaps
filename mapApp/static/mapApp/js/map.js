@@ -156,7 +156,7 @@ function initialize() {
 			}),
 
 		stravaHM5 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
-			attribution: 'ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
+			attribution: 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
 			minZoom: 3,
 			maxZoom: 17,
 			opacity: 0.5
@@ -169,11 +169,11 @@ function initialize() {
 		}),
 
 		skobbler = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1112113120/10/{z}/{x}/{y}.png@2x', {
-			attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a> Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
+			attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
 		}),
 
 		skobblerNight = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1112113120/2/{z}/{x}/{y}.png@2x', {
-			attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a> Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
+			attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
 		}),
 	
 	/* MAP INIT AND DEFAULT LAYERS */
