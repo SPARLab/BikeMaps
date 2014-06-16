@@ -30,7 +30,7 @@ def postRoute(request):
 
 		if routeForm.is_valid():
 			routeForm.save()
-			messages.success(request, '<strong>Thank you!</strong> Your route was successfully added.')
+			messages.success(request, '<strong>Thank you!</strong><br>Your route was successfully added.')
 			return HttpResponseRedirect(reverse('mapApp:index')) 
 		else:
 			# Form is not valid, display modal with highlighted errors 
@@ -55,7 +55,7 @@ def postIncident(request):
 
 		if incidentForm.is_valid():
 			incidentForm.save()
-			messages.success(request, '<strong>Thank you!</strong> Your incident marker was successfully added.')
+			messages.success(request, '<strong>Thank you!</strong><br>Your incident marker was successfully added.')
 			return HttpResponseRedirect(reverse('mapApp:index')) 
 		
 		else:

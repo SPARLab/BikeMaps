@@ -74,19 +74,21 @@
     {% include 'mapApp/util/route_form.html' %}
 
     <div class='container-fluid'>
-            <div id="thanks">
-                {% if messages %}
-                    {% for message in messages %}
-                    <div class="alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <center>{{ message | safe }}</center>
-                    </div>
-                    {% endfor %}
-                {% endif %}
-                    <!-- <div class="alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <center><strong>Thank you!</strong><br>This message is for testing purposes</center>
-                    </div> -->
+            <div class="row text-center">
+                <div id="thanks">
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <center>{{ message | safe }}</center>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <center><strong>Thank you!</strong><br>This message is for testing purposes</center>
+                        </div>
+                </div>
             </div>
             <!-- Leaflet map --> 
             <div id="map"></div>

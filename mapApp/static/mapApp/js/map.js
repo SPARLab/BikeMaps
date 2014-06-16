@@ -155,18 +155,6 @@ function initialize() {
 				maxZoom: 18,
 			}),
 
-		mapbox = L.tileLayer('http://{s}.tiles.mapbox.com/v3/tayden.ibi2aoib/{z}/{x}/{y}.png', {
-			attribution: 'Tiles courtesy of <a href=https://www.mapbox.com/>Mapbox</a>, \
-	    	map data &copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors',
-			maxZoom: 18
-		}),
-
-		mapboxSat = L.tileLayer('http://{s}.tiles.mapbox.com/v3/openstreetmap.map-4wvf9l0l/{z}/{x}/{y}.png', {
-			attribution: 'Tiles courtesy of <a href=https://www.mapbox.com/>Mapbox</a>, \
-	    	map data &copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors',
-			maxZoom: 18
-		}),
-
 		stravaHM5 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
 			attribution: 'ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
 			minZoom: 3,
@@ -174,19 +162,32 @@ function initialize() {
 			opacity: 0.5
 		});
 
+		mapquest = L.tileLayer('http://otile2.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+			attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">, \
+	    	map data &copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors',
+			maxZoom: 18
+		}),
+
+		skobbler = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1112113120/10/{z}/{x}/{y}.png@2x', {
+			attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a> Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
+		}),
+
+		skobblerNight = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1112113120/2/{z}/{x}/{y}.png@2x', {
+			attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a> Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
+		}),
 	
 	/* MAP INIT AND DEFAULT LAYERS */
 	map = L.map('map', {
 		center: [48.5, -123.3],
 		zoom: 11,
-		layers: [mapbox, accidentPoints],
+		layers: [skobbler, accidentPoints],
 	});
 
 	/* LAYER CONTROL */
 	var baseMaps = {
-			"Map": mapbox,
-			"Open Cycle Map": openCycleMap,
-			"Satellite": mapboxSat,
+			"Day": skobbler,
+			"Night": skobblerNight,
+			// "Open Cycle Map": openCycleMap,
 		},
 		overlayMaps = {
 			"Accident points": accidentPoints,
