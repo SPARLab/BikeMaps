@@ -20,17 +20,17 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav" role="navigation">
+      <ul class="nav navbar-nav" role="navigation">
 
-        <li {% ifequal request.path index %} class="active" {% endifequal %}><a href="{{ index }}">Home</a></li>
+        <li {% ifequal request.path index %} class="active" {% endifequal %}><a href="{{ index }}">Home <span class="glyphicon glyphicon-map-marker"></span></a></li>
+        <li><a>Forum <span class="glyphicon glyphicon-comment"></span></a></li>
         <li {% ifequal request.path about %} class="active" {% endifequal %}><a href="{{ about }}">About</a></li>
-        <li><a>Forum</a></li>
       </ul>
       
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a>Login | Register</a></li>
-        <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ admin }}"><small><span class="glyphicon glyphicon-eye-open"></span></small></a></li>
+        <li><a>Login | Register  <span class="glyphicon glyphicon-user"></span></a></li>
+        <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ admin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
       </ul>
     
 
