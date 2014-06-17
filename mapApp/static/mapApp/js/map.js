@@ -67,7 +67,9 @@ function initialize() {
 				});
 			},
 			onEachFeature: function(feature, layer) {
-				layer.bindPopup('<strong>' + feature.properties.ACC_DATE + '</strong><br>' + feature.properties.ACC_TYPE + '<br>Source: Victoria Police Dept.');
+				var date = feature.properties.ACC_DATE.split("/");
+				date = getMonthFromInt(parseInt(date[1])) + ' ' + date[2] + ', ' + date[0]; 	// Month dd, YYYY
+				layer.bindPopup('<strong>Source:</strong> Victoria Police Dept.<br><strong>Date:</strong> ' + date);
 			}
 		}).addTo(accidentPoints),
 
@@ -81,7 +83,8 @@ function initialize() {
 				});
 			},
 			onEachFeature: function(feature, layer) {
-				layer.bindPopup('<strong>' + feature.properties.Month + ' ' + feature.properties.Year + '</strong><br>');
+				var date = toTitleCase(feature.properties.Month) + " " + feature.properties.Year;
+				layer.bindPopup('<strong>Source:</strong> ICBC<br><strong>Date: </strong>' + date);
 			}
 		}).addTo(accidentPoints),
 
@@ -223,7 +226,7 @@ function initialize() {
 
 }
 
-function getPoint(latlng, msg, type) {
+function getPoint(latlng, date, type) {
 	heatMap.addLatLng(latlng);
 
 	var icon;
@@ -235,7 +238,10 @@ function getPoint(latlng, msg, type) {
 	marker = L.marker(latlng, {
 		icon: icon
 	});
-	marker.bindPopup(msg);
+
+	date = date.split(",");
+	date = date[0] + ',' + date[1]
+	marker.bindPopup('<strong>Source:</strong> User submitted<br><strong>Date:</strong> ' + date + '<br><strong>Type:</strong> ' + type);
 
 	accidentPoints.addLayer(marker);
 }
@@ -256,4 +262,38 @@ function locateUser() {
 	this.map.locate({
 		setView: true
 	});
+}
+
+function getMonthFromInt(num){
+	switch(num) {
+		case 1:
+			return "January";
+		case 2:
+			return "February";
+		case 3:
+			return "March";
+		case 4:
+			return "April";
+		case 5:
+			return "May";
+		case 6:
+			return "June";
+		case 7:
+			return "July";
+		case 8:
+			return "August";
+		case 9:
+			return "September";
+		case 10:
+			return "October";
+		case 11:
+			return "November";
+		case 12:
+			return "December";
+	}
+}
+
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
