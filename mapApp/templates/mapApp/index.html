@@ -90,22 +90,19 @@
                         </div> -->
                 </div>
             </div>
+            
             <!-- Leaflet map --> 
             <div id="map"></div>
     </div>
 
     <!-- Load user points from the database -->
     {% for incident in incidents %}
-        <script>
-            getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}" );
-        </script>
+        <script> getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}" ); </script>
     {% endfor %}
 
     <!-- Load user routes from the database -->
     {% for route in routes %}
-        <script>
-            getPolyline( {{ route.latlngList }} );
-        </script>
+        <script> getPolyline( {{ route.latlngList }} ); </script>
     {% endfor %}
 
 

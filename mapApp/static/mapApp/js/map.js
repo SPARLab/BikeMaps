@@ -4,6 +4,7 @@
 var map, //global map object
 
 	// Dynamically clustered point data layer
+	// accidentPoints = new L.LayerGroup({
 	accidentPoints = new L.MarkerClusterGroup({
 		// maxClusterRadius: 50,
 		// disableClusteringAtZoom: 16});
