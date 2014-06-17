@@ -65,7 +65,7 @@ textarea {
 	top: 0;
 	left: 0;
 	right: 0;
-	margin-top: 50px;
+	margin-top: 60px;
 	z-index: 0;
 }
 
@@ -76,16 +76,6 @@ textarea {
 	bottom: 1em;
 	width: auto;
 	margin: 1em;
-	/*padding: 5px;
-	z-index: 5;*/
-}
-
-.content {
-	position: absolute;
-	bottom: 0;
-	top: 0;
-	left: 0;
-	right: 0;
-	margin-top: 50px;
-	z-index: 0;
+	/*padding: 5px;*/
+	z-index: 1;
 }

@@ -3,34 +3,39 @@
     <head>
         <!-- Loads bootstrap, js, css, and metadata tags -->
         {% include 'mapApp/header.html' %}
-
     </head>
 
     <body>
-    	{% include 'mapApp/nav_bar.html' %}
-		
-        <div class="content">
-            <h1> About VicBikeMap </h1>
-
-         
-            <div class="database testing">
-                <div style='border:2px black solid; width: 100%;'>
-                    <center>
-                        {% if incidents %}
-                            <h2>All incidents (For dev purposes)</h2>
-                            <ul>
-                            {% for incident in incidents %}
-                                <li>{{ incident.report_date }} - {{ incident.incident_type }} - {{ incident.point.coords }}</li>
-                            {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p>Something's not working || No data in database</p>
-                        {% endif %}
-
-                    </center>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    {% include 'mapApp/nav_bar.html' %}
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1> About VicBikeMap </h1>
+                 
+                    <div class="database testing">
+                        <div style='border:2px black solid; width: 100%;'>
+                            <center>
+                                {% if incidents %}
+                                    <h2>All incidents (For dev purposes)</h2>
+                                    <ul>
+                                    {% for incident in incidents %}
+                                        <li>{{ incident.report_date }} - {{ incident.incident_type }} - {{ incident.point.coords }}</li>
+                                    {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p>Something's not working || No data in database</p>
+                                {% endif %}
 
-            </div> 
+                            </center>
+                        </div>
+
+                    </div> 
+                </div>
+            </div>
         </div>
 
 
