@@ -67,7 +67,7 @@ function initialize() {
 				});
 			},
 			onEachFeature: function(feature, layer) {
-				layer.bindPopup('<strong>' + feature.properties.ACC_DATE + '</strong><br>' + feature.properties.ACC_TYPE);
+				layer.bindPopup('<strong>' + feature.properties.ACC_DATE + '</strong><br>' + feature.properties.ACC_TYPE + '<br>Source: Victoria Police Dept.');
 			}
 		}).addTo(accidentPoints),
 
@@ -227,9 +227,7 @@ function getPoint(latlng, msg, type) {
 	heatMap.addLatLng(latlng);
 
 	var icon;
-	if (type == "police") {
-		icon = policeIcon;
-	} else if (type == "Collision") {
+	if (type == "Collision") {
 		icon = bikeRedIcon;
 	} else {
 		icon = bikeYellowIcon;

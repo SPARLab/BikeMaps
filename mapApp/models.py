@@ -42,7 +42,6 @@ HAZARD_TYPES = [
 
 INCIDENT_CHOICES = tuple(COLLISION_TYPES + NEAR_MISS_TYPES) #+ THEFT_TYPES + HAZARD_TYPES)
 
-
 PURPOSE_CHOICES = (
     ("Commute", "To/from work or school"), 
     ("Exercise or recreation", "Exercise or recreation"), 
@@ -50,20 +49,6 @@ PURPOSE_CHOICES = (
     ("Personal business", "Personal business"),
     ("During work", "During work")
 )
-TIMING_CHOICES = ( # NOT USED CURRENTLY
-    ("Dawn", "Dawn"),
-    ("Morning", "Morning"),
-    ("Midday", "Midday"),
-    ("Dusk", "Dusk/evening"),
-    ("Night", "Night")
-) 
-DISTANCE_CHOICES = ( # NOT USED CURRENTLY
-    ("<2", "<2"),
-    ("2 - <5", "2 - <5"),
-    ("5 - <10", "5 - <10"),
-    ("10 - <20", "10 - <20"),
-    ("20+")
-) # in (km)
 ROAD_COND_CHOICES = (
     ('Dry', 'Dry'),
     ('Wet','Wet'),
@@ -207,12 +192,6 @@ class Incident(models.Model):
     injury = models.NullBooleanField(
         'Did you require medical attention?',
         choices= BOOLEAN_CHOICES # Without this, field has 'Unknown' for None rather than the desired "---------"
-    )
-    injury_detail = models.TextField(
-        'Describe any injuries you sustained', 
-        max_length=300, 
-        blank=True, 
-        null=True
     )
 
     # Personal details about the participant (all optional)
