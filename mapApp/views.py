@@ -10,6 +10,7 @@ from django.contrib import messages
 from mapApp.models import Incident, Route
 from mapApp.forms import IncidentForm, RouteForm
 
+
 def index(request):
 	context = {
 		'incidents': Incident.objects.all(),
@@ -21,6 +22,7 @@ def index(request):
 		"routeFormErrors": False
 	}
 	return render(request, 'mapApp/index.html', context)
+
 
 def postRoute(request):
 	if request.method == 'POST':
@@ -48,6 +50,7 @@ def postRoute(request):
 	
 	else:
 		return HttpResponseRedirect(reverse('mapApp:thanks')) 
+
 
 def postIncident(request):
 	if request.method == 'POST':
@@ -77,12 +80,9 @@ def postIncident(request):
 	else:
 		return HttpResponseRedirect(reverse('mapApp:thanks')) 
 
-def about(request):
-	context = {
-		'incidents': Incident.objects.all(),
-	}
 
-	return render(request, 'mapApp/about.html', context)
+def about(request):
+	return render(request, 'mapApp/about.html')
 
 
 def contact(request):

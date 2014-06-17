@@ -6,36 +6,55 @@
     </head>
 
     <body>
+            {% include 'mapApp/nav_bar.html' %}  
         <div class="container">
             <div class="row">
-                <div class="col-xs-12">
-                    {% include 'mapApp/nav_bar.html' %}
-                </div>
+             
+                
             </div>
+           
             <div class="row">
-                <div class="col-xs-12">
-                    <h1> About VicBikeMap </h1>
-                 
-                    <div class="database testing">
-                        <div style='border:2px black solid; width: 100%;'>
-                            <center>
-                                {% if incidents %}
-                                    <h2>All incidents (For dev purposes)</h2>
-                                    <ul>
-                                    {% for incident in incidents %}
-                                        <li>{{ incident.report_date }} - {{ incident.incident_type }} - {{ incident.point.coords }}</li>
-                                    {% endfor %}
-                                    </ul>
-                                {% else %}
-                                    <p>Something's not working || No data in database</p>
-                                {% endif %}
+                <div class="jumbotron">
+                    <h1>Lorem Ipsum</h1>
+                    <p>...</p>
+                    <p><a class="btn btn-primary btn-lg" role="button">Learn more</a></p>
+                </div>
+                                
+            </div>
+           
+            <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                    <h1>Info</h1>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-                            </center>
-                        </div>
+                </div>
 
-                    </div> 
+                <div class="col-xs-12 col-sm-4">
+                    <h1>Sponsors</h1>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </div>
+
+                <div class="col-xs-12 col-sm-4">
+                    <h1>Contact</h1>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </div>
             </div>
+
         </div>
 
 
