@@ -31,8 +31,7 @@
       
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a>Register</a></li>
-        <li><a>Login</a></li>
+        <li><a>Login | Register</a></li>
         <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ admin }}"><small><span class="glyphicon glyphicon-eye-open"></span></small></a></li>
       </ul>
     

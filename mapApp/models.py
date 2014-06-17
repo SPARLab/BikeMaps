@@ -235,6 +235,10 @@ class Incident(models.Model):
         choices= BOOLEAN_CHOICES # Without this, field has 'Unknown' for None rather than the desired "---------"
     )
 
+    # reverses latlngs and turns tuple of tuples into list of lists
+    def latlngList(self):
+        return list(self.point)[::-1]
+        
 
     def was_published_recently(self):
         now = timezone.now()

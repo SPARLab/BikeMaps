@@ -97,9 +97,7 @@
     <!-- Load user points from the database -->
     {% for incident in incidents %}
         <script>
-            var latlng = [ {{ incident.point.coords.1 }}, {{ incident.point.coords.0 }} ];
-            var msg = "<b>{{ incident.incident_type }}</b><br>{{ incident.incident_date }}.";
-            getPoint( latlng, msg, "{{incident.incident_type}}" );
+            getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}" );
         </script>
     {% endfor %}
 
