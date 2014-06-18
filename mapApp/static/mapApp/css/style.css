@@ -11,7 +11,8 @@ body {
 	margin: 0px; 
 	padding: 0px;
 	padding-top: 60px;
-	background: #18bc9c;
+	/*background: #18bc9c;*/
+	background: #3b9972;
 }
 
 button {
@@ -59,8 +60,9 @@ textarea {
 	font-family: timeburner;
 }
 
-.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-    color: #FFF;
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #fff;
 }
 
 body h1{
