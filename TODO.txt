@@ -1,16 +1,11 @@
 TO DO
 
-* Add bike racks KML
-* Add meaningful popups to points
-* Do something with user route data.. Some sort of visualization?
 * Make nested layers panel for toggling specific layers or a group of layers
 * "Help" window - instructions for how to add point etc
 * Social media buttons/links
 * Add GPS file upload for routes
 * Forum? (see http://spirit-project.com/)
-* Make navigation prettier
 * Implement About page
-* Implement Contacts page
 * Add bike-maps.org graphics
 * Change server domain name
 * Category cluster - (See https://github.com/SINTEF-9012/PruneCluster)
