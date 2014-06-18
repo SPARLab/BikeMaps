@@ -14,7 +14,7 @@ TO DO
 * Add bike-maps.org graphics
 * Change server domain name
 * Category cluster - (See https://github.com/SINTEF-9012/PruneCluster)
-* 
+* Popover for intructions
 * 
 * 
 * 
