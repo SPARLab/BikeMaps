@@ -10,5 +10,6 @@ urlpatterns = patterns('',
 	url(r'^about/$', views.about, name='about'),
 	url(r'^incident_submit/$', views.postIncident, name='postIncident'),
 	url(r'^route_submit/$', views.postRoute, name='postRoute'),
+	url(r'^email/$', views.emailAdmin, name='emailAdmin'),
 	
 )

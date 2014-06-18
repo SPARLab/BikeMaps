@@ -3,6 +3,7 @@
     <head>
         <!-- Loads bootstrap, js, css, and metadata tags -->
         {% include 'mapApp/header.html' %}
+        {% include 'mapApp/util/email_form.html' %}
         {% load staticfiles %}
     </head>
 
@@ -32,7 +33,7 @@
                 <div class="col-xs-12 col-sm-6">
                     <h1>Contact</h1>
                     <p>Do you have questions or comments about bikemaps.org?</p>
-                    <p><a class="btn btn-primary btn-md" role="button">Contact us!</a></p>
+                    <p><a class="btn btn-primary btn-md" data-toggle="modal" data-target="#emailForm">Contact us!</a></p>
                 </div>
             </div>
 

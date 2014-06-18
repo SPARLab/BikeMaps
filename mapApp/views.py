@@ -88,3 +88,6 @@ def about(request):
 def contact(request):
 	return render(request, 'mapApp/contact.html')
 
+def emailAdmin(request):
+	pass
+
