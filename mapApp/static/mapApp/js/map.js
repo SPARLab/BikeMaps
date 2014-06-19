@@ -101,8 +101,6 @@ function initialize() {
 		}),
 		bikeRacksVictoria = new L.geoJson(bikeRacks, {
 			pointToLayer: function(feature, latlng) {
-				heatMap.addLatLng(latlng);
-
 				return L.marker(latlng, {
 					icon: bikeRackIcon
 				});
