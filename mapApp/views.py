@@ -92,14 +92,24 @@ def contact(request):
 
 
 		if emailForm.is_valid():
-			
-			messages.success(request, '<strong>Thank you!</strong><br>Your incident marker was successfully added.')
+			subject = emailForm.cleaned_data['subject']
+			message = emailForm.cleaned_data['message']
+			sender = emailForm.cleaned_data['sender']
+			cc_myself = emailForm.cleaned_data['cc_myself']
+
+			recipients = ['taylordenouden@gmail.com']
+			if cc_myself:
+				recipients.append(sender)
+
+			send_mail(subject, message, sender, recipients)
+
+			messages.success(request, '<strong>Thank you!</strong><br>We\'ll do our best to get back to you.')
 			return HttpResponseRedirect(reverse('mapApp:about')) 
 		
 		else:
 			# Form is not valid, display modal with highlighted errors 
 			return render(request, 'mapApp/about.html', {
-				"emailForm": EmailForm(),
+				"emailForm": emailForm,
 				"emailFormErrors": True,
 			})
 	

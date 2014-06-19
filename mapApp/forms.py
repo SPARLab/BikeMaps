@@ -77,8 +77,8 @@ class EmailForm(forms.Form):
     subject = forms.CharField(
         label = "Subject",
         max_length=100,
-        required = True,
-        initial = "Bikemaps.org question"
+        required = False,
+        widget=forms.TextInput(attrs={'placeholder': 'What\'s this about?'})
     )
     
     message = forms.CharField(
@@ -90,4 +90,5 @@ class EmailForm(forms.Form):
     cc_myself = forms.BooleanField(
         label = "Send myself a copy",
         required=False,
+        widget=forms.CheckboxInput()
     )

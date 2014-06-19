@@ -33,7 +33,7 @@ textarea {
 	z-index: 0;
 }
 
-#thanks {
+.thanks {
 	position: fixed;
 	right: 1em;
 	bottom: 1em;
