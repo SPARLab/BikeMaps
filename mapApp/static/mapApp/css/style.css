@@ -65,3 +65,16 @@ textarea {
 body h1{
 	font-family: timeburner;
 }
+
+.rack-cluster-small {
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.rack-cluster-medium {
+	background-color: rgba(64, 64, 64, 0.6);
+}
+
+.rack-cluster {
+	background-clip: padding-box;
+	border-radius: 20px;
+}

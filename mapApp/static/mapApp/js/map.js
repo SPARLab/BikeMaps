@@ -43,16 +43,6 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		icon: "car",
 		color: "#20a5de",
 		size: "m"
-	}),
-	bikeRackIcon = L.MakiMarkers.icon({
-		icon: "parking",
-		color: "#111",
-		size: "s"
-	}),
-	bikeRackIconAlt = L.MakiMarkers.icon({
-		icon: bikeRackIcon.options.icon,
-		color: "#333",
-		size: "m"
 	});
 
 /* Create the map with a tile layer and set global variable map */
@@ -90,20 +80,26 @@ function initialize() {
 
 
 		racksCluster = new L.MarkerClusterGroup({
+			showCoverageOnHover: false,
+			// spiderfyOnMaxZoom: false,
 			maxClusterRadius: 20,
-			disableClusteringAtZoom: 18,
+			singleMarkerMode: true,
 			iconCreateFunction: function(cluster) {
-				if (cluster.getChildCount() != 1) {
-					return bikeRackIconAlt;
+				var c = ' rack-cluster-'
+				if (cluster.getChildCount() > 1) {
+					c += 'medium';
+					size = new L.Point(10,10);
+				} else {
+					c += 'small';
+					size = new L.Point(5,5);
 				}
-				return bikeRackIcon;
+
+				return new L.DivIcon({ className: 'rack-cluster' + c, iconSize: size});
 			},
 		}),
 		bikeRacksVictoria = new L.geoJson(bikeRacks, {
 			pointToLayer: function(feature, latlng) {
-				return L.marker(latlng, {
-					icon: bikeRackIcon
-				});
+				return L.marker(latlng);
 			},
 			onEachFeature: function(feature, layer) {
 				layer.bindPopup('Bike rack');
