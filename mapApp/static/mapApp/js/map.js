@@ -1,22 +1,9 @@
 // Leaflet map code and functions
 
 /* GLOBAL VARIABLES */
-var map, //global map object
-
+var map; //global map object
 	// Dynamically clustered point data layer
 	// accidentPoints = new L.LayerGroup({
-	accidentPoints = new L.MarkerClusterGroup({
-		// maxClusterRadius: 50,
-		// disableClusteringAtZoom: 16});
-	}),
-
-	userRoutes = new L.LayerGroup([]);
-
-	// Heatmap layer corresponding to all accident data
-	heatMap = L.heatLayer([], {
-		radius: 40,
-		blur: 20,
-	});
 
 /* ICON DEFINITIONS */
 var bikeRedIcon = L.MakiMarkers.icon({
@@ -25,7 +12,7 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		size: "m"
 	}),
 	bikeYellowIcon = L.MakiMarkers.icon({
-		icon: "bicycle",
+		icon: bikeRedIcon.options.icon,
 		color: "#f0ad4e",
 		size: "m"
 	}),
@@ -44,6 +31,63 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		color: "#20a5de",
 		size: "m"
 	});
+
+var accidentPoints = new L.MarkerClusterGroup({
+	// maxClusterRadius: 50,
+	// disableClusteringAtZoom: 16});,
+	
+	// iconCreateFunction: function(cluster) {
+	// 	var children = cluster.getAllChildMarkers();
+
+	// 	var	nTotal = children.length, //Get number of markers in cluster
+	// 		nPolice = 0,
+	// 		nIcbc = 0,
+	// 		nBikeR = 0,
+	// 		nBikeY = 0,
+	// 		nUnknown = 0;
+
+	// 	// Count the number of each kind of markers in the cluster
+	// 	var marker;
+	// 	for (var i=0; i<nTotal; i++){			
+	// 		marker = children[i].options.icon.options; // options for each point in clusters icon, used here to differentiate the points in each cluster
+	// 		if (marker.icon === policeIcon.icon){ nPolice++; }
+	// 		else if (marker.icon === icbcIcon.icon){ nIcbc++; }
+	// 		else if (marker.icon === bikeRedIcon){
+	// 			if (marker.color === bikeRedIcon.color){
+	// 				nBikeR++;
+	// 			}
+	// 			else if (marker.color === bikeYellowIcon.color){
+	// 				nBikeY++;
+	// 			}
+	// 			else { nUnknown++; }
+	// 		}else { nUnknown++; }
+	// 	}
+
+	// 	return pieChart({
+	// 		"nTotal" : nTotal,
+	// 		"police" : nPolice/nTotal*360,
+	// 		"icbc" : nIcbc/nTotal*360,
+	// 		"bikeR" : nBikeR/nTotal*360,
+	// 		"bikeY" : nBikeY/nTotal*360,
+	// 		"unknown" : nUnknown/nTotal*360
+	// 	});
+	// },
+});
+
+// function pieChart(options){
+	
+// 	new L.DivIcon({ className: 'rack-cluster rack-cluster-medium', iconSize: new L.Point(20,20)});
+// };
+
+
+var	userRoutes = new L.LayerGroup([]);
+
+	// Heatmap layer corresponding to all accident data
+var	heatMap = L.heatLayer([], {
+		radius: 40,
+		blur: 20,
+	});
+
 
 /* Create the map with a tile layer and set global variable map */
 function initialize() {

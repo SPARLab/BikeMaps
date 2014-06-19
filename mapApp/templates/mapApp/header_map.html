@@ -47,11 +47,15 @@
 <script src="{% static 'leaflet/plugins/layer/draw/src/edit/handler/EditToolbar.Edit.js' %}"></script>
 <script src="{% static 'leaflet/plugins/layer/draw/src/edit/handler/EditToolbar.Delete.js' %}"></script>
 
+<!-- Used for pie chart creation -->
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
 <!-- GeoJSON sources -->
 <script type="text/javascript" src="{% static 'mapApp/data/policeData.js' %}"></script> 
 <script type="text/javascript" src="{% static 'mapApp/data/bikeRoutes.js' %}"></script>
 <script type="text/javascript" src="{% static 'mapApp/data/icbcData.js' %}"></script>
 <script type="text/javascript" src="{% static 'mapApp/data/bikeRacks.js' %}"></script>
+
 
 <!-- Load app js -->
 <script src="{% static 'mapApp/js/map.js' %}"></script>
