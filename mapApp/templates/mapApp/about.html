@@ -61,6 +61,10 @@
                 $('#emailForm').modal('show');
             });
             {% endif %}
+
+            $(window).load(function(){
+              setTimeout(function(){ $('.alert').fadeOut() }, 7000);
+            });
         </script>
 
 	</body>

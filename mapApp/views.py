@@ -97,7 +97,7 @@ def contact(request):
 			sender = emailForm.cleaned_data['sender']
 			cc_myself = emailForm.cleaned_data['cc_myself']
 
-			recipients = ['taylordenouden@gmail.com']
+			recipients = ['taylordenouden@gmail.com'] # Change to Trisalyn's email
 			if cc_myself:
 				recipients.append(sender)
 
