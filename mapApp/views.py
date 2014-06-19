@@ -4,11 +4,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
-from django.contrib.gis.geos import GEOSGeometry, Point, fromstr
+from django.contrib.gis.geos import GEOSGeometry
 from django.contrib import messages
+from django.core.mail import send_mail
 
 from mapApp.models import Incident, Route
-from mapApp.forms import IncidentForm, RouteForm
+from mapApp.forms import IncidentForm, RouteForm, EmailForm
 
 
 def index(request):
@@ -49,7 +50,7 @@ def postRoute(request):
 			})
 	
 	else:
-		return HttpResponseRedirect(reverse('mapApp:thanks')) 
+		return HttpResponseRedirect(reverse('mapApp:index')) 
 
 
 def postIncident(request):
@@ -78,16 +79,29 @@ def postIncident(request):
 			})
 	
 	else:
-		return HttpResponseRedirect(reverse('mapApp:thanks')) 
+		return HttpResponseRedirect(reverse('mapApp:index')) 
 
 
 def about(request):
-	return render(request, 'mapApp/about.html')
+	return render(request, 'mapApp/about.html', {"emailForm": EmailForm()})
 
 
 def contact(request):
-	return render(request, 'mapApp/contact.html')
+	if request.method == 'POST':
+		emailForm = EmailForm(request.POST)
 
-def emailAdmin(request):
-	pass
 
+		if emailForm.is_valid():
+			
+			messages.success(request, '<strong>Thank you!</strong><br>Your incident marker was successfully added.')
+			return HttpResponseRedirect(reverse('mapApp:about')) 
+		
+		else:
+			# Form is not valid, display modal with highlighted errors 
+			return render(request, 'mapApp/about.html', {
+				"emailForm": EmailForm(),
+				"emailFormErrors": True,
+			})
+	
+	else:
+		return HttpResponseRedirect(reverse('mapApp:about')) 

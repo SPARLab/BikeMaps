@@ -1,3 +1,6 @@
+<!-- Load Crispy-froms form template renderer -->
+{% load crispy_forms_tags %}
+
 <!-- Modal form -->
 <div class="modal fade" id="emailForm" tabindex="-1" role="dialog" aria-labelledby="emailForm" aria-hidden="false">
     <div class="modal-dialog">
@@ -6,19 +9,19 @@
 
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="emailForm">Email bikemaps admin</h4>
+                <h4 class="modal-title" id="emailForm">Email Bikemaps Admin</h4>
             </div>
         
 
-            <form action="{% url 'mapApp:emailAdmin' %}" method="post" class="form">
+            <form action="{% url 'mapApp:contact' %}" method="post" role="form">
                 <div class="modal-body">
-                    
+                    {% crispy emailForm %}
                 </div>
 
 
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-default" onclick="$('#emailForm').modal('hide');$('.modal-backdrop').hide();">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Send</button>
                 </div>
             
             </form>
