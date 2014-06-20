@@ -295,9 +295,8 @@ function getMonthFromInt(num){
 }
 
 
-function toTitleCase(str)
-{
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+function toTitleCase(s){
+    return s.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
 // Purpose: Initializes the Pie chart cluster icons by getting the needed attributes from each cluster
