@@ -11,8 +11,8 @@ TO DO
 * Category cluster - (See https://github.com/SINTEF-9012/PruneCluster)
 * Popover for intructions
 * 
-* 
-* 
+* Fix improper pie chart colors in firefox
+* Check compatabilities with internet explorer (even though it's the worst)
 * 
 * 
 * 
