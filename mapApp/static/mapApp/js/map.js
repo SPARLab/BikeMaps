@@ -32,85 +32,24 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		size: "m"
 	});
 
-var accidentPoints = new L.MarkerClusterGroup({
-	maxClusterRadius: 70,
-	polygonOptions: {
-		color: '#2c3e50',
-		weight: 3
-	},
-	
-	iconCreateFunction: function(cluster) {
-		var children = cluster.getAllChildMarkers();
+/* DATASETS */
+var	userRoutes = new L.LayerGroup([]),
 
-		//Count the number of markers in each cluster
-		var	n = children.length,
-			nPolice = 0,
-			nIcbc = 0,
-			nBikeR = 0,
-			nBikeY = 0,
-			nUnknown = 0,
-			marker;
-		
-		children.forEach( function(c) {
-			marker = c.options.icon.options; // options for each point in clusters icon, used here to differentiate the points in each cluster
-			if (marker.icon === policeIcon.options.icon) {
-				nPolice++;
-			} else if (marker.icon === icbcIcon.options.icon) {
-				nIcbc++;
-			} else if (marker.icon === bikeRedIcon.options.icon && marker.color === bikeRedIcon.options.color) {
-				nBikeR++;
-			} else if (marker.icon === bikeYellowIcon.options.icon && marker.color === bikeYellowIcon.options.color) {
-				nBikeY++;
-			} else {
-				nUnknown++;
-			}
-		});
+	// Heatmap layer corresponding to all accident data
+	heatMap = L.heatLayer([], {
+		radius: 40,
+		blur: 20,
+	}),
 
-		// if(nUnknown > 0){
-		// 	console.log("error");
-		// }
-		var outerR = 20, 
-			innerR = 10;
-		if(n>=20){
-			outerR += 5;
-			innerR += 3; 
-		}else if(n<10){
-			outerR -= 5;
-			innerR -= 3;
-		}
-	
-		// Build the svg layer
-		return pieChart([{
-			"type": 'Police',
-			"count": nPolice,
-			"color": policeIcon.options.color
-		}, {
-			"type": 'ICBC',
-			"count": nIcbc,
-			"color": icbcIcon.options.color
-		}, {
-			"type": 'BikeR',
-			"count": nBikeR,
-			"color": bikeRedIcon.options.color
-		}, {
-			"type": 'BikeY',
-			"count": nBikeY,
-			"color": bikeYellowIcon.options.color
-		}, {
-			"type": 'Unknown',
-			"count": nUnknown,
-			"color": bikeGreyIcon.options.color
-		}], 
-		
-		outerR, 
-		innerR,
-		n
-		);
-	},
-});
-
-
-
+	// Cluster group for all accident data
+	accidentPoints = new L.MarkerClusterGroup({
+		maxClusterRadius: 70,
+		polygonOptions: {
+			color: '#2c3e50',
+			weight: 3
+		},
+		iconCreateFunction: createPieCluster
+	});
 
 
 /* Create the map with a tile layer and set global variable map */
@@ -361,8 +300,80 @@ function toTitleCase(str)
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
+// Purpose: Initializes the Pie chart cluster icons by getting the needed attributes from each cluster
+//		and passing them to the pieChart function
+function createPieCluster(cluster) {
+	var children = cluster.getAllChildMarkers();
+
+	//Count the number of markers in each cluster
+	var	n = children.length,
+		nPolice = 0,
+		nIcbc = 0,
+		nBikeR = 0,
+		nBikeY = 0,
+		nUnknown = 0,
+		marker;
+	
+	children.forEach( function(c) {
+		marker = c.options.icon.options; // options for each point in clusters icon, used here to differentiate the points in each cluster
+		if (marker.icon === policeIcon.options.icon) {
+			nPolice++;
+		} else if (marker.icon === icbcIcon.options.icon) {
+			nIcbc++;
+		} else if (marker.icon === bikeRedIcon.options.icon && marker.color === bikeRedIcon.options.color) {
+			nBikeR++;
+		} else if (marker.icon === bikeYellowIcon.options.icon && marker.color === bikeYellowIcon.options.color) {
+			nBikeY++;
+		} else {
+			nUnknown++;
+		}
+	});
+
+	// if(nUnknown > 0){
+	// 	console.log("error");
+	// }
+	var outerR = 20, 
+		innerR = 10;
+	if(n>=20){
+		outerR += 5;
+		innerR += 3; 
+	}else if(n<10){
+		outerR -= 5;
+		innerR -= 3;
+	}
+
+	// Build the svg layer
+	return pieChart([{
+		"type": 'Police',
+		"count": nPolice,
+		"color": policeIcon.options.color
+	}, {
+		"type": 'ICBC',
+		"count": nIcbc,
+		"color": icbcIcon.options.color
+	}, {
+		"type": 'BikeR',
+		"count": nBikeR,
+		"color": bikeRedIcon.options.color
+	}, {
+		"type": 'BikeY',
+		"count": nBikeY,
+		"color": bikeYellowIcon.options.color
+	}, {
+		"type": 'Unknown',
+		"count": nUnknown,
+		"color": bikeGreyIcon.options.color
+	}], 
+	
+	outerR, 
+	innerR,
+	n
+	);
+};
+
 
 // pieChart
+// 	Purpose: Builds the svg DivIcons
 // 	inputs: data as list of objects containing "type", "count", "color", outer chart radius, inner chart radius, and total points for cluster
 // 	output: L.DivIcon donut chart where each "type" is mapped to the corresponding "color" with a proportional section corresponding to "count"
 function pieChart(data, outerR, innerR, total){
@@ -392,6 +403,7 @@ function pieChart(data, outerR, innerR, total){
 		height = 50;
 
 	var svg = document.createElementNS(d3.ns.prefix.svg, 'svg');
+	
 	var vis = d3.select(svg)
 		.data(data)
 		.attr('class', 'marker-cluster-pie')
@@ -399,10 +411,6 @@ function pieChart(data, outerR, innerR, total){
 		.attr('height', height)
 		.append("g")
 		.attr('transform', 'translate(' + width/2 + ',' + height/2 + ')');
-
-	data.forEach(function(d){
-		d.count = +d.count;
-	});
 
 	var g = vis.selectAll(".arc")
 		.data(pie(data))
@@ -429,6 +437,7 @@ function pieChart(data, outerR, innerR, total){
 	});
 };
 
+// Purpose: Helper function to convert xml markup into html code (...I think)
 function serializeXmlNode(xmlNode) {
     if (typeof window.XMLSerializer != "undefined") {
         return (new window.XMLSerializer()).serializeToString(xmlNode);
@@ -438,11 +447,3 @@ function serializeXmlNode(xmlNode) {
     return "";
 }
 
-
-var	userRoutes = new L.LayerGroup([]);
-
-	// Heatmap layer corresponding to all accident data
-var	heatMap = L.heatLayer([], {
-		radius: 40,
-		blur: 20,
-	});
