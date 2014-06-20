@@ -78,3 +78,7 @@ body h1{
 	background-clip: padding-box;
 	border-radius: 20px;
 }
+
+.marker-cluster-pie g.arc{
+	fill-opacity: 0.6;
+}
