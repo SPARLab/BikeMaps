@@ -35,6 +35,8 @@ var bikeRedIcon = L.MakiMarkers.icon({
 /* DATASETS */
 var	userRoutes = new L.LayerGroup([]),
 
+	bikeLanes,
+
 	// Heatmap layer corresponding to all accident data
 	heatMap = L.heatLayer([], {
 		radius: 40,
@@ -49,111 +51,33 @@ var	userRoutes = new L.LayerGroup([]),
 			weight: 3
 		},
 		iconCreateFunction: createPieCluster
+	}),
+
+	// Bike rack cluster
+	racksCluster = new L.MarkerClusterGroup({
+		showCoverageOnHover: false,
+		// spiderfyOnMaxZoom: false,
+		maxClusterRadius: 20,
+		singleMarkerMode: true,
+		iconCreateFunction: function(cluster) {
+			var c = ' rack-cluster-'
+			if (cluster.getChildCount() > 1) {
+				c += 'medium';
+				size = new L.Point(10,10);
+			} else {
+				c += 'small';
+				size = new L.Point(5,5);
+			}
+
+			return new L.DivIcon({ className: 'rack-cluster' + c, iconSize: size});
+		},
 	});
 
 
 /* Create the map with a tile layer and set global variable map */
 function initialize() {
 	/* STATIC VECTOR DEFINITIONS */
-	var policePoints = new L.geoJson(policeData, {
-			pointToLayer: function(feature, latlng) {
-				heatMap.addLatLng(latlng);
-
-				return L.marker(latlng, {
-					icon: policeIcon
-				});
-			},
-			onEachFeature: function(feature, layer) {
-				var date = feature.properties.ACC_DATE.split("/");
-				date = getMonthFromInt(parseInt(date[1])) + ' ' + date[2] + ', ' + date[0]; 	// Month dd, YYYY
-				layer.bindPopup('<strong>Source:</strong> Victoria Police Dept.<br><strong>Date:</strong> ' + date);
-			}
-		}).addTo(accidentPoints),
-
-
-		icbcPoints = new L.geoJson(icbcData, {
-			pointToLayer: function(feature, latlng) {
-				heatMap.addLatLng(latlng);
-
-				return L.marker(latlng, {
-					icon: icbcIcon
-				});
-			},
-			onEachFeature: function(feature, layer) {
-				var date = toTitleCase(feature.properties.Month) + " " + feature.properties.Year;
-				layer.bindPopup('<strong>Source:</strong> ICBC<br><strong>Date: </strong>' + date);
-			}
-		}).addTo(accidentPoints),
-
-
-		racksCluster = new L.MarkerClusterGroup({
-			showCoverageOnHover: false,
-			// spiderfyOnMaxZoom: false,
-			maxClusterRadius: 20,
-			singleMarkerMode: true,
-			iconCreateFunction: function(cluster) {
-				var c = ' rack-cluster-'
-				if (cluster.getChildCount() > 1) {
-					c += 'medium';
-					size = new L.Point(10,10);
-				} else {
-					c += 'small';
-					size = new L.Point(5,5);
-				}
-
-				return new L.DivIcon({ className: 'rack-cluster' + c, iconSize: size});
-			},
-		}),
-		bikeRacksVictoria = new L.geoJson(bikeRacks, {
-			pointToLayer: function(feature, latlng) {
-				return L.marker(latlng);
-			},
-			onEachFeature: function(feature, layer) {
-				layer.bindPopup('Bike rack');
-			}
-		}).addTo(racksCluster),
-
-
-		bikeLanes = new L.geoJson(bikeRoutes, {
-			style: function(feature) {
-				switch (feature.properties.Descriptio) {
-					case 'Buffered Bike Lane':
-						return {
-							color: '#007f16', // Dark green
-						};
-					case 'Cycle Track*':
-						return {
-							color: '#259238', // Faded dark green
-							opacity: 0.8
-						};
-					case 'Multi-Use Trail':
-						return {
-							color: '#87a000', // Dark Yellow
-							opacity: 0.8
-						};
-					case 'Conventional Bike Lane':
-						return {
-							color: '#00c322', // Green
-							opacity: 0.8
-						};
-					case 'Priority Transit and Cycling Lanes*':
-						return {
-							color: '#05326d', // Dark blue
-							opacity: 0.8
-						};
-					case 'Signed Bike Route':
-						return {
-							color: '#0e51a7', // blue
-							opacity: 0.8
-						};
-					case 'Proposed Bicycle Network':
-						return {
-							color: '#ff9e00', // Faded green
-							opacity: 0.3
-						};
-				}
-			}
-		});
+	initializeGeoJsonLayers();
 
 	/* TILE LAYER DEFINITIONS */
 	var stravaHM5 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
@@ -162,13 +86,6 @@ function initialize() {
 			maxZoom: 17,
 			opacity: 0.8
 		});
-
-		// Unused
-		mapquest = L.tileLayer('http://otile2.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
-			attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">, \
-	    	map data &copy <a href=http://openstreetmap.org>OpenStreetMap</a> contributors',
-			maxZoom: 18
-		}),
 
 		// Based on OSM data
 		skobbler = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/10/{z}/{x}/{y}.png@2x', {
@@ -202,7 +119,7 @@ function initialize() {
 	L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 
-	/* DRAWING CONTROL */
+	/* DRAWING CONTROLS */
 	L.drawLocal.draw.toolbar.buttons.marker = 'Add an incident marker';
 	L.drawLocal.draw.handlers.marker.tooltip.start = 'Place me where the incident occurred';
 	L.drawLocal.draw.toolbar.buttons.polyline = 'Add your cycling route';
@@ -226,6 +143,91 @@ function initialize() {
 	}));
 
 }
+
+function initializeGeoJsonLayers(){
+		var policePoints = new L.geoJson(policeData, {
+			pointToLayer: function(feature, latlng) {
+				heatMap.addLatLng(latlng);
+
+				return L.marker(latlng, {
+					icon: policeIcon
+				});
+			},
+			onEachFeature: function(feature, layer) {
+				var date = feature.properties.ACC_DATE.split("/");
+				date = getMonthFromInt(parseInt(date[1])) + ' ' + date[2] + ', ' + date[0]; 	// Month dd, YYYY
+				layer.bindPopup('<strong>Source:</strong> Victoria Police Dept.<br><strong>Date:</strong> ' + date);
+			}
+		}).addTo(accidentPoints),
+
+
+		icbcPoints = new L.geoJson(icbcData, {
+			pointToLayer: function(feature, latlng) {
+				heatMap.addLatLng(latlng);
+
+				return L.marker(latlng, {
+					icon: icbcIcon
+				});
+			},
+			onEachFeature: function(feature, layer) {
+				var date = toTitleCase(feature.properties.Month) + " " + feature.properties.Year;
+				layer.bindPopup('<strong>Source:</strong> ICBC<br><strong>Date: </strong>' + date);
+			}
+		}).addTo(accidentPoints),
+
+
+		bikeRacksVictoria = new L.geoJson(bikeRacks, {
+			pointToLayer: function(feature, latlng) {
+				return L.marker(latlng);
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup('Bike rack');
+			}
+		}).addTo(racksCluster);
+
+	// Initialize global bikeLanes layer
+	bikeLanes = new L.geoJson(bikeRoutes, {
+		style: function(feature) {
+			switch (feature.properties.Descriptio) {
+				case 'Buffered Bike Lane':
+					return {
+						color: '#007f16', // Dark green
+					};
+				case 'Cycle Track*':
+					return {
+						color: '#259238', // Faded dark green
+						opacity: 0.8
+					};
+				case 'Multi-Use Trail':
+					return {
+						color: '#87a000', // Dark Yellow
+						opacity: 0.8
+					};
+				case 'Conventional Bike Lane':
+					return {
+						color: '#00c322', // Green
+						opacity: 0.8
+					};
+				case 'Priority Transit and Cycling Lanes*':
+					return {
+						color: '#05326d', // Dark blue
+						opacity: 0.8
+					};
+				case 'Signed Bike Route':
+					return {
+						color: '#0e51a7', // blue
+						opacity: 0.8
+					};
+				case 'Proposed Bicycle Network':
+					return {
+						color: '#ff9e00', // Faded green
+						opacity: 0.3
+					};
+			}
+		}
+	});
+}
+
 
 function getPoint(latlng, date, type) {
 	heatMap.addLatLng(latlng);
