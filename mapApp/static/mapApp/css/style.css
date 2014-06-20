@@ -80,5 +80,9 @@ body h1{
 }
 
 .marker-cluster-pie g.arc{
-	fill-opacity: 0.6;
+	fill-opacity: 0.8;
+}
+
+.pieLabel{
+
 }

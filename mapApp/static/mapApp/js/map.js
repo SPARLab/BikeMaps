@@ -33,14 +33,15 @@ var bikeRedIcon = L.MakiMarkers.icon({
 	});
 
 var accidentPoints = new L.MarkerClusterGroup({
-	// maxClusterRadius: 50,
+	maxClusterRadius: 70,
 	// disableClusteringAtZoom: 16});,
 	
 	iconCreateFunction: function(cluster) {
 		var children = cluster.getAllChildMarkers();
 
 		//Count the number of markers in each cluster
-		var	nPolice = 0,
+		var	n = children.length,
+			nPolice = 0,
 			nIcbc = 0,
 			nBikeR = 0,
 			nBikeY = 0,
@@ -65,7 +66,16 @@ var accidentPoints = new L.MarkerClusterGroup({
 		// if(nUnknown > 0){
 		// 	console.log("error");
 		// }
-
+		var outerR = 20, 
+			innerR = 10;
+		if(n>=20){
+			outerR += 5;
+			innerR += 3; 
+		}else if(n<10){
+			outerR -= 5;
+			innerR -= 3;
+		}
+	
 		// Build the svg layer
 		return pieChart([{
 			"type": 'Police',
@@ -87,85 +97,17 @@ var accidentPoints = new L.MarkerClusterGroup({
 			"type": 'Unknown',
 			"count": nUnknown,
 			"color": bikeGreyIcon.options.color
-		}]);
+		}], 
+		
+		outerR, 
+		innerR,
+		n
+		);
 	},
 });
 
-function pieChart(data){
-	var types = [],
-		counts = [],
-		colors = [];
-
-	data.forEach(function(d){
-		types.push(d.type);
-		counts.push(d.count);
-		colors.push(d.color);
-	});
-
-	var color = d3.scale.ordinal()
-		.domain(types)
-		.range(colors)
-
-	var arc = d3.svg.arc()
-		.outerRadius(40)
-		.innerRadius(10);
-
-	var pie = d3.layout.pie()
-		.sort(null)
-		.value(function(d) { return d.count; });
-
-	var width = 50, 
-		height = 50;
-
-	var svg = document.createElementNS(d3.ns.prefix.svg, 'svg');
-	var vis = d3.select(svg)
-		.data(data)
-		.attr('class', 'marker-cluster-pie')
-		.attr('width', width)
-		.attr('height', height)
-		.append("g")
-		.attr('transform', 'translate(' + width/2 + ',' + width/2 + ')');
-
-	data.forEach(function(d){
-		d.count = +d.count;
-	});
-
-	var g = vis.selectAll(".arc")
-		.data(pie(data))
-		.enter().append("g")
-		.attr('class', 'arc');
-
-	g.append('path')
-		.attr("d", arc)
-		.style("fill", function(d) { return color(d.data.type); });
 
 
-	var html = serializeXmlNode(svg);
-
-	return new L.DivIcon({
-		html: html,
-		className: 'marker-cluster',
-		iconSize: new L.Point(40,40)
-	});
-};
-
-function serializeXmlNode(xmlNode) {
-    if (typeof window.XMLSerializer != "undefined") {
-        return (new window.XMLSerializer()).serializeToString(xmlNode);
-    } else if (typeof xmlNode.xml != "undefined") {
-        return xmlNode.xml;
-    }
-    return "";
-}
-
-
-var	userRoutes = new L.LayerGroup([]);
-
-	// Heatmap layer corresponding to all accident data
-var	heatMap = L.heatLayer([], {
-		radius: 40,
-		blur: 20,
-	});
 
 
 /* Create the map with a tile layer and set global variable map */
@@ -410,7 +352,94 @@ function getMonthFromInt(num){
 	}
 }
 
+
 function toTitleCase(str)
 {
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
+
+
+// pieChart
+// 	inputs: data as list of objects containing "type", "count", "color", outer chart radius, inner chart radius, and total points for cluster
+// 	output: L.DivIcon donut chart where each "type" is mapped to the corresponding "color" with a proportional section corresponding to "count"
+function pieChart(data, outerR, innerR, total){
+	var types = [],
+		counts = [],
+		colors = [];
+
+	data.forEach(function(d){
+		types.push(d.type);
+		counts.push(d.count);
+		colors.push(d.color);
+	});
+
+	var color = d3.scale.ordinal()
+		.domain(types)
+		.range(colors)
+
+	var arc = d3.svg.arc()
+		.outerRadius(outerR)
+		.innerRadius(innerR);
+
+	var pie = d3.layout.pie()
+		.sort(null)
+		.value(function(d) { return d.count; });
+
+	var width = 50, 
+		height = 50;
+
+	var svg = document.createElementNS(d3.ns.prefix.svg, 'svg');
+	var vis = d3.select(svg)
+		.data(data)
+		.attr('class', 'marker-cluster-pie')
+		.attr('width', width)
+		.attr('height', height)
+		.append("g")
+		.attr('transform', 'translate(' + width/2 + ',' + height/2 + ')');
+
+	data.forEach(function(d){
+		d.count = +d.count;
+	});
+
+	var g = vis.selectAll(".arc")
+		.data(pie(data))
+		.enter().append("g")
+		.attr('class', 'arc');
+
+	g.append('path')
+		.attr("d", arc)
+		.style("fill", function(d) { return color(d.data.type); });
+
+	vis.append('text')
+		.attr('class', 'pieLabel')
+		.attr('text-anchor', 'middle')
+		.attr('dy','.3em')
+		.text(total)
+
+
+	var html = serializeXmlNode(svg);
+
+	return new L.DivIcon({
+		html: html,
+		className: 'marker-cluster',
+		iconSize: new L.Point(40,40)
+	});
+};
+
+function serializeXmlNode(xmlNode) {
+    if (typeof window.XMLSerializer != "undefined") {
+        return (new window.XMLSerializer()).serializeToString(xmlNode);
+    } else if (typeof xmlNode.xml != "undefined") {
+        return xmlNode.xml;
+    }
+    return "";
+}
+
+
+var	userRoutes = new L.LayerGroup([]);
+
+	// Heatmap layer corresponding to all accident data
+var	heatMap = L.heatLayer([], {
+		radius: 40,
+		blur: 20,
+	});
