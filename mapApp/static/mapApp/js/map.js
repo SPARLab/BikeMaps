@@ -425,6 +425,7 @@ function pieChart(data, outerR, innerR, total){
 		.attr("cx", 0)
 		.attr("cy", 0)
 		.attr("r", innerR)
+		.attr('class', 'center')
 		.attr("fill", "#f1f1f1");
 
 	// Add count text
