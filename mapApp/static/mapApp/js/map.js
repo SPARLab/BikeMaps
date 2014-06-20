@@ -18,12 +18,12 @@ var bikeRedIcon = L.MakiMarkers.icon({
 	}),
 	bikeGreyIcon = L.MakiMarkers.icon({
 		icon: "bicycle",
-		color: "#999",
+		color: "#999999",
 		size: "m"
 	}),
 	policeIcon = L.MakiMarkers.icon({
 		icon: "police",
-		color: "#004",
+		color: "#000044",
 		size: "m"
 	}),
 	icbcIcon = L.MakiMarkers.icon({
@@ -34,7 +34,10 @@ var bikeRedIcon = L.MakiMarkers.icon({
 
 var accidentPoints = new L.MarkerClusterGroup({
 	maxClusterRadius: 70,
-	// disableClusteringAtZoom: 16});,
+	polygonOptions: {
+		color: '#2c3e50',
+		weight: 3
+	},
 	
 	iconCreateFunction: function(cluster) {
 		var children = cluster.getAllChildMarkers();
