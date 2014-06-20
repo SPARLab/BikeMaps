@@ -1,13 +1,13 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib import messages
 from django.core.mail import send_mail
 
+from django.contrib.auth.models import User, Group
 from mapApp.models import Incident, Route
 from mapApp.forms import IncidentForm, RouteForm, EmailForm
 
@@ -97,7 +97,11 @@ def contact(request):
 			sender = emailForm.cleaned_data['sender']
 			cc_myself = emailForm.cleaned_data['cc_myself']
 
-			recipients = ['taylordenouden@gmail.com'] # Change to Trisalyn's email
+			contact_group = Group.objects.get(name="admin contact")
+			members = contact_group.user_set.all()
+			recipients = []
+			for r in members:
+				recipients.append(r.email) 
 			if cc_myself:
 				recipients.append(sender)
 
