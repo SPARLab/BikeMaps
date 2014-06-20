@@ -36,47 +36,71 @@ var accidentPoints = new L.MarkerClusterGroup({
 	// maxClusterRadius: 50,
 	// disableClusteringAtZoom: 16});,
 	
-	// iconCreateFunction: function(cluster) {
-	// 	var children = cluster.getAllChildMarkers();
+// 	iconCreateFunction: function(cluster) {
+// 		var children = cluster.getAllChildMarkers();
 
-	// 	var	nTotal = children.length, //Get number of markers in cluster
-	// 		nPolice = 0,
-	// 		nIcbc = 0,
-	// 		nBikeR = 0,
-	// 		nBikeY = 0,
-	// 		nUnknown = 0;
+// 		//Get number of markers in cluster
+// 		var	nPolice = 0,
+// 			nIcbc = 0,
+// 			nBikeR = 0,
+// 			nBikeY = 0,
+// 			nUnknown = 0;
 
-	// 	// Count the number of each kind of markers in the cluster
-	// 	var marker;
-	// 	for (var i=0; i<nTotal; i++){			
-	// 		marker = children[i].options.icon.options; // options for each point in clusters icon, used here to differentiate the points in each cluster
-	// 		if (marker.icon === policeIcon.icon){ nPolice++; }
-	// 		else if (marker.icon === icbcIcon.icon){ nIcbc++; }
-	// 		else if (marker.icon === bikeRedIcon){
-	// 			if (marker.color === bikeRedIcon.color){
-	// 				nBikeR++;
-	// 			}
-	// 			else if (marker.color === bikeYellowIcon.color){
-	// 				nBikeY++;
-	// 			}
-	// 			else { nUnknown++; }
-	// 		}else { nUnknown++; }
-	// 	}
+// 		var marker;
+// 		children.forEach(function(c) {
+// 			marker = c.options.icon.options; // options for each point in clusters icon, used here to differentiate the points in each cluster
+// 			if (marker.icon === policeIcon.options.icon) {
+// 				nPolice++;
+// 			} else if (marker.icon === icbcIcon.options.icon) {
+// 				nIcbc++;
+// 			} else if (marker.icon === bikeRedIcon.options.icon && marker.color === bikeRedIcon.options.color) {
+// 				nBikeR++;
+// 			} else if (marker.icon === bikeYellowIcon.options.icon && marker.color === bikeYellowIcon.options.color) {
+// 				nBikeY++;
+// 			} else {
+// 				nUnknown++;
+// 			}
+// 		});
 
-	// 	return pieChart({
-	// 		"nTotal" : nTotal,
-	// 		"police" : nPolice/nTotal*360,
-	// 		"icbc" : nIcbc/nTotal*360,
-	// 		"bikeR" : nBikeR/nTotal*360,
-	// 		"bikeY" : nBikeY/nTotal*360,
-	// 		"unknown" : nUnknown/nTotal*360
-	// 	});
-	// },
-});
+// 		// if(nUnknown > 0){
+// 		// 	console.log("error");
+// 		// }
 
-// function pieChart(options){
-	
-// 	new L.DivIcon({ className: 'rack-cluster rack-cluster-medium', iconSize: new L.Point(20,20)});
+// 		// Build the svg layer
+// 		return pieChart([{
+// 			"type": 'Police',
+// 			"count": nPolice,
+// 			"color": policeIcon.options.color
+// 		}, {
+// 			"type": 'ICBC',
+// 			"count": nIcbc,
+// 			"color": icbcIcon.options.color
+// 		}, {
+// 			"type": 'BikeR',
+// 			"count": nBikeR,
+// 			"color": bikeRedIcon.options.color
+// 		}, {
+// 			"type": 'BikeY',
+// 			"count": nBikeY,
+// 			"color": bikeYellowIcon.options.color
+// 		}, {
+// 			"type": 'Unknown',
+// 			"count": nUnknown,
+// 			"color": bikeGreyIcon.options.color
+// 		}]);
+// 	},
+// });
+
+// function pieChart(data){
+// 	data.forEach(function(d){
+// 		console.log(d.type)
+// 	});
+// 	var color = d3.scale.ordinal ()
+// 		.domain(['Police', 'ICBC', 'BikeR', 'BikeY', 'Unknown'])
+// 		.range([policeIcon.options.color, icbcIcon.options.color, bikeRedIcon.options.color, bikeYellowIcon.options.color, bikeGreyIcon.options.color])
+
+
+// 	return new L.DivIcon({ className: 'rack-cluster rack-cluster-medium', iconSize: new L.Point(20,20)});
 // };
 
 
