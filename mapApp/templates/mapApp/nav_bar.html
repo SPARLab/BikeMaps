@@ -25,12 +25,12 @@
 
         <li {% ifequal request.path index %} class="active" {% endifequal %}><a href="{{ index }}">Home <span class="glyphicon glyphicon-map-marker"></span></a></li>
         <li><a>Forum <span class="glyphicon glyphicon-comment"></span></a></li>
-        <li {% ifequal request.path about %} class="active" {% endifequal %}><a href="{{ about }}">About</a></li>
+        <li {% ifequal request.path about %} class="active" {% endifequal %}><a href="{{ about }}">About <span class="glyphicon glyphicon-leaf"></span></a></li>
       </ul>
       
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a>Login | Register  <span class="glyphicon glyphicon-user"></span></a></li>
+        <li><a>Log in <span class="glyphicon glyphicon-user"></span></a></li>
         <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ admin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
       </ul>
     
