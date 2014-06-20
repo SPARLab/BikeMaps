@@ -90,3 +90,10 @@ body h1{
 .pieLabel{
 	font-family: sans-serif;
 }
+
+/* Click and drag point in line-routing */
+div.line-mouse-marker {
+  background-color: #ffffff;
+  border: 2px solid black;
+  border-radius: 10px;
+}
