@@ -334,7 +334,7 @@ function createPieCluster(cluster) {
 	// }
 	var outerR = 20, 
 		innerR = 10;
-	if(n>=20){
+	if(n>=50){
 		outerR += 5;
 		innerR += 3; 
 	}else if(n<10){
@@ -399,11 +399,10 @@ function pieChart(data, outerR, innerR, total){
 		.sort(null)
 		.value(function(d) { return d.count; });
 
+	// Define the svg layer
 	var width = 50, 
 		height = 50;
-
-	var svg = document.createElementNS(d3.ns.prefix.svg, 'svg');
-	
+	var svg = document.createElementNS(d3.ns.prefix.svg, 'svg');	
 	var vis = d3.select(svg)
 		.data(data)
 		.attr('class', 'marker-cluster-pie')
@@ -421,11 +420,20 @@ function pieChart(data, outerR, innerR, total){
 		.attr("d", arc)
 		.style("fill", function(d) { return color(d.data.type); });
 
+	// Add center fill
+	vis.append("circle")
+		.attr("cx", 0)
+		.attr("cy", 0)
+		.attr("r", innerR)
+		.attr("fill", "#f1f1f1");
+
+	// Add count text
 	vis.append('text')
 		.attr('class', 'pieLabel')
 		.attr('text-anchor', 'middle')
 		.attr('dy','.3em')
 		.text(total)
+
 
 
 	var html = serializeXmlNode(svg);
