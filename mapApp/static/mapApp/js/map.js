@@ -447,20 +447,6 @@ function createPieCluster(cluster) {
 // 	inputs: data as list of objects containing "type", "count", "color", outer chart radius, inner chart radius, and total points for cluster
 // 	output: L.DivIcon donut chart where each "type" is mapped to the corresponding "color" with a proportional section corresponding to "count"
 function pieChart(data, outerR, innerR, total){
-	var types = [],
-		counts = [],
-		colors = [];
-
-	data.forEach(function(d){
-		types.push(d.type);
-		counts.push(d.count);
-		colors.push(d.color);
-	});
-
-	var color = d3.scale.ordinal()
-		.domain(types)
-		.range(colors)
-
 	var arc = d3.svg.arc()
 		.outerRadius(outerR)
 		.innerRadius(innerR);
@@ -488,7 +474,7 @@ function pieChart(data, outerR, innerR, total){
 
 	g.append('path')
 		.attr("d", arc)
-		.style("fill", function(d) { return color(d.data.type); });
+		.style("fill", function(d) { return '#' + d.data.color; });
 
 	// Add center fill
 	vis.append("circle")
