@@ -90,10 +90,12 @@ function initialize() {
 		// Based on OSM data
 		skobbler = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/10/{z}/{x}/{y}.png@2x', {
 			attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
+			minZoom: 2,
 		}),
 
 		skobblerNight = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/2/{z}/{x}/{y}.png@2x', {
 			attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
+			minZoom: 2,
 		}),
 	
 	/* MAP INIT AND DEFAULT LAYERS */
@@ -295,7 +297,7 @@ function initializeGeoJsonLayers(){
 			}
 		}
 	});
-}
+};
 
 
 function getPoint(latlng, date, type) {
@@ -316,7 +318,7 @@ function getPoint(latlng, date, type) {
 	marker.bindPopup('<strong>Source:</strong> User submitted<br><strong>Date:</strong> ' + date + '<br><strong>Type:</strong> ' + type);
 
 	accidentPoints.addLayer(marker);
-}
+};
 
 
 function getPolyline(latlng, freq) {
@@ -327,14 +329,14 @@ function getPolyline(latlng, freq) {
 		lineCap: 'round',
 		clickable: false,
 	}));
-}
+};
 
 
 function locateUser() {
 	this.map.locate({
 		setView: true
 	});
-}
+};
 
 function getMonthFromInt(num){
 	switch(num) {
@@ -363,12 +365,12 @@ function getMonthFromInt(num){
 		case 12:
 			return "December";
 	}
-}
+};
 
 
 function toTitleCase(s){
     return s.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-}
+};
 
 // Purpose: Initializes the Pie chart cluster icons by getting the needed attributes from each cluster
 //		and passing them to the pieChart function
@@ -510,5 +512,5 @@ function serializeXmlNode(xmlNode) {
         return xmlNode.xml;
     }
     return "";
-}
+};
 
