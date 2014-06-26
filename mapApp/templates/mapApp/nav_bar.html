@@ -1,9 +1,15 @@
+{% include 'mapApp/header.html' %}
+
 {% load staticfiles %}
 {% url 'mapApp:index' as index %}
 {% url 'mapApp:about' as about %}
 {% url 'spirit:index' as forum %}
 {% url 'admin:index' as admin %}
 
+{% url 'spirit:user-logout' as logout %}
+{% url 'spirit:user-login' as login %}
+{% url 'spirit:user-register' as register %}
+{% url 'spirit:profile-update' as profile %}
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container-fluid">
@@ -29,8 +35,28 @@
       
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a>Log in <span class="glyphicon glyphicon-user"></span></a></li>
-        <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ admin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
+        <li class="dropdown">
+            {% if request.user.is_authenticated %}
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{ request.user }}<span class="caret"></span></a>
+
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ profile }}">Profile</a></li>
+                <li><a href="{{ logout }}">Log out</a></li>
+            {% else %}
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Guest<span class="caret"></span></a>
+
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="{{ login }}">Log in</a></li>
+              <li><a href="{{ register }}">Register</a></li>  
+            {% endif %}
+            
+            {% if request.user.is_superuser %}
+            <li class="divider"></li>
+            <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ admin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
+            {% endif %}
+          </ul>
+        </li>
+
       </ul>
     
 
