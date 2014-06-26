@@ -4,10 +4,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'VicBikeMap.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^', include('mapApp.urls', namespace="mapApp"))
+    url(r'^', include('mapApp.urls', namespace="mapApp", app_name="mapApp")),
+    url(r'^forum/', include('spirit.urls', namespace="spirit", app_name="spirit")),
 )
