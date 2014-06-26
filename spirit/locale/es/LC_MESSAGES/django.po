@@ -46,7 +46,7 @@ msgid "Category"
 msgstr "Categoria"
 
 #: .\forms\topic.py:30
-msgid "Chose a category"
+msgid "Choose a category"
 msgstr "Elige una categoria"
 
 #: .\forms\topic.py:40
