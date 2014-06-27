@@ -4,7 +4,7 @@
 }
 
 html {
-	height: 100%;\
+	height: 100%;
 }
 body {
 	height: 100%; 
@@ -12,7 +12,7 @@ body {
 	padding: 0px;
 	padding-top: 60px;
 	/*background: #18bc9c;*/
-	background: #3b9972;
+	/*background: #3b9972;*/
 }
 
 button {
@@ -97,3 +97,9 @@ div.line-mouse-marker {
   border: 2px solid black;
   border-radius: 10px;
 }
+
+.dropdown-menu{
+	font-family: sans-serif;
+}
+
+

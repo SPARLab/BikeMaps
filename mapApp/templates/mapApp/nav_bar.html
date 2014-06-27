@@ -8,7 +8,6 @@
 
 {% url 'spirit:user-logout' as logout %}
 {% url 'spirit:user-login' as login %}
-{% url 'spirit:user-register' as register %}
 {% url 'spirit:profile-update' as profile %}
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -46,8 +45,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Guest<span class="caret"></span></a>
 
             <ul class="dropdown-menu" role="menu">
-              <li><a href="{{ login }}">Log in</a></li>
-              <li><a href="{{ register }}">Register</a></li>  
+              <li><a href="{{ login }}">Log in</a></li> 
             {% endif %}
             
             {% if request.user.is_superuser %}
