@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  {% load staticfiles %}
+  {% load staticfiles spirit_tags%}
   <meta name="Description" content="Track Bike Accidents in Victoria" >
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   
@@ -54,30 +54,34 @@
           <li {% ifequal request.path about %} class="active" {% endifequal %}><a href="{{ about }}">About <span class="glyphicon glyphicon-leaf"></span></a></li>
         </ul>
         
-        {% load spirit_tags %}
         <ul class="nav navbar-nav navbar-right">
           {% if request.user.is_authenticated %}
-          <li><a class="header-tab-link js-tab-notification{% if has_notifications %} is-highlighted{% endif %}" href="{% url "spirit:topic-notification-list" %}" data-related=".js-notifications-content"><i class="fa fa-bell"></i></a></li>
-          <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{ request.user }}<span class="caret"></span></a>
 
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ profile }}">Profile</a></li>
-                <li><a href="{{ logout }}">Log out</a></li>
-                {% if request.user.is_superuser %}
-                <li class="divider"></li>
-                <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ admin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
-                {% endif %}
+            {% has_topic_notifications user as has_notifications %}
+            <li><a href="{% url "spirit:topic-notification-list" %}"><span class="glyphicon glyphicon-bell {% if has_notifications %} is-highlighted{% endif %}"></span></a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{ request.user }}<span class="caret"></span></a>
+
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="{{ profile }}">Profile</a></li>
+                  <li><a href="{{ logout }}">Log out</a></li>
+                  {% if request.user.is_superuser %}
+                  <li class="divider"></li>
+                  <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ admin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
+                  {% endif %}
+            
           {% else %}
-          <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Guest<span class="caret"></span></a>
+          
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Guest<span class="caret"></span></a>
 
-              <ul class="dropdown-menu" role="menu">
-              <li><a href="{{ login }}">Log in</a></li> 
-              <li><a href="{{ register }}">Register</a></li> 
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ login }}">Log in</a></li> 
+                <li><a href="{{ register }}">Register</a></li> 
+          
           {% endif %}    
-            </ul>
-          </li>
+              </ul>
+            </li>
 
         </ul>
       </div>
@@ -88,5 +92,3 @@
 
 </body>
 </html>
-
-<!-- 66.96.162.138 -->

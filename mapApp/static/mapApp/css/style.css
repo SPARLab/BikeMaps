@@ -102,4 +102,6 @@ div.line-mouse-marker {
 	font-family: sans-serif;
 }
 
-
+.is-highlighted{
+	color: #eeee00;
+}
