@@ -1,70 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <!-- Loads bootstrap, js, css, and metadata tags -->
-        {% include 'mapApp/header.html' %}
-        {% include 'mapApp/util/email_form.html' %}
-    </head>
+{% extends "mapApp/base.html" %}
 
-    <body>
-        {% include 'mapApp/nav_bar.html' %} 
+<!-- HEAD STUFF -->
+{% block header %}
+    {% include 'mapApp/util/email_form.html' %}
+{% endblock %}
 
-        <div class='container'>
-        <div class="row text-center">
-            <div class="thanks">
-                {% if messages %}
-                    {% for message in messages %}
-                    <div class="alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <center>{{ message | safe }}</center>
-                    </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </div>
+<!-- BODY STUFF -->
+{% block content %}
 
-         
-        <div class="container">
-                       
-            <div class="row">
-                <div class="jumbotron about">
-                  <h1>About</h1>
-                    <p>At BikeMaps we love bikes and maps! Our goal is to map your cycling experience to make biking safer. You know your local cycling trouble spots and we want you to map them. Your knowledge of cycling safety, hazards, and even bike thefts will be analyzed using GIS and statistics to identify hot spots of cycling safety, risk, and crime.  We are constantly updating our maps and technology so send us feedback.  And stay tuned for updated safety maps generated from YOUR biking experience.</p>
+    <div class='container'>
+    <div class="row text-center">
+        <div class="thanks">
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <center>{{ message | safe }}</center>
                 </div>
-                                
-            </div>
-           
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                    <h1>Sponsors</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                </div>
-
-                <div class="col-xs-12 col-sm-6">
-                    <h1>Contact</h1>
-                    <p>Do you have questions, comments, or feedback about bikemaps.org? <br>We would love to hear from you!</p>
-                    <p><a class="btn btn-primary btn-md" data-toggle="modal" data-target="#emailForm">Contact us!</a></p>
-                </div>
-            </div>
-
-        </div>
-
-        <script>
-            {% if emailFormErrors %}
-            $(window).load(function(){
-                $('#emailForm').modal('show');
-            });
+                {% endfor %}
             {% endif %}
+        </div>
+    </div>
 
-            $(window).load(function(){
-              setTimeout(function(){ $('.alert').fadeOut() }, 7000);
-            });
-        </script>
+     
+    <div class="container">
+                   
+        <div class="row">
+            <div class="jumbotron about">
+              <h1>About</h1>
+                <p>At BikeMaps we love biking as much as we love maps! Our goal is to map your cycling experience to make biking safer. You know your local cycling trouble spots and we want you to map them. Your knowledge of cycling safety, hazards, and even bike thefts will be analyzed using GIS and statistics to identify hot spots of cycling safety, risk, and crime.  We are constantly updating our maps and technology, so send us feedback.  And stay tuned for updated safety maps generated from YOUR biking experience.</p>
+            </div>
+                            
+        </div>
+       
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <h1>Sponsors</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
 
-	</body>
-</html>
+            <div class="col-xs-12 col-sm-6">
+                <h1>Contact</h1>
+                <p>Do you have questions, comments, or feedback about bikemaps.org? <br>We would love to hear from you!</p>
+                <p><a class="btn btn-primary btn-md" data-toggle="modal" data-target="#emailForm">Contact us!</a></p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        {% if emailFormErrors %}
+        $(window).load(function(){
+            $('#emailForm').modal('show');
+        });
+        {% endif %}
+
+        $(window).load(function(){
+          setTimeout(function(){ $('.alert').fadeOut() }, 7000);
+        });
+    </script>
+
+{% endblock %}
