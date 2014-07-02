@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  {% load staticfiles %}
-
   <meta name="Description" content="Track Bike Accidents in Victoria" >
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
   <title>BikeMaps.org</title>
+
+  {% load staticfiles %}
   {% block header %} {% endblock %}
 
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'mapApp/images/bikemaps_web_icon.ico' %}" />
@@ -20,9 +19,7 @@
 
   <!-- Load JS -->
   <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
-
 </head>
-
 
 <body>
   {% url 'mapApp:index' as index %}
