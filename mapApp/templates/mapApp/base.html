@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% load staticfiles %}
   <meta name="Description" content="Track Bike Accidents in Victoria" >
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <title>BikeMaps.org</title>
-
-  {% load staticfiles %}
-  {% block header %} {% endblock %}
-
+  
+  <title>BikeMaps.org {% block title %}{% endblock %}</title>
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'mapApp/images/bikemaps_web_icon.ico' %}" />
+
+  {% block header %} {% endblock %}
 
   <!-- Load CSS -->
   <link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet" media="screen">
   <link href="{% static 'mapApp/css/style.css' %}" rel="stylesheet">
 
   <!-- Load JQuery -->
-  <script src="{% static 'jquery-1.11.1.min.js' %}" ></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
   <!-- Load JS -->
   <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
@@ -63,15 +63,15 @@
                   <li><a href="{{ profile }}">Profile</a></li>
                   <li><a href="{{ logout }}">Log out</a></li>
               {% else %}
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Guest<span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Guest<span class="caret"></span></a>
 
-              <ul class="dropdown-menu" role="menu">
+                <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ login }}">Log in</a></li> 
               {% endif %}
               
               {% if request.user.is_superuser %}
-              <li class="divider"></li>
-              <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ admin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
+                <li class="divider"></li>
+                <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ admin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
               {% endif %}
             </ul>
           </li>

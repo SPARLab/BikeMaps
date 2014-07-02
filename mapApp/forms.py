@@ -17,7 +17,6 @@ class IncidentForm(forms.ModelForm):
                 Field('incident_date', id="incident_date", template='mapApp/util/datepicker.html'),
                 Field('incident'),
                 Field('injury'),
-                # Field('injury_detail', placeholder='optional'),
                 Field('trip_purpose'),
                 Field('incident_detail', placeholder='optional'),
                 Field('point', type="hidden", id="point"), # Coords passed after click on map from static/mapApp/js/map.js

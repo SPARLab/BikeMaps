@@ -67,10 +67,6 @@ WSGI_APPLICATION = 'VicBikeMap.wsgi.application'
 
 DATABASES = {
     'default': {
-        # SQLite settings for non-spatial development server
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-
         # PostgreSQL database connection on Taylor's Windows computer
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         # 'OPTIONS': {'charset': 'utf8mb4'},
@@ -127,4 +123,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'bikemaps.org@gmail.com'
-EMAIL_HOST_PASSWORD = 'sparlabspartan'
+# EMAIL_HOST_PASSWORD = #SECRET

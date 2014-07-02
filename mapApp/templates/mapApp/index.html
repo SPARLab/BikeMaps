@@ -77,12 +77,15 @@
     <!-- Modal form popups -->
     {% include 'mapApp/util/incident_form.html' %}
     {% include 'mapApp/util/route_form.html' %}
+
+
 {% endblock %}
 
 
 <!-- BODY STUFF -->
 {% block content %}
 
+    <!-- Thanks you message upon succesful form submition -->
     <div class='container'>
         <div class="row text-center">
             <div class="thanks">
@@ -96,11 +99,10 @@
                 {% endif %}
             </div>
         </div>
-            
-        <!-- Leaflet map --> 
-        <div id="map"></div>
-    
     </div>
+
+    <!-- Leaflet map --> 
+    <div id="map"></div>
 
     <!-- Load user points from the database -->
     {% for incident in incidents %}
@@ -112,30 +114,36 @@
         <script> getPolyline( {{ route.latlngList }} ); </script>
     {% endfor %}
 
-
+    <!-- JS to control message display and feature creation -->
     <script>
+        // Fade out the thank-you message after 7 seconds
         $(window).load(function(){
           setTimeout(function(){ $('.alert').fadeOut() }, 7000);
         });
 
-        // Create the map
+        // Create the map (call to map.js)
         initialize();
 
+        // Controls for feature creation (leaflet-draw)
         map.on('draw:created', function (e) {
             var type = e.layerType,
                 layer = e.layer;
             
             if (type === 'marker') {
+                // Set form geometry field to click location
                 document.getElementById("point").value = (JSON.stringify(layer.toGeoJSON().geometry));               
+                // Show the form for point creation
                 $('#incidentForm').modal('show');
             }
             if (type === 'polyline') {
+                // Set form geometry field to click location
                 document.getElementById("line").value = (JSON.stringify(layer.toGeoJSON().geometry));               
+                // Show the form for line creation
                 $('#routeForm').modal('show');
             }
 
         });
-        
+
         // Show the modal if there are errors in a form submit
         {% if incidentFormErrors %}
         $(window).load(function(){
