@@ -11,8 +11,9 @@ body {
 	margin: 0px; 
 	padding: 0px;
 	padding-top: 60px;
+	max-width: 100%;
 	/*background: #18bc9c;*/
-	background: #3b9972;
+	/*background: #3b9972;*/
 }
 
 button {
@@ -46,11 +47,19 @@ textarea {
 	margin-top: 40px;
 }
 
+.nav{
+	font-size: 15px;
+}
+
+.nav li{
+	margin-left: 0px;
+}
+
 .navbar-brand img{
-  float: left;
-  height: 45px;
-  margin-top: -10px;
-  margin-right: 5px;
+	float: left;
+	height: 45px;
+	margin-top: -10px;
+	margin-right: 5px;
 }
 
 .navbar {
