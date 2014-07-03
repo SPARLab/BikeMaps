@@ -9,23 +9,30 @@
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'mapApp/images/bikemaps_web_icon.ico' %}" />
 
   {% block header %} {% endblock %}
+  
+  <!-- Load JQuery -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
   <!-- Load CSS -->
   <link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet" media="screen">
   <link href="{% static 'mapApp/css/style.css' %}" rel="stylesheet">
 
-  <!-- Load JQuery -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
   <!-- Load JS -->
   <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+
+  <!-- Load tipsy tooltips -->
+  <script src="{% static 'tipsy/javascripts/jquery.tipsy.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'tipsy/stylesheets/tipsy.css' %}">
+    
 </head>
 
 <body>
   {% url 'mapApp:index' as index %}
   {% url 'mapApp:about' as about %}
   {% url 'spirit:index' as forum %}
-  {% url 'admin:index' as admin %}
+  {% url 'admin:index' as mapAdmin %} 
+
+  {% url 'spirit:admin' as spiritAdmin %}
 
   {% url 'spirit:user-logout' as logout %}
   {% url 'spirit:user-login' as login %}
@@ -67,7 +74,8 @@
                   <li><a href="{{ logout }}">Log out</a></li>
                   {% if request.user.is_superuser %}
                   <li class="divider"></li>
-                  <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ admin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
+                  <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ mapAdmin }}"><small>Map Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
+                  <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ spiritAdmin }}"><small>Forum Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
                   {% endif %}
             
           {% else %}

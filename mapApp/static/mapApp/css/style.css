@@ -34,7 +34,7 @@ textarea {
 	z-index: 0;
 }
 
-.thanks {
+#thanks {
 	position: fixed;
 	right: 1em;
 	bottom: 1em;
@@ -115,6 +115,19 @@ div.line-mouse-marker {
 	color: #eeee00;
 }
 
+#help{
+	position: fixed;
+	left: 1em;
+	bottom: 1em;
+	z-index: 1;
+}
+
+#help .btn{
+	padding: 5px 13px;
+	border-radius: 50%;
+}
+
+/* FORUM */
 .comment a{
 	color: #979797;
 }

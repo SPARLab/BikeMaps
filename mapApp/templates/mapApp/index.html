@@ -88,7 +88,7 @@
     <!-- Thanks you message upon succesful form submition -->
     <div class='container'>
         <div class="row text-center">
-            <div class="thanks">
+            <div id="thanks">
                 {% if messages %}
                     {% for message in messages %}
                     <div class="alert alert-success alert-dismissable">
@@ -97,6 +97,13 @@
                     </div>
                     {% endfor %}
                 {% endif %}
+            </div>
+        </div>
+        
+        <!-- Help button -->
+        <div class="row text-center">
+            <div id="help">
+                <button id="helpBtn" type="button" class="btn btn-warning" title='Get Help'>?</button>
             </div>
         </div>
     </div>
@@ -156,6 +163,13 @@
             $('#routeForm').modal('show');
         });
         {% endif %}
+
+        // Tool tip on hover over help button
+        $('#helpBtn').tipsy({gravity: 'w'});
+
+        // $('#help')
+
+
 
     </script>
 

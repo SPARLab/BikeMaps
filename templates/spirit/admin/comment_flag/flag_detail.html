@@ -6,10 +6,10 @@
 
 {% block content %}
 
-    <ul class="nav">
-        <li><a href="{% url "spirit:admin" %}" >{% trans "Admin" %}</a><i class="fa fa-chevron-right"></i></li><!--
+    <ol class="breadcrumb">
+        <li><a href="{% url "spirit:admin" %}" >{% trans "Admin" %}</a></li><!--
      --><li><a href="{% url "spirit:admin-flag" %}" >{% trans "Flags" %}</a></li>
-    </ul>
+    </ol>
 
     <h1 class="headline">{% trans "Flag" %}</h1>
 

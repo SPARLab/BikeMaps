@@ -54,6 +54,7 @@
 
 {% block body %}
 <div class="container">
+    {% render_messages messages %}
     {% block content %}{% endblock %}
 </div>
 {% endblock %}
