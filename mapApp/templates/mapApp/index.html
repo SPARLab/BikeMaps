@@ -164,7 +164,8 @@
         });
         {% endif %}
 
-        // Tool tip on hover over help button
+
+        // Tool tip controls
         $('#helpBtn').tipsy({gravity: 'w', delayIn: 200, fade: true});
         $('.leaflet-control-zoom-in').tipsy({gravity:'w', delayIn: 1000, fade: true});
         $('.leaflet-control-zoom-out').tipsy({gravity:'w', delayIn: 1000, fade: true});
@@ -172,21 +173,18 @@
         $('.leaflet-draw-draw-polyline').tipsy({gravity:'w', delayIn: 1000, fade: true});
         $('.leaflet-control-layers-toggle').tipsy({gravity:'e', trigger: 'manual', title: function(){ return "Layer control"}, fade: true});
 
-        $('#helpBtn').click(function(){  
-            $('.leaflet-control-zoom-in').tipsy("show");
-            $('.leaflet-control-zoom-out').tipsy("show");
-            $('.leaflet-draw-draw-marker').tipsy("show");
-            $('.leaflet-draw-draw-polyline').tipsy("show");
-            $('.leaflet-control-layers-toggle').tipsy("show");
-        });
+        $('#helpBtn').click(function(){toggleTooltips("show")});
+        $('#map').click(function(){toggleTooltips("hide")});
+        
+        function toggleTooltips(t){
+            console.log(t);
+            $('.leaflet-control-zoom-in').tipsy(t);
+            $('.leaflet-control-zoom-out').tipsy(t);
+            $('.leaflet-draw-draw-marker').tipsy(t);
+            $('.leaflet-draw-draw-polyline').tipsy(t);
+            $('.leaflet-control-layers-toggle').tipsy(t);            
+        };
 
-        $('#map').click(function(){
-            $('.leaflet-control-zoom-in').tipsy("hide");
-            $('.leaflet-control-zoom-out').tipsy("hide");
-            $('.leaflet-draw-draw-marker').tipsy("hide");
-            $('.leaflet-draw-draw-polyline').tipsy("hide");
-            $('.leaflet-control-layers-toggle').tipsy("hide");
-        });
 
 
 
