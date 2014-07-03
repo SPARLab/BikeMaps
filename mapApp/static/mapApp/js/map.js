@@ -124,7 +124,7 @@ function initialize() {
 	/* DRAWING CONTROLS */
 	L.drawLocal.draw.toolbar.buttons.marker = 'Add an incident marker';
 	L.drawLocal.draw.handlers.marker.tooltip.start = 'Place me where the incident occurred';
-	L.drawLocal.draw.toolbar.buttons.polyline = 'Add your cycling route';
+	L.drawLocal.draw.toolbar.buttons.polyline = 'Add a cycling route';
 
 	map.addControl(new L.Control.Draw({
 		draw: {
