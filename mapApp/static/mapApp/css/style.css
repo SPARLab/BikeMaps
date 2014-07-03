@@ -112,7 +112,7 @@ div.line-mouse-marker {
 }
 
 .is-highlighted{
-	color: #eeee00;
+	color: #D2850B;
 }
 
 #help{
@@ -123,8 +123,10 @@ div.line-mouse-marker {
 }
 
 #help .btn{
-	padding: 5px 13px;
+	padding: 0px 8px;
 	border-radius: 50%;
+	border-width: 1px;
+	border-color: #2C3E50;
 }
 
 /* FORUM */
