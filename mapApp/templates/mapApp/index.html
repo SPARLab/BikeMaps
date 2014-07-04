@@ -177,8 +177,8 @@
         $('.leaflet-control-zoom-out').tipsy({gravity:'w', delayIn: 1000, fade: true});
         $('.leaflet-draw-draw-marker').tipsy({gravity:'w', delayIn: 1000, fade: true});
         $('.leaflet-draw-draw-polyline').tipsy({gravity:'w', delayIn: 1000, fade: true});
+        $('.leaflet-control-geocoder').tipsy({gravity:'w', delayIn:1000, fade: true, title: function(){ return "Search for an address"}});
         $('.leaflet-control-layers-toggle').tipsy({gravity:'e', trigger: 'manual', title: function(){ return "Layer control"}, fade: true});
-        $('.leaflet-control-geocoder').tipsy({gravity:'w', trigger: 'manual', title: function(){ return "Search for an address"}, fade: true});
 
         $('#helpBtn').click(function(){toggleTooltips("show")});
         $('#map').click(function(){toggleTooltips("hide")});
