@@ -1,13 +1,15 @@
 {% extends "mapApp/base.html" %}
 
+{% load staticfiles %}
+
 {% block title %}-- About{% endblock %}
 <!-- HEAD STUFF -->
 {% block header %}
-    {% include 'mapApp/util/email_form.html' %}
 {% endblock %}
 
 <!-- BODY STUFF -->
 {% block body %}
+    {% include 'mapApp/util/email_form.html' %}
 
     <div class='container'>
     <div class="row text-center">
@@ -35,20 +37,44 @@
         </div>
        
         <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                <h1>Sponsors</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <div class="col-xs-12">
+                <h1>Contact</h1>
+                <p>Do you have questions, comments, or feedback about bikemaps.org? We would love to hear from you!</p>
+                <p><a class="btn btn-primary btn-md" data-toggle="modal" data-target="#emailForm">Contact us!</a></p>
             </div>
 
-            <div class="col-xs-12 col-sm-6">
-                <h1>Contact</h1>
-                <p>Do you have questions, comments, or feedback about bikemaps.org? <br>We would love to hear from you!</p>
-                <p><a class="btn btn-primary btn-md" data-toggle="modal" data-target="#emailForm">Contact us!</a></p>
+            <div class="col-xs-4">
+                <h1>Sponsors</h1>
+                <p><a href="http://www.geog.uvic.ca/spar/">
+                    <img src="{% static 'mapApp/images/sponsorLogos/SPAR_logo_transparent.png' %}" alt="SPAR Lab" height="90%" width="90%">
+                </a></p>
+                <p><a href="http://www.uvic.ca/socialsciences/">
+                    <img src="{% static 'mapApp/images/sponsorLogos/uvic_ss.jpg' %}" alt="UVic Social Sciences" height="90%" width="90%">
+                </a></p>
+            </div>
+
+            <div class="col-xs-4">
+                <p><a href="https://www.crd.bc.ca/">
+                    <img class="topSponsorImg" src="{% static 'mapApp/images/sponsorLogos/CRDlogo.jpg' %}" alt="CRD" height="90%" width="90%"></a>
+                </p>
+                <p><a href="https://www.bcaa.com">
+                    <img src="{% static 'mapApp/images/sponsorLogos/BCAA-logo.jpg' %}" alt="BCAA" height="90%" width="90%">
+                </a></p>
+                <p class="uvicDept"><a href="http://www.uvic.ca/socialsciences/geography/">
+                    <img class="uvicLogo" src="{% static 'mapApp/images/sponsorLogos/uvic-logo.jpg' %}" alt="UVic Geography" height="40%" width="40%"> <strong>Geography</strong>
+                </a></p>
+                <p class="uvicDept"><a href="http://www.uvic.ca/sustainability/">
+                    <img class="uvicLogo" src="{% static 'mapApp/images/sponsorLogos/uvic-logo.jpg' %}" alt="UVic Sustainability" height="40%" width="40%"> <strong>Sustainability</strong>
+                </a></p>
+            </div>
+
+            <div class="col-xs-4">
+                <p><a href="http://www.pedalheads.com/">
+                    <img class="topSponsorImg" src="{% static 'mapApp/images/sponsorLogos/Pedalheads-logo.jpg' %}" alt="Pedalheads" height="90%" width="90%">
+                </a></p>
+                <p><a href="http://kidicalmassyyj.blogspot.ca/">
+                    <img src="{% static 'mapApp/images/sponsorLogos/kidical_mass1.gif' %}" alt="Kidical Mass" height="90%" width="90%">
+                </a></p>
             </div>
         </div>
 

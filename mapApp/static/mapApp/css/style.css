@@ -149,3 +149,18 @@ div.line-mouse-marker {
 #cogsDropdown{
 	background: none;
 }
+
+.topSponsorImg{
+	padding-top: 73.5px;
+}
+
+.uvicLogo{
+	border-right-width:1px;
+	border-right-color:black;
+	border-right-style:solid;
+}
+
+.uvicDept{
+	font-size: 1.2em;
+	color: black;
+}
