@@ -10,24 +10,32 @@ from django.utils import timezone
 
 # Collision
 COLLISION_TYPES = [
-    ('Vehicle collision', 'Collision with a motor vehicle'),
-    ('Vehicle door collision','Collision with an open vehicle door'),
-    ('Surface feature collision','Collision with a surface feature (e.g., train tracks, pothole, rock)'),
-    ('Infrastructure collision','Collision with route infrastructure (e.g., post, curb, planter, lane divider)'),
-    ('Person/animal collision','Collision with other person or animal (i.e., cyclist, pedestrian, skater, dog)'),
-    ('Fall trying to avoid collision','Fall while trying to avoid a collision'),
-    ('Fall in other circumstances','Fall in other circumstances'),
+    ('Single vehicle striking fixed object','Single vehicle striking fixed object (e.g., curb, sign, planter)'),
+    ('Single vehicle striking a moving object', 'Single vehicle striking a moving object (e.g., pedestrian, inline skater, animal)'),
+    ('Multi vehicle collision with moving vehicle', 'Multi vehicle collision with moving vehicle'),
+    ('Multi vehicle collision with parked vehicle', 'Multi vehicle collision with parked vehicle'),
+    ('Single vehicle losing control on roadway', 'Single vehicle losing control on roadway')
 ]
 
 # Near miss
 NEAR_MISS_TYPES = [
-    ('Vehicle near collision', 'Near collision with a motor vehicle'),
-    ('Vehicle door near collision','Near collision with an open vehicle door'),
-    ('Surface feature near collision','Near collision with a surface feature (e.g., train tracks, pothole, rock)'),
-    ('Infrastructure near collision','Near collision with route infrastructure (e.g., post, curb, planter, lane divider)'),
-    ('Person/animal near collision','Near collision with other person or animal (i.e., cyclist, pedestrian, skater, dog)'),
-    ('Near fall trying to avoid collision','Near fall while trying to avoid a collisioin'),
-    ('Near fall in other circumstances','Near fall due to other circumstances'),
+    ('Near collision with a fixed object', 'Near collision with a fixed object (e.g., curb, sign, planter)'),
+    ('Near collision with a moving object', 'Near collision with a moving object (e.g., pedestrian, inline skater, animal)'),
+    ('Near collision with a moving vehicle', 'Near collision with a moving vehicle'),
+    ('Near collision with a parked vehicle', 'Near collision with a parked vehicle')
+]
+
+INCIDENT_WITH_CHOICES = [
+    ('Car/Truck', 'Car/Truck'),
+    ('Vehicle door', 'Vehicle door'),
+    ('Another cyclist', 'Another cyclist'),
+    ('Curb', 'Curb'),
+    ('Pedestrian/Person', 'Pedestrian/Person'),
+    ('Train Tracks', 'Train Tracks'),
+    ('Pothole', 'Pothole'),
+    ('Lane divider', 'Lane divider'),
+    ('Animal', 'Animal'),
+    ('Sign/Post', 'Sign/Post')
 ]
 
 # Theft
@@ -42,6 +50,12 @@ HAZARD_TYPES = [
 
 INCIDENT_CHOICES = tuple(COLLISION_TYPES + NEAR_MISS_TYPES) #+ THEFT_TYPES + HAZARD_TYPES)
 
+INJURY_CHOICES = [
+    ('No injury', 'No injury'),
+    ('Injury, not hospitalized', 'Injury, not hospitalized'),
+    ('Injury, hospitalized', 'Injury, hospitalized')
+]
+
 PURPOSE_CHOICES = (
     ("Commute", "To/from work or school"), 
     ("Exercise or recreation", "Exercise or recreation"), 
@@ -52,25 +66,32 @@ PURPOSE_CHOICES = (
 ROAD_COND_CHOICES = (
     ('Dry', 'Dry'),
     ('Wet','Wet'),
+    ('Loose sand, gravel, or dirt', 'Loose sand, gravel, or dirt'),
     ('Icy','Icy'),
-    ('Snowy','Snowy')
+    ('Snowy','Snowy'),
+    ('Don\'t remember', 'I don\'t remember')
 )
 SIGHTLINES_CHOICES = (
-    ('Good', 'Good'),
-    ('Poor', 'Poor'),
+    ('No', 'No'),
+    ('View obstructed', 'View obstructed'),
+    ('Glare or reflection', 'Glare or reflection'),
+    ('Obstruction on road', 'Obstruction on road'),
     ('Don\'t Remember', 'Don\'t Remember')
 )
-BIKE_INFRASTRUCTURE_CHOICES = (
-    ('None', 'None'),
-    ('Painted bike lane', 'Painted bike lane'),
-    ('Off street bike path', 'Off street bike path'),
-    ('Other', 'Other') # Necessary? Ask Trisalyn
+RIDING_ON_CHOICES = (
+    ('Painted bike lane', 'On a painted bike lane'),
+    ('Off street bike path', 'On an off street bike path'),
+    ('Street', 'On the road'),
+    ('Sidewalk', 'On the sidewalk'),
+    ('Don\'t remember', 'I don\'t remember')
 )
 LIGHTS_CHOICES = (
     ("NL", "No Lights"),
     ("FB", "Front and back lights"),
     ("F", "Front lights only"),
-    ("B", "Back lights only")
+    ("B", "Back lights only"),
+    ('Don\'t remember', 'I don\'t remember')
+
 )
 TERRAIN_CHOICES = (
     ('Uphill', 'Uphill'), 
@@ -106,27 +127,11 @@ FREQUENCY_CHOICES = (
 # Main class for Incident Report. Contains all required, non-required, and spatial fields. Setup to allow easy export to a singular shapefile.
 # Captures all data about the accident and environmental conditions when the bike incident occurred.
 class Incident(models.Model):
-    # Required fields
+    ########### INCIDENT FIELDS
     report_date = models.DateTimeField(
         'Date reported', 
         auto_now_add=True   # Date is set automatically when object created
     ) 
-    incident_date = models.DateTimeField(
-        'When was the incident?'
-    )
-
-    incident = models.CharField(
-        'What happened?', 
-        max_length=100, 
-        choices=INCIDENT_CHOICES
-    )
-    incident_detail = models.TextField(
-        'Please give a brief description of the incident', 
-        max_length=300, 
-        blank=True, 
-        null=True
-    )
-
     # Spatial fields
     # Default CRS -> WGS84
     point = models.PointField(
@@ -134,9 +139,29 @@ class Incident(models.Model):
     )
     objects = models.GeoManager() # Required to conduct geographic queries
 
+    incident_date = models.DateTimeField(
+        'When was the incident?'
+    )
 
-    #### Move following to new models?
-    # Trip and environment details (all optional)
+    incident = models.CharField(
+        'What type of incident was it?', 
+        max_length=150, 
+        choices=INCIDENT_CHOICES
+    )
+
+    incident_with = models.CharField(
+        'What sort of object was the collision or near collision with?',
+        max_length=100,
+        choices=INCIDENT_WITH_CHOICES
+    )
+
+    # Injury details (all optional)
+    injury = models.CharField(
+        'Were you injured?',
+        max_length=30,
+        choices= INJURY_CHOICES # Without this, field has 'Unknown' for None rather than the desired "---------"
+    )
+
     trip_purpose = models.CharField(
         'What was the purpose of your trip?', 
         max_length=50, 
@@ -144,28 +169,82 @@ class Incident(models.Model):
         blank=True, 
         null=True
     )
+    ###########
+
+    ########## DETAILS FIELDS
+    incident_detail = models.TextField(
+        'Please give a brief description of the incident', 
+        max_length=300, 
+        blank=True, 
+        null=True
+    )
+    ##############
+
+    ############## PERSONAL DETAILS FIELDS
+    # Personal details about the participant (all optional)
+    age = models.CharField(
+        'Please tell us which age category you fit into', 
+        max_length=15, 
+        choices=AGE_CHOICES, 
+        blank=True, 
+        null=True
+    ) 
+    sex = models.CharField(
+        'Please select your sex', 
+        max_length=6, 
+        choices=(('M', 'Male'), ('F', 'Female')), 
+        blank=True, 
+        null=True
+    )
+    regular_cyclist = models.CharField(
+        'Do you ride a bike often? (52+ times/year)',
+        max_length=20, 
+        choices=(('Y', 'Yes'), ('N', 'No'), ('I don\'t know', 'I don\'t know')), 
+        blank=True, 
+        null=True
+    )
+    helmet = models.CharField(
+        'Were you wearing a helmet?',
+        max_length=20, 
+        choices=(('Y', 'Yes'), ('N', 'No'), ('Don\'t remember', 'I don\'t remember')), 
+        blank=True, 
+        null=True
+    )
+    intoxicated = models.CharField(
+    'Were you intoxicated?',
+    max_length=20, 
+    choices=(('Y', 'Yes'), ('N', 'No'), ('Don\'t remember', 'I don\'t remember')), 
+    blank=True, 
+    null=True
+    )
+    #######################
+
+    ############### CONDITIONS FIELDS
     road_conditions = models.CharField(
         'What were the road conditions?', 
-        max_length=5, 
+        max_length=30, 
         choices=ROAD_COND_CHOICES, 
         blank=True, 
         null=True
     )
     sightlines = models.CharField(
         'How were the sight lines?', 
-        max_length=20, 
+        max_length=30, 
         choices=SIGHTLINES_CHOICES, 
         blank=True, 
         null=True
     )
-    cars_on_roadside = models.NullBooleanField(
+    cars_on_roadside = models.CharField(
         'Were there cars parked on the roadside',
-        choices= BOOLEAN_CHOICES # Without this, field has 'Unknown' for None rather than the desired "---------"
+        max_length=30, 
+        choices= (('Y', 'Yes'), ('N', 'No'), ('Don\'t remember', 'I don\'t remember')),
+        blank=True, 
+        null=True
     )
-    bike_infrastructure = models.CharField(
-        'What kind of bike infrastructure was there?', 
+    riding_on = models.CharField(
+        'Where were you riding your bike?', 
         max_length=20, 
-        choices=BIKE_INFRASTRUCTURE_CHOICES, 
+        choices=RIDING_ON_CHOICES, 
         blank=True, 
         null=True
     )
@@ -183,36 +262,8 @@ class Incident(models.Model):
         blank=True, 
         null=True
     )
-    helmet = models.NullBooleanField(
-        'Were you wearing a helmet?',
-        choices= BOOLEAN_CHOICES # Without this, field has 'Unknown' for None rather than the desired "---------"
-    )
+    ########################
 
-    # Injury details (all optional)
-    injury = models.NullBooleanField(
-        'Did you require medical attention?',
-        choices= BOOLEAN_CHOICES # Without this, field has 'Unknown' for None rather than the desired "---------"
-    )
-
-    # Personal details about the participant (all optional)
-    age = models.CharField(
-        'Please tell us which age category you fit into', 
-        max_length=15, 
-        choices=AGE_CHOICES, 
-        blank=True, 
-        null=True
-    ) 
-    sex = models.CharField(
-        'Please select your sex', 
-        max_length=1, 
-        choices=(('M', 'Male'), ('F', 'Female')), 
-        blank=True, 
-        null=True
-    )
-    regular_cyclist = models.NullBooleanField(
-        'Do you ride a bike often? (52+ times/year)',
-        choices= BOOLEAN_CHOICES # Without this, field has 'Unknown' for None rather than the desired "---------"
-    )
 
     # reverses latlngs and turns tuple of tuples into list of lists
     def latlngList(self):

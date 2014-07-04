@@ -16,11 +16,11 @@ class IncidentAdmin(admin.OSMGeoAdmin):
 	# Allow for filtering of report date
 	list_filter = ['report_date']
 
-	list_display = ('report_date','incident_date', 'incident_type', 'incident','was_published_recently')
+	list_display = ('report_date','incident_date', 'incident', 'incident_with','was_published_recently')
 
 	fieldsets = [
 		('Location',	{'fields': ['point']}),
-		('Incident information',	{'fields': ['incident_date','incident','incident_detail']}),
+		('Incident information',	{'fields': ['incident_date','incident','incident_with']}),
 		('Trip details',	{'fields': ['trip_purpose', 'road_conditions','sightlines','cars_on_roadside','bike_infrastructure','bike_lights','terrain','helmet'], 'classes':['collapse']}),
 		('Injury',	{'fields': ['injury','injury_detail'], 'classes':['collapse']}),
 		('Person',	{'fields': ['age','sex','regular_cyclist'], 'classes':['collapse']})

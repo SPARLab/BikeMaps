@@ -14,12 +14,12 @@ class IncidentForm(forms.ModelForm):
         Accordion(
             AccordionGroup(
                 'Incident',
+                Field('point', type="hidden", id="point"), # Coords passed after click on map from static/mapApp/js/map.js
                 Field('incident_date', id="incident_date", template='mapApp/util/datepicker.html'),
                 Field('incident'),
+                Field('incident_with'),
                 Field('injury'),
                 Field('trip_purpose'),
-                Field('incident_detail', placeholder='optional'),
-                Field('point', type="hidden", id="point"), # Coords passed after click on map from static/mapApp/js/map.js
             ),
             AccordionGroup(
                 'Personal Details',
@@ -27,15 +27,20 @@ class IncidentForm(forms.ModelForm):
                 Field('sex'),
                 Field('regular_cyclist'),
                 Field('helmet'),
+                Field('intoxicated'),
             ),
             AccordionGroup(
                 'Conditions',
                 Field('road_conditions'),
                 Field('sightlines'),
                 Field('cars_on_roadside'),
-                Field('bike_infrastructure'),
+                Field('riding_on'),
                 Field('bike_lights'),
                 Field('terrain'),
+            ),
+            AccordionGroup(
+                'Details',
+                Field('incident_detail', placeholder='optional'),
             ),
         )
     )
