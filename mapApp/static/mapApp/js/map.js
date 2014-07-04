@@ -128,12 +128,13 @@ function initialize() {
 
 	map.addControl(new L.Control.Draw({
 		draw: {
-			polyline: {
-				shapeOptions: {
-					color: '#f357a1',
-					weight: 5
-				}
-			},
+			// polyline: {
+			// 	shapeOptions: {
+			// 		color: '#f357a1',
+			// 		weight: 5
+			// 	}
+			// },
+			polyline: false,
 			polygon: false,
 			rectangle: false,
 			circle: false,
