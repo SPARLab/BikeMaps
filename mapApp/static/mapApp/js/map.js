@@ -113,10 +113,10 @@ function initialize() {
 		overlayMaps = {
 			"Accident points": accidentPoints,
 			"Accident heat map": heatMap,
-			"User route heat map": userRoutes,
+			// "User route heat map": userRoutes,
 			"Strava heat map": stravaHM5,
 			"Bike Racks": racksCluster,
-			"Bike lanes": bikeLanes,
+			// "Bike lanes": bikeLanes,
 		};
 	L.control.layers(baseMaps, overlayMaps).addTo(map);
 
