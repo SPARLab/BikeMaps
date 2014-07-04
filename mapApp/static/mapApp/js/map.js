@@ -31,6 +31,11 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		color: "#20a5de",
 		size: "m"
 	});
+	geocodeIcon = L.MakiMarkers.icon({
+		icon: "embassy",
+		color: "#CC2A01",
+		size: "l"
+	});
 
 /* DATASETS */
 var	userRoutes = new L.LayerGroup([]),
@@ -118,6 +123,7 @@ function initialize() {
 			"Bike Racks": racksCluster,
 			// "Bike lanes": bikeLanes,
 		};
+	/* LAYER CONTROL */
 	L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 
@@ -144,6 +150,27 @@ function initialize() {
 		},
 		edit: false,
 	}));
+
+	/* GEOCODING SEARCH BAR CONTROL */
+	var geocoder = L.Control.geocoder({
+		position: "topleft"
+	}).addTo(map);
+
+	var geocodeMarker;
+	geocoder.markGeocode = function(result){
+		map.fitBounds(result.bbox);
+
+		if (geocodeMarker) {
+			map.removeLayer(geocodeMarker);
+		}
+
+		geocodeMarker = new L.Marker(result.center, {
+			icon: geocodeIcon
+		})
+			.bindPopup(result.name)
+			.addTo(map)
+			.openPopup();
+	};
 
 	/* LEAFLET-ROUTING */
 /*
@@ -213,7 +240,6 @@ function initialize() {
     map.addControl(routing);
     routing.draw()
 */
-
 }
 
 function initializeGeoJsonLayers(){
