@@ -117,8 +117,8 @@ div.line-mouse-marker {
 
 #help{
 	position: fixed;
-	left: 1em;
-	bottom: 1em;
+	left: 10px;
+	bottom: 2.5em;
 	z-index: 1;
 }
 
@@ -165,8 +165,14 @@ div.line-mouse-marker {
 	color: black;
 }
 
+/* search control */
 .leaflet-control-geocoder-icon {
 	background-image: url(../images/geocoder_alt.png);
+	background-size: 83%;
+}
+
+.leaflet-control-geocoder{
+	-webkit-box-shadow: rgba(0, 0, 0, 0.65098) 0px 1px 5px 0px;
 }
 
 .leaflet-control-geocoder:hover{
