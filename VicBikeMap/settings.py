@@ -45,8 +45,7 @@ INSTALLED_APPS = (
     'mapApp',
     'spirit',
     'haystack',
-    'djconfig',
-    'dbbackup'
+    'djconfig'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -125,7 +124,3 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'bikemaps.org@gmail.com'
 # EMAIL_HOST_PASSWORD = #SECRET
-
-# DATABASE BACKUP
-DBBACKUP_STORAGE = 'dbbackup.storage.filesystem_storage'
-DBBACKUP_FILESYSTEM_DIRECTORY = 'C:\\Users\\Shanley\\Dropbox\\bikemaps_backups'
