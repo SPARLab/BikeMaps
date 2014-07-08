@@ -134,7 +134,7 @@ class Incident(models.Model):
     ) 
     # Spatial fields
     # Default CRS -> WGS84
-    point = models.PointField(
+    geom = models.PointField(
         'Location'
     )
     objects = models.GeoManager() # Required to conduct geographic queries
@@ -267,7 +267,7 @@ class Incident(models.Model):
 
     # reverses latlngs and turns tuple of tuples into list of lists
     def latlngList(self):
-        return list(self.point)[::-1]
+        return list(self.geom)[::-1]
         
 
     def was_published_recently(self):
@@ -303,7 +303,7 @@ class Incident(models.Model):
 class Route(models.Model):
     # Spatial fields
     # Default CRS -> WGS84
-    line = models.LineStringField()
+    geom = models.LineStringField()
     objects = models.GeoManager() # Required to conduct geographic queries
 
     report_date = models.DateTimeField(
@@ -326,7 +326,7 @@ class Route(models.Model):
 
     # reverses latlngs and turns tuple of tuples into list of lists
     def latlngList(self):
-        return list(list(latlng)[::-1] for latlng in self.line) 
+        return list(list(latlng)[::-1] for latlng in self.geom) 
 
     def was_published_recently(self):
         now = timezone.now()

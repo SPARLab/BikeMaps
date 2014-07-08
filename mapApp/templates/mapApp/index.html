@@ -144,13 +144,13 @@
             
             if (type === 'marker') {
                 // Set form geometry field to click location
-                document.getElementById("point").value = (JSON.stringify(layer.toGeoJSON().geometry));               
+                document.getElementById("geom").value = (JSON.stringify(layer.toGeoJSON().geometry));               
                 // Show the form for point creation
                 $('#incidentForm').modal('show');
             }
             if (type === 'polyline') {
                 // Set form geometry field to click location
-                document.getElementById("line").value = (JSON.stringify(layer.toGeoJSON().geometry));               
+                document.getElementById("geom").value = (JSON.stringify(layer.toGeoJSON().geometry));               
                 // Show the form for line creation
                 $('#routeForm').modal('show');
             }

@@ -1,7 +1,7 @@
 from django.contrib.gis import admin
 
 # Register your models here.
-from mapApp.models import Incident#, Route
+from mapApp.models import Incident, Route
 
 # class PersonStacked(admin.StackedInline):
 #     model = Person
@@ -19,7 +19,7 @@ class IncidentAdmin(admin.OSMGeoAdmin):
 	list_display = ('report_date','incident_date', 'incident', 'incident_with','was_published_recently')
 
 	fieldsets = [
-		('Location',	{'fields': ['point']}),
+		('Location',	{'fields': ['geom']}),
 		('Incident information',	{'fields': ['incident_date','incident','incident_with']}),
 		('Trip details',	{'fields': ['trip_purpose', 'road_conditions','sightlines','cars_on_roadside','bike_infrastructure','bike_lights','terrain','helmet'], 'classes':['collapse']}),
 		('Injury',	{'fields': ['injury','injury_detail'], 'classes':['collapse']}),
@@ -42,7 +42,7 @@ admin.site.register(Incident, IncidentAdmin)
 # 	list_display = ('report_date','trip_purpose', 'frequency','was_published_recently')
 
 # 	fieldsets = [
-# 		('Route',	{'fields': ['line']}),
+# 		('Route',	{'fields': ['geom']}),
 # 		('Details',	{'fields': ['trip_purpose','frequency']})
 # 	]
 
