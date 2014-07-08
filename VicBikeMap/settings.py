@@ -45,7 +45,7 @@ INSTALLED_APPS = (
     'mapApp',
     'spirit',
     'haystack',
-    'djconfig',
+    'djconfig'
 )
 
 MIDDLEWARE_CLASSES = (

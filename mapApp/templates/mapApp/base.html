@@ -29,6 +29,7 @@
 <body>
   {% url 'mapApp:index' as index %}
   {% url 'mapApp:about' as about %}
+  {% url 'mapApp:getIncidents' as getIncidents %} 
   {% url 'spirit:index' as forum %}
   {% url 'admin:index' as mapAdmin %} 
 
@@ -76,6 +77,7 @@
                   <li class="divider"></li>
                   <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ mapAdmin }}"><small>Map Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
                   <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ spiritAdmin }}"><small>Forum Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
+                  <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ getIncidents }}"><small>Export data to GeoJson <span class="glyphicon glyphicon-download"></span></small></a></li>
                   {% endif %}
             
           {% else %}

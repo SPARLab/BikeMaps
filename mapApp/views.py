@@ -11,6 +11,10 @@ from django.contrib.auth.models import User, Group
 from mapApp.models import Incident, Route
 from mapApp.forms import IncidentForm, RouteForm, EmailForm
 
+# Used for downloading data
+from spirit.utils.decorators import administrator_required
+from djgeojson.serializers import Serializer as GeoJSONSerializer
+
 
 def index(request):
 	context = {
@@ -31,7 +35,7 @@ def postRoute(request):
 
 		# Convert string coords to valid geometry object
 		routeForm.data = routeForm.data.copy()
-		routeForm.data['line'] = GEOSGeometry(routeForm.data['line'])
+		routeForm.data['geom'] = GEOSGeometry(routeForm.data['geom'])
 
 		if routeForm.is_valid():
 			routeForm.save()
@@ -59,7 +63,7 @@ def postIncident(request):
 		
 		# Convert string coords to valid geometry object
 		incidentForm.data = incidentForm.data.copy()
-		incidentForm.data['point'] = GEOSGeometry(incidentForm.data['point'])
+		incidentForm.data['geom'] = GEOSGeometry(incidentForm.data['geom'])
 
 		if incidentForm.is_valid():
 			incidentForm.save()
@@ -119,3 +123,8 @@ def contact(request):
 	
 	else:
 		return HttpResponseRedirect(reverse('mapApp:about')) 
+
+@administrator_required
+def getIncidents(request):
+	data = GeoJSONSerializer().serialize(Incident.objects.all(), use_natural_keys=True)
+	return HttpResponse(data, content_type="application/json")

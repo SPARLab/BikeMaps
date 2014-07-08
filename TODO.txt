@@ -1,17 +1,7 @@
 TO DO
 
-* Make nested layers panel for toggling specific layers or a group of layers
-* "Help" window - instructions for how to add point etc
 * Social media buttons/links
-* Add GPS file upload for routes
-* Forum? (see http://spirit-project.com/)
-* Implement About page
-* Add bike-maps.org graphics
-* Change server domain name
-* Category cluster - (See https://github.com/SINTEF-9012/PruneCluster)
-* Popover for intructions
 * 
-* Fix improper pie chart colors in firefox
 * Check compatabilities with internet explorer (even though it's the worst)
 * 
 * 

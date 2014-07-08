@@ -1,0 +1,12 @@
+Starting this django projects requires the following:
+
+Prereqs:
+A postgresql database named bikeDB with postgis extension installed 
+
+Then, run:
+
+pip install -r requirements.txt
+python manage.py syncdb
+python manage.py loaddata spirit_init
+python manage.py createcachetable spirit_cache
+# python manage.py collectstatic # After static root is set.

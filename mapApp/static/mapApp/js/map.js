@@ -107,7 +107,7 @@ function initialize() {
 	map = L.map('map', {
 		center: [48.5, -123.3],
 		zoom: 11,
-		layers: [skobbler, accidentPoints, userRoutes],
+		layers: [skobbler, accidentPoints, stravaHM5],
 	});
 
 	/* LAYER CONTROL */
