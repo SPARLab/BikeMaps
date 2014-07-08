@@ -40,12 +40,16 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.gis',   # geoDjango requirement
-    'crispy_forms',   # django-crispy-forms package to render bootstrap modelForms
-    'mapApp',
+    
+    # forum
     'spirit',
     'haystack',
-    'djconfig'
+    'djconfig',
+
+    # mapApp requirements
+    'django.contrib.gis',
+    'crispy_forms',
+    'mapApp'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -54,7 +58,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 )
 
 ROOT_URLCONF = 'VicBikeMap.urls'
@@ -71,7 +75,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         # 'OPTIONS': {'charset': 'utf8mb4'},
         'NAME': 'bikeDB',
-        'USER': 'postgres',
+        'USER': 'postgres'
         # 'PASSWORD': 'SUPER_SECRET'
 
         
