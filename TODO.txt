@@ -1,24 +1,24 @@
 TO DO
 
-* Social media buttons/links
 * Check compatabilities with internet explorer (even though it's the worst)
-* Data backup
-* Setup geofence
 * Admin point edit from map index
-* Email recipient groups
+* Setup geofence
+* Allow users to delete geofences using the edit toolbar
+* Fix contact email to work with spirit
+* Option to report for different person
+* Data backup
 * Colour theme
-* Password protected dev release
+* Social media buttons/links
 * Setup media root
 * Setup static root
-* Option to report for different person
-* custom ICBC icons
-* Day/Night point clusters or a timeslider
+* Password protected dev release
 * Write up readme
 * Documentation for future devs
+* Day/Night point clusters or a timeslider
+* custom ICBC icons
 
 BUGS
 
-* Improper dropdown on Forum
 *
 * 
 * 
