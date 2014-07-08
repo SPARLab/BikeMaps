@@ -103,9 +103,6 @@
         // Create the map (call to map.js)
         initialize();
 
-        // Center on user location
-        locateUser();
-
         /* Add lealet drawing controls if user is admin */
         {% if request.user.is_superuser %}
         map.addControl(new L.Control.Draw({

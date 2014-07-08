@@ -105,10 +105,12 @@ function initialize() {
 	
 	/* MAP INIT AND DEFAULT LAYERS */
 	map = L.map('map', {
-		center: [48.5, -123.3],
-		zoom: 11,
+		// center: [48.5, -123.3],
+		// zoom: 11,
 		layers: [skobbler, accidentPoints, stravaHM5],
 	});
+
+	locateUser();
 
 	/* LAYER CONTROL */
 	var baseMaps = {
@@ -176,6 +178,15 @@ function initialize() {
 			.openPopup();
 	};
 }
+
+
+function locateUser() {
+	this.map.locate({
+		setView: true,
+		maxZoom: 16
+	});
+};
+
 
 function initializeGeoJsonLayers(){
 		var policePoints = new L.geoJson(policeData, {
@@ -293,13 +304,6 @@ function getPolyline(latlng, freq) {
 	}));
 };
 
-
-function locateUser() {
-	this.map.locate({
-		setView: true,
-		maxZoom: 16
-	});
-};
 
 function getMonthFromInt(num){
 	switch(num) {
