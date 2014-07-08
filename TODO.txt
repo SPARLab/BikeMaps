@@ -16,6 +16,7 @@ TO DO
 * Documentation for future devs
 * Day/Night point clusters or a timeslider
 * custom ICBC icons
+* improve incidents heatmap
 
 BUGS
 
