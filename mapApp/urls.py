@@ -10,6 +10,6 @@ urlpatterns = patterns('',
 	url(r'^incident_submit/$', views.postIncident, name='postIncident'),
 	url(r'^route_submit/$', views.postRoute, name='postRoute'),
 	url(r'^contact/$', views.contact, name='contact'),
-	url(r'^bikemaps_incidents.json$', views.getIncidents, name='getIncidents'),
+	url(r'^incidents.json$', views.getIncidents, name='getIncidents'),
 	
 )
