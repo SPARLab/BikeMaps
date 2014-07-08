@@ -188,7 +188,3 @@ div.line-mouse-marker {
 .dropdown-menu>li>a{	
 	width: 158px;
 }
-
-/* Remove border of footer for geofence form */
-.geofence-form {
-  border-top: none;

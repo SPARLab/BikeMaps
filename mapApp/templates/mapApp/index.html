@@ -137,7 +137,8 @@
             if (type === 'polygon') {
                 // Set form geometry field to click location
                 document.getElementById("geofence").value = (JSON.stringify(layer.toGeoJSON().geometry));               
-                console.log(document.getElementById("geofence"))
+                document.getElementById("userEmail").value = ("{{ request.user.email }}");               
+                console.log()
                 $('#geofenceForm').modal('show');
             }
 
