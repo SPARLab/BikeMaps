@@ -8,8 +8,8 @@ from django.contrib import messages
 from django.core.mail import send_mail
 
 from django.contrib.auth.models import User, Group
-from mapApp.models import Incident, Route
-from mapApp.forms import IncidentForm, RouteForm, EmailForm
+from mapApp.models import Incident, Route, AlertArea
+from mapApp.forms import IncidentForm, RouteForm, EmailForm, GeofenceForm
 
 # Used for downloading data
 from spirit.utils.decorators import administrator_required
@@ -24,7 +24,11 @@ def index(request):
 
 		"routes": Route.objects.all(),
 		"routeForm": RouteForm(),
-		"routeFormErrors": False
+		"routeFormErrors": False,
+
+		"geofence": AlertArea.objects.all(),
+		"geofenceForm": GeofenceForm(),
+		"geofenceFormErrors": False
 	}
 	return render(request, 'mapApp/index.html', context)
 
@@ -47,6 +51,10 @@ def postRoute(request):
 				'incidents': Incident.objects.all(),
 				"incidentForm": IncidentForm(),
 				"incidentFormErrors": False,
+
+				"geofence": AlertArea.objects.all(),
+				"geofenceForm": GeofenceForm(),
+				"geofenceFormErrors": False,
 
 				"routes": Route.objects.all(),
 				"routeForm": routeForm,
@@ -76,6 +84,10 @@ def postIncident(request):
 				'incidents': Incident.objects.all(),
 				"incidentForm": incidentForm,
 				"incidentFormErrors": True,
+
+				"geofence": AlertArea.objects.all(),
+				"geofenceForm": GeofenceForm(),
+				"geofenceFormErrors": False,
 				
 				"routes": Route.objects.all(),
 				"routeForm": RouteForm(),
@@ -84,6 +96,10 @@ def postIncident(request):
 	
 	else:
 		return HttpResponseRedirect(reverse('mapApp:index')) 
+
+
+def postAlertPolygon(request):
+	return HttpResponse(request)
 
 
 def about(request):

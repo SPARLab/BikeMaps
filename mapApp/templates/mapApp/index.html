@@ -71,6 +71,7 @@
     <!-- Modal form popups -->
     {% include 'mapApp/util/incident_form.html' %}
     {% include 'mapApp/util/route_form.html' %}
+    {% include 'mapApp/util/geofence_form.html' %}
 
 
 {% endblock %}
@@ -126,19 +127,17 @@
             if (type === 'marker') {
                 // Set form geometry field to click location
                 document.getElementById("geom").value = (JSON.stringify(layer.toGeoJSON().geometry));               
-                // Show the form for point creation
                 $('#incidentForm').modal('show');
             }
             if (type === 'polyline') {
                 // Set form geometry field to click location
                 document.getElementById("line").value = (JSON.stringify(layer.toGeoJSON().geometry));               
-                // Show the form for line creation
                 $('#routeForm').modal('show');
             }
             if (type === 'polygon') {
                 // Set form geometry field to click location
                 document.getElementById("geofence").value = (JSON.stringify(layer.toGeoJSON().geometry));               
-                // Show the form for line creation
+                console.log(document.getElementById("geofence"))
                 $('#geofenceForm').modal('show');
             }
 

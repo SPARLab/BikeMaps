@@ -350,6 +350,9 @@ class AlertArea(models.Model):
     objects = models.GeoManager() # Required to conduct geographic queries
 
     user = models.ForeignKey('spirit.User')
+    emailWeekly = models.BooleanField(
+        'Send me weekly reports'
+    )
 
     def __unicode__(self):
         # reverses latlngs and turns tuple of tuples into list of lists
