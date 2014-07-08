@@ -22,12 +22,12 @@
     <!-- Load draw pluging -->
     <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.draw/dist/leaflet.draw.css' %}">
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/Leaflet.draw.js' %}"></script>
-    <!--
+    
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.Poly.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.SimpleShape.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.Circle.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.Rectangle.js' %}"></script>
-    -->
+    
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Feature.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Marker.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Polyline.js' %}"></script>
@@ -46,31 +46,19 @@
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/Tooltip.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/Toolbar.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/DrawToolbar.js' %}"></script>
-    <!-- 
+    
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/EditToolbar.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/EditToolbar.Edit.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/EditToolbar.Delete.js' %}"></script> 
-    -->
-
+   
     <!-- Used for pie chart creation -->
     <!-- d3 v3.4.8 -->
     <script src="{% static 'd3/d3.min.js' %}" charset="utf-8"></script> 
-
-    <!-- Leaflet.routing plugin 
-    <script src="{% static 'leaflet/plugins/leaflet-routing/src/utils/LineUtil.Snapping.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet-routing/src/utils/Marker.Snapping.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet-routing/src/L.Routing.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet-routing/src/L.Routing.Storage.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet-routing/src/L.Routing.Draw.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet-routing/src/L.Routing.Edit.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet-routing/osmtogeojson.js' %}"></script>
-    -->
 
     <!-- Leaflet Geocoder -->
     <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}"> 
     <script src="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script> 
     
-
     <!-- GeoJSON sources -->
     <script src="{% static 'mapApp/data/policeData.js' %}"></script> 
     <script src="{% static 'mapApp/data/bikeRoutes.js' %}"></script>
@@ -92,26 +80,20 @@
 {% block body %}
 
     <!-- Thanks you message upon succesful form submition -->
-    <div class='container'>
-        <div class="row text-center">
-            <div id="thanks">
-                {% if messages %}
-                    {% for message in messages %}
-                    <div class="alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <center>{{ message | safe }}</center>
-                    </div>
-                    {% endfor %}
-                {% endif %}
+    <div id="thanks">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <center>{{ message | safe }}</center>
             </div>
-        </div>
-        
-        <!-- Help button -->
-        <div class="row text-center">
-            <div id="help">
-                <button id="helpBtn" type="button" class="btn btn-warning" title='Get Help'>?</button>
-            </div>
-        </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Help button -->
+    <div id="help">
+        <button id="helpBtn" type="button" class="btn btn-warning" title='Get Help'>?</button>
     </div>
 
     <!-- Leaflet map --> 
@@ -169,29 +151,10 @@
             $('#routeForm').modal('show');
         });
         {% endif %}
-
-
-        // Tool tip controls
-        $('#helpBtn').tipsy({gravity: 'w', delayIn: 200, fade: true});
-        $('.leaflet-control-zoom-in').tipsy({gravity:'w', delayIn: 1000, fade: true});
-        $('.leaflet-control-zoom-out').tipsy({gravity:'w', delayIn: 1000, fade: true});
-        $('.leaflet-draw-draw-marker').tipsy({gravity:'w', delayIn: 1000, fade: true});
-        $('.leaflet-draw-draw-polyline').tipsy({gravity:'w', delayIn: 1000, fade: true});
-        $('.leaflet-control-geocoder').tipsy({gravity:'w', delayIn:1000, fade: true, title: function(){ return "Search for an address"}});
-        $('.leaflet-control-layers-toggle').tipsy({gravity:'e', trigger: 'manual', title: function(){ return "Layer control"}, fade: true});
-
-        $('#helpBtn').click(function(){toggleTooltips("show")});
-        $('#map').click(function(){toggleTooltips("hide")});
-        
-        function toggleTooltips(t){
-            $('.leaflet-control-zoom-in').tipsy(t);
-            $('.leaflet-control-zoom-out').tipsy(t);
-            $('.leaflet-draw-draw-marker').tipsy(t);
-            $('.leaflet-draw-draw-polyline').tipsy(t);
-            $('.leaflet-control-layers-toggle').tipsy(t);           
-            $('.leaflet-control-geocoder').tipsy(t);           
-        };
         
     </script>
+
+    <!-- Tooltips script -->
+    <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
 
 {% endblock %}

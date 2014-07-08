@@ -1,8 +1,20 @@
 TO DO
 
 * Social media buttons/links
-* 
+* Double messages bug
 * Check compatabilities with internet explorer (even though it's the worst)
-* 
+* Data backup
+* Setup geofence
+* Admin point edit from map index
+* Email recipient groups
+* Colour theme
+* Password protected dev release
+* Setup media root
+* Setup static root
+* Option to report for different person
+* custom ICBC icons
+* Day/Night point clusters or a timeslider
+* Write up readme
+* Documentation for future devs
 * 
 * 

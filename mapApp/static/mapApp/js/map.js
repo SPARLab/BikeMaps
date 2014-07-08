@@ -131,6 +131,8 @@ function initialize() {
 	L.drawLocal.draw.toolbar.buttons.marker = 'Add an incident marker';
 	L.drawLocal.draw.handlers.marker.tooltip.start = 'Place me where the incident occurred';
 	L.drawLocal.draw.toolbar.buttons.polyline = 'Add a cycling route';
+	L.drawLocal.draw.toolbar.buttons.polygon = 'Trace an area to receive incident alerts';
+	L.drawLocal.draw.handlers.polygon.tooltip.start = 'Trace the area you want to receive alerts for';
 
 	map.addControl(new L.Control.Draw({
 		draw: {
@@ -141,14 +143,20 @@ function initialize() {
 			// 	}
 			// },
 			polyline: false,
-			polygon: false,
 			rectangle: false,
 			circle: false,
 			marker: {
 				icon: bikeGreyIcon,
+			},
+			polygon: {
+				allowIntersection: false
 			}
 		},
-		edit: false,
+		edit: {
+			featureGroup: accidentPoints,
+			edit: true,
+			remove: true
+		},
 	}));
 
 	/* GEOCODING SEARCH BAR CONTROL */
@@ -171,75 +179,6 @@ function initialize() {
 			.addTo(map)
 			.openPopup();
 	};
-
-	/* LEAFLET-ROUTING */
-/*
-	// Snapping Layer
-    snapping = new L.geoJson(null, {
-      style: {
-        opacity:0
-        ,clickable:false
-      }
-    }).addTo(map);
-    map.on('moveend', function() {
-      if (map.getZoom() > 12) {
-        var proxy = 'http://www2.turistforeningen.no/routing.php?url=';
-        var route = 'http://www.openstreetmap.org/api/0.6/map';
-        var params = '&bbox=' + map.getBounds().toBBoxString() + '&1=2';
-        $.get(proxy + route + params).always(function(osm, status) {
-          if (status === 'success' && typeof osm === 'object') {
-            var geojson = osmtogeojson(osm);
-
-            snapping.clearLayers();
-            for (var i = 0; i < geojson.features.length; i++) {
-              var feat = geojson.features[i];
-              if (feat.geometry.type === 'LineString' && feat.properties.tags.highway) {
-                snapping.addData(geojson.features[i]);
-              }
-            }
-          } else {
-            console.log('Could not load snapping data');
-          }
-        });
-      } else {
-        snapping.clearLayers();
-      }
-    });
-    map.fire('moveend');
-
-    // OSM Router
-    router = function(m1, m2, cb) {
-      var proxy = 'http://www2.turistforeningen.no/routing.php?url=';
-      var route = 'http://www.yournavigation.org/api/1.0/gosmore.php&format=geojson&v=foot&fast=1&layer=mapnik';
-      var params = '&flat=' + m1.lat + '&flon=' + m1.lng + '&tlat=' + m2.lat + '&tlon=' + m2.lng;
-      $.getJSON(proxy + route + params, function(geojson, status) {
-        if (!geojson || !geojson.coordinates || geojson.coordinates.length === 0) {
-          if (typeof console.log === 'function') {
-            console.log('OSM router failed', geojson);
-          }
-          return cb(new Error());
-        }
-        return cb(null, L.GeoJSON.geometryToLayer(geojson));
-      });
-    }
-
-    routing = new L.Routing({
-      position: 'topleft'
-      ,routing: {
-        router: router
-      }
-      ,snapping: {
-        layers: []
-      }
-      ,snapping: {
-        layers: [snapping]
-        ,sensitivity: 15
-        ,vertexonly: false
-      }
-    });
-    map.addControl(routing);
-    routing.draw()
-*/
 }
 
 function initializeGeoJsonLayers(){
