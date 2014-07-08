@@ -1,7 +1,6 @@
 TO DO
 
 * Social media buttons/links
-* Double messages bug
 * Check compatabilities with internet explorer (even though it's the worst)
 * Data backup
 * Setup geofence
