@@ -7,6 +7,7 @@ django-compressor==1.4
 django-crispy-forms==1.4.0
 django-debug-toolbar==1.2.1
 django-djconfig==0.1.4
+django-geojson==2.5.0
 django-haystack==2.1.0
 django-infinite-scroll-pagination==0.1.1
 psycopg2==2.5.3
