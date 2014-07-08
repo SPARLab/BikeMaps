@@ -102,6 +102,20 @@
         // Create the map (call to map.js)
         initialize();
 
+
+        /* Add lealet drawing controls if user is admin */
+        
+        {% if request.user.is_superuser %}
+        map.addControl(new L.Control.Draw({
+            draw: false,
+            edit: {
+                featureGroup: accidentPoints,
+                edit: true,
+                remove: true
+            },
+        }));
+        {% endif %}
+
         // Controls for feature creation (leaflet-draw)
         map.on('draw:created', function (e) {
             var type = e.layerType,

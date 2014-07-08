@@ -4,8 +4,8 @@ Bike-maps
 
 [http://bikemaps.org]
 
-###A [SPARLab](http://www.geog.uvic.ca/spar/) project. 
-A database driven webapp that allows users to submit bike accidents and near-misses. Data is analyzed to detect areas/routes with high traffic and rates of incidents.  
+### A [SPARLab](http://www.geog.uvic.ca/spar/) project. 
+A database driven webapp that allows users to submit bike accidents and near-misses. Data is analyzed to detect areas/routes with high traffic and rates of incidents. 
 
 
 ##### Requirements
@@ -28,6 +28,7 @@ A database driven webapp that allows users to submit bike accidents and near-mis
   + sqlparse==0.1.11
   + wsgiref==0.1.2
 
+
 ##### People
   + Dr. Trisalyn Nelson (Project Lead)
   + Taylor Denouden (Developer)
@@ -36,21 +37,22 @@ A database driven webapp that allows users to submit bike accidents and near-mis
 
 ##### Setup
   Starting this django project requires the following:
+    Prereqs:
+      A postgresql database named bikeDB with postgis extension installed 
+      All requirements
+        + pip install -r requirements.txt
 
-  Prereqs:
-    A postgresql database named bikeDB with postgis extension installed 
-    All requirements
-      + pip install -r requirements.txt
+    Then, run:
+      python manage.py syncdb
+      python manage.py loaddata spirit_init
+      python manage.py createcachetable spirit_cache
+      # python manage.py collectstatic # In future, after static root is set (not yet implemented)
 
-  Then, run:
-    python manage.py syncdb
-    python manage.py loaddata spirit_init
-    python manage.py createcachetable spirit_cache
-    # python manage.py collectstatic # In future, after static root is set (not yet implemented)
+    Then running
+      python manage.py runserver
+      and visiting localhost:8000 should show the page on any dev computer
 
-  Then running
-    python manage.py runserver
-    and visiting localhost:8000 should show the page on any dev computer
+  Change email password in settings to allow for new account creation and emails to admin from contact link
 
 
 ##### Data output

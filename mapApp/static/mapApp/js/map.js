@@ -152,11 +152,7 @@ function initialize() {
 				allowIntersection: false
 			}
 		},
-		edit: {
-			featureGroup: accidentPoints,
-			edit: true,
-			remove: true
-		},
+		edit: false
 	}));
 
 	/* GEOCODING SEARCH BAR CONTROL */

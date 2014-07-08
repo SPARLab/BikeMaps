@@ -343,14 +343,14 @@ class Route(models.Model):
 ##########
 # AlertArea class.
 # Main class for submitted routes.
-# class AlertArea(models.Model):
-#     # Spatial fields
-#     # Default CRS -> WGS84
-#     geofence = models.PolygonField()
-#     objects = models.GeoManager() # Required to conduct geographic queries
+class AlertArea(models.Model):
+    # Spatial fields
+    # Default CRS -> WGS84
+    geofence = models.PolygonField()
+    objects = models.GeoManager() # Required to conduct geographic queries
 
-#     user = models.ForeignKey()
+    user = models.ForeignKey('spirit.User')
 
-#     def __unicode__(self):
-#         # reverses latlngs and turns tuple of tuples into list of lists
-#         return list(list(latlng)[::-1] for latlng in self.line) 
+    def __unicode__(self):
+        # reverses latlngs and turns tuple of tuples into list of lists
+        return list(list(latlng)[::-1] for latlng in self.line) 
