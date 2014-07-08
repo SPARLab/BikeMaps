@@ -296,7 +296,8 @@ function getPolyline(latlng, freq) {
 
 function locateUser() {
 	this.map.locate({
-		setView: true
+		setView: true,
+		maxZoom: 16
 	});
 };
 

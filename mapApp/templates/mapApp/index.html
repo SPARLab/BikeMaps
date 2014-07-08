@@ -102,9 +102,10 @@
         // Create the map (call to map.js)
         initialize();
 
+        // Center on user location
+        locateUser();
 
         /* Add lealet drawing controls if user is admin */
-        
         {% if request.user.is_superuser %}
         map.addControl(new L.Control.Draw({
             draw: false,
@@ -115,6 +116,7 @@
             },
         }));
         {% endif %}
+
 
         // Controls for feature creation (leaflet-draw)
         map.on('draw:created', function (e) {
@@ -132,6 +134,12 @@
                 document.getElementById("line").value = (JSON.stringify(layer.toGeoJSON().geometry));               
                 // Show the form for line creation
                 $('#routeForm').modal('show');
+            }
+            if (type === 'polygon') {
+                // Set form geometry field to click location
+                document.getElementById("geofence").value = (JSON.stringify(layer.toGeoJSON().geometry));               
+                // Show the form for line creation
+                $('#geofenceForm').modal('show');
             }
 
         });
