@@ -79,18 +79,6 @@
 <!-- BODY STUFF -->
 {% block body %}
 
-    <!-- Thanks you message upon succesful form submition -->
-    <div id="thanks">
-        {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-success alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <center>{{ message | safe }}</center>
-            </div>
-            {% endfor %}
-        {% endif %}
-    </div>
-
     <!-- Help button -->
     <div id="help">
         <button id="helpBtn" type="button" class="btn btn-warning" title='Get Help'>?</button>
@@ -111,11 +99,6 @@
 
     <!-- JS to control message display and feature creation -->
     <script>
-        // Fade out the thank-you message after 7 seconds
-        $(window).load(function(){
-          setTimeout(function(){ $('.alert').fadeOut() }, 7000);
-        });
-
         // Create the map (call to map.js)
         initialize();
 
@@ -132,7 +115,7 @@
             }
             if (type === 'polyline') {
                 // Set form geometry field to click location
-                document.getElementById("geom").value = (JSON.stringify(layer.toGeoJSON().geometry));               
+                document.getElementById("line").value = (JSON.stringify(layer.toGeoJSON().geometry));               
                 // Show the form for line creation
                 $('#routeForm').modal('show');
             }

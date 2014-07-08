@@ -42,7 +42,7 @@ admin.site.register(Incident, IncidentAdmin)
 # 	list_display = ('report_date','trip_purpose', 'frequency','was_published_recently')
 
 # 	fieldsets = [
-# 		('Route',	{'fields': ['geom']}),
+# 		('Route',	{'fields': ['line']}),
 # 		('Details',	{'fields': ['trip_purpose','frequency']})
 # 	]
 

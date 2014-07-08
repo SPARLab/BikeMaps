@@ -35,7 +35,7 @@ def postRoute(request):
 
 		# Convert string coords to valid geometry object
 		routeForm.data = routeForm.data.copy()
-		routeForm.data['geom'] = GEOSGeometry(routeForm.data['geom'])
+		routeForm.data['line'] = GEOSGeometry(routeForm.data['line'])
 
 		if routeForm.is_valid():
 			routeForm.save()
