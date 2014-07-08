@@ -126,5 +126,5 @@ def contact(request):
 
 @administrator_required
 def getIncidents(request):
-	data = GeoJSONSerializer().serialize(Incident.objects.all(), use_natural_keys=True)
+	data = GeoJSONSerializer().serialize(Incident.objects.all(), indent=2, use_natural_keys=True)
 	return HttpResponse(data, content_type="application/json")
