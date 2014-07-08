@@ -339,6 +339,7 @@ class Route(models.Model):
     def __unicode__(self):
         return unicode(self.report_date)
 
+
 ##########
 # AlertArea class.
 # Main class for submitted routes.
@@ -349,7 +350,7 @@ class Route(models.Model):
 #     objects = models.GeoManager() # Required to conduct geographic queries
 
 #     user = models.ForeignKey()
-    
+
 #     def __unicode__(self):
 #         # reverses latlngs and turns tuple of tuples into list of lists
 #         return list(list(latlng)[::-1] for latlng in self.line) 

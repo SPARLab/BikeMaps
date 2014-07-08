@@ -15,5 +15,12 @@ TO DO
 * Day/Night point clusters or a timeslider
 * Write up readme
 * Documentation for future devs
+
+BUGS
+
+* Improper dropdown on Forum
+*
 * 
 * 
+* 
+*  

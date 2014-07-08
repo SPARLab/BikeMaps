@@ -178,3 +178,13 @@ div.line-mouse-marker {
 .leaflet-control-geocoder:hover{
 	background: #f4f4f4;
 }
+
+/* Override spirt user dropdown*/
+.dropdown-menu>.divider{
+	height: 1px;
+	width: 158px;
+}
+
+.dropdown-menu>li>a{	
+	width: 158px;
+}
