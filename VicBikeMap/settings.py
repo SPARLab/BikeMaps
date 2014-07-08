@@ -128,3 +128,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'bikemaps.org@gmail.com'
 # EMAIL_HOST_PASSWORD = #SECRET
+
+SERIALIZATION_MODULES = {
+    'geojson' : 'djgeojson.serializers'
+}
