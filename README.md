@@ -2,7 +2,7 @@ Bike-maps
 =========
 ######TODO: Flesh out Readme
 
-[www.bike-maps.ca/org](http://bike-maps.ca)
+[http://bikemaps.org]
 
 ###A [SPARLab](http://www.geog.uvic.ca/spar/) project. 
 A database driven webapp that allows users to submit bike accidents and near-misses. Data is analyzed to detect areas/routes with high traffic and rates of incidents.  
@@ -39,8 +39,8 @@ A database driven webapp that allows users to submit bike accidents and near-mis
 
   Prereqs:
     A postgresql database named bikeDB with postgis extension installed 
-      and 
-    pip install -r requirements.txt
+    All requirements
+      + pip install -r requirements.txt
 
   Then, run:
     python manage.py syncdb
@@ -51,3 +51,10 @@ A database driven webapp that allows users to submit bike accidents and near-mis
   Then running
     python manage.py runserver
     and visiting localhost:8000 should show the page on any dev computer
+
+
+##### Data output
+  Data is output by loggin into an admin account and selecting "Data to GeoJson" under the user dropdown menu in the navbar
+  This geojson data can be used directly by QGis or converted to a shapefile using ogr2ogr tools.
+  The easiest method to convert the output geojson text to a shapefile is to copy it from the webpage and
+    past into the "Convert from GeoJSON" box at http://ogre.adc4gis.com/
