@@ -1,7 +1,7 @@
 from django.contrib.gis import admin
 
 # Register your models here.
-from mapApp.models import Incident, Route
+from mapApp.models import Incident, Route, AlertArea
 
 # class PersonStacked(admin.StackedInline):
 #     model = Person
@@ -29,22 +29,24 @@ class IncidentAdmin(admin.OSMGeoAdmin):
 
 admin.site.register(Incident, IncidentAdmin)
 
-
-# class RouteAdmin(admin.OSMGeoAdmin):
-# 	# Map options
-# 	default_lon = -13745000
-# 	default_lat = 6196000
-# 	default_zoom = 10
-
-# 	# Allow for filtering of report date
-# 	list_filter = ['report_date']
-
-# 	list_display = ('report_date','trip_purpose', 'frequency','was_published_recently')
-
-# 	fieldsets = [
-# 		('Route',	{'fields': ['geom']}),
-# 		('Details',	{'fields': ['trip_purpose','frequency']})
-# 	]
+admin.site.register(AlertArea)
 
 
-# admin.site.register(Route, RouteAdmin)
+class RouteAdmin(admin.OSMGeoAdmin):
+	# Map options
+	default_lon = -13745000
+	default_lat = 6196000
+	default_zoom = 10
+
+	# Allow for filtering of report date
+	list_filter = ['report_date']
+
+	list_display = ('report_date','trip_purpose', 'frequency','was_published_recently')
+
+	fieldsets = [
+		('Route',	{'fields': ['line']}),
+		('Details',	{'fields': ['trip_purpose','frequency']})
+	]
+
+
+admin.site.register(Route, RouteAdmin)

@@ -34,7 +34,7 @@ textarea {
 	z-index: 0;
 }
 
-#thanks {
+#message {
 	position: fixed;
 	right: 1em;
 	bottom: 1em;
@@ -177,4 +177,14 @@ div.line-mouse-marker {
 
 .leaflet-control-geocoder:hover{
 	background: #f4f4f4;
+}
+
+/* Override spirt user dropdown*/
+.dropdown-menu>.divider{
+	height: 1px;
+	width: 158px;
+}
+
+.dropdown-menu>li>a{	
+	width: 158px;
 }

@@ -22,12 +22,12 @@
     <!-- Load draw pluging -->
     <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.draw/dist/leaflet.draw.css' %}">
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/Leaflet.draw.js' %}"></script>
-    <!--
+    
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.Poly.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.SimpleShape.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.Circle.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.Rectangle.js' %}"></script>
-    -->
+    
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Feature.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Marker.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Polyline.js' %}"></script>
@@ -46,31 +46,19 @@
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/Tooltip.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/Toolbar.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/DrawToolbar.js' %}"></script>
-    <!-- 
+    
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/EditToolbar.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/EditToolbar.Edit.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/EditToolbar.Delete.js' %}"></script> 
-    -->
-
+   
     <!-- Used for pie chart creation -->
     <!-- d3 v3.4.8 -->
     <script src="{% static 'd3/d3.min.js' %}" charset="utf-8"></script> 
-
-    <!-- Leaflet.routing plugin 
-    <script src="{% static 'leaflet/plugins/leaflet-routing/src/utils/LineUtil.Snapping.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet-routing/src/utils/Marker.Snapping.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet-routing/src/L.Routing.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet-routing/src/L.Routing.Storage.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet-routing/src/L.Routing.Draw.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet-routing/src/L.Routing.Edit.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet-routing/osmtogeojson.js' %}"></script>
-    -->
 
     <!-- Leaflet Geocoder -->
     <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}"> 
     <script src="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script> 
     
-
     <!-- GeoJSON sources -->
     <script src="{% static 'mapApp/data/policeData.js' %}"></script> 
     <script src="{% static 'mapApp/data/bikeRoutes.js' %}"></script>
@@ -83,6 +71,7 @@
     <!-- Modal form popups -->
     {% include 'mapApp/util/incident_form.html' %}
     {% include 'mapApp/util/route_form.html' %}
+    {% include 'mapApp/util/geofence_form.html' %}
 
 
 {% endblock %}
@@ -91,27 +80,9 @@
 <!-- BODY STUFF -->
 {% block body %}
 
-    <!-- Thanks you message upon succesful form submition -->
-    <div class='container'>
-        <div class="row text-center">
-            <div id="thanks">
-                {% if messages %}
-                    {% for message in messages %}
-                    <div class="alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <center>{{ message | safe }}</center>
-                    </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </div>
-        
-        <!-- Help button -->
-        <div class="row text-center">
-            <div id="help">
-                <button id="helpBtn" type="button" class="btn btn-warning" title='Get Help'>?</button>
-            </div>
-        </div>
+    <!-- Help button -->
+    <div id="help">
+        <button id="helpBtn" type="button" class="btn btn-warning" title='Get Help'>?</button>
     </div>
 
     <!-- Leaflet map --> 
@@ -119,23 +90,45 @@
 
     <!-- Load user points from the database -->
     {% for incident in incidents %}
-        <script> getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}" ); </script>
+        <script> 
+        console.log({{ incident.latlngList }});
+        console.log("{{ incident.geom }}");
+        getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}" ); </script>
     {% endfor %}
 
     <!-- Load user routes from the database -->
     {% for route in routes %}
-        <script> getPolyline( {{ route.latlngList }} ); </script>
+        <script> 
+        console.log({{ route.latlngList }});
+        console.log("{{ route.line }}");
+        getPolyline( {{ route.latlngList }} ); </script>
+    {% endfor %}
+
+    <!-- Load user alert areas from the database -->
+    {% for polygon in geofences %}
+        <script> 
+        console.log({{ polygon.latlngList }});
+        console.log("{{ polygon.geofence }}");
+        getPolygon( {{ polygon.latlngList }} ); </script>
     {% endfor %}
 
     <!-- JS to control message display and feature creation -->
     <script>
-        // Fade out the thank-you message after 7 seconds
-        $(window).load(function(){
-          setTimeout(function(){ $('.alert').fadeOut() }, 7000);
-        });
-
         // Create the map (call to map.js)
         initialize();
+
+        /* Add lealet drawing controls if user is admin */
+        {% if request.user.is_superuser %}
+        map.addControl(new L.Control.Draw({
+            draw: false,
+            edit: {
+                featureGroup: accidentPoints,
+                edit: true,
+                remove: true
+            },
+        }));
+        {% endif %}
+
 
         // Controls for feature creation (leaflet-draw)
         map.on('draw:created', function (e) {
@@ -145,14 +138,20 @@
             if (type === 'marker') {
                 // Set form geometry field to click location
                 document.getElementById("geom").value = (JSON.stringify(layer.toGeoJSON().geometry));               
-                // Show the form for point creation
                 $('#incidentForm').modal('show');
             }
             if (type === 'polyline') {
                 // Set form geometry field to click location
-                document.getElementById("geom").value = (JSON.stringify(layer.toGeoJSON().geometry));               
-                // Show the form for line creation
+                document.getElementById("line").value = (JSON.stringify(layer.toGeoJSON().geometry));               
                 $('#routeForm').modal('show');
+            }
+            if (type === 'polygon') {
+                // Set form geometry field to click location
+                document.getElementById("geofence").value = (JSON.stringify(layer.toGeoJSON().geometry));               
+                console.log("{{request.user}}");
+                document.getElementById("userName").value = ("{{ request.user }}");               
+                document.getElementById("userEmail").value = ("{{ request.user.email }}");               
+                $('#geofenceForm').modal('show');
             }
 
         });
@@ -170,28 +169,15 @@
         });
         {% endif %}
 
-
-        // Tool tip controls
-        $('#helpBtn').tipsy({gravity: 'w', delayIn: 200, fade: true});
-        $('.leaflet-control-zoom-in').tipsy({gravity:'w', delayIn: 1000, fade: true});
-        $('.leaflet-control-zoom-out').tipsy({gravity:'w', delayIn: 1000, fade: true});
-        $('.leaflet-draw-draw-marker').tipsy({gravity:'w', delayIn: 1000, fade: true});
-        $('.leaflet-draw-draw-polyline').tipsy({gravity:'w', delayIn: 1000, fade: true});
-        $('.leaflet-control-geocoder').tipsy({gravity:'w', delayIn:1000, fade: true, title: function(){ return "Search for an address"}});
-        $('.leaflet-control-layers-toggle').tipsy({gravity:'e', trigger: 'manual', title: function(){ return "Layer control"}, fade: true});
-
-        $('#helpBtn').click(function(){toggleTooltips("show")});
-        $('#map').click(function(){toggleTooltips("hide")});
-        
-        function toggleTooltips(t){
-            $('.leaflet-control-zoom-in').tipsy(t);
-            $('.leaflet-control-zoom-out').tipsy(t);
-            $('.leaflet-draw-draw-marker').tipsy(t);
-            $('.leaflet-draw-draw-polyline').tipsy(t);
-            $('.leaflet-control-layers-toggle').tipsy(t);           
-            $('.leaflet-control-geocoder').tipsy(t);           
-        };
+        {% if geofenceFormErrors %}
+        $(window).load(function(){
+            $('#geofenceForm').modal('show');
+        });
+        {% endif %}
         
     </script>
+
+    <!-- Tooltips script -->
+    <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
 
 {% endblock %}
