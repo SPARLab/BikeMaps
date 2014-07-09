@@ -1,0 +1,65 @@
+<script>
+	/* ADD THE CONTROL TO LEAFLET MAP */
+    map.addControl(new L.Control.Draw({
+    draw: {
+        polyline: false,
+        rectangle: false,
+        circle: false,
+        marker: {
+            icon:bikeGreyIcon
+        },
+        {% if request.user.is_authenticated %}
+            polygon: {
+                allowIntersection: false
+            }
+        {% else %}
+            polygon: false
+        {% endif %}
+        },
+        edit: false
+    }));
+    /* Add lealet editing controls if user is admin */
+    {% if request.user.is_superuser %}
+    map.addControl(new L.Control.Draw({
+        draw: false,
+        edit: {
+            featureGroup: accidentPoints,
+            edit: true,
+            remove: true
+        },
+    }));
+    {% endif %}
+
+
+	/* DRAWING CONTROL TOOLTIPS */
+    L.drawLocal.draw.toolbar.buttons.marker = 'Add an incident marker';
+    L.drawLocal.draw.handlers.marker.tooltip.start = 'Place me where the incident occurred';
+    L.drawLocal.draw.toolbar.buttons.polyline = 'Add a cycling route';
+    L.drawLocal.draw.toolbar.buttons.polygon = 'Trace an area to receive incident alerts';
+    L.drawLocal.draw.handlers.polygon.tooltip.start = 'Trace the area you want to receive alerts for';
+
+
+    /* DEFINE ACTIONS TRIGGERED BY NEW DRAWINGS */
+    map.on('draw:created', function (e) {
+        var type = e.layerType,
+            layer = e.layer;
+        
+        if (type === 'marker') {
+            // Set form geometry field to click location
+            document.getElementById("point").value = (JSON.stringify(layer.toGeoJSON().geometry));               
+            $('#incidentForm').modal('show');
+        }
+        if (type === 'polyline') {
+            // Set form geometry field to click location
+            document.getElementById("line").value = (JSON.stringify(layer.toGeoJSON().geometry));               
+            $('#routeForm').modal('show');
+        }
+        if (type === 'polygon') {
+            // Set form geometry field to click location
+            document.getElementById("geofence").value = (JSON.stringify(layer.toGeoJSON().geometry));                             
+            document.getElementById("userEmail").value = ("{{ request.user.email }}");               
+            $('#geofenceForm').modal('show');
+        }
+    });
+
+</script>

@@ -9,7 +9,7 @@ $('.leaflet-draw-draw-polyline').tipsy({gravity:'w', delayIn: 1000, fade: true})
 $('.leaflet-draw-draw-polygon').tipsy({gravity:'w', delayIn: 1000, fade: true});
 $('.leaflet-draw-edit-remove').tipsy({gravity:'w', delayIn: 1000, fade: true});
 $('.leaflet-draw-edit-edit').tipsy({gravity:'w', delayIn: 1000, fade: true});
-$('.leaflet-control-geocoder').tipsy({gravity:'w', delayIn:1000, fade: true, title: function(){ return "Search for an address"}});
+$('.leaflet-control-geocoder').tipsy({gravity:'e', delayIn:1000, fade: true, title: function(){ return "Search for an address"}});
 $('.leaflet-control-layers-toggle').tipsy({gravity:'e', trigger: 'manual', title: function(){ return "Layer control"}, fade: true});
 
 $('#helpBtn').click(function(){toggleTooltips("show")});
