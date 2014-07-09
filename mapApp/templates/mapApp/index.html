@@ -90,71 +90,24 @@
 
     <!-- Load user points from the database -->
     {% for incident in incidents %}
-        <script> 
-        console.log({{ incident.latlngList }});
-        console.log("{{ incident.geom }}");
-        getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}" ); </script>
-    {% endfor %}
-
-    <!-- Load user routes from the database -->
-    {% for route in routes %}
-        <script> 
-        console.log({{ route.latlngList }});
-        console.log("{{ route.line }}");
-        getPolyline( {{ route.latlngList }} ); </script>
+        <script> getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}" ); </script>
     {% endfor %}
 
     <!-- Load user alert areas from the database -->
     {% for polygon in geofences %}
-        <script> 
-        console.log({{ polygon.latlngList }});
-        console.log("{{ polygon.geofence }}");
-        getPolygon( {{ polygon.latlngList }} ); </script>
+        <script>
+            getPolygon( {{ polygon.latlngList }} ); 
+            
+            {% for incident in polygon.alertPoints.all %}
+                console.log('{{ incident }}');
+            {% endfor %}
+        </script>
     {% endfor %}
 
     <!-- JS to control message display and feature creation -->
     <script>
         // Create the map (call to map.js)
         initialize();
-
-        /* Add lealet drawing controls if user is admin */
-        {% if request.user.is_superuser %}
-        map.addControl(new L.Control.Draw({
-            draw: false,
-            edit: {
-                featureGroup: accidentPoints,
-                edit: true,
-                remove: true
-            },
-        }));
-        {% endif %}
-
-
-        // Controls for feature creation (leaflet-draw)
-        map.on('draw:created', function (e) {
-            var type = e.layerType,
-                layer = e.layer;
-            
-            if (type === 'marker') {
-                // Set form geometry field to click location
-                document.getElementById("geom").value = (JSON.stringify(layer.toGeoJSON().geometry));               
-                $('#incidentForm').modal('show');
-            }
-            if (type === 'polyline') {
-                // Set form geometry field to click location
-                document.getElementById("line").value = (JSON.stringify(layer.toGeoJSON().geometry));               
-                $('#routeForm').modal('show');
-            }
-            if (type === 'polygon') {
-                // Set form geometry field to click location
-                document.getElementById("geofence").value = (JSON.stringify(layer.toGeoJSON().geometry));               
-                console.log("{{request.user}}");
-                document.getElementById("userName").value = ("{{ request.user }}");               
-                document.getElementById("userEmail").value = ("{{ request.user.email }}");               
-                $('#geofenceForm').modal('show');
-            }
-
-        });
 
         // Show the modal if there are errors in a form submit
         {% if incidentFormErrors %}
@@ -174,8 +127,10 @@
             $('#geofenceForm').modal('show');
         });
         {% endif %}
-        
     </script>
+
+    <!-- Add Leaflet.draw controls and actions to map -->
+    {% include 'mapApp/util/draw.html' %}
 
     <!-- Tooltips script -->
     <script src="{% static 'mapApp/js/tooltips.js' %}"></script>

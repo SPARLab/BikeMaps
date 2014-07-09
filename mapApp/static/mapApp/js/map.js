@@ -132,38 +132,9 @@ function initialize() {
 	/* LAYER CONTROL */
 	L.control.layers(baseMaps, overlayMaps).addTo(map);
 
-
-	/* DRAWING CONTROLS */
-	L.drawLocal.draw.toolbar.buttons.marker = 'Add an incident marker';
-	L.drawLocal.draw.handlers.marker.tooltip.start = 'Place me where the incident occurred';
-	L.drawLocal.draw.toolbar.buttons.polyline = 'Add a cycling route';
-	L.drawLocal.draw.toolbar.buttons.polygon = 'Trace an area to receive incident alerts';
-	L.drawLocal.draw.handlers.polygon.tooltip.start = 'Trace the area you want to receive alerts for';
-
-	map.addControl(new L.Control.Draw({
-		draw: {
-			// polyline: {
-			// 	shapeOptions: {
-			// 		color: '#f357a1',
-			// 		weight: 5
-			// 	}
-			// },
-			polyline: false,
-			rectangle: false,
-			circle: false,
-			marker: {
-				icon: bikeGreyIcon,
-			},
-			polygon: {
-				allowIntersection: false
-			}
-		},
-		edit: false
-	}));
-
 	/* GEOCODING SEARCH BAR CONTROL */
 	var geocoder = L.Control.geocoder({
-		position: "topleft"
+		position: "bottomright"
 	}).addTo(map);
 
 	var geocodeMarker;
@@ -310,8 +281,8 @@ function getPolyline(latlng, freq) {
 
 function getPolygon(latlng) {
 	alertAreas.addLayer(L.polygon(latlng, {
-		color: 'red',
-		width: 40,
+		color: '#3b9972',
+		weight: 3,
 		opacity: 1,
 		clickable: false,
 	}));
@@ -484,7 +455,7 @@ function pieChart(data, outerR, innerR, total){
 	});
 };
 
-// Purpose: Helper function to convert xmlNode into a string
+// Purpose: Helper function to convert xmlNode to a string
 function serializeXmlNode(xmlNode) {
     if (typeof window.XMLSerializer != "undefined") {
         return (new window.XMLSerializer()).serializeToString(xmlNode);

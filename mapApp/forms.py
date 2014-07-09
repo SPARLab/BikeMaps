@@ -2,7 +2,7 @@ from django import forms
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import Accordion, AccordionGroup
-from crispy_forms.layout import Layout, Field
+from crispy_forms.layout import Layout, Field, HTML
 
 from mapApp.models import Incident, Route, AlertArea
 
@@ -14,7 +14,7 @@ class IncidentForm(forms.ModelForm):
         Accordion(
             AccordionGroup(
                 'Incident',
-                Field('geom', type="hidden", id="geom"), # Coords passed after click on map from static/mapApp/js/map.js
+                Field('geom', type="hidden", id="point"), # Coords passed after click on map from static/mapApp/js/map.js
                 Field('incident_date', id="incident_date", template='mapApp/util/datepicker.html'),
                 Field('incident'),
                 Field('incident_with'),
@@ -41,7 +41,7 @@ class IncidentForm(forms.ModelForm):
             AccordionGroup(
                 'Details',
                 Field('incident_detail', placeholder='optional'),
-            ),
+            )
         )
     )
 
@@ -59,7 +59,7 @@ class RouteForm(forms.ModelForm):
                 'Details',
                 Field('trip_purpose'),
                 Field('frequency'),
-                Field('line', type="hidden", id="line"), # Coords passed after clicks on map
+                Field('geom', type="hidden", id="line"), # Coords passed after clicks on map
             ),
         )
     )
@@ -73,10 +73,13 @@ class GeofenceForm(forms.ModelForm):
     helper.form_tag = False # removes auto-inclusion of form tag in template
 
     helper.layout = Layout(
-        Field('geofence', type="hidden", id="geofence"), # Coords passed after clicks on map
-        Field('user', readonly=True, id="userName"),
+        Field('geom', type="hidden", id="geofence"), # Coords passed after clicks on map
+        # Field('user', readonly=True, id="userName"),
         Field('email', readonly=True, id="userEmail"),
-        Field('emailWeekly')
+        Field('emailWeekly'),
+        # Field('alertPoints'),
+        # Field('emailAlertPoints'),
+        HTML("""<br><em>Alerts will also continue to appear in the notifications tab of this website</em>""")
     )
 
     class Meta:

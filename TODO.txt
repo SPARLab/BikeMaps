@@ -25,3 +25,9 @@ BUGS
 * 
 * 
 *  
+
+Tomorrow
+* Edit toolbars for polygons
+* Email alerts weekly
+* navbar alerts for polygons
+* 

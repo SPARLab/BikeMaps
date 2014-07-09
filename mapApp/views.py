@@ -26,7 +26,7 @@ def index(request):
 		"routeForm": RouteForm(),
 		"routeFormErrors": False,
 
-		"geofences": AlertArea.objects.all(), #request.user
+		"geofences": AlertArea.objects.filter(user=request.user.id), #request.user
 		"geofenceForm": GeofenceForm(),
 		"geofenceFormErrors": False
 	}
@@ -52,7 +52,7 @@ def postRoute(request):
 				"incidentForm": IncidentForm(),
 				"incidentFormErrors": False,
 
-				"geofences": AlertArea.objects.all(),
+				"geofences": AlertArea.objects.filter(user=request.user.id),
 				"geofenceForm": GeofenceForm(),
 				"geofenceFormErrors": False,
 
@@ -74,7 +74,9 @@ def postIncident(request):
 		incidentForm.data['geom'] = GEOSGeometry(incidentForm.data['geom'])
 
 		if incidentForm.is_valid():
-			incidentForm.save()
+			incident = incidentForm.save()
+			addPointToUserAlerts(request, incident)
+
 			messages.success(request, '<strong>Thank you!</strong><br>Your incident marker was successfully added.')
 			return HttpResponseRedirect(reverse('mapApp:index')) 
 		
@@ -85,7 +87,7 @@ def postIncident(request):
 				"incidentForm": incidentForm,
 				"incidentFormErrors": True,
 
-				"geofences": AlertArea.objects.all(),
+				"geofences": AlertArea.objects.filter(user=request.user.id),
 				"geofenceForm": GeofenceForm(),
 				"geofenceFormErrors": False,
 				
@@ -98,13 +100,24 @@ def postIncident(request):
 		return HttpResponseRedirect(reverse('mapApp:index')) 
 
 
+def addPointToUserAlerts(request, incident):
+	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
+
+	for poly in intersectingPolys:
+		poly.alertPoints.add(incident)
+		poly.emailAlertPoints.add(incident)
+
+	return
+
 def postAlertPolygon(request):
 	if request.method == 'POST':
 		geofenceForm = GeofenceForm(request.POST)
 		
 		# Convert string coords to valid geometry object
 		geofenceForm.data = geofenceForm.data.copy()
-		geofenceForm.data['geofence'] = GEOSGeometry(geofenceForm.data['geofence'])
+		geofenceForm.data['geom'] = GEOSGeometry(geofenceForm.data['geom'])
+		
+		geofenceForm.data['user'] = request.user.id
 
 		if geofenceForm.is_valid():
 			geofenceForm.save()
@@ -118,7 +131,7 @@ def postAlertPolygon(request):
 				"incidentForm": IncidentForm(),
 				"incidentFormErrors": False,
 
-				"geofence": AlertArea.objects.all(),
+				"geofence": AlertArea.objects.filter(user=request.user.id),
 				"geofenceForm": geofenceForm,
 				"geofenceFormErrors": True,
 				

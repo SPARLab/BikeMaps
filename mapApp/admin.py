@@ -25,11 +25,22 @@ class IncidentAdmin(admin.OSMGeoAdmin):
 		('Injury',	{'fields': ['injury','injury_detail'], 'classes':['collapse']}),
 		('Person',	{'fields': ['age','sex','regular_cyclist'], 'classes':['collapse']})
 	]
-
-
 admin.site.register(Incident, IncidentAdmin)
 
-admin.site.register(AlertArea)
+
+class AlertAreaAdmin(admin.OSMGeoAdmin):
+	# Map options
+	default_lon = -13745000
+	default_lat = 6196000
+	default_zoom = 10
+
+	list_display = ('user', 'email', 'date')
+
+	fieldsets = [
+		('Area',	{'fields': ['geom']}),
+		('User',	{'fields': ['user','email']})
+	]
+admin.site.register(AlertArea, AlertAreaAdmin)
 
 
 class RouteAdmin(admin.OSMGeoAdmin):
@@ -44,9 +55,7 @@ class RouteAdmin(admin.OSMGeoAdmin):
 	list_display = ('report_date','trip_purpose', 'frequency','was_published_recently')
 
 	fieldsets = [
-		('Route',	{'fields': ['line']}),
+		('Route',	{'fields': ['geom']}),
 		('Details',	{'fields': ['trip_purpose','frequency']})
 	]
-
-
 admin.site.register(Route, RouteAdmin)
