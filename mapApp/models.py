@@ -350,16 +350,22 @@ class AlertArea(models.Model):
     objects = models.GeoManager() # Required to conduct geographic queries
 
     date = models.DateTimeField(
-    'Date created', 
-    auto_now_add=True   # Date is set automatically when object created
+        'Date created', 
+        auto_now_add=True   # Date is set automatically when object created
     ) 
 
     user = models.ForeignKey('spirit.User')
     email = models.EmailField()
     emailWeekly = models.BooleanField('Send me weekly email reports')
 
+    alertPoints = models.ManyToManyField(Incident, related_name='alert+', blank=True, null=True)
+    emailAlertPoints = models.ManyToManyField(Incident, related_name='email+', blank=True, null=True)
+
     def latlngList(self):
         return list(list(latlng)[::-1] for latlng in self.geom[0]) 
+
+    # def emailAlerts(self):
+    #     pass
 
     def __unicode__(self):
         # reverses latlngs and turns tuple of tuples into list of lists

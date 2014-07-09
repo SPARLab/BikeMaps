@@ -74,7 +74,9 @@ def postIncident(request):
 		incidentForm.data['geom'] = GEOSGeometry(incidentForm.data['geom'])
 
 		if incidentForm.is_valid():
-			incidentForm.save()
+			incident = incidentForm.save()
+			addPointToUserAlerts(request, incident)
+
 			messages.success(request, '<strong>Thank you!</strong><br>Your incident marker was successfully added.')
 			return HttpResponseRedirect(reverse('mapApp:index')) 
 		
@@ -97,6 +99,15 @@ def postIncident(request):
 	else:
 		return HttpResponseRedirect(reverse('mapApp:index')) 
 
+
+def addPointToUserAlerts(request, incident):
+	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
+
+	for poly in intersectingPolys:
+		poly.alertPoints.add(incident)
+		poly.emailAlertPoints.add(incident)
+
+	return
 
 def postAlertPolygon(request):
 	if request.method == 'POST':

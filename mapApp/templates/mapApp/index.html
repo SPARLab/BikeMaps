@@ -95,7 +95,13 @@
 
     <!-- Load user alert areas from the database -->
     {% for polygon in geofences %}
-        <script> getPolygon( {{ polygon.latlngList }} ); </script>
+        <script>
+            getPolygon( {{ polygon.latlngList }} ); 
+            
+            {% for incident in polygon.alertPoints.all %}
+                console.log('{{ incident }}');
+            {% endfor %}
+        </script>
     {% endfor %}
 
     <!-- JS to control message display and feature creation -->
@@ -122,7 +128,7 @@
         });
         {% endif %}
     </script>
-    
+
     <!-- Add Leaflet.draw controls and actions to map -->
     {% include 'mapApp/util/draw.html' %}
 

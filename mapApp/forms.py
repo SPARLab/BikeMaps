@@ -77,6 +77,8 @@ class GeofenceForm(forms.ModelForm):
         # Field('user', readonly=True, id="userName"),
         Field('email', readonly=True, id="userEmail"),
         Field('emailWeekly'),
+        # Field('alertPoints'),
+        # Field('emailAlertPoints'),
         HTML("""<br><em>Alerts will also continue to appear in the notifications tab of this website</em>""")
     )
 

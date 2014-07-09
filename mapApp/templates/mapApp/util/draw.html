@@ -20,14 +20,14 @@
     }));
     /* Add lealet editing controls if user is admin */
     {% if request.user.is_superuser %}
-    map.addControl(new L.Control.Draw({
-        draw: false,
-        edit: {
-            featureGroup: accidentPoints,
-            edit: true,
-            remove: true
-        },
-    }));
+    // map.addControl(new L.Control.Draw({
+    //     draw: false,
+    //     edit: {
+    //         featureGroup: accidentPoints,
+    //         edit: true,
+    //         remove: true
+    //     },
+    // }));
     {% endif %}
 
 
