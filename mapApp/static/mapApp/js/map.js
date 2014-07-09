@@ -281,8 +281,8 @@ function getPolyline(latlng, freq) {
 
 function getPolygon(latlng) {
 	alertAreas.addLayer(L.polygon(latlng, {
-		color: 'red',
-		width: 40,
+		color: '#3b9972',
+		weight: 3,
 		opacity: 1,
 		clickable: false,
 	}));
