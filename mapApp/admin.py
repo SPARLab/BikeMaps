@@ -3,6 +3,9 @@ from django.contrib.gis import admin
 # Register your models here.
 from mapApp.models import Incident, Route, AlertArea
 
+from spirit.models import User
+admin.site.register(User)
+
 # class PersonStacked(admin.StackedInline):
 #     model = Person
 #     verbose_name_plural = "Person"
@@ -34,7 +37,7 @@ class AlertAreaAdmin(admin.OSMGeoAdmin):
 	default_lat = 6196000
 	default_zoom = 10
 
-	list_display = ('user', 'email', 'date')
+	list_display = ('user', 'email', 'date', 'has_alerts', 'has_email_alerts')
 
 	fieldsets = [
 		('Area',	{'fields': ['geom']}),

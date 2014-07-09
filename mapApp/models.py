@@ -274,9 +274,6 @@ class Incident(models.Model):
         now = timezone.now()
         return now - datetime.timedelta(weeks=1) <= self.report_date < now
 
-    was_published_recently.admin_order_field = 'report_date'
-    was_published_recently.boolean = True
-    was_published_recently.short_description = 'Reported this week?'
 
     # A non elegant way to match up self.incident to a generalized incident_type string
     def incident_type(self):
@@ -291,8 +288,13 @@ class Incident(models.Model):
             for tup in TYPE:
                  if self.incident in tup:
                     return typStr 
-                    
 
+    # For admin site 
+    was_published_recently.admin_order_field = 'report_date'
+    was_published_recently.boolean = True
+    was_published_recently.short_description = 'Reported this week?'
+
+    # toString()
     def __unicode__(self):
         return unicode(self.incident_date)
 
@@ -332,10 +334,12 @@ class Route(models.Model):
         now = timezone.now()
         return now - datetime.timedelta(weeks=1) <= self.report_date < now
 
+    # For admin site
     was_published_recently.admin_order_field = 'report_date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Reported this week?'
 
+    # toString()
     def __unicode__(self):
         return unicode(self.report_date)
 
@@ -344,15 +348,15 @@ class Route(models.Model):
 # AlertArea class.
 # Main class for submitted routes.
 class AlertArea(models.Model):
+    date = models.DateTimeField(
+        'Date created', 
+        auto_now_add=True   # Date is set automatically when object created
+    )
+
     # Spatial fields
     # Default CRS -> WGS84
     geom = models.PolygonField()
     objects = models.GeoManager() # Required to conduct geographic queries
-
-    date = models.DateTimeField(
-        'Date created', 
-        auto_now_add=True   # Date is set automatically when object created
-    ) 
 
     user = models.ForeignKey('spirit.User')
     email = models.EmailField()
@@ -364,9 +368,16 @@ class AlertArea(models.Model):
     def latlngList(self):
         return list(list(latlng)[::-1] for latlng in self.geom[0]) 
 
-    # def emailAlerts(self):
-    #     pass
+    def has_alerts(self):
+        return len(self.alertPoints.all()) != 0
+    
+    def has_email_alerts(self):
+        return len(self.emailAlertPoints.all()) != 0
 
+    # For admin site
+    has_alerts.boolean = True
+    has_email_alerts.boolean = True
+
+    # toString()
     def __unicode__(self):
-        # reverses latlngs and turns tuple of tuples into list of lists
-        return unicode(self.user) 
+        return unicode(self.user)

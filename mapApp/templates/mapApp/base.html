@@ -77,7 +77,7 @@
         
         <ul class="nav navbar-nav navbar-right">
           {% if request.user.is_authenticated %}
-          
+            
             {% has_topic_notifications user as has_notifications %}
             <li><a href="{% url "spirit:topic-notification-list" %}"><span class="glyphicon glyphicon-bell {% if has_notifications %} is-highlighted{% endif %}"></span></a></li>
             <li class="dropdown">

@@ -97,10 +97,6 @@
     {% for polygon in geofences %}
         <script>
             getPolygon( {{ polygon.latlngList }} ); 
-            
-            {% for incident in polygon.alertPoints.all %}
-                console.log('{{ incident }}');
-            {% endfor %}
         </script>
     {% endfor %}
 
@@ -134,5 +130,11 @@
 
     <!-- Tooltips script -->
     <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
+
+    <script>
+    {% for polygon in geofences %}
+        console.log("{{polygon.has_alerts}}");
+    {% endfor %}
+    </script>
 
 {% endblock %}
