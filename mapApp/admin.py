@@ -44,7 +44,7 @@ class RouteAdmin(admin.OSMGeoAdmin):
 	list_display = ('report_date','trip_purpose', 'frequency','was_published_recently')
 
 	fieldsets = [
-		('Route',	{'fields': ['line']}),
+		('Route',	{'fields': ['geom']}),
 		('Details',	{'fields': ['trip_purpose','frequency']})
 	]
 

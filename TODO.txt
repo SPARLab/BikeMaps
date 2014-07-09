@@ -25,3 +25,10 @@ BUGS
 * 
 * 
 *  
+
+Tomorrow
+* Display only polygons for user
+* Edit toolbars for polygons
+* Email alerts weekly
+* 
+* 

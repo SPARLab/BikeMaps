@@ -104,7 +104,9 @@ def postAlertPolygon(request):
 		
 		# Convert string coords to valid geometry object
 		geofenceForm.data = geofenceForm.data.copy()
-		geofenceForm.data['geofence'] = GEOSGeometry(geofenceForm.data['geofence'])
+		geofenceForm.data['geom'] = GEOSGeometry(geofenceForm.data['geom'])
+		
+		geofenceForm.data['user'] = request.user.id
 
 		if geofenceForm.is_valid():
 			geofenceForm.save()

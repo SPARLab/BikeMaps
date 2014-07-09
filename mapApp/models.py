@@ -303,7 +303,7 @@ class Incident(models.Model):
 class Route(models.Model):
     # Spatial fields
     # Default CRS -> WGS84
-    line = models.LineStringField()
+    geom = models.LineStringField()
     objects = models.GeoManager() # Required to conduct geographic queries
 
     report_date = models.DateTimeField(
@@ -326,7 +326,7 @@ class Route(models.Model):
 
     # reverses latlngs and turns tuple of tuples into list of lists
     def latlngList(self):
-        return list(list(latlng)[::-1] for latlng in self.line) 
+        return list(list(latlng)[::-1] for latlng in self.geom) 
 
     def was_published_recently(self):
         now = timezone.now()
@@ -346,16 +346,16 @@ class Route(models.Model):
 class AlertArea(models.Model):
     # Spatial fields
     # Default CRS -> WGS84
-    geofence = models.PolygonField()
+    geom = models.PolygonField()
     objects = models.GeoManager() # Required to conduct geographic queries
 
-    user = models.CharField(max_length=30)
+    user = models.ForeignKey('spirit.User')
     email = models.EmailField()
     emailWeekly = models.BooleanField('Send me weekly email reports')
 
     def latlngList(self):
-        return list(list(latlng)[::-1] for latlng in self.geofence[0]) 
+        return list(list(latlng)[::-1] for latlng in self.geom[0]) 
 
     def __unicode__(self):
         # reverses latlngs and turns tuple of tuples into list of lists
-        return self.user 
+        return unicode(self.user) 
