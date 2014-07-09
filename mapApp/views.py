@@ -99,7 +99,36 @@ def postIncident(request):
 
 
 def postAlertPolygon(request):
-	return HttpResponse(request)
+	if request.method == 'POST':
+		geofenceForm = GeofenceForm(request.POST)
+		
+		# Convert string coords to valid geometry object
+		geofenceForm.data = geofenceForm.data.copy()
+		geofenceForm.data['geofence'] = GEOSGeometry(geofenceForm.data['geofence'])
+
+		if geofenceForm.is_valid():
+			geofenceForm.save()
+			messages.success(request, 'You will now recieve alerts for the area was traced.')
+			return HttpResponseRedirect(reverse('mapApp:index')) 
+		
+		else:
+			# Form is not valid, display modal with highlighted errors 
+			return render(request, 'mapApp/index.html', {
+				'incidents': Incident.objects.all(),
+				"incidentForm": IncidentForm(),
+				"incidentFormErrors": False,
+
+				"geofence": AlertArea.objects.all(),
+				"geofenceForm": geofenceForm,
+				"geofenceFormErrors": True,
+				
+				"routes": Route.objects.all(),
+				"routeForm": RouteForm(),
+				"routeFormErrors": False
+			})
+	
+	else:
+		return HttpResponseRedirect(reverse('mapApp:index'))
 
 
 def about(request):

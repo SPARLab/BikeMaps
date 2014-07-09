@@ -349,10 +349,13 @@ class AlertArea(models.Model):
     geofence = models.PolygonField()
     objects = models.GeoManager() # Required to conduct geographic queries
 
-    user = models.ForeignKey('spirit.User')
+    user = models.CharField(max_length=30)
     email = models.EmailField()
     emailWeekly = models.BooleanField('Send me weekly email reports')
 
+    def latlngList(self):
+        return list(list(latlng)[::-1] for latlng in self.geofence) 
+
     def __unicode__(self):
         # reverses latlngs and turns tuple of tuples into list of lists
-        return list(list(latlng)[::-1] for latlng in self.line) 
+        return self.user 

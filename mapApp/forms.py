@@ -74,7 +74,7 @@ class GeofenceForm(forms.ModelForm):
 
     helper.layout = Layout(
         Field('geofence', type="hidden", id="geofence"), # Coords passed after clicks on map
-        Field('user', type="hidden"),
+        Field('user', readonly=True, id="userName"),
         Field('email', readonly=True, id="userEmail"),
         Field('emailWeekly')
     )

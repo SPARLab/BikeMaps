@@ -1,7 +1,7 @@
 from django.contrib.gis import admin
 
 # Register your models here.
-from mapApp.models import Incident, Route
+from mapApp.models import Incident, Route, AlertArea
 
 # class PersonStacked(admin.StackedInline):
 #     model = Person
@@ -28,6 +28,8 @@ class IncidentAdmin(admin.OSMGeoAdmin):
 
 
 admin.site.register(Incident, IncidentAdmin)
+
+admin.site.register(AlertArea)
 
 
 # class RouteAdmin(admin.OSMGeoAdmin):

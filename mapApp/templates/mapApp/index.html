@@ -134,8 +134,9 @@
             if (type === 'polygon') {
                 // Set form geometry field to click location
                 document.getElementById("geofence").value = (JSON.stringify(layer.toGeoJSON().geometry));               
+                console.log("{{request.user}}");
+                document.getElementById("userName").value = ("{{ request.user }}");               
                 document.getElementById("userEmail").value = ("{{ request.user.email }}");               
-                console.log()
                 $('#geofenceForm').modal('show');
             }
 
@@ -151,6 +152,12 @@
         {% if routeFormErrors %}
         $(window).load(function(){
             $('#routeForm').modal('show');
+        });
+        {% endif %}
+
+        {% if geofenceFormErrors %}
+        $(window).load(function(){
+            $('#geofenceForm').modal('show');
         });
         {% endif %}
         
