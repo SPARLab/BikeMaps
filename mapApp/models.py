@@ -349,6 +349,11 @@ class AlertArea(models.Model):
     geom = models.PolygonField()
     objects = models.GeoManager() # Required to conduct geographic queries
 
+    date = models.DateTimeField(
+    'Date created', 
+    auto_now_add=True   # Date is set automatically when object created
+    ) 
+
     user = models.ForeignKey('spirit.User')
     email = models.EmailField()
     emailWeekly = models.BooleanField('Send me weekly email reports')
