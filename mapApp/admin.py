@@ -38,7 +38,8 @@ class AlertAreaAdmin(admin.OSMGeoAdmin):
 
 	fieldsets = [
 		('Area',	{'fields': ['geom']}),
-		('User',	{'fields': ['user','email']})
+		('User',	{'fields': ['user','email']}),
+		('Alerts',	{'fields': ['alertPoints','emailAlertPoints']})
 	]
 admin.site.register(AlertArea, AlertAreaAdmin)
 
