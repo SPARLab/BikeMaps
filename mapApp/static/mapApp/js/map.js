@@ -39,6 +39,8 @@ var bikeRedIcon = L.MakiMarkers.icon({
 
 /* DATASETS */
 var	userRoutes = new L.LayerGroup([]),
+	
+	alertAreas = new L.LayerGroup([]),
 
 	bikeLanes,
 
@@ -79,6 +81,7 @@ var	userRoutes = new L.LayerGroup([]),
 	});
 
 
+
 /* Create the map with a tile layer and set global variable map */
 function initialize() {
 	/* STATIC VECTOR DEFINITIONS */
@@ -107,7 +110,7 @@ function initialize() {
 	map = L.map('map', {
 		// center: [48.5, -123.3],
 		// zoom: 11,
-		layers: [skobbler, accidentPoints, stravaHM5],
+		layers: [skobbler, accidentPoints, stravaHM5, alertAreas],
 	});
 
 	locateUser();
@@ -124,6 +127,7 @@ function initialize() {
 			"Strava heat map": stravaHM5,
 			"Bike Racks": racksCluster,
 			// "Bike lanes": bikeLanes,
+			"Alert Areas": alertAreas
 		};
 	/* LAYER CONTROL */
 	L.control.layers(baseMaps, overlayMaps).addTo(map);
@@ -300,6 +304,15 @@ function getPolyline(latlng, freq) {
 		width: 40,
 		opacity: 0.1,
 		lineCap: 'round',
+		clickable: false,
+	}));
+};
+
+function getPolygon(latlng) {
+	alertAreas.addLayer(L.polygon(latlng, {
+		color: 'red',
+		width: 40,
+		opacity: 1,
 		clickable: false,
 	}));
 };

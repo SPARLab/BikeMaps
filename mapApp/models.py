@@ -354,7 +354,7 @@ class AlertArea(models.Model):
     emailWeekly = models.BooleanField('Send me weekly email reports')
 
     def latlngList(self):
-        return list(list(latlng)[::-1] for latlng in self.geofence) 
+        return list(list(latlng)[::-1] for latlng in self.geofence[0]) 
 
     def __unicode__(self):
         # reverses latlngs and turns tuple of tuples into list of lists

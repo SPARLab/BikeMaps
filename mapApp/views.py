@@ -26,7 +26,7 @@ def index(request):
 		"routeForm": RouteForm(),
 		"routeFormErrors": False,
 
-		"geofence": AlertArea.objects.all(),
+		"geofences": AlertArea.objects.all(), #request.user
 		"geofenceForm": GeofenceForm(),
 		"geofenceFormErrors": False
 	}
@@ -52,7 +52,7 @@ def postRoute(request):
 				"incidentForm": IncidentForm(),
 				"incidentFormErrors": False,
 
-				"geofence": AlertArea.objects.all(),
+				"geofences": AlertArea.objects.all(),
 				"geofenceForm": GeofenceForm(),
 				"geofenceFormErrors": False,
 
@@ -85,7 +85,7 @@ def postIncident(request):
 				"incidentForm": incidentForm,
 				"incidentFormErrors": True,
 
-				"geofence": AlertArea.objects.all(),
+				"geofences": AlertArea.objects.all(),
 				"geofenceForm": GeofenceForm(),
 				"geofenceFormErrors": False,
 				

@@ -90,12 +90,26 @@
 
     <!-- Load user points from the database -->
     {% for incident in incidents %}
-        <script> getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}" ); </script>
+        <script> 
+        console.log({{ incident.latlngList }});
+        console.log("{{ incident.geom }}");
+        getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}" ); </script>
     {% endfor %}
 
     <!-- Load user routes from the database -->
     {% for route in routes %}
-        <script> getPolyline( {{ route.latlngList }} ); </script>
+        <script> 
+        console.log({{ route.latlngList }});
+        console.log("{{ route.line }}");
+        getPolyline( {{ route.latlngList }} ); </script>
+    {% endfor %}
+
+    <!-- Load user alert areas from the database -->
+    {% for polygon in geofences %}
+        <script> 
+        console.log({{ polygon.latlngList }});
+        console.log("{{ polygon.geofence }}");
+        getPolygon( {{ polygon.latlngList }} ); </script>
     {% endfor %}
 
     <!-- JS to control message display and feature creation -->

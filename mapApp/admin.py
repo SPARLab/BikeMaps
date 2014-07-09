@@ -32,21 +32,21 @@ admin.site.register(Incident, IncidentAdmin)
 admin.site.register(AlertArea)
 
 
-# class RouteAdmin(admin.OSMGeoAdmin):
-# 	# Map options
-# 	default_lon = -13745000
-# 	default_lat = 6196000
-# 	default_zoom = 10
+class RouteAdmin(admin.OSMGeoAdmin):
+	# Map options
+	default_lon = -13745000
+	default_lat = 6196000
+	default_zoom = 10
 
-# 	# Allow for filtering of report date
-# 	list_filter = ['report_date']
+	# Allow for filtering of report date
+	list_filter = ['report_date']
 
-# 	list_display = ('report_date','trip_purpose', 'frequency','was_published_recently')
+	list_display = ('report_date','trip_purpose', 'frequency','was_published_recently')
 
-# 	fieldsets = [
-# 		('Route',	{'fields': ['line']}),
-# 		('Details',	{'fields': ['trip_purpose','frequency']})
-# 	]
+	fieldsets = [
+		('Route',	{'fields': ['line']}),
+		('Details',	{'fields': ['trip_purpose','frequency']})
+	]
 
 
-# admin.site.register(Route, RouteAdmin)
+admin.site.register(Route, RouteAdmin)
