@@ -131,10 +131,4 @@
     <!-- Tooltips script -->
     <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
 
-    <script>
-    {% for polygon in geofences %}
-        console.log("{{polygon.has_alerts}}");
-    {% endfor %}
-    </script>
-
 {% endblock %}
