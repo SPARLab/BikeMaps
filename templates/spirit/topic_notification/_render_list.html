@@ -20,3 +20,24 @@
         {% empty %}
             <p>{% trans "There are no notifications, yet" %}</p>
         {% endfor %}
+
+        {% for alert in geofences %}
+            <script>
+                console.log("something")
+            </script>
+        {% endfor %}
+
+        <!-- {#
+          {% for polygon in geofences %}
+              <script>
+                console.log("Polygon");
+                console.log("Has alerts: {{polygon.has_alerts}}");
+              </script>
+
+            {% for point in polygon.alertPoints.all %}    
+              <script> 
+                console.log("Alert: {{point}}");
+              </script>
+            {% endfor %}
+          {% endfor %}
+        #} -->
