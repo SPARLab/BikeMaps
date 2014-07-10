@@ -83,7 +83,13 @@
         
         <ul class="nav navbar-nav navbar-right">
           {% if request.user.is_authenticated %}
-            
+
+            {% has_topic_notifications user as has_notifications %}
+            <!-- 
+            <script>
+              console.log("has notifications: {{has_notifications}}");
+            </script>
+           -->
             <li><a href="{% url "spirit:topic-notification-list" %}"><span class="glyphicon glyphicon-bell {% if has_notifications %} is-highlighted{% endif %}"></span></a></li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{ request.user }}<span class="caret"></span></a>
@@ -127,6 +133,21 @@
       {% endif %}
   </div>
 
+<!-- {#
+  {% for polygon in geofences %}
+      <script>
+        console.log("Polygon");
+        console.log("Has alerts: {{polygon.has_alerts}}");
+      </script>
+
+    {% for point in polygon.alertPoints.all %}    
+      <script> 
+        console.log("Alert: {{point}}");
+      </script>
+    {% endfor %}
+  {% endfor %}
+
+#} -->
   {% block body %}{% endblock %}
   
   <!-- Fade out message -->
