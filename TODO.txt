@@ -29,5 +29,7 @@ BUGS
 Tomorrow
 * Edit toolbars for polygons
 * Email alerts weekly
-* navbar alerts for polygons
-* 
+* Fix spirit>topic_notification>_render_list.html to display accident notifications in correct order
+	* link to map and zoom to incident
+	* Reading notification shuts off "unread" tag
+	* Display old notifications

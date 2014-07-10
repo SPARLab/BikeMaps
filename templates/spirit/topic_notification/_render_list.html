@@ -4,6 +4,7 @@
             <div class="row">
                 {% url "spirit:profile-detail" pk=n.comment.user.pk slug=n.comment.user.slug as url_profile %}
                 {% url "spirit:comment-find" pk=n.comment.pk as url_topic %}
+                {% url "mapApp:index" as url_map %}
 
                 {% if n.is_comment %}
                     {% blocktrans with username=n.comment.user.username topic_title=n.topic.title %}<a href="{{ url_profile }}">{{ username }}</a> has commented on <a href="{{ url_topic }}">{{ topic_title }}</a>{% endblocktrans %}
@@ -18,26 +19,14 @@
                 {% endif %}
             </div>
         {% empty %}
-            <p>{% trans "There are no notifications, yet" %}</p>
+            {% if alerts|length == 0 %}
+                <p>{% trans "There are no notifications, yet" %}</p>
+            {% endif %}
         {% endfor %}
 
-        {% for alert in geofences %}
-            <script>
-                console.log("something")
-            </script>
+        
+        {% for alert in alerts %}    
+            <div class="row">
+            An incident has been reported! <a href="{% url 'mapApp:index' %}">Go to incident</a>
+            </div>
         {% endfor %}
-
-        <!-- {#
-          {% for polygon in geofences %}
-              <script>
-                console.log("Polygon");
-                console.log("Has alerts: {{polygon.has_alerts}}");
-              </script>
-
-            {% for point in polygon.alertPoints.all %}    
-              <script> 
-                console.log("Alert: {{point}}");
-              </script>
-            {% endfor %}
-          {% endfor %}
-        #} -->

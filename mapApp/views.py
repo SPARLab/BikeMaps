@@ -26,7 +26,7 @@ def index(request):
 		"routeForm": RouteForm(),
 		"routeFormErrors": False,
 
-		"geofences": AlertArea.objects.filter(user=request.user.id), #request.user
+		"geofences": AlertArea.objects.filter(user=request.user.id),
 		"geofenceForm": GeofenceForm(),
 		"geofenceFormErrors": False
 	}

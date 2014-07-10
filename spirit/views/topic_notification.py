@@ -19,6 +19,8 @@ from spirit.utils.paginator.infinite_paginator import paginate
 from spirit.models.topic_notification import TopicNotification
 from spirit.forms.topic_notification import NotificationForm, NotificationCreationForm
 
+from mapApp.models import AlertArea
+
 
 @require_POST
 @login_required
@@ -78,11 +80,22 @@ def notification_list_unread(request):
     if page:
         next_page_pk = page[-1].pk
 
+    geofences = AlertArea.objects.filter(user=request.user.id)
+    geofences = [area for area in geofences if area.has_alerts()]
+    alerts = [area.alertPoints for area in geofences]
+
     return render(request, 'spirit/topic_notification/list_unread.html', {'page': page,
-                                                                          'next_page_pk': next_page_pk})
+                                                                          'next_page_pk': next_page_pk,
+                                                                          "alerts": alerts})
 
 
 @login_required
 def notification_list(request):
     notifications = TopicNotification.objects.for_access(request.user)
-    return render(request, 'spirit/topic_notification/list.html', {'notifications': notifications, })
+
+    geofences = AlertArea.objects.filter(user=request.user.id)
+    geofences = [area for area in geofences if area.has_alerts()]
+    alerts = [area.alertPoints for area in geofences]
+
+    return render(request, 'spirit/topic_notification/list.html', {'notifications': notifications, 
+                                                                    'alerts': alerts})
