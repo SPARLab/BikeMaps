@@ -53,12 +53,24 @@
         <a href="{{ index }}" class="navbar-brand"><img src="{% static 'mapApp/images/bikemaps_alt.png' %}"> <strong>BikeMaps.org</strong></a>
       </div>
 
+      <!-- r'^about/$' -->
+      
+      <!-- {% ifequal path forum % -->
+      <script>
+        console.log("{{path}}");
+      </script>
+      <!-- {% endifequal % -->
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav" role="navigation">
 
-          <li {% ifequal request.path index %} class="active" {% endifequal %}><a href="{{ index }}">Home <span class="glyphicon glyphicon-map-marker"></span></a></li>
-          <li {% ifequal request.path forum %} class="active" {% endifequal %}><a href="{{ forum }}">Forum <span class="glyphicon glyphicon-comment"></span></a></li>
+          <li {% ifequal request.path index %} class="active" {% endifequal %}><a href="{{ index }}">Home <span class="glyphicon glyphicon-map-marker"></span></a></li
+          >
+
+          {% with request.path|slice:":7" as forumPath %}
+          <li {% ifequal forumPath forum %} class="active" {% endifequal %}><a href="{{ forum }}">Forum <span class="glyphicon glyphicon-comment"></span></a></li>
+          {% endwith %}
+
           <li {% ifequal request.path about %} class="active" {% endifequal %}><a href="{{ about }}">About <span class="glyphicon glyphicon-leaf"></span></a></li>
 
           <li class="dropdown">
