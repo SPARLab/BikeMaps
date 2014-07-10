@@ -97,10 +97,6 @@
     {% for polygon in geofences %}
         <script>
             getPolygon( {{ polygon.latlngList }} ); 
-            
-            {% for incident in polygon.alertPoints.all %}
-                console.log('{{ incident }}');
-            {% endfor %}
         </script>
     {% endfor %}
 

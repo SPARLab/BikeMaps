@@ -99,7 +99,6 @@ def postIncident(request):
 	else:
 		return HttpResponseRedirect(reverse('mapApp:index')) 
 
-
 def addPointToUserAlerts(request, incident):
 	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
 
@@ -108,6 +107,7 @@ def addPointToUserAlerts(request, incident):
 		poly.emailAlertPoints.add(incident)
 
 	return
+
 
 def postAlertPolygon(request):
 	if request.method == 'POST':

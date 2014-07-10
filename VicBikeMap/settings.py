@@ -65,10 +65,9 @@ ROOT_URLCONF = 'VicBikeMap.urls'
 
 WSGI_APPLICATION = 'VicBikeMap.wsgi.application'
 
+LOGIN_REDIRECT_URL = 'spirit:profile-update'
 
 # Database
-# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
 DATABASES = {
     'default': {
         # PostgreSQL database connection on Taylor's Windows computer
