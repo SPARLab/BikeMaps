@@ -413,7 +413,7 @@ class AlertNotification(models.Model):
         return self.action == INCIDENT
 
     @property
-    def is_comment(self):
+    def is_nearmiss(self):
         return self.action == NEARMISS
 
     def __unicode__(self):

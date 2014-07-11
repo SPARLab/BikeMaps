@@ -13,6 +13,10 @@
                     {% blocktrans with username=n.comment.user.username topic_title=n.topic.title %}<a href="{{ url_profile }}">{{ username }}</a> has commented on <a href="{{ url_topic }}">{{ topic_title }}</a>{% endblocktrans %}
                 {% elif n.is_mention %}
                     {% blocktrans with username=n.comment.user.username topic_title=n.topic.title %}<a href="{{ url_profile }}">{{ username }}</a> has mention you on <a href="{{ url_topic }}">{{ topic_title }}</a>{% endblocktrans %}
+                {% elif n.is_incident %}
+                    Collision
+                {% elif n.is_nearmiss %}
+                    Near miss
                 {% else %}
                     Unknown action
                 {% endif %}

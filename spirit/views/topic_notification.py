@@ -19,7 +19,7 @@ from spirit.utils.paginator.infinite_paginator import paginate
 from spirit.models.topic_notification import TopicNotification
 from spirit.forms.topic_notification import NotificationForm, NotificationCreationForm
 
-from mapApp.models import AlertArea, Incident
+from mapApp.models import AlertNotification
 from itertools import chain
 
 
@@ -86,6 +86,12 @@ def notification_list_unread(request):
 
 @login_required
 def notification_list(request):
-    notifications = TopicNotification.objects.for_access(request.user)
+    topicNotifications = TopicNotification.objects.for_access(request.user)
+    alertNotifications = AlertNotification.objects.filter(user=request.user)
+
+    alertNotifications = [alertN for alertN in alertNotifications ]
+    topicNotifications = [topicN for topicN in topicNotifications ]
+
+    notifications = sorted(list(chain(alertNotifications, topicNotifications)), key=lambda instance: instance.date )
 
     return render(request, 'spirit/topic_notification/list.html', {'notifications': notifications})
