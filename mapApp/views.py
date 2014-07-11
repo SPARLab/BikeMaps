@@ -13,6 +13,7 @@ from mapApp.forms import IncidentForm, RouteForm, EmailForm, GeofenceForm
 
 # Used for downloading data
 from spirit.utils.decorators import administrator_required
+from django.contrib.auth.decorators import login_required
 from djgeojson.serializers import Serializer as GeoJSONSerializer
 
 
@@ -31,6 +32,45 @@ def index(request):
 		"geofenceFormErrors": False
 	}
 	return render(request, 'mapApp/index.html', context)
+
+
+def about(request):
+	return render(request, 'mapApp/about.html', {"emailForm": EmailForm()})
+
+
+def contact(request):
+	if request.method == 'POST':
+		emailForm = EmailForm(request.POST)
+
+
+		if emailForm.is_valid():
+			subject = emailForm.cleaned_data['subject']
+			message = emailForm.cleaned_data['message']
+			sender = emailForm.cleaned_data['sender']
+			cc_myself = emailForm.cleaned_data['cc_myself']
+
+			contact_group = Group.objects.get(name="admin contact")
+			members = contact_group.user_set.all()
+			recipients = []
+			for r in members:
+				recipients.append(r.email) 
+			if cc_myself:
+				recipients.append(sender)
+
+			send_mail(subject, message, sender, recipients)
+
+			messages.success(request, '<strong>Thank you!</strong><br>We\'ll do our best to get back to you.')
+			return HttpResponseRedirect(reverse('mapApp:about')) 
+		
+		else:
+			# Form is not valid, display modal with highlighted errors 
+			return render(request, 'mapApp/about.html', {
+				"emailForm": emailForm,
+				"emailFormErrors": True,
+			})
+	
+	else:
+		return HttpResponseRedirect(reverse('mapApp:about')) 
 
 
 def postRoute(request):
@@ -115,7 +155,7 @@ def addPointToUserAlerts(request, incident):
 
 	return
 
-
+@login_required
 def postAlertPolygon(request):
 	if request.method == 'POST':
 		geofenceForm = GeofenceForm(request.POST)
@@ -151,45 +191,20 @@ def postAlertPolygon(request):
 		return HttpResponseRedirect(reverse('mapApp:index'))
 
 
-def about(request):
-	return render(request, 'mapApp/about.html', {"emailForm": EmailForm()})
-
-
-def contact(request):
-	if request.method == 'POST':
-		emailForm = EmailForm(request.POST)
-
-
-		if emailForm.is_valid():
-			subject = emailForm.cleaned_data['subject']
-			message = emailForm.cleaned_data['message']
-			sender = emailForm.cleaned_data['sender']
-			cc_myself = emailForm.cleaned_data['cc_myself']
-
-			contact_group = Group.objects.get(name="admin contact")
-			members = contact_group.user_set.all()
-			recipients = []
-			for r in members:
-				recipients.append(r.email) 
-			if cc_myself:
-				recipients.append(sender)
-
-			send_mail(subject, message, sender, recipients)
-
-			messages.success(request, '<strong>Thank you!</strong><br>We\'ll do our best to get back to you.')
-			return HttpResponseRedirect(reverse('mapApp:about')) 
-		
-		else:
-			# Form is not valid, display modal with highlighted errors 
-			return render(request, 'mapApp/about.html', {
-				"emailForm": emailForm,
-				"emailFormErrors": True,
-			})
-	
-	else:
-		return HttpResponseRedirect(reverse('mapApp:about')) 
 
 @administrator_required
 def getIncidents(request):
 	data = GeoJSONSerializer().serialize(Incident.objects.all(), indent=2, use_natural_keys=True)
 	return HttpResponse(data, content_type="application/json")
+
+@login_required
+def readAlertPoint(request, alertID):
+	alerts = AlertNotification.objects.filter(user=request.user).filter(pk=alertID)
+	if (alerts.exists()):
+		alert = [a for a in alerts][0]
+		alert.is_read=True
+		alert.save()
+		# return HttpResponse(alert)
+		return HttpResponseRedirect(reverse('mapApp:index')) 
+	else:
+		return HttpResponseRedirect(reverse('mapApp:index')) 

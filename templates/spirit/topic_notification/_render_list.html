@@ -14,9 +14,9 @@
                 {% elif n.is_mention %}
                     {% blocktrans with username=n.comment.user.username topic_title=n.topic.title %}<a href="{{ url_profile }}">{{ username }}</a> has mention you on <a href="{{ url_topic }}">{{ topic_title }}</a>{% endblocktrans %}
                 {% elif n.is_incident %}
-                    Collision
+                    Collision reported at <a href="{% url 'mapApp:readAlertPoint' n.pk %}">({{n.point.latlngList.0|floatformat:3}}, {{n.point.latlngList.1|floatformat:3}})</a>
                 {% elif n.is_nearmiss %}
-                    Near miss
+                    Near miss reported at <a href="{% url 'mapApp:readAlertPoint' n.pk %}">({{n.point.latlngList.0|floatformat:3}}, {{n.point.latlngList.1|floatformat:3}})</a>
                 {% else %}
                     Unknown action
                 {% endif %}

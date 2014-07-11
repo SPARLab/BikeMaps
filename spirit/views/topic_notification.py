@@ -86,11 +86,8 @@ def notification_list_unread(request):
 
 @login_required
 def notification_list(request):
-    topicNotifications = TopicNotification.objects.for_access(request.user)
-    alertNotifications = AlertNotification.objects.filter(user=request.user)
-
-    alertNotifications = [alertN for alertN in alertNotifications ]
-    topicNotifications = [topicN for topicN in topicNotifications ]
+    topicNotifications = [topicN for topicN in TopicNotification.objects.for_access(request.user)]
+    alertNotifications = [alertN for alertN in AlertNotification.objects.filter(user=request.user)]
 
     notifications = sorted(list(chain(alertNotifications, topicNotifications)), key=lambda instance: instance.date )
 
