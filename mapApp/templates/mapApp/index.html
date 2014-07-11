@@ -103,7 +103,11 @@
     <!-- JS to control message display and feature creation -->
     <script>
         // Create the map (call to map.js)
-        initialize();
+        initialize(
+            {% if lat and lng %} 
+            {{ lat }}, {{ lng }}, {{ zoom }} 
+            {% endif %} 
+        );
 
         // Show the modal if there are errors in a form submit
         {% if incidentFormErrors %}

@@ -17,7 +17,7 @@ from django.contrib.auth.decorators import login_required
 from djgeojson.serializers import Serializer as GeoJSONSerializer
 
 
-def index(request):
+def index(request, lat=None, lng=None, zoom=None):
 	context = {
 		'incidents': Incident.objects.all(),
 		"incidentForm": IncidentForm(), 	#the form to be rendered
@@ -31,6 +31,11 @@ def index(request):
 		"geofenceForm": GeofenceForm(),
 		"geofenceFormErrors": False
 	}
+
+	if(lat and lng and zoom):
+		context['lat']= float(lat)
+		context['lng']= float(lng)
+		context['zoom']= int(zoom)
 	return render(request, 'mapApp/index.html', context)
 
 
@@ -197,6 +202,7 @@ def getIncidents(request):
 	data = GeoJSONSerializer().serialize(Incident.objects.all(), indent=2, use_natural_keys=True)
 	return HttpResponse(data, content_type="application/json")
 
+
 @login_required
 def readAlertPoint(request, alertID):
 	alerts = AlertNotification.objects.filter(user=request.user).filter(pk=alertID)
@@ -204,7 +210,7 @@ def readAlertPoint(request, alertID):
 		alert = [a for a in alerts][0]
 		alert.is_read=True
 		alert.save()
-		# return HttpResponse(alert)
-		return HttpResponseRedirect(reverse('mapApp:index')) 
+
+		return HttpResponseRedirect(reverse('mapApp:index', kwargs=({"lat":str(alert.point.latlngList()[0]), "lng":str(alert.point.latlngList()[1]), "zoom":str(16)}) ))
 	else:
 		return HttpResponseRedirect(reverse('mapApp:index')) 

@@ -83,7 +83,7 @@ var	userRoutes = new L.LayerGroup([]),
 
 
 /* Create the map with a tile layer and set global variable map */
-function initialize() {
+function initialize(lat, lng, zoom) {
 	/* STATIC VECTOR DEFINITIONS */
 	initializeGeoJsonLayers();
 
@@ -112,8 +112,12 @@ function initialize() {
 		// zoom: 11,
 		layers: [skobbler, accidentPoints, stravaHM5, alertAreas],
 	});
-
-	locateUser();
+	if(lat && lng && zoom){
+		this.map.setView(L.latLng(lat,lng), zoom);
+	}
+	else{
+		locateUser();
+	}
 
 	/* LAYER CONTROL */
 	var baseMaps = {
