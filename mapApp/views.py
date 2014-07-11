@@ -123,7 +123,7 @@ def postIncident(request):
 			addPointToUserAlerts(request, incident)
 
 			messages.success(request, '<strong>Thank you!</strong><br>Your incident marker was successfully added.')
-			return HttpResponseRedirect(reverse('mapApp:index')) 
+			return HttpResponseRedirect(reverse('mapApp:index', kwargs=({"lat":str(incident.latlngList()[0]), "lng":str(incident.latlngList()[1]), "zoom":str(16)}))) 
 		
 		else:
 			# Form is not valid, display modal with highlighted errors 

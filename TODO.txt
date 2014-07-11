@@ -7,7 +7,6 @@ TO DO
 * Fix contact email to work with spirit
 * Option to report for different person
 * Data backup
-* Colour theme
 * Social media buttons/links
 * Setup media root
 * Setup static root
@@ -29,7 +28,3 @@ BUGS
 Tomorrow
 * Edit toolbars for polygons
 * Email alerts weekly
-* Fix spirit>topic_notification>_render_list.html to display accident notifications in correct order
-	* link to map and zoom to incident
-	* Reading notification shuts off "unread" tag
-	* Display old notifications
