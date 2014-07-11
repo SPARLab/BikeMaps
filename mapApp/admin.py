@@ -1,7 +1,7 @@
 from django.contrib.gis import admin
 
 # Register your models here.
-from mapApp.models import Incident, Route, AlertArea
+from mapApp.models import Incident, Route, AlertArea, AlertNotification
 
 from spirit.models import User
 admin.site.register(User)
@@ -37,12 +37,11 @@ class AlertAreaAdmin(admin.OSMGeoAdmin):
 	default_lat = 6196000
 	default_zoom = 10
 
-	list_display = ('user', 'email', 'date', 'has_alerts', 'has_email_alerts')
+	list_display = ('user', 'email', 'date')
 
 	fieldsets = [
 		('Area',	{'fields': ['geom']}),
-		('User',	{'fields': ['user','email']}),
-		('Alerts',	{'fields': ['alertPoints','emailAlertPoints']})
+		('User',	{'fields': ['user','email']})
 	]
 admin.site.register(AlertArea, AlertAreaAdmin)
 
@@ -63,3 +62,7 @@ class RouteAdmin(admin.OSMGeoAdmin):
 		('Details',	{'fields': ['trip_purpose','frequency']})
 	]
 admin.site.register(Route, RouteAdmin)
+
+
+
+admin.site.register(AlertNotification)

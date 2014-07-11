@@ -22,9 +22,7 @@
                 {% endif %}
             </div>
         {% empty %}
-            {% if alerts|length == 0 %}
-                <p>{% trans "There are no notifications, yet" %}</p>
-            {% endif %}
+            <p>{% trans "There are no notifications, yet" %}</p>
         {% endfor %}
 
         

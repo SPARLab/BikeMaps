@@ -3,15 +3,13 @@
 from . import register
 
 from spirit.models.topic_notification import TopicNotification
-from mapApp.models import AlertArea
+from mapApp.models import AlertNotification
 
 @register.assignment_tag()
 def has_alerts(user):
-	userAlertAreas = AlertArea.objects.filter(user=user)
-	result = [area for area in userAlertAreas if area.has_alerts()]
-
 	return (
-		len(result) or \
+		AlertNotification.objects.filter(user=user).filter(is_read=False).exists()\
+		or \
 		TopicNotification.objects.for_access(user=user)\
 			.filter(is_read=False)\
 			.exists())

@@ -74,9 +74,6 @@ def notification_list_unread(request):
     notifications = TopicNotification.objects.for_access(request.user)\
         .filter(is_read=False)
 
-    alertPolys = [area for area in AlertArea.objects.filter(user=request.user.id) if area.has_alerts()]
-    alerts = [area.alertPoints for area in alertPolys]
-
     page = paginate(request, query_set=notifications, lookup_field="date",
                     page_var='notif', per_page=settings.ST_NOTIFICATIONS_PER_PAGE)
     next_page_pk = None
@@ -84,17 +81,11 @@ def notification_list_unread(request):
     if page:
         next_page_pk = page[-1].pk
     return render(request, 'spirit/topic_notification/list_unread.html', {'page': page,
-                                                                          'next_page_pk': next_page_pk,
-                                                                          "alerts": alerts})
+                                                                          'next_page_pk': next_page_pk})
 
 
 @login_required
 def notification_list(request):
-    userAreas = AlertArea.objects.filter(user=request.user.id).exclude(alertPoints__isnull=True) #Alert Areas queryset for areas with some point in list for user logged in
-    # alerts = Incident.object.filter(user__in=userAreas).distinct().values_list('name', flat=True)
-
-    # Need query set of all incident points in the user's alertAreas
-        # Add these to notifications
     notifications = TopicNotification.objects.for_access(request.user)
 
     return render(request, 'spirit/topic_notification/list.html', {'notifications': notifications})

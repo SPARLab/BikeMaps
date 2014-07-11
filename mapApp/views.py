@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 
 from django.contrib.auth.models import User, Group
-from mapApp.models import Incident, Route, AlertArea
+from mapApp.models import Incident, Route, AlertArea, AlertNotification
 from mapApp.forms import IncidentForm, RouteForm, EmailForm, GeofenceForm
 
 # Used for downloading data
@@ -101,10 +101,17 @@ def postIncident(request):
 
 def addPointToUserAlerts(request, incident):
 	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
+	usersToAlert = list(set([poly.user for poly in intersectingPolys]))
 
-	for poly in intersectingPolys:
-		poly.alertPoints.add(incident)
-		poly.emailAlertPoints.add(incident)
+	if (incident.incident_type() == "Collision"):
+		action = 0
+	elif (incident.incident_type() == "Near miss"):
+		action = 1
+	else:
+		action = 2
+
+	for user in usersToAlert:
+		AlertNotification(user=user, point=incident, action=action).save()
 
 	return
 
