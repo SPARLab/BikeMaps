@@ -1,3 +1,6 @@
+from django.utils.translation import ugettext as _
+from django.conf import settings
+
 from django.contrib.gis.db import models
 
 import datetime
@@ -128,7 +131,7 @@ FREQUENCY_CHOICES = (
 # Captures all data about the accident and environmental conditions when the bike incident occurred.
 class Incident(models.Model):
     ########### INCIDENT FIELDS
-    report_date = models.DateTimeField(
+    date = models.DateTimeField(
         'Date reported', 
         auto_now_add=True   # Date is set automatically when object created
     ) 
@@ -272,7 +275,7 @@ class Incident(models.Model):
 
     def was_published_recently(self):
         now = timezone.now()
-        return now - datetime.timedelta(weeks=1) <= self.report_date < now
+        return now - datetime.timedelta(weeks=1) <= self.date < now
 
 
     # A non elegant way to match up self.incident to a generalized incident_type string
@@ -290,7 +293,7 @@ class Incident(models.Model):
                     return typStr 
 
     # For admin site 
-    was_published_recently.admin_order_field = 'report_date'
+    was_published_recently.admin_order_field = 'date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Reported this week?'
 
@@ -358,26 +361,60 @@ class AlertArea(models.Model):
     geom = models.PolygonField()
     objects = models.GeoManager() # Required to conduct geographic queries
 
-    user = models.ForeignKey('spirit.User')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("user"))
     email = models.EmailField()
     emailWeekly = models.BooleanField('Send me weekly email reports')
-
-    alertPoints = models.ManyToManyField(Incident, related_name='alert+', blank=True, null=True)
-    emailAlertPoints = models.ManyToManyField(Incident, related_name='email+', blank=True, null=True)
 
     def latlngList(self):
         return list(list(latlng)[::-1] for latlng in self.geom[0]) 
 
-    def has_alerts(self):
-        return len(self.alertPoints.all()) != 0
-    
-    def has_email_alerts(self):
-        return len(self.emailAlertPoints.all()) != 0
-
-    # For admin site
-    has_alerts.boolean = True
-    has_email_alerts.boolean = True
-
     # toString()
     def __unicode__(self):
         return unicode(self.user)
+
+
+
+INCIDENT, NEARMISS, UNDEFINED = xrange(3)
+
+ACTION_CHOICES = (
+    (INCIDENT, _("Incident")),
+    (NEARMISS, _("Near miss")),
+    (UNDEFINED, _("Undefined")),
+
+)
+
+class AlertNotification(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("user"))
+    point = models.ForeignKey('mapApp.Incident')
+
+    date = models.DateTimeField(auto_now_add=True)
+    action = models.IntegerField(choices=ACTION_CHOICES, default=UNDEFINED)
+    is_read = models.BooleanField(default=False)
+    emailed = models.BooleanField(default=False)
+
+    # objects = AlertNotificationManager()
+
+    class Meta:
+        app_label = 'mapApp'
+        unique_together = ('user', 'point')
+        ordering = ['-date', ]
+        verbose_name = _("alert notification")
+        verbose_name_plural = _("alert notifications")
+
+    def get_location(self):
+        return self.point.geom
+
+    @property
+    def text_action(self):
+        return ACTION_CHOICES[self.action][1]
+
+    @property
+    def is_incident(self):
+        return self.action == INCIDENT
+
+    @property
+    def is_nearmiss(self):
+        return self.action == NEARMISS
+
+    def __unicode__(self):
+        return "%s" % (self.user)

@@ -65,7 +65,7 @@ ROOT_URLCONF = 'VicBikeMap.urls'
 
 WSGI_APPLICATION = 'VicBikeMap.wsgi.application'
 
-LOGIN_REDIRECT_URL = 'spirit:profile-update'
+LOGIN_REDIRECT_URL = 'mapApp:index'
 
 # Database
 DATABASES = {

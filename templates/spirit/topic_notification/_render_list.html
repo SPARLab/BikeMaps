@@ -2,15 +2,23 @@
 
         {% for n in page %}
             <div class="row">
+                <script>
+                //     console.log("{{n}}")
+                </script>
                 {% url "spirit:profile-detail" pk=n.comment.user.pk slug=n.comment.user.slug as url_profile %}
                 {% url "spirit:comment-find" pk=n.comment.pk as url_topic %}
+                {% url "mapApp:index" as url_map %}
 
                 {% if n.is_comment %}
                     {% blocktrans with username=n.comment.user.username topic_title=n.topic.title %}<a href="{{ url_profile }}">{{ username }}</a> has commented on <a href="{{ url_topic }}">{{ topic_title }}</a>{% endblocktrans %}
                 {% elif n.is_mention %}
                     {% blocktrans with username=n.comment.user.username topic_title=n.topic.title %}<a href="{{ url_profile }}">{{ username }}</a> has mention you on <a href="{{ url_topic }}">{{ topic_title }}</a>{% endblocktrans %}
+                {% elif n.is_incident %}
+                    Collision reported at <a href="{% url 'mapApp:readAlertPoint' n.pk %}">({{n.point.latlngList.0|floatformat:3}}, {{n.point.latlngList.1|floatformat:3}})</a>
+                {% elif n.is_nearmiss %}
+                    Near miss reported at <a href="{% url 'mapApp:readAlertPoint' n.pk %}">({{n.point.latlngList.0|floatformat:3}}, {{n.point.latlngList.1|floatformat:3}})</a>
                 {% else %}
-                    Unknow action
+                    Unknown action
                 {% endif %}
 
                 {% if not n.is_read %}
@@ -20,3 +28,11 @@
         {% empty %}
             <p>{% trans "There are no notifications, yet" %}</p>
         {% endfor %}
+
+        
+        {% for alert in alerts %}    
+            <div class="row">
+            An incident has been reported! <a href="{% url 'mapApp:index' %}">Go to incident "{{alert}}"</a>
+            </div>
+        {% endfor %}
+

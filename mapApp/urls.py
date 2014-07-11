@@ -12,5 +12,6 @@ urlpatterns = patterns('',
 	url(r'^new_alert/$', views.postAlertPolygon, name='postAlertPolygon'),
 	url(r'^contact/$', views.contact, name='contact'),
 	url(r'^incidents.json$', views.getIncidents, name='getIncidents'),
+	url(r'^readAlert/(?P<alertID>\d+)/$', views.readAlertPoint, name='readAlertPoint')
 	
 )
