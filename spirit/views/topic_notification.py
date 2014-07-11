@@ -89,6 +89,6 @@ def notification_list(request):
     topicNotifications = [topicN for topicN in TopicNotification.objects.for_access(request.user)]
     alertNotifications = [alertN for alertN in AlertNotification.objects.filter(user=request.user)]
 
-    notifications = sorted(list(chain(alertNotifications, topicNotifications)), key=lambda instance: instance.date )
+    notifications = sorted(list(chain(alertNotifications, topicNotifications)), key=lambda i: i.date, reverse=True )
 
     return render(request, 'spirit/topic_notification/list.html', {'notifications': notifications})
