@@ -2,6 +2,9 @@
 
         {% for n in page %}
             <div class="row">
+                <script>
+                //     console.log("{{n}}")
+                </script>
                 {% url "spirit:profile-detail" pk=n.comment.user.pk slug=n.comment.user.slug as url_profile %}
                 {% url "spirit:comment-find" pk=n.comment.pk as url_topic %}
                 {% url "mapApp:index" as url_map %}
@@ -11,7 +14,7 @@
                 {% elif n.is_mention %}
                     {% blocktrans with username=n.comment.user.username topic_title=n.topic.title %}<a href="{{ url_profile }}">{{ username }}</a> has mention you on <a href="{{ url_topic }}">{{ topic_title }}</a>{% endblocktrans %}
                 {% else %}
-                    Unknow action
+                    Unknown action
                 {% endif %}
 
                 {% if not n.is_read %}
@@ -27,6 +30,7 @@
         
         {% for alert in alerts %}    
             <div class="row">
-            An incident has been reported! <a href="{% url 'mapApp:index' %}">Go to incident</a>
+            An incident has been reported! <a href="{% url 'mapApp:index' %}">Go to incident "{{alert}}"</a>
             </div>
         {% endfor %}
+

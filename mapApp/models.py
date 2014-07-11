@@ -128,7 +128,7 @@ FREQUENCY_CHOICES = (
 # Captures all data about the accident and environmental conditions when the bike incident occurred.
 class Incident(models.Model):
     ########### INCIDENT FIELDS
-    report_date = models.DateTimeField(
+    date = models.DateTimeField(
         'Date reported', 
         auto_now_add=True   # Date is set automatically when object created
     ) 
@@ -272,7 +272,7 @@ class Incident(models.Model):
 
     def was_published_recently(self):
         now = timezone.now()
-        return now - datetime.timedelta(weeks=1) <= self.report_date < now
+        return now - datetime.timedelta(weeks=1) <= self.date < now
 
 
     # A non elegant way to match up self.incident to a generalized incident_type string
@@ -290,7 +290,7 @@ class Incident(models.Model):
                     return typStr 
 
     # For admin site 
-    was_published_recently.admin_order_field = 'report_date'
+    was_published_recently.admin_order_field = 'date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Reported this week?'
 

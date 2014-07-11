@@ -17,9 +17,9 @@ class IncidentAdmin(admin.OSMGeoAdmin):
 	default_zoom = 10
 
 	# Allow for filtering of report date
-	list_filter = ['report_date']
+	list_filter = ['date']
 
-	list_display = ('report_date','incident_date', 'incident', 'incident_with','was_published_recently')
+	list_display = ('date','incident_date', 'incident', 'incident_with','was_published_recently')
 
 	fieldsets = [
 		('Location',	{'fields': ['geom']}),

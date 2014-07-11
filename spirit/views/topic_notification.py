@@ -19,7 +19,8 @@ from spirit.utils.paginator.infinite_paginator import paginate
 from spirit.models.topic_notification import TopicNotification
 from spirit.forms.topic_notification import NotificationForm, NotificationCreationForm
 
-from mapApp.models import AlertArea
+from mapApp.models import AlertArea, Incident
+from itertools import chain
 
 
 @require_POST
@@ -73,17 +74,15 @@ def notification_list_unread(request):
     notifications = TopicNotification.objects.for_access(request.user)\
         .filter(is_read=False)
 
+    alertPolys = [area for area in AlertArea.objects.filter(user=request.user.id) if area.has_alerts()]
+    alerts = [area.alertPoints for area in alertPolys]
+
     page = paginate(request, query_set=notifications, lookup_field="date",
                     page_var='notif', per_page=settings.ST_NOTIFICATIONS_PER_PAGE)
     next_page_pk = None
 
     if page:
         next_page_pk = page[-1].pk
-
-    geofences = AlertArea.objects.filter(user=request.user.id)
-    geofences = [area for area in geofences if area.has_alerts()]
-    alerts = [area.alertPoints for area in geofences]
-
     return render(request, 'spirit/topic_notification/list_unread.html', {'page': page,
                                                                           'next_page_pk': next_page_pk,
                                                                           "alerts": alerts})
@@ -91,11 +90,11 @@ def notification_list_unread(request):
 
 @login_required
 def notification_list(request):
+    userAreas = AlertArea.objects.filter(user=request.user.id).exclude(alertPoints__isnull=True) #Alert Areas queryset for areas with some point in list for user logged in
+    # alerts = Incident.object.filter(user__in=userAreas).distinct().values_list('name', flat=True)
+
+    # Need query set of all incident points in the user's alertAreas
+        # Add these to notifications
     notifications = TopicNotification.objects.for_access(request.user)
 
-    geofences = AlertArea.objects.filter(user=request.user.id)
-    geofences = [area for area in geofences if area.has_alerts()]
-    alerts = [area.alertPoints for area in geofences]
-
-    return render(request, 'spirit/topic_notification/list.html', {'notifications': notifications, 
-                                                                    'alerts': alerts})
+    return render(request, 'spirit/topic_notification/list.html', {'notifications': notifications})
