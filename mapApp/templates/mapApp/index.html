@@ -104,7 +104,7 @@
     <script>
         // Create the map (call to map.js)
         initialize(
-            {% if lat and lng and {{ zoom }} %} 
+            {% if lat and lng and zoom %} 
             {{ lat }}, {{ lng }}, {{ zoom }} 
             {% endif %} 
         );

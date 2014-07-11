@@ -29,6 +29,17 @@
     //     },
     // }));
     {% endif %}
+    {% if request.user.is_authenticated %}
+    map.addControl(new L.Control.Draw({
+        draw: false,
+        edit: {
+            featureGroup: geofences,
+            edit: true,
+            remove: true
+        },
+    }));
+
+    {% endif %}
 
 
 	/* DRAWING CONTROL TOOLTIPS */
