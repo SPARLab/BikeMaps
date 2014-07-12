@@ -6,7 +6,7 @@ from mapApp import views
 
 urlpatterns = patterns('',
 	url(r'^$', views.index, name='index'),
-	url(r'^(?P<lat>-?\d{1,3}\.?\d*)_(?P<lng>-?\d{1,3}\.?\d*)/(?P<zoom>\d+)/$', views.index, name='index'),
+	url(r'^(?P<lat>-?\d{1,3}\.?\d*)_(?P<lng>-?\d{1,3}\.?\d*)/(?P<zoom>\d+)/?$', views.index, name='index'),
 	url(r'^about/$', views.about, name='about'),
 	url(r'^incident_submit/$', views.postIncident, name='postIncident'),
 	url(r'^route_submit/$', views.postRoute, name='postRoute'),

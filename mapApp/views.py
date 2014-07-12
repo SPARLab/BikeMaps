@@ -32,7 +32,7 @@ def index(request, lat=None, lng=None, zoom=None):
 		"geofenceFormErrors": False
 	}
 
-	if(lat and lng and zoom):
+	if(lat is not None and lng is not None and zoom is not None):
 		context['lat']= float(lat)
 		context['lng']= float(lng)
 		context['zoom']= int(zoom)

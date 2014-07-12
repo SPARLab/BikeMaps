@@ -40,7 +40,7 @@ var bikeRedIcon = L.MakiMarkers.icon({
 /* DATASETS */
 var	userRoutes = new L.LayerGroup([]),
 	
-	alertAreas = new L.LayerGroup([]),
+	alertAreas = new L.FeatureGroup([]),
 
 	bikeLanes,
 
@@ -112,7 +112,7 @@ function initialize(lat, lng, zoom) {
 		// zoom: 11,
 		layers: [skobbler, accidentPoints, stravaHM5, alertAreas],
 	});
-	if(lat && lng && zoom){
+	if(zoom){
 		this.map.setView(L.latLng(lat,lng), zoom);
 	}
 	else{
