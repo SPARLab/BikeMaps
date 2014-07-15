@@ -2,7 +2,6 @@ TO DO
 
 * Check compatabilities with internet explorer (even though it's the worst)
 * Admin point edit from map index
-* Setup geofence
 * Allow users to delete geofences using the edit toolbar
 * Fix contact email to work with spirit
 * Option to report for different person
