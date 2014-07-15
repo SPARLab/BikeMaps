@@ -286,8 +286,7 @@ function getPolygon(latlng) {
 	alertAreas.addLayer(L.polygon(latlng, {
 		color: '#3b9972',
 		weight: 3,
-		opacity: 1,
-		clickable: false,
+		opacity: 1
 	}));
 };
 
