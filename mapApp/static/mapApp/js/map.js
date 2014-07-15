@@ -42,6 +42,8 @@ var	userRoutes = new L.LayerGroup([]),
 	
 	alertAreas = new L.FeatureGroup([]),
 
+	accidentAdmin = new L.FeatureGroup([]),
+
 	bikeLanes,
 
 	// Heatmap layer corresponding to all accident data
@@ -110,7 +112,7 @@ function initialize(lat, lng, zoom) {
 	map = L.map('map', {
 		// center: [48.5, -123.3],
 		// zoom: 11,
-		layers: [skobbler, accidentPoints, stravaHM5, alertAreas],
+		layers: [skobbler, accidentPoints, /*stravaHM5, */alertAreas],
 	});
 	if(zoom){
 		this.map.setView(L.latLng(lat,lng), zoom);
@@ -131,7 +133,8 @@ function initialize(lat, lng, zoom) {
 			"Strava heat map": stravaHM5,
 			"Bike Racks": racksCluster,
 			// "Bike lanes": bikeLanes,
-			"Alert Areas": alertAreas
+			"Alert Areas": alertAreas,
+			"Admin points": accidentAdmin
 		};
 	/* LAYER CONTROL */
 	L.control.layers(baseMaps, overlayMaps).addTo(map);
@@ -270,6 +273,7 @@ function getPoint(latlng, date, type) {
 	marker.bindPopup('<strong>Source:</strong> User submitted<br><strong>Date:</strong> ' + date + '<br><strong>Type:</strong> ' + type);
 
 	accidentPoints.addLayer(marker);
+	accidentAdmin.addLayer(marker);
 };
 
 

@@ -1,66 +1,26 @@
-{% load staticfiles %}
-
-<!-- Load draw pluging -->
-<link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.draw/dist/leaflet.draw.css' %}">
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/Leaflet.draw.js' %}"></script>
-
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.Poly.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.SimpleShape.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.Circle.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.Rectangle.js' %}"></script>
-
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Feature.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Marker.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Polyline.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.SimpleShape.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Polygon.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Rectangle.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Circle.js' %}"></script>
-
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/ext/LatLngUtil.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/ext/GeometryUtil.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/ext/LineUtil.Intersect.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/ext/Polyline.Intersect.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/ext/Polygon.Intersect.js' %}"></script>
-
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/Control.Draw.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/Tooltip.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/Toolbar.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/DrawToolbar.js' %}"></script>
-
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/EditToolbar.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/EditToolbar.Edit.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/EditToolbar.Delete.js' %}"></script> 
-
 <script>
 	/* ADD THE CONTROL TO LEAFLET MAP */
     map.addControl(new L.Control.Draw({
-    draw: {
-        polyline: false,
-        rectangle: false,
-        circle: false,
-        marker: {
-            icon:bikeGreyIcon
-        },
-        {% if request.user.is_authenticated %}
+        draw: {
+            polyline: false,
+            rectangle: false,
+            circle: false,
+            marker: {
+                icon:bikeGreyIcon
+            },
+            {% if request.user.is_authenticated %}
             polygon: {
                 allowIntersection: false
             }
-        {% else %}
+            {% else %}
             polygon: false
-        {% endif %}
+            {% endif %}
         },
 
         {% if request.user.is_authenticated %}
         edit: {
-            {% if request.user.is_superuser %}
-            featureGroup: accidentPoints,           /* CHANGE ME!!!! SHOULD BE ACCIDENTPOINTS AND ALERTAREAS*****/
-            {% else %}
-            featureGroup: alertAreas,
-            {% endif %}
-            edit: true,
-            remove: true
-        },
+            featureGroup: alertAreas
+        }         
         {% else %}
         edit: false
         {% endif %}
@@ -111,7 +71,6 @@
         var layers = e.layers;
         layers.eachLayer(function (layer) {
             console.log("obj delete");
-
         });
     });
 

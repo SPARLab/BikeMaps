@@ -19,14 +19,14 @@ class IncidentAdmin(admin.OSMGeoAdmin):
 	# Allow for filtering of report date
 	list_filter = ['date']
 
-	list_display = ('date','incident_date', 'incident', 'incident_with','was_published_recently')
+	list_display = ('pk','date','incident_date', 'incident', 'incident_with','was_published_recently')
 
 	fieldsets = [
-		('Location',	{'fields': ['geom']}),
-		('Incident information',	{'fields': ['incident_date','incident','incident_with']}),
-		('Trip details',	{'fields': ['trip_purpose', 'road_conditions','sightlines','cars_on_roadside','bike_infrastructure','bike_lights','terrain','helmet'], 'classes':['collapse']}),
-		('Injury',	{'fields': ['injury','injury_detail'], 'classes':['collapse']}),
-		('Person',	{'fields': ['age','sex','regular_cyclist'], 'classes':['collapse']})
+	    ('Location', {'fields': ['geom']}),
+	    ('Incident', {'fields': ['incident_date', 'incident', 'incident_with', 'injury', 'trip_purpose']}),
+	    ('Detail', {'fields': ['incident_detail'], 'classes':['collapse']}),
+	    ('Personal', {'fields': ['age', 'sex', 'regular_cyclist', 'helmet', 'intoxicated'], 'classes':['collapse']}),
+	    ('Conditions', {'fields': ['road_conditions', 'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain'], 'classes':['collapse']}),
 	]
 admin.site.register(Incident, IncidentAdmin)
 
