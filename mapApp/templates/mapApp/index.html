@@ -90,13 +90,13 @@
 
     <!-- Load user points from the database -->
     {% for incident in incidents %}
-        <script> getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}" ); </script>
+        <script> getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}", {{ incident.pk }} ); </script>
     {% endfor %}
 
     <!-- Load user alert areas from the database -->
     {% for polygon in geofences %}
         <script>
-            getPolygon( {{ polygon.latlngList }} ); 
+            getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} ); 
         </script>
     {% endfor %}
 

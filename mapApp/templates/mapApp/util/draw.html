@@ -70,7 +70,10 @@
     map.on('draw:deleted', function(e) {
         var layers = e.layers;
         layers.eachLayer(function (layer) {
-            console.log("obj delete");
+            // calculate the url with the js variable passed in
+            var url = "{% url 'mapApp:deletePoly' pk=0 %}".replace(/0/, layer.options.pk);
+            // redirect to delete_poly url (then view)
+            $(location).attr('href', url);
         });
     });
 

@@ -16,7 +16,6 @@ from spirit.utils.decorators import administrator_required
 from django.contrib.auth.decorators import login_required
 from djgeojson.serializers import Serializer as GeoJSONSerializer
 
-
 def index(request, lat=None, lng=None, zoom=None):
 	context = {
 		'incidents': Incident.objects.all(),
@@ -205,12 +204,22 @@ def getIncidents(request):
 
 @login_required
 def readAlertPoint(request, alertID):
-	alerts = AlertNotification.objects.filter(user=request.user).filter(pk=alertID)
-	if (alerts.exists()):
-		alert = [a for a in alerts][0]
+	alert = AlertNotification.objects.filter(user=request.user).get(pk=alertID)
+	if (alert):
 		alert.is_read=True
 		alert.save()
 
-		return HttpResponseRedirect(reverse('mapApp:index', kwargs=({"lat":str(alert.point.latlngList()[0]), "lng":str(alert.point.latlngList()[1]), "zoom":str(16)}) ))
+		return HttpResponseRedirect(reverse('mapApp:index', kwargs=({"lat":str(alert.point.latlngList()[0]), "lng":str(alert.point.latlngList()[1]), "zoom":str(18)}) ))
 	else:
 		return HttpResponseRedirect(reverse('mapApp:index')) 
+
+
+@login_required
+def deletePoly(request, pk):
+	poly = AlertArea.objects.filter(user=request.user).get(pk=pk)
+	if (poly):
+		poly.delete();
+		messages.success(request, 'Polygon successfully deleted')
+		return HttpResponseRedirect(reverse('mapApp:index'))	
+	else:
+		return HttpResponseRedirect(reverse('mapApp:index'))

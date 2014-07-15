@@ -37,7 +37,7 @@ class AlertAreaAdmin(admin.OSMGeoAdmin):
 	default_lat = 6196000
 	default_zoom = 10
 
-	list_display = ('user', 'email', 'date')
+	list_display = ('pk', 'user', 'email', 'date')
 
 	fieldsets = [
 		('Area',	{'fields': ['geom']}),

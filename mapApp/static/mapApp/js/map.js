@@ -250,7 +250,7 @@ function initializeGeoJsonLayers(){
 };
 
 
-function getPoint(latlng, date, type) {
+function getPoint(latlng, date, type, pk) {
 	heatMap.addLatLng(latlng);
 
 	var icon;
@@ -260,7 +260,8 @@ function getPoint(latlng, date, type) {
 		icon = bikeYellowIcon;
 	}
 	marker = L.marker(latlng, {
-		icon: icon
+		icon: icon,
+		pk:pk
 	});
 
 	date = date.split(",");
@@ -279,14 +280,15 @@ function getPolyline(latlng, freq) {
 		opacity: 0.1,
 		lineCap: 'round',
 		clickable: false,
-	}));
+	}).toGeoJSON());
 };
 
-function getPolygon(latlng) {
+function getPolygon(latlng, pk) {
 	alertAreas.addLayer(L.polygon(latlng, {
 		color: '#3b9972',
 		weight: 3,
-		opacity: 1
+		opacity: 1,
+		pk: pk	/*Option to mark where the polygon came from in the database*/
 	}));
 };
 
