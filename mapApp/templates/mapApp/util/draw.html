@@ -1,46 +1,31 @@
 <script>
 	/* ADD THE CONTROL TO LEAFLET MAP */
     map.addControl(new L.Control.Draw({
-    draw: {
-        polyline: false,
-        rectangle: false,
-        circle: false,
-        marker: {
-            icon:bikeGreyIcon
-        },
-        {% if request.user.is_authenticated %}
+        draw: {
+            polyline: false,
+            rectangle: false,
+            circle: false,
+            marker: {
+                icon:bikeGreyIcon
+            },
+            {% if request.user.is_authenticated %}
             polygon: {
                 allowIntersection: false
             }
-        {% else %}
+            {% else %}
             polygon: false
-        {% endif %}
+            {% endif %}
         },
-        edit: false
-    }));
-    /* Add lealet editing controls if user is admin */
-    {% if request.user.is_superuser %}
-    // map.addControl(new L.Control.Draw({
-    //     draw: false,
-    //     edit: {
-    //         featureGroup: accidentPoints,
-    //         edit: true,
-    //         remove: true
-    //     },
-    // }));
-    {% endif %}
-    {% if request.user.is_authenticated %}
-    map.addControl(new L.Control.Draw({
-        draw: false,
+
+        {% if request.user.is_authenticated %}
         edit: {
-            featureGroup: alertAreas,
-            edit: true,
-            remove: true
-        },
+            featureGroup: alertAreas
+        }         
+        {% else %}
+        edit: false
+        {% endif %}
     }));
-
-    {% endif %}
-
+    
 
 	/* DRAWING CONTROL TOOLTIPS */
     L.drawLocal.draw.toolbar.buttons.marker = 'Add an incident marker';
@@ -72,5 +57,24 @@
             $('#geofenceForm').modal('show');
         }
     });
+
+    map.on('draw:edited', function(e) {
+        var layers = e.layers;
+        layers.eachLayer(function (layer) {
+            console.log("obj edit")
+
+        });
+    });
+
+    {% url 'mapApp:about' as about %}
+    map.on('draw:deleted', function(e) {
+        var layers = e.layers;
+        layers.eachLayer(function (layer) {
+            console.log("obj delete");
+        });
+    });
+
+
+
 
 </script>

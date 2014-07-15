@@ -29,12 +29,12 @@
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.Rectangle.js' %}"></script>
     
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Feature.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Marker.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Polyline.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.SimpleShape.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Polygon.js' %}"></script>
+    <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.SimpleShape.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Rectangle.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Circle.js' %}"></script>
+    <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Marker.js' %}"></script>
 
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/ext/LatLngUtil.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/ext/GeometryUtil.js' %}"></script>
@@ -45,8 +45,8 @@
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/Control.Draw.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/Tooltip.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/Toolbar.js' %}"></script>
+
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/DrawToolbar.js' %}"></script>
-    
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/EditToolbar.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/EditToolbar.Edit.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/EditToolbar.Delete.js' %}"></script> 
@@ -69,9 +69,9 @@
     <script src="{% static 'mapApp/js/map.js' %}"></script>
 
     <!-- Modal form popups -->
-    {% include 'mapApp/util/incident_form.html' %}
-    {% include 'mapApp/util/route_form.html' %}
-    {% include 'mapApp/util/geofence_form.html' %}
+    {% include 'mapApp/forms/incident_form.html' %}
+    {% include 'mapApp/forms/route_form.html' %}
+    {% include 'mapApp/forms/geofence_form.html' %}
 
 
 {% endblock %}
