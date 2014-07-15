@@ -27,3 +27,5 @@ BUGS
 Tomorrow
 * Edit toolbars for polygons
 * Email alerts weekly
+* use session to pass edit and delete polygon info
+* Edit notification url to show incident id rather than alert id

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -204,7 +204,7 @@ def getIncidents(request):
 
 @login_required
 def readAlertPoint(request, alertID):
-	alert = AlertNotification.objects.filter(user=request.user).get(pk=alertID)
+	alert = get_object_or_404(AlertNotification.objects.filter(user=request.user), pk=alertID)
 	if (alert):
 		alert.is_read=True
 		alert.save()
@@ -215,11 +215,17 @@ def readAlertPoint(request, alertID):
 
 
 @login_required
-def deletePoly(request, pk):
-	poly = AlertArea.objects.filter(user=request.user).get(pk=pk)
-	if (poly):
+def editAlertArea(request, edit, pk):
+	poly = get_object_or_404(AlertArea.objects.filter(user=request.user), pk=pk)
+
+	if(poly and edit == 'edit'):
+		return HttpResponse("edit")
+
+
+	elif(poly and edit == 'delete'):
 		poly.delete();
 		messages.success(request, 'Polygon successfully deleted')
 		return HttpResponseRedirect(reverse('mapApp:index'))	
+
 	else:
 		return HttpResponseRedirect(reverse('mapApp:index'))

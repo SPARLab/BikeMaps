@@ -61,23 +61,22 @@
     map.on('draw:edited', function(e) {
         var layers = e.layers;
         layers.eachLayer(function (layer) {
-            console.log("obj edit")
+            console.log(layer.toGeoJSON().geometry);
+            // calculate the url with the js variable passed in
+            var url = "{% url 'mapApp:editAlertArea' edit='edit' pk=0 %}".replace(/0/, layer.options.pk);
+            // redirect to delete_poly url (then view)
+            // $(location).attr('href', url);
 
         });
     });
 
-    {% url 'mapApp:about' as about %}
     map.on('draw:deleted', function(e) {
         var layers = e.layers;
         layers.eachLayer(function (layer) {
             // calculate the url with the js variable passed in
-            var url = "{% url 'mapApp:deletePoly' pk=0 %}".replace(/0/, layer.options.pk);
+            var url = "{% url 'mapApp:editAlertArea' edit='delete' pk=0 %}".replace(/0/, layer.options.pk);
             // redirect to delete_poly url (then view)
             $(location).attr('href', url);
         });
     });
-
-
-
-
 </script>
