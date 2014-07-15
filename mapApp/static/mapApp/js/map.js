@@ -90,29 +90,24 @@ function initialize(lat, lng, zoom) {
 	initializeGeoJsonLayers();
 
 	/* TILE LAYER DEFINITIONS */
-	var stravaHM5 = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
-			attribution: 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
-			minZoom: 3,
-			maxZoom: 17,
-			opacity: 0.8
-		});
+	var stravaUrl = 'http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png',
+		stravaAttrib = 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
+		stravaHM = L.tileLayer(stravaUrl, {minZoom: 3, maxZoom: 17, opacity: 0.8, attribution: stravaAttrib}),
 
 		// Based on OSM data
-		skobbler = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/10/{z}/{x}/{y}.png@2x', {
-			attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
-			minZoom: 2,
-		}),
+		skobblerUrl = 'http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/10/{z}/{x}/{y}.png@2x',
+		skobblerAttrib = '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
+		skobbler = L.tileLayer(skobblerUrl, {minZoom: 2, attribution: skobblerAttrib}),
 
-		skobblerNight = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/2/{z}/{x}/{y}.png@2x', {
-			attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
-			minZoom: 2,
-		}),
+		skobblerNightUrl = 'http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/2/{z}/{x}/{y}.png@2x',
+		skobblerNightAttrib = '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
+		skobblerNight = L.tileLayer(skobblerNightUrl, {minZoom: 2, attribution: skobblerNightAttrib});
 	
 	/* MAP INIT AND DEFAULT LAYERS */
 	map = L.map('map', {
 		// center: [48.5, -123.3],
 		// zoom: 11,
-		layers: [skobbler, accidentPoints, /*stravaHM5, */alertAreas],
+		layers: [skobbler, accidentPoints, /*stravaHM, */alertAreas],
 	});
 	if(zoom){
 		this.map.setView(L.latLng(lat,lng), zoom);
@@ -130,7 +125,7 @@ function initialize(lat, lng, zoom) {
 			"Accident points": accidentPoints,
 			"Accident heat map": heatMap,
 			// "User route heat map": userRoutes,
-			"Strava heat map": stravaHM5,
+			"Strava heat map": stravaHM,
 			"Bike Racks": racksCluster,
 			// "Bike lanes": bikeLanes,
 			"Alert Areas": alertAreas,
