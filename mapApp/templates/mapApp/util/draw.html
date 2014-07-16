@@ -1,5 +1,27 @@
 <script>
-	/* ADD THE CONTROL TO LEAFLET MAP */
+	/* DRAWING CONTROL TOOLTIPS */
+    L.drawLocal.draw.toolbar.buttons.marker = 'Add an incident marker.';
+    L.drawLocal.draw.handlers.marker.tooltip.start = 'Place me where the incident occurred.';
+    
+    L.drawLocal.draw.toolbar.buttons.polyline = 'Add a cycling route.';
+    
+    L.drawLocal.draw.toolbar.buttons.polygon = 'Trace an area to receive incident alerts.';
+    L.drawLocal.draw.handlers.polygon.tooltip.start = 'Trace the area you would like to receive alerts for.';
+    // L.drawLocal.draw.handlers.polygon.tooltip.cont = 'Click to continue drawing shape.';
+    // L.drawLocal.draw.handlers.polygon.tooltip.end = 'Click the first point to close this shape.';
+
+    L.drawLocal.edit.toolbar.buttons.edit = 'Edit alert area.';
+    L.drawLocal.edit.handlers.edit.tooltip.text = 'Drag handles to edit alert areas. Be sure to save your changes.';
+    L.drawLocal.edit.handlers.edit.tooltip.subtext = 'Click cancel to undo changes.';
+        
+    L.drawLocal.edit.toolbar.buttons.remove = 'Delete alert areas.';
+    L.drawLocal.edit.handlers.remove.tooltip.text = 'Click the alert areas to remove';
+    
+    L.drawLocal.edit.toolbar.buttons.editDisabled = 'No alert areas to edit.';
+    L.drawLocal.edit.toolbar.buttons.removeDisabled = 'No alert areas to delete.';
+    
+
+    /* ADD THE CONTROL TO LEAFLET MAP */
     map.addControl(new L.Control.Draw({
         draw: {
             polyline: false,
@@ -25,14 +47,6 @@
         edit: false
         {% endif %}
     }));
-    
-
-	/* DRAWING CONTROL TOOLTIPS */
-    L.drawLocal.draw.toolbar.buttons.marker = 'Add an incident marker';
-    L.drawLocal.draw.handlers.marker.tooltip.start = 'Place me where the incident occurred';
-    L.drawLocal.draw.toolbar.buttons.polyline = 'Add a cycling route';
-    L.drawLocal.draw.toolbar.buttons.polygon = 'Trace an area to receive incident alerts';
-    L.drawLocal.draw.handlers.polygon.tooltip.start = 'Trace the area you want to receive alerts for';
 
 
     /* DEFINE ACTIONS TRIGGERED BY NEW DRAWINGS */
@@ -58,6 +72,7 @@
         }
     });
 
+    /* DEFINE ACTIONS TRIGGERED BY EDITING A POLYGON */
     map.on('draw:edited', function(e) {
         var layers = e.layers;
         layers.eachLayer(function (layer) {
@@ -70,6 +85,7 @@
         });
     });
 
+    /* DEFINE ACTIONS TRIGGERED BY DELETING A POLYGON */
     map.on('draw:deleted', function(e) {
         var layers = e.layers;
         layers.eachLayer(function (layer) {
@@ -82,7 +98,7 @@
     });
 </script>
 
-<!-- Form for edit polygon data -->
+<!-- Form for passing data to view to edit polygon data -->
 <form id="editAlertArea" action="{% url 'mapApp:editAlertArea' %}" method="post">
     {% csrf_token %}
     {{ geofenceEditForm.as_p}}

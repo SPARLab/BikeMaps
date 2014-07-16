@@ -150,7 +150,7 @@ def postIncident(request):
 
 def addPointToUserAlerts(request, incident):
 	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
-	usersToAlert = list(set([poly.user for poly in intersectingPolys]))
+	usersToAlert = list(set([poly.user for poly in intersectingPolys])) # get list of distinct users to alert
 
 	if (incident.incident_type() == "Collision"):
 		action = 0
@@ -241,4 +241,4 @@ def editAlertArea(request):
 				polyEdited.delete() 	# delete the object
 				messages.success(request, 'Alert Area was deleted')
 			
-	return HttpResponseRedirect(reverse('mapApp:index'))	
+	return HttpResponseRedirect(reverse('mapApp:index'))

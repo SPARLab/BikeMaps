@@ -2,7 +2,6 @@ TO DO
 
 * Check compatabilities with internet explorer (even though it's the worst)
 * Admin point edit from map index
-* Allow users to delete geofences using the edit toolbar
 * Fix contact email to work with spirit
 * Option to report for different person
 * Data backup
@@ -25,6 +24,4 @@ BUGS
 *  
 
 Tomorrow
-* Edit toolbars for polygons
 * Email alerts weekly
-* use session to pass view info instead of ugly URLs
