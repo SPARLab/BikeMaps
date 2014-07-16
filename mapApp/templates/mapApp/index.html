@@ -58,6 +58,9 @@
     <!-- Leaflet Geocoder -->
     <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}"> 
     <script src="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script> 
+
+    <!-- Tooltips script -->
+    <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
     
     <!-- GeoJSON sources -->
     <script src="{% static 'mapApp/data/policeData.js' %}"></script> 
@@ -131,8 +134,5 @@
 
     <!-- Add Leaflet.draw controls and actions to map -->
     {% include 'mapApp/util/draw.html' %}
-
-    <!-- Tooltips script -->
-    <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
 
 {% endblock %}
