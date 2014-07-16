@@ -385,7 +385,7 @@ ACTION_CHOICES = (
 
 class AlertNotification(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("user"))
-    point = models.ForeignKey('mapApp.Incident')
+    point = models.ForeignKey('mapApp.Incident', related_name='+')
 
     date = models.DateTimeField(auto_now_add=True)
     action = models.IntegerField(choices=ACTION_CHOICES, default=UNDEFINED)

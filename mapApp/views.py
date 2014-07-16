@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -9,12 +9,14 @@ from django.core.mail import send_mail
 
 from django.contrib.auth.models import User, Group
 from mapApp.models import Incident, Route, AlertArea, AlertNotification
-from mapApp.forms import IncidentForm, RouteForm, EmailForm, GeofenceForm
+from mapApp.forms import IncidentForm, RouteForm, EmailForm, GeofenceForm, EditAlertAreaForm
 
 # Used for downloading data
 from spirit.utils.decorators import administrator_required
 from django.contrib.auth.decorators import login_required
 from djgeojson.serializers import Serializer as GeoJSONSerializer
+import time
+
 
 def index(request, lat=None, lng=None, zoom=None):
 	context = {
@@ -28,7 +30,8 @@ def index(request, lat=None, lng=None, zoom=None):
 
 		"geofences": AlertArea.objects.filter(user=request.user.id),
 		"geofenceForm": GeofenceForm(),
-		"geofenceFormErrors": False
+		"geofenceFormErrors": False,
+		"geofenceEditForm": EditAlertAreaForm()
 	}
 
 	if(lat is not None and lng is not None and zoom is not None):
@@ -99,6 +102,7 @@ def postRoute(request):
 				"geofences": AlertArea.objects.filter(user=request.user.id),
 				"geofenceForm": GeofenceForm(),
 				"geofenceFormErrors": False,
+				"geofenceEditForm": EditAlertAreaForm(),
 
 				"routes": Route.objects.all(),
 				"routeForm": routeForm,
@@ -134,6 +138,7 @@ def postIncident(request):
 				"geofences": AlertArea.objects.filter(user=request.user.id),
 				"geofenceForm": GeofenceForm(),
 				"geofenceFormErrors": False,
+				"geofenceEditForm": EditAlertAreaForm(),
 				
 				"routes": Route.objects.all(),
 				"routeForm": RouteForm(),
@@ -145,7 +150,7 @@ def postIncident(request):
 
 def addPointToUserAlerts(request, incident):
 	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
-	usersToAlert = list(set([poly.user for poly in intersectingPolys]))
+	usersToAlert = list(set([poly.user for poly in intersectingPolys])) # get list of distinct users to alert
 
 	if (incident.incident_type() == "Collision"):
 		action = 0
@@ -185,6 +190,7 @@ def postAlertPolygon(request):
 				"geofence": AlertArea.objects.filter(user=request.user.id),
 				"geofenceForm": geofenceForm,
 				"geofenceFormErrors": True,
+				"geofenceEditForm": EditAlertAreaForm(),
 				
 				"routes": Route.objects.all(),
 				"routeForm": RouteForm(),
@@ -199,12 +205,15 @@ def postAlertPolygon(request):
 @administrator_required
 def getIncidents(request):
 	data = GeoJSONSerializer().serialize(Incident.objects.all(), indent=2, use_natural_keys=True)
-	return HttpResponse(data, content_type="application/json")
+	
+	response = HttpResponse(data, content_type="application/json")
+	response['Content-Disposition'] = 'attachment; filename="bikemaps_incidents_%s.json' % time.strftime("%x_%H-%M")
+	return response
 
 
 @login_required
 def readAlertPoint(request, alertID):
-	alert = AlertNotification.objects.filter(user=request.user).get(pk=alertID)
+	alert = get_object_or_404(AlertNotification.objects.filter(user=request.user), pk=alertID)
 	if (alert):
 		alert.is_read=True
 		alert.save()
@@ -215,11 +224,21 @@ def readAlertPoint(request, alertID):
 
 
 @login_required
-def deletePoly(request, pk):
-	poly = AlertArea.objects.filter(user=request.user).get(pk=pk)
-	if (poly):
-		poly.delete();
-		messages.success(request, 'Polygon successfully deleted')
-		return HttpResponseRedirect(reverse('mapApp:index'))	
-	else:
-		return HttpResponseRedirect(reverse('mapApp:index'))
+def editAlertArea(request):
+	if(request.method == 'POST'):
+		editForm = EditAlertAreaForm(request.POST)
+		
+		if editForm.is_valid():
+			editType = editForm.cleaned_data['editType']
+			polyEdited = get_object_or_404(AlertArea.objects.filter(user=request.user), pk=editForm.cleaned_data['editPk'])
+
+			if(editType == 'edit'):
+				polyEdited.geom = GEOSGeometry(editForm.cleaned_data['editGeom'])	# edit the object geometry
+				polyEdited.save()
+				messages.success(request, 'Alert Area was edited')
+		
+			elif (editType == 'delete'):
+				polyEdited.delete() 	# delete the object
+				messages.success(request, 'Alert Area was deleted')
+			
+	return HttpResponseRedirect(reverse('mapApp:index'))

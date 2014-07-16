@@ -114,3 +114,28 @@ class EmailForm(forms.Form):
         required=False,
         widget=forms.CheckboxInput()
     )
+
+
+# Used to send polygon info to view
+class EditAlertAreaForm(forms.Form):
+    helper = FormHelper()
+    helper.form_tag = False
+
+    editPk = forms.IntegerField(
+        label = "editPk",
+        required = True,
+        widget = forms.HiddenInput(attrs={'id': 'editPk'})
+    )
+    
+    editType = forms.CharField(
+        label = "editType",
+        max_length=10,
+        required = True,
+        widget = forms.HiddenInput(attrs={'id': 'editType'})
+    )
+    
+    editGeom = forms.CharField(
+        label = "Geom",
+        required = False,
+        widget = forms.HiddenInput(attrs={'id': 'editGeom'})
+    )

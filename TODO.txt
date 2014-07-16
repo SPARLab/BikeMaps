@@ -1,29 +1,31 @@
 TO DO
 
-* Check compatabilities with internet explorer (even though it's the worst)
+High priority
 * Admin point edit from map index
-* Allow users to delete geofences using the edit toolbar
-* Fix contact email to work with spirit
-* Option to report for different person
+* Email alerts weekly
 * Data backup
-* Social media buttons/links
+* Fix contact email to work with spirit
+>
 * Setup media root
 * Setup static root
 * Password protected dev release
+
+Lower priority
+* Comment moderating delete not working
+* Check compatabilities with internet explorer (even though it's the worst)
+* Option to report for different person
+* Social media buttons/links
 * Write up readme
 * Documentation for future devs
 * Day/Night point clusters or a timeslider
 * custom ICBC icons
 * improve incidents heatmap
+* flagged comment alerts for admins
 
 BUGS
 
-*
+* Moderate comments > delete button not working
 * 
 * 
 * 
 *  
-
-Tomorrow
-* Edit toolbars for polygons
-* Email alerts weekly

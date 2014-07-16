@@ -7,3 +7,4 @@
 
 # Ignore data folder
 /data
+/public/static/**/*.pyc
