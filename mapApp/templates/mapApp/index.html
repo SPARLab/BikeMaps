@@ -113,19 +113,19 @@
         );
 
         // Show the modal if there are errors in a form submit
-        {% if incidentFormErrors %}
+        {% if incidentForm.errors %}
         $(window).load(function(){
             $('#incidentForm').modal('show');
         });
         {% endif %}
 
-        {% if routeFormErrors %}
+        {% if routeForm.errors %}
         $(window).load(function(){
             $('#routeForm').modal('show');
         });
         {% endif %}
 
-        {% if geofenceFormErrors %}
+        {% if geofenceForm.errors %}
         $(window).load(function(){
             $('#geofenceForm').modal('show');
         });

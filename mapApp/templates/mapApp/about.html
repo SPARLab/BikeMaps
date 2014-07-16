@@ -66,7 +66,7 @@
     </div>
 
     <script>
-        {% if emailFormErrors %}
+        {% if emailForm.errors %}
         $(window).load(function(){
             $('#emailForm').modal('show');
         });
