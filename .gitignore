@@ -9,4 +9,4 @@
 /data
 
 # Ignore compiled python files
-/public/static/**/*.pyc
+*.pyc
