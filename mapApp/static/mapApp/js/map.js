@@ -105,8 +105,8 @@ function initialize(lat, lng, zoom) {
 	
 	/* MAP INIT AND DEFAULT LAYERS */
 	map = L.map('map', {
-		// center: [48.5, -123.3],
-		// zoom: 11,
+		center: [48, -100],
+		zoom: 4,
 		layers: [skobbler, accidentPoints, /*stravaHM, */alertAreas],
 	});
 	if(zoom){

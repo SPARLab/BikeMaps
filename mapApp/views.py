@@ -217,15 +217,11 @@ def readAlertPoint(request, alertID):
 @login_required
 def editAlertArea(request, edit, pk):
 	poly = get_object_or_404(AlertArea.objects.filter(user=request.user), pk=pk)
-
-	if(poly and edit == 'edit'):
+	
+	if(edit == 'edit'):
 		return HttpResponse("edit")
 
-
-	elif(poly and edit == 'delete'):
+	elif(edit == 'delete'):
 		poly.delete();
 		messages.success(request, 'Polygon successfully deleted')
 		return HttpResponseRedirect(reverse('mapApp:index'))	
-
-	else:
-		return HttpResponseRedirect(reverse('mapApp:index'))
