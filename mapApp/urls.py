@@ -27,5 +27,5 @@ urlpatterns = patterns('',
 	url(r'^incidents.json$', views.getIncidents, name='getIncidents'),
 
 	# Called when user edits or deletes an alert area
-	url(r'^(?P<edit>edit|delete)_poly/(?P<pk>\d+)/$', views.editAlertArea, name='editAlertArea')
+	url(r'edit_alert_area/$', views.editAlertArea, name='editAlertArea')
 )

@@ -9,7 +9,7 @@ from django.core.mail import send_mail
 
 from django.contrib.auth.models import User, Group
 from mapApp.models import Incident, Route, AlertArea, AlertNotification
-from mapApp.forms import IncidentForm, RouteForm, EmailForm, GeofenceForm
+from mapApp.forms import IncidentForm, RouteForm, EmailForm, GeofenceForm, EditAlertAreaForm
 
 # Used for downloading data
 from spirit.utils.decorators import administrator_required
@@ -28,7 +28,8 @@ def index(request, lat=None, lng=None, zoom=None):
 
 		"geofences": AlertArea.objects.filter(user=request.user.id),
 		"geofenceForm": GeofenceForm(),
-		"geofenceFormErrors": False
+		"geofenceFormErrors": False,
+		"geofenceEditForm": EditAlertAreaForm()
 	}
 
 	if(lat is not None and lng is not None and zoom is not None):
@@ -99,6 +100,7 @@ def postRoute(request):
 				"geofences": AlertArea.objects.filter(user=request.user.id),
 				"geofenceForm": GeofenceForm(),
 				"geofenceFormErrors": False,
+				"geofenceEditForm": EditAlertAreaForm(),
 
 				"routes": Route.objects.all(),
 				"routeForm": routeForm,
@@ -134,6 +136,7 @@ def postIncident(request):
 				"geofences": AlertArea.objects.filter(user=request.user.id),
 				"geofenceForm": GeofenceForm(),
 				"geofenceFormErrors": False,
+				"geofenceEditForm": EditAlertAreaForm(),
 				
 				"routes": Route.objects.all(),
 				"routeForm": RouteForm(),
@@ -185,6 +188,7 @@ def postAlertPolygon(request):
 				"geofence": AlertArea.objects.filter(user=request.user.id),
 				"geofenceForm": geofenceForm,
 				"geofenceFormErrors": True,
+				"geofenceEditForm": EditAlertAreaForm(),
 				
 				"routes": Route.objects.all(),
 				"routeForm": RouteForm(),
@@ -215,13 +219,30 @@ def readAlertPoint(request, alertID):
 
 
 @login_required
-def editAlertArea(request, edit, pk):
-	poly = get_object_or_404(AlertArea.objects.filter(user=request.user), pk=pk)
-	
-	if(edit == 'edit'):
-		return HttpResponse("edit")
+def editAlertArea(request):
+	if(request.method == 'POST'):
+		editForm = EditAlertAreaForm(request.POST)
+		
+		if(editForm.data['editType'] == 'edit'):
+			# Convert string coords to valid geometry object
+			editForm.data = editForm.data.copy()
+			editForm.data['editGeom'] = GEOSGeometry(editForm.data['editGeom'])
 
-	elif(edit == 'delete'):
-		poly.delete();
-		messages.success(request, 'Polygon successfully deleted')
+
+		if editForm.is_valid():
+			pk = editForm.cleaned_data['editPk']
+			poly = get_object_or_404(AlertArea.objects.filter(user=request.user), pk=pk)
+			
+			if(editForm.data['editType'] == 'edit'):
+				# poly['geom'] = editForm.cleaned_data['editGeom']
+				# poly.save
+				messages.success(request, 'Polygon successfully edited')
+
+			elif(editForm.data['editType'] == 'delete'):
+				poly.delete()
+				messages.success(request, 'Polygon successfully deleted')
+
+			return HttpResponseRedirect(reverse('mapApp:index'))
+
+	else:
 		return HttpResponseRedirect(reverse('mapApp:index'))	

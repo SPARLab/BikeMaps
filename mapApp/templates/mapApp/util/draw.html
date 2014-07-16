@@ -42,18 +42,18 @@
         
         if (type === 'marker') {
             // Set form geometry field to click location
-            document.getElementById("point").value = (JSON.stringify(layer.toGeoJSON().geometry));               
+            document.getElementById("point").value = JSON.stringify(layer.toGeoJSON().geometry);               
             $('#incidentForm').modal('show');
         }
         if (type === 'polyline') {
             // Set form geometry field to click location
-            document.getElementById("line").value = (JSON.stringify(layer.toGeoJSON().geometry));               
+            document.getElementById("line").value = JSON.stringify(layer.toGeoJSON().geometry);               
             $('#routeForm').modal('show');
         }
         if (type === 'polygon') {
             // Set form geometry field to click location
-            document.getElementById("geofence").value = (JSON.stringify(layer.toGeoJSON().geometry));                             
-            document.getElementById("userEmail").value = ("{{ request.user.email }}");               
+            document.getElementById("geofence").value = JSON.stringify(layer.toGeoJSON().geometry);                             
+            document.getElementById("userEmail").value = "{{ request.user.email }}";               
             $('#geofenceForm').modal('show');
         }
     });
@@ -61,11 +61,11 @@
     map.on('draw:edited', function(e) {
         var layers = e.layers;
         layers.eachLayer(function (layer) {
-            console.log(layer.toGeoJSON().geometry);
-            // calculate the url with the js variable passed in
-            var url = "{% url 'mapApp:editAlertArea' edit='edit' pk=0 %}".replace(/0/, layer.options.pk);
-            // redirect to delete_poly url (then view)
-            // $(location).attr('href', url);
+            document.getElementById("editPk").value = layer.options.pk;
+            document.getElementById("editType").value = 'edit';
+            document.getElementById("editGeom").value = JSON.stringify(layer.toGeoJSON().geometry);
+
+            $( "#editAlertArea" ).submit();
 
         });
     });
@@ -73,10 +73,17 @@
     map.on('draw:deleted', function(e) {
         var layers = e.layers;
         layers.eachLayer(function (layer) {
-            // calculate the url with the js variable passed in
-            var url = "{% url 'mapApp:editAlertArea' edit='delete' pk=0 %}".replace(/0/, layer.options.pk);
-            // redirect to delete_poly url (then view)
-            $(location).attr('href', url);
+            document.getElementById("editPk").value = layer.options.pk;
+            document.getElementById("editType").value = 'delete';
+
+            $( "#editAlertArea" ).submit();
+
         });
     });
 </script>
+
+<!-- Form for edit polygon data -->
+<form id="editAlertArea" action="{% url 'mapApp:editAlertArea' %}" method="post">
+    {% csrf_token %}
+    {{ geofenceEditForm.as_p}}
+</form>
