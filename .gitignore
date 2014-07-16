@@ -7,4 +7,6 @@
 
 # Ignore data folder
 /data
+
+# Ignore compiled python files
 /public/static/**/*.pyc
