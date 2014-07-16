@@ -226,23 +226,25 @@ def editAlertArea(request):
 		if(editForm.data['editType'] == 'edit'):
 			# Convert string coords to valid geometry object
 			editForm.data = editForm.data.copy()
-			editForm.data['editGeom'] = GEOSGeometry(editForm.data['editGeom'])
+			newGeom = GEOSGeometry(editForm.data['editGeom'])
 
 
 		if editForm.is_valid():
-			pk = editForm.cleaned_data['editPk']
-			poly = get_object_or_404(AlertArea.objects.filter(user=request.user), pk=pk)
-			
-			if(editForm.data['editType'] == 'edit'):
-				# poly['geom'] = editForm.cleaned_data['editGeom']
-				# poly.save
-				messages.success(request, 'Polygon successfully edited')
+			editType = editForm.cleaned_data['editType']
+			# get the object to edit/delete
+			poly = get_object_or_404(AlertArea.objects.filter(user=request.user), \
+				pk=editForm.cleaned_data['editPk'])
 
-			elif(editForm.data['editType'] == 'delete'):
-				poly.delete()
-				messages.success(request, 'Polygon successfully deleted')
-
-			return HttpResponseRedirect(reverse('mapApp:index'))
-
+			if(editType == 'edit'):
+				poly.geom = newGeom	# edit the object geometry
+				poly.save()
+		
+			elif (editType == 'delete'):
+				poly.delete() 	# delete the object
+		
+			messages.success(request, 'Polygon successfully %s' % editForm.cleaned_data['editType'])
+		
+		return HttpResponseRedirect(reverse('mapApp:index'))
+	
 	else:
 		return HttpResponseRedirect(reverse('mapApp:index'))	
