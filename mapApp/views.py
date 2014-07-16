@@ -15,6 +15,8 @@ from mapApp.forms import IncidentForm, RouteForm, EmailForm, GeofenceForm, EditA
 from spirit.utils.decorators import administrator_required
 from django.contrib.auth.decorators import login_required
 from djgeojson.serializers import Serializer as GeoJSONSerializer
+import time
+
 
 def index(request, lat=None, lng=None, zoom=None):
 	context = {
@@ -203,7 +205,10 @@ def postAlertPolygon(request):
 @administrator_required
 def getIncidents(request):
 	data = GeoJSONSerializer().serialize(Incident.objects.all(), indent=2, use_natural_keys=True)
-	return HttpResponse(data, content_type="application/json")
+	
+	response = HttpResponse(data, content_type="application/json")
+	response['Content-Disposition'] = 'attachment; filename="bikemaps_incidents_%s.json' % time.strftime("%x_%H-%M")
+	return response
 
 
 @login_required
