@@ -228,28 +228,17 @@ def editAlertArea(request):
 	if(request.method == 'POST'):
 		editForm = EditAlertAreaForm(request.POST)
 		
-		if(editForm.data['editType'] == 'edit'):
-			# Convert string coords to valid geometry object
-			editForm.data = editForm.data.copy()
-			newGeom = GEOSGeometry(editForm.data['editGeom'])
-
-
 		if editForm.is_valid():
 			editType = editForm.cleaned_data['editType']
-			# get the object to edit/delete
-			poly = get_object_or_404(AlertArea.objects.filter(user=request.user), \
-				pk=editForm.cleaned_data['editPk'])
+			polyEdited = get_object_or_404(AlertArea.objects.filter(user=request.user), pk=editForm.cleaned_data['editPk'])
 
 			if(editType == 'edit'):
-				poly.geom = newGeom	# edit the object geometry
-				poly.save()
+				polyEdited.geom = GEOSGeometry(editForm.cleaned_data['editGeom'])	# edit the object geometry
+				polyEdited.save()
+				messages.success(request, 'Alert Area was edited')
 		
 			elif (editType == 'delete'):
-				poly.delete() 	# delete the object
-		
-			messages.success(request, 'Polygon successfully %s' % editForm.cleaned_data['editType'])
-		
-		return HttpResponseRedirect(reverse('mapApp:index'))
-	
-	else:
-		return HttpResponseRedirect(reverse('mapApp:index'))	
+				polyEdited.delete() 	# delete the object
+				messages.success(request, 'Alert Area was deleted')
+			
+	return HttpResponseRedirect(reverse('mapApp:index'))	
