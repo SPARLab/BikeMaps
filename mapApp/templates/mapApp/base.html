@@ -8,10 +8,10 @@
   <title>BikeMaps.org {% block title %}{% endblock %}</title>
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'mapApp/images/bikemaps_web_icon.ico' %}" />
 
-  {% block header %} {% endblock %}
-  
   <!-- Load JQuery -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  
+  {% block header %} {% endblock %}
 
   <!-- Load CSS -->
   <link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet" media="screen">
