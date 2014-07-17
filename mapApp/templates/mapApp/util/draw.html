@@ -45,6 +45,17 @@
             {% endif %}
     }));
 
+    // Add a point editing control for admins
+    {% if request.user.is_superuser %}
+    map.addControl(new L.Control.Draw({
+        position: 'bottomright',
+        draw: false,        
+        edit: {
+            edit: false,
+            featureGroup: accidentPoints
+        }
+    }));
+    {% endif %}
 
     /* DEFINE ACTIONS TRIGGERED BY NEW DRAWINGS */
     map.on('draw:created', function (e) {

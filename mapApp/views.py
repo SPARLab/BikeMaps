@@ -184,12 +184,12 @@ def readAlertPoint(request, alertID):
 def editAlertArea(request):
 	if(request.method == 'POST'):
 		editForm = EditForm(request.POST)
-		
 		if editForm.is_valid():
-			objType = editForm.cleaned_data['objType']
-			editType = editForm.cleaned_data['editType']
+
 			pks = editForm.cleaned_data['editPk'].split(';')[:-1]
 			newGeoms = editForm.cleaned_data['editGeom'].split(';')[:-1]
+			editType = editForm.cleaned_data['editType']
+			objType = editForm.cleaned_data['objType']
 
 			if objType == 'point' and request.user.is_superuser:
 				objectSet = Incident.objects.all()
