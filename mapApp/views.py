@@ -19,17 +19,7 @@ import time
 
 
 def index(request, lat=None, lng=None, zoom=None):
-	context = {
-		'incidents': Incident.objects.all(),
-		"incidentForm": IncidentForm(), 	#the form to be rendered
-
-		"routes": Route.objects.all(),
-		"routeForm": RouteForm(),
-
-		"geofences": AlertArea.objects.filter(user=request.user.id),
-		"geofenceForm": GeofenceForm(),
-		"geofenceEditForm": EditAlertAreaForm()
-	}
+	context = indexContext(request)
 
 	if(lat is not None and lng is not None and zoom is not None):
 		context['lat']= float(lat)
@@ -37,6 +27,23 @@ def index(request, lat=None, lng=None, zoom=None):
 		context['zoom']= int(zoom)
 	
 	return render(request, 'mapApp/index.html', context)
+
+
+def indexContext(request, incidentForm=IncidentForm(), routeForm=RouteForm(), geofenceForm=GeofenceForm()):
+	context = {
+		# Model data used by map
+		'incidents': Incident.objects.all(),
+		"routes": Route.objects.all(),
+		"geofences": AlertArea.objects.filter(user=request.user.id),
+
+		# Form data used by map
+		"incidentForm": incidentForm,
+		"routeForm": routeForm,
+		"geofenceForm": geofenceForm,
+		"geofenceEditForm": EditAlertAreaForm()
+	}
+
+	return context
 
 
 def about(request):
@@ -67,9 +74,7 @@ def contact(request):
 		
 		else:
 			# Form is not valid, display modal with highlighted errors 
-			return render(request, 'mapApp/about.html', {
-				"emailForm": emailForm,
-			})
+			return render(request, 'mapApp/about.html', {"emailForm": emailForm})
 	
 	return HttpResponseRedirect(reverse('mapApp:about')) 
 
@@ -88,17 +93,7 @@ def postRoute(request):
 
 		else:
 			# Form is not valid, display modal with highlighted errors 
-			return render(request, 'mapApp/index.html', {
-				'incidents': Incident.objects.all(),
-				"incidentForm": IncidentForm(),
-
-				"geofences": AlertArea.objects.filter(user=request.user.id),
-				"geofenceForm": GeofenceForm(),
-				"geofenceEditForm": EditAlertAreaForm(),
-
-				"routes": Route.objects.all(),
-				"routeForm": routeForm,
-			})
+			return render(request, 'mapApp/index.html', indexContext(request, routeForm=routeForm))
 	
 	return HttpResponseRedirect(reverse('mapApp:index')) 
 
@@ -120,17 +115,7 @@ def postIncident(request):
 		
 		else:
 			# Form is not valid, display modal with highlighted errors 
-			return render(request, 'mapApp/index.html', {
-				'incidents': Incident.objects.all(),
-				"incidentForm": incidentForm,
-
-				"geofences": AlertArea.objects.filter(user=request.user.id),
-				"geofenceForm": GeofenceForm(),
-				"geofenceEditForm": EditAlertAreaForm(),
-				
-				"routes": Route.objects.all(),
-				"routeForm": RouteForm(),
-			})
+			return render(request, 'mapApp/index.html', indexContext(request, incidentForm=incidentForm))
 	
 	else:
 		return HttpResponseRedirect(reverse('mapApp:index')) 
@@ -165,27 +150,12 @@ def postAlertPolygon(request):
 		if geofenceForm.is_valid():
 			geofenceForm.save()
 			messages.success(request, 'You will now recieve alerts for the area was traced.')
-			return HttpResponseRedirect(reverse('mapApp:index')) 
 		
 		else:
 			# Form is not valid, display modal with highlighted errors 
-			return render(request, 'mapApp/index.html', {
-				'incidents': Incident.objects.all(),
-				"incidentForm": IncidentForm(),
-				"incidentFormErrors": False,
+			return render(request, 'mapApp/index.html', indexContext(request, geofenceForm=geofenceForm))
 
-				"geofence": AlertArea.objects.filter(user=request.user.id),
-				"geofenceForm": geofenceForm,
-				"geofenceFormErrors": True,
-				"geofenceEditForm": EditAlertAreaForm(),
-				
-				"routes": Route.objects.all(),
-				"routeForm": RouteForm(),
-				"routeFormErrors": False
-			})
-	
-	else:
-		return HttpResponseRedirect(reverse('mapApp:index'))
+	return HttpResponseRedirect(reverse('mapApp:index'))
 
 
 
