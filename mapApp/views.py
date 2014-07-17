@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404, render
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
+
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -15,8 +16,8 @@ from mapApp.forms import IncidentForm, RouteForm, EmailForm, GeofenceForm, EditA
 from spirit.utils.decorators import administrator_required
 from django.contrib.auth.decorators import login_required
 from djgeojson.serializers import Serializer as GeoJSONSerializer
-import time
 
+import time
 
 def index(request, lat=None, lng=None, zoom=None):
 	context = indexContext(request)
