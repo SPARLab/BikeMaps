@@ -38,28 +38,22 @@ var bikeRedIcon = L.MakiMarkers.icon({
 	});
 
 /* DATASETS */
-var	userRoutes = new L.LayerGroup([]),
-	
-	alertAreas = new L.FeatureGroup([]),
-
-	accidentAdmin = new L.FeatureGroup([]),
-
-	bikeLanes,
-
-	// Heatmap layer corresponding to all accident data
-	heatMap = L.heatLayer([], {
-		radius: 40,
-		blur: 20,
-	}),
-
 	// Cluster group for all accident data
-	accidentPoints = new L.MarkerClusterGroup({
+var	accidentPoints = new L.MarkerClusterGroup({
 		maxClusterRadius: 70,
 		polygonOptions: {
 			color: '#2c3e50',
 			weight: 3
 		},
 		iconCreateFunction: createPieCluster
+	}),
+
+	alertAreas = new L.FeatureGroup([]),
+
+	// Heatmap layer corresponding to all accident data
+	heatMap = L.heatLayer([], {
+		radius: 40,
+		blur: 20,
 	}),
 
 	// Bike rack cluster
@@ -81,7 +75,6 @@ var	userRoutes = new L.LayerGroup([]),
 			return new L.DivIcon({ className: 'rack-cluster' + c, iconSize: size});
 		},
 	});
-
 
 
 /* Create the map with a tile layer and set global variable map */
@@ -107,7 +100,7 @@ function initialize(lat, lng, zoom) {
 	map = L.map('map', {
 		center: [48, -100],
 		zoom: 4,
-		layers: [skobbler, accidentPoints, /*stravaHM, */alertAreas],
+		layers: [skobbler, accidentPoints, stravaHM, alertAreas],
 	});
 	if(zoom){
 		this.map.setView(L.latLng(lat,lng), zoom);
@@ -124,14 +117,10 @@ function initialize(lat, lng, zoom) {
 		overlayMaps = {
 			"Accident points": accidentPoints,
 			"Accident heat map": heatMap,
-			// "User route heat map": userRoutes,
 			"Strava heat map": stravaHM,
 			"Bike Racks": racksCluster,
-			// "Bike lanes": bikeLanes,
 			"Alert Areas": alertAreas,
-			"Admin points": accidentAdmin
 		};
-	/* LAYER CONTROL */
 	L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 	/* GEOCODING SEARCH BAR CONTROL */
@@ -154,18 +143,9 @@ function initialize(lat, lng, zoom) {
 			.addTo(map)
 			.openPopup();
 	};
-}
-
-
-function locateUser() {
-	this.map.locate({
-		setView: true,
-		maxZoom: 16
-	});
-};
-
-
-function initializeGeoJsonLayers(){
+	
+	/* GET GEOJSON STATIC LAYERS AND STORE AS LEAFLET FEATURE */
+	function initializeGeoJsonLayers(){
 		var policePoints = new L.geoJson(policeData, {
 			pointToLayer: function(feature, latlng) {
 				heatMap.addLatLng(latlng);
@@ -181,7 +161,6 @@ function initializeGeoJsonLayers(){
 			}
 		}).addTo(accidentPoints),
 
-
 		icbcPoints = new L.geoJson(icbcData, {
 			pointToLayer: function(feature, latlng) {
 				heatMap.addLatLng(latlng);
@@ -196,7 +175,6 @@ function initializeGeoJsonLayers(){
 			}
 		}).addTo(accidentPoints),
 
-
 		bikeRacksVictoria = new L.geoJson(bikeRacks, {
 			pointToLayer: function(feature, latlng) {
 				return L.marker(latlng);
@@ -205,51 +183,19 @@ function initializeGeoJsonLayers(){
 				layer.bindPopup('Bike rack');
 			}
 		}).addTo(racksCluster);
+	};
+	
+	/* FIND AND RETURN THE USER'S LOCATION */
+	function locateUser() {
+		this.map.locate({
+			setView: true,
+			maxZoom: 16
+		});
+	};
+}
 
-	// Initialize global bikeLanes layer
-	bikeLanes = new L.geoJson(bikeRoutes, {
-		style: function(feature) {
-			switch (feature.properties.Descriptio) {
-				case 'Buffered Bike Lane':
-					return {
-						color: '#007f16', // Dark green
-					};
-				case 'Cycle Track*':
-					return {
-						color: '#259238', // Faded dark green
-						opacity: 0.8
-					};
-				case 'Multi-Use Trail':
-					return {
-						color: '#87a000', // Dark Yellow
-						opacity: 0.8
-					};
-				case 'Conventional Bike Lane':
-					return {
-						color: '#00c322', // Green
-						opacity: 0.8
-					};
-				case 'Priority Transit and Cycling Lanes*':
-					return {
-						color: '#05326d', // Dark blue
-						opacity: 0.8
-					};
-				case 'Signed Bike Route':
-					return {
-						color: '#0e51a7', // blue
-						opacity: 0.8
-					};
-				case 'Proposed Bicycle Network':
-					return {
-						color: '#ff9e00', // Faded green
-						opacity: 0.3
-					};
-			}
-		}
-	});
-};
-
-
+// Purpose: Add a given latlng poing with the given information to the map. 
+// 		Add pk for easy lookup of marker for admin tasks
 function getPoint(latlng, date, type, pk) {
 	heatMap.addLatLng(latlng);
 
@@ -269,70 +215,24 @@ function getPoint(latlng, date, type, pk) {
 	marker.bindPopup('<strong>Source:</strong> User submitted<br><strong>Date:</strong> ' + date + '<br><strong>Type:</strong> ' + type);
 
 	accidentPoints.addLayer(marker);
-	accidentAdmin.addLayer(marker);
 };
 
-
-function getPolyline(latlng, freq) {
-	userRoutes.addLayer(L.polyline(latlng, {
-		color: 'red',
-		width: 40,
-		opacity: 0.1,
-		lineCap: 'round',
-		clickable: false,
-	}).toGeoJSON());
-};
-
+// Purpose: Add a given latlng list to the map as a polygon. Add pk attribute so polygon can be deleted by user.
 function getPolygon(latlng, pk) {
 	alertAreas.addLayer(L.polygon(latlng, {
 		color: '#3b9972',
 		weight: 3,
 		opacity: 1,
-		pk: pk	/*Option to mark where the polygon came from in the database*/
+		pk: pk	/*Mark the polygon with it's database id*/
 	}));
 };
 
-
-function getMonthFromInt(num){
-	switch(num) {
-		case 1:
-			return "January";
-		case 2:
-			return "February";
-		case 3:
-			return "March";
-		case 4:
-			return "April";
-		case 5:
-			return "May";
-		case 6:
-			return "June";
-		case 7:
-			return "July";
-		case 8:
-			return "August";
-		case 9:
-			return "September";
-		case 10:
-			return "October";
-		case 11:
-			return "November";
-		case 12:
-			return "December";
-	}
-};
-
-
-function toTitleCase(s){
-    return s.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-};
 
 // Purpose: Initializes the Pie chart cluster icons by getting the needed attributes from each cluster
 //		and passing them to the pieChart function
 function createPieCluster(cluster) {
 	var children = cluster.getAllChildMarkers();
 
-	//Count the number of markers in each cluster
 	var	n = children.length,
 		nPolice = 0,
 		nIcbc = 0,
@@ -341,6 +241,7 @@ function createPieCluster(cluster) {
 		nUnknown = 0,
 		marker;
 	
+	//Count the number of markers in each cluster
 	children.forEach( function(c) {
 		marker = c.options.icon.options; // options for each point in clusters icon, used here to differentiate the points in each cluster
 		if (marker.icon === policeIcon.options.icon) {
@@ -369,33 +270,30 @@ function createPieCluster(cluster) {
 		innerR -= 3;
 	}
 
-	// Build the svg layer
-	return pieChart([{
+	var data = [{
 		"type": 'Police',
 		"count": nPolice,
 		"color": policeIcon.options.color
-	}, {
+		}, {
 		"type": 'ICBC',
 		"count": nIcbc,
 		"color": icbcIcon.options.color
-	}, {
+		}, {
 		"type": 'BikeR',
 		"count": nBikeR,
 		"color": bikeRedIcon.options.color
-	}, {
+		}, {
 		"type": 'BikeY',
 		"count": nBikeY,
 		"color": bikeYellowIcon.options.color
-	}, {
+		}, {
 		"type": 'Unknown',
 		"count": nUnknown,
 		"color": bikeGreyIcon.options.color
-	}], 
-	
-	outerR, 
-	innerR,
-	n
-	);
+	}];
+
+	// Build the svg layer
+	return pieChart(data, outerR, innerR, n);
 };
 
 
@@ -448,8 +346,6 @@ function pieChart(data, outerR, innerR, total){
 		.attr('dy','.3em')
 		.text(total)
 
-
-
 	var html = serializeXmlNode(svg);
 
 	return new L.DivIcon({
@@ -469,3 +365,37 @@ function serializeXmlNode(xmlNode) {
     return "";
 };
 
+
+function getMonthFromInt(num){
+	switch(num) {
+		case 1:
+			return "January";
+		case 2:
+			return "February";
+		case 3:
+			return "March";
+		case 4:
+			return "April";
+		case 5:
+			return "May";
+		case 6:
+			return "June";
+		case 7:
+			return "July";
+		case 8:
+			return "August";
+		case 9:
+			return "September";
+		case 10:
+			return "October";
+		case 11:
+			return "November";
+		case 12:
+			return "December";
+	}
+};
+
+
+function toTitleCase(s){
+    return s.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+};

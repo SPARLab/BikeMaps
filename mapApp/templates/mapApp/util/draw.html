@@ -30,6 +30,7 @@
             marker: {
                 icon:bikeGreyIcon
             },
+            
             {% if request.user.is_authenticated %}
             polygon: {
                 allowIntersection: false
@@ -42,7 +43,8 @@
         {% if request.user.is_authenticated %}
         edit: {
             featureGroup: alertAreas
-        }         
+        }
+
         {% else %}
         edit: false
         {% endif %}
@@ -76,10 +78,11 @@
     map.on('draw:edited', function(e) {
         var layers = e.layers;
         layers.eachLayer(function (layer) {
+            // Fill out form
             document.getElementById("editPk").value = layer.options.pk;
             document.getElementById("editType").value = 'edit';
             document.getElementById("editGeom").value = JSON.stringify(layer.toGeoJSON().geometry);
-
+            // Submit form
             $( "#editAlertArea" ).submit();
 
         });
@@ -89,9 +92,10 @@
     map.on('draw:deleted', function(e) {
         var layers = e.layers;
         layers.eachLayer(function (layer) {
+            // Fill out form
             document.getElementById("editPk").value = layer.options.pk;
             document.getElementById("editType").value = 'delete';
-
+            // Submit form
             $( "#editAlertArea" ).submit();
 
         });
