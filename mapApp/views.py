@@ -21,7 +21,8 @@ import time
 def index(request, lat=None, lng=None, zoom=None):
 	context = indexContext(request)
 
-	if(lat is not None and lng is not None and zoom is not None):
+	# Add zoom and center data if present
+	if not None in [lat, lng, zoom]:
 		context['lat']= float(lat)
 		context['lng']= float(lng)
 		context['zoom']= int(zoom)
@@ -29,8 +30,9 @@ def index(request, lat=None, lng=None, zoom=None):
 	return render(request, 'mapApp/index.html', context)
 
 
+# Define default context data for the index view. Forms can be overridden to display errors (used by other views)
 def indexContext(request, incidentForm=IncidentForm(), routeForm=RouteForm(), geofenceForm=GeofenceForm()):
-	context = {
+	return {
 		# Model data used by map
 		'incidents': Incident.objects.all(),
 		"routes": Route.objects.all(),
@@ -42,8 +44,6 @@ def indexContext(request, incidentForm=IncidentForm(), routeForm=RouteForm(), ge
 		"geofenceForm": geofenceForm,
 		"geofenceEditForm": EditAlertAreaForm()
 	}
-
-	return context
 
 
 def about(request):
@@ -60,23 +60,19 @@ def contact(request):
 			sender = emailForm.cleaned_data['sender']
 			cc_myself = emailForm.cleaned_data['cc_myself']
 
-			contact_group = Group.objects.get(name="admin contact")
-			members = contact_group.user_set.all()
+			adminContacts = Group.objects.get(name="admin contact").user_set.all()
 			recipients = []
-			for r in members:
-				recipients.append(r.email) 
+			
+			for contact in adminContacts:
+				recipients.append(contact.email) 
 			if cc_myself:
 				recipients.append(sender)
 
 			send_mail(subject, message, sender, recipients)
-
 			messages.success(request, '<strong>Thank you!</strong><br>We\'ll do our best to get back to you.')
-		
-		else:
-			# Form is not valid, display modal with highlighted errors 
-			return render(request, 'mapApp/about.html', {"emailForm": emailForm})
-	
-	return HttpResponseRedirect(reverse('mapApp:about')) 
+			emailForm = EmailForm() # Clear the form
+
+	return render(request, 'mapApp/about.html', {"emailForm": emailForm})
 
 
 def postRoute(request):
@@ -89,80 +85,77 @@ def postRoute(request):
 
 		if routeForm.is_valid():
 			routeForm.save()
+			routeForm = RouteForm() # Clear the form
 			messages.success(request, '<strong>Thank you!</strong><br>Your route was successfully added.')
 
-		else:
-			# Form is not valid, display modal with highlighted errors 
-			return render(request, 'mapApp/index.html', indexContext(request, routeForm=routeForm))
-	
-	return HttpResponseRedirect(reverse('mapApp:index')) 
+	return render(request, 'mapApp/index.html', indexContext(request, routeForm=routeForm))
 
 
 def postIncident(request):
 	if request.method == 'POST':
 		incidentForm = IncidentForm(request.POST)
 		
-		# Convert string coords to valid geometry object
+		# Convert coords to valid geometry
 		incidentForm.data = incidentForm.data.copy()
 		incidentForm.data['geom'] = GEOSGeometry(incidentForm.data['geom'])
 
 		if incidentForm.is_valid():
 			incident = incidentForm.save()
-			addPointToUserAlerts(request, incident)
+			alertUsers(request, incident)
+			
+			messages.success(request, '<strong>Thank you!</strong><br>Your incident marker was successfully added.')			
+			return HttpResponseRedirect(reverse('mapApp:index', \
+				kwargs=({										\
+					"lat":str(incident.latlngList()[0]),		\
+					"lng":str(incident.latlngList()[1]),		\
+					"zoom":str(18)								\
+				})												\
+			)) 
 
-			messages.success(request, '<strong>Thank you!</strong><br>Your incident marker was successfully added.')
-			return HttpResponseRedirect(reverse('mapApp:index', kwargs=({"lat":str(incident.latlngList()[0]), "lng":str(incident.latlngList()[1]), "zoom":str(16)}))) 
-		
-		else:
-			# Form is not valid, display modal with highlighted errors 
+		else: # Show form errors 
 			return render(request, 'mapApp/index.html', indexContext(request, incidentForm=incidentForm))
 	
-	else:
+	else: # Redirect to index if not a post request
 		return HttpResponseRedirect(reverse('mapApp:index')) 
 
-def addPointToUserAlerts(request, incident):
-	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
-	usersToAlert = list(set([poly.user for poly in intersectingPolys])) # get list of distinct users to alert
+	def alertUsers(request, incident):
+		intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
+		usersToAlert = list(set([poly.user for poly in intersectingPolys])) # get list of distinct users to alert
 
-	if (incident.incident_type() == "Collision"):
-		action = 0
-	elif (incident.incident_type() == "Near miss"):
-		action = 1
-	else:
-		action = 2
+		# FIX THIS MAGIC
+		if (incident.incident_type() == "Collision"):
+			action = 0
+		elif (incident.incident_type() == "Near miss"):
+			action = 1
+		else:
+			action = 2
 
-	for user in usersToAlert:
-		AlertNotification(user=user, point=incident, action=action).save()
+		for user in usersToAlert:
+			AlertNotification(user=user, point=incident, action=action).save()
 
-	return
 
 @login_required
 def postAlertPolygon(request):
 	if request.method == 'POST':
 		geofenceForm = GeofenceForm(request.POST)
-		
-		# Convert string coords to valid geometry object
+
+		# Create valid attributes for user and geom fields 
 		geofenceForm.data = geofenceForm.data.copy()
-		geofenceForm.data['geom'] = GEOSGeometry(geofenceForm.data['geom'])
-		
 		geofenceForm.data['user'] = request.user.id
+		geofenceForm.data['geom'] = GEOSGeometry(geofenceForm.data['geom'])
 
 		if geofenceForm.is_valid():
+			# Save new model object, send success message to the user
 			geofenceForm.save()
-			messages.success(request, 'You will now recieve alerts for the area was traced.')
-		
-		else:
-			# Form is not valid, display modal with highlighted errors 
-			return render(request, 'mapApp/index.html', indexContext(request, geofenceForm=geofenceForm))
+			messages.success(request, 'You will now receive alerts for the area was traced.')
 
 	return HttpResponseRedirect(reverse('mapApp:index'))
-
 
 
 @administrator_required
 def getIncidents(request):
 	data = GeoJSONSerializer().serialize(Incident.objects.all(), indent=2, use_natural_keys=True)
-	
+
 	response = HttpResponse(data, content_type="application/json")
 	response['Content-Disposition'] = 'attachment; filename="bikemaps_incidents_%s.json' % time.strftime("%x_%H-%M")
 	return response
@@ -174,8 +167,14 @@ def readAlertPoint(request, alertID):
 	if (alert):
 		alert.is_read=True
 		alert.save()
-
-		return HttpResponseRedirect(reverse('mapApp:index', kwargs=({"lat":str(alert.point.latlngList()[0]), "lng":str(alert.point.latlngList()[1]), "zoom":str(18)}) ))
+		return HttpResponseRedirect(reverse('mapApp:index', \
+			kwargs=({										\
+				"lat":str(alert.point.latlngList()[0]), 	\
+				"lng":str(alert.point.latlngList()[1]), 	\
+				"zoom":str(18)								\
+			})												\
+		))
+	
 	else:
 		return HttpResponseRedirect(reverse('mapApp:index')) 
 
