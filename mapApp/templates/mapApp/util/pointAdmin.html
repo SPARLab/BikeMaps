@@ -17,37 +17,4 @@
         edit: 
             {featureGroup: accidentPoints}
     }));
-
-    /* DEFINE ACTIONS TRIGGERED BY EDITING A POINT */
-    map.on('draw:edited', function(e) {
-        var layers = e.layers;
-        layers.eachLayer(function (layer) {
-            // Fill out form
-            document.getElementById("editPk").value = layer.options.pk;
-            document.getElementById("editType").value = 'edit';
-            document.getElementById("editGeom").value = JSON.stringify(layer.toGeoJSON().geometry);
-            // Submit form
-            $( "#adminEditForm" ).submit();
-
-        });
-    });
-
-    /* DEFINE ACTIONS TRIGGERED BY DELETING A POINT */
-    map.on('draw:deleted', function(e) {
-        var layers = e.layers;
-        layers.eachLayer(function (layer) {
-            // Fill out form
-            document.getElementById("editPk").value = layer.options.pk;
-            document.getElementById("editType").value = 'delete';
-            // Submit form
-            $( "#adminEditForm" ).submit();
-
-        });
-    });
 </script>
-
-<!-- Form for passing data to view to edit polygon data -->
-<form id="adminEditForm" action="{% url 'mapApp:editPoint' %}" method="post">
-    {% csrf_token %}
-    {{ editForm.as_p}}
-</form>

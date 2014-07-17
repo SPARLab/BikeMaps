@@ -30,24 +30,19 @@
             marker: {
                 icon:bikeGreyIcon
             },
-            
-            {% if request.user.is_authenticated %}
-            polygon: {
-                allowIntersection: false
-            }
-            {% else %}
-            polygon: false
-            {% endif %}
+            polygon: 
+                {% if request.user.is_authenticated %}
+                { allowIntersection: false }
+                {% else %}
+                false
+                {% endif %}
         },
-
-        {% if request.user.is_authenticated %}
-        edit: {
-            featureGroup: alertAreas
-        }
-
-        {% else %}
-        edit: false
-        {% endif %}
+        edit: 
+            {% if request.user.is_authenticated %}
+            { featureGroup: alertAreas }
+            {% else %}
+            false
+            {% endif %}
     }));
 
 
@@ -76,26 +71,27 @@
 
     /* DEFINE ACTIONS TRIGGERED BY EDITING A POLYGON */
     map.on('draw:edited', function(e) {
-        var layers = e.layers;
-        // Fill out and submit form
-        layers.eachLayer(function (layer) {
-            document.getElementById("editPk").value += (layer.options.pk + ';');
-            document.getElementById("editGeom").value += (JSON.stringify(layer.toGeoJSON().geometry) + ";");
-        });
+        addEditsToForm(e);
         document.getElementById("editType").value = 'edit';
         $( "#editForm" ).submit();
     });
 
     /* DEFINE ACTIONS TRIGGERED BY DELETING A POLYGON */
     map.on('draw:deleted', function(e) {
-        var layers = e.layers;
-        // Fill out and submit form
-        layers.eachLayer(function (layer) {
-            document.getElementById("editPk").value += (layer.options.pk + ';');
-        });
+        addEditsToForm(e);
         document.getElementById("editType").value = 'delete';
         $( "#editForm" ).submit();
     });
+
+    function addEditsToForm(e){
+        var layers = e.layers;
+        // Fill out form
+        layers.eachLayer(function (layer) {
+            document.getElementById("editPk").value += (layer.options.pk + ';');
+            document.getElementById("editGeom").value += (JSON.stringify(layer.toGeoJSON().geometry) + ";");
+            document.getElementById("objType").value = layer.options.objType;
+        });
+    }
 </script>
 
 <!-- Form for passing data to view to edit polygon data -->

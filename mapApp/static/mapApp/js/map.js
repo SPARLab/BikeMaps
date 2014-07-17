@@ -207,7 +207,8 @@ function getPoint(latlng, date, type, pk) {
 	}
 	marker = L.marker(latlng, {
 		icon: icon,
-		pk:pk
+		pk:pk,
+		objType: 'point'
 	});
 
 	date = date.split(",");
@@ -223,7 +224,8 @@ function getPolygon(latlng, pk) {
 		color: '#3b9972',
 		weight: 3,
 		opacity: 1,
-		pk: pk	/*Mark the polygon with it's database id*/
+		pk: pk,	/*Mark the polygon with it's database id*/
+		objType: 'polygon'
 	}));
 };
 

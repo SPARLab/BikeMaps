@@ -139,3 +139,9 @@ class EditForm(forms.Form):
         required = False,
         widget = forms.HiddenInput(attrs={'id': 'editGeom'})
     )
+
+    objType = forms.CharField(
+        label = "objType",
+        required = False,
+        widget = forms.HiddenInput(attrs={'id': 'objType'})
+    )

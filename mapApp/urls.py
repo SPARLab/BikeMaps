@@ -28,5 +28,4 @@ urlpatterns = patterns('',
 
 	# Called when user edits or deletes an alert area
 	url(r'edit/$', views.editAlertArea, name='editAlertArea'),
-	url(r'adminEdit/$', views.editPoint, name='editPoint')
 )
