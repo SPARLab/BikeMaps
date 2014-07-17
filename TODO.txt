@@ -23,9 +23,6 @@ Lower priority
 * flagged comment alerts for admins
 
 BUGS
-
 * Moderate comments > delete button not working
 * 
 * 
-* 
-*  

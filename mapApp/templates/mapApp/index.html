@@ -114,6 +114,9 @@
     <!-- Add Leaflet.draw controls and actions to map -->
     {% include 'mapApp/util/draw.html' %}
 
+<!--     {% if request.user.is_superuser %
+    {% include 'mapApp/util/pointAdmin.html' %
+    {% endif % -->
     <!-- Show modals if there are from errors -->
     <script>
         {% if incidentForm.errors %}

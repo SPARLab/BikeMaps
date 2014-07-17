@@ -117,11 +117,11 @@ class EmailForm(forms.Form):
 
 
 # Used to send polygon info to view
-class EditAlertAreaForm(forms.Form):
+class EditForm(forms.Form):
     helper = FormHelper()
     helper.form_tag = False
 
-    editPk = forms.IntegerField(
+    editPk = forms.CharField(
         label = "editPk",
         required = True,
         widget = forms.HiddenInput(attrs={'id': 'editPk'})

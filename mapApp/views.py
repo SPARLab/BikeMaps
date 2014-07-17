@@ -10,7 +10,7 @@ from django.core.mail import send_mail
 
 from django.contrib.auth.models import User, Group
 from mapApp.models import Incident, Route, AlertArea, AlertNotification
-from mapApp.forms import IncidentForm, RouteForm, EmailForm, GeofenceForm, EditAlertAreaForm
+from mapApp.forms import IncidentForm, RouteForm, EmailForm, GeofenceForm, EditForm
 
 # Used for downloading data
 from spirit.utils.decorators import administrator_required
@@ -43,7 +43,7 @@ def indexContext(request, incidentForm=IncidentForm(), routeForm=RouteForm(), ge
 		"incidentForm": incidentForm,
 		"routeForm": routeForm,
 		"geofenceForm": geofenceForm,
-		"geofenceEditForm": EditAlertAreaForm()
+		"editForm": EditForm()
 	}
 
 
@@ -183,19 +183,46 @@ def readAlertPoint(request, alertID):
 @login_required
 def editAlertArea(request):
 	if(request.method == 'POST'):
-		editForm = EditAlertAreaForm(request.POST)
+		editForm = EditForm(request.POST)
 		
 		if editForm.is_valid():
 			editType = editForm.cleaned_data['editType']
-			polyEdited = get_object_or_404(AlertArea.objects.filter(user=request.user), pk=editForm.cleaned_data['editPk'])
+			pks = editForm.cleaned_data['editPk'].split(';')[:-1]
+			userAreas = AlertArea.objects.filter(user=request.user)
 
 			if(editType == 'edit'):
-				polyEdited.geom = GEOSGeometry(editForm.cleaned_data['editGeom'])	# edit the object geometry
-				polyEdited.save()
-				messages.success(request, 'Alert Area was edited')
+				newGeoms = editForm.cleaned_data['editGeom'].split(';')[:-1]
+				for pk, newGeom in zip(pks, newGeoms):
+					polyEdited = get_object_or_404(userAreas, pk=pk)
+					polyEdited.geom = GEOSGeometry(newGeom)	# edit the object geometry
+					polyEdited.save()
 		
 			elif (editType == 'delete'):
-				polyEdited.delete() 	# delete the object
-				messages.success(request, 'Alert Area was deleted')
+				for pk in pks:		
+					polyEdited = get_object_or_404(userAreas, pk=pk)
+					polyEdited.delete() 	# delete the object
+
+			message = str(len(pks)) + ' ' + editType + ('s' if len(pks)>1 else '') + ' successful'
+			messages.success(request, message)
+	return HttpResponseRedirect(reverse('mapApp:index'))
+
+
+@administrator_required
+def editPoint(request):
+	if(request.method == 'POST'):
+		editForm = EditForm(request.POST)
+		
+		if editForm.is_valid():
+			editType = editForm.cleaned_data['editType']
+			pointEdited = get_object_or_404(Incident.objects, pk=editForm.cleaned_data['editPk'])
+
+			if(editType == 'edit'):
+				pointEdited.geom = GEOSGeometry(editForm.cleaned_data['editGeom'])	# edit the object geometry
+				pointEdited.save()
+				messages.success(request, 'Points were edited')
+		
+			elif (editType == 'delete'):
+				pointEdited.delete() 	# delete the object
+				messages.success(request, 'Points were deleted')
 			
 	return HttpResponseRedirect(reverse('mapApp:index'))
