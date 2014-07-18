@@ -33,5 +33,7 @@ function toggleTooltips(t){
 
     $('.leaflet-control-layers-toggle').tipsy(t);           
 
-    $('.leaflet-control-geocoder').tipsy(t);         	
+    $('.leaflet-control-geocoder').tipsy(t);
+
+    $('.gps-button').tipsy(t);     	
 };

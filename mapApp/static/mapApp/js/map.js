@@ -30,11 +30,16 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		icon: "car",
 		color: "#20a5de",
 		size: "m"
-	});
+	}),
 	geocodeIcon = L.MakiMarkers.icon({
 		icon: "embassy",
 		color: "#CC2A01",
 		size: "l"
+	}),
+	locationIcon = L.MakiMarkers.icon({
+		icon: "star",
+		color: "#CC2A01",
+		size: "m"
 	});
 
 /* DATASETS */
@@ -148,6 +153,14 @@ function initialize(lat, lng, zoom) {
 			.addTo(map)
 			.openPopup();
 	};
+
+	/*ADD GPS BUTTON */
+	map.addControl(new L.Control.Gps({
+		// autoActive: true,
+		title: 'Show your detected location',
+		marker: new L.marker([0,0], {
+		icon: locationIcon})
+	}));
 
 	/* ADD CUSTOM HELP BUTTON */ 
 	L.easyButton('bottomright', 'fa-question-circle',

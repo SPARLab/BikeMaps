@@ -7,6 +7,7 @@ High priority
 >
 * Setup media root
 * Setup static root
+* Add beta tag?
 * Password protected dev release
 
 Lower priority
