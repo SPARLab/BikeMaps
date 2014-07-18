@@ -102,9 +102,11 @@
         var layers = e.layers;
         // Fill out form
         layers.eachLayer(function (layer) {
-            document.getElementById("editPk").value += (layer.options.pk + ';');
-            document.getElementById("editGeom").value += (JSON.stringify(layer.toGeoJSON().geometry) + ";");
-            document.getElementById("objType").value = layer.options.objType;
+            if(layer.options.pk){   
+                document.getElementById("editPk").value += (layer.options.pk + ';');
+                document.getElementById("editGeom").value += (JSON.stringify(layer.toGeoJSON().geometry) + ";");
+                document.getElementById("objType").value = layer.options.objType;
+            }
         });
     }
 </script>
