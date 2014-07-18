@@ -109,6 +109,11 @@ function initialize(lat, lng, zoom) {
 		locateUser();
 	}
 
+	/* ADD SCALE BAR */
+	L.control.scale({
+		position: 'bottomright'
+	}).addTo(map);
+
 	/* LAYER CONTROL */
 	var baseMaps = {
 			"Day": skobbler,
@@ -121,11 +126,11 @@ function initialize(lat, lng, zoom) {
 			"Bike Racks": racksCluster,
 			"Alert Areas": alertAreas,
 		};
-	L.control.layers(baseMaps, overlayMaps).addTo(map);
+	L.control.layers(baseMaps, overlayMaps, {position: 'topright'}).addTo(map);
 
 	/* GEOCODING SEARCH BAR CONTROL */
 	var geocoder = L.Control.geocoder({
-		position: "bottomright"
+		position: "topright"
 	}).addTo(map);
 
 	var geocodeMarker;
@@ -143,6 +148,12 @@ function initialize(lat, lng, zoom) {
 			.addTo(map)
 			.openPopup();
 	};
+
+	/* ADD CUSTOM HELP BUTTON */ 
+	L.easyButton('bottomright', 'fa-question-circle',
+             function(){toggleTooltips("show")},
+             'Get Help'
+    )
 	
 	/* GET GEOJSON STATIC LAYERS AND STORE AS LEAFLET FEATURE */
 	function initializeGeoJsonLayers(){

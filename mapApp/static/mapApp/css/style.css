@@ -122,13 +122,6 @@ div.line-mouse-marker {
 	z-index: 1;
 }
 
-#help .btn{
-	padding: 0px 8px;
-	border-radius: 50%;
-	border-width: 1px;
-	border-color: #2C3E50;
-}
-
 /* FORUM */
 .comment a{
 	color: #979797;

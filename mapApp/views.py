@@ -119,20 +119,20 @@ def postIncident(request):
 	else: # Redirect to index if not a post request
 		return HttpResponseRedirect(reverse('mapApp:index')) 
 
-	def alertUsers(request, incident):
-		intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
-		usersToAlert = list(set([poly.user for poly in intersectingPolys])) # get list of distinct users to alert
+def alertUsers(request, incident):
+	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
+	usersToAlert = list(set([poly.user for poly in intersectingPolys])) # get list of distinct users to alert
 
-		# FIX THIS MAGIC
-		if (incident.incident_type() == "Collision"):
-			action = 0
-		elif (incident.incident_type() == "Near miss"):
-			action = 1
-		else:
-			action = 2
+	# FIX THIS MAGIC
+	if (incident.incident_type() == "Collision"):
+		action = 0
+	elif (incident.incident_type() == "Near miss"):
+		action = 1
+	else:
+		action = 2
 
-		for user in usersToAlert:
-			AlertNotification(user=user, point=incident, action=action).save()
+	for user in usersToAlert:
+		AlertNotification(user=user, point=incident, action=action).save()
 
 
 @login_required
