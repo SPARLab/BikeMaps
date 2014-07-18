@@ -47,6 +47,9 @@
 
     // Add a point editing control for admins
     {% if request.user.is_superuser %}
+    L.drawLocal.edit.handlers.remove.tooltip.text = 'Click the object to remove';
+    L.drawLocal.edit.toolbar.buttons.removeDisabled = 'No objects to delete.';
+
     map.addControl(new L.Control.Draw({
         position: 'bottomright',
         draw: false,        
@@ -107,7 +110,7 @@
 </script>
 
 <!-- Form for passing data to view to edit polygon data -->
-<form id="editForm" action="{% url 'mapApp:editAlertArea' %}" method="post">
+<form id="editForm" action="{% url 'mapApp:editShape' %}" method="post">
     {% csrf_token %}
     {{ editForm.as_p}}
 </form>

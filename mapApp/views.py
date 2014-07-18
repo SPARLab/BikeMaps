@@ -181,7 +181,7 @@ def readAlertPoint(request, alertID):
 
 
 @login_required
-def editAlertArea(request):
+def editShape(request):
 	if(request.method == 'POST'):
 		editForm = EditForm(request.POST)
 		if editForm.is_valid():

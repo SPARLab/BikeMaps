@@ -1,7 +1,6 @@
 TO DO
 
 High priority
-* Admin point edit from map index
 * Email alerts weekly
 * Data backup
 * Fix contact email to work with spirit
@@ -11,10 +10,8 @@ High priority
 * Password protected dev release
 
 Lower priority
-* Comment moderating delete not working
 * Check compatabilities with internet explorer (even though it's the worst)
 * Option to report for different person
-* Social media buttons/links
 * Write up readme
 * Documentation for future devs
 * Day/Night point clusters or a timeslider
@@ -24,5 +21,5 @@ Lower priority
 
 BUGS
 * Moderate comments > delete button not working
-* 
+* Need to catch 404 when admin tries to delete icbc or police points
 * 
