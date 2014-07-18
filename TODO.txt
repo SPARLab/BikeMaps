@@ -21,5 +21,4 @@ Lower priority
 
 BUGS
 * Moderate comments > delete button not working
-* Need to catch 404 when admin tries to delete icbc or police points
 * 
