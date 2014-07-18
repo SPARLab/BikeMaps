@@ -24,10 +24,9 @@
   <script src="{% static 'tipsy/javascripts/jquery.tipsy.js' %}"></script>
   <link rel="stylesheet" href="{% static 'tipsy/stylesheets/tipsy.css' %}">
 
-  <!-- Load icon libraries -->
-  <script src="{% static 'leaflet/plugins/maki-markers/Leaflet.MakiMarkers.js' %}"></script>
+  <!-- Load icons -->
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-
+  
 </head>
 
 <body>
@@ -73,16 +72,19 @@
 
           <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Share </span><span class="glyphicon glyphicon-share"></span> <span class="caret"></a>
-              <ul class="dropdown-menu" role="menu">
-              <li><a href="#">TODO</a></li>           
-              <li><a href="https://www.facebook.com/sharer/sharer.php?u=bikemaps.org">
-                  <i class="fa fa-facebook-square"></i> Facebook</a></li>
+              <ul class="dropdown-menu" role="menu">          
+              <li><a href="https://www.facebook.com/sharer/sharer.php?u=bikemaps.org&t=BikeMaps.org%20is%20the%20coolest">
+                  <i class="fa fa-facebook"></i> Facebook</a></li>
               <li><a href="http://twitter.com/intent/tweet?text=Take%20a%20look%20at%20reported%20cycling%20incidents%20in%20your%20community%20here!%20&url=http%3A%2F%2Fbikemaps.org">
-                  <i class="fa fa-twitter-square"></i> Twitter</a></li>
-              <li><a href="#"><i class="fa fa-google-plus-square"></i> Google+</a></li>
-              <li><a href="#"><i class="fa fa-tumblr-square"></i> Tumblr</a></li>
-              <li><a href="#"><i class="fa fa-reddit-square"></i> Reddit</a></li>
-              <li><a href="#"><i class="fa fa-stumbleupon-circle"></i> StumbleUpon</a></li>
+                  <i class="fa fa-twitter"></i> Twitter</a></li>
+              <li><a href="https://plus.google.com/share?url=bikemaps.org">
+                  <i class="fa fa-google-plus"></i> Google+</a></li>
+              <li><a href="http://www.tumblr.com/share/link?url=bikemaps.org&name=BikeMaps.org&description=Take%20a%20look%20at%20reported%20cycling%20incidents%20in%20your%20community%20at%20BikeMaps.org#sthash.2MHzi8oM.dpuf">
+                  <i class="fa fa-tumblr"></i> Tumblr</a></li>
+              <li><a href="http://reddit.com/submit?url=bikemaps.org&title=BikeMaps.org#sthash.2MHzi8oM.dpuf">
+                  <i class="fa fa-reddit"></i> Reddit</a></li>
+              <li><a href="http://www.stumbleupon.com/submit?url=bikemaps.org&title=BikeMaps.org#sthash.2MHzi8oM.dpuf">
+                  <i class="fa fa-stumbleupon"></i> StumbleUpon</a></li>
             </ul>
           </li>          
         </ul>
