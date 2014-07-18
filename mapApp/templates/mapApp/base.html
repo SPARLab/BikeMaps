@@ -24,6 +24,10 @@
   <script src="{% static 'tipsy/javascripts/jquery.tipsy.js' %}"></script>
   <link rel="stylesheet" href="{% static 'tipsy/stylesheets/tipsy.css' %}">
 
+  <!-- Load icon libraries -->
+  <script src="{% static 'leaflet/plugins/maki-markers/Leaflet.MakiMarkers.js' %}"></script>
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -71,12 +75,11 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Share </span><span class="glyphicon glyphicon-share"></span> <span class="caret"></a>
               <ul class="dropdown-menu" role="menu">
               <li><a href="#">TODO</a></li>           
-              <li><a href="#">Facebook</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Tumbler</a></li>
-              <li><a href="#">Reddit</a></li>
-              <li><a href="#">4chan</a></li>
-              <li><a href="#">Whatever</a></li>           
+              <li><a href="#"><i class="fa fa-facebook-square"></i> Facebook</a></li>
+              <li><a href="#"><i class="fa fa-twitter-square"></i> Twitter</a></li>
+              <li><a href="#"><i class="fa fa-tumblr-square"></i> Tumblr</a></li>
+              <li><a href="#"><i class="fa fa-reddit-square"></i> Reddit</a></li>
+              <li><a href="#"><i class="fa fa-stumbleupon-circle"></i> Stumbleupon</a></li>
             </ul>
           </li>          
         </ul>
