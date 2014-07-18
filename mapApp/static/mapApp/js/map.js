@@ -39,7 +39,7 @@ var bikeRedIcon = L.MakiMarkers.icon({
 	locationIcon = L.MakiMarkers.icon({
 		icon: "star",
 		color: "#CC2A01",
-		size: "m"
+		size: "s"
 	});
 
 /* DATASETS */
@@ -79,6 +79,16 @@ var	accidentPoints = new L.MarkerClusterGroup({
 
 			return new L.DivIcon({ className: 'rack-cluster' + c, iconSize: size});
 		},
+	}),
+	
+	layerControl = L.control.layers({
+		},{
+			"Accident points": accidentPoints,
+			"Alert Areas": alertAreas,
+			"Bike Racks": racksCluster,
+			"Accident heat map": heatMap,
+		}, {
+			position: 'topright'
 	});
 
 
@@ -90,54 +100,78 @@ function initialize(lat, lng, zoom) {
 	/* TILE LAYER DEFINITIONS */
 	var stravaUrl = 'http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png',
 		stravaAttrib = 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
-		stravaHM = L.tileLayer(stravaUrl, {minZoom: 3, maxZoom: 17, opacity: 0.8, attribution: stravaAttrib}),
+		stravaHM = L.tileLayer(stravaUrl, {minZoom: 3, maxZoom: 17, opacity: 0.8, attribution: stravaAttrib});
+	layerControl.addOverlay(stravaHM, 'Cyclist density heatmap');
+
 
 		// Based on OSM data
-		skobblerUrl = 'http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/10/{z}/{x}/{y}.png@2x',
+	var	skobblerUrl = 'http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/10/{z}/{x}/{y}.png@2x',
 		skobblerAttrib = '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
-		skobbler = L.tileLayer(skobblerUrl, {minZoom: 2, attribution: skobblerAttrib}),
+		skobbler = L.tileLayer(skobblerUrl, {minZoom: 2, attribution: skobblerAttrib});
+	layerControl.addBaseLayer(skobbler, 'Day');
 
-		skobblerNightUrl = 'http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/2/{z}/{x}/{y}.png@2x',
+	var skobblerNightUrl = 'http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/2/{z}/{x}/{y}.png@2x',
 		skobblerNightAttrib = '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
 		skobblerNight = L.tileLayer(skobblerNightUrl, {minZoom: 2, attribution: skobblerNightAttrib});
-	
+	layerControl.addBaseLayer(skobblerNight, 'Night');
+
 	/* MAP INIT AND DEFAULT LAYERS */
 	map = L.map('map', {
 		center: [48, -100],
 		zoom: 4,
 		layers: [skobbler, accidentPoints, stravaHM, alertAreas],
 	});
-	if(zoom){
-		this.map.setView(L.latLng(lat,lng), zoom);
-	}
-	else{
-		locateUser();
-	}
+	
+	// Add all controls to the map
+	addControls();
 
-	/* ADD SCALE BAR */
-	L.control.scale({
-		position: 'bottomright'
-	}).addTo(map);
+	if(zoom) this.map.setView(L.latLng(lat,lng), zoom);
+	else locateUser();
 
+	map.on('locationerror', onLocationError);
+	map.on('locationfound', onLocationFound);
+};
+
+/* FIND AND RETURN THE USER'S LOCATION */
+function locateUser() {
+	this.map.locate({
+		setView: true,
+		maxZoom: 16
+	});
+};
+
+function onLocationError(e) {
+	alert(e.message);
+};
+
+function onLocationFound(e) {
+    var radius = e.accuracy / 2,
+
+	    marker = L.marker(e.latlng, {icon: locationIcon})
+	        .bindPopup("You are within " + radius + " meters from this point"),
+	    circle = L.circle(e.latlng, radius, {
+	      	color: "#" + locationIcon.options.color,
+			weight: 1,
+			opacity: 0.3,
+			clickable: false,
+			fillOpacity: 0.1
+	    });
+    
+    locationGroup = L.layerGroup([marker, circle]);
+    layerControl.addOverlay(locationGroup, "Detected location");
+    locationGroup.addTo(map);
+};
+
+function addControls(){
 	/* LAYER CONTROL */
-	var baseMaps = {
-			"Day": skobbler,
-			"Night": skobblerNight,
-		},
-		overlayMaps = {
-			"Accident points": accidentPoints,
-			"Accident heat map": heatMap,
-			"Strava heat map": stravaHM,
-			"Bike Racks": racksCluster,
-			"Alert Areas": alertAreas,
-		};
-	L.control.layers(baseMaps, overlayMaps, {position: 'topright'}).addTo(map);
+	layerControl.addTo(map);
+
 
 	/* GEOCODING SEARCH BAR CONTROL */
 	var geocoder = L.Control.geocoder({
 		position: "topright"
 	}).addTo(map);
-
+	
 	var geocodeMarker;
 	geocoder.markGeocode = function(result){
 		map.fitBounds(result.bbox);
@@ -153,70 +187,70 @@ function initialize(lat, lng, zoom) {
 			.addTo(map)
 			.openPopup();
 	};
+	
 
-	/*ADD GPS BUTTON */
-	map.addControl(new L.Control.Gps({
-		// autoActive: true,
-		title: 'Show your detected location',
-		marker: new L.marker([0,0], {
-		icon: locationIcon})
-	}));
+	/* ADD SCALE BAR */
+	L.control.scale({
+		position: 'bottomright'
+	}).addTo(map);
+
 
 	/* ADD CUSTOM HELP BUTTON */ 
 	L.easyButton('bottomright', 'fa-question-circle',
-             function(){toggleTooltips("show")},
-             'Get Help'
-    )
-	
-	/* GET GEOJSON STATIC LAYERS AND STORE AS LEAFLET FEATURE */
-	function initializeGeoJsonLayers(){
-		var policePoints = new L.geoJson(policeData, {
-			pointToLayer: function(feature, latlng) {
-				heatMap.addLatLng(latlng);
+	         function(){toggleTooltips("show")},
+	         'Get Help'
+	);
 
-				return L.marker(latlng, {
-					icon: policeIcon
-				});
-			},
-			onEachFeature: function(feature, layer) {
-				var date = feature.properties.ACC_DATE.split("/");
-				date = getMonthFromInt(parseInt(date[1])) + ' ' + date[2] + ', ' + date[0]; 	// Month dd, YYYY
-				layer.bindPopup('<strong>Source:</strong> Victoria Police Dept.<br><strong>Date:</strong> ' + date);
-			}
-		}).addTo(accidentPoints),
 
-		icbcPoints = new L.geoJson(icbcData, {
-			pointToLayer: function(feature, latlng) {
-				heatMap.addLatLng(latlng);
+	/*ADD GPS BUTTON */
+	// map.addControl(new L.Control.Gps({
+	// 	// autoActive: true,
+	// 	title: 'Show your detected location',
+	// 	marker: new L.marker([0,0], {
+	// 	icon: locationIcon})
+	// }));
+};
 
-				return L.marker(latlng, {
-					icon: icbcIcon
-				});
-			},
-			onEachFeature: function(feature, layer) {
-				var date = toTitleCase(feature.properties.Month) + " " + feature.properties.Year;
-				layer.bindPopup('<strong>Source:</strong> ICBC<br><strong>Date: </strong>' + date);
-			}
-		}).addTo(accidentPoints),
+/* GET GEOJSON STATIC LAYERS AND STORE AS LEAFLET FEATURE */
+function initializeGeoJsonLayers(){
+	var policePoints = new L.geoJson(policeData, {
+		pointToLayer: function(feature, latlng) {
+			heatMap.addLatLng(latlng);
 
-		bikeRacksVictoria = new L.geoJson(bikeRacks, {
-			pointToLayer: function(feature, latlng) {
-				return L.marker(latlng);
-			},
-			onEachFeature: function(feature, layer) {
-				layer.bindPopup('Bike rack');
-			}
-		}).addTo(racksCluster);
-	};
-	
-	/* FIND AND RETURN THE USER'S LOCATION */
-	function locateUser() {
-		this.map.locate({
-			setView: true,
-			maxZoom: 16
-		});
-	};
-}
+			return L.marker(latlng, {
+				icon: policeIcon
+			});
+		},
+		onEachFeature: function(feature, layer) {
+			var date = feature.properties.ACC_DATE.split("/");
+			date = getMonthFromInt(parseInt(date[1])) + ' ' + date[2] + ', ' + date[0]; 	// Month dd, YYYY
+			layer.bindPopup('<strong>Source:</strong> Victoria Police Dept.<br><strong>Date:</strong> ' + date);
+		}
+	}).addTo(accidentPoints),
+
+	icbcPoints = new L.geoJson(icbcData, {
+		pointToLayer: function(feature, latlng) {
+			heatMap.addLatLng(latlng);
+
+			return L.marker(latlng, {
+				icon: icbcIcon
+			});
+		},
+		onEachFeature: function(feature, layer) {
+			var date = toTitleCase(feature.properties.Month) + " " + feature.properties.Year;
+			layer.bindPopup('<strong>Source:</strong> ICBC<br><strong>Date: </strong>' + date);
+		}
+	}).addTo(accidentPoints),
+
+	bikeRacksVictoria = new L.geoJson(bikeRacks, {
+		pointToLayer: function(feature, latlng) {
+			return L.marker(latlng);
+		},
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup('Bike rack');
+		}
+	}).addTo(racksCluster);
+};
 
 // Purpose: Add a given latlng poing with the given information to the map. 
 // 		Add pk for easy lookup of marker for admin tasks
@@ -246,8 +280,9 @@ function getPoint(latlng, date, type, pk) {
 function getPolygon(latlng, pk) {
 	alertAreas.addLayer(L.polygon(latlng, {
 		color: '#3b9972',
-		weight: 3,
-		opacity: 1,
+		weight: 2,
+		opacity: 0.6,
+		fillOpacity:0.1,
 		pk: pk,	/*Mark the polygon with it's database id*/
 		objType: 'polygon'
 	}));
