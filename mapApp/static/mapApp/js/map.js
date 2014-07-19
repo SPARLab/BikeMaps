@@ -103,7 +103,6 @@ function initialize(lat, lng, zoom) {
 		stravaHM = L.tileLayer(stravaUrl, {minZoom: 3, maxZoom: 17, opacity: 0.8, attribution: stravaAttrib});
 	layerControl.addOverlay(stravaHM, 'Cyclist density heatmap');
 
-
 		// Based on OSM data
 	var	skobblerUrl = 'http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/10/{z}/{x}/{y}.png@2x',
 		skobblerAttrib = '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
@@ -136,7 +135,9 @@ function initialize(lat, lng, zoom) {
 function locateUser() {
 	this.map.locate({
 		setView: true,
-		maxZoom: 16
+		maxZoom: 16,
+		// watch: true,
+		enableHighAccuracy: true
 	});
 };
 
@@ -145,6 +146,8 @@ function onLocationError(e) {
 };
 
 function onLocationFound(e) {
+	// console.log('location found');
+    // if(locationGroup) layerControl.removeLayer(locationGroup);
     var radius = e.accuracy / 2,
 
 	    marker = L.marker(e.latlng, {icon: locationIcon})
@@ -156,7 +159,7 @@ function onLocationFound(e) {
 			clickable: false,
 			fillOpacity: 0.1
 	    });
-    
+
     locationGroup = L.layerGroup([marker, circle]);
     layerControl.addOverlay(locationGroup, "Detected location");
     locationGroup.addTo(map);
