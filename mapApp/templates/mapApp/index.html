@@ -113,8 +113,12 @@
         );
     </script>
 
-    <!-- Add Leaflet.draw controls and actions to map -->
+    <!-- Add Leaflet.draw controls and actions to map for desktop browsers (not working for touch devices) -->
+    {% if not request.mobile %}
     {% include 'mapApp/util/draw.html' %}
+    {% endif %}
+
+    <!-- TODO add mobile controls to record paths or take pictures etc. -->
 
     <!-- Show modals if there are from errors -->
     <script>

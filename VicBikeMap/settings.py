@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'djconfig',
 
     # mapApp requirements
+    'minidetector',
     'django.contrib.gis',
     'crispy_forms',
     'mapApp'
@@ -58,7 +59,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'minidetector.Middleware'
 )
 
 ROOT_URLCONF = 'VicBikeMap.urls'
