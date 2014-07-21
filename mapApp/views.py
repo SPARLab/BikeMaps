@@ -69,7 +69,11 @@ def contact(request):
 			if cc_myself:
 				recipients.append(sender)
 
-			send_mail(subject, message, sender, recipients)
+			try:
+				send_mail(subject, message, sender, recipients)
+			except BadHeaderError:
+				messages.error(request, '<strong>Invalid Header.</strong> Illegal characters found.')
+
 			messages.success(request, '<strong>Thank you!</strong><br>We\'ll do our best to get back to you.')
 			emailForm = EmailForm() # Clear the form
 
@@ -121,9 +125,11 @@ def postIncident(request):
 
 def alertUsers(request, incident):
 	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
-	usersToAlert = list(set([poly.user for poly in intersectingPolys])) # get list of distinct users to alert
+	usersToAlert = set([poly.user for poly in intersectingPolys if poly.emailWeekly]) # get list of distinct users to alert
+	usersToNotEmail = list(set([poly.user for poly in intersectingPolys if not poly.emailWeekly]) - usersToAlert) # Email if conflict between two polygons receive email
+	usersToAlert = list(usersToAlert)
 
-	# FIX THIS MAGIC
+	# TODO FIX THIS MAGIC
 	if (incident.incident_type() == "Collision"):
 		action = 0
 	elif (incident.incident_type() == "Near miss"):
@@ -133,6 +139,9 @@ def alertUsers(request, incident):
 
 	for user in usersToAlert:
 		AlertNotification(user=user, point=incident, action=action).save()
+
+	for user in usersToNotEmail:
+		AlertNotification(user=user, point=incident, action=action, emailed=True).save()
 
 
 @login_required

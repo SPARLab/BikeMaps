@@ -47,7 +47,8 @@ INSTALLED_APPS = (
     'djconfig',
 
     # mapApp requirements
-    'minidetector',
+    'minidetector', # Mobile detector
+    'django_cron', # Cron tasks
     'django.contrib.gis',
     'crispy_forms',
     'mapApp'
@@ -128,8 +129,13 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'bikemaps.org@gmail.com'
-EMAIL_HOST_PASSWORD = 'secret'
+EMAIL_HOST_PASSWORD = 'sparlabbalraps'
 
 SERIALIZATION_MODULES = {
     'geojson' : 'djgeojson.serializers'
 }
+
+CRON_CLASSES = [
+    "mapApp.cron.UserAlertEmails",
+    # ...
+]
