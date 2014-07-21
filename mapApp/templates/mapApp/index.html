@@ -95,6 +95,25 @@
 
     <!-- JS to control message display and feature creation -->
     <script>
+        // Show modals if there are from errors
+        {% if incidentForm.errors %}
+        $(window).load(function(){
+            $('#incidentForm').modal('show');
+        });
+        {% endif %}
+
+        {% if routeForm.errors %}
+        $(window).load(function(){
+            $('#routeForm').modal('show');
+        });
+        {% endif %}
+
+        {% if geofenceForm.errors %}
+        $(window).load(function(){
+            $('#geofenceForm').modal('show');
+        });
+        {% endif %}
+        
         // Load user points from the database
         {% for incident in incidents %}
             getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}", {{ incident.pk }} );
@@ -119,25 +138,5 @@
     {% endif %}
 
     <!-- TODO add mobile controls to record paths or take pictures etc. -->
-
-    <!-- Show modals if there are from errors -->
-    <script>
-        {% if incidentForm.errors %}
-        $(window).load(function(){
-            $('#incidentForm').modal('show');
-        });
-        {% endif %}
-
-        {% if routeForm.errors %}
-        $(window).load(function(){
-            $('#routeForm').modal('show');
-        });
-        {% endif %}
-
-        {% if geofenceForm.errors %}
-        $(window).load(function(){
-            $('#geofenceForm').modal('show');
-        });
-        {% endif %}
-    </script>
+    
 {% endblock %}
