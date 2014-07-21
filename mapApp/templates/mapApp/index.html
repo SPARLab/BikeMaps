@@ -96,25 +96,24 @@
     <!-- JS to control message display and feature creation -->
     <script>
         // Show modals if there are from errors
-         $(document).ready(function(){
-            {% if incidentForm.errors %}
-            $(window).load(function(){
-                $('#incidentForm').modal('show');
-            });
-            {% endif %}
-
-            {% if routeForm.errors %}
-            $(window).load(function(){
-                $('#routeForm').modal('show');
-            });
-            {% endif %}
-
-            {% if geofenceForm.errors %}
-            $(window).load(function(){
-                $('#geofenceForm').modal('show');
-            });
-            {% endif %}
+        {% if incidentForm.errors %}
+        $(window).load(function(){
+            $('#incidentForm').modal('show');
         });
+        {% endif %}
+
+        {% if routeForm.errors %}
+        $(window).load(function(){
+            $('#routeForm').modal('show');
+        });
+        {% endif %}
+
+        {% if geofenceForm.errors %}
+        $(window).load(function(){
+            $('#geofenceForm').modal('show');
+        });
+        {% endif %}
+        
         
         // Load user points from the database
         {% for incident in incidents %}
@@ -125,6 +124,7 @@
         {% for polygon in geofences %}
             getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} ); 
         {% endfor %}
+
 
         // Create the map (call to map.js)
         initialize(

@@ -1,7 +1,7 @@
 // TOOLTIP POPUPS FOR INDEX
 
 // Tool tip definitions. Uses title attribut of html tag.
- $(document).ready(function(){
+$(document).ready(function(){
  	// layer control
 	$('.leaflet-control-layers-toggle').tipsy({gravity:'e', trigger: 'manual', title: function(){ return "Layer control"}, fade: true});
 	// search control
@@ -16,24 +16,24 @@
 	$('.leaflet-left .leaflet-control a').tipsy({gravity:'w', delayIn: 400, fade: true});
 	
 	$('#map').click(function(){toggleTooltips("hide")});
+
+	// Used to toggle all tooltips on or off
+	function toggleTooltips(t){
+	    $('.leaflet-control-zoom a').tipsy(t);
+	    $('.leaflet-control-zoom-out').tipsy(t);
+
+	    $('.leaflet-draw-draw-marker').tipsy(t);
+	    $('.leaflet-draw-draw-polyline').tipsy(t);
+	    $('.leaflet-draw-draw-polygon').tipsy(t);
+	  
+	    $('.leaflet-draw-edit-remove').tipsy(t);
+	    $('.leaflet-draw-edit-edit').tipsy(t);
+		$('.leaflet-right .leaflet-draw-edit-remove').tipsy(t);
+
+	    $('.leaflet-control-layers-toggle').tipsy(t);           
+
+	    $('.leaflet-control-geocoder').tipsy(t);
+
+	    $('.gps-button').tipsy(t);     	
+	};
 });
-
-// Used to toggle all tooltips on or off
-function toggleTooltips(t){
-    $('.leaflet-control-zoom a').tipsy(t);
-    $('.leaflet-control-zoom-out').tipsy(t);
-
-    $('.leaflet-draw-draw-marker').tipsy(t);
-    $('.leaflet-draw-draw-polyline').tipsy(t);
-    $('.leaflet-draw-draw-polygon').tipsy(t);
-  
-    $('.leaflet-draw-edit-remove').tipsy(t);
-    $('.leaflet-draw-edit-edit').tipsy(t);
-	$('.leaflet-right .leaflet-draw-edit-remove').tipsy(t);
-
-    $('.leaflet-control-layers-toggle').tipsy(t);           
-
-    $('.leaflet-control-geocoder').tipsy(t);
-
-    $('.gps-button').tipsy(t);     	
-};

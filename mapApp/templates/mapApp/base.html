@@ -139,8 +139,10 @@
   
   <!-- Fade out message -->
   <script>
-    $(window).load(function(){
-      setTimeout(function(){ $('.alert').fadeOut() }, 7000);
+    $(document).ready(function(){
+      $(window).load(function(){
+        setTimeout(function(){ $('.alert').fadeOut() }, 7000);
+      });
     });
   </script>
 </body>
