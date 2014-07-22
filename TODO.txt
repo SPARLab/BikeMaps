@@ -1,8 +1,9 @@
 TO DO
 
 High priority
-* Email alerts weekly
 * Data backup
+* Disengage geofencing for now
+* Terms and conditions checkbox on form
 * Fix contact email to work with spirit
 >
 * Setup media root
@@ -11,6 +12,8 @@ High priority
 * Password protected dev release
 
 Lower priority
+* Email alerts weekly
+* Smaller sponsor logos
 * Check compatabilities with internet explorer (even though it's the worst)
 * Option to report for different person
 * Write up readme

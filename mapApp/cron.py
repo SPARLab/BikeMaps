@@ -9,8 +9,8 @@ from mapApp.models import AlertNotification
 
 
 class UserAlertEmails(CronJobBase):
-    RUN_EVERY_MINS = 1 # every 2 hours
-    # RETRY_AFTER_FAILURE_MINS = 5
+    RUN_EVERY_MINS = 120 # every 2 hours
+    RETRY_AFTER_FAILURE_MINS = 5
 
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS, retry_after_failure_mins=RETRY_AFTER_FAILURE_MINS)
     code = 'mapApp.cron.UserAlertEmails'    # a unique code
@@ -23,10 +23,10 @@ class UserAlertEmails(CronJobBase):
 			alertPoints = alertPolys.filter(user=user)
 
 			subject = "Weekly alerts update"
-			message = "blah blah blah"
+			message = "blah blah blah - insert some message about alertPoints here."
 			sender = "bikemaps.org@gmail.com"
 			recipient = [user.email]
 			send_mail(subject, message, sender, recipient)
 
 			# if success:
-			#	alertPoints.emailed = True;
+			alertPoints.update(emailed=True)
