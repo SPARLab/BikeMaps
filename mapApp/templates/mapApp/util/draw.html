@@ -1,5 +1,6 @@
 <script>
-	/* DRAWING CONTROL TOOLTIPS */
+
+    /* DRAWING CONTROL TOOLTIPS */
     L.drawLocal.draw.toolbar.buttons.marker = 'Add an incident marker.';
     L.drawLocal.draw.handlers.marker.tooltip.start = 'Place me where the incident occurred.';
     
@@ -20,7 +21,7 @@
     L.drawLocal.edit.toolbar.buttons.editDisabled = 'No alert areas to edit.';
     L.drawLocal.edit.toolbar.buttons.removeDisabled = 'No alert areas to delete.';
     
-
+    {% with DISABLE_GEOFENCES=True %}
     /* ADD THE CONTROL TO LEAFLET MAP */
     map.addControl(new L.Control.Draw({
         draw: {
@@ -31,19 +32,20 @@
                 icon:bikeGreyIcon
             },
             polygon: 
-                {% if request.user.is_authenticated %}
+                {% if request.user.is_authenticated and not DISABLE_GEOFENCES %}
                 { allowIntersection: false }
                 {% else %}
                 false
                 {% endif %}
         },
         edit: 
-            {% if request.user.is_authenticated %}
+            {% if request.user.is_authenticated and not DISABLE_GEOFENCES %}
             { featureGroup: alertAreas }
             {% else %}
             false
             {% endif %}
     }));
+    {% endwith %}
 
     // Add a point editing control for admins
     {% if request.user.is_superuser %}
