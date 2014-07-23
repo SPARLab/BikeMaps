@@ -1,13 +1,9 @@
 var DISABLE_GEOFENCES = true;
 
-// Leaflet map code and functions
-
 /* GLOBAL VARIABLES */
-var map; //global map object
-	// Dynamically clustered point data layer
-	// accidentPoints = new L.LayerGroup({
+var map;
 
-/* ICON DEFINITIONS */
+// Icon definitions
 var bikeRedIcon = L.MakiMarkers.icon({
 		icon: "bicycle",
 		color: "#d9534f",
@@ -44,9 +40,9 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		size: "s"
 	});
 
-/* DATASETS */
-	// Cluster group for all accident data
-var	accidentPoints = new L.MarkerClusterGroup({
+// Layer datasets
+// Cluster group for all accident data
+var accidentPoints = new L.MarkerClusterGroup({
 		maxClusterRadius: 70,
 		polygonOptions: {
 			color: '#2c3e50',
@@ -73,26 +69,36 @@ var	accidentPoints = new L.MarkerClusterGroup({
 			var c = ' rack-cluster-'
 			if (cluster.getChildCount() > 1) {
 				c += 'medium';
-				size = new L.Point(10,10);
+				size = new L.Point(10, 10);
 			} else {
 				c += 'small';
-				size = new L.Point(5,5);
+				size = new L.Point(5, 5);
 			}
 
-			return new L.DivIcon({ className: 'rack-cluster' + c, iconSize: size});
+			return new L.DivIcon({
+				className: 'rack-cluster' + c,
+				iconSize: size
+			});
 		},
 	}),
 
 	// Tile layers
-	skobbler = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/10/{z}/{x}/{y}.png@2x', 
-		{minZoom: 2, attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'}),
-	
-	skobblerNight = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/2/{z}/{x}/{y}.png@2x', 
-		{minZoom: 2, attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'}),
+	skobbler = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/10/{z}/{x}/{y}.png@2x', {
+		minZoom: 2,
+		attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
+	}),
 
-	stravaHM = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', 
-		{minZoom: 3, maxZoom: 17, opacity: 0.8, attribution: 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>'});
+	skobblerNight = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/2/{z}/{x}/{y}.png@2x', {
+		minZoom: 2,
+		attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
+	}),
 
+	stravaHM = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
+		minZoom: 3,
+		maxZoom: 17,
+		opacity: 0.8,
+		attribution: 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>'
+	});
 
 /* Create the map with a tile layer and set global variable map */
 function initialize(mobile) {
@@ -107,89 +113,86 @@ function initialize(mobile) {
 		zoom: 4,
 		layers: [skobbler, stravaHM, accidentPoints, alertAreas],
 	});
-	
+
 	// Add all controls to the map
 	addControls(mobile);
-	
 
-	/* GET GEOJSON STATIC LAYERS AND STORE AS LEAFLET FEATURE */
-	function initializeGeoJsonLayers(){
+	function initializeGeoJsonLayers() {
 		var policePoints = new L.geoJson(policeData, {
-			pointToLayer: function(feature, latlng) {
-				heatMap.addLatLng(latlng);
+				pointToLayer: function(feature, latlng) {
+					heatMap.addLatLng(latlng);
 
-				return L.marker(latlng, {
-					icon: policeIcon
-				});
-			},
-			onEachFeature: function(feature, layer) {
-				var date = feature.properties.ACC_DATE.split("/");
-				date = getMonthFromInt(parseInt(date[1])) + ' ' + date[2] + ', ' + date[0]; 	// Month dd, YYYY
-				layer.bindPopup('<strong>Source:</strong> Victoria Police Dept.<br><strong>Date:</strong> ' + date);
-			}
-		}).addTo(accidentPoints),
+					return L.marker(latlng, {
+						icon: policeIcon
+					});
+				},
+				onEachFeature: function(feature, layer) {
+					var date = feature.properties.ACC_DATE.split("/");
+					date = getMonthFromInt(parseInt(date[1])) + ' ' + date[2] + ', ' + date[0]; // Month dd, YYYY
+					layer.bindPopup('<strong>Source:</strong> Victoria Police Dept.<br><strong>Date:</strong> ' + date);
+				}
+			}).addTo(accidentPoints),
 
-		icbcPoints = new L.geoJson(icbcData, {
-			pointToLayer: function(feature, latlng) {
-				heatMap.addLatLng(latlng);
+			icbcPoints = new L.geoJson(icbcData, {
+				pointToLayer: function(feature, latlng) {
+					heatMap.addLatLng(latlng);
 
-				return L.marker(latlng, {
-					icon: icbcIcon
-				});
-			},
-			onEachFeature: function(feature, layer) {
-				var date = toTitleCase(feature.properties.Month) + " " + feature.properties.Year;
-				layer.bindPopup('<strong>Source:</strong> ICBC<br><strong>Date: </strong>' + date);
-			}
-		}).addTo(accidentPoints),
+					return L.marker(latlng, {
+						icon: icbcIcon
+					});
+				},
+				onEachFeature: function(feature, layer) {
+					var date = toTitleCase(feature.properties.Month) + ", " + feature.properties.Year;
+					layer.bindPopup('<strong>Source:</strong> ICBC<br><strong>Date: </strong>' + date);
+				}
+			}).addTo(accidentPoints),
 
-		bikeRacksVictoria = new L.geoJson(bikeRacks, {
-			pointToLayer: function(feature, latlng) {
-				return L.marker(latlng);
-			},
-			onEachFeature: function(feature, layer) {
-				layer.bindPopup('Bike rack');
-			}
-		}).addTo(racksCluster);
+			bikeRacksVictoria = new L.geoJson(bikeRacks, {
+				pointToLayer: function(feature, latlng) {
+					return L.marker(latlng);
+				},
+				onEachFeature: function(feature, layer) {
+					layer.bindPopup('Bike rack');
+				}
+			}).addTo(racksCluster);
 	};
-	
-	/* ADD ALL CONTROLS TO THE MAP */
-	function addControls(mobile){
+
+	function addControls(mobile) {
 		/* LAYER CONTROL */
-		layerControl = L.control.layers([],[],{collapsed: mobile});
+		layerControl = L.control.layers([], [], {
+			collapsed: mobile
+		});
 
 		// Add layers
 		layerControl.addBaseLayer(skobbler, 'Day');
 		layerControl.addBaseLayer(skobblerNight, 'Night');
-		layerControl.addOverlay(stravaHM, 'Cyclist density heatmap');
-		layerControl.addOverlay(accidentPoints, 
-			'Incident points<br>' + 
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' 
-				+ '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png"> <small>User collision</small><br>' + 
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' 
-			+ '-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png"> <small>User near miss</small><br>' +
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' 
-			+ '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png"> <small>Police reported cyclist incident</small><br>' +
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' 
-			+ '-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png"> <small>Cyclist incident insurance claim location</small>'
+		layerControl.addOverlay(stravaHM, 'Cyclist density heatmap<br>' +
+			'<small id="strava-gradient">less <div class="pull-right">more</div></small>');
+		layerControl.addOverlay(accidentPoints,
+			'Incident points<br><div class="marker-group">' +
+			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png"> <small>User collision</small><br>' +
+			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png"> <small>User near miss</small><br>' +
+			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png"> <small>Police reported cyclist incident</small><br>' +
+			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png"> <small>Cyclist incident insurance claim location</small>' +
+			'</div>'
 
-			);
-		if(!DISABLE_GEOFENCES){
+		);
+		if (!DISABLE_GEOFENCES) {
 			layerControl.addOverlay(alertAreas, "Alert Areas");
 		}
 		layerControl.addOverlay(racksCluster, "Bike Racks");
-		layerControl.addOverlay(heatMap, "Accident heat map");
+		layerControl.addOverlay(heatMap, 'Incident heatmap<br>' +
+			'<small id="rainbow-gradient">less <div class="pull-right">more</div></small>');
 
 		layerControl.addTo(map);
-
 
 		/* GEOCODING SEARCH BAR CONTROL */
 		var geocoder = L.Control.geocoder({
 			position: "topright"
 		}).addTo(map);
-		
+
 		var geocodeMarker;
-		geocoder.markGeocode = function(result){
+		geocoder.markGeocode = function(result) {
 			map.fitBounds(result.bbox);
 
 			if (geocodeMarker) {
@@ -203,20 +206,19 @@ function initialize(mobile) {
 				.addTo(map)
 				.openPopup();
 		};
-		
 
 		/* ADD SCALE BAR */
 		L.control.scale({
 			position: 'bottomright'
 		}).addTo(map);
 
-
-		/* ADD CUSTOM HELP BUTTON */ 
+		/* ADD CUSTOM HELP BUTTON */
 		L.easyButton('bottomright', 'fa-question-circle',
-		         function(){toggleTooltips("show")},
-		         'Get Help'
+			function() {
+				toggleTooltips("show")
+			},
+			'Get Help'
 		);
-
 
 		/*ADD GPS BUTTON */
 		// map.addControl(new L.Control.Gps({
@@ -228,20 +230,19 @@ function initialize(mobile) {
 	};
 };
 
-
-function setView(lat,lng,zoom) {
-	if(zoom){
-        this.map.setView(L.latLng(lat, lng), zoom);
-        locateUser(setView=false);
+// Purpose: Locate the user and add their location to the map. 
+// 		Given lat, lng, and zoom, go to that point, else to user location
+function setView(lat, lng, zoom) {
+	if (zoom) {
+		this.map.setView(L.latLng(lat, lng), zoom);
+		locateUser(setView = false);
+	} else {
+		locateUser(setView = true);
 	}
-    else {
-        locateUser(setView=true);
-    }
 
 	// Define event actions for finding the user's location
 	map.on('locationerror', onLocationError);
 	map.on('locationfound', onLocationFound);
-	
 
 	/* FIND AND RETURN THE USER'S LOCATION */
 	function locateUser(setView) {
@@ -253,35 +254,33 @@ function setView(lat,lng,zoom) {
 		});
 	};
 
-
 	function onLocationError(e) {
 		alert(e.message);
 	};
 
-
 	function onLocationFound(e) {
 		// console.log('location found');
-	    // if(locationGroup) layerControl.removeLayer(locationGroup);
-	    var radius = e.accuracy / 2,
+		// if(locationGroup) layerControl.removeLayer(locationGroup);
+		var radius = e.accuracy / 2,
 
-		    marker = L.marker(e.latlng, {icon: locationIcon})
-		        .bindPopup("You are within " + radius + " meters of this point"),
-		    circle = L.circle(e.latlng, radius, {
-		      	color: "#" + locationIcon.options.color,
+			marker = L.marker(e.latlng, {
+				icon: locationIcon
+			})
+			.bindPopup("You are within " + radius + " meters of this point"),
+			circle = L.circle(e.latlng, radius, {
+				color: "#" + locationIcon.options.color,
 				weight: 1,
 				opacity: 0.3,
 				clickable: false,
 				fillOpacity: 0.1
-		    });
+			});
 
-	    locationGroup = L.layerGroup([marker, circle]);
-	    layerControl.addOverlay(locationGroup, 'Detected location<br>' + 
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' 
-				+ '-' + locationIcon.options.icon + '+' + locationIcon.options.color + '.png"> <small>You are here</small>');
-	    locationGroup.addTo(map);
+		locationGroup = L.layerGroup([marker, circle]);
+		layerControl.addOverlay(locationGroup, 'Detected location<br><div class="marker-group">' +
+			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + locationIcon.options.icon + '+' + locationIcon.options.color + '.png"> <small>You are here</small></div>');
+		locationGroup.addTo(map);
 	};
 };
-
 
 // Purpose: Add a given latlng poing with the given information to the map. 
 // 		Add pk for easy lookup of marker for admin tasks
@@ -318,7 +317,6 @@ function getPolygon(latlng, pk) {
 		objType: 'polygon'
 	}));
 };
-
 
 // Purpose: Initializes the Pie chart cluster icons by getting the needed attributes from each cluster
 //		and passing them to the pieChart function
