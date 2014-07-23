@@ -183,26 +183,17 @@ div.line-mouse-marker {
 }
 
 /* Leaflet legend on map */
-.legend {
-    line-height: 30px;
-    color: #555;
-    overflow: hidden;
-}
-.legend img {
-    width: 20px;
+.legend-marker {
+	width: 20px;
     height: 50px;
     float: left;
     margin-right: 8px;
     opacity: 0.8;
     background-size: 20px;
     margin-bottom: -20px;
+    margin-left: 18px;
 }
 
-.legend-info {
-    padding: 6px 8px;
-	/*font: 14px/16px Arial, Helvetica, sans-serif;*/
-    background: white;
-    background: rgba(255,255,255,0.8);
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    border-radius: 5px;
+.leaflet-control-layers-list {
+	line-height: 30px;
 }

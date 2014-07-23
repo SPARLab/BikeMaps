@@ -81,15 +81,7 @@ var	accidentPoints = new L.MarkerClusterGroup({
 		},
 	}),
 	
-	layerControl = L.control.layers({
-		},{
-			"Accident points": accidentPoints,
-			"Alert Areas": alertAreas,
-			"Bike Racks": racksCluster,
-			"Accident heat map": heatMap,
-		}, {
-			position: 'topright'
-	});
+	layerControl = L.control.layers();
 
 
 /* Create the map with a tile layer and set global variable map */
@@ -98,12 +90,6 @@ function initialize(lat, lng, zoom) {
 	initializeGeoJsonLayers();
 
 	/* TILE LAYER DEFINITIONS */
-	var stravaUrl = 'http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png',
-		stravaAttrib = 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
-		stravaHM = L.tileLayer(stravaUrl, {minZoom: 3, maxZoom: 17, opacity: 0.8, attribution: stravaAttrib});
-	layerControl.addOverlay(stravaHM, 'Cyclist density heatmap');
-
-		// Based on OSM data
 	var	skobblerUrl = 'http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/10/{z}/{x}/{y}.png@2x',
 		skobblerAttrib = '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA',
 		skobbler = L.tileLayer(skobblerUrl, {minZoom: 2, attribution: skobblerAttrib});
@@ -114,47 +100,26 @@ function initialize(lat, lng, zoom) {
 		skobblerNight = L.tileLayer(skobblerNightUrl, {minZoom: 2, attribution: skobblerNightAttrib});
 	layerControl.addBaseLayer(skobblerNight, 'Night');
 
+	var stravaUrl = 'http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png',
+		stravaAttrib = 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>',
+		stravaHM = L.tileLayer(stravaUrl, {minZoom: 3, maxZoom: 17, opacity: 0.8, attribution: stravaAttrib});
+	layerControl.addOverlay(stravaHM, 'Cyclist density heatmap');
+
 	/* MAP INIT AND DEFAULT LAYERS */
 	map = L.map('map', {
 		center: [48, -100],
 		zoom: 4,
-		layers: [skobbler, accidentPoints, stravaHM, alertAreas],
+		layers: [skobbler, stravaHM, accidentPoints, alertAreas],
 	});
 	
 	// Add all controls to the map
 	addControls();
-
-	// Add a legend
-	addLegend();
 
 	if(zoom) this.map.setView(L.latLng(lat,lng), zoom);
 	else locateUser();
 
 	map.on('locationerror', onLocationError);
 	map.on('locationfound', onLocationFound);
-};
-
-/* RENDER A LEGEND CONTROL */
-function addLegend() {
-	var legend = L.control({position: 'bottomright'});
-
-	legend.onAdd = function (map) {
-
-	    var div = L.DomUtil.create('div', 'legend legend-info'),
-	        icons = [locationIcon, bikeRedIcon, bikeYellowIcon, policeIcon, icbcIcon, geocodeIcon],
-	        labels = ["Your location", "User reported collision", "User reported near miss", "Police reported cycling incident", "ICBC cycling claim location", "Search result"];
-
-	    div.innerHTML = "<h4><strong>Legend</strong></h4><br>";
-   	    for (var i = 0; i < icons.length; i++) {
-	        div.innerHTML +=  (i === 0 ? '' : '<br>') + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + 
-	        	icons[i].options.icon + '+' + icons[i].options.color + '.png">'
-	        	 + labels[i];
-	    }
-
-	    return div;
-	};
-
-	legend.addTo(map);
 };
 
 /* FIND AND RETURN THE USER'S LOCATION */
@@ -187,12 +152,30 @@ function onLocationFound(e) {
 	    });
 
     locationGroup = L.layerGroup([marker, circle]);
-    layerControl.addOverlay(locationGroup, "Detected location");
+    layerControl.addOverlay(locationGroup, 'Detected location<br>' + 
+		'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' 
+			+ '-' + locationIcon.options.icon + '+' + locationIcon.options.color + '.png"> <small>You are here</small>');
     locationGroup.addTo(map);
 };
 
 function addControls(){
 	/* LAYER CONTROL */
+	layerControl.addOverlay(accidentPoints, 
+		'Incident points<br>' + 
+		'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' 
+			+ '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png"> <small>User collision</small><br>' + 
+		'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' 
+		+ '-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png"> <small>User near miss</small><br>' +
+		'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' 
+		+ '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png"> <small>Police reported cyclist incident</small><br>' +
+		'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' 
+		+ '-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png"> <small>Cyclist incident insurance claim location</small>'
+
+		);
+	layerControl.addOverlay(alertAreas, "Alert Areas");
+	layerControl.addOverlay(racksCluster, "Bike Racks");
+	layerControl.addOverlay(heatMap, "Accident heat map");
+
 	layerControl.addTo(map);
 
 
