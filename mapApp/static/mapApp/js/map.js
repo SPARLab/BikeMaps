@@ -164,8 +164,8 @@ function initialize(mobile) {
 		});
 
 		// Add layers
-		layerControl.addBaseLayer(skobbler, '<i class="fa fa-sun-o"></i> Light');
-		layerControl.addBaseLayer(skobblerNight, '<i class="fa fa-moon-o"></i> Dark');
+		layerControl.addBaseLayer(skobbler, '<i class="fa fa-sun-o"></i> Light map');
+		layerControl.addBaseLayer(skobblerNight, '<i class="fa fa-moon-o"></i> Dark map');
 		
 		layerControl.addOverlay(stravaHM, 'Cyclist density heatmap<br>' +
 			'<div class="legend-subtext">' +
