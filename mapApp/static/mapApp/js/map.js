@@ -164,12 +164,16 @@ function initialize(mobile) {
 		});
 
 		// Add layers
-		layerControl.addBaseLayer(skobbler, 'Day');
-		layerControl.addBaseLayer(skobblerNight, 'Night');
+		layerControl.addBaseLayer(skobbler, '<i class="fa fa-sun-o"></i> Light');
+		layerControl.addBaseLayer(skobblerNight, '<i class="fa fa-moon-o"></i> Dark');
+		
 		layerControl.addOverlay(stravaHM, 'Cyclist density heatmap<br>' +
-			'<small id="strava-gradient">less <div class="pull-right">more</div></small>');
+			'<div class="legend-subtext">' +
+			'<small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>' + 
+			'</div>');
+		
 		layerControl.addOverlay(accidentPoints,
-			'Incident points<br><div class="marker-group">' +
+			'Incident points<br><div class="marker-group legend-subtext">' +
 			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png"> <small>User collision</small><br>' +
 			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png"> <small>User near miss</small><br>' +
 			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png"> <small>Police reported cyclist incident</small><br>' +
@@ -180,9 +184,18 @@ function initialize(mobile) {
 		if (!DISABLE_GEOFENCES) {
 			layerControl.addOverlay(alertAreas, "Alert Areas");
 		}
-		layerControl.addOverlay(racksCluster, "Bike Racks");
+		
+		layerControl.addOverlay(racksCluster, "Bike Racks<br>" +
+			'<div class="legend-subtext">' +
+			'<div class="rack-cluster-small" style="width: 5px; height: 5px; display: inline-block; border-radius:20px; margin-left:3px;"></div><small> Single rack</small>' + 
+			'<br>' + 
+			'<div class="rack-cluster-medium" style="width: 10px; height: 10px; display: inline-block; border-radius:20px"></div><small> Multiple racks</small>' +
+			'</div>');
+		
 		layerControl.addOverlay(heatMap, 'Incident heatmap<br>' +
-			'<small id="rainbow-gradient">less <div class="pull-right">more</div></small>');
+			'<div class="legend-subtext">' +
+			'<small class="rainbow-gradient gradient-bar">less <div class="pull-right">more</div></small>' +
+			'</div>');
 
 		layerControl.addTo(map);
 
@@ -272,12 +285,14 @@ function setView(lat, lng, zoom) {
 				weight: 1,
 				opacity: 0.3,
 				clickable: false,
-				fillOpacity: 0.1
+				fillOpacity: 0.05
 			});
 
 		locationGroup = L.layerGroup([marker, circle]);
 		layerControl.addOverlay(locationGroup, 'Detected location<br><div class="marker-group">' +
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + locationIcon.options.icon + '+' + locationIcon.options.color + '.png"> <small>You are here</small></div>');
+			'<div class="legend-subtext">' +
+			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + locationIcon.options.icon + '+' + locationIcon.options.color + '.png"> <small>You are here</small></div>' +
+			'</div>');
 		locationGroup.addTo(map);
 	};
 };

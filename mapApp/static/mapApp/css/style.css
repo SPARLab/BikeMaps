@@ -76,11 +76,11 @@ body h1{
 }
 
 .rack-cluster-small {
-	background-color: rgba(0, 0, 0, 0.6);
+	background-color: rgba(128, 128, 0, 0.6);
 }
 
 .rack-cluster-medium {
-	background-color: rgba(64, 64, 64, 0.6);
+	background-color: rgba(170, 170, 0, 0.6);
 }
 
 .rack-cluster {
@@ -183,6 +183,9 @@ div.line-mouse-marker {
 }
 
 /* Leaflet legend on map */
+.legend-subtext {
+	margin-left: 18px;
+}
 .legend-marker {
 	width: 20px;
     height: 50px;
@@ -191,19 +194,12 @@ div.line-mouse-marker {
     opacity: 0.8;
     background-size: 20px;
     margin-bottom: -20px;
-    margin-left: 18px;
 }
 .marker-group {
 	line-height: 30px;
 }
 
-#strava-gradient{
-	height: 5px;
-	width: 200px;
-    margin-left: 18px;
-    margin-top: 5px;
-    display: inline-block;
-
+.strava-gradient{
 	background: rgba(255,102,17,0);
 	background: -moz-linear-gradient(left, rgba(255,102,17,0) 0%, rgba(255,102,17,1) 100%);
 	background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,102,17,0)), color-stop(100%, rgba(255,102,17,1)));
@@ -214,13 +210,7 @@ div.line-mouse-marker {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff6611', endColorstr='#ff6611', GradientType=1 );
 }
 
-#rainbow-gradient{
-	height: 5px;
-	width: 200px;
-    margin-left: 18px;
-    margin-top: 5px;
-    display: inline-block;
-
+.rainbow-gradient{
     background: red; /* not working, let's see some red */
     background: -moz-linear-gradient( left ,
         blue 0%,
@@ -234,4 +224,11 @@ div.line-mouse-marker {
         color-stop(50%, lime),
         color-stop(55%, yellow),
         color-stop(100%, red));
+}
+
+.gradient-bar {
+	height: 5px;
+	width: 210px;
+    margin-top: 5px;
+    display: inline-block;
 }
