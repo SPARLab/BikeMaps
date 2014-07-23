@@ -127,11 +127,11 @@
 
 
         // Create the map (call to map.js)
-        initialize(
-            {% if zoom %}   /*lat and lng can be 0, just check zoom*/
-            {{ lat }}, {{ lng }}, {{ zoom }} 
-            {% endif %} 
-        );
+        initialize({% if request.mobile %} mobile=true {% endif %});
+
+        setView({% if zoom %} {{ lat }}, {{ lng }}, {{ zoom}} {% endif %});
+
+
     </script>
 
     <!-- Add Leaflet.draw controls and actions -->
