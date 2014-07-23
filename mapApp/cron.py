@@ -7,8 +7,9 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from mapApp.models import AlertNotification
 
-
+# DISABLED!
 class UserAlertEmails(CronJobBase):
+	pass ########################## REMOVE THIS TO ENABLE
     RUN_EVERY_MINS = 120 # every 2 hours
     RETRY_AFTER_FAILURE_MINS = 5
 
@@ -30,3 +31,7 @@ class UserAlertEmails(CronJobBase):
 
 			# if success:
 			alertPoints.update(emailed=True)
+
+
+class BackupDB(CronJobBase):
+	pass

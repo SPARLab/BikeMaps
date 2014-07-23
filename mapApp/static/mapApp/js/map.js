@@ -124,11 +124,37 @@ function initialize(lat, lng, zoom) {
 	// Add all controls to the map
 	addControls();
 
+	// Add a legend
+	addLegend();
+
 	if(zoom) this.map.setView(L.latLng(lat,lng), zoom);
 	else locateUser();
 
 	map.on('locationerror', onLocationError);
 	map.on('locationfound', onLocationFound);
+};
+
+/* RENDER A LEGEND CONTROL */
+function addLegend() {
+	var legend = L.control({position: 'bottomright'});
+
+	legend.onAdd = function (map) {
+
+	    var div = L.DomUtil.create('div', 'legend legend-info'),
+	        icons = [locationIcon, bikeRedIcon, bikeYellowIcon, policeIcon, icbcIcon, geocodeIcon],
+	        labels = ["Your location", "User reported collision", "User reported near miss", "Police reported cycling incident", "ICBC cycling claim location", "Search result"];
+
+	    div.innerHTML = "<h4><strong>Legend</strong></h4><br>";
+   	    for (var i = 0; i < icons.length; i++) {
+	        div.innerHTML +=  (i === 0 ? '' : '<br>') + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + 
+	        	icons[i].options.icon + '+' + icons[i].options.color + '.png">'
+	        	 + labels[i];
+	    }
+
+	    return div;
+	};
+
+	legend.addTo(map);
 };
 
 /* FIND AND RETURN THE USER'S LOCATION */
@@ -151,7 +177,7 @@ function onLocationFound(e) {
     var radius = e.accuracy / 2,
 
 	    marker = L.marker(e.latlng, {icon: locationIcon})
-	        .bindPopup("You are within " + radius + " meters from this point"),
+	        .bindPopup("You are within " + radius + " meters of this point"),
 	    circle = L.circle(e.latlng, radius, {
 	      	color: "#" + locationIcon.options.color,
 			weight: 1,

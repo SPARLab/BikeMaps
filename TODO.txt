@@ -2,7 +2,8 @@ TO DO
 
 High priority
 * Data backup
-* Disengage geofencing for now
+* Legend
+* Unsafe area reporting
 * Terms and conditions checkbox on form
 * Fix contact email to work with spirit
 >
