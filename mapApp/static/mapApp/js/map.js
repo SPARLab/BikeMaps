@@ -1,3 +1,5 @@
+var DISABLE_GEOFENCES = true;
+
 // Leaflet map code and functions
 
 /* GLOBAL VARIABLES */
@@ -172,7 +174,9 @@ function addControls(){
 		+ '-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png"> <small>Cyclist incident insurance claim location</small>'
 
 		);
-	layerControl.addOverlay(alertAreas, "Alert Areas");
+	if(!DISABLE_GEOFENCES){
+		layerControl.addOverlay(alertAreas, "Alert Areas");
+	}
 	layerControl.addOverlay(racksCluster, "Bike Racks");
 	layerControl.addOverlay(heatMap, "Accident heat map");
 
