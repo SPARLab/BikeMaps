@@ -15,8 +15,8 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		size: "m"
 	}),
 	hazardIcon = L.MakiMarkers.icon({
-		icon: "triangle",
-		color: "#117700",
+		icon: "triangle-stroked",
+		color: "#d9844f",//3eab45",
 		size: "m"
 	}),
 	bikeGreyIcon = L.MakiMarkers.icon({

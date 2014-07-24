@@ -71,11 +71,9 @@
             
             if (type === 'marker') {
                 // Set form geometry field to click location
-                console.log(JSON.stringify(layer.toGeoJSON().geometry));
                 $('#incidentForm').modal('show');
                 document.getElementById("point").value = JSON.stringify(layer.toGeoJSON().geometry); 
                 document.getElementById("hazPoint").value = JSON.stringify(layer.toGeoJSON().geometry); 
-                console.log(document.getElementById("point"));           
             }
             if (type === 'polyline') {
                 // Set form geometry field to click location

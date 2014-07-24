@@ -260,10 +260,8 @@ class Incident(models.Model):
         return now - datetime.timedelta(weeks=1) <= self.date < now
 
     def incident_type(self):
-        if self.incident in COLLISION_TYPES:
-            return "Collision"
-        else:
-            return "Near miss"
+        for (x, y) in COLLISION_TYPES:
+            return ("Collision" if self.incident == x else "Near miss")
 
     # For admin site 
     was_published_recently.admin_order_field = 'date'
