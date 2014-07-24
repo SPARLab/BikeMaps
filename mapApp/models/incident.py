@@ -262,17 +262,10 @@ class Incident(models.Model):
 
     # A non elegant way to match up self.incident to a generalized incident_type string
     def incident_type(self):
-        TYPES = [
-            (COLLISION_TYPES, "Collision"), 
-            (NEAR_MISS_TYPES, "Near miss"), 
-            (THEFT_TYPES, "Theft"),
-            (HAZARD_TYPES, "Hazard")
-        ]
-
-        for (TYPE, typStr) in TYPES: # Loop through tuples in each TYPE
-            for tup in TYPE:
-                 if self.incident in tup:
-                    return typStr 
+        if self.incident in COLLISION_TYPES:
+            return "Collision"
+        else:
+            return "Near miss"
 
     # For admin site 
     was_published_recently.admin_order_field = 'date'

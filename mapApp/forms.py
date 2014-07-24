@@ -64,7 +64,7 @@ class HazardForm(forms.ModelForm):
         Accordion(
             AccordionGroup(
                 'Hazard',
-                Field('geom', type="hidden", id="point"), # Coords passed after click on map from static/mapApp/js/map.js
+                Field('geom', type="hidden", id="hazPoint"), # Coords passed after click on map from static/mapApp/js/map.js
                 Field('hazard_date', id="hazard_date", template='mapApp/util/datepicker.html'),
                 Field('hazard'),
                 Field('hazard_object'),
