@@ -41,6 +41,7 @@ def indexContext(request, incidentForm=IncidentForm(), routeForm=RouteForm(), ge
 	return {
 		# Model data used by map
 		'incidents': Incident.objects.all(),
+		'hazards': Hazard.objects.all(),
 		"routes": Route.objects.all(),
 		"geofences": AlertArea.objects.filter(user=request.user.id),
 

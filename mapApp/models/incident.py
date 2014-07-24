@@ -259,8 +259,6 @@ class Incident(models.Model):
         now = timezone.now()
         return now - datetime.timedelta(weeks=1) <= self.date < now
 
-
-    # A non elegant way to match up self.incident to a generalized incident_type string
     def incident_type(self):
         if self.incident in COLLISION_TYPES:
             return "Collision"

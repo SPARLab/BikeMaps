@@ -120,6 +120,11 @@
             getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}", {{ incident.pk }} );
         {% endfor %}
 
+        // Load user hazards from the database
+        {% for hazard in hazards %}
+            getPoint( {{ hazard.latlngList }}, "{{ hazard.hazard_date }}", "Hazard", {{ hazard.pk }} );
+        {% endfor %}
+
         // Load user alert areas from the database
         {% for polygon in geofences %}
             getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} ); 

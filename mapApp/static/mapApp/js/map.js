@@ -14,6 +14,11 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		color: "#f0ad4e",
 		size: "m"
 	}),
+	hazardIcon = L.MakiMarkers.icon({
+		icon: "triangle",
+		color: "#117700",
+		size: "m"
+	}),
 	bikeGreyIcon = L.MakiMarkers.icon({
 		icon: "bicycle",
 		color: "#999999",
@@ -177,7 +182,8 @@ function initialize(mobile) {
 			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png"> <small>User collision</small><br>' +
 			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png"> <small>User near miss</small><br>' +
 			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png"> <small>Police reported cyclist incident</small><br>' +
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png"> <small>Cyclist incident insurance claim location</small>' +
+			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png"> <small>Cyclist incident insurance claim location</small><br>' +
+			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png"> <small>Cyclist hazard</small>' +
 			'</div>'
 
 		);
@@ -303,10 +309,14 @@ function getPoint(latlng, date, type, pk) {
 	heatMap.addLatLng(latlng);
 
 	var icon;
-	if (type == "Collision") {
+	if (type === "Collision") {
 		icon = bikeRedIcon;
-	} else {
+	} else if (type === "Near miss") {
 		icon = bikeYellowIcon;
+	} else if (type === "Hazard") {
+		icon = hazardIcon;
+	} else {
+		return;
 	}
 	marker = L.marker(latlng, {
 		icon: icon,
