@@ -107,7 +107,7 @@ class Hazard(models.Model):
     ##############
 
     over13 = models.BooleanField(
-        'I am over the age of 13.'
+        '<strong>I am over the age of 13.</strong>'
     )
 
     # reverses latlngs and turns tuple of tuples into list of lists

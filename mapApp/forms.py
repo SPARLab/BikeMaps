@@ -1,8 +1,8 @@
 from django import forms
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.bootstrap import Accordion, AccordionGroup
-from crispy_forms.layout import Layout, Field, HTML
+from crispy_forms.bootstrap import Accordion, AccordionGroup, FormActions
+from crispy_forms.layout import Layout, Field, HTML, Button, Submit, Reset
 
 from mapApp.models.incident import Incident
 from mapApp.models.route import Route
@@ -50,6 +50,11 @@ class IncidentForm(forms.ModelForm):
             )
         ),
         Field('over13'),
+        FormActions(
+            Reset('cancel', 'Cancel', onclick="$('#incidentForm').modal('hide');$('.modal-backdrop').hide();"),
+            Submit('save', 'Submit'),
+            css_class='modal-footer'
+        )
     )
 
     class Meta:
@@ -83,6 +88,11 @@ class HazardForm(forms.ModelForm):
             )
         ),
         Field('over13'),
+        FormActions(
+            Reset('cancel', 'Cancel', onclick="$('#incidentForm').modal('hide');$('.modal-backdrop').hide();"),
+            Submit('save', 'Submit'),
+            css_class='modal-footer'
+        )
     )
 
     class Meta:

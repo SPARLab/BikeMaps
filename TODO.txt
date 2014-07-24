@@ -4,6 +4,7 @@ High priority
 * Data backup
 * Unsafe area reporting
 * Fix contact email to work with spirit
+* Share this view extent link
 >
 * Setup media root
 * Setup static root
@@ -24,4 +25,4 @@ Lower priority
 
 BUGS
 * Moderate comments > delete button not working
-* 
+* Date picker does not scroll with modal

@@ -28,14 +28,13 @@
 
 
 	<div class="controls">
-	    <div class="input-group date form_datetime" data-date-format='yyyy-mm-dd hh:ii' data-link-field="{{ field.auto_id }}" >
+	    <div class="input-group date form_datetime" id="{{ field.auto_id }}" data-date-format='yyyy-mm-dd hh:ii' data-link-field="{{ field.auto_id }}" >
 	        {% crispy_field field %}
 	        <!-- <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> -->
 			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
             <span class="add-on {% if active %}active{% endif %}">{{ crispy_appended_text|safe }}</span>
 
 	    </div>
-        
     </div>
     {% include 'bootstrap3/layout/help_text_and_errors.html' %}
 </div>
@@ -46,7 +45,7 @@
 
 
 <script type="text/javascript">
-    $('.form_datetime').datetimepicker({
+    $('#{{ field.auto_id }}').datetimepicker({
 		autoclose: 1,
         todayBtn:  0,
 		autoclose: 1,

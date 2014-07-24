@@ -246,7 +246,7 @@ class Incident(models.Model):
     ##############
 
     over13 = models.BooleanField(
-        'I am over the age of 13.'
+        '<strong>I am over the age of 13.</strong>'
     )
 
 
