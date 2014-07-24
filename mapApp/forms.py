@@ -42,7 +42,8 @@ class IncidentForm(forms.ModelForm):
                 'Details',
                 Field('incident_detail', placeholder='optional'),
             )
-        )
+        ),
+        Field('over13')
     )
 
     class Meta:

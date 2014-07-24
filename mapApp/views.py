@@ -105,6 +105,11 @@ def postIncident(request):
 		incidentForm.data['geom'] = GEOSGeometry(incidentForm.data['geom'])
 
 		if incidentForm.is_valid():
+			# Exit with error message if submission doesn't meet age requirement
+			if not incidentForm.cleaned_data['over13']:
+				messages.error(request, '<strong>Sorry!</strong><br>You must be over 13 years of age.')
+				return render(request, 'mapApp/index.html', indexContext(request, incidentForm=incidentForm))
+
 			incident = incidentForm.save()
 			alertUsers(request, incident)
 			

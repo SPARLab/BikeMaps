@@ -174,15 +174,6 @@ class Incident(models.Model):
     )
     ###########
 
-    ########## DETAILS FIELDS
-    incident_detail = models.TextField(
-        'Please give a brief description of the incident', 
-        max_length=300, 
-        blank=True, 
-        null=True
-    )
-    ##############
-
     ############## PERSONAL DETAILS FIELDS
     # Personal details about the participant (all optional)
     age = models.CharField(
@@ -266,6 +257,19 @@ class Incident(models.Model):
         null=True
     )
     ########################
+
+    ########## DETAILS FIELDS
+    incident_detail = models.TextField(
+        'Please give a brief description of the incident', 
+        max_length=300, 
+        blank=True, 
+        null=True
+    )
+    ##############
+
+    over13 = models.BooleanField(
+        'I am over the age of 13.'
+    )
 
 
     # reverses latlngs and turns tuple of tuples into list of lists
