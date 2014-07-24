@@ -135,6 +135,40 @@ def postIncident(request):
 	else: # Redirect to index if not a post request
 		return HttpResponseRedirect(reverse('mapApp:index')) 
 
+
+def postHazard(request):
+	if request.method == 'POST':
+		hazardForm = HazardForm(request.POST)
+		
+		# Convert coords to valid geometry
+		hazardForm.data = hazardForm.data.copy()
+		hazardForm.data['geom'] = GEOSGeometry(hazardForm.data['geom'])
+
+		if hazardForm.is_valid():
+			# Exit with error message if submission doesn't meet age requirement
+			if not hazardForm.cleaned_data['over13']:
+				messages.error(request, '<strong>Sorry!</strong><br>You must be over 13 years of age.')
+				return render(request, 'mapApp/index.html', indexContext(request, hazardForm=hazardForm))
+
+			hazard = hazardForm.save()
+			# alertUsers(request, hazard) #alertUsers view needs to be edited to accomodate hazards
+			
+			messages.success(request, '<strong>Thank you!</strong><br>Your hazard marker was successfully added.')			
+			return HttpResponseRedirect(reverse('mapApp:index', \
+				kwargs=({										\
+					"lat":str(hazard.latlngList()[0]),		\
+					"lng":str(hazard.latlngList()[1]),		\
+					"zoom":str(18)								\
+				})												\
+			)) 
+
+		else: # Show form errors 
+			return render(request, 'mapApp/index.html', indexContext(request, hazardForm=hazardForm))
+	
+	else: # Redirect to index if not a post request
+		return HttpResponseRedirect(reverse('mapApp:index')) 
+
+
 def alertUsers(request, incident):
 	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
 	usersToAlert = set([poly.user for poly in intersectingPolys if poly.emailWeekly]) # get list of distinct users to alert

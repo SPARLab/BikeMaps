@@ -1,7 +1,7 @@
 from django import forms
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.bootstrap import Accordion, AccordionGroup, FormActions
+from crispy_forms.bootstrap import Accordion, AccordionGroup, FormActions, Div
 from crispy_forms.layout import Layout, Field, HTML, Button, Submit, Reset
 
 from mapApp.models.incident import Incident
@@ -49,12 +49,17 @@ class IncidentForm(forms.ModelForm):
                 css_id='incident-description'
             )
         ),
-        Field('over13'),
-        FormActions(
-            Reset('cancel', 'Cancel', onclick="$('#incidentForm').modal('hide');$('.modal-backdrop').hide();"),
-            Submit('save', 'Submit'),
+        Div(
+            Div(
+                Field('over13'),
+                css_class='pull-left'
+            ),
+            FormActions(
+                Reset('cancel', 'Cancel', onclick="$('#incidentForm').modal('hide');$('.modal-backdrop').hide();"),
+                Submit('save', 'Submit'),
+            ),
             css_class='modal-footer'
-        )
+        ),
     )
 
     class Meta:
@@ -87,12 +92,17 @@ class HazardForm(forms.ModelForm):
                 css_id = 'hazard-description'
             )
         ),
-        Field('over13'),
-        FormActions(
-            Reset('cancel', 'Cancel', onclick="$('#incidentForm').modal('hide');$('.modal-backdrop').hide();"),
-            Submit('save', 'Submit'),
+        Div(
+            Div(
+                Field('over13'),
+                css_class='pull-left'
+            ),
+            FormActions(
+                Reset('cancel', 'Cancel', onclick="$('#incidentForm').modal('hide');$('.modal-backdrop').hide();"),
+                Submit('save', 'Submit'),
+            ),
             css_class='modal-footer'
-        )
+        ),
     )
 
     class Meta:

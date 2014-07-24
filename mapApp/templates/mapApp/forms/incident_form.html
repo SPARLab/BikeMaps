@@ -11,31 +11,29 @@
                 <h4 class="modal-title" id="incidentForm">Submit a new report</h4>
             </div>
 
-            <form action="{% url 'mapApp:postIncident' %}" method="post" class="form">
-                <div class="modal-body">
-                    
-                    <!-- Nav Tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                      <li class="active"><a href="#incidentReport" role="tab" data-toggle="tab">Incident Report</a></li>
-                      <li><a href="#hazardReport" role="tab" data-toggle="tab">Hazard Report</a></li>
-                      <li><a href="#theftReport" role="tab" data-toggle="tab">Theft Report</a></li>
-                    </ul>
+            <div class="modal-body">
+                
+                <!-- Nav Tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="active"><a href="#incidentReport" role="tab" data-toggle="tab">Incident Report</a></li>
+                  <li><a href="#hazardReport" role="tab" data-toggle="tab">Hazard Report</a></li>
+                  <li><a href="#theftReport" role="tab" data-toggle="tab">Theft Report</a></li>
+                </ul>
 
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                      <div class="tab-pane active" id="incidentReport"> {% crispy incidentForm %} </div>
-                      <div class="tab-pane" id="hazardReport"> {% crispy hazardForm %} </div>
-                      <div class="tab-pane" id="theftReport">Theft form here</div>
-                    </div>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <form action="{% url 'mapApp:postIncident' %}" method="post" class="form tab-pane active" id="incidentReport">
+                    {% crispy incidentForm %}
+                  </form>
 
+                  <form action="{% url 'mapApp:postHazard' %}" method="post" class="form tab-pane" id="hazardReport">
+                    {% crispy hazardForm %}
+                  </form>
+
+                  <div class="tab-pane" id="theftReport">Theft form here</div>
                 </div>
 
-<!--                 <div class="modal-footer">
-                    <button type="reset" class="btn btn-default" onclick="$('#incidentForm').modal('hide');$('.modal-backdrop').hide();">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-             -->
-            </form>
+            </div>
         </div>
     </div>
 </div>

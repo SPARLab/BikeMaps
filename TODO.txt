@@ -12,6 +12,7 @@ High priority
 * Password protected dev release
 
 Lower priority
+* alertUsers view needs to be edited to accomodate hazards
 * Email alerts weekly
 * Smaller sponsor logos
 * Check compatabilities with internet explorer (even though it's the worst)
