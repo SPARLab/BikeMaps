@@ -353,6 +353,7 @@ function createPieCluster(cluster) {
 		nIcbc = 0,
 		nBikeR = 0,
 		nBikeY = 0,
+		nHazard = 0,
 		nUnknown = 0,
 		marker;
 	
@@ -367,13 +368,15 @@ function createPieCluster(cluster) {
 			nBikeR++;
 		} else if (marker.icon === bikeYellowIcon.options.icon && marker.color === bikeYellowIcon.options.color) {
 			nBikeY++;
+		} else if (marker.icon === hazardIcon.options.icon && marker.color === hazardIcon.options.color) {
+			nHazard++;
 		} else {
 			nUnknown++;
 		}
 	});
 
 	// if(nUnknown > 0){
-	// 	console.log("error");
+	// 	console.log("Unknown cluster points found");
 	// }
 	var outerR = 20, 
 		innerR = 10;
@@ -401,6 +404,10 @@ function createPieCluster(cluster) {
 		"type": 'BikeY',
 		"count": nBikeY,
 		"color": bikeYellowIcon.options.color
+		}, {
+		"type": 'Hazard',
+		"count": nHazard,
+		"color": hazardIcon.options.color
 		}, {
 		"type": 'Unknown',
 		"count": nUnknown,
