@@ -2,9 +2,7 @@ TO DO
 
 High priority
 * Data backup
-* Legend
 * Unsafe area reporting
-* Terms and conditions checkbox on form
 * Fix contact email to work with spirit
 >
 * Setup media root

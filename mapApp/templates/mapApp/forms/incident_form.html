@@ -8,12 +8,26 @@
 
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="incidentForm">Submit an incident report</h4>
+                <h4 class="modal-title" id="incidentForm">Submit a new report</h4>
             </div>
 
             <form action="{% url 'mapApp:postIncident' %}" method="post" class="form">
                 <div class="modal-body">
-                    {% crispy incidentForm %}
+                    
+                    <!-- Nav Tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                      <li class="active"><a href="#incidentReport" role="tab" data-toggle="tab">Incident Report</a></li>
+                      <li><a href="#hazardReport" role="tab" data-toggle="tab">Hazard Report</a></li>
+                      <li><a href="#theftReport" role="tab" data-toggle="tab">Theft Report</a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="incidentReport">{% crispy incidentForm %}</div>
+                      <div class="tab-pane" id="hazardReport">{% crispy hazardForm %}</div>
+                      <div class="tab-pane" id="theftReport">Theft form here</div>
+                    </div>
+
                 </div>
 
                 <div class="modal-footer">

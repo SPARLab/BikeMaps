@@ -1,14 +1,15 @@
 from django.contrib.gis import admin
 
-# Register your models here.
-from mapApp.models import Incident, Route, AlertArea, AlertNotification
+# Register models
+from mapApp.models.incident import Incident
+from mapApp.models.route import Route
+from mapApp.models.alert_area import AlertArea
+from mapApp.models.alert_notification import AlertNotification
+from mapApp.models.hazard import Hazard
 
 from spirit.models import User
 admin.site.register(User)
 
-# class PersonStacked(admin.StackedInline):
-#     model = Person
-#     verbose_name_plural = "Person"
 
 class IncidentAdmin(admin.OSMGeoAdmin):
 	# Map options
@@ -47,3 +48,5 @@ admin.site.register(AlertArea, AlertAreaAdmin)
 
 
 admin.site.register(AlertNotification)
+
+admin.site.register(Hazard)

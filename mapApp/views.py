@@ -9,8 +9,14 @@ from django.contrib import messages
 from django.core.mail import send_mail
 
 from django.contrib.auth.models import User, Group
-from mapApp.models import Incident, Route, AlertArea, AlertNotification
-from mapApp.forms import IncidentForm, RouteForm, EmailForm, GeofenceForm, EditForm
+from mapApp.models.incident import Incident
+from mapApp.models.route import Route
+from mapApp.models.alert_area import AlertArea
+from mapApp.models.alert_notification import AlertNotification
+from mapApp.models.hazard import Hazard
+
+from mapApp.forms import IncidentForm, RouteForm, EmailForm, GeofenceForm, EditForm, HazardForm
+
 # Used for downloading data
 from spirit.utils.decorators import administrator_required
 from django.contrib.auth.decorators import login_required
@@ -31,7 +37,7 @@ def index(request, lat=None, lng=None, zoom=None):
 
 
 # Define default context data for the index view. Forms can be overridden to display errors (used by other views)
-def indexContext(request, incidentForm=IncidentForm(), routeForm=RouteForm(), geofenceForm=GeofenceForm()):
+def indexContext(request, incidentForm=IncidentForm(), routeForm=RouteForm(), geofenceForm=GeofenceForm(), hazardForm=HazardForm()):
 	return {
 		# Model data used by map
 		'incidents': Incident.objects.all(),
@@ -42,6 +48,7 @@ def indexContext(request, incidentForm=IncidentForm(), routeForm=RouteForm(), ge
 		"incidentForm": incidentForm,
 		"routeForm": routeForm,
 		"geofenceForm": geofenceForm,
+		"hazardForm": hazardForm,
 		
 		"editForm": EditForm()
 	}

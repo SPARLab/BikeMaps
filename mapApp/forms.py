@@ -4,7 +4,11 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import Accordion, AccordionGroup
 from crispy_forms.layout import Layout, Field, HTML
 
-from mapApp.models import Incident, Route, AlertArea
+from mapApp.models.incident import Incident
+from mapApp.models.route import Route
+from mapApp.models.alert_area import AlertArea
+from mapApp.models.hazard import Hazard
+
 
 class IncidentForm(forms.ModelForm):
     helper = FormHelper()
@@ -28,6 +32,7 @@ class IncidentForm(forms.ModelForm):
                 Field('regular_cyclist'),
                 Field('helmet'),
                 Field('intoxicated'),
+                css_id = "incident-personal"
             ),
             AccordionGroup(
                 'Conditions',
@@ -39,15 +44,49 @@ class IncidentForm(forms.ModelForm):
                 Field('terrain'),
             ),
             AccordionGroup(
-                'Details',
+                'Description',
                 Field('incident_detail', placeholder='optional'),
+                css_id='incident-description'
             )
         ),
-        Field('over13')
+        Field('over13'),
     )
 
     class Meta:
         model = Incident
+
+
+class HazardForm(forms.ModelForm):
+    helper = FormHelper()
+    helper.form_tag = False # removes auto-inclusion of form tag in template
+
+    helper.layout = Layout(
+        Accordion(
+            AccordionGroup(
+                'Hazard',
+                Field('geom', type="hidden", id="point"), # Coords passed after click on map from static/mapApp/js/map.js
+                Field('hazard_date', id="hazard_date", template='mapApp/util/datepicker.html'),
+                Field('hazard'),
+                Field('hazard_object'),
+            ),
+            AccordionGroup(
+                'Personal Details',
+                Field('age'),
+                Field('sex'),
+                Field('regular_cyclist'),
+                css_id = 'hazard-personal'
+            ),
+            AccordionGroup(
+                'Description',
+                Field('hazard_detail', placeholder='optional'),
+                css_id = 'hazard-description'
+            )
+        ),
+        Field('over13'),
+    )
+
+    class Meta:
+        model = Hazard
 
 
 class RouteForm(forms.ModelForm):

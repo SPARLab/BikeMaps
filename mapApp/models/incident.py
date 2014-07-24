@@ -28,6 +28,8 @@ NEAR_MISS_TYPES = [
     ('Near collision with a parked vehicle', 'Near collision with a parked vehicle')
 ]
 
+INCIDENT_CHOICES = tuple(COLLISION_TYPES + NEAR_MISS_TYPES)
+
 INCIDENT_WITH_CHOICES = [
     ('Car/Truck', 'Car/Truck'),
     ('Vehicle door', 'Vehicle door'),
@@ -40,18 +42,6 @@ INCIDENT_WITH_CHOICES = [
     ('Animal', 'Animal'),
     ('Sign/Post', 'Sign/Post')
 ]
-
-# Theft
-THEFT_TYPES = [
-    ('Theft','Theft'),
-]
-
-# Hazard
-HAZARD_TYPES = [
-    ('Hazard','Hazard')
-]
-
-INCIDENT_CHOICES = tuple(COLLISION_TYPES + NEAR_MISS_TYPES) #+ THEFT_TYPES + HAZARD_TYPES)
 
 INJURY_CHOICES = [
     ('No injury', 'No injury'),
@@ -112,18 +102,6 @@ AGE_CHOICES = (
     (">70", "70 or over")
 )
 
-BOOLEAN_CHOICES = (
-    (True, "Yes"),
-    (False, "No")
-)
-
-FREQUENCY_CHOICES = (
-    ("15+/wk", "15 or more"),
-    ("10-14/wk", "10 - 14"),
-    ("6-8/wk","6 - 8"),
-    ("2-4/wk", "2 - 4"),
-    ("<2/wk","less than twice a week"),
-)
 
 ##########
 # Incident class.
@@ -305,120 +283,5 @@ class Incident(models.Model):
     def __unicode__(self):
         return unicode(self.incident_date)
 
-
-##########
-# Routes class.
-# Main class for submitted routes.
-class Route(models.Model):
-    # Spatial fields
-    # Default CRS -> WGS84
-    geom = models.LineStringField()
-    objects = models.GeoManager() # Required to conduct geographic queries
-
-    report_date = models.DateTimeField(
-    'Date reported', 
-    auto_now_add=True   # Date is set automatically when object created
-    ) 
-
-    trip_purpose = models.CharField(
-        'What is the reason you usually ride this route?', 
-        max_length=50, 
-        choices=PURPOSE_CHOICES, 
-    )
-
-    # Personal details about the participant (all optional)
-    frequency = models.CharField(
-        'How many times per week do you ride this route?', 
-        max_length=15, 
-        choices=FREQUENCY_CHOICES
-    )
-
-    # reverses latlngs and turns tuple of tuples into list of lists
-    def latlngList(self):
-        return list(list(latlng)[::-1] for latlng in self.geom) 
-
-    def was_published_recently(self):
-        now = timezone.now()
-        return now - datetime.timedelta(weeks=1) <= self.report_date < now
-
-    # For admin site
-    was_published_recently.admin_order_field = 'report_date'
-    was_published_recently.boolean = True
-    was_published_recently.short_description = 'Reported this week?'
-
-    # toString()
-    def __unicode__(self):
-        return unicode(self.report_date)
-
-
-##########
-# AlertArea class.
-# Main class for submitted routes.
-class AlertArea(models.Model):
-    date = models.DateTimeField(
-        'Date created', 
-        auto_now_add=True   # Date is set automatically when object created
-    )
-
-    # Spatial fields
-    # Default CRS -> WGS84
-    geom = models.PolygonField()
-    objects = models.GeoManager() # Required to conduct geographic queries
-
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("user"))
-    email = models.EmailField()
-    emailWeekly = models.BooleanField('Send me weekly email reports')
-
-    def latlngList(self):
-        return list(list(latlng)[::-1] for latlng in self.geom[0]) 
-
-    # toString()
-    def __unicode__(self):
-        return unicode(self.user)
-
-
-
-INCIDENT, NEARMISS, UNDEFINED = xrange(3)
-
-ACTION_CHOICES = (
-    (INCIDENT, _("Incident")),
-    (NEARMISS, _("Near miss")),
-    (UNDEFINED, _("Undefined")),
-
-)
-
-class AlertNotification(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("user"))
-    point = models.ForeignKey('mapApp.Incident', related_name='+')
-
-    date = models.DateTimeField(auto_now_add=True)
-    action = models.IntegerField(choices=ACTION_CHOICES, default=UNDEFINED)
-    is_read = models.BooleanField(default=False)
-    emailed = models.BooleanField(default=False)
-
-    # objects = AlertNotificationManager()
-
     class Meta:
         app_label = 'mapApp'
-        unique_together = ('user', 'point')
-        ordering = ['-date', ]
-        verbose_name = _("alert notification")
-        verbose_name_plural = _("alert notifications")
-
-    def get_location(self):
-        return self.point.geom
-
-    @property
-    def text_action(self):
-        return ACTION_CHOICES[self.action][1]
-
-    @property
-    def is_incident(self):
-        return self.action == INCIDENT
-
-    @property
-    def is_nearmiss(self):
-        return self.action == NEARMISS
-
-    def __unicode__(self):
-        return "%s" % (self.user)
