@@ -100,10 +100,14 @@ def contact(request):
 def postRoute(request):
 	if request.method == 'POST':
 		routeForm = RouteForm(request.POST)
+		routeForm.data = routeForm.data.copy()
 
 		# Convert string coords to valid geometry object
-		routeForm.data = routeForm.data.copy()
-		routeForm.data['line'] = GEOSGeometry(routeForm.data['line'])
+		try:
+			routeForm.data['line'] = GEOSGeometry(routeForm.data['line'])
+		except(ValueError):
+			messages.error(request, '<strong>Error</strong><br>Invalid geometry data.')
+			return HttpResponseRedirect(reverse('mapApp:index')) 
 
 		if routeForm.is_valid():
 			routeForm.save()
@@ -116,10 +120,14 @@ def postRoute(request):
 def postIncident(request):
 	if request.method == 'POST':
 		incidentForm = IncidentForm(request.POST)
+		incidentForm.data = incidentForm.data.copy()
 		
 		# Convert coords to valid geometry
-		incidentForm.data = incidentForm.data.copy()
-		incidentForm.data['geom'] = GEOSGeometry(incidentForm.data['geom'])
+		try:
+			incidentForm.data['geom'] = GEOSGeometry(incidentForm.data['geom'])
+		except(ValueError):
+			messages.error(request, '<strong>Error</strong><br>No point was selected for this type of report.')
+			return HttpResponseRedirect(reverse('mapApp:index')) 
 
 		if incidentForm.is_valid():
 			incident = incidentForm.save()
@@ -144,10 +152,14 @@ def postIncident(request):
 def postHazard(request):
 	if request.method == 'POST':
 		hazardForm = HazardForm(request.POST)
+		hazardForm.data = hazardForm.data.copy()
 		
 		# Convert coords to valid geometry
-		hazardForm.data = hazardForm.data.copy()
-		hazardForm.data['geom'] = GEOSGeometry(hazardForm.data['geom'])
+		try :
+			hazardForm.data['geom'] = GEOSGeometry(hazardForm.data['geom'])
+		except(ValueError):
+			messages.error(request, '<strong>Error</strong><br>No point was selected for this type of report.')
+			return HttpResponseRedirect(reverse('mapApp:index')) 
 
 		if hazardForm.is_valid():
 			hazard = hazardForm.save()
@@ -172,10 +184,14 @@ def postHazard(request):
 def postTheft(request):
 	if request.method == 'POST':
 		theftForm = TheftForm(request.POST)
+		theftForm.data = theftForm.data.copy()
 		
 		# Convert coords to valid geometry
-		theftForm.data = theftForm.data.copy()
-		theftForm.data['geom'] = GEOSGeometry(theftForm.data['geom'])
+		try:
+			theftForm.data['geom'] = GEOSGeometry(theftForm.data['geom'])
+		except(ValueError):
+			messages.error(request, '<strong>Error</strong><br>No point was selected for this type of report.')
+			return HttpResponseRedirect(reverse('mapApp:index')) 
 
 		if theftForm.is_valid():
 			theft = theftForm.save()
@@ -222,11 +238,15 @@ def alertUsers(request, incident):
 def postAlertPolygon(request):
 	if request.method == 'POST':
 		geofenceForm = GeofenceForm(request.POST)
-
-		# Create valid attributes for user and geom fields 
 		geofenceForm.data = geofenceForm.data.copy()
-		geofenceForm.data['user'] = request.user.id
-		geofenceForm.data['geom'] = GEOSGeometry(geofenceForm.data['geom'])
+
+		# Create valid attributes for user and geom fields
+		try:
+			geofenceForm.data['user'] = request.user.id
+			geofenceForm.data['geom'] = GEOSGeometry(geofenceForm.data['geom'])
+		except(ValueError):
+			messages.error(request, '<strong>Error</strong><br>Invalid geometry data.')
+			return HttpResponseRedirect(reverse('mapApp:index')) 
 
 		if geofenceForm.is_valid():
 			# Save new model object, send success message to the user
@@ -299,7 +319,11 @@ def editShape(request):
 			for pk, newGeom in zip(pks, newGeoms):
 				if(editType == 'edit'):
 					shapeEdited = get_object_or_404(objectSet, pk=pk)
-					shapeEdited.geom = GEOSGeometry(newGeom)	# edit the object geometry
+					try:
+						shapeEdited.geom = GEOSGeometry(newGeom)	# edit the object geometry
+					except(ValueError):
+						messages.error(request, '<strong>Error</strong><br>Invalid geometry error.')
+						return HttpResponseRedirect(reverse('mapApp:index')) 
 					shapeEdited.save()
 			
 				elif (editType == 'delete'):
