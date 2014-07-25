@@ -4,6 +4,7 @@ High priority
 * Data backup
 * Unsafe area reporting
 * Fix contact email to work with spirit
+* Form errors opens correct tab
 >
 * Setup media root
 * Setup static root

@@ -19,6 +19,11 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		color: "#d9844f",//3eab45",
 		size: "m"
 	}),
+	theftIcon = L.MakiMarkers.icon({
+		icon: "triangle-stroked",
+		color: "#3eab45",
+		size: "m"
+	}),
 	bikeGreyIcon = L.MakiMarkers.icon({
 		icon: "bicycle",
 		color: "#999999",
@@ -183,7 +188,8 @@ function initialize(mobile) {
 			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png"> <small>User near miss</small><br>' +
 			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png"> <small>Police reported cyclist incident</small><br>' +
 			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png"> <small>Cyclist incident insurance claim location</small><br>' +
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png"> <small>Cyclist hazard</small>' +
+			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png"> <small>Cyclist hazard</small><br>' +
+			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + theftIcon.options.icon + '+' + theftIcon.options.color + '.png"> <small>Theft</small>' +
 			'</div>'
 
 		);
@@ -315,6 +321,8 @@ function getPoint(latlng, date, type, pk) {
 		icon = bikeYellowIcon;
 	} else if (type === "Hazard") {
 		icon = hazardIcon;
+	} else if (type === "Theft") {
+		icon = theftIcon;
 	} else {
 		return;
 	}
@@ -354,6 +362,7 @@ function createPieCluster(cluster) {
 		nBikeR = 0,
 		nBikeY = 0,
 		nHazard = 0,
+		nTheft = 0,
 		nUnknown = 0,
 		marker;
 	
@@ -370,6 +379,8 @@ function createPieCluster(cluster) {
 			nBikeY++;
 		} else if (marker.icon === hazardIcon.options.icon && marker.color === hazardIcon.options.color) {
 			nHazard++;
+		} else if (marker.icon === theftIcon.options.icon && marker.color === theftIcon.options.color) {
+			nTheft++;
 		} else {
 			nUnknown++;
 		}
@@ -408,6 +419,10 @@ function createPieCluster(cluster) {
 		"type": 'Hazard',
 		"count": nHazard,
 		"color": hazardIcon.options.color
+		}, {
+		"type": 'Theft',
+		"count": nTheft,
+		"color": theftIcon.options.color
 		}, {
 		"type": 'Unknown',
 		"count": nUnknown,

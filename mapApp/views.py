@@ -14,6 +14,7 @@ from mapApp.models.route import Route
 from mapApp.models.alert_area import AlertArea
 from mapApp.models.alert_notification import AlertNotification
 from mapApp.models.hazard import Hazard
+from mapApp.models.theft import Theft
 
 from mapApp.forms.incident import IncidentForm
 from mapApp.forms.route import RouteForm
@@ -21,6 +22,7 @@ from mapApp.forms.contact import EmailForm
 from mapApp.forms.geofences import GeofenceForm
 from mapApp.forms.edit_geom import EditForm
 from mapApp.forms.hazard import HazardForm
+from mapApp.forms.theft import TheftForm
 
 # Used for downloading data
 from spirit.utils.decorators import administrator_required
@@ -42,11 +44,12 @@ def index(request, lat=None, lng=None, zoom=None):
 
 
 # Define default context data for the index view. Forms can be overridden to display errors (used by other views)
-def indexContext(request, incidentForm=IncidentForm(), routeForm=RouteForm(), geofenceForm=GeofenceForm(), hazardForm=HazardForm()):
+def indexContext(request, incidentForm=IncidentForm(), routeForm=RouteForm(), geofenceForm=GeofenceForm(), hazardForm=HazardForm(), theftForm=TheftForm()):
 	return {
 		# Model data used by map
 		'incidents': Incident.objects.all(),
 		'hazards': Hazard.objects.all(),
+		'thefts': Theft.objects.all(),
 		"routes": Route.objects.all(),
 		"geofences": AlertArea.objects.filter(user=request.user.id),
 
@@ -55,6 +58,7 @@ def indexContext(request, incidentForm=IncidentForm(), routeForm=RouteForm(), ge
 		"routeForm": routeForm,
 		"geofenceForm": geofenceForm,
 		"hazardForm": hazardForm,
+		"theftForm": theftForm,
 		
 		"editForm": EditForm()
 	}
@@ -165,6 +169,34 @@ def postHazard(request):
 		return HttpResponseRedirect(reverse('mapApp:index')) 
 
 
+def postTheft(request):
+	if request.method == 'POST':
+		theftForm = TheftForm(request.POST)
+		
+		# Convert coords to valid geometry
+		theftForm.data = theftForm.data.copy()
+		theftForm.data['geom'] = GEOSGeometry(theftForm.data['geom'])
+
+		if theftForm.is_valid():
+			theft = theftForm.save()
+			# alertUsers(request, theft) #alertUsers view needs to be edited to accomodate thefts
+			
+			messages.success(request, '<strong>Thank you!</strong><br>Your theft marker was successfully added.')			
+			return HttpResponseRedirect(reverse('mapApp:index', \
+				kwargs=({										\
+					"lat":str(theft.latlngList()[0]),		\
+					"lng":str(theft.latlngList()[1]),		\
+					"zoom":str(18)								\
+				})												\
+			)) 
+
+		else: # Show form errors 
+			return render(request, 'mapApp/index.html', indexContext(request, hazardForm=hazardForm))
+	
+	else: # Redirect to index if not a post request
+		return HttpResponseRedirect(reverse('mapApp:index')) 
+
+
 def alertUsers(request, incident):
 	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
 	usersToAlert = set([poly.user for poly in intersectingPolys if poly.emailWeekly]) # get list of distinct users to alert
@@ -218,6 +250,14 @@ def getHazards(request):
 
 	response = HttpResponse(data, content_type="application/json")
 	response['Content-Disposition'] = 'attachment; filename="bikemaps_hazards_%s.json' % time.strftime("%x_%H-%M")
+	return response
+
+@administrator_required
+def getThefts(request):
+	data = GeoJSONSerializer().serialize(Theft.objects.all(), indent=2, use_natural_keys=True)
+
+	response = HttpResponse(data, content_type="application/json")
+	response['Content-Disposition'] = 'attachment; filename="bikemaps_thefts_%s.json' % time.strftime("%x_%H-%M")
 	return response
 
 @login_required

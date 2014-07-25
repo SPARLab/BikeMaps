@@ -4,9 +4,9 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import Accordion, AccordionGroup, FormActions, Div
 from crispy_forms.layout import Layout, Field, HTML, Button, Submit, Reset, HTML
 
-from mapApp.models.hazard import Hazard
+from mapApp.models.theft import Theft
 
-class HazardForm(forms.ModelForm):
+class TheftForm(forms.ModelForm):
     helper = FormHelper()
     helper.form_tag = False # removes auto-inclusion of form tag in template
 
@@ -14,36 +14,35 @@ class HazardForm(forms.ModelForm):
         HTML("<br>"),
         Accordion(
             AccordionGroup(
-                'Hazard',
-                Field('geom', type="hidden", id="hazPoint"), # Coords passed after click on map from static/mapApp/js/map.js
-                Field('hazard_date', id="hazard_date", template='mapApp/util/datepicker.html'),
-                Field('hazard'),
-                Field('hazard_object'),
+                'Theft',
+                Field('geom', type="hidden", id="theftPoint"), # Coords passed after click on map from static/mapApp/js/map.js
+                Field('theft_date', id="theft_date", template='mapApp/util/datepicker.html'),
+                Field('theft'),
+                Field('locked'),
+                Field("police_report")
             ),
             AccordionGroup(
                 'Personal Details',
-                Field('age'),
-                Field('sex'),
                 Field('regular_cyclist'),
-                css_id = 'hazard-personal'
+                css_id = 'theft-personal'
             ),
             AccordionGroup(
                 'Description',
-                Field('hazard_detail', placeholder='optional'),
-                css_id = 'hazard-description'
+                Field('theft_detail', placeholder='optional'),
+                css_id = 'theft-description'
             )
         ),
         Div(
             Div(
                 HTML("""
-                    <input type='checkbox' class='over13hazard'><strong> I am over the age of 13</strong>
+                    <input type='checkbox' class='over13theft'><strong> I am over the age of 13</strong>
                     
                     <script>
-                      $(".over13hazard").change(function() {
+                      $(".over13theft").change(function() {
                         if(this.checked) {
-                            $(".submitBtnHazard").removeClass("disabled");
+                            $(".submitBtnTheft").removeClass("disabled");
                         }else{
-                            $(".submitBtnHazard").addClass("disabled");
+                            $(".submitBtnTheft").addClass("disabled");
                         }
                     });
                     </script>
@@ -52,11 +51,11 @@ class HazardForm(forms.ModelForm):
             ),
             FormActions(
                 Reset('cancel', 'Cancel', onclick="$('#incidentForm').modal('hide');$('.modal-backdrop').hide();"),
-                Submit('save', 'Submit', css_class="disabled submitBtnHazard"),
+                Submit('save', 'Submit', css_class="disabled submitBtnTheft"),
             ),
             css_class='modal-footer'
         ),
     )
 
     class Meta:
-        model = Hazard
+        model = Theft

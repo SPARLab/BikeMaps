@@ -18,6 +18,7 @@ urlpatterns = patterns('',
 	# Called upon geometry object creation on map
 	url(r'^incident_submit/$', views.postIncident, name='postIncident'),
 	url(r'^hazard_submit/$', views.postHazard, name='postHazard'),
+	url(r'^theft_submit/$', views.postTheft, name='postTheft'),
 	url(r'^route_submit/$', views.postRoute, name='postRoute'),
 	url(r'^new_alert/$', views.postAlertPolygon, name='postAlertPolygon'),
 	

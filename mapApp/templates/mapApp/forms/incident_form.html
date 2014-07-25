@@ -30,7 +30,9 @@
                     {% crispy hazardForm %}
                   </form>
 
-                  <div class="tab-pane" id="theftReport">Theft form here</div>
+                  <form action="{% url 'mapApp:postTheft' %}" method="post" class="form tab-pane" id="theftReport">
+                    {% crispy theftForm %}
+                  </form>
                 </div>
 
             </div>

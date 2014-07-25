@@ -34,6 +34,7 @@
   {% url 'mapApp:about' as about %}
   {% url 'mapApp:getIncidents' as getIncidents %} 
   {% url 'mapApp:getHazards' as getHazards %} 
+  {% url 'mapApp:getThefts' as getThefts %} 
   {% url 'spirit:index' as forum %}
   {% url 'admin:index' as mapAdmin %} 
 
@@ -106,6 +107,7 @@
                   <li><a href="{{ spiritAdmin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
                   <li><a href="{{ getIncidents }}"><small>Export Incidents <span class="glyphicon glyphicon-download"></span></small></a></li>
                   <li><a href="{{ getHazards }}"><small>Export Hazards <span class="glyphicon glyphicon-download"></span></small></a></li>
+                  <li><a href="{{ getThefts }}"><small>Export Thefts <span class="glyphicon glyphicon-download"></span></small></a></li>
                   {% endif %}
           
           {% else %}

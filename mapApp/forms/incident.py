@@ -12,6 +12,7 @@ class IncidentForm(forms.ModelForm):
     helper.form_tag = False # removes auto-inclusion of form tag in template
 
     helper.layout = Layout(
+        HTML("<br>"),
         Accordion(
             AccordionGroup(
                 'Incident',
