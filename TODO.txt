@@ -12,7 +12,8 @@ High priority
 * Password protected dev release
 
 Lower priority
-* alertUsers view needs to be edited to accomodate hazards
+* add new alerts badge to navbar bell
+* alertUsers view needs to be edited to accomodate hazards and thefts
 * Make modal form templates render using only cripsy forms where possible
 * Email alerts weekly
 * Smaller sponsor logos
@@ -21,7 +22,6 @@ Lower priority
 * Write up readme
 * Documentation for future devs
 * Day/Night point clusters or a timeslider
-* custom ICBC icons
 * improve incidents heatmap
 * flagged comment alerts for admins
 
