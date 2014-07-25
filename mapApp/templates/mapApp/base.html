@@ -101,7 +101,8 @@
                   <li><a href="{{ profile }}">Profile</a></li>
                   <li><a href="{{ logout }}">Log out</a></li>
                   {% if request.user.is_superuser %}
-                  <li class="divider"></li>
+                  <li role="presentation" class="divider"></li>
+                  <li role="presentation" class="dropdown-header">Admin options</li>
                   <li><a href="{{ spiritAdmin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
                   <li><a href="{{ getIncidents }}"><small>Export Incidents <span class="glyphicon glyphicon-download"></span></small></a></li>
                   <li><a href="{{ getHazards }}"><small>Export Hazards <span class="glyphicon glyphicon-download"></span></small></a></li>
