@@ -2,9 +2,9 @@ TO DO
 
 High priority
 * Data backup
-* Unsafe area reporting
 * Fix contact email to work with spirit
-* Form errors opens correct tab
+* Popup messages more interesting..?
+* Information to collect for thefts and hazards?
 >
 * Setup media root
 * Setup static root

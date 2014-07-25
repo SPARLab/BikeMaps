@@ -35,7 +35,7 @@ class Theft(models.Model):
     objects = models.GeoManager() # Required to conduct geographic queries
 
     theft_date = models.DateTimeField(
-        'When did notice that you got robbed, sucker?'
+        'When did notice that you had been robbed?'
     )
 
     theft = models.CharField(
