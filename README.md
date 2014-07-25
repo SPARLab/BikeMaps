@@ -52,7 +52,7 @@ A database driven webapp that allows users to submit bike accidents and near-mis
       python manage.py runserver
       and visiting localhost:8000 should show the page on any dev computer
 
-  Change email password in settings to allow for new account creation and emails to admin from contact link
+  Change email password in settings.py to allow for new account creation and emails to admin from contact link
 
 
 ##### Data output

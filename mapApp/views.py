@@ -15,7 +15,12 @@ from mapApp.models.alert_area import AlertArea
 from mapApp.models.alert_notification import AlertNotification
 from mapApp.models.hazard import Hazard
 
-from mapApp.forms import IncidentForm, RouteForm, EmailForm, GeofenceForm, EditForm, HazardForm
+from mapApp.forms.incident import IncidentForm
+from mapApp.forms.route import RouteForm
+from mapApp.forms.contact import EmailForm
+from mapApp.forms.geofences import GeofenceForm
+from mapApp.forms.edit_geom import EditForm
+from mapApp.forms.hazard import HazardForm
 
 # Used for downloading data
 from spirit.utils.decorators import administrator_required
