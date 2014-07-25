@@ -113,11 +113,6 @@ def postIncident(request):
 		incidentForm.data['geom'] = GEOSGeometry(incidentForm.data['geom'])
 
 		if incidentForm.is_valid():
-			# Exit with error message if submission doesn't meet age requirement
-			if not incidentForm.cleaned_data['over13']:
-				messages.error(request, '<strong>Sorry!</strong><br>You must be over 13 years of age.')
-				return render(request, 'mapApp/index.html', indexContext(request, incidentForm=incidentForm))
-
 			incident = incidentForm.save()
 			alertUsers(request, incident)
 			
@@ -146,11 +141,6 @@ def postHazard(request):
 		hazardForm.data['geom'] = GEOSGeometry(hazardForm.data['geom'])
 
 		if hazardForm.is_valid():
-			# Exit with error message if submission doesn't meet age requirement
-			if not hazardForm.cleaned_data['over13']:
-				messages.error(request, '<strong>Sorry!</strong><br>You must be over 13 years of age.')
-				return render(request, 'mapApp/index.html', indexContext(request, hazardForm=hazardForm))
-
 			hazard = hazardForm.save()
 			# alertUsers(request, hazard) #alertUsers view needs to be edited to accomodate hazards
 			
