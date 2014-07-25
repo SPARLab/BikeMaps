@@ -4,7 +4,6 @@ High priority
 * Data backup
 * Unsafe area reporting
 * Fix contact email to work with spirit
-* Share this view extent link
 >
 * Setup media root
 * Setup static root
@@ -13,6 +12,7 @@ High priority
 
 Lower priority
 * alertUsers view needs to be edited to accomodate hazards
+* Make modal form templates render using only cripsy forms where possible
 * Email alerts weekly
 * Smaller sponsor logos
 * Check compatabilities with internet explorer (even though it's the worst)

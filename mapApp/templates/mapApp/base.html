@@ -33,6 +33,7 @@
   {% url 'mapApp:index' as index %}
   {% url 'mapApp:about' as about %}
   {% url 'mapApp:getIncidents' as getIncidents %} 
+  {% url 'mapApp:getHazards' as getHazards %} 
   {% url 'spirit:index' as forum %}
   {% url 'admin:index' as mapAdmin %} 
 
@@ -101,8 +102,9 @@
                   <li><a href="{{ logout }}">Log out</a></li>
                   {% if request.user.is_superuser %}
                   <li class="divider"></li>
-                  <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ spiritAdmin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
-                  <li {% ifequal request.path admin %} class="active" {% endifequal %}><a href="{{ getIncidents }}"><small>Export <span class="glyphicon glyphicon-download"></span></small></a></li>
+                  <li><a href="{{ spiritAdmin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
+                  <li><a href="{{ getIncidents }}"><small>Export Incidents <span class="glyphicon glyphicon-download"></span></small></a></li>
+                  <li><a href="{{ getHazards }}"><small>Export Hazards <span class="glyphicon glyphicon-download"></span></small></a></li>
                   {% endif %}
           
           {% else %}

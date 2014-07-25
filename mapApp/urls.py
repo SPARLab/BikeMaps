@@ -26,6 +26,7 @@ urlpatterns = patterns('',
 	
 	# Called by admin data export button
 	url(r'^incidents.json$', views.getIncidents, name='getIncidents'),
+	url(r'^hazards.json$', views.getHazards, name='getHazards'),
 
 	# Called when user edits or deletes an alert area
 	url(r'edit/$', views.editShape, name='editShape'),
