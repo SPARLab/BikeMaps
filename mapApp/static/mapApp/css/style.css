@@ -232,3 +232,15 @@ div.line-mouse-marker {
     margin-top: 5px;
     display: inline-block;
 }
+
+li a {
+	color: #2c3e50;
+}
+
+/*.nav-tabs>li.active>a {
+	background-color: #ecf0f1;
+	font-weight: bold;
+}.nav-tabs>li.active>a:hover {
+	background-color: #ecf0f1;
+	font-weight: bold;
+}*/

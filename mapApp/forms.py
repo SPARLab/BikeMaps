@@ -2,7 +2,7 @@ from django import forms
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import Accordion, AccordionGroup, FormActions, Div
-from crispy_forms.layout import Layout, Field, HTML, Button, Submit, Reset
+from crispy_forms.layout import Layout, Field, HTML, Button, Submit, Reset, HTML
 
 from mapApp.models.incident import Incident
 from mapApp.models.route import Route
@@ -51,12 +51,24 @@ class IncidentForm(forms.ModelForm):
         ),
         Div(
             Div(
-                Field('over13'),
+                HTML("""
+                    <input type='checkbox' class='over13_incident'><strong> I am over the age of 13</strong>
+                    
+                    <script>
+                      $(".over13_incident").change(function() {
+                        if(this.checked) {
+                            $(".submitBtnIncident").removeClass("disabled");
+                        }else{
+                            $(".submitBtnIncident").addClass("disabled");
+                        }
+                    });
+                    </script>
+                """),
                 css_class='pull-left'
             ),
             FormActions(
                 Reset('cancel', 'Cancel', onclick="$('#incidentForm').modal('hide');$('.modal-backdrop').hide();"),
-                Submit('save', 'Submit'),
+                Submit('save', 'Submit', css_class="disabled submitBtnIncident"),
             ),
             css_class='modal-footer'
         ),
@@ -94,12 +106,24 @@ class HazardForm(forms.ModelForm):
         ),
         Div(
             Div(
-                Field('over13'),
+                HTML("""
+                    <input type='checkbox' class='over13hazard'><strong> I am over the age of 13</strong>
+                    
+                    <script>
+                      $(".over13hazard").change(function() {
+                        if(this.checked) {
+                            $(".submitBtnHazard").removeClass("disabled");
+                        }else{
+                            $(".submitBtnHazard").addClass("disabled");
+                        }
+                    });
+                    </script>
+                """),
                 css_class='pull-left'
             ),
             FormActions(
                 Reset('cancel', 'Cancel', onclick="$('#incidentForm').modal('hide');$('.modal-backdrop').hide();"),
-                Submit('save', 'Submit'),
+                Submit('save', 'Submit', css_class="disabled submitBtnHazard"),
             ),
             css_class='modal-footer'
         ),
