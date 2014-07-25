@@ -245,10 +245,6 @@ class Incident(models.Model):
     )
     ##############
 
-    over13 = models.BooleanField(
-        '<strong>I am over the age of 13.</strong>'
-    )
-
 
     # reverses latlngs and turns tuple of tuples into list of lists
     def latlngList(self):
