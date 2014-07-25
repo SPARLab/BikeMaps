@@ -102,6 +102,20 @@
         });
         {% endif %}
 
+        {% if hazardForm.errors %}
+        $(window).load(function(){
+            $('.nav-tabs a[href="#hazardReport"]').tab('show')
+            $('#incidentForm').modal('show');
+        });
+        {% endif %}
+
+        {% if theftForm.errors %}
+        $(window).load(function(){
+            $('.nav-tabs a[href="#theftReport"]').tab('show')
+            $('#incidentForm').modal('show');
+        });
+        {% endif %}
+
         {% if routeForm.errors %}
         $(window).load(function(){
             $('#routeForm').modal('show');

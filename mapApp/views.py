@@ -191,7 +191,7 @@ def postTheft(request):
 			)) 
 
 		else: # Show form errors 
-			return render(request, 'mapApp/index.html', indexContext(request, hazardForm=hazardForm))
+			return render(request, 'mapApp/index.html', indexContext(request, theftForm=theftForm))
 	
 	else: # Redirect to index if not a post request
 		return HttpResponseRedirect(reverse('mapApp:index')) 
