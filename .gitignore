@@ -10,3 +10,4 @@
 
 # Ignore compiled python files
 *.pyc
+/VicBikeMap/production_settings.py
