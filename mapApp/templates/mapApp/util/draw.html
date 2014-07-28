@@ -21,7 +21,7 @@
     L.drawLocal.edit.toolbar.buttons.editDisabled = 'No alert areas to edit.';
     L.drawLocal.edit.toolbar.buttons.removeDisabled = 'No alert areas to delete.';
     
-    {% with DISABLE_GEOFENCES=True %}
+    {% with DISABLE_GEOFENCES=False %}
     /* ADD THE CONTROL TO LEAFLET MAP */
     map.addControl(new L.Control.Draw({
         draw: {

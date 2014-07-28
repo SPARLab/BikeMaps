@@ -1,4 +1,4 @@
-var DISABLE_GEOFENCES = true;
+var DISABLE_GEOFENCES = false;
 
 /* GLOBAL VARIABLES */
 var map;
