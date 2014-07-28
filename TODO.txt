@@ -1,6 +1,8 @@
 TO DO
 
 High priority
+* Add geofences to legend
+* Make sponsor logos smaller
 * Data backup
 * Fix contact email to work with spirit
 * Popup messages more interesting..?
