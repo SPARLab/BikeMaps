@@ -143,21 +143,6 @@ div.line-mouse-marker {
 	background: none;
 }
 
-.topSponsorImg{
-	padding-top: 73.5px;
-}
-
-.uvicLogo{
-	border-right-width:1px;
-	border-right-color:black;
-	border-right-style:solid;
-}
-
-.uvicDept{
-	font-size: 1.2em;
-	color: black;
-}
-
 /* search control */
 .leaflet-control-geocoder-icon {
 	background-image: url(../images/geocoder_alt.png);
@@ -237,10 +222,15 @@ li a {
 	color: #2c3e50;
 }
 
-/*.nav-tabs>li.active>a {
-	background-color: #ecf0f1;
-	font-weight: bold;
-}.nav-tabs>li.active>a:hover {
-	background-color: #ecf0f1;
-	font-weight: bold;
+/* Alignment of sponsor images */
+/*div .sponsor {
+	text-align: center;
+	height: 190px;
+	line-height: 190px;
 }*/
+div .sponsor img {
+	margin: auto;
+/*	height: 100%;
+	width: 100%;*/
+/*	vertical-align: middle;*/
+}
