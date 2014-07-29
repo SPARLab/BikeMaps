@@ -189,7 +189,7 @@ function initialize(mobile) {
 			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png"> <small>Police reported cyclist incident</small><br>' +
 			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png"> <small>Cyclist incident insurance claim location</small><br>' +
 			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png"> <small>Cyclist hazard</small><br>' +
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + theftIcon.options.icon + '+' + theftIcon.options.color + '.png"> <small>Theft</small>' +
+			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + theftIcon.options.icon + '+' + theftIcon.options.color + '.png"> <small>Bike Theft</small>' +
 			'</div>'
 
 		);
