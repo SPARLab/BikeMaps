@@ -173,7 +173,10 @@ div.line-mouse-marker {
 .legend-subtext {
 	margin-left: 18px;
 }
-.legend-marker {
+.marker-group {
+	line-height: 30px;
+}
+.marker-group img{
 	width: 20px;
     height: 50px;
     float: left;
@@ -181,9 +184,6 @@ div.line-mouse-marker {
     opacity: 0.8;
     background-size: 20px;
     margin-bottom: -20px;
-}
-.marker-group {
-	line-height: 30px;
 }
 
 .strava-gradient{
