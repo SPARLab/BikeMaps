@@ -221,16 +221,3 @@ div.line-mouse-marker {
 li a {
 	color: #2c3e50;
 }
-
-/* Alignment of sponsor images */
-/*div .sponsor {
-	text-align: center;
-	height: 190px;
-	line-height: 190px;
-}*/
-div .sponsor img {
-	margin: auto;
-/*	height: 100%;
-	width: 100%;*/
-/*	vertical-align: middle;*/
-}
