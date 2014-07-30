@@ -1,4 +1,5 @@
 var DISABLE_GEOFENCES = false;
+var RACK_CLUSTERING = false;
 
 /* GLOBAL VARIABLES */
 var map;
@@ -48,6 +49,10 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		icon: "star",
 		color: "#CC2A01",
 		size: "s"
+	}),
+	singleRackIcon = new L.DivIcon({
+		className: 'rack-cluster rack-cluster-small',
+		iconSize: new L.Point(5, 5)
 	});
 
 // Layer datasets
@@ -69,8 +74,27 @@ var accidentPoints = new L.MarkerClusterGroup({
 		blur: 20,
 	}),
 
-	// Bike rack cluster
-	racksCluster = new L.MarkerClusterGroup({
+	// Tile layers
+	skobbler = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/10/{z}/{x}/{y}.png@2x', {
+		minZoom: 2,
+		attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
+	}),
+
+	skobblerNight = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/2/{z}/{x}/{y}.png@2x', {
+		minZoom: 2,
+		attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
+	}),
+
+	stravaHM = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
+		minZoom: 3,
+		maxZoom: 17,
+		opacity: 0.8,
+		attribution: 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>'
+	});
+
+if(RACK_CLUSTERING){
+// Bike rack cluster (clustered points)
+	var racksCluster = new L.MarkerClusterGroup({
 		showCoverageOnHover: false,
 		// spiderfyOnMaxZoom: false,
 		maxClusterRadius: 20,
@@ -90,25 +114,12 @@ var accidentPoints = new L.MarkerClusterGroup({
 				iconSize: size
 			});
 		},
-	}),
-
-	// Tile layers
-	skobbler = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/10/{z}/{x}/{y}.png@2x', {
-		minZoom: 2,
-		attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
-	}),
-
-	skobblerNight = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/2/{z}/{x}/{y}.png@2x', {
-		minZoom: 2,
-		attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
-	}),
-
-	stravaHM = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
-		minZoom: 3,
-		maxZoom: 17,
-		opacity: 0.8,
-		attribution: 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>'
 	});
+} else {
+	// Bike rack layer (single points)
+	var racksCluster = new L.FeatureGroup([]);
+};
+
 
 /* Create the map with a tile layer and set global variable map */
 function initialize(mobile) {
@@ -159,7 +170,11 @@ function initialize(mobile) {
 
 			bikeRacksVictoria = new L.geoJson(bikeRacks, {
 				pointToLayer: function(feature, latlng) {
-					return L.marker(latlng);
+					if(RACK_CLUSTERING){
+						return L.marker(latlng); // For cluster
+					} else {
+						return L.marker(latlng, {icon: singleRackIcon})
+					}
 				},
 				onEachFeature: function(feature, layer) {
 					layer.bindPopup('Bike rack');
@@ -174,8 +189,8 @@ function initialize(mobile) {
 		});
 
 		// Add layers
-		layerControl.addBaseLayer(skobbler, '<i class="fa fa-sun-o"></i> Light map');
-		layerControl.addBaseLayer(skobblerNight, '<i class="fa fa-moon-o"></i> Dark map');
+		// layerControl.addBaseLayer(skobbler, '<i class="fa fa-sun-o"></i> Light map');
+		// layerControl.addBaseLayer(skobblerNight, '<i class="fa fa-moon-o"></i> Dark map');
 		
 		layerControl.addOverlay(stravaHM, 'Cyclist density heatmap<br>' +
 			'<div class="legend-subtext">' +
@@ -197,12 +212,16 @@ function initialize(mobile) {
 			layerControl.addOverlay(alertAreas, "Alert Areas");
 		}
 		
-		layerControl.addOverlay(racksCluster, "Bike Racks<br>" +
+
+		racksLegendHTML = "Bike Racks<br>" +
 			'<div class="legend-subtext">' +
-			'<div class="rack-cluster-small" style="width: 5px; height: 5px; display: inline-block; border-radius:20px; margin-left:3px;"></div><small> Single rack</small>' + 
-			'<br>' + 
-			'<div class="rack-cluster-medium" style="width: 10px; height: 10px; display: inline-block; border-radius:20px"></div><small> Multiple racks</small>' +
-			'</div>');
+			'<div class="rack-cluster-small" style="width: 5px; height: 5px; display: inline-block; border-radius:20px; margin-left:3px;"></div><small> Single rack</small>';
+		if(RACK_CLUSTERING){
+			racksLegendHTML += '<br><div class="rack-cluster-medium" style="width: 10px; height: 10px; display: inline-block; border-radius:20px"></div><small> Multiple racks</small>';
+		}
+		racksLegendHTML += '</div>';
+
+		layerControl.addOverlay(racksCluster, racksLegendHTML);
 		
 		layerControl.addOverlay(heatMap, 'Incident heatmap<br>' +
 			'<div class="legend-subtext">' +

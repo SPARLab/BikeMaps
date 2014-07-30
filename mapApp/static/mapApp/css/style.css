@@ -76,11 +76,13 @@ body h1{
 }
 
 .rack-cluster-small {
-	background-color: rgba(128, 128, 0, 0.6);
+	background-color: #111111;
+	opacity:0.6;
 }
 
 .rack-cluster-medium {
-	background-color: rgba(170, 170, 0, 0.6);
+	background-color: #444444;
+	opacity:0.6;
 }
 
 .rack-cluster {
