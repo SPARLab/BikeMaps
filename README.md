@@ -43,13 +43,13 @@ A database driven webapp that allows users to submit bike accidents and near-mis
         + pip install -r requirements.txt
 
     Then, run:
-      python manage.py syncdb --settings=VicBikeMap.settings.development (or use production settings)
-      python manage.py loaddata spirit_init --settings=VicBikeMap.settings.development (or use production settings)
-      python manage.py createcachetable spirit_cache --settings=VicBikeMap.settings.development (or use production settings)
-      # python manage.py collectstatic # In future, after static root is set (not yet implemented)
+      python manage.py syncdb
+      python manage.py loaddata spirit_init
+      python manage.py createcachetable spirit_cache
+      # python manage.py collectstatic # If on production server only
 
     Then running
-      python manage.py runserver --settings=VicBikeMap.settings.development (or use production settings)
+      python manage.py runserver
       and visiting localhost:8000 should show the page on any dev computer
 
   Change email password in settings.py to allow for new account creation and emails to admin from contact link
