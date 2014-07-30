@@ -46,7 +46,7 @@ A database driven webapp that allows users to submit bike accidents and near-mis
       python manage.py syncdb
       python manage.py loaddata spirit_init
       python manage.py createcachetable spirit_cache
-      # python manage.py collectstatic # If on production server
+      # python manage.py collectstatic # If on production server only
 
     Then running
       python manage.py runserver
