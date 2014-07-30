@@ -10,5 +10,9 @@
 
 # Ignore compiled python files
 *.pyc
+<<<<<<< HEAD
 /VicBikeMap/settings/production.py
 /VicBikeMap/static/
+=======
+/VicBikeMap/settings/prod.py
+>>>>>>> f34a224d2582df9efa36316521908bc0ac07cb25
