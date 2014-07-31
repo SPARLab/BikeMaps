@@ -11,3 +11,4 @@
 # Ignore compiled python files
 *.pyc
 /VicBikeMap/settings/prod.py
+/spirit/images/
