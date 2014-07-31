@@ -186,6 +186,15 @@ div.line-mouse-marker {
     margin-bottom: -20px;
 }
 
+/* Stops bouncing of elements when collapsing out legend */
+#location-legend{
+	max-height: 30px;
+}
+#incident-legend{
+	max-height: 180px;
+}
+
+/* Legend gradients*/
 .strava-gradient{
 	background: rgba(255,102,17,0);
 	background: -moz-linear-gradient(left, rgba(255,102,17,0) 0%, rgba(255,102,17,1) 100%);
@@ -220,6 +229,7 @@ div.line-mouse-marker {
     display: inline-block;
 }
 
+/* General text alteration from bootstrap defaults*/
 li a {
 	color: #2c3e50;
 }

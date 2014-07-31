@@ -290,7 +290,7 @@ function initialize(mobile) {
 		function onLocationFound(e) {
 			// console.log('location found');
 			// if(locationGroup) layerControl.removeLayer(locationGroup);
-			var radius = e.accuracy / 2,
+			var radius = Math.round((((e.accuracy / 2)+0.00001)*100)/100), //Round accuracy to two decimal places
 
 				marker = L.marker(e.latlng, {
 					icon: locationIcon
