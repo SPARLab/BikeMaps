@@ -1,0 +1,97 @@
+  {% url 'mapApp:index' as index %}
+  {% url 'mapApp:about' as about %}
+  {% url 'mapApp:getIncidents' as getIncidents %} 
+  {% url 'mapApp:getHazards' as getHazards %} 
+  {% url 'mapApp:getThefts' as getThefts %} 
+  {% url 'spirit:index' as forum %}
+  {% url 'admin:index' as mapAdmin %} 
+
+  {% url 'spirit:admin' as spiritAdmin %}
+
+  {% url 'spirit:user-logout' as logout %}
+  {% url 'spirit:user-login' as login %}
+  {% url 'spirit:user-register' as register %}
+  {% url 'spirit:profile-update' as profile %}
+
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="{{ index }}" class="navbar-brand"><img src="{% static 'mapApp/images/bikemaps_alt.png' %}"> <strong>BikeMaps.org</strong></a>
+      </div>
+
+      <!-- {% endifequal % -->
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav" role="navigation">
+
+          <li {% ifequal request.path index %} class="active" {% endifequal %}><a href="{{ index }}">Home <span class="glyphicon glyphicon-map-marker"></span></a></li
+          >
+
+          {% with request.path|slice:":7" as forumPath %}
+          <li {% ifequal forumPath forum %} class="active" {% endifequal %}><a href="{{ forum }}">Forum <span class="glyphicon glyphicon-comment"></span></a></li>
+          {% endwith %}
+
+          <li {% ifequal request.path about %} class="active" {% endifequal %}><a href="{{ about }}">About <span class="glyphicon glyphicon-leaf"></span></a></li>
+
+          <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Share </span><span class="glyphicon glyphicon-share"></span> <span class="caret"></a>
+              <ul class="dropdown-menu" role="menu">          
+              <li><a href="https://www.facebook.com/sharer/sharer.php?u=bikemaps.org&t=BikeMaps.org%20is%20the%20coolest">
+                  <i class="fa fa-facebook"></i> Facebook</a></li>
+              <li><a href="http://twitter.com/intent/tweet?text=Take%20a%20look%20at%20reported%20cycling%20incidents%20in%20your%20community%20here!%20&url=http%3A%2F%2Fbikemaps.org">
+                  <i class="fa fa-twitter"></i> Twitter</a></li>
+              <li><a href="https://plus.google.com/share?url=bikemaps.org">
+                  <i class="fa fa-google-plus"></i> Google+</a></li>
+              <li><a href="http://www.tumblr.com/share/link?url=bikemaps.org&name=BikeMaps.org&description=Take%20a%20look%20at%20reported%20cycling%20incidents%20in%20your%20community%20at%20BikeMaps.org#sthash.2MHzi8oM.dpuf">
+                  <i class="fa fa-tumblr"></i> Tumblr</a></li>
+              <li><a href="http://reddit.com/submit?url=bikemaps.org&title=BikeMaps.org#sthash.2MHzi8oM.dpuf">
+                  <i class="fa fa-reddit"></i> Reddit</a></li>
+              <li><a href="http://www.stumbleupon.com/submit?url=bikemaps.org&title=BikeMaps.org#sthash.2MHzi8oM.dpuf">
+                  <i class="fa fa-stumbleupon"></i> StumbleUpon</a></li>
+            </ul>
+          </li>          
+        </ul>
+        
+        <ul class="nav navbar-nav navbar-right">
+          {% if request.user.is_authenticated %}
+            {% has_alerts user as has_notifications %}
+            <li><a href="{% url "spirit:topic-notification-list" %}"><span class="glyphicon glyphicon-bell {% if has_notifications %} is-highlighted{% endif %}"></span></a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{ request.user }}<span class="caret"></span></a>
+
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="{{ profile }}">Profile</a></li>
+                  <li><a href="{{ logout }}">Log out</a></li>
+                  {% if request.user.is_superuser %}
+                  <li role="presentation" class="divider"></li>
+                  <li role="presentation" class="dropdown-header">Admin options</li>
+                  <li><a href="{{ spiritAdmin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
+                  <li><a href="{{ getIncidents }}"><small>Export Incidents <span class="glyphicon glyphicon-download"></span></small></a></li>
+                  <li><a href="{{ getHazards }}"><small>Export Hazards <span class="glyphicon glyphicon-download"></span></small></a></li>
+                  <li><a href="{{ getThefts }}"><small>Export Thefts <span class="glyphicon glyphicon-download"></span></small></a></li>
+                  {% endif %}
+          
+          {% else %}
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Guest<span class="caret"></span></a>
+
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ login }}">Log in</a></li> 
+                <li><a href="{{ register }}">Register</a></li> 
+          
+          {% endif %}    
+              </ul>
+            </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
