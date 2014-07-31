@@ -12,3 +12,4 @@
 *.pyc
 /VicBikeMap/settings/prod.py
 /static/
+/spirit/images/
