@@ -194,7 +194,7 @@ function initialize(mobile) {
 		// layerControl.addBaseLayer(skobbler, '<i class="fa fa-sun-o"></i> Light map');
 		// layerControl.addBaseLayer(skobblerNight, '<i class="fa fa-moon-o"></i> Dark map');
 		
-		layerControl.addOverlay(stravaHM, 'Cyclist density heatmap<br>' +
+		layerControl.addOverlay(stravaHM, 'Rider volume<br>' +
 			'<div id=strava-legend class="legend-subtext collapse in">' +
 			'<small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>' + 
 			'</div>');
@@ -209,10 +209,10 @@ function initialize(mobile) {
 			+		' <small>Citizen near miss report</small><br>' 
 			
 			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png">'
-			+		' <small>Police reported cyclist incident</small><br>' 
+			+		' <small>Police report</small><br>' 
 			
 			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png">'
-			+		' <small>Cyclist incident insurance claim location</small><br>' 
+			+		' <small>Insurance report</small><br>' 
 			
 			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png">'
 			+		' <small>Cyclist hazard</small><br>' 
@@ -223,7 +223,10 @@ function initialize(mobile) {
 		);
 		
 		if (!DISABLE_GEOFENCES) {
-			layerControl.addOverlay(alertAreas, "Alert Areas");
+			layerControl.addOverlay(alertAreas, 'Alert Areas<br>' +
+			'<div id="alert-areas-legend" class="legend-subtext collapse in">' +
+			'<small class="alert-area-box"></small>' +
+			'</div>');
 		}
 
 		racksLegendHTML = "Bike Racks<br>" +
@@ -321,7 +324,7 @@ function initialize(mobile) {
 			if(e.name.match('Incident points.')){
 				$('#incident-legend').collapse('hide');
 			}
-			else if(e.name.match('Cyclist density heatmap.')){
+			else if(e.name.match('Rider volume.')){
 				$('#strava-legend').collapse('hide');
 			}
 			else if(e.name.match('Bike Racks.')){
@@ -333,16 +336,16 @@ function initialize(mobile) {
 			else if(e.name.match('Detected location.')){
 				$('#location-legend').collapse('hide');
 			}		
-			// else if(e.name.match('Alert Areas.')){
-			// 	$('#hm-legend').collapse('hide');
-			// }
+			else if(e.name.match('Alert Areas.')){
+				$('#alert-areas-legend').collapse('hide');
+			}
 		};
 
 		function showLegendItem(e){
 			if(e.name.match('Incident points.')){
 				$('#incident-legend').collapse('show');
 			}
-			else if(e.name.match('Cyclist density heatmap.')){
+			else if(e.name.match('Rider volume.')){
 				$('#strava-legend').collapse('show');
 			}
 			else if(e.name.match('Bike Racks.')){
@@ -354,9 +357,9 @@ function initialize(mobile) {
 			else if(e.name.match('Detected location.')){
 				$('#location-legend').collapse('show');
 			}			
-			// else if(e.name.match('Alert Areas.')){
-			// 	$('#hm-legend').collapse('show');
-			// }
+			else if(e.name.match('Alert Areas.')){
+				$('#alert-areas-legend').collapse('show');
+			}
 		};
 	};
 };
