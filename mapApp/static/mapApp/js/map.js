@@ -1,4 +1,5 @@
 var DISABLE_GEOFENCES = false;
+var RACK_CLUSTERING = false;
 
 /* GLOBAL VARIABLES */
 var map;
@@ -48,6 +49,10 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		icon: "star",
 		color: "#CC2A01",
 		size: "s"
+	}),
+	singleRackIcon = new L.DivIcon({
+		className: 'rack-cluster rack-cluster-small',
+		iconSize: new L.Point(5, 5)
 	});
 
 // Layer datasets
@@ -69,8 +74,27 @@ var accidentPoints = new L.MarkerClusterGroup({
 		blur: 20,
 	}),
 
-	// Bike rack cluster
-	racksCluster = new L.MarkerClusterGroup({
+	// Tile layers
+	skobbler = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/10/{z}/{x}/{y}.png@2x', {
+		minZoom: 2,
+		attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
+	}),
+
+	skobblerNight = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/2/{z}/{x}/{y}.png@2x', {
+		minZoom: 2,
+		attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
+	}),
+
+	stravaHM = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
+		minZoom: 3,
+		maxZoom: 17,
+		opacity: 0.8,
+		attribution: 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>'
+	});
+
+if(RACK_CLUSTERING){
+// Bike rack cluster (clustered points)
+	var racksCluster = new L.MarkerClusterGroup({
 		showCoverageOnHover: false,
 		// spiderfyOnMaxZoom: false,
 		maxClusterRadius: 20,
@@ -90,25 +114,11 @@ var accidentPoints = new L.MarkerClusterGroup({
 				iconSize: size
 			});
 		},
-	}),
-
-	// Tile layers
-	skobbler = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/10/{z}/{x}/{y}.png@2x', {
-		minZoom: 2,
-		attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
-	}),
-
-	skobblerNight = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/1111113120/2/{z}/{x}/{y}.png@2x', {
-		minZoom: 2,
-		attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
-	}),
-
-	stravaHM = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
-		minZoom: 3,
-		maxZoom: 17,
-		opacity: 0.8,
-		attribution: 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>'
 	});
+} else {
+	// Bike rack layer (single points)
+	var racksCluster = new L.FeatureGroup([]);
+};
 
 /* Create the map with a tile layer and set global variable map */
 function initialize(mobile) {
@@ -126,6 +136,8 @@ function initialize(mobile) {
 
 	// Add all controls to the map
 	addControls(mobile);
+
+	$(document).ready(mapListen);
 
 	function initializeGeoJsonLayers() {
 		var policePoints = new L.geoJson(policeData, {
@@ -159,7 +171,11 @@ function initialize(mobile) {
 
 			bikeRacksVictoria = new L.geoJson(bikeRacks, {
 				pointToLayer: function(feature, latlng) {
-					return L.marker(latlng);
+					if(RACK_CLUSTERING){
+						return L.marker(latlng); // For cluster
+					} else {
+						return L.marker(latlng, {icon: singleRackIcon})
+					}
 				},
 				onEachFeature: function(feature, layer) {
 					layer.bindPopup('Bike rack');
@@ -174,38 +190,54 @@ function initialize(mobile) {
 		});
 
 		// Add layers
-		layerControl.addBaseLayer(skobbler, '<i class="fa fa-sun-o"></i> Light map');
-		layerControl.addBaseLayer(skobblerNight, '<i class="fa fa-moon-o"></i> Dark map');
+		// Basemaps
+		// layerControl.addBaseLayer(skobbler, '<i class="fa fa-sun-o"></i> Light map');
+		// layerControl.addBaseLayer(skobblerNight, '<i class="fa fa-moon-o"></i> Dark map');
 		
 		layerControl.addOverlay(stravaHM, 'Cyclist density heatmap<br>' +
-			'<div class="legend-subtext">' +
+			'<div id=strava-legend class="legend-subtext collapse in">' +
 			'<small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>' + 
 			'</div>');
 		
 		layerControl.addOverlay(accidentPoints,
-			'Incident points<br><div class="marker-group legend-subtext">' +
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png"> <small>User collision</small><br>' +
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png"> <small>User near miss</small><br>' +
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png"> <small>Police reported cyclist incident</small><br>' +
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png"> <small>Cyclist incident insurance claim location</small><br>' +
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png"> <small>Cyclist hazard</small><br>' +
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + theftIcon.options.icon + '+' + theftIcon.options.color + '.png"> <small>Bike Theft</small>' +
-			'</div>'
-
+			'Incident points<br>'
+			+'<div id=incident-legend class="marker-group legend-subtext collapse in">' 
+			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png">'
+			+		' <small>User collision</small><br>' 
+			
+			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png">'
+			+		' <small>User near miss</small><br>' 
+			
+			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png">'
+			+		' <small>Police reported cyclist incident</small><br>' 
+			
+			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png">'
+			+		' <small>Cyclist incident insurance claim location</small><br>' 
+			
+			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png">'
+			+		' <small>Cyclist hazard</small><br>' 
+			
+			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + theftIcon.options.icon + '+' + theftIcon.options.color + '.png">'
+			+		' <small>Bike Theft</small>' 
+			+'</div>'
 		);
+		
 		if (!DISABLE_GEOFENCES) {
 			layerControl.addOverlay(alertAreas, "Alert Areas");
 		}
-		
-		layerControl.addOverlay(racksCluster, "Bike Racks<br>" +
-			'<div class="legend-subtext">' +
-			'<div class="rack-cluster-small" style="width: 5px; height: 5px; display: inline-block; border-radius:20px; margin-left:3px;"></div><small> Single rack</small>' + 
-			'<br>' + 
-			'<div class="rack-cluster-medium" style="width: 10px; height: 10px; display: inline-block; border-radius:20px"></div><small> Multiple racks</small>' +
-			'</div>');
+
+		racksLegendHTML = "Bike Racks<br>" +
+			'<div id="racks-legend" class="legend-subtext collapse">' +
+			'<div class="rack-cluster-small" style="width: 5px; height: 5px; display: inline-block; border-radius:20px; margin-left:3px;"></div><small> Single rack</small>';
+		if(RACK_CLUSTERING){
+			racksLegendHTML += '<br><div class="rack-cluster-medium" style="width: 10px; height: 10px; display: inline-block; border-radius:20px"></div><small> Multiple racks</small>';
+		}
+		racksLegendHTML += '</div>';
+
+		layerControl.addOverlay(racksCluster, racksLegendHTML);
 		
 		layerControl.addOverlay(heatMap, 'Incident heatmap<br>' +
-			'<div class="legend-subtext">' +
+			'<div id="hm-legend" class="legend-subtext collapse">' +
 			'<small class="rainbow-gradient gradient-bar">less <div class="pull-right">more</div></small>' +
 			'</div>');
 
@@ -244,14 +276,88 @@ function initialize(mobile) {
 			},
 			'Get Help'
 		);
+	};
 
-		/*ADD GPS BUTTON */
-		// map.addControl(new L.Control.Gps({
-		// 	// autoActive: true,
-		// 	title: 'Show your detected location',
-		// 	marker: new L.marker([0,0], {
-		// 	icon: locationIcon})
-		// }));
+	function mapListen(){
+		// Listener events for locating the user
+		map.on('locationerror', onLocationError);
+		map.on('locationfound', onLocationFound);
+		
+		function onLocationError(e) {
+			alert(e.message);
+		};
+
+		function onLocationFound(e) {
+			// console.log('location found');
+			// if(locationGroup) layerControl.removeLayer(locationGroup);
+			var radius = e.accuracy / 2,
+
+				marker = L.marker(e.latlng, {
+					icon: locationIcon
+				})
+				.bindPopup("You are within " + radius + " meters of this point"),
+				circle = L.circle(e.latlng, radius, {
+					color: "#" + locationIcon.options.color,
+					weight: 1,
+					opacity: 0.3,
+					clickable: false,
+					fillOpacity: 0.05
+				});
+
+			locationGroup = L.layerGroup([marker, circle]);
+			layerControl.addOverlay(locationGroup, 'Detected location<br>' +
+				'<div id="location-legend" class="marker-group legend-subtext collapse">' +
+				'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + locationIcon.options.icon + '+' + locationIcon.options.color + '.png"> <small>You are here</small></div>' +
+				'</div>');
+			locationGroup.addTo(map);
+		};
+
+
+		//Listener events for toggling legend items
+		map.on('overlayremove', collapseLegendItem);
+		map.on('overlayadd', showLegendItem);
+
+		function collapseLegendItem(e){
+			if(e.name.match('Incident points.')){
+				$('#incident-legend').collapse('hide');
+			}
+			else if(e.name.match('Cyclist density heatmap.')){
+				$('#strava-legend').collapse('hide');
+			}
+			else if(e.name.match('Bike Racks.')){
+				$('#racks-legend').collapse('hide');
+			}
+			else if(e.name.match('Incident heatmap.')){
+				$('#hm-legend').collapse('hide');
+			}
+			else if(e.name.match('Detected location.')){
+				$('#location-legend').collapse('hide');
+			}		
+			// else if(e.name.match('Alert Areas.')){
+			// 	$('#hm-legend').collapse('hide');
+			// }
+		};
+
+		function showLegendItem(e){
+			if(e.name.match('Incident points.')){
+				$('#incident-legend').collapse('show');
+			}
+			else if(e.name.match('Cyclist density heatmap.')){
+				$('#strava-legend').collapse('show');
+			}
+			else if(e.name.match('Bike Racks.')){
+				$('#racks-legend').collapse('show');
+			}
+			else if(e.name.match('Incident heatmap.')){
+				$('#hm-legend').collapse('show');
+			}	
+			else if(e.name.match('Detected location.')){
+				$('#location-legend').collapse('show');
+			}			
+			// else if(e.name.match('Alert Areas.')){
+			// 	$('#hm-legend').collapse('show');
+			// }
+		};
 	};
 };
 
@@ -265,10 +371,6 @@ function setView(lat, lng, zoom) {
 		locateUser(setView = true);
 	}
 
-	// Define event actions for finding the user's location
-	map.on('locationerror', onLocationError);
-	map.on('locationfound', onLocationFound);
-
 	/* FIND AND RETURN THE USER'S LOCATION */
 	function locateUser(setView) {
 		this.map.locate({
@@ -277,35 +379,6 @@ function setView(lat, lng, zoom) {
 			// watch: true,
 			enableHighAccuracy: true
 		});
-	};
-
-	function onLocationError(e) {
-		alert(e.message);
-	};
-
-	function onLocationFound(e) {
-		// console.log('location found');
-		// if(locationGroup) layerControl.removeLayer(locationGroup);
-		var radius = e.accuracy / 2,
-
-			marker = L.marker(e.latlng, {
-				icon: locationIcon
-			})
-			.bindPopup("You are within " + radius + " meters of this point"),
-			circle = L.circle(e.latlng, radius, {
-				color: "#" + locationIcon.options.color,
-				weight: 1,
-				opacity: 0.3,
-				clickable: false,
-				fillOpacity: 0.05
-			});
-
-		locationGroup = L.layerGroup([marker, circle]);
-		layerControl.addOverlay(locationGroup, 'Detected location<br><div class="marker-group">' +
-			'<div class="legend-subtext">' +
-			'<img class="legend-marker" src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + locationIcon.options.icon + '+' + locationIcon.options.color + '.png"> <small>You are here</small></div>' +
-			'</div>');
-		locationGroup.addTo(map);
 	};
 };
 
