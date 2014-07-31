@@ -73,13 +73,11 @@
 
     <!-- Load app js -->
     <script src="{% static 'mapApp/js/map.js' %}"></script>
+    {% load crispy_forms_tags %}
+    {% crispy geofenceForm %}
+    {% crispy routeForm %}
 
-    <!-- Modal form popups -->
-    {% include 'mapApp/forms/incident_form.html' %}
-    {% include 'mapApp/forms/route_form.html' %}
-    {% include 'mapApp/forms/geofence_form.html' %}
-
-
+    {% include 'mapApp/incident_form.html' %}
 {% endblock %}
 
 
