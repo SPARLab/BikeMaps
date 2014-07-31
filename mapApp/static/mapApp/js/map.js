@@ -203,10 +203,10 @@ function initialize(mobile) {
 			'Incident points<br>'
 			+'<div id=incident-legend class="marker-group legend-subtext collapse in">' 
 			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png">'
-			+		' <small>User collision</small><br>' 
+			+		' <small>Citizen collision report</small><br>' 
 			
 			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png">'
-			+		' <small>User near miss</small><br>' 
+			+		' <small>Citizen near miss report</small><br>' 
 			
 			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png">'
 			+		' <small>Police reported cyclist incident</small><br>' 
