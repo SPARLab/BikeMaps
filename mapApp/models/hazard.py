@@ -23,7 +23,9 @@ HAZARD_OBJECT_CHOICES = (
     ('Pothole', 'Pothole'),
     ('Lane divider', 'Lane divider'),
     ('Animal', 'Animal'),
-    ('Sign/Post', 'Sign/Post')
+    ('Sign/Post', 'Sign/Post'),
+    ('Infrastructure needing repair', 'Infrastructure needing repair'),
+    ('Dangerous infrastructure', 'Dangerous infrastructure')
 )
 
 AGE_CHOICES = (
