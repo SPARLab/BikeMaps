@@ -232,8 +232,8 @@ div.line-mouse-marker {
 .alert-area-box{
 	background: rgba(59, 153, 114, 0.1);
 	border: 2px solid rgba(59, 153, 114, 0.6);
-	height: 15px;
-	width: 150px;
+	height: 20px;
+	width: 32.36px; /*THE GOLDEN RATIO*/
     margin-top: 5px;
     display: inline-block;
 
