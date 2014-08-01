@@ -9,6 +9,6 @@ urlpatterns = patterns('',
     url(r'^forum/', include('spirit.urls', namespace="spirit", app_name="spirit")),
 )
 
-urlpatterns += patterns('',
-    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-)
+# urlpatterns += patterns('',
+#     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+# )

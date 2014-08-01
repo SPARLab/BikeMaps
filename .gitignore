@@ -13,4 +13,4 @@
 /VicBikeMap/settings/prod.py
 /static/
 /media/
-/spirit/images/
+.DS_store
