@@ -8,7 +8,9 @@ from django.contrib.gis.geos import GEOSGeometry
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.core.mail import send_mail
+import time
 
+# Import models
 from django.contrib.auth.models import User, Group
 from mapApp.models.incident import Incident
 from mapApp.models.route import Route
@@ -17,6 +19,7 @@ from mapApp.models.alert_notification import AlertNotification
 from mapApp.models.hazard import Hazard
 from mapApp.models.theft import Theft
 
+# Import forms
 from mapApp.forms.incident import IncidentForm
 from mapApp.forms.route import RouteForm
 from mapApp.forms.contact import EmailForm
@@ -30,7 +33,6 @@ from spirit.utils.decorators import administrator_required
 from django.contrib.auth.decorators import login_required
 from djgeojson.serializers import Serializer as GeoJSONSerializer
 
-import time
 
 def index(request, lat=None, lng=None, zoom=None):
 	context = indexContext(request)
