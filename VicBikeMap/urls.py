@@ -8,3 +8,9 @@ urlpatterns = patterns('',
     url(r'^', include('mapApp.urls', namespace="mapApp")),
     url(r'^forum/', include('spirit.urls', namespace="spirit", app_name="spirit")),
 )
+
+from django.conf import settings
+
+urlpatterns += patterns('',
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+)
