@@ -1,17 +1,13 @@
 TO DO
 
 High priority
+* Edit hazards and thefts!
 * Add geofences to legend
-* Make sponsor logos smaller
 * Data backup
-* Fix contact email to work with spirit
 * Popup messages more interesting..?
 * Information to collect for thefts and hazards?
 >
-* Setup media root
-* Setup static root
 * Add beta tag?
-* Password protected dev release
 
 Lower priority
 * add new alerts badge to navbar bell
