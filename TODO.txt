@@ -1,13 +1,18 @@
 TO DO
 
 High priority
-* Edit hazards and thefts!
-* Add geofences to legend
+* Edit modal for alert areas when creating them
+* Display hazards and theft in alert area notifications
 * Data backup
 * Popup messages more interesting..?
 * Information to collect for thefts and hazards?
->
-* Add beta tag?
+* Alert report
+* Shut off skobbler bike lanes
+* Add our own bikelands
+* Create infrastructure category in legend with bikelanes and bike racks
+* Combine police and insurance icons/categories into new more general category
+
+
 
 Lower priority
 * add new alerts badge to navbar bell
