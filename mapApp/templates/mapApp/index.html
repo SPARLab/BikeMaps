@@ -146,8 +146,6 @@
         initialize({% if request.mobile %} mobile=true {% endif %});
 
         setView({% if zoom %} {{ lat }}, {{ lng }}, {{ zoom}} {% endif %});
-
-
     </script>
 
     <!-- Add Leaflet.draw controls and actions -->
@@ -157,4 +155,30 @@
 
     <!-- Google analytics tracker -->
     {% include 'mapApp/util/google-analytics.html' %}
+
+
+    <div class="modal fade" id="about-alert-areas">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">About alert areas</h4>
+          </div>
+          <div class="modal-body">
+            <p>Receive monthly alerts for your riding area.</p>
+            To setup monitoring areas:
+                <ol>
+                    <li>Login to your account
+                    <li>Trace areas on the map you would like to track using the <span id="polygon-sprite"></span> button.
+                        <br><small><em>note: mobile devices not currently supported for tracing.</em></small>
+                </ol>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <a href="{% url 'spirit:user-login' %}" type="button" class="btn btn-primary">Login or Register</a>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 {% endblock %}

@@ -242,3 +242,11 @@ div.line-mouse-marker {
 li a {
 	color: #2c3e50;
 }
+
+#polygon-sprite{
+	width: 25px;
+    height: 25px;
+    display: inline-block;
+    background: url(../../leaflet/plugins/leaflet.draw/dist/images/spritesheet.png) -32px 3px;
+    margin-top: -9px;	
+}

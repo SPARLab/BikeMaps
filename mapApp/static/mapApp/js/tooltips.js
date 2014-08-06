@@ -5,7 +5,7 @@ $(document).ready(function(){
  	// layer control
 	$('.leaflet-control-layers-toggle').tipsy({gravity:'e', trigger: 'manual', title: function(){ return "Layer control"}, fade: true});
 	// search control
-	$('.leaflet-control-geocoder').tipsy({gravity:'e', delayIn:400, fade: true, title: function(){ return "Search for an address"}});
+	$('.leaflet-control-geocoder').tipsy({gravity:'w', delayIn:400, fade: true, title: function(){ return "Search for an address"}});
  	// delete points control
  	$('.leaflet-right .leaflet-draw-edit-remove').prop('title', 'Delete user points');
  	$('.leaflet-right .leaflet-draw-edit-remove').tipsy({gravity:'e', delayIn: 400, fade: true});

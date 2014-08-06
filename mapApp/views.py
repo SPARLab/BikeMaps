@@ -203,9 +203,7 @@ def postTheft(request):
 
 def alertUsers(request, incident):
 	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
-	usersToAlert = set([poly.user for poly in intersectingPolys if poly.emailWeekly]) # get list of distinct users to alert
-	usersToNotEmail = list(set([poly.user for poly in intersectingPolys if not poly.emailWeekly]) - usersToAlert) # Email if conflict between two polygons receive email
-	usersToAlert = list(usersToAlert)
+	usersToAlert = list(set([poly.user for poly in intersectingPolys])) # get list of distinct users to alert
 
 	# TODO FIX THIS MAGIC
 	if (incident.incident_type() == "Collision"):
@@ -217,9 +215,6 @@ def alertUsers(request, incident):
 
 	for user in usersToAlert:
 		AlertNotification(user=user, point=incident, action=action).save()
-
-	for user in usersToNotEmail:
-		AlertNotification(user=user, point=incident, action=action, emailed=True).save()
 
 @require_POST
 @login_required
@@ -238,7 +233,7 @@ def postAlertPolygon(request):
 	if geofenceForm.is_valid():
 		# Save new model object, send success message to the user
 		geofenceForm.save()
-		messages.success(request, 'You will now receive alerts for the area was traced.')
+		messages.success(request, 'You will now receive alerts for the area traced.')
 
 	return HttpResponseRedirect(reverse('mapApp:index'))
 

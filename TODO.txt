@@ -26,3 +26,23 @@ Lower priority
 BUGS
 * Moderate comments > delete button not working
 * Date picker does not scroll with modal
+
+
+
+
+
+
+Trisalyn TODO
+BikeMaps – Functionality
+-	Database backup
+-	Intersection search
+-	Linking the occurrence of a near-miss, crash, and theft to weather.
+-	Bike infrastructure in the legend with bike route and racks
+-	Alert emails to include graphics
+-	Alert info button - Receive monthly alerts for your riding area. Register to access alert functionality and define an area to track.
+-	Prize entry for registered users
+-	Sliders and query tools on the website so people can see where recent crashes are or the difference between day and night incidents.
+-	Integrate all official crash reports into one layer. When we click on markers the date and source should be shown. For the citizen data maybe the data and object
+		the incident occurred with. 
+-	Is it possible that when people click on the source of official data that they get metadata. For example if it is ICBC we could say. “Data available for British
+		Columbia from 1999 to 2013. Incident characteristics not provided.”

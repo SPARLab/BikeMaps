@@ -223,10 +223,12 @@ function initialize(mobile) {
 		);
 		
 		if (!DISABLE_GEOFENCES) {
-			layerControl.addOverlay(alertAreas, 'Alert Areas<br>' +
-			'<div id="alert-areas-legend" class="legend-subtext collapse in">' +
-			'<small class="alert-area-box"></small>' +
-			'</div>');
+			layerControl.addOverlay(alertAreas, 'Alert Areas' +
+				'   <a data-target="#about-alert-areas" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>' +
+				'<div id="alert-areas-legend" class="legend-subtext collapse in">' +
+				'<small class="alert-area-box"></small>' +
+				'</div>'
+			);
 		}
 
 		racksLegendHTML = "Bike Racks<br>" +
@@ -248,7 +250,7 @@ function initialize(mobile) {
 
 		/* GEOCODING SEARCH BAR CONTROL */
 		var geocoder = L.Control.geocoder({
-			position: "topright"
+			position: "topleft"
 		}).addTo(map);
 
 		var geocodeMarker;
