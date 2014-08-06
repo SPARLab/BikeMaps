@@ -285,7 +285,7 @@ def readAlertPoint(request, alertID):
 		return HttpResponseRedirect(reverse('mapApp:index')) 
 
 @require_POST
-@login_required
+@administrator_required
 def editShape(request):
 	editForm = EditForm(request.POST)
 	if editForm.is_valid():
@@ -293,16 +293,23 @@ def editShape(request):
 		pks = editForm.cleaned_data['editPk'].split(';')[:-1]
 		newGeoms = editForm.cleaned_data['editGeom'].split(';')[:-1]
 		editType = editForm.cleaned_data['editType']
-		objType = editForm.cleaned_data['objType']
+		objTypes = editForm.cleaned_data['objType'].split(';')[:-1]
 
-		if objType == 'point' and request.user.is_superuser:
-			objectSet = Incident.objects.all()
-		elif objType == 'polygon':
-			objectSet = AlertArea.objects.filter(user=request.user)
-		else:
-			return HttpResponseRedirect(reverse('mapApp:index'))
+		# Edit/Delete each object
+		for pk, newGeom, objType in zip(pks, newGeoms, objTypes):
+			# Get the correct model dataset
+			if objType == 'incident':
+				objectSet = Incident.objects.all()
+			elif objType == 'theft':
+				objectSet = Theft.objects.all()
+			elif objType == 'hazard':
+				objectSet = Hazard.objects.all()
+			elif objType == 'polygon':
+				objectSet = AlertArea.objects.filter(user=request.user)
+			else:
+				return HttpResponseRedirect(reverse('mapApp:index'))
 
-		for pk, newGeom in zip(pks, newGeoms):
+			# Edit
 			if(editType == 'edit'):
 				shapeEdited = get_object_or_404(objectSet, pk=pk)
 				try:
@@ -311,7 +318,8 @@ def editShape(request):
 					messages.error(request, '<strong>Error</strong><br>Invalid geometry error.')
 					return HttpResponseRedirect(reverse('mapApp:index')) 
 				shapeEdited.save()
-		
+			
+			# Delete
 			elif (editType == 'delete'):
 				shapeEdited = get_object_or_404(objectSet, pk=pk)
 				shapeEdited.delete() 	# delete the object

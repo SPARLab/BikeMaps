@@ -113,7 +113,7 @@
                 if(layer.options.pk){   
                     document.getElementById("editPk").value += (layer.options.pk + ';');
                     document.getElementById("editGeom").value += (JSON.stringify(layer.toGeoJSON().geometry) + ";");
-                    document.getElementById("objType").value = layer.options.objType;
+                    document.getElementById("objType").value += layer.options.objType+ ';';
                 }
             });
         }

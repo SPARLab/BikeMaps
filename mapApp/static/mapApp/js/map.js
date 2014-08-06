@@ -393,19 +393,24 @@ function getPoint(latlng, date, type, pk) {
 	var icon;
 	if (type === "Collision") {
 		icon = bikeRedIcon;
+		dataset = "incident"
 	} else if (type === "Near miss") {
 		icon = bikeYellowIcon;
+		dataset = "incident"
 	} else if (type === "Hazard") {
 		icon = hazardIcon;
+		dataset = "hazard"
 	} else if (type === "Theft") {
 		icon = theftIcon;
+		dataset = "theft"
 	} else {
 		return;
 	}
+
 	marker = L.marker(latlng, {
 		icon: icon,
 		pk: pk,
-		objType: 'point'
+		objType: dataset
 	});
 
 	date = date.split(",");
