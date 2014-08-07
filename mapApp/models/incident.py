@@ -43,8 +43,10 @@ INCIDENT_WITH_CHOICES = [
 
 INJURY_CHOICES = [
     ('No injury', 'No injury'),
-    ('Injury, not hospitalized', 'Injury, not hospitalized'),
-    ('Injury, hospitalized', 'Injury, hospitalized')
+    ('Injury, no treatment', 'Injury, no medical treatment'),
+    ('Injury, saw family doctor', 'Injury, saw family doctor'),
+    ('Injury, hospital emergency visit', 'Injury, visited hospital emergency dept.'),
+    ('Injury, hospitalized', 'Injury, hospitalized (i.e. stayed overnight in hospital dept. other than emergency)')
 ]
 
 PURPOSE_CHOICES = (
@@ -70,10 +72,22 @@ SIGHTLINES_CHOICES = (
     ('Don\'t Remember', 'Don\'t Remember')
 )
 RIDING_ON_CHOICES = (
-    ('Painted bike lane', 'On a painted bike lane'),
-    ('Off street bike path', 'On an off street bike path'),
-    ('Street', 'On the road'),
-    ('Sidewalk', 'On the sidewalk'),
+    ('Busy street', (
+            ('Busy street bike lane', 'On a painted bike lane'),
+            ('Busy street, no bike facilities', 'On road with no bike facilities')
+        )
+    ),
+    ('Quiet street', (
+            ('Quiet street bike lane', 'On a painted bike lane'),
+            ('Quiet street, no bike facilities', 'On road with no bike facilities')
+        )
+    ),
+    ('Not on the street', (
+            ('Cycle track', 'On a physically separated bike lane (cycle track)'),
+            ('Mixed use trail', 'On a mixed use trail'),
+            ('Sidewalk', 'On the sidewalk'),
+        )
+    ),
     ('Don\'t remember', 'I don\'t remember')
 )
 LIGHTS_CHOICES = (
