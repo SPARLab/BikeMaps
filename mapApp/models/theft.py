@@ -81,6 +81,9 @@ class Theft(models.Model):
         now = timezone.now()
         return now - datetime.timedelta(weeks=1) <= self.date < now
 
+    def incident_type(self):
+        return "Theft"
+
     # For admin site 
     was_published_recently.admin_order_field = 'date'
     was_published_recently.boolean = True

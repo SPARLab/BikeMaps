@@ -1,7 +1,6 @@
 TO DO
 
 High priority
-* Edit modal for alert areas when creating them
 * Display hazards and theft in alert area notifications
 * Data backup
 * Popup messages more interesting..?

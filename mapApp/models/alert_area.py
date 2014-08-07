@@ -22,7 +22,7 @@ class AlertArea(models.Model):
     objects = models.GeoManager() # Required to conduct geographic queries
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("user"))
-    email = models.EmailField()
+    email = models.EmailField(verbose_name="Current email")
 
     def latlngList(self):
         return list(list(latlng)[::-1] for latlng in self.geom[0]) 

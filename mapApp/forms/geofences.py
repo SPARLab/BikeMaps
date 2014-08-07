@@ -31,7 +31,7 @@ class GeofenceForm(forms.ModelForm):
         Field('geom', type="hidden", id="geofence"), # Coords passed after clicks on map
         Field('email', readonly=True, id="userEmail"),
 
-        HTML("""<br><em>Alerts will also continue to appear in the notifications tab of this website</em>"""),
+        HTML("""<br><em>Your email address can be changed in user preferences.</em>"""),
 
 
 
