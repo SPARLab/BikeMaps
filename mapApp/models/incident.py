@@ -16,7 +16,7 @@ INCIDENT_CHOICES = (
             ('Single vehicle striking a moving object', 'Single vehicle striking a moving object (e.g., pedestrian, inline skater, animal)'),
             ('Multi vehicle collision with moving vehicle', 'Multi vehicle collision with moving vehicle'),
             ('Multi vehicle collision with parked vehicle', 'Multi vehicle collision with parked vehicle'),
-            ('Single vehicle losing control on roadway', 'Single vehicle losing control on roadway'),
+            ('Single vehicle losing control', 'Single vehicle losing control (fall)'),
         )
     ),
     ('Near miss', (
@@ -25,7 +25,7 @@ INCIDENT_CHOICES = (
             ('Near collision with a moving vehicle', 'Near collision with a moving vehicle'),
             ('Near collision with a parked vehicle', 'Near collision with a parked vehicle'),
         )
-    )
+    ),
 )
 INCIDENT_WITH_CHOICES = [
     ('Car/Truck', 'Car/Truck'),
