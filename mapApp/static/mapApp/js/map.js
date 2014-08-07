@@ -21,7 +21,7 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		size: "m"
 	}),
 	theftIcon = L.MakiMarkers.icon({
-		icon: "triangle-stroked",
+		icon: "bicycle",
 		color: "#3eab45",
 		size: "m"
 	}),
@@ -232,11 +232,11 @@ function initialize(mobile) {
 			);
 		}
 
-		racksLegendHTML = "Bike Racks<br>" +
+		racksLegendHTML = "Infrastructure<br>" +
 			'<div id="racks-legend" class="legend-subtext collapse">' +
-			'<div class="rack-cluster-small" style="width: 5px; height: 5px; display: inline-block; border-radius:20px; margin-left:3px;"></div><small> Single rack</small>';
+			'<div class="rack-cluster-small" style="width: 5px; height: 5px; display: inline-block; border-radius:20px; margin-left:3px;"></div><small> Bike rack</small>';
 		if(RACK_CLUSTERING){
-			racksLegendHTML += '<br><div class="rack-cluster-medium" style="width: 10px; height: 10px; display: inline-block; border-radius:20px"></div><small> Multiple racks</small>';
+			racksLegendHTML += '<br><div class="rack-cluster-medium" style="width: 10px; height: 10px; display: inline-block; border-radius:20px"></div><small> Multiple bike racks</small>';
 		}
 		racksLegendHTML += '</div>';
 
@@ -330,7 +330,7 @@ function initialize(mobile) {
 			else if(e.name.match('Rider volume.')){
 				$('#strava-legend').collapse('hide');
 			}
-			else if(e.name.match('Bike Racks.')){
+			else if(e.name.match('Infrastructure.')){
 				$('#racks-legend').collapse('hide');
 			}
 			else if(e.name.match('Incident heatmap.')){
@@ -351,7 +351,7 @@ function initialize(mobile) {
 			else if(e.name.match('Rider volume.')){
 				$('#strava-legend').collapse('show');
 			}
-			else if(e.name.match('Bike Racks.')){
+			else if(e.name.match('Infrastructure.')){
 				$('#racks-legend').collapse('show');
 			}
 			else if(e.name.match('Incident heatmap.')){
