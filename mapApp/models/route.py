@@ -23,6 +23,7 @@ PURPOSE_CHOICES = (
     ("During work", "During work")
 )
 
+
 ##########
 # Routes class.
 # Main class for submitted routes.

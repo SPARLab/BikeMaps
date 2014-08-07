@@ -21,16 +21,16 @@ class HazardForm(forms.ModelForm):
                 Field('hazard_object'),
             ),
             AccordionGroup(
+                'Description',
+                Field('hazard_detail', placeholder='optional'),
+                css_id = 'hazard-description'
+            ),
+            AccordionGroup(
                 'Personal Details',
                 Field('age'),
                 Field('sex'),
                 Field('regular_cyclist'),
                 css_id = 'hazard-personal'
-            ),
-            AccordionGroup(
-                'Description',
-                Field('hazard_detail', placeholder='optional'),
-                css_id = 'hazard-description'
             )
         ),
         Div(

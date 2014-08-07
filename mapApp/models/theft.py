@@ -12,10 +12,35 @@ THEFT_CHOICES = (
     ('Major bike component', 'Major bike component (e.g. tire, seat, handlebars, etc.)'),
     ('Minor bike component', 'Minor bike component (e.g. lights, topbar padding, bell, etc.)')
 )
-
 BOOLEAN_CHOICES = (
-    (True, 'Yes'),
-    (False, 'No')
+    ('Y', 'Yes'), 
+    ('N', 'No'), 
+    ('I don\'t know', 'I don\'t know')
+)
+HOW_LOCKED_CHOICES = (
+    ('Frame locked', 'Frame locked'),
+    ('Frame and tire locked', 'Frame and tire locked'),
+    ('Frame and both tires locked', 'Frame and both tires locked'),
+    ('Tire(s) locked', 'Tire(s) locked'),
+    ('Not locked', 'Not locked')
+)
+LOCK_CHOICES = (
+    ('U-Lock', 'U-Lock'),
+    ('Cable lock', 'Cable lock'),
+    ('U-Lock and cable', 'U-Lock and cable'),
+    ('Padlock', 'Padlock'),
+    ('Not locked', 'Not locked')
+)
+LOCKED_TO_CHOICES = (
+    ('Outdoor bike rack', 'Outdoor bike rack'),
+    ('Indoor bike rack', 'Indoor bike rack (e.g. parking garage, bike room)'),
+    ('Bike locker', 'Bike locker'),
+    ('Street sign', 'Street sign'),
+    ('Fence', 'Fence'),
+    ('Bench', 'Bench'),
+    ('Railing', 'Railing'),
+    ('Other', 'Other'),
+    ('Not locked', 'Not locked')
 )
 
 ##########
@@ -40,25 +65,48 @@ class Theft(models.Model):
 
     theft = models.CharField(
         'What was stolen?', 
-        max_length=150, 
+        max_length=100, 
         choices=THEFT_CHOICES
     )
 
-    locked = models.NullBooleanField(
-        'Was your bike locked up?',
-        choices=BOOLEAN_CHOICES
+    was_locked = models.BooleanField(
+        'Was your bike locked?',
+        choices=((True, 'Yes'),(False, 'No'))
+    )
+    
+    how_locked = models.CharField(
+        'How did you have your bike locked?',
+        max_length=100,
+        choices=HOW_LOCKED_CHOICES
+    )
+
+    lock = models.CharField(
+        'What kind of lock were you using?',
+        max_length=100,
+        choices=LOCK_CHOICES
+    )
+
+    locked_to = models.CharField(
+        'What was your bike locked to?',
+        max_length=100,
+        choices=LOCKED_TO_CHOICES
     )
 
     police_report = models.NullBooleanField(
         'Did you file a report with the police?',
-        choices=BOOLEAN_CHOICES
+        choices=((True, 'Yes'),(False, 'No'))
+    )
+
+    insurance_claim = models.NullBooleanField(
+        'Did you file an insurance claim?',
+        choices=((True, 'Yes'),(False, 'No'))
     )
     ###########
 
     regular_cyclist = models.CharField(
         'Do you ride a bike often? (52+ times/year)',
         max_length=20, 
-        choices=(('Y', 'Yes'), ('N', 'No'), ('I don\'t know', 'I don\'t know')), 
+        choices=BOOLEAN_CHOICES, 
         blank=True, 
         null=True
     )

@@ -18,18 +18,22 @@ class TheftForm(forms.ModelForm):
                 Field('geom', type="hidden", id="theftPoint"), # Coords passed after click on map from static/mapApp/js/map.js
                 Field('theft_date', id="theft_date", template='mapApp/util/datepicker.html'),
                 Field('theft'),
-                Field('locked'),
-                Field("police_report")
+                Field('was_locked'),
+                Field('how_locked'),
+                Field('lock'),
+                Field('locked_to'),
+            ),
+            AccordionGroup(
+                'Details',
+                Field("police_report"),
+                Field("insurance_claim"),
+                Field('theft_detail', placeholder='optional'),
+                css_id = 'theft-description'
             ),
             AccordionGroup(
                 'Personal Details',
                 Field('regular_cyclist'),
                 css_id = 'theft-personal'
-            ),
-            AccordionGroup(
-                'Description',
-                Field('theft_detail', placeholder='optional'),
-                css_id = 'theft-description'
             )
         ),
         Div(

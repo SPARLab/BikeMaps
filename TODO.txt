@@ -1,7 +1,6 @@
 TO DO
 
 High priority
-* Display hazards and theft in alert area notifications
 * Data backup
 * Popup messages more interesting..?
 * Information to collect for thefts and hazards?
@@ -50,3 +49,27 @@ BikeMaps – Functionality
 		the incident occurred with. 
 -	Is it possible that when people click on the source of official data that they get metadata. For example if it is ICBC we could say. “Data available for British
 		Columbia from 1999 to 2013. Incident characteristics not provided.”
+
+
+From Holland
+& Greating message with tour of site on first visit
+- "Add an incident marker" tooltip to something else
+& Help button hard to see
+
+& Basemap highway colors are too similar to legend colors
+
+- Add "roadway" to collision objects
+- Add "prefer not to disclose" or "other" to sex choices
+& Change "More than 52 times a year" to "weekly" -> Should "I don't know" be an option?
+& Change age category youngest to age to 13
+
+	THEFT FORM
+- Add 'Did you file an insurance claim?'
+& Add Type of lock?
+& Where was bike locked? Garage, bike room, street, sign, etc
+& More detailed "was your bike locked answers" -> Locked frame, locked frame and wheel, etc...
+
+	HAZARD FORM
+& Confusion about object that presents the hazard -> hard to distinguish one choice
+& Add other/explain field
+& Description should be before personal details

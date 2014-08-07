@@ -40,7 +40,8 @@ INCIDENT_WITH_CHOICES = [
     ('Pothole', 'Pothole'),
     ('Lane divider', 'Lane divider'),
     ('Animal', 'Animal'),
-    ('Sign/Post', 'Sign/Post')
+    ('Sign/Post', 'Sign/Post'),
+    ('Roadway', 'Roadway')
 ]
 
 INJURY_CHOICES = [
@@ -100,6 +101,16 @@ AGE_CHOICES = (
     ("50-59","50 - 59"),
     ("60-69","60 - 69"),
     (">70", "70 or over")
+)
+SEX_CHOICES = (
+    ('M', 'Male'), 
+    ('F', 'Female'),
+    ('Other', 'Other')
+)
+BOOLEAN_CHOICES = (
+    ('Y', 'Yes'), 
+    ('N', 'No'), 
+    ('I don\'t know', 'I don\'t know')
 )
 
 
@@ -164,28 +175,28 @@ class Incident(models.Model):
     sex = models.CharField(
         'Please select your sex', 
         max_length=6, 
-        choices=(('M', 'Male'), ('F', 'Female')), 
+        choices=SEX_CHOICES, 
         blank=True, 
         null=True
     )
     regular_cyclist = models.CharField(
         'Do you ride a bike often? (52+ times/year)',
         max_length=20, 
-        choices=(('Y', 'Yes'), ('N', 'No'), ('I don\'t know', 'I don\'t know')), 
+        choices=BOOLEAN_CHOICES, 
         blank=True, 
         null=True
     )
     helmet = models.CharField(
         'Were you wearing a helmet?',
         max_length=20, 
-        choices=(('Y', 'Yes'), ('N', 'No'), ('Don\'t remember', 'I don\'t remember')), 
+        choices=BOOLEAN_CHOICES, 
         blank=True, 
         null=True
     )
     intoxicated = models.CharField(
     'Were you intoxicated?',
     max_length=20, 
-    choices=(('Y', 'Yes'), ('N', 'No'), ('Don\'t remember', 'I don\'t remember')), 
+    choices=BOOLEAN_CHOICES, 
     blank=True, 
     null=True
     )

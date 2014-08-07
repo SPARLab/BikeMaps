@@ -12,7 +12,6 @@ HAZARD_CHOICES = (
     ('Falling hazard', 'Falling hazard'),
     ('Scraping/cutting hazard', 'Scraping/cutting hazard')
 )
-
 HAZARD_OBJECT_CHOICES = (
     ('Car/Truck', 'Car/Truck'),
     ('Vehicle door', 'Vehicle door'),
@@ -27,7 +26,6 @@ HAZARD_OBJECT_CHOICES = (
     ('Infrastructure needing repair', 'Infrastructure needing repair'),
     ('Dangerous infrastructure', 'Dangerous infrastructure')
 )
-
 AGE_CHOICES = (
     ("<19", "19 or under"),
     ("19-29","19 - 29"),
@@ -37,7 +35,16 @@ AGE_CHOICES = (
     ("60-69","60 - 69"),
     (">70", "70 or over")
 )
-
+SEX_CHOICES = (
+    ('M', 'Male'), 
+    ('F', 'Female'),
+    ('Other', 'Other')
+)
+BOOLEAN_CHOICES = (
+    ('Y', 'Yes'), 
+    ('N', 'No'), 
+    ('I don\'t know', 'I don\'t know')
+)
 
 ##########
 # Hazard class.
@@ -86,14 +93,14 @@ class Hazard(models.Model):
     sex = models.CharField(
         'Please select your sex', 
         max_length=6, 
-        choices=(('M', 'Male'), ('F', 'Female')), 
+        choices=SEX_CHOICES, 
         blank=True, 
         null=True
     )
     regular_cyclist = models.CharField(
         'Do you ride a bike often? (52+ times/year)',
         max_length=20, 
-        choices=(('Y', 'Yes'), ('N', 'No'), ('I don\'t know', 'I don\'t know')), 
+        choices=BOOLEAN_CHOICES, 
         blank=True, 
         null=True
     )
