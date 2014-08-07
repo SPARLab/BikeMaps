@@ -4,7 +4,7 @@ from django.contrib.gis import admin
 from mapApp.models.incident import Incident
 from mapApp.models.route import Route
 from mapApp.models.alert_area import AlertArea
-from mapApp.models.alert_notification import AlertNotification
+from mapApp.models.alert_notification import IncidentNotification, HazardNotification, TheftNotification
 from mapApp.models.hazard import Hazard
 
 from spirit.models import User
@@ -47,6 +47,8 @@ class AlertAreaAdmin(admin.OSMGeoAdmin):
 admin.site.register(AlertArea, AlertAreaAdmin)
 
 
-admin.site.register(AlertNotification)
+admin.site.register(IncidentNotification)
+admin.site.register(HazardNotification)
+admin.site.register(TheftNotification)
 
 admin.site.register(Hazard)

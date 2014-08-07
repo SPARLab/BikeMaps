@@ -7,17 +7,18 @@ import datetime
 from django.utils import timezone
 
 
-INCIDENT, NEARMISS, UNDEFINED = xrange(3)
+INCIDENT, NEARMISS, HAZARD, THEFT, UNDEFINED = xrange(5)
 
 ACTION_CHOICES = (
     (INCIDENT, _("Incident")),
     (NEARMISS, _("Near miss")),
+    (HAZARD, _("Hazard")),
+    (THEFT, _("Theft")),
     (UNDEFINED, _("Undefined"))
 )
 
 class AlertNotification(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("user"))
-    point = models.ForeignKey('mapApp.Incident', related_name='+')
 
     date = models.DateTimeField(auto_now_add=True)
     action = models.IntegerField(choices=ACTION_CHOICES, default=UNDEFINED)
@@ -48,8 +49,27 @@ class AlertNotification(models.Model):
     def is_nearmiss(self):
         return self.action == NEARMISS
 
+    @property
+    def is_hazard(self):
+        return self.action == HAZARD
+    
+    @property
+    def is_theft(self):
+        return self.action == THEFT
+
     def __unicode__(self):
         return "%s" % (self.user)
 
     class Meta:
+        abstract= True
         app_label = 'mapApp'
+
+
+class IncidentNotification(AlertNotification):
+    point = models.ForeignKey('mapApp.Incident', related_name='+')
+
+class HazardNotification(AlertNotification):
+    point = models.ForeignKey('mapApp.Hazard', related_name='+')
+
+class TheftNotification(AlertNotification):
+    point = models.ForeignKey('mapApp.Theft', related_name='+')

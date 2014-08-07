@@ -11,14 +11,25 @@
 
                 {% if n.is_comment %}
                     {% blocktrans with username=n.comment.user.username topic_title=n.topic.title %}<a href="{{ url_profile }}">{{ username }}</a> has commented on <a href="{{ url_topic }}">{{ topic_title }}</a>{% endblocktrans %}
+                
                 {% elif n.is_mention %}
                     {% blocktrans with username=n.comment.user.username topic_title=n.topic.title %}<a href="{{ url_profile }}">{{ username }}</a> has mention you on <a href="{{ url_topic }}">{{ topic_title }}</a>{% endblocktrans %}
+                
                 {% elif n.is_incident %}
-                    Collision reported at <a href="{% url 'mapApp:readAlertPoint' n.pk %}">({{n.point.latlngList.0|floatformat:3}}, {{n.point.latlngList.1|floatformat:3}})</a>
+                    Collision reported at <a href="{% url 'mapApp:readAlertPoint' 'collision' n.pk %}">({{n.point.latlngList.0|floatformat:3}}, {{n.point.latlngList.1|floatformat:3}})</a>
+                
                 {% elif n.is_nearmiss %}
-                    Near miss reported at <a href="{% url 'mapApp:readAlertPoint' n.pk %}">({{n.point.latlngList.0|floatformat:3}}, {{n.point.latlngList.1|floatformat:3}})</a>
+                    Near miss reported at <a href="{% url 'mapApp:readAlertPoint' 'nearmiss' n.pk %}">({{n.point.latlngList.0|floatformat:3}}, {{n.point.latlngList.1|floatformat:3}})</a>
+                
+                {% elif n.is_hazard %}
+                    Hazard reported at <a href="{% url 'mapApp:readAlertPoint' 'hazard' n.pk %}">({{n.point.latlngList.0|floatformat:3}}, {{n.point.latlngList.1|floatformat:3}})</a>
+                
+                {% elif n.is_theft %}
+                    Theft reported at <a href="{% url 'mapApp:readAlertPoint' 'theft' n.pk %}">({{n.point.latlngList.0|floatformat:3}}, {{n.point.latlngList.1|floatformat:3}})</a>
+                
                 {% else %}
                     Unknown action
+                
                 {% endif %}
 
                 {% if not n.is_read %}

@@ -15,7 +15,7 @@ from django.contrib.auth.models import User, Group
 from mapApp.models.incident import Incident
 from mapApp.models.route import Route
 from mapApp.models.alert_area import AlertArea
-from mapApp.models.alert_notification import AlertNotification
+from mapApp.models.alert_notification import IncidentNotification, HazardNotification, TheftNotification
 from mapApp.models.hazard import Hazard
 from mapApp.models.theft import Theft
 
@@ -158,7 +158,7 @@ def postHazard(request):
 
 	if hazardForm.is_valid():
 		hazard = hazardForm.save()
-		# alertUsers(request, hazard) #alertUsers view needs to be edited to accomodate hazards
+		alertUsers(request, hazard)
 		
 		messages.success(request, '<strong>Thank you!</strong><br>Your hazard marker was successfully added.')			
 		return HttpResponseRedirect(reverse('mapApp:index', \
@@ -186,7 +186,7 @@ def postTheft(request):
 
 	if theftForm.is_valid():
 		theft = theftForm.save()
-		# alertUsers(request, theft) #alertUsers view needs to be edited to accomodate thefts
+		alertUsers(request, theft)
 		
 		messages.success(request, '<strong>Thank you!</strong><br>Your theft marker was successfully added.')			
 		return HttpResponseRedirect(reverse('mapApp:index', \
@@ -205,16 +205,29 @@ def alertUsers(request, incident):
 	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
 	usersToAlert = list(set([poly.user for poly in intersectingPolys])) # get list of distinct users to alert
 
-	# TODO FIX THIS MAGIC
+	INCIDENT, NEARMISS, HAZARD, THEFT, UNDEFINED = xrange(5)
+	
 	if (incident.incident_type() == "Collision"):
-		action = 0
-	elif (incident.incident_type() == "Near miss"):
-		action = 1
-	else:
-		action = 2
+		action = INCIDENT
+		Notification = IncidentNotification
 
-	for user in usersToAlert:
-		AlertNotification(user=user, point=incident, action=action).save()
+	elif (incident.incident_type() == "Near miss"):
+		action = NEARMISS
+		Notification = IncidentNotification
+
+	elif (incident.incident_type() == "Hazard"):
+		action = HAZARD
+		Notification = HazardNotification
+
+	elif (incident.incident_type() == "Theft"):
+		action = THEFT
+		Notification = TheftNotification
+
+	else:
+		action = UNDEFINED
+
+	for user in usersToAlert:	
+		Notification(user=user, point=incident, action=action).save()
 
 @require_POST
 @login_required
@@ -263,8 +276,14 @@ def getThefts(request):
 	return response
 
 @login_required
-def readAlertPoint(request, alertID):
-	alert = get_object_or_404(AlertNotification.objects.filter(user=request.user), pk=alertID)
+def readAlertPoint(request, type, alertID):
+	if type == 'collision' or type == 'nearmiss':
+		alert = get_object_or_404(IncidentNotification.objects.filter(user=request.user), pk=alertID)
+	if type == 'hazard':
+		alert = get_object_or_404(HazardNotification.objects.filter(user=request.user), pk=alertID)
+	if type == 'theft':
+		alert = get_object_or_404(TheftNotification.objects.filter(user=request.user), pk=alertID)
+		
 	if (alert):
 		alert.is_read=True
 		alert.save()
