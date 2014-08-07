@@ -162,10 +162,9 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title">About alert areas</h4>
+            <h4 class="modal-title text-center">Receive monthly alerts for your riding area.</h4>
           </div>
           <div class="modal-body">
-            <p>Receive monthly alerts for your riding area.</p>
             To setup monitoring areas:
                 <ol>
                     <li>Login to your account
@@ -175,7 +174,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <a href="{% url 'spirit:user-login' %}" type="button" class="btn btn-primary">Login or Register</a>
+            <div class="btn-group">
+                <a href="{% url 'spirit:user-register' %}" type="button" class="btn btn-primary">Register</a>
+                <a href="{% url 'spirit:user-login' %}" type="button" class="btn btn-primary">Login</a>
+            </div>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

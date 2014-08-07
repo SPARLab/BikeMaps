@@ -7,7 +7,7 @@ High priority
 * Information to collect for thefts and hazards?
 * Alert report
 * Shut off skobbler bike lanes
-* Add our own bikelands
+* Add our own bikelanes
 * Create infrastructure category in legend with bikelanes and bike racks
 * Combine police and insurance icons/categories into new more general category
 
