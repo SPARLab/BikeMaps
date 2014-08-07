@@ -18,7 +18,6 @@ class TheftForm(forms.ModelForm):
                 Field('geom', type="hidden", id="theftPoint"), # Coords passed after click on map from static/mapApp/js/map.js
                 Field('theft_date', id="theft_date", template='mapApp/util/datepicker.html'),
                 Field('theft'),
-                Field('was_locked'),
                 Field('how_locked'),
                 Field('lock'),
                 Field('locked_to'),

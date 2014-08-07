@@ -18,29 +18,34 @@ BOOLEAN_CHOICES = (
     ('I don\'t know', 'I don\'t know')
 )
 HOW_LOCKED_CHOICES = (
-    ('Frame locked', 'Frame locked'),
-    ('Frame and tire locked', 'Frame and tire locked'),
-    ('Frame and both tires locked', 'Frame and both tires locked'),
-    ('Tire(s) locked', 'Tire(s) locked'),
-    ('Not locked', 'Not locked')
+    ('Yes', (
+            ('Frame locked', 'Frame locked'),
+            ('Frame and tire locked', 'Frame and tire locked'),
+            ('Frame and both tires locked', 'Frame and both tires locked'),
+            ('Tire(s) locked', 'Tire(s) locked'),
+          )
+    ),
+    ('No', (
+            ('Not locked', 'Not locked'),
+        )
+    )
 )
 LOCK_CHOICES = (
     ('U-Lock', 'U-Lock'),
     ('Cable lock', 'Cable lock'),
     ('U-Lock and cable', 'U-Lock and cable'),
     ('Padlock', 'Padlock'),
-    ('Not locked', 'Not locked')
+    ('NA', 'Not applicable'),
 )
 LOCKED_TO_CHOICES = (
-    ('Outdoor bike rack', 'Outdoor bike rack'),
-    ('Indoor bike rack', 'Indoor bike rack (e.g. parking garage, bike room)'),
-    ('Bike locker', 'Bike locker'),
-    ('Street sign', 'Street sign'),
-    ('Fence', 'Fence'),
-    ('Bench', 'Bench'),
-    ('Railing', 'Railing'),
-    ('Other', 'Other'),
-    ('Not locked', 'Not locked')
+    ('Outdoor bike rack', 'At an outdoor bike rack'),
+    ('Indoor bike rack', 'At an indoor bike rack (e.g. parking garage, bike room)'),
+    ('Bike locker', 'Inside a bike locker'),
+    ('Street sign', 'Against street sign'),
+    ('Fence/railing', 'Against a fence or railing'),
+    ('Bench', 'Against a public bench'),
+    ('Indoors/lobby', 'Inside a building/lobby'),
+    ('Other', 'Other')
 )
 
 ##########
@@ -69,13 +74,8 @@ class Theft(models.Model):
         choices=THEFT_CHOICES
     )
 
-    was_locked = models.BooleanField(
-        'Was your bike locked?',
-        choices=((True, 'Yes'),(False, 'No'))
-    )
-    
     how_locked = models.CharField(
-        'How did you have your bike locked?',
+        'Did you have your bike locked?',
         max_length=100,
         choices=HOW_LOCKED_CHOICES
     )
@@ -87,7 +87,7 @@ class Theft(models.Model):
     )
 
     locked_to = models.CharField(
-        'What was your bike locked to?',
+        'Where did you lock/leave your bike?',
         max_length=100,
         choices=LOCKED_TO_CHOICES
     )
@@ -104,7 +104,7 @@ class Theft(models.Model):
     ###########
 
     regular_cyclist = models.CharField(
-        'Do you ride a bike often? (52+ times/year)',
+        'Do you bike at least once a week?',
         max_length=20, 
         choices=BOOLEAN_CHOICES, 
         blank=True, 

@@ -24,15 +24,6 @@ class IncidentForm(forms.ModelForm):
                 Field('trip_purpose'),
             ),
             AccordionGroup(
-                'Personal Details',
-                Field('age'),
-                Field('sex'),
-                Field('regular_cyclist'),
-                Field('helmet'),
-                Field('intoxicated'),
-                css_id = "incident-personal"
-            ),
-            AccordionGroup(
                 'Conditions',
                 Field('road_conditions'),
                 Field('sightlines'),
@@ -45,6 +36,15 @@ class IncidentForm(forms.ModelForm):
                 'Description',
                 Field('incident_detail', placeholder='optional'),
                 css_id='incident-description'
+            ),
+            AccordionGroup(
+                'Personal Details',
+                Field('age'),
+                Field('sex'),
+                Field('regular_cyclist'),
+                Field('helmet'),
+                Field('intoxicated'),
+                css_id = "incident-personal"
             )
         ),
         Div(

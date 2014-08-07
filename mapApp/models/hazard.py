@@ -98,7 +98,7 @@ class Hazard(models.Model):
         null=True
     )
     regular_cyclist = models.CharField(
-        'Do you ride a bike often? (52+ times/year)',
+        'Do you bike at least once a week?',
         max_length=20, 
         choices=BOOLEAN_CHOICES, 
         blank=True, 

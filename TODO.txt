@@ -65,11 +65,26 @@ From Holland
 
 	THEFT FORM
 - Add 'Did you file an insurance claim?'
-& Add Type of lock?
-& Where was bike locked? Garage, bike room, street, sign, etc
+- Add Type of lock?
+- Where was bike locked? Garage, bike room, street, sign, etc
 & More detailed "was your bike locked answers" -> Locked frame, locked frame and wheel, etc...
 
 	HAZARD FORM
 & Confusion about object that presents the hazard -> hard to distinguish one choice
 & Add other/explain field
 & Description should be before personal details
+
+
+From Kay
+•	some of the crashes may not be collisions, they may be falls
+•	injury might be better further classified, e.g.,
+	o	not injured
+	o	injured, no medical treatment
+	o	injured, saw a family doctor
+	o	injured, went to hospital emergency department
+	o	injured, hospitalized (i.e., stayed overnight in hospital in a department other than emergency)
+
+•	where were you riding your bike might include a few more categories:
+	o	on a physically separated bike lane (cycle track)
+	o	on a busy street with no bike facilities
+	o	on a quiet street

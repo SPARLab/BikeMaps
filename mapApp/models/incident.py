@@ -10,26 +10,23 @@ from django.utils import timezone
 ############
 # Response options for CharField data types
 # 
-
-# Collision
-COLLISION_TYPES = [
-    ('Single vehicle striking fixed object','Single vehicle striking fixed object (e.g., curb, sign, planter)'),
-    ('Single vehicle striking a moving object', 'Single vehicle striking a moving object (e.g., pedestrian, inline skater, animal)'),
-    ('Multi vehicle collision with moving vehicle', 'Multi vehicle collision with moving vehicle'),
-    ('Multi vehicle collision with parked vehicle', 'Multi vehicle collision with parked vehicle'),
-    ('Single vehicle losing control on roadway', 'Single vehicle losing control on roadway')
-]
-
-# Near miss
-NEAR_MISS_TYPES = [
-    ('Near collision with a fixed object', 'Near collision with a fixed object (e.g., curb, sign, planter)'),
-    ('Near collision with a moving object', 'Near collision with a moving object (e.g., pedestrian, inline skater, animal)'),
-    ('Near collision with a moving vehicle', 'Near collision with a moving vehicle'),
-    ('Near collision with a parked vehicle', 'Near collision with a parked vehicle')
-]
-
-INCIDENT_CHOICES = tuple(COLLISION_TYPES + NEAR_MISS_TYPES)
-
+INCIDENT_CHOICES = (
+    ('Collision', (
+            ('Single vehicle striking fixed object','Single vehicle striking fixed object (e.g., curb, sign, planter)'),
+            ('Single vehicle striking a moving object', 'Single vehicle striking a moving object (e.g., pedestrian, inline skater, animal)'),
+            ('Multi vehicle collision with moving vehicle', 'Multi vehicle collision with moving vehicle'),
+            ('Multi vehicle collision with parked vehicle', 'Multi vehicle collision with parked vehicle'),
+            ('Single vehicle losing control on roadway', 'Single vehicle losing control on roadway'),
+        )
+    ),
+    ('Near miss', (
+            ('Near collision with a fixed object', 'Near collision with a fixed object (e.g., curb, sign, planter)'),
+            ('Near collision with a moving object', 'Near collision with a moving object (e.g., pedestrian, inline skater, animal)'),
+            ('Near collision with a moving vehicle', 'Near collision with a moving vehicle'),
+            ('Near collision with a parked vehicle', 'Near collision with a parked vehicle'),
+        )
+    )
+)
 INCIDENT_WITH_CHOICES = [
     ('Car/Truck', 'Car/Truck'),
     ('Vehicle door', 'Vehicle door'),
@@ -180,7 +177,7 @@ class Incident(models.Model):
         null=True
     )
     regular_cyclist = models.CharField(
-        'Do you ride a bike often? (52+ times/year)',
+        'Do you bike at least once a week?',
         max_length=20, 
         choices=BOOLEAN_CHOICES, 
         blank=True, 
@@ -220,7 +217,7 @@ class Incident(models.Model):
     cars_on_roadside = models.CharField(
         'Were there cars parked on the roadside',
         max_length=30, 
-        choices= (('Y', 'Yes'), ('N', 'No'), ('Don\'t remember', 'I don\'t remember')),
+        choices= BOOLEAN_CHOICES,
         blank=True, 
         null=True
     )
@@ -267,8 +264,9 @@ class Incident(models.Model):
         return now - datetime.timedelta(weeks=1) <= self.date < now
 
     def incident_type(self):
-        for (x, y) in COLLISION_TYPES:
-            return ("Collision" if self.incident == x else "Near miss")
+        for (kind, choices) in INCIDENT_CHOICES:
+            for c in choices:
+                if self.incident in c: return kind
 
     # For admin site 
     was_published_recently.admin_order_field = 'date'
