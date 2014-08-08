@@ -53,38 +53,10 @@ BikeMaps – Functionality
 
 From Holland
 & Greating message with tour of site on first visit
-- "Add an incident marker" tooltip to something else
 & Help button hard to see
 
 & Basemap highway colors are too similar to legend colors
 
-- Add "roadway" to collision objects
-- Add "prefer not to disclose" or "other" to sex choices
-- Change "More than 52 times a year" to "weekly" -> Should "I don't know" be an option?
-- Change age category youngest to age to 13
-
-	THEFT FORM
-- Add 'Did you file an insurance claim?'
-- Add Type of lock?
-- Where was bike locked? Garage, bike room, street, sign, etc
-- More detailed "was your bike locked answers" -> Locked frame, locked frame and wheel, etc...
-
 	HAZARD FORM
 & Confusion about object that presents the hazard -> hard to distinguish one choice
 & Add other/explain field
-- Description should be before personal details
-
-
-From Kay
-•	some of the crashes may not be collisions, they may be falls
-•	injury might be better further classified, e.g.,
-	o	not injured
-	o	injured, no medical treatment
-	o	injured, saw a family doctor
-	o	injured, went to hospital emergency department
-	o	injured, hospitalized (i.e., stayed overnight in hospital in a department other than emergency)
-
--	where were you riding your bike might include a few more categories:
-	-	on a physically separated bike lane (cycle track)
-	-	on a busy street with no bike facilities
-	-	on a quiet street
