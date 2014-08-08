@@ -205,7 +205,7 @@ def alertUsers(request, incident):
 	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
 	usersToAlert = list(set([poly.user for poly in intersectingPolys])) # get list of distinct users to alert
 
-	INCIDENT, NEARMISS, HAZARD, THEFT, UNDEFINED = xrange(5)
+	INCIDENT, NEARMISS, FALL, HAZARD, THEFT, UNDEFINED = xrange(6)
 	
 	if (incident.incident_type() == "Collision"):
 		action = INCIDENT
@@ -213,6 +213,10 @@ def alertUsers(request, incident):
 
 	elif (incident.incident_type() == "Near miss"):
 		action = NEARMISS
+		Notification = IncidentNotification
+
+	elif (incident.incident_type() == "Fall"):
+		action = FALL
 		Notification = IncidentNotification
 
 	elif (incident.incident_type() == "Hazard"):
@@ -277,7 +281,7 @@ def getThefts(request):
 
 @login_required
 def readAlertPoint(request, type, alertID):
-	if type == 'collision' or type == 'nearmiss':
+	if type == 'collision' or type == 'nearmiss' or type == 'fall':
 		alert = get_object_or_404(IncidentNotification.objects.filter(user=request.user), pk=alertID)
 	if type == 'hazard':
 		alert = get_object_or_404(HazardNotification.objects.filter(user=request.user), pk=alertID)

@@ -15,14 +15,19 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		color: "#f0ad4e",
 		size: "m"
 	}),
+	bikeOrangeIcon = L.MakiMarkers.icon({
+		icon: bikeRedIcon.options.icon,
+		color: "#d9844f",
+		size: "m"
+	}),
 	hazardIcon = L.MakiMarkers.icon({
 		icon: "triangle-stroked",
-		color: "#d9844f",//3eab45",
+		color: "#3eab45",
 		size: "m"
 	}),
 	theftIcon = L.MakiMarkers.icon({
 		icon: "bicycle",
-		color: "#3eab45",
+		color: "#000000",
 		size: "m"
 	}),
 	bikeGreyIcon = L.MakiMarkers.icon({
@@ -206,17 +211,20 @@ function initialize(mobile) {
 			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png">'
 			+		' <small>Citizen collision report</small><br>' 
 			
-			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png">'
+			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeOrangeIcon.options.icon + '+' + bikeOrangeIcon.options.color + '.png">'
 			+		' <small>Citizen near miss report</small><br>' 
 			
-			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png">'
-			+		' <small>Police report</small><br>' 
+			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png">'
+			+		' <small>Citizen fall report</small><br>' 
+			
+			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png">'
+			+		' <small>Cyclist hazard</small><br>' 
 			
 			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png">'
 			+		' <small>Insurance report</small><br>' 
 			
-			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png">'
-			+		' <small>Cyclist hazard</small><br>' 
+			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png">'
+			+		' <small>Police report</small><br>' 
 			
 			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + theftIcon.options.icon + '+' + theftIcon.options.color + '.png">'
 			+		' <small>Bike Theft</small>' 
@@ -398,6 +406,9 @@ function getPoint(latlng, date, type, pk) {
 		icon = bikeRedIcon;
 		dataset = "incident"
 	} else if (type === "Near miss") {
+		icon = bikeOrangeIcon;
+		dataset = "incident"
+	} else if (type === "Fall") {
 		icon = bikeYellowIcon;
 		dataset = "incident"
 	} else if (type === "Hazard") {
@@ -444,6 +455,7 @@ function createPieCluster(cluster) {
 		nPolice = 0,
 		nIcbc = 0,
 		nBikeR = 0,
+		nBikeO = 0,
 		nBikeY = 0,
 		nHazard = 0,
 		nTheft = 0,
@@ -459,6 +471,8 @@ function createPieCluster(cluster) {
 			nIcbc++;
 		} else if (marker.icon === bikeRedIcon.options.icon && marker.color === bikeRedIcon.options.color) {
 			nBikeR++;
+		} else if (marker.icon === bikeOrangeIcon.options.icon && marker.color === bikeOrangeIcon.options.color) {
+			nBikeO++;
 		} else if (marker.icon === bikeYellowIcon.options.icon && marker.color === bikeYellowIcon.options.color) {
 			nBikeY++;
 		} else if (marker.icon === hazardIcon.options.icon && marker.color === hazardIcon.options.color) {
@@ -495,6 +509,10 @@ function createPieCluster(cluster) {
 		"type": 'BikeR',
 		"count": nBikeR,
 		"color": bikeRedIcon.options.color
+		}, {
+		"type": 'BikeO',
+		"count": nBikeO,
+		"color": bikeOrangeIcon.options.color
 		}, {
 		"type": 'BikeY',
 		"count": nBikeY,
