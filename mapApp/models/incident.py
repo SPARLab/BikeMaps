@@ -188,28 +188,28 @@ class Incident(models.Model):
     ) 
     sex = models.CharField(
         'Please select your sex', 
-        max_length=6, 
+        max_length=10, 
         choices=SEX_CHOICES, 
         blank=True, 
         null=True
     )
     regular_cyclist = models.CharField(
         'Do you bike at least once a week?',
-        max_length=20, 
+        max_length=30, 
         choices=BOOLEAN_CHOICES, 
         blank=True, 
         null=True
     )
     helmet = models.CharField(
         'Were you wearing a helmet?',
-        max_length=20, 
+        max_length=30, 
         choices=BOOLEAN_CHOICES, 
         blank=True, 
         null=True
     )
     intoxicated = models.CharField(
     'Were you intoxicated?',
-    max_length=20, 
+    max_length=30, 
     choices=BOOLEAN_CHOICES, 
     blank=True, 
     null=True
@@ -240,7 +240,7 @@ class Incident(models.Model):
     )
     riding_on = models.CharField(
         'Where were you riding your bike?', 
-        max_length=20, 
+        max_length=30, 
         choices=RIDING_ON_CHOICES, 
         blank=True, 
         null=True
@@ -254,7 +254,7 @@ class Incident(models.Model):
     )
     terrain = models.CharField(
         'What was the terrain like?', 
-        max_length=20, 
+        max_length=30, 
         choices=TERRAIN_CHOICES, 
         blank=True, 
         null=True

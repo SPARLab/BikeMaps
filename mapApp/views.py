@@ -205,30 +205,12 @@ def alertUsers(request, incident):
 	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects
 	usersToAlert = list(set([poly.user for poly in intersectingPolys])) # get list of distinct users to alert
 
-	INCIDENT, NEARMISS, FALL, HAZARD, THEFT, UNDEFINED = xrange(6)
-	
-	if (incident.incident_type() == "Collision"):
-		action = INCIDENT
-		Notification = IncidentNotification
-
-	elif (incident.incident_type() == "Near miss"):
-		action = NEARMISS
-		Notification = IncidentNotification
-
-	elif (incident.incident_type() == "Fall"):
-		action = FALL
-		Notification = IncidentNotification
-
-	elif (incident.incident_type() == "Hazard"):
-		action = HAZARD
-		Notification = HazardNotification
-
-	elif (incident.incident_type() == "Theft"):
-		action = THEFT
-		Notification = TheftNotification
-
-	else:
-		action = UNDEFINED
+	if (incident.incident_type() == "Collision"): Notification = IncidentNotification; action = Notification.INCIDENT
+	elif (incident.incident_type() == "Near miss"): Notification = IncidentNotification; action = Notification.NEARMISS
+	elif (incident.incident_type() == "Fall"): Notification = IncidentNotification; action = Notification.FALL
+	elif (incident.incident_type() == "Hazard"): Notification = HazardNotification; action = Notification.HAZARD
+	elif (incident.incident_type() == "Theft"): Notification = TheftNotification; action = Notification.THEFT
+	else: HttpResponseRedirect('mapApp:index.html')
 
 	for user in usersToAlert:	
 		Notification(user=user, point=incident, action=action).save()

@@ -8,7 +8,8 @@ from django.utils import timezone
 
 
 THEFT_CHOICES = (
-    ('Bike', 'Bike'),
+    ('Bike (value < $1000)', 'Bike (value < $1000)'),
+    ('Bike (value >= $1000)', 'Bike (value >= $1000)'),
     ('Major bike component', 'Major bike component (e.g. tire, seat, handlebars, etc.)'),
     ('Minor bike component', 'Minor bike component (e.g. lights, topbar padding, bell, etc.)')
 )
@@ -105,7 +106,7 @@ class Theft(models.Model):
 
     regular_cyclist = models.CharField(
         'Do you bike at least once a week?',
-        max_length=20, 
+        max_length=30, 
         choices=BOOLEAN_CHOICES, 
         blank=True, 
         null=True

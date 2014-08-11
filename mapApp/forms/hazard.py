@@ -17,8 +17,7 @@ class HazardForm(forms.ModelForm):
                 'Hazard',
                 Field('geom', type="hidden", id="hazPoint"), # Coords passed after click on map from static/mapApp/js/map.js
                 Field('hazard_date', id="hazard_date", template='mapApp/util/datepicker.html'),
-                Field('hazard'),
-                Field('hazard_object'),
+                Field('hazard', id="hazard-type"),
             ),
             AccordionGroup(
                 'Description',
@@ -46,6 +45,7 @@ class HazardForm(forms.ModelForm):
                             $(".submitBtnHazard").addClass("disabled");
                         }
                     });
+
                     </script>
                 """),
                 css_class='pull-left'

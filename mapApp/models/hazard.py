@@ -8,24 +8,29 @@ from django.utils import timezone
 
 
 HAZARD_CHOICES = (
-    ('Collision hazard', 'Collision hazard'),
-    ('Falling hazard', 'Falling hazard'),
-    ('Scraping/cutting hazard', 'Scraping/cutting hazard')
+    ('Infrastructure', (
+            ('Curb', 'Curb'),
+            ('Island', 'Island'),
+            ('Train track', 'Train track'),
+            ('Pothole', 'Pothole'),
+            ('Road surface', 'Road surface'),
+            ('Poor signage', 'Poor signage'),
+            ('Speed limits', 'Speed limits'),
+            ('Other infrastructure', 'Other infrastructure'),
+        )
+    ),
+    ('Other', (
+            ('Poor visibility', 'Poor visibility'),
+            ('Parked car', 'Parked car'),
+            ('Traffic flow', 'Traffic flow'),
+            ('Driver behaviour', 'Driver behaviour'),
+            ('Pedestrian behaviour', 'Pedestrian behaviour'),
+            ('Congestion', 'Congestion'),
+            ('Other', 'Other (Please describe)')
+        )
+    )
 )
-HAZARD_OBJECT_CHOICES = (
-    ('Car/Truck', 'Car/Truck'),
-    ('Vehicle door', 'Vehicle door'),
-    ('Another cyclist', 'Another cyclist'),
-    ('Curb', 'Curb'),
-    ('Pedestrian/Person', 'Pedestrian/Person'),
-    ('Train Tracks', 'Train Tracks'),
-    ('Pothole', 'Pothole'),
-    ('Lane divider', 'Lane divider'),
-    ('Animal', 'Animal'),
-    ('Sign/Post', 'Sign/Post'),
-    ('Infrastructure needing repair', 'Infrastructure needing repair'),
-    ('Dangerous infrastructure', 'Dangerous infrastructure')
-)
+
 AGE_CHOICES = (
     ("<19", "19 or under"),
     ("19-29","19 - 29"),
@@ -71,14 +76,6 @@ class Hazard(models.Model):
         max_length=150, 
         choices=HAZARD_CHOICES
     )
-
-    hazard_object = models.CharField(
-        'If applicable, what sort of object presented the hazard?',
-        max_length=100,
-        choices=HAZARD_OBJECT_CHOICES,
-        blank=True,
-        null=True
-    )
     ###########
 
     ############## PERSONAL DETAILS FIELDS
@@ -92,14 +89,14 @@ class Hazard(models.Model):
     ) 
     sex = models.CharField(
         'Please select your sex', 
-        max_length=6, 
+        max_length=10, 
         choices=SEX_CHOICES, 
         blank=True, 
         null=True
     )
     regular_cyclist = models.CharField(
         'Do you bike at least once a week?',
-        max_length=20, 
+        max_length=30, 
         choices=BOOLEAN_CHOICES, 
         blank=True, 
         null=True
