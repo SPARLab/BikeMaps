@@ -41,13 +41,32 @@ class TheftForm(forms.ModelForm):
                     <input type='checkbox' class='over13theft'><strong> I am over the age of 13</strong>
                     
                     <script>
-                      $(".over13theft").change(function() {
+                    $(".over13theft").change(function() {
                         if(this.checked) {
                             $(".submitBtnTheft").removeClass("disabled");
                         }else{
                             $(".submitBtnTheft").addClass("disabled");
                         }
                     });
+
+                    // Dynamically change lock to "NA" if bike not locked
+                    $("#div_id_lock select option[value='NA']").hide();
+                    $("#div_id_how_locked select").change( function(){
+                        if($(this).val() == 'Not locked'){
+                            $("#div_id_lock select").val('NA');
+                            $("#div_id_lock select").attr('disabled', true);
+                            $("#div_id_lock select option[value='NA']").show();
+                        }
+                        else{
+                            if($("#div_id_lock select").val() == 'NA'){
+                                $("#div_id_lock select").val('');
+                            }
+                            $("#div_id_lock select").attr('disabled', false);
+                            $("#div_id_lock select option[value='NA']").hide();
+                        }    
+                    });
+
+
                     </script>
                 """),
                 css_class='pull-left'

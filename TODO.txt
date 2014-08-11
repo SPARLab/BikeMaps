@@ -50,6 +50,10 @@ BikeMaps – Functionality
 -	Is it possible that when people click on the source of official data that they get metadata. For example if it is ICBC we could say. “Data available for British
 		Columbia from 1999 to 2013. Incident characteristics not provided.”
 
+Theft: 
+Add something on visibility/lighting.
+
+
 
 From Holland
 & Greating message with tour of site on first visit
@@ -57,6 +61,47 @@ From Holland
 
 & Basemap highway colors are too similar to legend colors
 
-	HAZARD FORM
-& Confusion about object that presents the hazard -> hard to distinguish one choice
-& Add other/explain field
+
+
+
+
+FROM DARREN
+2. I would suggest that the links from the share button open in a new
+window since they are going to external sites. In general, I expect links
+within the same web site to open in the same tab, but links to external
+sites to open in new tabs.
+
+5. When you search for a word/phrase that returns multiple results, the
+text of the results is truncated. Try searching for 'shell' for example.
+The list of results should probably expand horizontally to accommodate the
+width of the result items or the text in the result items may even need to
+wrap if it is sufficiently long.
+
+7. Geolocation frequently doesn't work for me on my home computer. I get a
+message saying "Geolocation error: Position acquisition timed out." It
+seems to work better from my Android phone however.
+
+8. The search function doesn't seem to work from my Android phone.
+
+10. When using a phone, it would be nice if the address bar could be
+hidden as it occupies valuable screen real estate, especially when in
+landscape mode.
+
+
+
+
+
+FROM MARTIN
+I looked at the intersection where I got hit, and I see there's a little cluster of police/insurance reports there.  I didn't file one, and I suspect the driver who hit me didn't bother.  So I added a report!
+
+(side question--do you access insurance and police databases to get some of the data or is it all from self-reports?) 
+
+A few comments:
+
+I think it would help to make the option for filing a report a little more obvious.  I had to search around (I was looking for a menu item "Make a Report" or something like that).  Took me awhile to find the little "pin" tab to place on the map.  Until then I thought maybe this was so beta that reports couldn't be added.
+
+The incident types were slightly confusing to me, because my personal instinct was not to think of my bike as a vehicle.  Of course, this is probably silly, but if other people have similar instincts it might help to word things a little differently.  For example, if things were stated as an incident "Between a bike and…" with options listed ("fixed object", "moving object"), and "moving object" broken into ("pedestrian", "car or truck", "another bike", etc.) this might be a bit clearer.  For a moment when I looked at "multiple vehicles" I thought maybe this could allow for car on car accidents that didn't even involve cyclists.  
+
+For the question "How were the sight lines?",  one option is "No" which is a bit confusing.  I suspect it should say "No obstructions"  or "No obstructed view".
+
+On the "Where were you riding your bike" question, one of the choices is "On a painted bike lane".  I selected this, but when I submitted my report, that entry got flagged for having too many characters (21 rather than the max of 20).  I changed my answer to "I don't remember" so that I could submit it.
