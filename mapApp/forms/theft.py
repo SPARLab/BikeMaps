@@ -21,6 +21,8 @@ class TheftForm(forms.ModelForm):
                 Field('how_locked'),
                 Field('lock'),
                 Field('locked_to'),
+                Field('lighting'),
+                Field('traffic'),
             ),
             AccordionGroup(
                 'Details',

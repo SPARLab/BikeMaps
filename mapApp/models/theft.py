@@ -46,7 +46,21 @@ LOCKED_TO_CHOICES = (
     ('Fence/railing', 'Against a fence or railing'),
     ('Bench', 'Against a public bench'),
     ('Indoors/lobby', 'Inside a building/lobby'),
-    ('Other', 'Other')
+    ('Other', 'Other (please describe)')
+)
+TRAFFIC_CHOICES = (
+    ('Very High', 'Very heavy (pedestrians passing by in a nearly constant stream)'),
+    ('High', 'Heavy (pedestrians passing by regularly)'),
+    ('Medium', 'Moderate (irregular pedestrian with busy vehicle traffic)'),
+    ('Low', 'Light (irregular pedestrian with light to moderate vehicle traffic)'),
+    ('Very Low', 'Very light (little pedestrian and vehicle traffic)'),
+    ('Don\'t know', 'I don\'t know')
+)
+LIGHTING_CHOICES =  (
+    ('Good', 'Well lit (e.g. bright daylight)'),
+    ('Moderate', 'Moderately well lit (e.g. streetlights, parking garage)'),
+    ('Poor', 'Poorly lit (e.g. night, unlit alleyway)'),
+    ('Don\'t know', 'I don\'t know')
 )
 
 ##########
@@ -88,9 +102,21 @@ class Theft(models.Model):
     )
 
     locked_to = models.CharField(
-        'Where did you lock/leave your bike?',
+        'Where did you leave your bike?',
         max_length=100,
         choices=LOCKED_TO_CHOICES
+    )
+
+    lighting = models.CharField(
+        'Which describes the lighting conditions where and when the theft occurred?',
+        max_length=100,
+        choices=LIGHTING_CHOICES
+    )
+
+    traffic = models.CharField(
+        'Which best describes the traffic in the area where the theft occurred?',
+        max_length=100,
+        choices=TRAFFIC_CHOICES
     )
 
     police_report = models.NullBooleanField(

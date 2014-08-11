@@ -68,7 +68,7 @@ ROAD_COND_CHOICES = (
     ('Don\'t remember', 'I don\'t remember')
 )
 SIGHTLINES_CHOICES = (
-    ('No', 'No'),
+    ('No obstructions', 'No obstructions'),
     ('View obstructed', 'View obstructed'),
     ('Glare or reflection', 'Glare or reflection'),
     ('Obstruction on road', 'Obstruction on road'),

@@ -92,16 +92,12 @@ landscape mode.
 
 
 FROM MARTIN
-I looked at the intersection where I got hit, and I see there's a little cluster of police/insurance reports there.  I didn't file one, and I suspect the driver who hit me didn't bother.  So I added a report!
-
-(side question--do you access insurance and police databases to get some of the data or is it all from self-reports?) 
 
 A few comments:
 
-I think it would help to make the option for filing a report a little more obvious.  I had to search around (I was looking for a menu item "Make a Report" or something like that).  Took me awhile to find the little "pin" tab to place on the map.  Until then I thought maybe this was so beta that reports couldn't be added.
+- More obvious reporting buttons
+
 
 The incident types were slightly confusing to me, because my personal instinct was not to think of my bike as a vehicle.  Of course, this is probably silly, but if other people have similar instincts it might help to word things a little differently.  For example, if things were stated as an incident "Between a bike and…" with options listed ("fixed object", "moving object"), and "moving object" broken into ("pedestrian", "car or truck", "another bike", etc.) this might be a bit clearer.  For a moment when I looked at "multiple vehicles" I thought maybe this could allow for car on car accidents that didn't even involve cyclists.  
-
-For the question "How were the sight lines?",  one option is "No" which is a bit confusing.  I suspect it should say "No obstructions"  or "No obstructed view".
 
 On the "Where were you riding your bike" question, one of the choices is "On a painted bike lane".  I selected this, but when I submitted my report, that entry got flagged for having too many characters (21 rather than the max of 20).  I changed my answer to "I don't remember" so that I could submit it.
