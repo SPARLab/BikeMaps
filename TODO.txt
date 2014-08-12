@@ -50,10 +50,6 @@ BikeMaps – Functionality
 -	Is it possible that when people click on the source of official data that they get metadata. For example if it is ICBC we could say. “Data available for British
 		Columbia from 1999 to 2013. Incident characteristics not provided.”
 
-Theft: 
-Add something on visibility/lighting.
-
-
 
 From Holland
 & Greating message with tour of site on first visit

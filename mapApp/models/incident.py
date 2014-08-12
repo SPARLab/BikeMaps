@@ -12,45 +12,59 @@ from django.utils import timezone
 # 
 INCIDENT_CHOICES = (
     ('Collision', (
-            ('Single vehicle striking fixed object','Single vehicle striking fixed object (e.g., curb, sign, planter)'),
-            ('Single vehicle striking a moving object', 'Single vehicle striking a moving object (e.g., pedestrian, inline skater, animal)'),
-            ('Multi vehicle collision with moving vehicle', 'Multi vehicle collision with moving vehicle'),
-            ('Multi vehicle collision with parked vehicle', 'Multi vehicle collision with parked vehicle'),
+            ('Collision with a stationary object or vehicle', 'Collision with a stationary object or vehicle'),
+            ('Collision with a moving object or vehicle', 'Collision with a moving object or vehicle'),
         )
     ),
     ('Near miss', (
-            ('Near collision with a fixed object', 'Near collision with a fixed object (e.g., curb, sign, planter)'),
-            ('Near collision with a moving object', 'Near collision with a moving object (e.g., pedestrian, inline skater, animal)'),
-            ('Near collision with a moving vehicle', 'Near collision with a moving vehicle'),
-            ('Near collision with a parked vehicle', 'Near collision with a parked vehicle'),
+            ('Near collision with a stationary object or vehicle', 'Near miss with a stationary object or vehicle'),
+            ('Near collision with a moving object or vehicle', 'Near miss with a moving object or vehicle'),
         )
     ),
     ('Fall', (
-            ('Single vehicle losing control', 'Single vehicle losing control'),
+            ('Fall', 'Lost control and fell'),
         )
     )
 )
-INCIDENT_WITH_CHOICES = [
-    ('Car/Truck', 'Car/Truck'),
-    ('Vehicle door', 'Vehicle door'),
-    ('Another cyclist', 'Another cyclist'),
-    ('Curb', 'Curb'),
-    ('Pedestrian/Person', 'Pedestrian/Person'),
-    ('Train Tracks', 'Train Tracks'),
-    ('Pothole', 'Pothole'),
-    ('Lane divider', 'Lane divider'),
-    ('Animal', 'Animal'),
-    ('Sign/Post', 'Sign/Post'),
-    ('Roadway', 'Roadway')
-]
+INCIDENT_WITH_CHOICES = (
+    ('Vehicle', (
+            ('Vehicle, head on', 'Head on'),
+            ('Vehicle, side impact', 'Side impact'),
+            ('Vehicle, angle', 'Angle impact'),
+            ('Vehicle, rear end', 'Rear end'),
+            ('Vehicle, open door', 'Open vehicle door'),
+        )
+    ),
+    ('Person/animal', (
+            ('Another cyclist', 'Another cyclist'),
+            ('Pedestrian', 'Pedestrian'),
+            ('Animal', 'Animal'),
+        )
+    ),
+    ('Infrastructure', (
+            ('Curb', 'Curb'),
+            ('Train Tracks', 'Train Tracks'),
+            ('Pothole', 'Pothole'),
+            ('Lane divider', 'Lane divider'),
+            ('Sign/Post', 'Sign/Post'),
+            ('Roadway', 'Roadway')
+        )
+    )
+)
 
-INJURY_CHOICES = [
-    ('No injury', 'No injury'),
-    ('Injury, no treatment', 'Injury, no medical treatment'),
-    ('Injury, saw family doctor', 'Injury, saw family doctor'),
-    ('Injury, hospital emergency visit', 'Injury, visited hospital emergency dept.'),
-    ('Injury, hospitalized', 'Injury, hospitalized (i.e. stayed overnight in hospital dept. other than emergency)')
-]
+INJURY_CHOICES = (
+    ('Yes', (
+            ('Injury, no treatment', 'Medical treatment not required'),
+            ('Injury, saw family doctor', 'Saw a family doctor'),
+            ('Injury, hospital emergency visit', 'Visited the hospital emergency dept.'),
+            ('Injury, hospitalized', 'Overnight stay in hospital)')
+        )
+    ),
+    ('No', (
+            ('No injury', 'No injury'),
+        )
+    )
+)
 
 PURPOSE_CHOICES = (
     ("Commute", "To/from work or school"), 

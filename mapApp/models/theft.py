@@ -36,7 +36,7 @@ LOCK_CHOICES = (
     ('Cable lock', 'Cable lock'),
     ('U-Lock and cable', 'U-Lock and cable'),
     ('Padlock', 'Padlock'),
-    ('NA', 'Not applicable'),
+    ('NA', 'Not locked'),
 )
 LOCKED_TO_CHOICES = (
     ('Outdoor bike rack', 'At an outdoor bike rack'),
