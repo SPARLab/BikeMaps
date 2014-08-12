@@ -178,7 +178,7 @@ class Incident(models.Model):
     # Injury details (all optional)
     injury = models.CharField(
         'Were you injured?',
-        max_length=30,
+        max_length=50,
         choices= INJURY_CHOICES # Without this, field has 'Unknown' for None rather than the desired "---------"
     )
 
@@ -209,21 +209,21 @@ class Incident(models.Model):
     )
     regular_cyclist = models.CharField(
         'Do you bike at least once a week?',
-        max_length=30, 
+        max_length=50, 
         choices=BOOLEAN_CHOICES, 
         blank=True, 
         null=True
     )
     helmet = models.CharField(
         'Were you wearing a helmet?',
-        max_length=30, 
+        max_length=50, 
         choices=BOOLEAN_CHOICES, 
         blank=True, 
         null=True
     )
     intoxicated = models.CharField(
     'Were you intoxicated?',
-    max_length=30, 
+    max_length=50, 
     choices=BOOLEAN_CHOICES, 
     blank=True, 
     null=True
@@ -233,28 +233,28 @@ class Incident(models.Model):
     ############### CONDITIONS FIELDS
     road_conditions = models.CharField(
         'What were the road conditions?', 
-        max_length=30, 
+        max_length=50, 
         choices=ROAD_COND_CHOICES, 
         blank=True, 
         null=True
     )
     sightlines = models.CharField(
         'How were the sight lines?', 
-        max_length=30, 
+        max_length=50, 
         choices=SIGHTLINES_CHOICES, 
         blank=True, 
         null=True
     )
     cars_on_roadside = models.CharField(
         'Were there cars parked on the roadside',
-        max_length=30, 
+        max_length=50, 
         choices= BOOLEAN_CHOICES,
         blank=True, 
         null=True
     )
     riding_on = models.CharField(
         'Where were you riding your bike?', 
-        max_length=30, 
+        max_length=50, 
         choices=RIDING_ON_CHOICES, 
         blank=True, 
         null=True
@@ -268,7 +268,7 @@ class Incident(models.Model):
     )
     terrain = models.CharField(
         'What was the terrain like?', 
-        max_length=30, 
+        max_length=50, 
         choices=TERRAIN_CHOICES, 
         blank=True, 
         null=True
