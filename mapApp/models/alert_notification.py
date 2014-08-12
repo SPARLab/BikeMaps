@@ -7,18 +7,19 @@ import datetime
 from django.utils import timezone
 
 
-INCIDENT, NEARMISS, FALL, HAZARD, THEFT, UNDEFINED = xrange(6)
-
-ACTION_CHOICES = (
-    (INCIDENT, _("Incident")),
-    (NEARMISS, _("Near miss")),
-    (FALL, _("Fall")),
-    (HAZARD, _("Hazard")),
-    (THEFT, _("Theft")),
-    (UNDEFINED, _("Undefined"))
-)
 
 class AlertNotification(models.Model):
+    INCIDENT, NEARMISS, FALL, HAZARD, THEFT, UNDEFINED = xrange(6)
+
+    ACTION_CHOICES = (
+        (INCIDENT, _("Incident")),
+        (NEARMISS, _("Near miss")),
+        (FALL, _("Fall")),
+        (HAZARD, _("Hazard")),
+        (THEFT, _("Theft")),
+        (UNDEFINED, _("Undefined"))
+    )
+    
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("user"))
 
     date = models.DateTimeField(auto_now_add=True)
