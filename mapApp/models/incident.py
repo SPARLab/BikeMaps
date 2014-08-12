@@ -282,6 +282,14 @@ class Incident(models.Model):
         blank=True, 
         null=True
     )
+
+    # Placeholder for automatically added weather using an HTTP_GET from rss?
+    weather = models.CharField(
+        'What was the weather like?', 
+        max_length=100, 
+        blank=True, 
+        null=True
+    )
     ##############
 
 

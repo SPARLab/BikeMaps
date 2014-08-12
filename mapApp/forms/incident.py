@@ -17,7 +17,7 @@ class IncidentForm(forms.ModelForm):
             AccordionGroup(
                 'Incident',
                 Field('geom', type="hidden", id="point"), # Coords passed after click on map from static/mapApp/js/map.js
-                Field('incident_date', id="incident_date", template='mapApp/util/datepicker.html'),
+                Field('incident_date', id="incident_date", template='mapApp/util/datepicker.html', autocomplete='off'),
                 Field('incident'),
                 Field('incident_with'),
                 Field('injury'),
