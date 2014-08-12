@@ -7,54 +7,54 @@ import datetime
 from django.utils import timezone
 
 
-HAZARD_CHOICES = (
-    ('Infrastructure', (
-            ('Curb', 'Curb'),
-            ('Island', 'Island'),
-            ('Train track', 'Train track'),
-            ('Pothole', 'Pothole'),
-            ('Road surface', 'Road surface'),
-            ('Poor signage', 'Poor signage'),
-            ('Speed limits', 'Speed limits'),
-            ('Other infrastructure', 'Other infrastructure'),
-        )
-    ),
-    ('Other', (
-            ('Poor visibility', 'Poor visibility'),
-            ('Parked car', 'Parked car'),
-            ('Traffic flow', 'Traffic flow'),
-            ('Driver behaviour', 'Driver behaviour'),
-            ('Pedestrian behaviour', 'Pedestrian behaviour'),
-            ('Congestion', 'Congestion'),
-            ('Other', 'Other (Please describe)')
-        )
-    )
-)
-
-AGE_CHOICES = (
-    ("<19", "19 or under"),
-    ("19-29","19 - 29"),
-    ("30-39", "30 - 39"),
-    ("40-49", "40 - 49"),
-    ("50-59","50 - 59"),
-    ("60-69","60 - 69"),
-    (">70", "70 or over")
-)
-SEX_CHOICES = (
-    ('M', 'Male'), 
-    ('F', 'Female'),
-    ('Other', 'Other')
-)
-BOOLEAN_CHOICES = (
-    ('Y', 'Yes'), 
-    ('N', 'No'), 
-    ('I don\'t know', 'I don\'t know')
-)
-
 ##########
 # Hazard class.
 # Class for Hazard Reports. Contains all required, non-required, and spatial fields. Setup to allow easy export to a singular shapefile.
 class Hazard(models.Model):
+    HAZARD_CHOICES = (
+        ('Infrastructure', (
+                ('Curb', 'Curb'),
+                ('Island', 'Island'),
+                ('Train track', 'Train track'),
+                ('Pothole', 'Pothole'),
+                ('Road surface', 'Road surface'),
+                ('Poor signage', 'Poor signage'),
+                ('Speed limits', 'Speed limits'),
+                ('Other infrastructure', 'Other infrastructure'),
+            )
+        ),
+        ('Other', (
+                ('Poor visibility', 'Poor visibility'),
+                ('Parked car', 'Parked car'),
+                ('Traffic flow', 'Traffic flow'),
+                ('Driver behaviour', 'Driver behaviour'),
+                ('Pedestrian behaviour', 'Pedestrian behaviour'),
+                ('Congestion', 'Congestion'),
+                ('Other', 'Other (Please describe)')
+            )
+        )
+    )
+
+    AGE_CHOICES = (
+        ("<19", "19 or under"),
+        ("19-29","19 - 29"),
+        ("30-39", "30 - 39"),
+        ("40-49", "40 - 49"),
+        ("50-59","50 - 59"),
+        ("60-69","60 - 69"),
+        (">70", "70 or over")
+    )
+    SEX_CHOICES = (
+        ('M', 'Male'), 
+        ('F', 'Female'),
+        ('Other', 'Other')
+    )
+    BOOLEAN_CHOICES = (
+        ('Y', 'Yes'), 
+        ('N', 'No'), 
+        ('I don\'t know', 'I don\'t know')
+)
+
     ########### HAZARD FIELDS
     date = models.DateTimeField(
         'Date reported', 
