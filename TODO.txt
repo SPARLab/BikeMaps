@@ -1,11 +1,8 @@
 TO DO
 
 High priority
-* Data backup
 * Popup messages more interesting..?
-* Information to collect for thefts and hazards?
 * Alert report
-* Shut off skobbler bike lanes
 * Add our own bikelanes
 * Create infrastructure category in legend with bikelanes and bike racks
 * Combine police and insurance icons/categories into new more general category
@@ -25,6 +22,7 @@ Lower priority
 * Day/Night point clusters or a timeslider
 * improve incidents heatmap
 * flagged comment alerts for admins
+* Contacts link to navbar
 
 BUGS
 * Moderate comments > delete button not working
@@ -91,9 +89,4 @@ FROM MARTIN
 
 A few comments:
 
-- More obvious reporting buttons
-
-
-The incident types were slightly confusing to me, because my personal instinct was not to think of my bike as a vehicle.  Of course, this is probably silly, but if other people have similar instincts it might help to word things a little differently.  For example, if things were stated as an incident "Between a bike and…" with options listed ("fixed object", "moving object"), and "moving object" broken into ("pedestrian", "car or truck", "another bike", etc.) this might be a bit clearer.  For a moment when I looked at "multiple vehicles" I thought maybe this could allow for car on car accidents that didn't even involve cyclists.  
-
-On the "Where were you riding your bike" question, one of the choices is "On a painted bike lane".  I selected this, but when I submitted my report, that entry got flagged for having too many characters (21 rather than the max of 20).  I changed my answer to "I don't remember" so that I could submit it.
+- More obvious reporting buttons 
