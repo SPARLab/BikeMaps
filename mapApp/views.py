@@ -85,11 +85,11 @@ def contact(request):
 		
 		for contact in adminContacts:
 			recipients.append(contact.email) 
-		if cc_myself:
-			recipients.append(sender)
 
 		try:
 			send_mail(subject, message, sender, recipients)
+			if cc_myself:
+				send_mail(subject, message, 'admin@bikemaps.org', sender)
 		except BadHeaderError:
 			messages.error(request, '<strong>Invalid Header.</strong> Illegal characters found.')
 
