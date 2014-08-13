@@ -7,17 +7,6 @@
 		Calendar view 3 displays wrong month selection and end date (displays 2 months previous)
 -->
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-    {% load staticfiles %}
-    <link href="{% static 'datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen"/>
-    <link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet" media="screen"/>
-</head>
-
-<body>
-
 {% load crispy_forms_field %}
 <div id="div_{{ field.auto_id }}" class="form-group {% if form_show_errors and field.errors %}has-error{% endif %}">
     {% if field.label %}
@@ -40,10 +29,6 @@
 </div>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
-<script type="text/javascript" src="{% static 'datetimepicker/js/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
-
-
 <script type="text/javascript">
     $('#{{ field.auto_id }}').datetimepicker({
 		autoclose: 1,
@@ -60,6 +45,3 @@
 		pickerPosition: 'bottom-left',
     });
 </script>
-
-</body>
-</html>

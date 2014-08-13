@@ -1,11 +1,12 @@
 {% extends "mapApp/base.html" %}
 
-{% block header %}
+{% block headerCSS %}
     {% load spirit_tags i18n %}
     <link rel="stylesheet" href="{{ STATIC_URL }}spirit/stylesheets/vendors/font-awesome.min.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}spirit/stylesheets/styles.css">
+{% endblock %}
 
-
+{% block headerJS %}
     <script src="{{ STATIC_URL }}spirit/scripts/jquery.min.js"></script>
     <script src="{{ STATIC_URL }}spirit/scripts/utils.js"></script>
     <script src="{{ STATIC_URL }}spirit/scripts/dropdown.js"></script>

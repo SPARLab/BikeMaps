@@ -1,16 +1,28 @@
 {% extends "mapApp/base.html" %}
 
 <!-- HEAD STUFF -->
-{% block header %}
-    {% load staticfiles %}
-
+{% load staticfiles crispy_forms_tags %}
+{% block headerCSS %}
     <!-- Load leaflet -->
     <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
-    <script src="{% static 'leaflet/leaflet.js' %}"></script>
 
     <!-- Load marker clustering -->
     <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.markercluster/MarkerCluster.css' %}">
     <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.markercluster/MarkerCluster.Default.css' %}">
+
+    <!-- Load draw pluging -->
+    <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.draw/dist/leaflet.draw.css' %}">
+
+    <!-- Leaflet Geocoder -->
+    <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}"> 
+{% endblock %}
+
+{% block headerJS %}
+    <!-- LOAD JS -->
+    <!-- Load leaflet -->
+    <script src="{% static 'leaflet/leaflet.js' %}"></script>
+
+    <!-- Load marker clustering -->
     <script src="{% static 'leaflet/plugins/leaflet.markercluster/leaflet.markercluster-src.js' %}"></script>
 
     <!-- Load Maki Markers Icons -->
@@ -20,7 +32,6 @@
     <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
 
     <!-- Load draw pluging -->
-    <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.draw/dist/leaflet.draw.css' %}">
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/Leaflet.draw.js' %}"></script>
     
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.Poly.js' %}"></script>
@@ -59,7 +70,6 @@
     <script src="{% static 'd3/d3.min.js' %}" charset="utf-8"></script> 
 
     <!-- Leaflet Geocoder -->
-    <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}"> 
     <script src="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script> 
 
     <!-- Tooltips script -->
@@ -73,16 +83,15 @@
 
     <!-- Load app js -->
     <script src="{% static 'mapApp/js/map.js' %}"></script>
-    {% load crispy_forms_tags %}
-    {% crispy geofenceForm %}
-    {% crispy routeForm %}
-
-    {% include 'mapApp/incident_form.html' %}
 {% endblock %}
 
 
 <!-- BODY STUFF -->
 {% block body %}
+    {% crispy geofenceForm %}
+    {% crispy routeForm %}
+
+    {% include 'mapApp/incident_form.html' %}
     <!-- Leaflet map --> 
     <div id="map"></div>
 
