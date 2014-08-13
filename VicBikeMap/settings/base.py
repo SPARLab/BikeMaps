@@ -66,6 +66,3 @@ SERIALIZATION_MODULES = {
 CRON_CLASSES = [
     "mapApp.cron.UserAlertEmails",
 ]
-
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True

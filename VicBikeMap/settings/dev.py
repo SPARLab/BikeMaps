@@ -80,6 +80,5 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'bikemaps.org@gmail.com'
 EMAIL_HOST_PASSWORD = 'secret'
 
-# Disable SSLify if DEBUG is enabled.
-if DEBUG:
-    SSLIFY_DISABLE = True
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
