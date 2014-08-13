@@ -81,5 +81,5 @@ EMAIL_HOST_USER = 'bikemaps.org@gmail.com'
 EMAIL_HOST_PASSWORD = 'secret'
 
 # Disable SSLify if DEBUG is enabled.
-# if DEBUG:
-#     SSLIFY_DISABLE = True
+if DEBUG:
+    SSLIFY_DISABLE = True
