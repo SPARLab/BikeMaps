@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.gis.geos import GEOSGeometry
 from django.views.decorators.http import require_POST
 from django.contrib import messages
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
 import time
 
 # Import models
