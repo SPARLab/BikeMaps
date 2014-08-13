@@ -89,7 +89,7 @@ def contact(request):
 		try:
 			send_mail(subject, message, sender, recipients)
 			if cc_myself:
-				send_mail(subject, message, 'admin@bikemaps.org', sender)
+				send_mail(subject, message, 'admin@bikemaps.org', list(sender))
 		except BadHeaderError:
 			messages.error(request, '<strong>Invalid Header.</strong> Illegal characters found.')
 
