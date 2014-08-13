@@ -109,9 +109,6 @@ div.line-mouse-marker {
   border-radius: 10px;
 }
 
-.dropdown-menu{
-	font-family: sans-serif;
-}
 
 .is-highlighted{
 	color: #D2850B;
@@ -160,13 +157,20 @@ div.line-mouse-marker {
 }
 
 /* Override spirt user dropdown*/
+.dropdown-menu{
+	font-family: sans-serif;
+}
+
 .dropdown-menu>.divider{
 	height: 1px;
-	width: 158px;
+	width: 100%;
 }
 
 .dropdown-menu>li>a{	
-	width: 158px;
+	width: 100%;
+}
+.dropdown-menu>li{	
+	width: 100%;
 }
 
 /* Leaflet legend on map */
