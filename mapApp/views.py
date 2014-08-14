@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.gis.geos import GEOSGeometry
 from django.views.decorators.http import require_POST
 from django.contrib import messages
-from django.core.mail import send_mail, BadHeaderError
+from django.core.mail import send_mail, BadHeaderError, EmailMessage
 import time
 
 # Import models
@@ -80,21 +80,17 @@ def contact(request):
 		sender = emailForm.cleaned_data['sender']
 		cc_myself = emailForm.cleaned_data['cc_myself']
 
-		adminContacts = Group.objects.get(name="admin contact").user_set.all()
-		recipients = []
-		
-		for contact in adminContacts:
-			recipients.append(contact.email) 
-		if cc_myself:
-			recipients.append(sender)
+		recipients = ['admin@bikemaps.org',]
+		cc = [sender] if cc_myself else []
+
+		email = EmailMessage(subject, message, 'postmaster@bikemaps.org', recipients, headers = {'Reply-To': sender}, cc = cc)
 
 		try:
-			send_mail(subject, message, sender, recipients)
+			email.send()
+			messages.success(request, '<strong>Thank you!</strong><br>We\'ll do our best to get back to you soon.')
+			emailForm = EmailForm() # Clear the form
 		except BadHeaderError:
 			messages.error(request, '<strong>Invalid Header.</strong> Illegal characters found.')
-
-		messages.success(request, '<strong>Thank you!</strong><br>We\'ll do our best to get back to you.')
-		emailForm = EmailForm() # Clear the form
 
 	return render(request, 'mapApp/about.html', {"emailForm": emailForm})
 
