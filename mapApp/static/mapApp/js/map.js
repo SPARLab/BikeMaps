@@ -1,5 +1,4 @@
 var DISABLE_GEOFENCES = false;
-var RACK_CLUSTERING = false;
 
 /* GLOBAL VARIABLES */
 var map;
@@ -96,35 +95,9 @@ var accidentPoints = new L.MarkerClusterGroup({
 		maxZoom: 17,
 		opacity: 0.8,
 		attribution: 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>'
-	});
-
-if(RACK_CLUSTERING){
-// Bike rack cluster (clustered points)
-	var racksCluster = new L.MarkerClusterGroup({
-		showCoverageOnHover: false,
-		// spiderfyOnMaxZoom: false,
-		maxClusterRadius: 20,
-		singleMarkerMode: true,
-		iconCreateFunction: function(cluster) {
-			var c = ' rack-cluster-'
-			if (cluster.getChildCount() > 1) {
-				c += 'medium';
-				size = new L.Point(10, 10);
-			} else {
-				c += 'small';
-				size = new L.Point(5, 5);
-			}
-
-			return new L.DivIcon({
-				className: 'rack-cluster' + c,
-				iconSize: size
-			});
-		},
-	});
-} else {
-	// Bike rack layer (single points)
-	var racksCluster = new L.FeatureGroup([]);
-};
+	}),
+	
+	infrastructure = new L.FeatureGroup([]);
 
 /* Create the map with a tile layer and set global variable map */
 function initialize(mobile) {
@@ -146,47 +119,67 @@ function initialize(mobile) {
 	$(document).ready(mapListen);
 
 	function initializeGeoJsonLayers() {
-		var policePoints = new L.geoJson(policeData, {
-				pointToLayer: function(feature, latlng) {
-					heatMap.addLatLng(latlng);
+		// Police data
+		L.geoJson(policeData, {
+			pointToLayer: function(feature, latlng) {
+				heatMap.addLatLng(latlng);
 
-					return L.marker(latlng, {
-						icon: policeIcon
-					});
-				},
-				onEachFeature: function(feature, layer) {
-					var date = feature.properties.ACC_DATE.split("/");
-					date = getMonthFromInt(parseInt(date[1])) + ' ' + date[2] + ', ' + date[0]; // Month dd, YYYY
-					layer.bindPopup('<strong>Source:</strong> Victoria Police Dept.<br><strong>Date:</strong> ' + date);
-				}
-			}).addTo(accidentPoints),
+				return L.marker(latlng, {
+					icon: policeIcon
+				});
+			},
+			onEachFeature: function(feature, layer) {
+				var date = feature.properties.ACC_DATE.split("/");
+				date = getMonthFromInt(parseInt(date[1])) + ' ' + date[2] + ', ' + date[0]; // Month dd, YYYY
+				layer.bindPopup('<strong>Source:</strong> Victoria Police Dept.<br><strong>Date:</strong> ' + date);
+			}
+		}).addTo(accidentPoints);
 
-			icbcPoints = new L.geoJson(icbcData, {
-				pointToLayer: function(feature, latlng) {
-					heatMap.addLatLng(latlng);
+		// ICBC Data
+		L.geoJson(icbcData, {
+			pointToLayer: function(feature, latlng) {
+				heatMap.addLatLng(latlng);
 
-					return L.marker(latlng, {
-						icon: icbcIcon
-					});
-				},
-				onEachFeature: function(feature, layer) {
-					var date = toTitleCase(feature.properties.Month) + ", " + feature.properties.Year;
-					layer.bindPopup('<strong>Source:</strong> ICBC<br><strong>Date: </strong>' + date);
-				}
-			}).addTo(accidentPoints),
+				return L.marker(latlng, {
+					icon: icbcIcon
+				});
+			},
+			onEachFeature: function(feature, layer) {
+				var date = toTitleCase(feature.properties.Month) + ", " + feature.properties.Year;
+				layer.bindPopup('<strong>Source:</strong> ICBC<br><strong>Date: </strong>' + date);
+			}
+		}).addTo(accidentPoints);
 
-			bikeRacksVictoria = new L.geoJson(bikeRacks, {
-				pointToLayer: function(feature, latlng) {
-					if(RACK_CLUSTERING){
-						return L.marker(latlng); // For cluster
-					} else {
-						return L.marker(latlng, {icon: singleRackIcon})
-					}
-				},
-				onEachFeature: function(feature, layer) {
-					layer.bindPopup('Bike rack');
-				}
-			}).addTo(racksCluster);
+		// Bike Racks Victoria
+		L.geoJson(bikeRacks, {
+			pointToLayer: function(feature, latlng) {
+				return L.marker(latlng, {icon: singleRackIcon})
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup('Bike rack');
+			}
+		}).addTo(infrastructure);
+
+		// Solid bike lanes Victoria
+		var solidLaneStyle = {
+			"color": "#ff0066",
+		    "weight": 2,
+		    "opacity": 0.65			
+		};
+		L.geoJson (primary_bikelanes, {
+			style: solidLaneStyle
+		}).addTo(infrastructure);
+
+		// Dashed bike lanes Victoria
+		var dashedLaneStyle = {
+			"color": "#ff0066",
+		    "weight": 2,
+		    "opacity": 0.65,
+		    "dashArray": "5, 5"	
+		};
+		L.geoJson (secondary_bikelanes, {
+			style: dashedLaneStyle
+		}).addTo(infrastructure);
 	};
 
 	function addControls(mobile) {
@@ -240,15 +233,11 @@ function initialize(mobile) {
 			);
 		}
 
-		racksLegendHTML = "Infrastructure<br>" +
-			'<div id="racks-legend" class="legend-subtext collapse">' +
-			'<div class="rack-cluster-small" style="width: 5px; height: 5px; display: inline-block; border-radius:20px; margin-left:3px;"></div><small> Bike rack</small>';
-		if(RACK_CLUSTERING){
-			racksLegendHTML += '<br><div class="rack-cluster-medium" style="width: 10px; height: 10px; display: inline-block; border-radius:20px"></div><small> Multiple bike racks</small>';
-		}
-		racksLegendHTML += '</div>';
+		infrastructureLegendHTML = "Infrastructure<br>" +
+			'<div id="infrastructure-legend" class="legend-subtext collapse">' +
+			'<div class="rack-cluster-small" style="width: 5px; height: 5px; display: inline-block; border-radius:20px; margin-left:3px;"></div><small> Bike rack</small></div>';
 
-		layerControl.addOverlay(racksCluster, racksLegendHTML);
+		layerControl.addOverlay(infrastructure, infrastructureLegendHTML);
 		
 		layerControl.addOverlay(heatMap, 'Incident heatmap<br>' +
 			'<div id="hm-legend" class="legend-subtext collapse">' +
@@ -339,7 +328,7 @@ function initialize(mobile) {
 				$('#strava-legend').collapse('hide');
 			}
 			else if(e.name.match('Infrastructure.')){
-				$('#racks-legend').collapse('hide');
+				$('#infrastructure-legend').collapse('hide');
 			}
 			else if(e.name.match('Incident heatmap.')){
 				$('#hm-legend').collapse('hide');
@@ -360,7 +349,7 @@ function initialize(mobile) {
 				$('#strava-legend').collapse('show');
 			}
 			else if(e.name.match('Infrastructure.')){
-				$('#racks-legend').collapse('show');
+				$('#infrastructure-legend').collapse('show');
 			}
 			else if(e.name.match('Incident heatmap.')){
 				$('#hm-legend').collapse('show');
