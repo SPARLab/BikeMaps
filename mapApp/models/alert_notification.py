@@ -45,23 +45,23 @@ class AlertNotification(models.Model):
 
     @property
     def is_incident(self):
-        return self.action == INCIDENT
+        return self.action == self.INCIDENT
 
     @property
     def is_nearmiss(self):
-        return self.action == NEARMISS
+        return self.action == self.NEARMISS
 
     @property
     def is_fall(self):
-        return self.action == FALL
+        return self.action == self.FALL
 
     @property
     def is_hazard(self):
-        return self.action == HAZARD
+        return self.action == self.HAZARD
     
     @property
     def is_theft(self):
-        return self.action == THEFT
+        return self.action == self.THEFT
 
     def __unicode__(self):
         return "%s" % (self.user)
