@@ -93,7 +93,12 @@ var accidentPoints = new L.MarkerClusterGroup({
 		attribution: 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>'
 	}),
 	
-	infrastructure = new L.FeatureGroup([]);
+	infrastructure = L.tileLayer.wms("https://bikemaps.org/WMS", {
+		layers: 'bikemaps_infrastructure',
+		format: 'image/png',
+		transparent: true,
+		version: '1.3.0'
+	});
 
 /* Create the map with a tile layer and set global variable map */
 function initialize(mobile) {
@@ -145,13 +150,6 @@ function initialize(mobile) {
 				layer.bindPopup('<strong>Source:</strong> ICBC<br><strong>Date: </strong>' + date);
 			}
 		}).addTo(accidentPoints);
-
-		L.tileLayer.wms("https://bikemaps.org/WMS", {
-			layers: 'bikemaps_infrastructure',
-			format: 'image/png',
-			transparent: true,
-			version: '1.3.0'
-		}).addTo(infrastructure);
 	};
 
 	function addControls(mobile) {
@@ -159,65 +157,7 @@ function initialize(mobile) {
 		layerControl = L.control.layers([], [], {
 			collapsed: mobile
 		});
-
-		// Add layers
-		// Basemaps
-		// layerControl.addBaseLayer(skobbler, '<i class="fa fa-sun-o"></i> Light map');
-		// layerControl.addBaseLayer(skobblerNight, '<i class="fa fa-moon-o"></i> Dark map');
-		
-		layerControl.addOverlay(stravaHM, 'Rider volume<br>' +
-			'<div id=strava-legend class="legend-subtext collapse in">' +
-			'<small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>' + 
-			'</div>');
-		
-		layerControl.addOverlay(accidentPoints,
-			'Incident points<br>'
-			+'<div id=incident-legend class="marker-group legend-subtext collapse in">' 
-			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png">'
-			+		' <small>Citizen collision report</small><br>' 
-			
-			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeOrangeIcon.options.icon + '+' + bikeOrangeIcon.options.color + '.png">'
-			+		' <small>Citizen near miss report</small><br>' 
-			
-			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png">'
-			+		' <small>Citizen fall report</small><br>' 
-			
-			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png">'
-			+		' <small>Cyclist hazard</small><br>' 
-			
-			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png">'
-			+		' <small>Insurance report</small><br>' 
-			
-			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png">'
-			+		' <small>Police report</small><br>' 
-			
-			+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + theftIcon.options.icon + '+' + theftIcon.options.color + '.png">'
-			+		' <small>Bike Theft</small>' 
-			+'</div>'
-		);
-		
-		if (!DISABLE_GEOFENCES) {
-			layerControl.addOverlay(alertAreas, 'Alert Areas' +
-				'   <a data-target="#about-alert-areas" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>' +
-				'<div id="alert-areas-legend" class="legend-subtext collapse in">' +
-				'<small class="alert-area-box"></small>' +
-				'</div>'
-			);
-		}
-
-		infrastructureLegendHTML = "Infrastructure<br>" +
-			'<div id="infrastructure-legend" class="legend-subtext collapse">' +
-			'<small> Bike rack</small><br>' +
-			'<small> Separated lane</small><br>' +
-			'<small> Shared lane</small></div>';
-
-		layerControl.addOverlay(infrastructure, infrastructureLegendHTML);
-		
-		layerControl.addOverlay(heatMap, 'Incident heatmap<br>' +
-			'<div id="hm-legend" class="legend-subtext collapse">' +
-			'<small class="rainbow-gradient gradient-bar">less <div class="pull-right">more</div></small>' +
-			'</div>');
-
+		addLegend();
 		layerControl.addTo(map);
 
 		/* GEOCODING SEARCH BAR CONTROL */
@@ -253,6 +193,66 @@ function initialize(mobile) {
 			},
 			'Get Help'
 		);
+
+		function addLegend(){	
+			// Add layers
+			// Basemaps
+			// layerControl.addBaseLayer(skobbler, '<i class="fa fa-sun-o"></i> Light map');
+			// layerControl.addBaseLayer(skobblerNight, '<i class="fa fa-moon-o"></i> Dark map');
+			
+			layerControl.addOverlay(stravaHM, 'Rider volume<br>' +
+				'<div id=strava-legend class="legend-subtext collapse in">' +
+				'<small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>' + 
+				'</div>');
+			
+			layerControl.addOverlay(accidentPoints,
+				'Incident points<br>'
+				+'<div id=incident-legend class="marker-group legend-subtext collapse in">' 
+				+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png">'
+				+		' <small>Citizen collision report</small><br>' 
+				
+				+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeOrangeIcon.options.icon + '+' + bikeOrangeIcon.options.color + '.png">'
+				+		' <small>Citizen near miss report</small><br>' 
+				
+				+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png">'
+				+		' <small>Citizen fall report</small><br>' 
+				
+				+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png">'
+				+		' <small>Cyclist hazard</small><br>' 
+				
+				+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png">'
+				+		' <small>Insurance report</small><br>' 
+				
+				+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png">'
+				+		' <small>Police report</small><br>' 
+				
+				+	'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + theftIcon.options.icon + '+' + theftIcon.options.color + '.png">'
+				+		' <small>Bike Theft</small>' 
+				+'</div>'
+			);
+			
+			if (!DISABLE_GEOFENCES) {
+				layerControl.addOverlay(alertAreas, 'Alert Areas' +
+					'   <a data-target="#about-alert-areas" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>' +
+					'<div id="alert-areas-legend" class="legend-subtext collapse in">' +
+					'<small class="alert-area-box"></small>' +
+					'</div>'
+				);
+			}
+
+			infrastructureLegendHTML = "Infrastructure<br>" +
+				'<div id="infrastructure-legend" class="legend-subtext collapse">' +
+				'<small> Bike rack</small><br>' +
+				'<small> Separated lane</small><br>' +
+				'<small> Shared lane</small></div>';
+
+			layerControl.addOverlay(infrastructure, infrastructureLegendHTML);
+			
+			layerControl.addOverlay(heatMap, 'Incident heatmap<br>' +
+				'<div id="hm-legend" class="legend-subtext collapse">' +
+				'<small class="rainbow-gradient gradient-bar">less <div class="pull-right">more</div></small>' +
+				'</div>');
+		}
 	};
 
 	function mapListen(){
@@ -568,12 +568,10 @@ function createPieCluster(cluster) {
 	};
 };
 
-
 function getMonthFromInt(num) {
 	months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 	return months[num - 1];
 };
-
 
 function toTitleCase(s) {
 	return s.replace(/\w\S*/g, function(txt) {
