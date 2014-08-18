@@ -19,6 +19,11 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		color: "#d9844f",
 		size: "m"
 	}),
+	bikeGreyIcon = L.MakiMarkers.icon({
+		icon: "bicycle",
+		color: "#999999",
+		size: "m"
+	}),
 	hazardIcon = L.MakiMarkers.icon({
 		icon: "triangle-stroked",
 		color: "#3eab45",
@@ -27,11 +32,6 @@ var bikeRedIcon = L.MakiMarkers.icon({
 	theftIcon = L.MakiMarkers.icon({
 		icon: "bicycle",
 		color: "#000000",
-		size: "m"
-	}),
-	bikeGreyIcon = L.MakiMarkers.icon({
-		icon: "bicycle",
-		color: "#999999",
 		size: "m"
 	}),
 	policeIcon = L.MakiMarkers.icon({
@@ -53,10 +53,6 @@ var bikeRedIcon = L.MakiMarkers.icon({
 		icon: "star",
 		color: "#CC2A01",
 		size: "s"
-	}),
-	singleRackIcon = new L.DivIcon({
-		className: 'rack-cluster rack-cluster-small',
-		iconSize: new L.Point(5, 5)
 	});
 
 // Layer datasets
@@ -104,7 +100,7 @@ function initialize(mobile) {
 	mobile = typeof mobile !== 'undefined' ? mobile : false; //default value of mobile is false
 
 	// Static vector definitions 
-	initializeGeoJsonLayers();
+	initializeDatasets();
 
 	// Map init and default layers 
 	map = L.map('map', {
@@ -118,7 +114,7 @@ function initialize(mobile) {
 
 	$(document).ready(mapListen);
 
-	function initializeGeoJsonLayers() {
+	function initializeDatasets() {
 		// Police data
 		L.geoJson(policeData, {
 			pointToLayer: function(feature, latlng) {
@@ -150,35 +146,11 @@ function initialize(mobile) {
 			}
 		}).addTo(accidentPoints);
 
-		// Bike Racks Victoria
-		L.geoJson(bikeRacks, {
-			pointToLayer: function(feature, latlng) {
-				return L.marker(latlng, {icon: singleRackIcon})
-			},
-			onEachFeature: function(feature, layer) {
-				layer.bindPopup('Bike rack');
-			}
-		}).addTo(infrastructure);
-
-		// Solid bike lanes Victoria
-		var solidLaneStyle = {
-			"color": "#ff0066",
-		    "weight": 2,
-		    "opacity": 0.65			
-		};
-		L.geoJson (primary_bikelanes, {
-			style: solidLaneStyle
-		}).addTo(infrastructure);
-
-		// Dashed bike lanes Victoria
-		var dashedLaneStyle = {
-			"color": "#ff0066",
-		    "weight": 2,
-		    "opacity": 0.65,
-		    "dashArray": "5, 5"	
-		};
-		L.geoJson (secondary_bikelanes, {
-			style: dashedLaneStyle
+		L.tileLayer.wms("https://bikemaps.org/WMS", {
+			layers: 'bikemaps_infrastructure',
+			format: 'image/png',
+			transparent: true,
+			version: '1.3.0'
 		}).addTo(infrastructure);
 	};
 
@@ -235,7 +207,9 @@ function initialize(mobile) {
 
 		infrastructureLegendHTML = "Infrastructure<br>" +
 			'<div id="infrastructure-legend" class="legend-subtext collapse">' +
-			'<div class="rack-cluster-small" style="width: 5px; height: 5px; display: inline-block; border-radius:20px; margin-left:3px;"></div><small> Bike rack</small></div>';
+			'<small> Bike rack</small><br>' +
+			'<small> Separated lane</small><br>' +
+			'<small> Shared lane</small></div>';
 
 		layerControl.addOverlay(infrastructure, infrastructureLegendHTML);
 		

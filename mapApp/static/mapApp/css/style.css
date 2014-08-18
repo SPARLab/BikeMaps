@@ -75,21 +75,6 @@ body h1{
 	font-family: timeburner;
 }
 
-.rack-cluster-small {
-	background-color: #111111;
-	opacity:0.6;
-}
-
-.rack-cluster-medium {
-	background-color: #444444;
-	opacity:0.6;
-}
-
-.rack-cluster {
-	background-clip: padding-box;
-	border-radius: 20px;
-}
-
 .marker-cluster-pie g.arc{
 	fill-opacity: 0.8;
 }
