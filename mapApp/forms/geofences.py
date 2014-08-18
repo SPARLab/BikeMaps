@@ -28,10 +28,18 @@ class GeofenceForm(forms.ModelForm):
 
 
 
-        Field('geom', type="hidden", id="geofence"), # Coords passed after clicks on map
-        Field('email', readonly=True, id="userEmail"),
+        HTML("""<div class="form-group">
+                    <label class="col-xs-6 control-label">Reports will be emailed to you at:</label>
+                    <div class="col-xs-6">
+                        <p class="form-control-static">{{ request.user.email }}</p>
+                    </div>
+                </div>"""),
+        HTML("""<br><div class="col-xs-12"><em>Address can be changed in user preferences.</em></div>"""),
+        
 
-        HTML("""<br><em>Your email address can be changed in user preferences.</em>"""),
+        Field('geom', type="hidden", id="geofence"), # Coords passed after clicks on map
+        Field('email', type="hidden", readonly=True, id="userEmail"),
+
 
 
 
