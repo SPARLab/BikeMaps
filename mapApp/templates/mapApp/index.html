@@ -87,9 +87,8 @@
 <!-- BODY STUFF -->
 {% block body %}
     {% crispy geofenceForm %}
-    {% crispy routeForm %}
-
     {% include 'mapApp/incident_form.html' %}
+    
     <!-- Leaflet map --> 
     <div id="map"></div>
 
@@ -113,12 +112,6 @@
         $(window).load(function(){
             $('.nav-tabs a[href="#theftReport"]').tab('show')
             $('#incidentForm').modal('show');
-        });
-        {% endif %}
-
-        {% if routeForm.errors %}
-        $(window).load(function(){
-            $('#routeForm').modal('show');
         });
         {% endif %}
 

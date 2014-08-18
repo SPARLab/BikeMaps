@@ -4,8 +4,6 @@
     L.drawLocal.draw.toolbar.buttons.marker = 'Add a new marker.';
     L.drawLocal.draw.handlers.marker.tooltip.start = 'Place me where the incident, hazard, or theft occurred.';
     
-    L.drawLocal.draw.toolbar.buttons.polyline = 'Add a cycling route.';
-    
     L.drawLocal.draw.toolbar.buttons.polygon = 'Trace an area to receive incident alerts.';
     L.drawLocal.draw.handlers.polygon.tooltip.start = 'Trace the area you would like to receive alerts for.';
     // L.drawLocal.draw.handlers.polygon.tooltip.cont = 'Click to continue drawing shape.';
@@ -78,11 +76,6 @@
                 document.getElementById("point").value = geom; 
                 document.getElementById("hazPoint").value = geom; 
                 document.getElementById("theftPoint").value = geom; 
-            }
-            if (type === 'polyline') {
-                // Set form geometry field to click location
-                document.getElementById("line").value = JSON.stringify(layer.toGeoJSON().geometry);               
-                $('#routeForm').modal('show');
             }
             if (type === 'polygon') {
                 // Set form geometry field to click location

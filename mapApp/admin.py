@@ -2,7 +2,6 @@ from django.contrib.gis import admin
 
 # Register models
 from mapApp.models.incident import Incident
-from mapApp.models.route import Route
 from mapApp.models.alert_area import AlertArea
 from mapApp.models.alert_notification import IncidentNotification, HazardNotification, TheftNotification
 from mapApp.models.hazard import Hazard

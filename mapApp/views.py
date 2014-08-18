@@ -13,7 +13,6 @@ import time
 # Import models
 from django.contrib.auth.models import User, Group
 from mapApp.models.incident import Incident
-from mapApp.models.route import Route
 from mapApp.models.alert_area import AlertArea
 from mapApp.models.alert_notification import IncidentNotification, HazardNotification, TheftNotification
 from mapApp.models.hazard import Hazard
@@ -21,7 +20,6 @@ from mapApp.models.theft import Theft
 
 # Import forms
 from mapApp.forms.incident import IncidentForm
-from mapApp.forms.route import RouteForm
 from mapApp.forms.contact import EmailForm
 from mapApp.forms.geofences import GeofenceForm
 from mapApp.forms.edit_geom import EditForm
@@ -47,18 +45,16 @@ def index(request, lat=None, lng=None, zoom=None):
 
 
 # Define default context data for the index view. Forms can be overridden to display errors (used by other views)
-def indexContext(request, incidentForm=IncidentForm(), routeForm=RouteForm(), geofenceForm=GeofenceForm(), hazardForm=HazardForm(), theftForm=TheftForm()):
+def indexContext(request, incidentForm=IncidentForm(), geofenceForm=GeofenceForm(), hazardForm=HazardForm(), theftForm=TheftForm()):
 	return {
 		# Model data used by map
 		'incidents': Incident.objects.all(),
 		'hazards': Hazard.objects.all(),
 		'thefts': Theft.objects.all(),
-		"routes": Route.objects.all(),
 		"geofences": AlertArea.objects.filter(user=request.user.id),
 
 		# Form data used by map
 		"incidentForm": incidentForm,
-		"routeForm": routeForm,
 		"geofenceForm": geofenceForm,
 		"hazardForm": hazardForm,
 		"theftForm": theftForm,
@@ -93,25 +89,6 @@ def contact(request):
 			messages.error(request, '<strong>Invalid Header.</strong> Illegal characters found.')
 
 	return render(request, 'mapApp/about.html', {"emailForm": emailForm})
-
-@require_POST
-def postRoute(request):
-	routeForm = RouteForm(request.POST)
-	routeForm.data = routeForm.data.copy()
-
-	# Convert string coords to valid geometry object
-	try:
-		routeForm.data['line'] = GEOSGeometry(routeForm.data['line'])
-	except(ValueError):
-		messages.error(request, '<strong>Error</strong><br>Invalid geometry data.')
-		return HttpResponseRedirect(reverse('mapApp:index')) 
-
-	if routeForm.is_valid():
-		routeForm.save()
-		routeForm = RouteForm() # Clear the form
-		messages.success(request, '<strong>Thank you!</strong><br>Your route was successfully added.')
-
-	return render(request, 'mapApp/index.html', indexContext(request, routeForm=routeForm))
 
 @require_POST
 def postIncident(request):
