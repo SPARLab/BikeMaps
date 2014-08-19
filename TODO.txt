@@ -3,26 +3,18 @@ TO DO
 High priority
 * Popup messages more interesting..?
 * Alert report
-* Add our own bikelanes
-* Create infrastructure category in legend with bikelanes and bike racks
 * Combine police and insurance icons/categories into new more general category
-
 
 
 Lower priority
 * add new alerts badge to navbar bell
-* alertUsers view needs to be edited to accomodate hazards and thefts
-* Make modal form templates render using only cripsy forms where possible
-* Email alerts weekly
-* Smaller sponsor logos
-* Check compatabilities with internet explorer (even though it's the worst)
+* Email alerts monthly
 * Option to report for different person
 * Write up readme
 * Documentation for future devs
 * Day/Night point clusters or a timeslider
 * improve incidents heatmap
 * flagged comment alerts for admins
-* Contacts link to navbar
 
 BUGS
 * Moderate comments > delete button not working
@@ -30,12 +22,8 @@ BUGS
 
 
 
-
-
-
-Trisalyn TODO
+TRISALYN TODO
 BikeMaps – Functionality
--	Database backup
 -	Intersection search
 -	Linking the occurrence of a near-miss, crash, and theft to weather.
 -	Bike infrastructure in the legend with bike route and racks
@@ -49,14 +37,10 @@ BikeMaps – Functionality
 		Columbia from 1999 to 2013. Incident characteristics not provided.”
 
 
-From Holland
+FROM HOLLAND
 & Greating message with tour of site on first visit
 & Help button hard to see
-
 & Basemap highway colors are too similar to legend colors
-
-
-
 
 
 FROM DARREN
@@ -82,11 +66,5 @@ hidden as it occupies valuable screen real estate, especially when in
 landscape mode.
 
 
-
-
-
 FROM MARTIN
-
-A few comments:
-
 - More obvious reporting buttons 
