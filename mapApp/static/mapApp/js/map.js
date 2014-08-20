@@ -74,6 +74,8 @@ var accidentPoints = new L.MarkerClusterGroup({
 		blur: 20,
 	}),
 
+	locationGroup,
+
 	// Tile layers
 	// Skobbler settings flag reference at http://developer.skobbler.com/getting-started/web#sec0
 	skobbler = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/0111113120/10/{z}/{x}/{y}.png@2x', {
@@ -102,7 +104,7 @@ var accidentPoints = new L.MarkerClusterGroup({
 
 /* Create the map with a tile layer and set global variable map */
 function initialize(mobile) {
-	mobile = typeof mobile !== 'undefined' ? mobile : false; //default value of mobile is false
+	mobile = (typeof mobile !== 'undefined' ? mobile : false); //default value of mobile is false
 
 	// Static vector definitions 
 	initializeDatasets();
@@ -261,32 +263,41 @@ function initialize(mobile) {
 		map.on('locationfound', onLocationFound);
 		
 		function onLocationError(e) {
-			alert(e.message);
+			console.log(e.message);
 		};
 
 		function onLocationFound(e) {
-			// console.log('location found');
-			// if(locationGroup) layerControl.removeLayer(locationGroup);
-			var radius = Math.round((((e.accuracy / 2)+0.00001)*100)/100), //Round accuracy to two decimal places
+			var radius = Math.round((((e.accuracy / 2)+0.00001)*100)/100); //Round accuracy to two decimal places
+			
+			if(locationGroup){	
+				/*Update the coordinates of the marker*/
+				locationGroup.eachLayer(function (layer) {
+					layer.setLatLng(e.latlng);
+					if (layer._mRadius) {
+						layer.setRadius(radius);
+					}
+				});			
+			}
+			else{	
+				/*Location not previously found, create marker and legend item etc.*/
+				var marker = L.marker(e.latlng, {icon: locationIcon})
+						.bindPopup("You are within " + radius + " meters of this point"),
 
-				marker = L.marker(e.latlng, {
-					icon: locationIcon
-				})
-				.bindPopup("You are within " + radius + " meters of this point"),
-				circle = L.circle(e.latlng, radius, {
-					color: "#" + locationIcon.options.color,
-					weight: 1,
-					opacity: 0.3,
-					clickable: false,
-					fillOpacity: 0.05
-				});
+					circle = L.circle(e.latlng, radius, {
+						color: "#" + locationIcon.options.color,
+						weight: 1,
+						opacity: 0.3,
+						clickable: false,
+						fillOpacity: 0.05
+					});
 
-			locationGroup = L.layerGroup([marker, circle]);
-			layerControl.addOverlay(locationGroup, 'Detected location<br>' +
-				'<div id="location-legend" class="marker-group legend-subtext collapse">' +
-				'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + locationIcon.options.icon + '+' + locationIcon.options.color + '.png"> <small>You are here</small></div>' +
-				'</div>');
-			locationGroup.addTo(map);
+				locationGroup = L.layerGroup([marker, circle]);
+				layerControl.addOverlay(locationGroup, 'Detected location<br>' +
+					'<div id="location-legend" class="marker-group legend-subtext collapse">' +
+					'<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + locationIcon.options.icon + '+' + locationIcon.options.color + '.png"> <small>You are here</small></div>' +
+					'</div>');
+				locationGroup.addTo(map);
+			}
 		};
 
 
@@ -347,14 +358,18 @@ function setView(lat, lng, zoom) {
 	} else {
 		locateUser(setView = true);
 	}
-
 	/* FIND AND RETURN THE USER'S LOCATION */
 	function locateUser(setView) {
+		watch = !setView
 		this.map.locate({
 			setView: setView,
 			maxZoom: 16,
-			// watch: true,
+			watch: watch,
 			enableHighAccuracy: true
+		});
+		// Watch user after view reset without panning to new location
+		map.on('viewreset', function(){
+			locateUser(setView = false);
 		});
 	};
 };
