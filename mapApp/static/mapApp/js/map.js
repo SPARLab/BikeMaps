@@ -273,9 +273,8 @@ function initialize(mobile) {
 				/*Update the coordinates of the marker*/
 				locationGroup.eachLayer(function (layer) {
 					layer.setLatLng(e.latlng);
-					if (layer._mRadius) {
-						layer.setRadius(radius);
-					}
+					if (layer._mRadius) {layer.setRadius(radius);}
+					else{layer.getPopup().setContent("You are within " + radius + " meters of this point");}
 				});			
 			}
 			else{	
