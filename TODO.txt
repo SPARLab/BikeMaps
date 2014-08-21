@@ -2,13 +2,11 @@ TO DO
 
 High priority
 * Popup messages more interesting..?
-* Alert report
-* Combine police and insurance icons/categories into new more general category
-
+* Combine police and insurance icons/categories into new more general category --> Later
+* Email alerts monthly
 
 Lower priority
 * add new alerts badge to navbar bell
-* Email alerts monthly
 * Option to report for different person
 * Write up readme
 * Documentation for future devs
@@ -44,20 +42,11 @@ FROM HOLLAND
 
 
 FROM DARREN
-2. I would suggest that the links from the share button open in a new
-window since they are going to external sites. In general, I expect links
-within the same web site to open in the same tab, but links to external
-sites to open in new tabs.
-
 5. When you search for a word/phrase that returns multiple results, the
 text of the results is truncated. Try searching for 'shell' for example.
 The list of results should probably expand horizontally to accommodate the
 width of the result items or the text in the result items may even need to
 wrap if it is sufficiently long.
-
-7. Geolocation frequently doesn't work for me on my home computer. I get a
-message saying "Geolocation error: Position acquisition timed out." It
-seems to work better from my Android phone however.
 
 8. The search function doesn't seem to work from my Android phone.
 

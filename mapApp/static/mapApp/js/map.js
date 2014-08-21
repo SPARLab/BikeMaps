@@ -208,19 +208,21 @@ function initialize(mobile) {
                 '</div>');
 
             layerControl.addOverlay(accidentPoints,
-                'Incident points<br>' + '<div id=incident-legend class="marker-group legend-subtext collapse in">' + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png">' + ' <small>Citizen incident report</small><br>'
+                'Incident points<br>'
+
+                + '<div id=incident-legend class="marker-group legend-subtext collapse in">' + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png">' + ' <small>Citizen incident report</small><br>'
 
                 // + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeOrangeIcon.options.icon + '+' + bikeOrangeIcon.options.color + '.png">' + ' <small>Citizen near miss report</small><br>'
 
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png">' + ' <small>Citizen near miss report</small><br>'
+                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png"> <small>Citizen near miss report</small><br>'
 
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png">' + ' <small>Cyclist hazard</small><br>'
+                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png"> <small>Cyclist hazard</small><br>'
 
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png">' + ' <small>Insurance report</small><br>'
+                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png"> <small>Insurance report</small><br>'
 
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png">' + ' <small>Police report</small><br>'
+                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png"> <small>Police report</small><br>'
 
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + theftIcon.options.icon + '+' + theftIcon.options.color + '.png">' + ' <small>Bike Theft</small>' + '</div>'
+                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + theftIcon.options.icon + '+' + theftIcon.options.color + '.png"> <small>Bike Theft</small>' + '</div>'
             );
 
             if (!DISABLE_GEOFENCES) {
