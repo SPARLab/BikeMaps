@@ -48,7 +48,7 @@ A database driven webapp that allows users to submit bike accidents and near-mis
   Prereqs:
   * A postgresql database named bikeDB with postgis extension installed 
   * Install all required python packages by navigating to the project root and running
-   `pip install -r requirements.txt`
+    `pip install -r requirements.txt`
 
   Then to get things going, run the following commands:
         ```python manage.py syncdb

@@ -234,9 +234,9 @@ function initialize(mobile) {
 
             infrastructureLegendHTML = "Infrastructure<br>" +
                 '<div id="infrastructure-legend" class="legend-subtext collapse">' +
-                '<small> Bike rack</small><br>' +
-                '<small> Separated lane</small><br>' +
-                '<small> Shared lane</small></div>';
+                '<div class="bikerack"></div><small> Bike rack</small><br>' +
+                '<div class="bikelane solidlane"></div><small> Separated bike lane</small><br>' +
+                '<div class="bikelane dotlane"></div><small> Other cycling route</small></div>';
 
             layerControl.addOverlay(infrastructure, infrastructureLegendHTML);
 

@@ -227,6 +227,41 @@ div.line-mouse-marker {
     display: inline-block;
 }
 
+.bikerack{
+    display:inline-block;
+    background: #666666;
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    border: 1px solid black;
+    opacity: 0.5;
+    /*margin-top: -15px;*/
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+.bikelane{
+	display:inline-block;
+    background: #666666;
+    width: 30px;
+    height: 3px;
+    margin-right: 5px;
+}
+.solidlane{
+	background: #ff0080;
+}
+.dotlane{
+ 	border: 1px solid #ff0080;
+    background: #ff0080; /* not working, let's see some red */
+    background: repeating-linear-gradient(
+      to right,
+      #ff0080,
+      #ff0080 3px,
+      #ffffff 3px,
+      #ffffff 6px
+	);
+}
+
 /* General text alteration from bootstrap defaults*/
 li a {
 	color: #2c3e50;
