@@ -124,7 +124,8 @@
         
         // Load user points from the database
         {% for incident in incidents %}
-            getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}", {{ incident.pk }} );
+            getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}", 
+                {{ incident.pk }} );
         {% endfor %}
 
         // Load user hazards from the database
