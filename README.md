@@ -37,18 +37,18 @@ A database driven webapp that allows users to submit bike accidents and near-mis
 
 ##### Setup
   Starting this django project requires the following:
-    Prereqs:
-      A postgresql database named bikeDB with postgis extension installed 
-      All requirements
-        + pip install -r requirements.txt
+  Prereqs:
+  A postgresql database named bikeDB with postgis extension installed 
+  Install all required python packages with
+      pip install -r requirements.txt
 
-    Then, run:
+  Then, run:
       python manage.py syncdb
       python manage.py loaddata spirit_init
       python manage.py createcachetable spirit_cache
       # python manage.py collectstatic # If on production server only
 
-    Then running
+  Then running
       python manage.py runserver
       and visiting localhost:8000 should show the page on any dev computer
 
