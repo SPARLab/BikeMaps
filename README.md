@@ -9,24 +9,32 @@ A database driven webapp that allows users to submit bike accidents and near-mis
 
 
 ##### Requirements
-  + Django==1.6.4
-  + Python==2.7.6
-  + psycopg2==2.5.3
-  + Markdown==2.3.1
-  + Pillow==2.4.0
-  + Whoosh==2.5.7
-  + django-appconf==0.6
-  + django-compressor==1.4
-  + django-crispy-forms==1.4.0
-  + django-debug-toolbar==1.2.1
-  + django-djconfig==0.1.4
-  + django-haystack==2.1.0
-  + django-infinite-scroll-pagination==0.1.1
-  + django-geojson==2.5.0
-  + pytz==2014.4
-  + six==1.7.3
-  + sqlparse==0.1.11
-  + wsgiref==0.1.2
+  + Django 1.6.5
+  + Markdown 2.3.1
+  + Minidetector 0.1
+  + Pillow 2.4.0
+  + South 1.0
+  + Whoosh 2.5.7
+  + django-appconf 0.6
+  + django-common-helpers 0.6.1
+  + django-compressor 1.4
+  + django-crispy-forms 1.4.0
+  + django-cron 0.3.3
+  + django-debug-toolbar 1.2.1
+  + django-djconfig 0.1.4
+  + django-geojson 2.5.0
+  + django-haystack 2.1.0
+  + django-infinite-scroll-pagination 0.1.1
+  + django-leaflet 0.14.1
+  + django-lockdown 1.0
+  + mod-wsgi 4.2.6
+  + mod-wsgi-metrics 1.1.0
+  + psutil 2.1.1
+  + psycopg2 2.5.3
+  + pytz 2014.4
+  + six 1.7.3
+  + sqlparse 0.1.11
+  + wsgiref 0.1.2
 
 
 ##### People
