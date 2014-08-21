@@ -78,12 +78,12 @@ var accidentPoints = new L.MarkerClusterGroup({
 
 	// Tile layers
 	// Skobbler settings flag reference at http://developer.skobbler.com/getting-started/web#sec0
-	skobbler = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/0111113120/10/{z}/{x}/{y}.png@2x', {
+	skobbler = L.tileLayer('https://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/0111113120/10/{z}/{x}/{y}.png@2x', {
 		minZoom: 2,
 		attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
 	}),
 
-	skobblerNight = L.tileLayer('http://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/0111113120/2/{z}/{x}/{y}.png@2x', {
+	skobblerNight = L.tileLayer('https://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/0111113120/2/{z}/{x}/{y}.png@2x', {
 		minZoom: 2,
 		attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
 	}),
