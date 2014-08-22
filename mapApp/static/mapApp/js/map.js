@@ -272,6 +272,7 @@ function initialize(mobile) {
                     }
                 });
             } else {
+
                 /*Location not previously found, create marker and legend item etc.*/
                 var marker = L.marker(e.latlng, {
                     icon: locationIcon
@@ -292,6 +293,9 @@ function initialize(mobile) {
                     '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + locationIcon.options.icon + '+' + locationIcon.options.color + '.png"> <small>You are here</small></div>' +
                     '</div>');
                 locationGroup.addTo(map);
+
+                // Watch user without view reset
+                locateUser(false);
             }
         };
 
@@ -349,12 +353,8 @@ function setView(lat, lng, zoom) {
         this.map.locate({
             setView: setView,
             maxZoom: 16,
-            watch: true,
+            watch: !setView,
             enableHighAccuracy: true
-        });
-        // Watch user after view reset without panning to new location
-        map.on('viewreset', function() {
-            setView = false;
         });
     };
 };
