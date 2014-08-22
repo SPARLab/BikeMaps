@@ -47,9 +47,10 @@ INCIDENT_WITH_CHOICES = (
             ('Pothole', 'Pothole'),
             ('Lane divider', 'Lane divider'),
             ('Sign/Post', 'Sign/Post'),
-            ('Roadway', 'Roadway')
+            ('Roadway', 'Roadway'),
         )
-    )
+    ),
+    ('Other', 'Other (please describe)')
 )
 
 INJURY_CHOICES = (
