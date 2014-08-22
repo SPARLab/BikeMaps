@@ -1,9 +1,10 @@
-TO DO
+#TO DO
 
-High priority
+###HIGH PRIORITY
 * Email alerts monthly
+* Mobile reporting
 
-Lower priority
+###LOWER PRIORITY
 * add new alerts badge to navbar bell
 * Option to report for different person
 * Write up readme
@@ -11,40 +12,38 @@ Lower priority
 * improve incidents heatmap
 * flagged comment alerts for admins
 
-BUGS
+###BUGS
 * Moderate comments > delete button not working
 * Date picker does not scroll with modal
+* Leaflet draw does not work for mobile (currently disabled for these users)
 
 
-TRISALYN TODO
+
+##TRISALYN TODO
 BikeMaps – Functionality
 -	Intersection search
 -	Linking the occurrence of a near-miss, crash, and theft to weather.
--	Bike infrastructure in the legend with bike route and racks
 -	Alert emails to include graphics
 -	Prize entry for registered users
 -	Sliders and query tools on the website so people can see where recent crashes are or the difference between day and night incidents.
 
 
-FROM HOLLAND
-& Greating message with tour of site on first visit
-& Help button hard to see
-& Basemap highway colors are too similar to legend colors
+##FROM HOLLAND
+- Greating message with tour of site on first visit
+- Help button hard to see
+- Basemap highway colors are too similar to legend colors
 
 
-FROM DARREN
-5. When you search for a word/phrase that returns multiple results, the
-text of the results is truncated. Try searching for 'shell' for example.
-The list of results should probably expand horizontally to accommodate the
-width of the result items or the text in the result items may even need to
-wrap if it is sufficiently long.
+##FROM DARREN
+- When you search for a word/phrase that returns multiple results, the text of the results is truncated. 
+	Try searching for 'shell' for example. The list of results should probably expand horizontally to accommodate 
+	the width of the result items or the text in the result items may even need to wrap if it is sufficiently long.
 
-8. The search function doesn't seem to work from my Android phone.
+- The search function doesn't seem to work from my Android phone.
 
-10. When using a phone, it would be nice if the address bar could be
-hidden as it occupies valuable screen real estate, especially when in
-landscape mode.
+- When using a phone, it would be nice if the address bar could be
+	hidden as it occupies valuable screen real estate, especially when in landscape mode.
 
 
-FROM MARTIN
+##FROM MARTIN
 - More obvious reporting buttons 
