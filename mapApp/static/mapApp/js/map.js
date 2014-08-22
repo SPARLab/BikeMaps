@@ -4,49 +4,48 @@ var DISABLE_GEOFENCES = false;
 var map;
 
 // Icon definitions
-var bikeRedIcon = L.MakiMarkers.icon({
-    icon: "bicycle",
-    color: "#d9534f",
-    size: "m"
-    }),
-    bikeYellowIcon = L.MakiMarkers.icon({
-        icon: bikeRedIcon.options.icon,
-        color: "#f0ad4e",
-        size: "m"
-    }),
-    bikeGreyIcon = L.MakiMarkers.icon({
+var icons = {
+    "bikeRedIcon": L.MakiMarkers.icon({
         icon: "bicycle",
-        color: "#999999",
+        color: "#d9534f",
         size: "m"
-    }),
-    hazardIcon = L.MakiMarkers.icon({
-        icon: "triangle-stroked",
-        color: "#3eab45",
-        size: "m"
-    }),
-    theftIcon = L.MakiMarkers.icon({
-        icon: "bicycle",
-        color: "#000000",
-        size: "m"
-    }),
-    officialIcon = L.MakiMarkers.icon({
-        icon: "police",
-        color: "#000044",
-        size: "m"
-    }),
-    geocodeIcon = L.MakiMarkers.icon({
-        icon: "embassy",
-        color: "#CC2A01",
-        size: "l"
-    }),
-    locationIcon = L.MakiMarkers.icon({
-        icon: "star",
-        color: "#CC2A01",
-        size: "s"
-    }),
-
-    /*Used to make the pie chart creation more autonomous*/
-    iconList = [bikeRedIcon, bikeYellowIcon, bikeGreyIcon, hazardIcon, theftIcon, officialIcon, geocodeIcon, locationIcon];
+        }),
+    "bikeYellowIcon": L.MakiMarkers.icon({
+            icon: "bicycle",
+            color: "#f0ad4e",
+            size: "m"
+        }),
+    "bikeGreyIcon": L.MakiMarkers.icon({
+            icon: "bicycle",
+            color: "#999999",
+            size: "m"
+        }),
+    "hazardIcon": L.MakiMarkers.icon({
+            icon: "triangle-stroked",
+            color: "#3eab45",
+            size: "m"
+        }),
+    "theftIcon": L.MakiMarkers.icon({
+            icon: "bicycle",
+            color: "#000000",
+            size: "m"
+        }),
+    "officialIcon": L.MakiMarkers.icon({
+            icon: "police",
+            color: "#000044",
+            size: "m"
+        }),
+    "geocodeIcon": L.MakiMarkers.icon({
+            icon: "embassy",
+            color: "#CC2A01",
+            size: "l"
+        }),
+    "locationIcon": L.MakiMarkers.icon({
+            icon: "star",
+            color: "#CC2A01",
+            size: "s"
+        })
+};
 
 // Layer datasets
 // Cluster group for all accident data
@@ -121,7 +120,7 @@ function initialize(mobile) {
                 heatMap.addLatLng(latlng);
 
                 return L.marker(latlng, {
-                    icon: officialIcon
+                    icon: icons["officialIcon"]
                 });
             },
             onEachFeature: function(feature, layer) {
@@ -137,7 +136,7 @@ function initialize(mobile) {
                 heatMap.addLatLng(latlng);
 
                 return L.marker(latlng, {
-                    icon: officialIcon
+                    icon: icons["officialIcon"]
                 });
             },
             onEachFeature: function(feature, layer) {
@@ -169,7 +168,7 @@ function initialize(mobile) {
             }
 
             geocodeMarker = new L.Marker(result.center, {
-                icon: geocodeIcon
+                icon: icons["geocodeIcon"]
             })
                 .bindPopup(result.name)
                 .addTo(map)
@@ -203,15 +202,15 @@ function initialize(mobile) {
             layerControl.addOverlay(incidentData,
                 'Incident points<br>'
 
-                + '<div id=incident-legend class="marker-group legend-subtext collapse in">' + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png">' + ' <small>Citizen incident report</small><br>'
+                + '<div id=incident-legend class="marker-group legend-subtext collapse in">' + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icons["bikeRedIcon"].options.icon + '+' + icons["bikeRedIcon"].options.color + '.png">' + ' <small>Citizen incident report</small><br>'
 
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png"> <small>Citizen near miss report</small><br>'
+                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["bikeYellowIcon"].options.icon + '+' + icons["bikeYellowIcon"].options.color + '.png"> <small>Citizen near miss report</small><br>'
 
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png"> <small>Cyclist hazard</small><br>'
+                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["hazardIcon"].options.icon + '+' + icons["hazardIcon"].options.color + '.png"> <small>Cyclist hazard</small><br>'
 
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + officialIcon.options.icon + '+' + officialIcon.options.color + '.png"> <small>Official collision report</small><br>'
+                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["officialIcon"].options.icon + '+' + icons["officialIcon"].options.color + '.png"> <small>Official collision report</small><br>'
 
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + theftIcon.options.icon + '+' + theftIcon.options.color + '.png"> <small>Bike Theft</small>' + '</div>'
+                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["theftIcon"].options.icon + '+' + icons["theftIcon"].options.color + '.png"> <small>Bike Theft</small>' + '</div>'
             );
 
             if (!DISABLE_GEOFENCES) {
@@ -258,12 +257,12 @@ function initialize(mobile) {
             } else {
                 /*Location not previously found, create marker and legend item*/
                 var marker = L.marker(e.latlng, {
-                    icon: locationIcon
+                    icon: icons["locationIcon"]
                 })
                     .bindPopup("You are within " + radius + " meters of this point"),
 
                     circle = L.circle(e.latlng, radius, {
-                        color: "#" + locationIcon.options.color,
+                        color: "#" + icons["locationIcon"].options.color,
                         weight: 1,
                         opacity: 0.3,
                         clickable: false,
@@ -273,7 +272,7 @@ function initialize(mobile) {
                 locationGroup = L.layerGroup([marker, circle]);
                 layerControl.addOverlay(locationGroup, 'Detected location<br>' +
                     '<div id="location-legend" class="marker-group legend-subtext collapse">' +
-                    '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + locationIcon.options.icon + '+' + locationIcon.options.color + '.png"> <small>You are here</small></div>' +
+                    '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icons["locationIcon"].options.icon + '+' + icons["locationIcon"].options.color + '.png"> <small>You are here</small></div>' +
                     '</div>');
                 locationGroup.addTo(map);
 
@@ -346,16 +345,16 @@ function getPoint(latlng, type, pk, popupText) {
 
     var icon, dataset;
     if (type === "Collision" || type === "Fall") {
-        icon = bikeRedIcon;
+        icon = icons["bikeRedIcon"];
         dataset = "incident"
     } else if (type === "Near miss") {
-        icon = bikeYellowIcon;
+        icon = icons["bikeYellowIcon"];
         dataset = "incident"
     } else if (type === "Hazard") {
-        icon = hazardIcon;
+        icon = icons["hazardIcon"];
         dataset = "hazard"
     } else if (type === "Theft") {
-        icon = theftIcon;
+        icon = icons["theftIcon"];
         dataset = "theft"
     } else {
         return;
@@ -391,32 +390,34 @@ function createPieCluster(cluster) {
         n = children.length,
         colorRef = {};
 
-    iconList.forEach(function(obj, i){
-        // Add a counting field to the iconList objects
-        obj["count"] = 0;
+    for(var icon in icons) {
+        // Add a counting field to the icons objects
+        icons[icon]["count"] = 0;
         // construct colorRef object for efficiency of bin sort
-        colorRef[obj.options.color] = i;
-    });
+        colorRef[icons[icon].options.color] = icon;
+    };
 
     //Count the number of markers in each cluster
     children.forEach(function(child) {
-        // Match childColor to icon in iconList
-        var i = colorRef[child.options.icon.options.color];
-        iconList[i].count++;
+        // Match childColor to icon in icons
+        var icon = colorRef[child.options.icon.options.color];
+        icons[icon].count++;
     });
 
-    var outerR = (n >= 10 ? (n < 50 ? 20 : 25 ) : 15),
-        innerR = (n >= 10 ? (n < 50 ? 10 : 13) : 7);
-
+    // Make array of icons data
+    data = $.map(icons, function(v){ return v; })
+    
     // Build the svg layer
-    return pieChart(iconList, outerR, innerR, n);
-
+    return pieChart(data, n);
 
     // pieChart
     // 	Purpose: Builds the svg DivIcons
     // 	inputs: data as list of objects containing "type", "count", "color", outer chart radius, inner chart radius, and total points for cluster
     // 	output: L.DivIcon donut chart where each "type" is mapped to the corresponding "color" with a proportional section corresponding to "count"
-    function pieChart(data, outerR, innerR, total) {
+    function pieChart(data, total) {
+        outerR = (total >= 10 ? (total < 50 ? 20 : 25 ) : 15), 
+        innerR = (total >= 10 ? (total < 50 ? 10 : 13) : 7);
+
         var arc = d3.svg.arc()
             .outerRadius(outerR)
             .innerRadius(innerR);
