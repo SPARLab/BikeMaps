@@ -57,7 +57,7 @@ var bikeRedIcon = L.MakiMarkers.icon({
 
 // Layer datasets
 // Cluster group for all accident data
-var accidentPoints = new L.MarkerClusterGroup({
+var incidentData = new L.MarkerClusterGroup({
     maxClusterRadius: 70,
     polygonOptions: {
         color: '#2c3e50',
@@ -113,7 +113,7 @@ function initialize(mobile) {
     map = L.map('map', {
         center: [48, -100],
         zoom: 4,
-        layers: [skobbler, stravaHM, accidentPoints, alertAreas],
+        layers: [skobbler, stravaHM, incidentData, alertAreas],
     });
 
     // Add all controls to the map
@@ -136,7 +136,7 @@ function initialize(mobile) {
                 date = getMonthFromInt(parseInt(date[1])) + ' ' + date[2] + ', ' + date[0]; // Month dd, YYYY
                 layer.bindPopup('<strong>Source:</strong> Victoria Police Dept.<br><strong>Date:</strong> ' + date);
             }
-        }).addTo(accidentPoints);
+        }).addTo(incidentData);
 
         // ICBC Data
         L.geoJson(icbcData, {
@@ -151,7 +151,7 @@ function initialize(mobile) {
                 var date = toTitleCase(feature.properties.Month) + ", " + feature.properties.Year;
                 layer.bindPopup('<strong>Source:</strong> ICBC<br><strong>Date: </strong>' + date);
             }
-        }).addTo(accidentPoints);
+        }).addTo(incidentData);
     };
 
     function addControls(mobile) {
@@ -207,7 +207,7 @@ function initialize(mobile) {
                 '<small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>' +
                 '</div>');
 
-            layerControl.addOverlay(accidentPoints,
+            layerControl.addOverlay(incidentData,
                 'Incident points<br>'
 
                 + '<div id=incident-legend class="marker-group legend-subtext collapse in">' + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png">' + ' <small>Citizen incident report</small><br>'
@@ -391,7 +391,7 @@ function getPoint(latlng, type, pk, popupText) {
     });
 
     marker.bindPopup(popupText);
-    accidentPoints.addLayer(marker);
+    incidentData.addLayer(marker);
 };
 
 // Purpose: Add a given latlng list to the map as a polygon. Add pk attribute so polygon can be deleted by user.
