@@ -29,7 +29,7 @@ INCIDENT_CHOICES = (
 INCIDENT_WITH_CHOICES = (
     ('Vehicle', (
             ('Vehicle, head on', 'Head on'),
-            ('Vehicle, side impact', 'Side impact'),
+            ('Vehicle, side', 'Side impact'),
             ('Vehicle, angle', 'Angle impact'),
             ('Vehicle, rear end', 'Rear end'),
             ('Vehicle, open door', 'Open vehicle door'),
