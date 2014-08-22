@@ -94,7 +94,10 @@ var incidentData = new L.MarkerClusterGroup({
         version: '1.3.0'
     });
 
-/* Create the map with a tile layer and set global variable map */
+
+
+// Purpose: Create the map with a tile layer and set the map global variable. Initialize geojson datasets, 
+//      add controls, and legend items. Mobile parameter allows for rendering items differently for mobile users.
 function initialize(mobile) {
     mobile = (typeof mobile !== 'undefined' ? mobile : false); //default value of mobile is false
 
@@ -328,7 +331,9 @@ function setView(lat, lng, zoom) {
         locateUser(setView = true, watch = false);
     }
 };
-/* FIND AND RETURN THE USER'S LOCATION */
+
+// Purpose: Find the user via GPS or internet connection.
+//      Parameters to determine if the maps view should be set to that location and if the position should be polled and updated 
 function locateUser(setView, watch) {
     this.map.locate({
         setView: setView,
@@ -487,6 +492,9 @@ function createPieCluster(cluster) {
     };
 };
 
+
+
+// HELPER FUNCTIONS
 function getMonthFromInt(num) {
     months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     return months[num - 1];
