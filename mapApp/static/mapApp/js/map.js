@@ -46,7 +46,7 @@ var bikeRedIcon = L.MakiMarkers.icon({
     }),
 
     /*Used to make the pie chart creation more autonomous*/
-    iconList = [bikeRedIcon, bikeYellowIcon, bikeGreyIcon, hazardIcon, theftIcon, officialIcon, geocodeIcon, locationIcon] 
+    iconList = [bikeRedIcon, bikeYellowIcon, bikeGreyIcon, hazardIcon, theftIcon, officialIcon, geocodeIcon, locationIcon];
 
 // Layer datasets
 // Cluster group for all accident data
@@ -240,12 +240,7 @@ function initialize(mobile) {
 
     function mapListen() {
         // Listener events for locating the user
-        map.on('locationerror', onLocationError);
         map.on('locationfound', onLocationFound);
-
-        function onLocationError(e) {
-            // console.log(e.message);
-        };
 
         function onLocationFound(e) {
             var radius = Math.round((((e.accuracy / 2) + 0.00001) * 100) / 100); //Round accuracy to two decimal places
@@ -261,8 +256,7 @@ function initialize(mobile) {
                     }
                 });
             } else {
-
-                /*Location not previously found, create marker and legend item etc.*/
+                /*Location not previously found, create marker and legend item*/
                 var marker = L.marker(e.latlng, {
                     icon: locationIcon
                 })
@@ -283,11 +277,10 @@ function initialize(mobile) {
                     '</div>');
                 locationGroup.addTo(map);
 
-                // Watch user without view reset
+                // Watch location of user without resetting viewpane
                 locateUser(false);
             }
         };
-
 
         //Listener events for toggling legend items
         map.on('overlayremove', collapseLegendItem);
@@ -308,7 +301,6 @@ function initialize(mobile) {
                 $('#alert-areas-legend').collapse('hide');
             }
         };
-
         function showLegendItem(e) {
             if (e.name.match('Incident points.')) {
                 $('#incident-legend').collapse('show');
