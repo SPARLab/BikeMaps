@@ -92,8 +92,8 @@ var incidentData = new L.MarkerClusterGroup({
         format: 'image/png',
         transparent: true,
         version: '1.3.0'
-    });
-
+    }),
+    openPopup;
 
 
 // Purpose: Create the map with a tile layer and set the map global variable. Initialize geojson datasets, 
@@ -129,7 +129,13 @@ function initialize(mobile) {
             onEachFeature: function(feature, layer) {
                 var date = feature.properties.ACC_DATE.split("/");
                 date = getMonthFromInt(parseInt(date[1])).substring(0, 3) + '. ' + parseInt(date[2]) + ', ' + date[0]; // Month dd, YYYY
-                layer.bindPopup('<strong>Data source:</strong> <a class="police-metadata">Victoria Police Dept.</a><br><strong>Date:</strong> ' + date);
+                layer.bindPopup('<strong>Date: </strong>' + date + '<br>'
+                    + '<strong>Data source: </strong>Victoria Police Dept. '
+                    + '<a href="#" data-toggle="collapse" data-target="#police-metadata"><small>(metadata)</small></a><br>' 
+                    + '<div id="police-metadata" class="metadata collapse">'
+                        + '<strong>Metadata: </strong><small>blah blah blah</small>'
+                    +'</div>'
+                );
             }
         }).addTo(incidentData);
 
@@ -144,7 +150,13 @@ function initialize(mobile) {
             },
             onEachFeature: function(feature, layer) {
                 var date = toTitleCase(feature.properties.Month).substring(0, 3) + ". " + feature.properties.Year;
-                layer.bindPopup('<strong>Data source:</strong> <a class="ICBC-metadata">ICBC</a><br><strong>Date: </strong>' + date);
+                layer.bindPopup('<strong>Date: </strong>' + date + '<br>'
+                    + '<strong>Data source: </strong>ICBC ' 
+                    + '<a href="#" data-toggle="collapse" data-target="#icbc-metadata"><small>(metadata)</small></a><br>'
+                    + '<div id="icbc-metadata" class="metadata collapse">'
+                        + '<strong>Metadata: </strong><small>Data available for British Columbia from 1999 to 2013. Incident characteristics not provided.</small>'
+                    + '</div>'
+                );
             }
         }).addTo(incidentData);
     };
@@ -241,6 +253,8 @@ function initialize(mobile) {
     };
 
     function mapListen() {
+        map.on('popupopen', function(e){ openPopup = e.popup;});
+
         // Listener events for locating the user
         map.on('locationfound', onLocationFound);
 
