@@ -255,7 +255,7 @@ function initialize(mobile) {
         map.on('locationfound', onLocationFound);
 
         function onLocationError(e) {
-            console.log(e.message);
+            // console.log(e.message);
         };
 
         function onLocationFound(e) {
@@ -345,16 +345,16 @@ function setView(lat, lng, zoom) {
     }
     /* FIND AND RETURN THE USER'S LOCATION */
     function locateUser(setView) {
-        watch = !setView
+        // watch = !setView
         this.map.locate({
             setView: setView,
             maxZoom: 16,
-            watch: watch,
+            watch: true,
             enableHighAccuracy: true
         });
         // Watch user after view reset without panning to new location
         map.on('viewreset', function() {
-            locateUser(setView = false);
+            setView = false;
         });
     };
 };
