@@ -12,13 +12,13 @@ from django.utils import timezone
 # 
 INCIDENT_CHOICES = (
     ('Collision', (
-            ('Collision with a stationary object or vehicle', 'Collision with a stationary object or vehicle'),
-            ('Collision with a moving object or vehicle', 'Collision with a moving object or vehicle'),
+            ('Collision with stationary object or vehicle', 'Collision with a stationary object or vehicle'),
+            ('Collision with moving object or vehicle', 'Collision with a moving object or vehicle'),
         )
     ),
     ('Near miss', (
-            ('Near collision with a stationary object or vehicle', 'Near miss with a stationary object or vehicle'),
-            ('Near collision with a moving object or vehicle', 'Near miss with a moving object or vehicle'),
+            ('Near collision with stationary object or vehicle', 'Near miss with a stationary object or vehicle'),
+            ('Near collision with moving object or vehicle', 'Near miss with a moving object or vehicle'),
         )
     ),
     ('Fall', (
@@ -170,7 +170,7 @@ class Incident(models.Model):
     )
 
     incident_with = models.CharField(
-        'What sort of object was the collision or near collision with?',
+        'What sort of object did you collide or nearly collide with?',
         max_length=100,
         choices=INCIDENT_WITH_CHOICES
     )

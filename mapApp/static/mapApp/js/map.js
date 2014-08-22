@@ -361,7 +361,7 @@ function setView(lat, lng, zoom) {
 
 // Purpose: Add a given latlng poing with the given information to the map. 
 // 		Add pk for easy lookup of marker for admin tasks
-function getPoint(latlng, date, type, pk) {
+function getPoint(latlng, type, pk, popupText) {
     heatMap.addLatLng(latlng);
 
     var icon;
@@ -390,10 +390,7 @@ function getPoint(latlng, date, type, pk) {
         objType: dataset
     });
 
-    date = date.split(",");
-    date = date[0] + ',' + date[1]
-    marker.bindPopup('<strong>Source:</strong> User submitted<br><strong>Date:</strong> ' + date + '<br><strong>Type:</strong> ' + type);
-
+    marker.bindPopup(popupText);
     accidentPoints.addLayer(marker);
 };
 

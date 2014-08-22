@@ -124,17 +124,27 @@
         
         // Load user points from the database
         {% for incident in incidents %}
-            getPoint( {{ incident.latlngList }}, "{{ incident.incident_date }}", "{{incident.incident_type}}", 
-                {{ incident.pk }} );
+            getPoint( {{ incident.latlngList }}, "{{incident.incident_type}}", {{ incident.pk }}, 
+                '<strong>Type:</strong> {{ incident.incident }}<br>'
+                + '<strong>{% if incident.incident_type != "Fall" %}Incident with'
+                + '{% else %}Due to{% endif %}:</strong> {{ incident.incident_with }}<br>'
+                + '<strong>Date:</strong> {{ incident.incident_date }}'
+            );
         {% endfor %}
 
         // Load user hazards from the database
         {% for hazard in hazards %}
-            getPoint( {{ hazard.latlngList }}, "{{ hazard.hazard_date }}", "Hazard", {{ hazard.pk }} );
+            getPoint( {{ hazard.latlngList }}, "Hazard", {{ hazard.pk }},
+                '<strong>Hazard type:</strong> {{ hazard.hazard }}<br>'
+                + '<strong>Date:</strong> {{ hazard.hazard_date }}'
+            );
         {% endfor %}
 
         {% for theft in thefts %}
-            getPoint( {{ theft.latlngList }}, "{{ theft.theft_date }}", "Theft", {{ theft.pk }} );
+            getPoint( {{ theft.latlngList }}, "Theft", {{ theft.pk }},
+                '<strong>Theft type:</strong> {{ theft.theft }}<br>'
+                + '<strong>Date:</strong> {{ theft.theft_date }}'
+                );
         {% endfor %}
 
         // Load user alert areas from the database

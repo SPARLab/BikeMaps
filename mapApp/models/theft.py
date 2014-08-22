@@ -54,13 +54,13 @@ TRAFFIC_CHOICES = (
     ('Medium', 'Moderate (irregular pedestrian with busy vehicle traffic)'),
     ('Low', 'Light (irregular pedestrian with light to moderate vehicle traffic)'),
     ('Very Low', 'Very light (little pedestrian and vehicle traffic)'),
-    ('Don\'t know', 'I don\'t know')
+    ('I don\'t know', 'I don\'t know')
 )
 LIGHTING_CHOICES =  (
     ('Good', 'Well lit (e.g. bright daylight)'),
     ('Moderate', 'Moderately well lit (e.g. streetlights, parking garage)'),
     ('Poor', 'Poorly lit (e.g. night, unlit alleyway)'),
-    ('Don\'t know', 'I don\'t know')
+    ('I don\'t know', 'I don\'t know')
 )
 
 ##########
