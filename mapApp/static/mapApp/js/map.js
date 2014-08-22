@@ -278,7 +278,7 @@ function initialize(mobile) {
                 locationGroup.addTo(map);
 
                 // Watch location of user without resetting viewpane
-                locateUser(false);
+                locateUser(setView = false, watch = true);
             }
         };
 
@@ -324,17 +324,17 @@ function initialize(mobile) {
 function setView(lat, lng, zoom) {
     if (zoom) {
         this.map.setView(L.latLng(lat, lng), zoom);
-        locateUser(setView = false);
+        locateUser(setView = false, watch = false);
     } else {
-        locateUser(setView = true);
+        locateUser(setView = true, watch = false);
     }
 };
 /* FIND AND RETURN THE USER'S LOCATION */
-function locateUser(setView) {
+function locateUser(setView, watch) {
     this.map.locate({
         setView: setView,
         maxZoom: 16,
-        watch: !setView,
+        watch: watch,
         enableHighAccuracy: true
     });
 };
