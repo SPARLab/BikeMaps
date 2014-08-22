@@ -133,8 +133,8 @@ function initialize(mobile) {
             },
             onEachFeature: function(feature, layer) {
                 var date = feature.properties.ACC_DATE.split("/");
-                date = getMonthFromInt(parseInt(date[1])) + ' ' + date[2] + ', ' + date[0]; // Month dd, YYYY
-                layer.bindPopup('<strong>Source:</strong> Victoria Police Dept.<br><strong>Date:</strong> ' + date);
+                date = getMonthFromInt(parseInt(date[1])).substring(0, 3) + '. ' + parseInt(date[2]) + ', ' + date[0]; // Month dd, YYYY
+                layer.bindPopup('<strong>Data source:</strong> <a href="#">Victoria Police Dept.</a><br><strong>Date:</strong> ' + date);
             }
         }).addTo(incidentData);
 
@@ -144,12 +144,12 @@ function initialize(mobile) {
                 heatMap.addLatLng(latlng);
 
                 return L.marker(latlng, {
-                    icon: icbcIcon
+                    icon: policeIcon
                 });
             },
             onEachFeature: function(feature, layer) {
-                var date = toTitleCase(feature.properties.Month) + ", " + feature.properties.Year;
-                layer.bindPopup('<strong>Source:</strong> ICBC<br><strong>Date: </strong>' + date);
+                var date = toTitleCase(feature.properties.Month).substring(0, 3) + ". " + feature.properties.Year;
+                layer.bindPopup('<strong>Data source:</strong> <a href="#">ICBC</a><br><strong>Date: </strong>' + date);
             }
         }).addTo(incidentData);
     };
@@ -218,9 +218,9 @@ function initialize(mobile) {
 
                 + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png"> <small>Cyclist hazard</small><br>'
 
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png"> <small>Insurance report</small><br>'
+                // + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png"> <small>Insurance report</small><br>'
 
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png"> <small>Police report</small><br>'
+                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png"> <small>Official collision report</small><br>'
 
                 + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + theftIcon.options.icon + '+' + theftIcon.options.color + '.png"> <small>Bike Theft</small>' + '</div>'
             );
