@@ -102,7 +102,7 @@ function initialize(mobile) {
     mobile = (typeof mobile !== 'undefined' ? mobile : false); //default value of mobile is false
 
     // Static vector definitions 
-    initializeDatasets();
+    initializeGeoJSON();
 
     // Map init and default layers 
     map = L.map('map', {
@@ -116,7 +116,7 @@ function initialize(mobile) {
 
     $(document).ready(mapListen);
 
-    function initializeDatasets() {
+    function initializeGeoJSON() {
         // Police data
         L.geoJson(policeData, {
             pointToLayer: function(feature, latlng) {
@@ -129,7 +129,7 @@ function initialize(mobile) {
             onEachFeature: function(feature, layer) {
                 var date = feature.properties.ACC_DATE.split("/");
                 date = getMonthFromInt(parseInt(date[1])).substring(0, 3) + '. ' + parseInt(date[2]) + ', ' + date[0]; // Month dd, YYYY
-                layer.bindPopup('<strong>Data source:</strong> <a href="#">Victoria Police Dept.</a><br><strong>Date:</strong> ' + date);
+                layer.bindPopup('<strong>Data source:</strong> <a class="police-metadata">Victoria Police Dept.</a><br><strong>Date:</strong> ' + date);
             }
         }).addTo(incidentData);
 
@@ -144,7 +144,7 @@ function initialize(mobile) {
             },
             onEachFeature: function(feature, layer) {
                 var date = toTitleCase(feature.properties.Month).substring(0, 3) + ". " + feature.properties.Year;
-                layer.bindPopup('<strong>Data source:</strong> <a href="#">ICBC</a><br><strong>Date: </strong>' + date);
+                layer.bindPopup('<strong>Data source:</strong> <a class="ICBC-metadata">ICBC</a><br><strong>Date: </strong>' + date);
             }
         }).addTo(incidentData);
     };
