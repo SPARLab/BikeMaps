@@ -8,15 +8,10 @@ var bikeRedIcon = L.MakiMarkers.icon({
     icon: "bicycle",
     color: "#d9534f",
     size: "m"
-}),
+    }),
     bikeYellowIcon = L.MakiMarkers.icon({
         icon: bikeRedIcon.options.icon,
         color: "#f0ad4e",
-        size: "m"
-    }),
-    bikeOrangeIcon = L.MakiMarkers.icon({
-        icon: bikeRedIcon.options.icon,
-        color: "#d9844f",
         size: "m"
     }),
     bikeGreyIcon = L.MakiMarkers.icon({
@@ -34,14 +29,9 @@ var bikeRedIcon = L.MakiMarkers.icon({
         color: "#000000",
         size: "m"
     }),
-    policeIcon = L.MakiMarkers.icon({
+    officialIcon = L.MakiMarkers.icon({
         icon: "police",
         color: "#000044",
-        size: "m"
-    }),
-    icbcIcon = L.MakiMarkers.icon({
-        icon: "car",
-        color: "#20a5de",
         size: "m"
     }),
     geocodeIcon = L.MakiMarkers.icon({
@@ -53,7 +43,10 @@ var bikeRedIcon = L.MakiMarkers.icon({
         icon: "star",
         color: "#CC2A01",
         size: "s"
-    });
+    }),
+
+    /*Used to make the pie chart creation more autonomous*/
+    iconList = [bikeRedIcon, bikeYellowIcon, bikeGreyIcon, hazardIcon, theftIcon, officialIcon, geocodeIcon, locationIcon] 
 
 // Layer datasets
 // Cluster group for all accident data
@@ -128,7 +121,7 @@ function initialize(mobile) {
                 heatMap.addLatLng(latlng);
 
                 return L.marker(latlng, {
-                    icon: policeIcon
+                    icon: officialIcon
                 });
             },
             onEachFeature: function(feature, layer) {
@@ -144,7 +137,7 @@ function initialize(mobile) {
                 heatMap.addLatLng(latlng);
 
                 return L.marker(latlng, {
-                    icon: policeIcon
+                    icon: officialIcon
                 });
             },
             onEachFeature: function(feature, layer) {
@@ -212,15 +205,11 @@ function initialize(mobile) {
 
                 + '<div id=incident-legend class="marker-group legend-subtext collapse in">' + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeRedIcon.options.icon + '+' + bikeRedIcon.options.color + '.png">' + ' <small>Citizen incident report</small><br>'
 
-                // + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + bikeOrangeIcon.options.icon + '+' + bikeOrangeIcon.options.color + '.png">' + ' <small>Citizen near miss report</small><br>'
-
                 + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + bikeYellowIcon.options.icon + '+' + bikeYellowIcon.options.color + '.png"> <small>Citizen near miss report</small><br>'
 
                 + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + hazardIcon.options.icon + '+' + hazardIcon.options.color + '.png"> <small>Cyclist hazard</small><br>'
 
-                // + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icbcIcon.options.icon + '+' + icbcIcon.options.color + '.png"> <small>Insurance report</small><br>'
-
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + policeIcon.options.icon + '+' + policeIcon.options.color + '.png"> <small>Official collision report</small><br>'
+                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + officialIcon.options.icon + '+' + officialIcon.options.color + '.png"> <small>Official collision report</small><br>'
 
                 + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + theftIcon.options.icon + '+' + theftIcon.options.color + '.png"> <small>Bike Theft</small>' + '</div>'
             );
@@ -347,16 +336,15 @@ function setView(lat, lng, zoom) {
     } else {
         locateUser(setView = true);
     }
-    /* FIND AND RETURN THE USER'S LOCATION */
-    function locateUser(setView) {
-        // watch = !setView
-        this.map.locate({
-            setView: setView,
-            maxZoom: 16,
-            watch: !setView,
-            enableHighAccuracy: true
-        });
-    };
+};
+/* FIND AND RETURN THE USER'S LOCATION */
+function locateUser(setView) {
+    this.map.locate({
+        setView: setView,
+        maxZoom: 16,
+        watch: !setView,
+        enableHighAccuracy: true
+    });
 };
 
 // Purpose: Add a given latlng poing with the given information to the map. 
@@ -364,16 +352,13 @@ function setView(lat, lng, zoom) {
 function getPoint(latlng, type, pk, popupText) {
     heatMap.addLatLng(latlng);
 
-    var icon;
+    var icon, dataset;
     if (type === "Collision" || type === "Fall") {
         icon = bikeRedIcon;
         dataset = "incident"
     } else if (type === "Near miss") {
         icon = bikeYellowIcon;
         dataset = "incident"
-        // } else if (type === "Fall") {
-        // 	icon = bikeYellowIcon;
-        // 	dataset = "incident"
     } else if (type === "Hazard") {
         icon = hazardIcon;
         dataset = "hazard"
@@ -410,90 +395,29 @@ function getPolygon(latlng, pk) {
 // Purpose: Initializes the Pie chart cluster icons by getting the needed attributes from each cluster
 //		and passing them to the pieChart function
 function createPieCluster(cluster) {
-    var children = cluster.getAllChildMarkers();
+    var children = cluster.getAllChildMarkers(),
+        n = children.length,
+        colorRef = {};
 
-    var n = children.length,
-        nPolice = 0,
-        nIcbc = 0,
-        nBikeR = 0,
-        nBikeO = 0,
-        nBikeY = 0,
-        nHazard = 0,
-        nTheft = 0,
-        nUnknown = 0,
-        marker;
-
-    //Count the number of markers in each cluster
-    children.forEach(function(c) {
-        marker = c.options.icon.options; // options for each point in clusters icon, used here to differentiate the points in each cluster
-        if (marker.icon === policeIcon.options.icon) {
-            nPolice++;
-        } else if (marker.icon === icbcIcon.options.icon) {
-            nIcbc++;
-        } else if (marker.icon === bikeRedIcon.options.icon && marker.color === bikeRedIcon.options.color) {
-            nBikeR++;
-        } else if (marker.icon === bikeOrangeIcon.options.icon && marker.color === bikeOrangeIcon.options.color) {
-            nBikeO++;
-        } else if (marker.icon === bikeYellowIcon.options.icon && marker.color === bikeYellowIcon.options.color) {
-            nBikeY++;
-        } else if (marker.icon === hazardIcon.options.icon && marker.color === hazardIcon.options.color) {
-            nHazard++;
-        } else if (marker.icon === theftIcon.options.icon && marker.color === theftIcon.options.color) {
-            nTheft++;
-        } else {
-            nUnknown++;
-        }
+    iconList.forEach(function(obj, i){
+        // Add a counting field to the iconList objects
+        obj["count"] = 0;
+        // construct colorRef object for efficiency of bin sort
+        colorRef[obj.options.color] = i;
     });
 
-    // if(nUnknown > 0){
-    // 	console.log("Unknown cluster points found");
-    // }
-    var outerR = 20,
-        innerR = 10;
-    if (n >= 50) {
-        outerR += 5;
-        innerR += 3;
-    } else if (n < 10) {
-        outerR -= 5;
-        innerR -= 3;
-    }
+    //Count the number of markers in each cluster
+    children.forEach(function(child) {
+        // Match childColor to icon in iconList
+        var i = colorRef[child.options.icon.options.color];
+        iconList[i].count++;
+    });
 
-    var data = [{
-        "type": 'Police',
-        "count": nPolice,
-        "color": policeIcon.options.color
-    }, {
-        "type": 'ICBC',
-        "count": nIcbc,
-        "color": icbcIcon.options.color
-    }, {
-        "type": 'BikeR',
-        "count": nBikeR,
-        "color": bikeRedIcon.options.color
-    }, {
-        "type": 'BikeO',
-        "count": nBikeO,
-        "color": bikeOrangeIcon.options.color
-    }, {
-        "type": 'BikeY',
-        "count": nBikeY,
-        "color": bikeYellowIcon.options.color
-    }, {
-        "type": 'Hazard',
-        "count": nHazard,
-        "color": hazardIcon.options.color
-    }, {
-        "type": 'Theft',
-        "count": nTheft,
-        "color": theftIcon.options.color
-    }, {
-        "type": 'Unknown',
-        "count": nUnknown,
-        "color": bikeGreyIcon.options.color
-    }];
+    var outerR = (n >= 10 ? (n < 50 ? 20 : 25 ) : 15),
+        innerR = (n >= 10 ? (n < 50 ? 10 : 13) : 7);
 
     // Build the svg layer
-    return pieChart(data, outerR, innerR, n);
+    return pieChart(iconList, outerR, innerR, n);
 
 
     // pieChart
@@ -531,7 +455,7 @@ function createPieCluster(cluster) {
         g.append('path')
             .attr("d", arc)
             .style("fill", function(d) {
-                return '#' + d.data.color;
+                return '#' + d.data.options.color;
             });
 
         // Add center fill
