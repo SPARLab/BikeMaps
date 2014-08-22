@@ -58,7 +58,7 @@ INJURY_CHOICES = (
             ('Injury, no treatment', 'Medical treatment not required'),
             ('Injury, saw family doctor', 'Saw a family doctor'),
             ('Injury, hospital emergency visit', 'Visited the hospital emergency dept.'),
-            ('Injury, hospitalized', 'Overnight stay in hospital)')
+            ('Injury, hospitalized', 'Overnight stay in hospital')
         )
     ),
     ('No', (
