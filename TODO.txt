@@ -21,7 +21,7 @@
 
 
 
-##TRISALYN TODO
+##FROM TRISALYN
 BikeMaps – Functionality
 -	Intersection search
 -	Linking the occurrence of a near-miss, crash, and theft to weather.

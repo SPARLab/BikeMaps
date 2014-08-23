@@ -21,9 +21,6 @@
                 {% elif n.is_nearmiss %}
                     Near miss reported at <a href="{% url 'mapApp:readAlertPoint' 'nearmiss' n.pk %}">({{n.point.latlngList.0|floatformat:3}}, {{n.point.latlngList.1|floatformat:3}})</a>
                 
-                {% elif n.is_fall %}
-                    Fall reported at <a href="{% url 'mapApp:readAlertPoint' 'fall' n.pk %}">({{n.point.latlngList.0|floatformat:3}}, {{n.point.latlngList.1|floatformat:3}})</a>
-                
                 {% elif n.is_hazard %}
                     Hazard reported at <a href="{% url 'mapApp:readAlertPoint' 'hazard' n.pk %}">({{n.point.latlngList.0|floatformat:3}}, {{n.point.latlngList.1|floatformat:3}})</a>
                 
