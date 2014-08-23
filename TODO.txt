@@ -11,6 +11,7 @@
 * Documentation for future devs
 * improve incidents heatmap
 * flagged comment alerts for admins
+* Pictures of hazards uploading
 
 ###BUGS
 * Moderate comments > delete button not working

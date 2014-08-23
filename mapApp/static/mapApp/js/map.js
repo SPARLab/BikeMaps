@@ -127,14 +127,23 @@ function initialize(mobile) {
                 });
             },
             onEachFeature: function(feature, layer) {
+                var time = feature.properties.ACC_TIME;
+                    if (time){
+                        hours = parseInt(time.substring(0,2));
+                        time = ", " + hours%12 + ":" + time.substring(2) + (Math.floor(hours/12) ? " p.m." : " a.m.")
+                    }else{
+                        time = '';
+                    };
                 var date = feature.properties.ACC_DATE.split("/");
-                date = getMonthFromInt(parseInt(date[1])).substring(0, 3) + '. ' + parseInt(date[2]) + ', ' + date[0]; // Month dd, YYYY
-                layer.bindPopup('<strong>Date: </strong>' + date + '<br>'
+                date = getMonthFromInt(parseInt(date[1])).substring(0, 3) + '. ' + parseInt(date[2]) + ', ' + date[0] + time; // Month dd, YYYY, hh:mm a.m.
+                
+                layer.bindPopup('<strong>Type: </strong>Vehicle collision (' + feature.properties.ACC_TYPE.toLowerCase() + ')<br>'
                     + '<strong>Data source: </strong>Victoria Police Dept. '
                     + '<a href="#" data-toggle="collapse" data-target="#police-metadata"><small>(metadata)</small></a><br>' 
                     + '<div id="police-metadata" class="metadata collapse">'
                         + '<strong>Metadata: </strong><small>blah blah blah</small>'
                     +'</div>'
+                    + '<strong>Date: </strong>' + date
                 );
             }
         }).addTo(incidentData);
@@ -150,12 +159,12 @@ function initialize(mobile) {
             },
             onEachFeature: function(feature, layer) {
                 var date = toTitleCase(feature.properties.Month).substring(0, 3) + ". " + feature.properties.Year;
-                layer.bindPopup('<strong>Date: </strong>' + date + '<br>'
-                    + '<strong>Data source: </strong>ICBC ' 
+                layer.bindPopup('<strong>Data source: </strong>ICBC ' 
                     + '<a href="#" data-toggle="collapse" data-target="#icbc-metadata"><small>(metadata)</small></a><br>'
                     + '<div id="icbc-metadata" class="metadata collapse">'
                         + '<strong>Metadata: </strong><small>Data available for British Columbia from 1999 to 2013. Incident characteristics not provided.</small>'
                     + '</div>'
+                    + '<strong>Date: </strong>' + date
                 );
             }
         }).addTo(incidentData);
