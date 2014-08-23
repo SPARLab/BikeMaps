@@ -30,6 +30,7 @@ class Hazard(models.Model):
                 ('Driver behaviour', 'Driver behaviour'),
                 ('Pedestrian behaviour', 'Pedestrian behaviour'),
                 ('Congestion', 'Congestion'),
+                ('Broken glass', 'Broken glass on road')
                 ('Other', 'Other (Please describe)')
             )
         )
