@@ -141,7 +141,7 @@ function initialize(mobile) {
                     + '<strong>Data source: </strong>Victoria Police Dept. '
                     + '<a href="#" data-toggle="collapse" data-target="#police-metadata"><small>(metadata)</small></a><br>' 
                     + '<div id="police-metadata" class="metadata collapse">'
-                        + '<strong>Metadata: </strong><small>blah blah blah</small>'
+                        + '<strong>Metadata: </strong><small>Data available for the City of Victoria from 2008 to 2012.</small>'
                     +'</div>'
                     + '<strong>Date: </strong>' + date
                 );
