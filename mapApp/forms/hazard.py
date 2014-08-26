@@ -36,7 +36,7 @@ class HazardForm(forms.ModelForm):
             Div(
                 HTML("""
                     <input type='checkbox' class='terms_hazard'>
-                    <strong> I understand the 
+                    <strong> I have read and understand the 
                     <a href="{% url 'mapApp:termsAndConditions' %}" target=_blank>terms and conditions</a></strong>
                     
                     <script>

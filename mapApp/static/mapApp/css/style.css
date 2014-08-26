@@ -279,3 +279,12 @@ li a {
 	display: block;
 	margin-left:5px;
 }
+
+.terms-conditions p{
+	font-size: 15px;
+	text-indent:15px;
+}
+
+.terms-conditions h1{
+	font-size: 32px;
+}
