@@ -35,10 +35,12 @@ class HazardForm(forms.ModelForm):
         Div(
             Div(
                 HTML("""
-                    <input type='checkbox' class='over13hazard'><strong> I am over the age of 13</strong>
+                    <input type='checkbox' class='terms_hazard'>
+                    <strong> I understand the 
+                    <a href="{% url 'mapApp:termsAndConditions' %}" target=_blank>terms and conditions</a></strong>
                     
                     <script>
-                      $(".over13hazard").change(function() {
+                      $(".terms_hazard").change(function() {
                         if(this.checked) {
                             $(".submitBtnHazard").removeClass("disabled");
                         }else{

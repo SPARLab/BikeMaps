@@ -40,10 +40,12 @@ class TheftForm(forms.ModelForm):
         Div(
             Div(
                 HTML("""
-                    <input type='checkbox' class='over13theft'><strong> I am over the age of 13</strong>
+                    <input type='checkbox' class='terms_theft'>
+                        <strong> I understand the 
+                        <a href="{% url 'mapApp:termsAndConditions' %}" target=_blank>terms and conditions</a></strong>
                     
                     <script>
-                    $(".over13theft").change(function() {
+                    $(".terms_theft").change(function() {
                         if(this.checked) {
                             $(".submitBtnTheft").removeClass("disabled");
                         }else{

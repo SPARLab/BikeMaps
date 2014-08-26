@@ -50,10 +50,12 @@ class IncidentForm(forms.ModelForm):
         Div(
             Div(
                 HTML("""
-                    <input type='checkbox' class='over13_incident'><strong> I am over the age of 13</strong>
+                    <input type='checkbox' class='terms_incident'>
+                        <strong> I understand the 
+                        <a href="{% url 'mapApp:termsAndConditions' %}" target=_blank>terms and conditions</a></strong>
                     
                     <script>
-                      $(".over13_incident").change(function() {
+                      $(".terms_incident").change(function() {
                         if(this.checked) {
                             $(".submitBtnIncident").removeClass("disabled");
                         }else{

@@ -9,54 +9,54 @@ var icons = {
         icon: "bicycle",
         color: "#d9534f",
         size: "m"
-        }),
+    }),
     "bikeYellowIcon": L.MakiMarkers.icon({
-            icon: "bicycle",
-            color: "#f0ad4e",
-            size: "m"
-        }),
+        icon: "bicycle",
+        color: "#f0ad4e",
+        size: "m"
+    }),
     "bikeGreyIcon": L.MakiMarkers.icon({
-            icon: "bicycle",
-            color: "#999999",
-            size: "m"
-        }),
+        icon: "bicycle",
+        color: "#999999",
+        size: "m"
+    }),
     "hazardIcon": L.MakiMarkers.icon({
-            icon: "triangle-stroked",
-            color: "#3eab45",
-            size: "m"
-        }),
+        icon: "triangle-stroked",
+        color: "#3eab45",
+        size: "m"
+    }),
     "theftIcon": L.MakiMarkers.icon({
-            icon: "bicycle",
-            color: "#000000",
-            size: "m"
-        }),
+        icon: "bicycle",
+        color: "#000000",
+        size: "m"
+    }),
     "officialIcon": L.MakiMarkers.icon({
-            icon: "police",
-            color: "#000044",
-            size: "m"
-        }),
+        icon: "police",
+        color: "#000044",
+        size: "m"
+    }),
     "geocodeIcon": L.MakiMarkers.icon({
-            icon: "embassy",
-            color: "#CC2A01",
-            size: "l"
-        }),
+        icon: "embassy",
+        color: "#CC2A01",
+        size: "l"
+    }),
     "locationIcon": L.MakiMarkers.icon({
-            icon: "star",
-            color: "#CC2A01",
-            size: "s"
-        })
+        icon: "star",
+        color: "#CC2A01",
+        size: "s"
+    })
 };
 
 // Layer datasets
 // Cluster group for all accident data
 var incidentData = new L.MarkerClusterGroup({
-        maxClusterRadius: 70,
-        polygonOptions: {
-            color: '#2c3e50',
-            weight: 3
-        },
-        iconCreateFunction: createPieCluster
-    }),
+    maxClusterRadius: 70,
+    polygonOptions: {
+        color: '#2c3e50',
+        weight: 3
+    },
+    iconCreateFunction: createPieCluster
+}),
 
     alertAreas = new L.FeatureGroup([]),
 
@@ -128,23 +128,16 @@ function initialize(mobile) {
             },
             onEachFeature: function(feature, layer) {
                 var time = feature.properties.ACC_TIME;
-                    if (time){
-                        hours = parseInt(time.substring(0,2));
-                        time = ", " + hours%12 + ":" + time.substring(2) + (Math.floor(hours/12) ? " p.m." : " a.m.")
-                    }else{
-                        time = '';
-                    };
+                if (time) {
+                    hours = parseInt(time.substring(0, 2));
+                    time = ", " + hours % 12 + ":" + time.substring(2) + (Math.floor(hours / 12) ? " p.m." : " a.m.")
+                } else {
+                    time = '';
+                };
                 var date = feature.properties.ACC_DATE.split("/");
                 date = getMonthFromInt(parseInt(date[1])).substring(0, 3) + '. ' + parseInt(date[2]) + ', ' + date[0] + time; // Month dd, YYYY, hh:mm a.m.
-                
-                layer.bindPopup('<strong>Type: </strong>Vehicle collision (' + feature.properties.ACC_TYPE.toLowerCase() + ')<br>'
-                    + '<strong>Data source: </strong>Victoria Police Dept. '
-                    + '<a href="#" data-toggle="collapse" data-target="#police-metadata"><small>(metadata)</small></a><br>' 
-                    + '<div id="police-metadata" class="metadata collapse">'
-                        + '<strong>Metadata: </strong><small>Data available for the City of Victoria from 2008 to 2012.</small>'
-                    +'</div>'
-                    + '<strong>Date: </strong>' + date
-                );
+
+                layer.bindPopup('<strong>Type: </strong>Vehicle collision (' + feature.properties.ACC_TYPE.toLowerCase() + ')<br>' + '<strong>Data source: </strong>Victoria Police Dept. ' + '<a href="#" data-toggle="collapse" data-target="#police-metadata"><small>(metadata)</small></a><br>' + '<div id="police-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>Data available for the City of Victoria from 2008 to 2012.</small>' + '</div>' + '<strong>Date: </strong>' + date);
             }
         }).addTo(incidentData);
 
@@ -159,13 +152,7 @@ function initialize(mobile) {
             },
             onEachFeature: function(feature, layer) {
                 var date = toTitleCase(feature.properties.Month).substring(0, 3) + ". " + feature.properties.Year;
-                layer.bindPopup('<strong>Data source: </strong>ICBC ' 
-                    + '<a href="#" data-toggle="collapse" data-target="#icbc-metadata"><small>(metadata)</small></a><br>'
-                    + '<div id="icbc-metadata" class="metadata collapse">'
-                        + '<strong>Metadata: </strong><small>Data available for British Columbia from 1999 to 2013. Incident characteristics not provided.</small>'
-                    + '</div>'
-                    + '<strong>Date: </strong>' + date
-                );
+                layer.bindPopup('<strong>Data source: </strong>ICBC ' + '<a href="#" data-toggle="collapse" data-target="#icbc-metadata"><small>(metadata)</small></a><br>' + '<div id="icbc-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>Data available for British Columbia from 1999 to 2013. Incident characteristics not provided.</small>' + '</div>' + '<strong>Date: </strong>' + date);
             }
         }).addTo(incidentData);
     };
@@ -262,7 +249,9 @@ function initialize(mobile) {
     };
 
     function mapListen() {
-        map.on('popupopen', function(e){ openPopup = e.popup;});
+        map.on('popupopen', function(e) {
+            openPopup = e.popup;
+        });
 
         // Listener events for locating the user
         map.on('locationfound', onLocationFound);
@@ -326,6 +315,7 @@ function initialize(mobile) {
                 $('#alert-areas-legend').collapse('hide');
             }
         };
+
         function showLegendItem(e) {
             if (e.name.match('Incident points.')) {
                 $('#incident-legend').collapse('show');
@@ -418,7 +408,7 @@ function createPieCluster(cluster) {
         n = children.length,
         colorRef = {};
 
-    for(var icon in icons) {
+    for (var icon in icons) {
         // Add a counting field to the icons objects
         icons[icon]["count"] = 0;
         // construct colorRef object for efficiency of bin sort
@@ -433,8 +423,10 @@ function createPieCluster(cluster) {
     });
 
     // Make array of icons data
-    data = $.map(icons, function(v){ return v; })
-    
+    data = $.map(icons, function(v) {
+        return v;
+    })
+
     // Build the svg layer
     return pieChart(data, n);
 
@@ -443,7 +435,7 @@ function createPieCluster(cluster) {
     // 	inputs: data as list of objects containing "type", "count", "color", outer chart radius, inner chart radius, and total points for cluster
     // 	output: L.DivIcon donut chart where each "type" is mapped to the corresponding "color" with a proportional section corresponding to "count"
     function pieChart(data, total) {
-        outerR = (total >= 10 ? (total < 50 ? 20 : 25 ) : 15), 
+        outerR = (total >= 10 ? (total < 50 ? 20 : 25) : 15),
         innerR = (total >= 10 ? (total < 50 ? 10 : 13) : 7);
 
         var arc = d3.svg.arc()
