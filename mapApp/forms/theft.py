@@ -73,7 +73,7 @@ class TheftForm(forms.ModelForm):
 
                     </script>
                 """),
-                css_class='pull-left'
+                css_class='pull-left text-left'
             ),
             FormActions(
                 Reset('cancel', 'Cancel', onclick="$('#incidentForm').modal('hide');$('.modal-backdrop').hide();"),
