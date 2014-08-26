@@ -33,25 +33,24 @@ class HazardForm(forms.ModelForm):
             )
         ),
         Div(
-            Div(
-                HTML("""
-                    <input type='checkbox' class='terms_hazard'>
-                    <strong> I have read and understand the 
-                    <a href="{% url 'mapApp:termsAndConditions' %}" target=_blank>terms and conditions</a></strong>
-                    
-                    <script>
-                      $(".terms_hazard").change(function() {
-                        if(this.checked) {
-                            $(".submitBtnHazard").removeClass("disabled");
-                        }else{
-                            $(".submitBtnHazard").addClass("disabled");
-                        }
-                    });
+            HTML("""
+                <input type='checkbox' class='terms_hazard'>
+                <strong> I have read and understand the 
+                <a href="{% url 'mapApp:termsAndConditions' %}" target=_blank>terms and conditions</a></strong>
+                
+                <script>
+                  $(".terms_hazard").change(function() {
+                    if(this.checked) {
+                        $(".submitBtnHazard").removeClass("disabled");
+                    }else{
+                        $(".submitBtnHazard").addClass("disabled");
+                    }
+                });
 
-                    </script>
-                """),
-                css_class='pull-left'
-            ),
+                </script>
+            """),
+        ),
+        Div(
             FormActions(
                 Reset('cancel', 'Cancel', onclick="$('#incidentForm').modal('hide');$('.modal-backdrop').hide();"),
                 Submit('save', 'Submit', css_class="disabled submitBtnHazard"),

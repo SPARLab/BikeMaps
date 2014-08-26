@@ -38,43 +38,42 @@ class TheftForm(forms.ModelForm):
             )
         ),
         Div(
-            Div(
-                HTML("""
-                    <input type='checkbox' class='terms_theft'>
-                        <strong> I have read and understand the 
-                        <a href="{% url 'mapApp:termsAndConditions' %}" target=_blank>terms and conditions</a></strong>
-                    
-                    <script>
-                    $(".terms_theft").change(function() {
-                        if(this.checked) {
-                            $(".submitBtnTheft").removeClass("disabled");
-                        }else{
-                            $(".submitBtnTheft").addClass("disabled");
+            HTML("""
+                <input type='checkbox' class='terms_theft'>
+                    <strong> I have read and understand the 
+                    <a href="{% url 'mapApp:termsAndConditions' %}" target=_blank>terms and conditions</a></strong>
+                
+                <script>
+                $(".terms_theft").change(function() {
+                    if(this.checked) {
+                        $(".submitBtnTheft").removeClass("disabled");
+                    }else{
+                        $(".submitBtnTheft").addClass("disabled");
+                    }
+                });
+
+                // Dynamically change lock to "NA" if bike not locked
+                $("#div_id_lock select option[value='NA']").hide();
+                $("#div_id_how_locked select").change( function(){
+                    if($(this).val() == 'Not locked'){
+                        $("#div_id_lock select").val('NA');
+                        $("#div_id_lock select").attr('disabled', true);
+                        $("#div_id_lock select option[value='NA']").show();
+                    }
+                    else{
+                        if($("#div_id_lock select").val() == 'NA'){
+                            $("#div_id_lock select").val('');
                         }
-                    });
-
-                    // Dynamically change lock to "NA" if bike not locked
-                    $("#div_id_lock select option[value='NA']").hide();
-                    $("#div_id_how_locked select").change( function(){
-                        if($(this).val() == 'Not locked'){
-                            $("#div_id_lock select").val('NA');
-                            $("#div_id_lock select").attr('disabled', true);
-                            $("#div_id_lock select option[value='NA']").show();
-                        }
-                        else{
-                            if($("#div_id_lock select").val() == 'NA'){
-                                $("#div_id_lock select").val('');
-                            }
-                            $("#div_id_lock select").attr('disabled', false);
-                            $("#div_id_lock select option[value='NA']").hide();
-                        }    
-                    });
+                        $("#div_id_lock select").attr('disabled', false);
+                        $("#div_id_lock select option[value='NA']").hide();
+                    }    
+                });
 
 
-                    </script>
-                """),
-                css_class='pull-left text-left'
-            ),
+                </script>
+            """),
+        ),
+        Div(
             FormActions(
                 Reset('cancel', 'Cancel', onclick="$('#incidentForm').modal('hide');$('.modal-backdrop').hide();"),
                 Submit('save', 'Submit', css_class="disabled submitBtnTheft"),
