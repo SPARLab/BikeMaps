@@ -152,7 +152,7 @@ function initialize(mobile) {
             },
             onEachFeature: function(feature, layer) {
                 var date = toTitleCase(feature.properties.Month).substring(0, 3) + ". " + feature.properties.Year;
-                layer.bindPopup('<strong>Data source: </strong>ICBC ' + '<a href="#" data-toggle="collapse" data-target="#icbc-metadata"><small>(metadata)</small></a><br>' + '<div id="icbc-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>Data available for British Columbia from 1999 to 2013. Incident characteristics not provided.</small>' + '</div>' + '<strong>Date: </strong>' + date);
+                layer.bindPopup('<strong>Data source: </strong>ICBC ' + '<a href="#" data-toggle="collapse" data-target="#icbc-metadata"><small>(metadata)</small></a><br>' + '<div id="icbc-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>Data available for British Columbia from 2009 to 2013. Incident characteristics not provided.</small>' + '</div>' + '<strong>Date: </strong>' + date);
             }
         }).addTo(incidentData);
     };
