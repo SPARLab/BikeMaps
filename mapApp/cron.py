@@ -17,9 +17,12 @@ class UserAlertEmails(CronJobBase):
 	code = 'mapApp.cron.UserAlertEmails'    # a unique code
 
 	def do(self):
+		# Get all notification objects that need to be emailed
 		incidentPolys = IncidentNotification.objects.filter(emailed=False)
 		hazardPolys = HazardNotification.objects.filter(emailed=False)
 		theftPolys = TheftNotification.objects.filter(emailed=False)
+		
+		# Get a list of distinct users that need to be emailed
 		userSet = list(set(
 			[poly.user for poly in incidentPolys] + 
 			[poly.user for poly in hazardPolys] + 
@@ -27,9 +30,13 @@ class UserAlertEmails(CronJobBase):
 		))
 
 		for user in userSet:
+			# Get the users notification objects
 			incidentPoints = incidentPolys.filter(user=user)
 			hazardPoints = hazardPolys.filter(user=user)
 			theftPoints = theftPolys.filter(user=user)
+
+			# ????
+			# PROFIT!!
 
 			subject = "Monthly alerts update"
 			message = "blah blah blah - insert some message about alertPoints here."
