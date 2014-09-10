@@ -48,7 +48,7 @@
     {% endwith %}
 
     // Add a point editing control for admins
-    {% if request.user.is_superuser %}
+    {% if request.user.is_administrator %}
     L.drawLocal.edit.handlers.remove.tooltip.text = 'Click the object to remove';
     L.drawLocal.edit.toolbar.buttons.removeDisabled = 'No objects to delete.';
 
