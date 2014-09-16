@@ -42,6 +42,7 @@ class IncidentForm(forms.ModelForm):
             AccordionGroup(
                 'Personal Details',
                 Field('age'),
+                Field('birthmonth'),
                 Field('sex'),
                 Field('regular_cyclist'),
                 Field('helmet'),

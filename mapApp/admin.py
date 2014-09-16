@@ -25,8 +25,8 @@ class IncidentAdmin(admin.OSMGeoAdmin):
 	    ('Location', {'fields': ['geom']}),
 	    ('Incident', {'fields': ['incident_date', 'incident', 'incident_with', 'injury', 'trip_purpose']}),
 	    ('Detail', {'fields': ['incident_detail'], 'classes':['collapse']}),
-	    ('Personal', {'fields': ['age', 'sex', 'regular_cyclist', 'helmet', 'intoxicated'], 'classes':['collapse']}),
-	    ('Conditions', {'fields': ['road_conditions', 'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain'], 'classes':['collapse']}),
+	    ('Personal', {'fields': ['age', 'birthmonth', 'sex', 'regular_cyclist', 'helmet', 'intoxicated'], 'classes':['collapse']}),
+	    ('Conditions', {'fields': ['road_conditions', 'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain', 'direction', 'turning'], 'classes':['collapse']}),
 	]
 admin.site.register(Incident, IncidentAdmin)
 
