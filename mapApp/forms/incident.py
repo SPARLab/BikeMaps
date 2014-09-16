@@ -31,6 +31,8 @@ class IncidentForm(forms.ModelForm):
                 Field('riding_on'),
                 Field('bike_lights'),
                 Field('terrain'),
+                Field('direction'),
+                Field('turning'),
             ),
             AccordionGroup(
                 'Description',

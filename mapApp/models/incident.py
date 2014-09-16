@@ -141,6 +141,23 @@ BOOLEAN_CHOICES = (
     ('N', 'No'), 
     ('I don\'t know', 'I don\'t know')
 )
+CARDINAL_DIRECTIONS_CHOICES = (
+    ('N','N'),
+    ('NE','NE'),
+    ('E','E'),
+    ('SE','SE'),
+    ('S','S'),
+    ('SW','SW'),
+    ('W','W'),
+    ('NW', 'NW'),
+    ('I don\'t know', 'I don\'t know')
+)
+TURNING_CHOICES = (
+    ('Heading straight','Heading straight'),
+    ('Turning left','Turning left'),
+    ('Turning right','Turning right'),
+    ('I don\'t remember', 'I don\'t remember')
+)
 
 
 ##########
@@ -272,6 +289,20 @@ class Incident(models.Model):
         max_length=50, 
         choices=TERRAIN_CHOICES, 
         blank=True, 
+        null=True
+    )
+    direction = models.CharField(
+        'What direction were you heading?', 
+        max_length=50, 
+        choices=CARDINAL_DIRECTIONS_CHOICES, 
+        blank=True, 
+        null=True
+    )
+    turning = models.CharField(
+        'How were you moving?',
+        max_length=50,
+        choices=TURNING_CHOICES,
+        blank=True,
         null=True
     )
     ########################
