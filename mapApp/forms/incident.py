@@ -78,3 +78,7 @@ class IncidentForm(forms.ModelForm):
 
     class Meta:
         model = Incident
+        fields = ['geom', 'incident_date', 'incident', 'incident_with', 'injury', 'trip_purpose', 'road_conditions', 
+            'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain', 'direction', 'turning', 
+            'incident_detail', 'age', 'birthmonth', 'sex', 'regular_cyclist', 'helmet', 'intoxicated'
+        ]

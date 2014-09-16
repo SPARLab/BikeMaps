@@ -84,3 +84,7 @@ class TheftForm(forms.ModelForm):
 
     class Meta:
         model = Theft
+        fields = ['geom', 'theft_date', 'theft', 'how_locked', 
+            'lock', 'locked_to', 'lighting', 'traffic', 'police_report', 
+            'insurance_claim', 'theft_detail', 'regular_cyclist'
+        ]

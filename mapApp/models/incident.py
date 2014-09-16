@@ -164,7 +164,6 @@ TURNING_CHOICES = (
 )
 
 
-
 ##########
 # Incident class.
 # Main class for Incident Report. Contains all required, non-required, and spatial fields. Setup to allow easy export to a singular shapefile.

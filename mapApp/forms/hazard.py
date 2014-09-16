@@ -61,3 +61,4 @@ class HazardForm(forms.ModelForm):
 
     class Meta:
         model = Hazard
+        fields = ['geom', 'hazard_date', 'hazard', 'hazard_detail', 'age', 'sex', 'regular_cyclist']
