@@ -3,6 +3,7 @@ from django_cron import CronJobBase, Schedule
 
 from django.core.mail import send_mail
 # from django.shortcuts import get_object_or_404
+from django.template import loader, Context
 
 from django.contrib.auth.models import User
 from mapApp.models.alert_notification import IncidentNotification, HazardNotification, TheftNotification
@@ -45,16 +46,26 @@ class UserAlertEmails(CronJobBase):
 
 
 			# Add the points to the email message
+			template = loader.get_template('mapApp/email.html')
+			d = Context({ 
+				'user': user, 
+				'incidentCount': incidentPoints.count(), 
+				'nearmissCount': nearmissPoints.count(), 
+				'hazardCount': hazardPoints.count(), 
+				'theftCount': theftPoints.count() 
+			})
+			html_content = template.render(d)
+
 
 			# ????
 			# PROFIT!!
 
 			# Send the message
 			subject = "Monthly alerts update"
-			message = "blah blah blah - insert some message about alertPoints here."
+			text_content = "blah blah blah - insert some message about alertPoints here."
 			sender = "do-not-reply@bikemaps.org"
 			recipient = [user.email]
-			send_mail(subject, message, sender, recipient)
+			send_mail(subject, text_content, sender, recipient, html_message=html_content)
 
 			# if success: #TODO implement this check
 
