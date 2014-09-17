@@ -59,4 +59,4 @@ class GeofenceForm(forms.ModelForm):
 
     class Meta:
         model = AlertArea
-        fields = ['geom', 'email']
+        fields = ['user', 'geom', 'email']
