@@ -62,6 +62,7 @@
     $(window).load(function(){
       setTimeout(function(){ $('.alert').fadeOut() }, 7000);
     });
+    // Prevent multiple submits of forms by disabling the button on single click
     $(document).ready(function() {
       $('input[type=submit]').click(function(){
         $(this).prop("disabled", true);
