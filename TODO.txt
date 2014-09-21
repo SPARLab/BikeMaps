@@ -3,15 +3,14 @@
 ###HIGH PRIORITY
 * Email alerts monthly
 * Mobile reporting
-* Add month and year instead of age range
 * New logo
 * Hazard deletion
+* Rapid clicking submits multiple points
 
 ###LOWER PRIORITY
 * add bikelanes from OCM
 * add new alerts badge to navbar bell
 * Option to report for different person
-* Write up readme
 * Documentation for future devs
 * improve incidents heatmap
 * flagged comment alerts for admins
