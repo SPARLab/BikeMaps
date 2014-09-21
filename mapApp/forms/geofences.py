@@ -37,6 +37,7 @@ class GeofenceForm(forms.ModelForm):
         HTML("""<br><div class="col-xs-12"><em>Address can be changed in user preferences.</em></div>"""),
         
 
+        Field('user', type="hidden", id="user"), # Coords passed after clicks on map
         Field('geom', type="hidden", id="geofence"), # Coords passed after clicks on map
         Field('email', type="hidden", readonly=True, id="userEmail"),
 
