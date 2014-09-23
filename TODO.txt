@@ -5,9 +5,9 @@
 * Mobile reporting
 * New logo
 * Hazard deletion
-* Rapid clicking submits multiple points
 
 ###LOWER PRIORITY
+* opt in for emails (double opt in if possible)
 * add bikelanes from OCM
 * add new alerts badge to navbar bell
 * Option to report for different person
