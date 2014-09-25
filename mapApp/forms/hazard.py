@@ -14,7 +14,7 @@ class HazardForm(forms.ModelForm):
         HTML("<br>"),
         Accordion(
             AccordionGroup(
-                'Hazard',
+                'Hazard Details',
                 Field('geom', type="hidden", id="hazPoint"), # Coords passed after click on map from static/mapApp/js/map.js
                 Field('hazard_date', id="hazard_date", template='mapApp/util/datepicker.html', autocomplete='off'),
                 Field('hazard', id="hazard-type"),#, template='mapApp/util/multiselect_field.html'),

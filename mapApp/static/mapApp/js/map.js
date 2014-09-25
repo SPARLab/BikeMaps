@@ -211,9 +211,9 @@ function initialize(mobile) {
                 '</div>');
 
             layerControl.addOverlay(incidentData,
-                'Incident points<br>'
+                'Incident locations<br>'
 
-                + '<div id=incident-legend class="marker-group legend-subtext collapse in">' + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icons["bikeRedIcon"].options.icon + '+' + icons["bikeRedIcon"].options.color + '.png">' + ' <small>Citizen incident report</small><br>'
+                + '<div id=incident-legend class="marker-group legend-subtext collapse in">' + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icons["bikeRedIcon"].options.icon + '+' + icons["bikeRedIcon"].options.color + '.png">' + ' <small>Citizen collision report</small><br>'
 
                 + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["bikeYellowIcon"].options.icon + '+' + icons["bikeYellowIcon"].options.color + '.png"> <small>Citizen near miss report</small><br>'
 
@@ -301,7 +301,7 @@ function initialize(mobile) {
         map.on('overlayadd', showLegendItem);
 
         function collapseLegendItem(e) {
-            if (e.name.match('Incident points.')) {
+            if (e.name.match('Incident locations.')) {
                 $('#incident-legend').collapse('hide');
             } else if (e.name.match('Rider volume.')) {
                 $('#strava-legend').collapse('hide');
@@ -317,7 +317,7 @@ function initialize(mobile) {
         };
 
         function showLegendItem(e) {
-            if (e.name.match('Incident points.')) {
+            if (e.name.match('Incident locations.')) {
                 $('#incident-legend').collapse('show');
             } else if (e.name.match('Rider volume.')) {
                 $('#strava-legend').collapse('show');
