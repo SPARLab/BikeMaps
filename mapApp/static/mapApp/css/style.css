@@ -1,6 +1,6 @@
 @font-face { 
-	font-family: timeburner; 
-	src: url('../font/timeburner_regular.ttf');
+	font-family: faktos; 
+	src: url('../font/faktos.regular.ttf');
 }
 
 html {
@@ -63,7 +63,7 @@ textarea {
 }
 
 .navbar {
-	font-family: timeburner;
+	font-family: faktos;
 }
 
 .navbar-default .navbar-brand:hover,
@@ -72,7 +72,7 @@ textarea {
 }
 
 body h1{
-	font-family: timeburner;
+	font-family: faktos;
 }
 
 .marker-cluster-pie g.arc{
