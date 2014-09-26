@@ -18,6 +18,8 @@ from mapApp.models.alert_area import AlertArea
 # Forms
 from mapApp.forms.edit_geom import EditForm
 
+# Notifications
+from mapApp.models.alert_notification import IncidentNotification, HazardNotification, TheftNotification
 
 @require_POST
 @login_required
@@ -57,6 +59,16 @@ def editShape(request):
 			# Delete
 			elif (editType == 'delete'):
 				shapeEdited = get_object_or_404(objectSet, pk=pk)
+				
+				# Delete associated notifications
+				if objType == 'incident':
+					IncidentNotification.objects.filter(point=shapeEdited).delete()
+				elif objType == 'theft':
+					TheftNotification.objects.filter(point=shapeEdited).delete()
+				elif objType == 'hazard':
+					HazardNotification.objects.filter(point=shapeEdited).delete()
+
+
 				shapeEdited.delete() 	# delete the object
 
 		message = str(len(pks)) + ' ' + editType + ('s' if len(pks)>1 else '') + ' successful'

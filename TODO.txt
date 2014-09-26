@@ -20,7 +20,6 @@
 * Moderate comments > delete button not working
 * Date picker does not scroll with modal
 * Leaflet draw does not work for mobile (currently disabled for these users)
-* If a point is deleted by an admin, notification related to that point are not deleted
 
 
 ##FROM TRISALYN

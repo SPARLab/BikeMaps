@@ -13,28 +13,33 @@ from mapApp.models.alert_notification import IncidentNotification, HazardNotific
 import datetime
 
 def stats(request):
+	user = request.user
+
 	now = datetime.date.today()
 	monthPast = now - datetime.timedelta(1*365/12)
 
-	# Get points reported within last month
-	recentIncidents = Incident.objects.filter(date__range=[monthPast, now])
-	recentHazards = Hazard.objects.filter(date__range=[monthPast, now])
-	recentThefts = Theft.objects.filter(date__range=[monthPast, now])
-
-	
+	# Get the user's alertable points in the last month
+	recentNotificationIncidents = IncidentNotification.objects.filter(user=user).filter(date__range=[monthPast, now])
+	recentNotificationHazards = HazardNotification.objects.filter(user=user).filter(date__range=[monthPast, now])
+	recentNotificationThefts = TheftNotification.objects.filter(user=user).filter(date__range=[monthPast, now])
 
 	context = {
-		'date_now': now,
-		'date_monthago': monthPast,
-		'recentIncidents': recentIncidents,
-		'recentHazards': recentHazards,
-		'recentThefts': recentThefts
+		'user': user,
 
-		# 'user': user, 
-		# 'incidentCount': incidentPoints.count(), 
-		# 'nearmissCount': nearmissPoints.count(), 
-		# 'hazardCount': hazardPoints.count(), 
-		# 'theftCount': theftPoints.count() 
+		'date_today': now,
+		'date_lastmonth': monthPast,
+	
+		'recentIncidents': Incident.objects.filter(date__range=[monthPast, now]),
+		'recentHazards': Hazard.objects.filter(date__range=[monthPast, now]),
+		'recentThefts': Theft.objects.filter(date__range=[monthPast, now]),
+
+		'recentNotificationIncidents': recentNotificationIncidents,
+		'recentNotificationHazards': recentNotificationHazards,
+		'recentNotificationThefts': recentNotificationThefts,
+
+		'recentIncidentsNotificationCount': recentNotificationIncidents.count(),
+		'recentHazardsNotificationCount': recentNotificationHazards.count(),
+		'recentTheftsNotificationCount': recentNotificationThefts.count(),
 	}
 
 	return render(request, 'mapApp/stats.html', context)
