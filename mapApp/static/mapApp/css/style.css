@@ -52,7 +52,7 @@ textarea {
 }
 
 .nav li{
-	/*margin-left: 0px;*/
+	margin-left: 0px;
 }
 
 .navbar-brand img{
@@ -75,6 +75,9 @@ textarea {
 }
 
 .navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.open>a:focus,
+.navbar-default .navbar-nav>.open>a,
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:hover {
 	color: #f18904;
