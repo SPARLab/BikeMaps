@@ -5,3 +5,4 @@ from postPoint import postIncident, postHazard, postTheft
 from editShape import editShape
 from exportData import getIncidents, getHazards, getThefts
 from termsAndConditions import termsAndConditions
+from statistics import stats

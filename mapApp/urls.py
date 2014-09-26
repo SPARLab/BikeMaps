@@ -34,4 +34,6 @@ urlpatterns = patterns('',
 
 	# Terms and conditions page
 	url(r'terms_and_conditions/$', views.termsAndConditions, name='termsAndConditions'),
+
+	url(r'stats/$', views.stats, name='stats'),
 )

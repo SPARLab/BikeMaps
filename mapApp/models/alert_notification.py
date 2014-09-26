@@ -28,12 +28,6 @@ class AlertNotification(models.Model):
 
     # objects = AlertNotificationManager()
 
-    class Meta:
-        app_label = 'mapApp'
-        unique_together = ('user', 'point')
-        ordering = ['-date', ]
-        verbose_name = _("alert notification")
-        verbose_name_plural = _("alert notifications")
 
     def get_location(self):
         return self.point.geom
@@ -62,6 +56,12 @@ class AlertNotification(models.Model):
         return "%s" % (self.user)
 
     class Meta:
+        app_label = 'mapApp'
+        unique_together = ('user', 'point')
+        ordering = ['-date', ]
+        verbose_name = _("alert notification")
+        verbose_name_plural = _("alert notifications")
+
         abstract= True
         app_label = 'mapApp'
 
