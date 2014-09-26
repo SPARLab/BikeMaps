@@ -52,7 +52,7 @@ textarea {
 }
 
 .nav li{
-	margin-left: 0px;
+	/*margin-left: 0px;*/
 }
 
 .navbar-brand img{
@@ -64,6 +64,20 @@ textarea {
 
 .navbar {
 	font-family: faktos;
+}
+
+.navbar-default .navbar-nav>li>a {
+	color: #00aeac;
+	-webkit-text-stroke: 1px #2c3e50;
+}
+.navbar-default .navbar-nav>li>a>span {
+	-webkit-text-stroke: 0px;
+}
+
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:hover {
+	color: #f18904;
 }
 
 .navbar-default .navbar-brand:hover,
