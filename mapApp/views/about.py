@@ -21,7 +21,7 @@ def contact(request):
 		sender = emailForm.cleaned_data['sender']
 		cc_myself = emailForm.cleaned_data['cc_myself']
 
-		recipients = ['admin@bikemaps.org',]
+		recipients = ['admin@bikemaps.org','tech-support@bikemaps.org']
 		cc = [sender] if cc_myself else []
 
 		email = EmailMessage(subject, message, 'postmaster@bikemaps.org', recipients, headers = {'Reply-To': sender}, cc = cc)
