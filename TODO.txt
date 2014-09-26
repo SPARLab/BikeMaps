@@ -3,8 +3,9 @@
 ###HIGH PRIORITY
 * Email alerts monthly
 * Mobile reporting
-* New logo
 * Hazard deletion
+* Change header font to faktos
+* Find out why firewall says that we're pron?
 
 ###LOWER PRIORITY
 * opt in for emails (double opt in if possible)
@@ -21,7 +22,6 @@
 * Date picker does not scroll with modal
 * Leaflet draw does not work for mobile (currently disabled for these users)
 * If a point is deleted by an admin, notification related to that point are not deleted
-
 
 
 ##FROM TRISALYN
