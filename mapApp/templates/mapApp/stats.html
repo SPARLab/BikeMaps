@@ -1,50 +1,83 @@
 {% extends "mapApp/base.html" %}
 {% load staticfiles %}
 
+
+{% block title %}
+	Monthly statistics
+{% endblock %}
+
+
 {% block headerCSS %}
 {% endblock %}
+
 
 {% block headerJS %}
     <!-- d3 v3.4.8 -->
     <script src="{% static 'd3/d3.min.js' %}" charset="utf-8"></script>
 {% endblock %}
 
-{% block title %}Monthly statistics{% endblock %}
 
 {% block body %}
-	
-	<!-- VARIABLES PASSED BY VIEW -->
-<!-- 
-	<p>User: {{user}}</p>
-	<p>Date_today: {{date_today}}</p>
-	<p>Date_lastmonth: {{date_lastmonth}}</p>
-
-	<!-- One months of all reports of each kind --
-	<p>RecentIncidents: {{recentIncidents}}</p>
-	<p>RecentHazards: {{recentHazards}}</p>
-	<p>RecentThefts: {{recentThefts}}</p>
-
-	<!-- One month of reports in the requesting user's alert area(s) of each type --
-	<p>RecentNotificationIncidents: {{recentNotificationIncidents}}</p>
-	<p>RecentNotificationHazards: {{recentNotificationHazards}}</p>
-	<p>RecentNotificationThefts: {{recentNotificationThefts}}</p>
-
-	<!-- The counts of each kind of report in the requesting user's alert area(s) --
-	<p>RecentIncidentsNotificationCount: {{recentIncidentsNotificationCount}}</p>
-	<p>RecentHazardsNotificationCount: {{recentHazardsNotificationCount}}</p>
-	<p>RecentTheftsNotificationCount: {{recentTheftsNotificationCount}}</p>\
--->
-	<!-- ENDVARIABLES -->
-
-
 	<!-- PLANNED LAYOUT -->
 	<!-- Map of one month of reports -->
 	
 
 	<!-- Bar graph of Alert area points by type -->
 	<!-- See http://bost.ocks.org/mike/bar/ for bar chart tutorials -->
+	<svg id="barchart"></svg>
 	
+	<style>
+
+	#barchart rect {
+	  fill: steelblue;
+	}
+
+	#barchart text {
+	  fill: white;
+	  font: 10px sans-serif;
+	  text-anchor: end;
+	}
+
+	</style>
+
 	<script>
+		// Create dataset out of django context
+		// Note, data and counts are for last month of points in user alert areas only, not total points
+		var data = [ 
+			{ type: "collision", 	value: {{ collisionsCount }} }, 
+			{ type: "nearmiss", 	value: {{ nearmissesCount }} }, 
+			{ type: "hazard", 		value: {{ hazardsCount }} }, 
+			{ type: "theft", 		value: {{ theftsCount }} }
+		];
+		
+		console.log(data.length);
+
+		var barWidth = 30,
+			height = 500;
+
+		var x = d3.scale.linear()
+			.domain([0, d3.max(data, function(d) { return d.value; })])
+			.range([height, 0]);
+
+		var chart = d3.select("#barchart")
+			.attr("height", height)
+			.attr("width", barWidth * data.length);
+
+		var bar = chart.selectAll("g")
+			.data(data)
+		  .enter().append("g")
+		  	.attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
+
+		bar.append("rect")
+			.attr("y", function(d) { return x(d.value); })
+			.attr("height", function(d) { return height - x(d.value); })
+			.attr("width", barWidth - 1);
+
+		bar.append("text")
+			.attr("x", barWidth / 2)
+			.attr("y", function(d) { return x(d.value) + 3 })
+			.attr("dy", ".75em")
+			.text(function(d) { return d.type; });
 
 	</script>
 

@@ -19,9 +19,12 @@ def stats(request):
 	monthPast = now - datetime.timedelta(1*365/12)
 
 	# Get the user's alertable points in the last month
-	recentNotificationIncidents = IncidentNotification.objects.filter(user=user).filter(date__range=[monthPast, now])
-	recentNotificationHazards = HazardNotification.objects.filter(user=user).filter(date__range=[monthPast, now])
-	recentNotificationThefts = TheftNotification.objects.filter(user=user).filter(date__range=[monthPast, now])
+	recentIncidents = IncidentNotification.objects.filter(user=user.id).filter(date__range=[monthPast, now])
+	recentCollisions = recentIncidents.filter(action=IncidentNotification.INCIDENT)
+	recentNearmisses = recentIncidents.filter(action=IncidentNotification.NEARMISS)
+
+	recentHazards = HazardNotification.objects.filter(user=user.id).filter(date__range=[monthPast, now])
+	recentThefts = TheftNotification.objects.filter(user=user.id).filter(date__range=[monthPast, now])
 
 	context = {
 		'user': user,
@@ -29,17 +32,19 @@ def stats(request):
 		'date_today': now,
 		'date_lastmonth': monthPast,
 	
-		'recentIncidents': Incident.objects.filter(date__range=[monthPast, now]),
-		'recentHazards': Hazard.objects.filter(date__range=[monthPast, now]),
-		'recentThefts': Theft.objects.filter(date__range=[monthPast, now]),
+		# 'recentIncidents': Incident.objects.filter(date__range=[monthPast, now]),
+		# 'recentHazards': Hazard.objects.filter(date__range=[monthPast, now]),
+		# 'recentThefts': Theft.objects.filter(date__range=[monthPast, now]),
 
-		'recentNotificationIncidents': recentNotificationIncidents,
-		'recentNotificationHazards': recentNotificationHazards,
-		'recentNotificationThefts': recentNotificationThefts,
+		'recentCollisions': recentCollisions,
+		'recentNearmisses': recentNearmisses,
+		'recentHazards': recentHazards,
+		'recentThefts': recentThefts,
 
-		'recentIncidentsNotificationCount': recentNotificationIncidents.count(),
-		'recentHazardsNotificationCount': recentNotificationHazards.count(),
-		'recentTheftsNotificationCount': recentNotificationThefts.count(),
+		'collisionsCount': recentCollisions.count(),
+		'nearmissesCount': recentNearmisses.count(),
+		'hazardsCount': recentHazards.count(),
+		'theftsCount': recentThefts.count(),
 	}
 
 	return render(request, 'mapApp/stats.html', context)
