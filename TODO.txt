@@ -1,7 +1,6 @@
 #TO DO
 
 ###HIGH PRIORITY
-* Add Acart Logo
 * Tutorial for adding points
 * Mobile reporting
 * Email alerts monthly
@@ -9,6 +8,7 @@
 * Find out why firewall says that we're pron?
 
 ###LOWER PRIORITY
+* User login cookies to prevent having to sign in every time
 * opt in for emails (double opt in if possible)
 * add bikelanes from OCM
 * add new alerts badge to navbar bell
