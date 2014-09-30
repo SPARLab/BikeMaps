@@ -1,8 +1,10 @@
 #TO DO
 
 ###HIGH PRIORITY
-* Email alerts monthly
+* Add Acart Logo
+* Tutorial for adding points
 * Mobile reporting
+* Email alerts monthly
 * Hazard deletion
 * Find out why firewall says that we're pron?
 
