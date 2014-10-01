@@ -2,12 +2,12 @@
 
 ###HIGH PRIORITY
 * Tutorial for adding points
-* Mobile reporting
 * Email alerts monthly
 * Hazard deletion
 * Find out why firewall says that we're pron?
 
 ###LOWER PRIORITY
+* Different color for bike thefts so they stand out more against official reports
 * User login cookies to prevent having to sign in every time
 * opt in for emails (double opt in if possible)
 * add bikelanes from OCM
