@@ -1,5 +1,10 @@
-/*Javascript saved as html to allow for use of Django template tags within the code*/
+<!-- Javascript saved as html to allow for use of Django template tags within the code -->
 <script>
+$(document).ready(function(){
+	$('#map').css("margin-top", "80px");
+
+});
+
 // Allow double click point adding for mobile users
 function mobileAdd(e){
     var geom = '{"type":"Point","coordinates":['+e.latlng.lng+','+e.latlng.lat+']}';
@@ -11,3 +16,8 @@ function mobileAdd(e){
 }
 map.on('dblclick', mobileAdd);
 </script>
+
+<div id="mobile-tip" class="alert-info">
+	<div class="text-center">Double tap a location to report an incident</div>
+</div>
+

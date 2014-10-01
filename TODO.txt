@@ -1,6 +1,7 @@
 #TO DO
 
 ###HIGH PRIORITY
+* Change BCAA logo to CAA
 * Tutorial for adding points
 * Mobile reporting
 * Email alerts monthly
