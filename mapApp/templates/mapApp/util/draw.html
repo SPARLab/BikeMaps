@@ -1,3 +1,4 @@
+/*Javascript saved as html to allow for use of Django template tags within the code*/
 <script>
 
     /* DRAWING CONTROL TOOLTIPS */
@@ -19,6 +20,7 @@
     L.drawLocal.edit.toolbar.buttons.editDisabled = 'No alert areas to edit.';
     L.drawLocal.edit.toolbar.buttons.removeDisabled = 'No alert areas to delete.';
     
+
     {% with DISABLE_GEOFENCES=False %}
     /* ADD THE CONTROL TO LEAFLET MAP */
     {% if not request.mobile %}
@@ -73,6 +75,7 @@
                 // Set form geometry field to click location
                 $('#incidentForm').modal('show');
                 var geom = JSON.stringify(layer.toGeoJSON().geometry);
+
                 document.getElementById("point").value = geom; 
                 document.getElementById("hazPoint").value = geom; 
                 document.getElementById("theftPoint").value = geom; 
