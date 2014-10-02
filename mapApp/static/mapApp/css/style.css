@@ -312,6 +312,9 @@ li a {
 	top: 60px;
 	left: 0px;
 	right: 0px;
-
-	height: 20px;
+	height: 23px;
+}
+.mobile-tip .close{
+	margin-top: -3px;
+	margin-right: 2px;
 }
