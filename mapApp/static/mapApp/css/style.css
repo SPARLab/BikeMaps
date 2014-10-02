@@ -307,7 +307,7 @@ li a {
 }
 
 /* Mobile info popup on mobile phones */
-#mobile-tip{
+.mobile-tip{
 	position: absolute;
 	top: 60px;
 	left: 0px;

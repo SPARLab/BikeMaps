@@ -2,7 +2,12 @@
 <script>
 $(document).ready(function(){
 	$('#map').animate({marginTop: "+=20"});
-	$('#mobile-tip').hide().animate({height:'show'});
+	$('.mobile-tip').hide().animate({height:'show'});
+
+	$('.mobile-tip .close').click(function(){
+		$('#map').animate({marginTop: "-=20"});
+		$('.mobile-tip').animate({height:'hide'});
+	});
 });
 
 // Allow double click point adding for mobile users
@@ -17,7 +22,10 @@ function mobileAdd(e){
 map.on('dblclick', mobileAdd);
 </script>
 
-<div id="mobile-tip" class="alert-info">
-	<div class="text-center">Tip: Double tap a location to report an incident</div>
+<div class="mobile-tip alert-info">
+	<center>
+		<div class="close">&times;</div>
+		Tip: Double tap a location to report an incident
+	</center>
 </div>
 
