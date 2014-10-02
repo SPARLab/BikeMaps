@@ -78,8 +78,8 @@ EMAIL_USE_TLS = False
 EMAIL_HOST = 'smtp.domain.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'postmaster@bikemaps.org'
-f = open('C://Users/Shanley/Desktop/bikemaps_email_pass.txt')
-# f = open('/Users/taylor/Desktop/bikemaps_email_pass.txt')
+# f = open('C://Users/Shanley/Desktop/bikemaps_email_pass.txt')
+f = open('/Users/taylor/Desktop/bikemaps_email_pass.txt')
 EMAIL_HOST_PASSWORD = f.read().strip()
 EMAIL_SUBJECT_PREFIX = '[BikeMaps] '
 

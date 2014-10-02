@@ -1,8 +1,8 @@
 <!-- Javascript saved as html to allow for use of Django template tags within the code -->
 <script>
 $(document).ready(function(){
-	$('#map').css("margin-top", "80px");
-
+	$('#map').animate({marginTop: "+=20"});
+	$('#mobile-tip').hide().animate({height:'show'});
 });
 
 // Allow double click point adding for mobile users
@@ -18,6 +18,6 @@ map.on('dblclick', mobileAdd);
 </script>
 
 <div id="mobile-tip" class="alert-info">
-	<div class="text-center">Double tap a location to report an incident</div>
+	<div class="text-center">Tip: Double tap a location to report an incident</div>
 </div>
 
