@@ -163,15 +163,8 @@
         setView({% if zoom %} {{ lat }}, {{ lng }}, {{ zoom}} {% endif %});
     </script>
 
-
-
-    {% if request.mobile %}
-        <!-- Add custom script for double tapping to add point data -->
-        {% include 'mapApp/util/mobileDraw.html' %}
-    {% else %}
-        <!-- Add Leaflet.draw controls and actions -->
-        {% include 'mapApp/util/draw.html' %}
-    {% endif %}
+    <!-- Add draw controls and actions -->
+    {% include 'mapApp/util/draw.html' %}
 
     <!-- TODO add mobile controls to record paths or take pictures etc. -->
 
