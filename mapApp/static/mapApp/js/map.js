@@ -21,7 +21,7 @@ var icons = {
         size: "m"
     }),
     "hazardIcon": L.MakiMarkers.icon({
-        icon: "triangle-stroked",
+        icon: "triangle",
         color: "#3eab45",
         size: "m"
     }),
@@ -32,7 +32,7 @@ var icons = {
     }),
     "officialIcon": L.MakiMarkers.icon({
         icon: "police",
-        color: "#000044",
+        color: "#1D84A6",
         size: "m"
     }),
     "geocodeIcon": L.MakiMarkers.icon({
