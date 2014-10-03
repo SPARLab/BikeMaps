@@ -191,14 +191,6 @@ function initialize(mobile) {
             position: 'bottomright'
         }).addTo(map);
 
-        /* ADD CUSTOM HELP BUTTON */
-        L.easyButton('bottomright', 'fa-question-circle',
-            function() {
-                toggleTooltips("show")
-            },
-            'Get Help'
-        );
-
         function addLegend() {
             // Add layers
             // Basemaps
