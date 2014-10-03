@@ -305,3 +305,16 @@ li a {
 .terms-conditions h1{
 	font-size: 32px;
 }
+
+/* Mobile info popup on mobile phones */
+.mobile-tip{
+	position: absolute;
+	top: 60px;
+	left: 0px;
+	right: 0px;
+	height: 23px;
+}
+.mobile-tip .close{
+	margin-top: -3px;
+	margin-right: 2px;
+}

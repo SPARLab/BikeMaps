@@ -31,6 +31,7 @@
     <!-- Load heatmap -->
     <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
 
+    {% if not request.mobile %}
     <!-- Load draw pluging -->
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/Leaflet.draw.js' %}"></script>
     
@@ -61,6 +62,7 @@
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/EditToolbar.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/EditToolbar.Edit.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/EditToolbar.Delete.js' %}"></script> 
+    {% endif %}
 
     <!-- Load leaflet easy button -->
     <script src="{% static 'leaflet/plugins/easy-button/easy-button.js' %}"></script> 
@@ -157,14 +159,23 @@
         // Create the map (call to map.js)
         initialize({% if request.mobile %} mobile=true {% endif %});
 
+        // Set the appropriate map extend and zoom
         setView({% if zoom %} {{ lat }}, {{ lng }}, {{ zoom}} {% endif %});
     </script>
 
-    <!-- Add Leaflet.draw controls and actions -->
-    {% include 'mapApp/util/draw.html' %}
+
+
+    {% if request.mobile %}
+        <!-- Add custom script for double tapping to add point data -->
+        {% include 'mapApp/util/mobileDraw.html' %}
+    {% else %}
+        <!-- Add Leaflet.draw controls and actions -->
+        {% include 'mapApp/util/draw.html' %}
+    {% endif %}
 
     <!-- TODO add mobile controls to record paths or take pictures etc. -->
 
+    <!-- Modal popup that explains the alert areas (triggered from map legend) -->
     <div class="modal fade" id="about-alert-areas">
       <div class="modal-dialog">
         <div class="modal-content">

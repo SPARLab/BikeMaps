@@ -1,0 +1,29 @@
+<!-- Javascript saved as html to allow for use of Django template tags within the code -->
+<script>
+$(document).ready(function(){
+	$('#map').animate({marginTop: "+=23"});
+	$('.mobile-tip').hide().animate({height:'show'});
+
+	$('.mobile-tip .close').click(function(){
+		$('#map').animate({marginTop: "-=23"});
+		$('.mobile-tip').animate({height:'hide'});
+	});
+});
+
+// Allow double click point adding for mobile users
+function mobileAdd(e){
+    var geom = '{"type":"Point","coordinates":['+e.latlng.lng+','+e.latlng.lat+']}';
+
+        $('#incidentForm').modal('show');
+        document.getElementById("point").value = geom; 
+        document.getElementById("hazPoint").value = geom; 
+        document.getElementById("theftPoint").value = geom;
+}
+map.on('dblclick', mobileAdd);
+</script>
+
+<div class="mobile-tip alert-info">
+	<div class="close">&times;</div>
+	<center>Double tap a location to report an incident</center>
+</div>
+
