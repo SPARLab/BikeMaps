@@ -1,9 +1,9 @@
 <!-- Javascript saved as html to allow for use of Django template tags within the code -->
 <script>
-{% if request.mobile %}
-    mobileDrawing();
-{% else %}
+{% if not request.mobile %}
     desktopDrawing();
+{% else %}
+    mobileDrawing();
 {% endif %}
 
 function desktopDrawing(){
@@ -151,8 +151,10 @@ function mobileDrawing(){
     {{ editForm.as_p}}
 </form>
 
+{% if request.mobile %}
 <!-- Mobile tooltip to explain the double tapping -->
 <div class="mobile-tip alert-info alert-dismissable">
     <div class="close">&times;</div>
     <center>Double tap a location to report an incident</center>
 </div>
+{% endif %}
