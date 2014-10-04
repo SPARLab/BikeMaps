@@ -46,7 +46,6 @@ $(document).ready(function(){
         $('.tip-msg').animate({height:'hide'});
     });
 
-
   // Add marker
   $('.leaflet-draw-draw-marker').popover({placement:'right', title:"<strong>Add a new marker</strong>", content:"Click this button to add a pin where you had a cycling incident that you would like to report.", html:true, delay: 400, trigger:'manual', container:"#map"});
 
@@ -59,24 +58,28 @@ $(document).ready(function(){
   // search control
   $('.leaflet-control-geocoder').popover({placement:'right', title:"<strong>Search</strong>", content:"Type in an address to find it's location.", html:true, delay: 400, trigger:'manual', container:"#map"});
 
+
+  /* Start the tutorial */
   $('.tip-msg a').click(function(){
     /* Hide the message*/
     $('#map').animate({marginTop: "-=23"});
     $('.tip-msg').animate({height:'hide'});
     
-    
     /* Display the first tip, then other tips sequentially */
-    var popovers = ['.leaflet-draw-draw-marker', '.leaflet-draw-draw-polygon', '.leaflet-control-layers', '.leaflet-control-geocoder']
-    popovers.forEach(function(p){
-      $(p).popover('show')
-        .on('shown.bs.popover', function(){
-          $this = $(this);
-          setTimeout(function(){ $this.popover('hide'); }, 7000);
-        
+    showTutorial(['.leaflet-draw-draw-marker', '.leaflet-control-geocoder', '.leaflet-control-layers', '.leaflet-draw-draw-polygon'], 0);
+    function showTutorial(p, i){
+      if( i === p.length-1)
+        return;
+      $(p[i]).popover('show').on('shown.bs.popover', function(){
+        setTimeout(function(){ 
+          $(p[i]).popover('hide'); 
+          showTutorial(p, i+1); 
+        }, 6000);
       });
-    });
+    };
+
   });
-  
+
 });
 </script>
 {% endif %}
