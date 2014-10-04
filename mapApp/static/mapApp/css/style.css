@@ -12,8 +12,6 @@ body {
 	padding: 0px;
 	padding-top: 60px;
 	max-width: 100%;
-	/*background: #18bc9c;*/
-	/*background: #3b9972;*/
 }
 
 button {
@@ -104,14 +102,7 @@ body h1{
 	font-family: sans-serif;
 }
 
-/* Click and drag point in line-routing */
-div.line-mouse-marker {
-  background-color: #ffffff;
-  border: 2px solid black;
-  border-radius: 10px;
-}
-
-
+/* Alert bell highlighting*/
 .is-highlighted{
 	color: #D2850B;
 }
@@ -307,7 +298,7 @@ li a {
 }
 
 /* Mobile info popup on mobile phones */
-.mobile-tip{
+.tip-msg{
 	position: absolute;
 	top: 60px;
 	left: 0px;

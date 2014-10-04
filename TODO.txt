@@ -6,11 +6,10 @@
 * Hazard deletion
 * Find out why firewall says that we're pron?
 * Cleanup index.html code
-* Fullscreen on mobile
+* Fullscreen on mobile (sort of done if app is added to homepage, more to do)
 
 ###LOWER PRIORITY
 * Scroll to hide browser bar on mobile phones
-* Different color for bike thefts so they stand out more against official reports
 * User login cookies to prevent having to sign in every time
 * opt in for emails (double opt in if possible)
 * add bikelanes from OCM

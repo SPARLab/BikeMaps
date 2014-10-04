@@ -24,3 +24,73 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+
+<!-- 'Get help' message -->
+{% if not request.mobile %}
+<!-- Mobile tooltip to explain the double tapping -->
+<div class="tip-msg alert-info alert-dismissable">
+    <div class="close">&times;</div>
+    <center>Need help? Click <a href="#">here</a> for a quick tutorial.</center>
+</div>
+
+<script>
+/* Show the dropdown help message */
+$(document).ready(function(){
+    $('#map').animate({marginTop: "+=23"});
+    $('.tip-msg').hide().animate({height:'show'});
+
+    $('.tip-msg .close').click(function(){
+        $('#map').animate({marginTop: "-=23"});
+        $('.tip-msg').animate({height:'hide'});
+    });
+
+
+  // Add marker
+  $('.leaflet-draw-draw-marker').popover({placement:'right', title:"<strong>Add a new marker</strong>", content:"Click this button to add a pin where you had a cycling incident that you would like to report.", html:true, delay: 400, trigger:'manual', container:"#map"});
+
+  // Add polygon
+  $('.leaflet-draw-draw-polygon').popover({placement:'right', title:"<strong>Add an alert area</strong>", content:"Trace a polygon and you'll receive notifications on BikeMaps when an incident is reported in that area.", html:true, delay: 400, trigger:'manual', container:"#map"});
+
+  // layer control
+  $('.leaflet-control-layers').popover({placement:'left', title:"<strong>Layers</strong>", content:"Turn layers on and off using this panel.", html:true, delay: 400, trigger:'manual', container:"#map"});
+
+  // search control
+  $('.leaflet-control-geocoder').popover({placement:'right', title:"<strong>Search</strong>", content:"Type in an address to find it's location.", html:true, delay: 400, trigger:'manual', container:"#map"});
+
+  $('.tip-msg a').click(function(){
+    /* Hide the message*/
+    $('#map').animate({marginTop: "-=23"});
+    $('.tip-msg').animate({height:'hide'});
+    
+    /* Display the first tip, then other tips sequentially */
+    $('.leaflet-draw-draw-marker').popover('show');
+    $('.leaflet-draw-draw-marker').on('shown.bs.popover', function(){
+      setTimeout(function(){ 
+        $('.leaflet-draw-draw-marker').popover('hide');
+        $('.leaflet-draw-draw-polygon').popover('show');
+      }, 7000);
+    });
+    $('.leaflet-draw-draw-polygon').on('shown.bs.popover', function(){
+      setTimeout(function(){ 
+        $('.leaflet-draw-draw-polygon').popover('hide');
+        $('.leaflet-control-layers').popover('show');
+      }, 7000);
+    });
+    $('.leaflet-control-layers').on('shown.bs.popover', function(){
+      setTimeout(function(){ 
+        $('.leaflet-control-layers').popover('hide');
+        $('.leaflet-control-geocoder').popover('show');
+      }, 7000);
+    });
+    $('.leaflet-control-geocoder').on('shown.bs.popover', function(){
+      setTimeout(function(){ 
+        $('.leaflet-control-geocoder').popover('hide');
+      }, 7000);
+    });
+  });
+  
+});
+</script>
+{% endif %}

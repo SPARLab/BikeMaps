@@ -125,11 +125,11 @@ function desktopDrawing(){
 function mobileDrawing(){
     $(document).ready(function(){
         $('#map').animate({marginTop: "+=23"});
-        $('.mobile-tip').hide().animate({height:'show'});
+        $('.tip-msg').hide().animate({height:'show'});
 
-        $('.mobile-tip .close').click(function(){
+        $('.tip-msg .close').click(function(){
             $('#map').animate({marginTop: "-=23"});
-            $('.mobile-tip').animate({height:'hide'});
+            $('.tip-msg').animate({height:'hide'});
         });
     });
 
@@ -145,15 +145,17 @@ function mobileDrawing(){
 }
 </script>
 
+
+
 <!-- Form for passing data to view to edit polygon data -->
 <form id="editForm" action="{% url 'mapApp:editShape' %}" method="post">
     {% csrf_token %}
     {{ editForm.as_p}}
 </form>
 
-{% if request.mobile %}
 <!-- Mobile tooltip to explain the double tapping -->
-<div class="mobile-tip alert-info alert-dismissable">
+{% if request.mobile %}
+<div class="tip-msg alert-info alert-dismissable">
     <div class="close">&times;</div>
     <center>Double tap a location to report an incident</center>
 </div>
