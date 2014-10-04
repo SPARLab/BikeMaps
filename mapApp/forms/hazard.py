@@ -27,6 +27,7 @@ class HazardForm(forms.ModelForm):
             AccordionGroup(
                 'Personal Details',
                 Field('age'),
+                Field('birthmonth'),
                 Field('sex'),
                 Field('regular_cyclist'),
                 css_id = 'hazard-personal'
@@ -61,4 +62,4 @@ class HazardForm(forms.ModelForm):
 
     class Meta:
         model = Hazard
-        fields = ['geom', 'hazard_date', 'hazard', 'hazard_detail', 'age', 'sex', 'regular_cyclist']
+        fields = ['geom', 'hazard_date', 'hazard', 'hazard_detail', 'age', 'birthmonth', 'sex', 'regular_cyclist']
