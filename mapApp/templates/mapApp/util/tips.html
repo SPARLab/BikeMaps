@@ -64,30 +64,16 @@ $(document).ready(function(){
     $('#map').animate({marginTop: "-=23"});
     $('.tip-msg').animate({height:'hide'});
     
+    
     /* Display the first tip, then other tips sequentially */
-    $('.leaflet-draw-draw-marker').popover('show');
-    $('.leaflet-draw-draw-marker').on('shown.bs.popover', function(){
-      setTimeout(function(){ 
-        $('.leaflet-draw-draw-marker').popover('hide');
-        $('.leaflet-draw-draw-polygon').popover('show');
-      }, 7000);
-    });
-    $('.leaflet-draw-draw-polygon').on('shown.bs.popover', function(){
-      setTimeout(function(){ 
-        $('.leaflet-draw-draw-polygon').popover('hide');
-        $('.leaflet-control-layers').popover('show');
-      }, 7000);
-    });
-    $('.leaflet-control-layers').on('shown.bs.popover', function(){
-      setTimeout(function(){ 
-        $('.leaflet-control-layers').popover('hide');
-        $('.leaflet-control-geocoder').popover('show');
-      }, 7000);
-    });
-    $('.leaflet-control-geocoder').on('shown.bs.popover', function(){
-      setTimeout(function(){ 
-        $('.leaflet-control-geocoder').popover('hide');
-      }, 7000);
+    var popovers = ['.leaflet-draw-draw-marker', '.leaflet-draw-draw-polygon', '.leaflet-control-layers', '.leaflet-control-geocoder']
+    popovers.forEach(function(p){
+      $(p).popover('show')
+        .on('shown.bs.popover', function(){
+          $this = $(this);
+          setTimeout(function(){ $this.popover('hide'); }, 7000);
+        
+      });
     });
   });
   
