@@ -1,12 +1,12 @@
 #TO DO
 
 ###HIGH PRIORITY
-* Tutorial for adding points
 * Email alerts monthly
 * Hazard deletion
 * Find out why firewall says that we're pron?
 * Cleanup index.html code
 * Fullscreen on mobile (sort of done if app is added to homepage, more to do)
+* Expose hazards model as a WFS service
 
 ###LOWER PRIORITY
 * User login cookies to prevent having to sign in every time
