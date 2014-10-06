@@ -6,8 +6,7 @@
 * Hazard deletion
 * Find out why firewall says that we're pron?
 * Cleanup index.html code
-* Fullscreen on mobile
-* Host admin map tiles over ssl
+* Fullscreen on mobile (sort of done if app is added to homepage, more to do)
 
 ###LOWER PRIORITY
 * User login cookies to prevent having to sign in every time
