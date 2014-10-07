@@ -18,54 +18,55 @@ class UserAlertEmails(CronJobBase):
 	code = 'mapApp.cron.UserAlertEmails'    # a unique code
 
 	def do(self):
-		# Get all notification objects that need to be emailed
-		incidentPolys = IncidentNotification.objects.filter(emailed=False)
-		hazardPolys = HazardNotification.objects.filter(emailed=False)
-		theftPolys = TheftNotification.objects.filter(emailed=False)
+		pass
+		# # Get all notification objects that need to be emailed
+		# incidentPolys = IncidentNotification.objects.filter(emailed=False)
+		# hazardPolys = HazardNotification.objects.filter(emailed=False)
+		# theftPolys = TheftNotification.objects.filter(emailed=False)
 		
-		# Get a list of distinct users that need to be emailed
-		userSet = list(set(
-			[poly.user for poly in incidentPolys] + 
-			[poly.user for poly in hazardPolys] + 
-			[poly.user for poly in theftPolys]
-		))
+		# # Get a list of distinct users that need to be emailed
+		# userSet = list(set(
+		# 	[poly.user for poly in incidentPolys] + 
+		# 	[poly.user for poly in hazardPolys] + 
+		# 	[poly.user for poly in theftPolys]
+		# ))
 
-		for user in userSet:
-			# Get the users notification objects
-			incidentPoints = incidentPolys.filter(user=user.id)
-			hazardPoints = hazardPolys.filter(user=user.id)
-			theftPoints = theftPolys.filter(user=user.id)
+		# for user in userSet:
+		# 	# Get the users notification objects
+		# 	incidentPoints = incidentPolys.filter(user=user.id)
+		# 	hazardPoints = hazardPolys.filter(user=user.id)
+		# 	theftPoints = theftPolys.filter(user=user.id)
 
-			# separate nearmiss and incident points
-			nearmissPoints = incidentPoints.filter(action=IncidentNotification.NEARMISS)
-			incidentPoints = incidentPolys.filter(action=IncidentNotification.INCIDENT)
+		# 	# separate nearmiss and incident points
+		# 	nearmissPoints = incidentPoints.filter(action=IncidentNotification.NEARMISS)
+		# 	incidentPoints = incidentPolys.filter(action=IncidentNotification.INCIDENT)
 
-			# Turn these points into a chart, etc
-			# Get counts like this
-			# 	nearmissPoints.count()
-
-
-			# Add the points to the email message
-			template = loader.get_template('mapApp/email.html')
-			d = Context({ 
-				'user': user, 
-				'incidentCount': incidentPoints.count(), 
-				'nearmissCount': nearmissPoints.count(), 
-				'hazardCount': hazardPoints.count(), 
-				'theftCount': theftPoints.count() 
-			})
-			html_content = template.render(d)
+		# 	# Turn these points into a chart, etc
+		# 	# Get counts like this
+		# 	# 	nearmissPoints.count()
 
 
-			# ????
-			# PROFIT!!
+		# 	# Add the points to the email message
+		# 	template = loader.get_template('mapApp/email.html')
+		# 	d = Context({ 
+		# 		'user': user, 
+		# 		'incidentCount': incidentPoints.count(), 
+		# 		'nearmissCount': nearmissPoints.count(), 
+		# 		'hazardCount': hazardPoints.count(), 
+		# 		'theftCount': theftPoints.count() 
+		# 	})
+		# 	html_content = template.render(d)
 
-			# Send the message
-			subject = "Monthly alerts update"
-			text_content = "blah blah blah - insert some message about alertPoints here."
-			sender = "do-not-reply@bikemaps.org"
-			recipient = [user.email]
-			send_mail(subject, text_content, sender, recipient, html_message=html_content)
+
+		# 	# ????
+		# 	# PROFIT!!
+
+		# 	# Send the message
+		# 	subject = "Monthly alerts update"
+		# 	text_content = "blah blah blah - insert some message about alertPoints here."
+		# 	sender = "do-not-reply@bikemaps.org"
+		# 	recipient = [user.email]
+		# 	send_mail(subject, text_content, sender, recipient, html_message=html_content)
 
 			# if success: #TODO implement this check
 

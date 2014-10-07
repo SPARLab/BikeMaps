@@ -24,7 +24,7 @@ def contact(request):
 		recipients = ['admin@bikemaps.org','tech-support@bikemaps.org']
 		cc = [sender] if cc_myself else []
 
-		email = EmailMessage(subject, message, 'postmaster@bikemaps.org', recipients, headers = {'Reply-To': sender}, cc = cc)
+		email = EmailMessage(subject, message, 'admin@bikemaps.org', recipients, headers = {'Reply-To': sender}, cc = cc)
 
 		try:
 			email.send()
