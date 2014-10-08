@@ -1,7 +1,5 @@
 Bike-maps
 =========
-######TODO: Flesh out Readme
-
 [http://bikemaps.org]
 
 ### A [SPARLab](http://www.geog.uvic.ca/spar/) project. 
@@ -27,10 +25,10 @@ A database driven webapp that allows users to submit bike accidents and near-mis
     `pip install -r requirements.txt`
 
   Then to get things going, run the following commands:
-        ```python manage.py migrate
-        python manage.py loaddata spirit_init
-        python manage.py createcachetable spirit_cache
-        python manage.py collectstatic # If on production server only```
+        `./manage.py migrate`
+        `./manage.py loaddata spirit_init`
+        `./manage.py createcachetable spirit_cache`
+        `./manage.py collectstatic # If on production server`
 
   Then running `python manage.py runserver` and visiting localhost:8000
    should display the dev version of the website
