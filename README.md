@@ -12,7 +12,7 @@ A database driven webapp that allows users to submit bike accidents and near-mis
   + Django 1.7
 
 ##### Database setup
-The development settings require a Postgres database called "bikeDB" accessible by user "postgres" that is not password protected. Be sure to add the postGIS extension.
+The development settings require a Postgres database called "bikeDB" accessible by user "postgres" that is not password protected. Be sure to add the postGIS extension. From the terminal, run:
 ```
 createdb -U postgres bikeDB
 psql -U postgres -d bikeDB -c "CREATE EXTENSON postgis;"
