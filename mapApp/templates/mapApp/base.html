@@ -5,17 +5,22 @@
   <meta name="Description" content="Cyclist safety maps from your cycling experience" >
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   
+  <!-- Allow fullscreen webapps on iOS and Chrome Mobile -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  
   <title>{% block title %}{% endblock %}</title>
+
+  <!-- Browser icon -->
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'mapApp/images/BikeMapsORG_Logo.ico' %}" />
+
 
   <!-- LOAD CSS -->
   {% block headerCSS %} {% endblock %}
+
   <!-- Load CSS -->
   <link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet" media="screen">
   <link href="{% static 'mapApp/css/style.css' %}" rel="stylesheet">
-  
-  <!-- Load tipsy tooltips -->
-  <link rel="stylesheet" href="{% static 'tipsy/stylesheets/tipsy.css' %}">
 
   <!-- Load icons -->
   <link href="{% static 'font-awesome-4.1.0/css/font-awesome.min.css' %}" rel="stylesheet">
@@ -31,9 +36,6 @@
 
   <!-- Load JS -->
   <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
-
-  <!-- Load tipsy tooltips -->
-  <script src="{% static 'tipsy/javascripts/jquery.tipsy.js' %}"></script>
 
   <!-- Bootstrap datetime picker -->
   <script type="text/javascript" src="{% static 'datetimepicker/js/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
@@ -70,7 +72,6 @@
       });  
     });
   </script>
-
   
   <!-- Google analytics tracker -->
   {% include 'mapApp/util/google-analytics.html' %}

@@ -1,0 +1,80 @@
+<!-- Modal popup that explains the alert areas (triggered from map legend) -->
+<div class="modal fade" id="about-alert-areas">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title text-center">Receive monthly alerts for your riding area.</h4>
+      </div>
+      <div class="modal-body">
+        To setup monitoring areas:
+            <ol>
+                <li>Login to your account
+                <li>Trace areas on the map you would like to track using the <span id="polygon-sprite"></span> button.
+                    <br><small><em>note: tracing is currently not supported on mobile devices.</em></small>
+            </ol>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <div class="btn-group">
+            <a href="{% url 'spirit:user-register' %}" type="button" class="btn btn-primary">Register</a>
+            <a href="{% url 'spirit:user-login' %}" type="button" class="btn btn-primary">Login</a>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+ 
+
+<!-- 'Get help' message -->
+{% if not request.mobile %}
+<!-- Mobile tooltip to explain the double tapping -->
+<div class="tip-msg alert-info alert-dismissable">
+    <div class="close">&times;</div>
+    <center>Need help? Click <a href="#">here</a> for a quick tutorial.</center>
+</div>
+
+<script>
+
+/* Show the dropdown help message */
+$(document).ready(function(){
+    $('#map').animate({marginTop: "+=23"});
+    $('.tip-msg').hide().animate({height:'show'});
+
+    $('.tip-msg .close').click(function(){
+        $('#map').animate({marginTop: "-=23"});
+        $('.tip-msg').animate({height:'hide'});
+    });
+
+  //POPOVERS
+  // Add marker
+  $('.leaflet-draw-draw-marker').popover({placement:'right', title:"<strong>Add a new marker</strong>", content:"Click this button to add a pin where you had a cycling incident that you would like to report.", html:true, delay: 400, trigger:'manual', container:"#map"});
+  // Add polygon
+  $('.leaflet-draw-draw-polygon').popover({placement:'right', title:"<strong>Add an alert area</strong>", content:"Trace a polygon and you'll receive notifications on BikeMaps when an incident is reported in that area.", html:true, delay: 400, trigger:'manual', container:"#map"});
+  // layer control
+  $('.leaflet-control-layers').popover({placement:'left', title:"<strong>Layers</strong>", content:"Turn layers on and off using this panel.", html:true, delay: 400, trigger:'manual', container:"#map"});
+  // search control
+  $('.leaflet-control-geocoder').popover({placement:'right', title:"<strong>Search</strong>", content:"Type in an address to find it's location.", html:true, delay: 400, trigger:'manual', container:"#map"});
+
+  /* Start the tutorial */
+  $('.tip-msg a').click(function(){
+    /* Hide the message*/
+    $('#map').animate({marginTop: "-=23"});
+    $('.tip-msg').animate({height:'hide'});
+    
+    /* Display the first tip, then other tips sequentially */
+    showTutorial(['.leaflet-draw-draw-marker', '.leaflet-control-geocoder', '.leaflet-control-layers', '.leaflet-draw-draw-polygon'], 0);
+    function showTutorial(p, i){
+      if( i === p.length-1)
+        return;
+      $(p[i]).popover('show').on('shown.bs.popover', function(){
+        setTimeout(function(){ 
+          $(p[i]).popover('hide'); 
+          showTutorial(p, i+1); 
+        }, 6000);
+      });
+    };
+  });
+});
+</script>
+{% endif %}

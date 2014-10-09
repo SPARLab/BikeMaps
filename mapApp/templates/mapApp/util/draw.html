@@ -1,6 +1,12 @@
 <!-- Javascript saved as html to allow for use of Django template tags within the code -->
 <script>
+{% if not request.mobile %}
+    desktopDrawing();
+{% else %}
+    mobileDrawing();
+{% endif %}
 
+function desktopDrawing(){
     /* DRAWING CONTROL TOOLTIPS */
     L.drawLocal.draw.toolbar.buttons.marker = 'Add a new marker.';
     L.drawLocal.draw.handlers.marker.tooltip.start = 'Place me where the incident, hazard, or theft occurred.';
@@ -114,10 +120,43 @@
             });
         }
     });
+};
+
+function mobileDrawing(){
+    $(document).ready(function(){
+        $('#map').animate({marginTop: "+=23"});
+        $('.tip-msg').hide().animate({height:'show'});
+
+        $('.tip-msg .close').click(function(){
+            $('#map').animate({marginTop: "-=23"});
+            $('.tip-msg').animate({height:'hide'});
+        });
+    });
+
+    // Allow double click point adding for mobile users
+    map.on('dblclick', function (e){
+        console.log("DOUBLE CLICK");
+        var geom = '{"type":"Point","coordinates":['+e.latlng.lng+','+e.latlng.lat+']}';
+        $('#incidentForm').modal('show');
+        document.getElementById("point").value = geom; 
+        document.getElementById("hazPoint").value = geom; 
+        document.getElementById("theftPoint").value = geom;
+    });
+}
 </script>
+
+
 
 <!-- Form for passing data to view to edit polygon data -->
 <form id="editForm" action="{% url 'mapApp:editShape' %}" method="post">
     {% csrf_token %}
     {{ editForm.as_p}}
 </form>
+
+<!-- Mobile tooltip to explain the double tapping -->
+{% if request.mobile %}
+<div class="tip-msg alert-info alert-dismissable">
+    <div class="close">&times;</div>
+    <center>Double tap a location to report an incident</center>
+</div>
+{% endif %}

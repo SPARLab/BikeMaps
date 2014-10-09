@@ -12,8 +12,6 @@ body {
 	padding: 0px;
 	padding-top: 60px;
 	max-width: 100%;
-	/*background: #18bc9c;*/
-	/*background: #3b9972;*/
 }
 
 button {
@@ -68,10 +66,11 @@ textarea {
 
 .navbar-default .navbar-nav>li>a {
 	color: #00aeac;
-	-webkit-text-stroke: 1px #2c3e50;
+	font-weight: lighter;
+	/*-webkit-text-stroke: 1px #2c3e50;*/
 }
 .navbar-default .navbar-nav>li>a>span {
-	-webkit-text-stroke: 0px;
+	/*-webkit-text-stroke: 0px;*/
 }
 
 .navbar-default .navbar-nav>li>a:hover,
@@ -104,14 +103,7 @@ body h1{
 	font-family: sans-serif;
 }
 
-/* Click and drag point in line-routing */
-div.line-mouse-marker {
-  background-color: #ffffff;
-  border: 2px solid black;
-  border-radius: 10px;
-}
-
-
+/* Alert bell highlighting*/
 .is-highlighted{
 	color: #D2850B;
 }
@@ -307,14 +299,10 @@ li a {
 }
 
 /* Mobile info popup on mobile phones */
-.mobile-tip{
+.tip-msg{
 	position: absolute;
 	top: 60px;
 	left: 0px;
 	right: 0px;
 	height: 23px;
-}
-.mobile-tip .close{
-	margin-top: -3px;
-	margin-right: 2px;
 }

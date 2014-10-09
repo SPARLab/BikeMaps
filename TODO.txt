@@ -1,14 +1,17 @@
 #TO DO
 
 ###HIGH PRIORITY
-* Tutorial for adding points
+* Make three categories of bikelanes
 * Email alerts monthly
 * Hazard deletion
 * Find out why firewall says that we're pron?
+* Cleanup index.html code
+* Fullscreen on mobile (sort of done if app is added to homepage, more to do)
+* Expose hazards model as a WFS service
 
 ###LOWER PRIORITY
-* Scroll to hide browser bar on mobile phones
-* Different color for bike thefts so they stand out more against official reports
+* Make API to allow developer access to bikemaps data
+* Use Seth's API to send and receive data from seeclickfix
 * User login cookies to prevent having to sign in every time
 * opt in for emails (double opt in if possible)
 * add bikelanes from OCM
@@ -22,7 +25,7 @@
 
 ###BUGS
 * Moderate comments > delete button not working
-* Date picker does not scroll with modal
+* Date picker does not scroll with modal (bind to something?)
 * Leaflet draw does not work for mobile (currently using double tap work-around for mobile)
 
 
@@ -35,22 +38,10 @@ BikeMaps – Functionality
 -	Sliders and query tools on the website so people can see where recent crashes are or the difference between day and night incidents.
 
 
-##FROM HOLLAND
-- Greating message with tour of site on first visit
-- Help button hard to see
-- Basemap highway colors are too similar to legend colors
-
-
 ##FROM DARREN
 - When you search for a word/phrase that returns multiple results, the text of the results is truncated. 
 	Try searching for 'shell' for example. The list of results should probably expand horizontally to accommodate 
 	the width of the result items or the text in the result items may even need to wrap if it is sufficiently long
-
 - The search function doesn't seem to work from my Android phone.
-
 - When using a phone, it would be nice if the address bar could be
 	hidden as it occupies valuable screen real estate, especially when in landscape mode.
-
-
-##FROM MARTIN
-- More obvious reporting buttons 

@@ -16,7 +16,7 @@ def contact(request):
 	emailForm = EmailForm(request.POST)
 
 	if emailForm.is_valid():
-		subject = emailForm.cleaned_data['subject']
+		subject = '[BikeMaps] '+ emailForm.cleaned_data['subject']
 		message = emailForm.cleaned_data['message']
 		sender = emailForm.cleaned_data['sender']
 		cc_myself = emailForm.cleaned_data['cc_myself']
@@ -24,7 +24,7 @@ def contact(request):
 		recipients = ['admin@bikemaps.org','tech-support@bikemaps.org']
 		cc = [sender] if cc_myself else []
 
-		email = EmailMessage(subject, message, 'postmaster@bikemaps.org', recipients, headers = {'Reply-To': sender}, cc = cc)
+		email = EmailMessage(subject, message, 'admin@bikemaps.org', recipients, headers = {'Reply-To': sender}, cc = cc)
 
 		try:
 			email.send()

@@ -21,7 +21,7 @@ var icons = {
         size: "m"
     }),
     "hazardIcon": L.MakiMarkers.icon({
-        icon: "triangle-stroked",
+        icon: "triangle",
         color: "#3eab45",
         size: "m"
     }),
@@ -32,7 +32,7 @@ var icons = {
     }),
     "officialIcon": L.MakiMarkers.icon({
         icon: "police",
-        color: "#000044",
+        color: "#1D84A6",
         size: "m"
     }),
     "geocodeIcon": L.MakiMarkers.icon({
@@ -191,14 +191,6 @@ function initialize(mobile) {
             position: 'bottomright'
         }).addTo(map);
 
-        /* ADD CUSTOM HELP BUTTON */
-        L.easyButton('bottomright', 'fa-question-circle',
-            function() {
-                toggleTooltips("show")
-            },
-            'Get Help'
-        );
-
         function addLegend() {
             // Add layers
             // Basemaps
@@ -221,7 +213,8 @@ function initialize(mobile) {
 
                 + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["officialIcon"].options.icon + '+' + icons["officialIcon"].options.color + '.png"> <small>Official collision report</small><br>'
 
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["theftIcon"].options.icon + '+' + icons["theftIcon"].options.color + '.png"> <small>Bike Theft</small>' + '</div>'
+                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["theftIcon"].options.icon + '+' + icons["theftIcon"].options.color + '.png"> <small>Bike Theft</small>'
+                + '<div class="clearfix"</div></div>'
             );
 
             if (!DISABLE_GEOFENCES) {
