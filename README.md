@@ -1,4 +1,4 @@
-Bike-maps
+BikeMaps
 =========
 [http://bikemaps.org]
 
