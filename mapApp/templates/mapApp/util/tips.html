@@ -24,8 +24,7 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
+ 
 
 <!-- 'Get help' message -->
 {% if not request.mobile %}
@@ -36,6 +35,7 @@
 </div>
 
 <script>
+
 /* Show the dropdown help message */
 $(document).ready(function(){
     $('#map').animate({marginTop: "+=23"});
@@ -46,18 +46,15 @@ $(document).ready(function(){
         $('.tip-msg').animate({height:'hide'});
     });
 
+  //POPOVERS
   // Add marker
   $('.leaflet-draw-draw-marker').popover({placement:'right', title:"<strong>Add a new marker</strong>", content:"Click this button to add a pin where you had a cycling incident that you would like to report.", html:true, delay: 400, trigger:'manual', container:"#map"});
-
   // Add polygon
   $('.leaflet-draw-draw-polygon').popover({placement:'right', title:"<strong>Add an alert area</strong>", content:"Trace a polygon and you'll receive notifications on BikeMaps when an incident is reported in that area.", html:true, delay: 400, trigger:'manual', container:"#map"});
-
   // layer control
   $('.leaflet-control-layers').popover({placement:'left', title:"<strong>Layers</strong>", content:"Turn layers on and off using this panel.", html:true, delay: 400, trigger:'manual', container:"#map"});
-
   // search control
   $('.leaflet-control-geocoder').popover({placement:'right', title:"<strong>Search</strong>", content:"Type in an address to find it's location.", html:true, delay: 400, trigger:'manual', container:"#map"});
-
 
   /* Start the tutorial */
   $('.tip-msg a').click(function(){
@@ -77,9 +74,7 @@ $(document).ready(function(){
         }, 6000);
       });
     };
-
   });
-
 });
 </script>
 {% endif %}
