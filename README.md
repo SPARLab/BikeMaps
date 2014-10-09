@@ -12,7 +12,7 @@ A database driven webapp that allows users to submit bike accidents and near-mis
   + Django 1.7
 
 ##### Database setup
-The development settings require a Postgres database called "bikeDB" accessible by user "postgres" that is not password protected.
+The development settings require a Postgres database called "bikeDB" accessible by user "postgres" that is not password protected. Be sure to add the postGIS extension.
 ```
 createdb -U postgres bikeDB
 psql -U postgres -d bikeDB -c "CREATE EXTENSON postgis;"
@@ -30,13 +30,12 @@ Additionally, the forum Django app "Spirit" (located at http://spirit-project.co
 ./manage.py loaddata spirit_init
 ```
 
+A full list of required python packages can be found in requirements.txt and can be installed via pip 
+    `pip install -r requirements.txt`
+
 If all dependancies have been met, running `./manage.py runserver` should start the development server at 127.0.0.1
 
-Should the app be run in production mode, static files will need to be collected and served from one location. This will require additional settings to be defined in /VicBikeMap/VicBikeMap/settings/prod.py which are not available in this repo for security reasons.
-
-##### Other required Python packages
-  A full list of required python packages can be found in requirements.txt and can be installed via pip 
-    `pip install -r requirements.txt`
+_Note: There are additional requirements for serving this application in a production setting, and the relevant Django documentation should be consulted in this scenary. This repo does not provide production settings for security reasons._
 
 
 ##### Data output
