@@ -6,29 +6,25 @@ Bike-maps
 A database driven webapp that allows users to submit bike accidents and near-misses. Data is analyzed to detect areas/routes with high traffic and rates of incidents. 
 
 ##### Dependancies
-Postgres 9.3
-PostGIS 9.3? (whatever the version you can download with postgres is)
-Python 2.7
-psycopg2
-Django 1.7
+  + Python 2.7
+  + Postgres 9.3 + PostGIS
+  + psycopg2
+  + Django 1.7
 
 ##### Database setup
 The development settings require a Postgres database called "bikeDB" accessible by user "postgres" that is not password protected.
-
-run: 
 ```
 createdb -U postgres bikeDB
 psql -U postgres -d bikeDB -c "CREATE EXTENSON postgis;"
 ```
 
-syncing the tables from the Django app requires running
+Syncing the tables from the Django app requires running
 ```
 ./manage.py makemigrations
 ./manage.py migrate
 ```
 
 Additionally, the forum Django app "Spirit" (located at http://spirit-project.com/ and developed by Esteban Castro Borsani) requires it's own cachetable and fixture data be installed
-run
 ```
 ./manage.py createcachetable spirit_cache
 ./manage.py loaddata spirit_init
