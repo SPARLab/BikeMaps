@@ -16,7 +16,7 @@ def contact(request):
 	emailForm = EmailForm(request.POST)
 
 	if emailForm.is_valid():
-		subject = emailForm.cleaned_data['subject']
+		subject = '[BikeMaps] '+ emailForm.cleaned_data['subject']
 		message = emailForm.cleaned_data['message']
 		sender = emailForm.cleaned_data['sender']
 		cc_myself = emailForm.cleaned_data['cc_myself']
