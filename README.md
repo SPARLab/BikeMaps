@@ -5,35 +5,42 @@ Bike-maps
 ### A [SPARLab](http://www.geog.uvic.ca/spar/) project. 
 A database driven webapp that allows users to submit bike accidents and near-misses. Data is analyzed to detect areas/routes with high traffic and rates of incidents. 
 
+##### Dependancies
+Postgres 9.3
+PostGIS 9.3? (whatever the version you can download with postgres is)
+Python 2.7
+psycopg2
+Django 1.7
 
-##### Requirements
-  A full list of requirements can be found in requirements.txt and can be easily installed via pip 
+##### Database setup
+The development settings require a Postgres database called "bikeDB" accessible by user "postgres" that is not password protected.
+
+run: 
+```
+createdb -U postgres bikeDB
+psql -U postgres -d bikeDB -c "CREATE EXTENSON postgis;"
+```
+
+syncing the tables from the Django app requires running
+```
+./manage.py makemigrations
+./manage.py migrate
+```
+
+Additionally, the forum Django app "Spirit" (located at http://spirit-project.com/ and developed by Esteban Castro Borsani) requires it's own cachetable and fixture data be installed
+run
+```
+./manage.py createcachetable spirit_cache
+./manage.py loaddata spirit_init
+```
+
+If all dependancies have been met, running `./manage.py runserver` should start the development server at 127.0.0.1
+
+Should the app be run in production mode, static files will need to be collected and served from one location. This will require additional settings to be defined in /VicBikeMap/VicBikeMap/settings/prod.py which are not available in this repo for security reasons.
+
+##### Other required Python packages
+  A full list of required python packages can be found in requirements.txt and can be installed via pip 
     `pip install -r requirements.txt`
-
-
-##### People
-  + Dr. Trisalyn Nelson (Project Lead)
-  + Taylor Denouden (Developer)
-  + James Stephaniuk (Developer)
-
-
-##### Setup
-  Starting this django project requires the following:
-  Prereqs:
-  * A postgresql database named bikeDB with postgis extension installed 
-  * Install all required python packages by navigating to the project root and running
-    `pip install -r requirements.txt`
-
-  Then to get things going, run the following commands:
-        ```./manage.py migrate;
-        ./manage.py loaddata spirit_init;
-        ./manage.py createcachetable spirit_cache;
-        ./manage.py collectstatic```
-
-  Then running `python manage.py runserver` and visiting localhost:8000
-   should display the dev version of the website
-
-  Change email password in settings.py to allow for new account creation and emails to admin from contact link
 
 
 ##### Data output
@@ -41,3 +48,9 @@ A database driven webapp that allows users to submit bike accidents and near-mis
   This geojson data can be used directly by QGis or converted to a shapefile using ogr2ogr tools.
   The easiest method to convert the output geojson text to a shapefile is to copy it from the webpage and
     past into the "Convert from GeoJSON" box at http://ogre.adc4gis.com/
+
+
+##### People
+  + Dr. Trisalyn Nelson (Project Lead)
+  + Taylor Denouden (Developer)
+  + James Stephaniuk (Developer)

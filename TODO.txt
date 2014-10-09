@@ -10,6 +10,8 @@
 * Expose hazards model as a WFS service
 
 ###LOWER PRIORITY
+* Make API to allow developer access to bikemaps data
+* Use Seth's API to send and receive data from seeclickfix
 * User login cookies to prevent having to sign in every time
 * opt in for emails (double opt in if possible)
 * add bikelanes from OCM
@@ -25,7 +27,6 @@
 * Moderate comments > delete button not working
 * Date picker does not scroll with modal (bind to something?)
 * Leaflet draw does not work for mobile (currently using double tap work-around for mobile)
-
 
 
 ##FROM TRISALYN
