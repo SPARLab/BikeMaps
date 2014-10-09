@@ -35,7 +35,7 @@ A full list of required python packages can be found in requirements.txt and can
 
 If all dependancies have been met, running `./manage.py runserver` should start the development server at 127.0.0.1
 
-_Note: There are additional requirements for serving this application in a production setting, and the relevant Django documentation should be consulted in this scenary. This repo does not provide production settings for security reasons._
+_Note: There are additional requirements for serving this application in a production setting, and the relevant Django documentation should be consulted in this scenario. This repo does not provide production settings for security reasons._
 
 
 ##### Data output
