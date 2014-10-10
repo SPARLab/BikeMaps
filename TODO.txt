@@ -6,6 +6,8 @@
 * Cleanup index.html code
 * Fullscreen on mobile (sort of done if app is added to homepage, more to do)
 * Expose hazards model as a WFS service
+* Allow admin point moving on main map page
+* Request https admin page maps
 
 ###LOWER PRIORITY
 * Make API to allow developer access to bikemaps data
