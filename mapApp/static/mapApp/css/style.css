@@ -253,13 +253,18 @@ body h1{
 	display:inline-block;
     background: #666666;
     width: 30px;
-    height: 3px;
     margin-right: 5px;
 }
 .solidlane{
+	height:2px;
 	background: #ff0080;
 }
+.thicklane{
+	height: 3.5px;
+
+}
 .dotlane{
+	height: 3px;
  	border: 1px solid #ff0080;
     background: #ff0080; /* not working, let's see some red */
     background: repeating-linear-gradient(
