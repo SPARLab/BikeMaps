@@ -1,13 +1,15 @@
 #TO DO
 
-###HIGH PRIORITY
+###HIGHER PRIORITY
 * Email alerts monthly
 * Hazard deletion
 * Cleanup index.html code
 * Fullscreen on mobile (sort of done if app is added to homepage, more to do)
-* Expose hazards model as a WFS service
+* Allow admin point moving on main map page
+* Request https admin page maps
 
 ###LOWER PRIORITY
+* Expose hazards model as a WFS service
 * Make API to allow developer access to bikemaps data
 * Use Seth's API to send and receive data from seeclickfix
 * User login cookies to prevent having to sign in every time
