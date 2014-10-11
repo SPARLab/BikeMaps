@@ -1,5 +1,5 @@
 Django==1.7
-Markdown==2.5
+Markdown==2.3
 Minidetector==0.1
 Pillow==2.5.3
 Whoosh==2.6.0
