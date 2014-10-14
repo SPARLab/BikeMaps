@@ -197,7 +197,8 @@ function initialize(mobile) {
             // layerControl.addBaseLayer(skobbler, '<i class="fa fa-sun-o"></i> Light map');
             // layerControl.addBaseLayer(skobblerNight, '<i class="fa fa-moon-o"></i> Dark map');
 
-            layerControl.addOverlay(stravaHM, 'Rider volume<br>' +
+            layerControl.addOverlay(stravaHM, 'Rider volume' +
+                '   <a data-target="#about-strava" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>' +
                 '<div id=strava-legend class="legend-subtext collapse in">' +
                 '<small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>' +
                 '</div>');
