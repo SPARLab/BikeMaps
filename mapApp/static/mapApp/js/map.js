@@ -109,6 +109,7 @@ function initialize(mobile) {
         center: [48, -100],
         zoom: 4,
         layers: [skobbler, stravaHM, incidentData, alertAreas],
+        worldCopyJump: true
     });
 
     // Add all controls to the map
@@ -214,8 +215,7 @@ function initialize(mobile) {
 
                 + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["officialIcon"].options.icon + '+' + icons["officialIcon"].options.color + '.png"> <small>Official collision report</small><br>'
 
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["theftIcon"].options.icon + '+' + icons["theftIcon"].options.color + '.png"> <small>Bike Theft</small>'
-                + '<div class="clearfix"</div></div>'
+                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["theftIcon"].options.icon + '+' + icons["theftIcon"].options.color + '.png"> <small>Bike Theft</small>' + '<div class="clearfix"</div></div>'
             );
 
             if (!DISABLE_GEOFENCES) {
