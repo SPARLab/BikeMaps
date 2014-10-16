@@ -56,15 +56,14 @@ class TheftForm(forms.ModelForm):
                 $("#div_id_lock select option[value='NA']").hide();
                 $("#div_id_how_locked select").change( function(){
                     if($(this).val() == 'Not locked'){
-                        $("#div_id_lock select").val('NA');
-                        $("#div_id_lock select").attr('disabled', true);
+                        $("#div_id_lock select option").hide();
                         $("#div_id_lock select option[value='NA']").show();
                     }
                     else{
                         if($("#div_id_lock select").val() == 'NA'){
                             $("#div_id_lock select").val('');
                         }
-                        $("#div_id_lock select").attr('disabled', false);
+                        $("#div_id_lock select option").show();
                         $("#div_id_lock select option[value='NA']").hide();
                     }    
                 });
