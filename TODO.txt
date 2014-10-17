@@ -7,7 +7,10 @@
 * Fullscreen on mobile (sort of done if app is added to homepage, more to do)
 * Allow admin point moving on main map page
 * Request https admin page maps
-* Provide info about strava
+* FAQ on about
+* About spar people on about page
+* Easy way to add points from other sources
+* Broken modal popups on some browsers
 
 ###LOWER PRIORITY
 * Expose hazards model as a WFS service
