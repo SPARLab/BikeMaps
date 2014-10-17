@@ -1,10 +1,12 @@
+{% load staticfiles %}
+
 <!-- Modal popup that explains the alert areas (triggered from map legend) -->
 <div class="modal fade" id="about-alert-areas">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title text-center">Receive monthly alerts for your riding area.</h4>
+        <h4 class="modal-title text-center">Receive monthly alerts for your riding area</h4>
       </div>
       <div class="modal-body">
         To setup monitoring areas:
@@ -21,6 +23,44 @@
             <a href="{% url 'spirit:user-login' %}" type="button" class="btn btn-primary">Login</a>
         </div>
       </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<!-- Modal popup that explains strava (triggered from map legend) -->
+<div class="modal fade" id="about-strava">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title text-center">Rider density</h4>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+            <div class="col-xs-12">
+              <p style="text-indent: 2em">
+                Our rider density data comes directly from the Strava cycling and running mobile tracker application. Using Strava, you can track your cycling commutes and recreational rides using your Android or iPhone.
+              </p>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="text-center col-xs-12 col-sm-3 col-sm-offset-3">
+              <a href="https://play.google.com/store/apps/details?id=com.strava" target="_blank">
+                <img alt="Get it on Google Play" src="{% static 'mapApp/images/googleButton.png' %}"/>
+              </a>
+            </div>
+            <div class="text-center col-xs-12 col-sm-3">
+              <a href="https://itunes.apple.com/us/app/strava-running-cycling-gps/id426826309?mt=8&uo=4" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_appstore-lrg.png) no-repeat;width:135px;height:40px;@media only screen{background-image:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_appstore-lrg.svg);}"></a>
+            </div>
+          </div>
+
+      </div>
+<!--       <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div> -->
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
