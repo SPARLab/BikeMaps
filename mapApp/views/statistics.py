@@ -10,13 +10,13 @@ from mapApp.models.alert_area import AlertArea
 from django.contrib.auth.models import User
 from mapApp.models.alert_notification import IncidentNotification, HazardNotification, TheftNotification
 
-import datetime
+from datetime import datetime, timedelta
 
 def stats(request):
 	user = request.user
 
-	now = datetime.date.today()
-	monthPast = now - datetime.timedelta(1*365/12)
+	now = datetime.now()
+	monthPast = now - timedelta(1*365/12)
 
 	# Get the user's alertable points in the last month
 	recentIncidents = IncidentNotification.objects.filter(user=user.id).filter(date__range=[monthPast, now])
