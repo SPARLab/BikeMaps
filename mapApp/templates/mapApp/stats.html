@@ -10,6 +10,9 @@
 {% block headerCSS %}
 	<!-- Load leaflet -->
 	<link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
+
+	<!-- Barchart style -->
+	<link rel="stylesheet" href="{% static 'mapApp/css/barchart.css' %}"/>
 {% endblock %}
 
 
@@ -37,44 +40,21 @@
 
 {% block body %}
 	<div class="container">
-		<!-- PLANNED LAYOUT -->
-		<!-- Map of one month of reports -->
 		<div class="row">
-			<div class="col-xs-12">
+			<div class="col-xs-6">
+				<!-- Map of one month of reports -->
 				<div id="statsMap"></div>
 			</div>
-		</div>
 
-		<!-- Bar graph of Alert area points by type -->
-		<!-- See http://bost.ocks.org/mike/bar/ for bar chart tutorials -->
-		<div class="row">
-			<div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+			<!-- Bar graph of Alert area points by type -->
+			<!-- See http://bost.ocks.org/mike/bar/ for bar chart tutorials -->
+			<div class="col-xs-6">
 				<svg id="barchart" width='100%' height='100%'></svg>
 			</div>
 		</div>
 
 
 	</div>
-	
-	<style>
-	#barchart text {
-		fill: white;
-		font: 10px sans-serif;
-		text-anchor: start;
-	}
-
-	#barchart .axis text {
-		fill: black;
-		font: 10px sans-serif;
-	}
-
-	.axis path,
-	.axis line {
-		fill: none;
-		stroke: #000;
-		shape-rendering: crispEdges;
-	}
-	</style>
 
 	<script>
 		// Create dataset out of django context

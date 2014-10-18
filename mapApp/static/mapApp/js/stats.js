@@ -1,8 +1,8 @@
 // TODO add axis
 // 	Make height nicer
+//  Make chart responsive to window resize
 
 function initializeBarChart(data) {
-
     var margin = {
         top: 20,
         right: 30,
@@ -14,91 +14,68 @@ function initializeBarChart(data) {
         height = width / 2 - margin.top - margin.bottom,
         barWidth = width / data.length;
 
+    // SCALES
+    var x = d3.scale.ordinal()
+        .domain(data.map(function(d) {
+            return d.type;
+        }))
+        .rangeRoundBands([0, width], .1);
+
     var y = d3.scale.linear() // function that translates data to a height value based on the value of d in data
     .domain([0, d3.max(data, function(d) {
         return d.value;
     })])
         .range([height, 0]);
 
-    // SVG chart elemet
+    // AXES
+    // y axis
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(d3.max(data, function(d) {
+            return d.value
+        }))
+        .tickFormat(d3.format("d"))
+        .tickSubdivide(0);
+
+    // x axis
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+    // SVG CHART ELEMENT
     var chart = d3.select("#barchart")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // Create a bar for each element in data
-    var bar = chart.selectAll("g") // creates d and i. i is the i'th element in data and d is the data at data[i]
-    .data(data)
-        .enter().append("g")
-        .attr("transform", function(d, i) {
-            return "translate(" + i * barWidth + ",0)";
-        });
+    chart.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
 
-    bar.append("rect")
+    chart.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+    // Create a bar for each element in data
+    chart.selectAll(".bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("fill", function(d) {
+            return d.color;
+        })
+        .attr("x", function(d) {
+            return x(d.type);
+        })
         .attr("y", function(d) {
             return y(d.value);
         })
         .attr("height", function(d) {
             return height - y(d.value);
         })
-        .attr("width", barWidth - 5)
-        .attr("fill", function(d) {
-            return d.color;
-        });
+        .attr("width", x.rangeBand());
 
-    bar.append("text")
-        .attr("x", 5)
-        .attr("y", height - 3)
-    // .attr("dy", "1em")
-    .text(function(d) {
-        return d.type;
-    });
 
-    // TODO add x and y axis
-    // y axis
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left");
-
-    chart.append("g")
-        .attr("class", "y axis")
-        .call(yAxis);
-
-    // x axis
-    // var xAxis = d3.svg.axis()
-    //     .orient("bottom");
-
-    // chart.append("g")
-    //     .attr("class", "x axis")
-    //     .translate
-    //     .call(xAxis);
-
-    // $(window).resize(function() {
-    //     // Updated parameters
-    //     var width = $("#barchart").parent().width() - margin.left - margin.right,
-    //         height = width / 2 - margin.top - margin.bottom,
-    //         barWidth = width / data.length;
-    //     x.range([0, height]);
-
-    //     // Resize chart according to new width and height
-    //     chart
-    //         .attr("width", width + margin.left + margin.right)
-    //         .attr("height", height + margin.top + margin.bottom);
-
-    //     bar.attr("transform", function(d, i) {
-    //         return "translate(" + i * barWidth + ",)";
-    //     })
-    //     bar.select("rect")
-    //         .attr("width", barWidth - 5)
-    //         .attr("y", function(d) {
-    //             return height - y(d.value);
-    //         })
-    //         .attr("height", function(d) {
-    //             return y(d.value);
-    //         });
-    //     bar.select("text")
-    //         .attr("y", height - 3);
-
-    // });
 };
