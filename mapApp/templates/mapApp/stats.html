@@ -31,26 +31,37 @@
 
     <!-- map generating code -->
     <script src="{% static 'mapApp/js/map.js' %}" charset="utf-8"></script>
+    <script src="{% static 'mapApp/js/stats.js' %}" charset="utf-8"></script>
 {% endblock %}
 
 
 {% block body %}
-	<!-- PLANNED LAYOUT -->
-	<!-- Map of one month of reports -->
-	
+	<div class="container">
+		<!-- PLANNED LAYOUT -->
+		<!-- Map of one month of reports -->
+		<div class="row">
+			<div class="col-xs-12">
+				<div id="statsMap"></div>
+			</div>
+		</div>
 
-	<!-- Bar graph of Alert area points by type -->
-	<!-- See http://bost.ocks.org/mike/bar/ for bar chart tutorials -->
-	<svg id="barchart"></svg>
+		<!-- Bar graph of Alert area points by type -->
+		<!-- See http://bost.ocks.org/mike/bar/ for bar chart tutorials -->
+		<div class="row">
+			<div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+				<svg id="barchart" width='100%' height='100%'></svg>
+			</div>
+		</div>
+
+
+	</div>
 	
 	<style>
-
 	#barchart text {
 	  fill: white;
 	  font: 10px sans-serif;
 	  text-anchor: start;
 	}
-
 	</style>
 
 	<script>
@@ -63,37 +74,7 @@
 			{ type: "theft", 		value: {{ theftsCount }}, 		color: "#" + icons["theftIcon"].options.color }
 		];
 
-		//make dynamic for screen width
-		var height = 400,
-			width = 400,
-			barWidth = width/data.length;
-
-		var x = d3.scale.linear() // function that translates data to a height value based on the value of d in data
-			.domain([0, d3.max(data, function(d) { return d.value; })])
-			.range([0, height]);
-
-		// SVG chart elemet
-		var chart = d3.select("#barchart")
-			.attr("height", height)
-			.attr("width", barWidth * data.length);
-
-		// Create a bar for each element in data
-		var bar = chart.selectAll("g") // creates d and i. i is the i'th element in data and d is the data at data[i]
-			.data(data)
-		  .enter().append("g")
-		  	.attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
-
-			bar.append("rect")
-				.attr("y", function(d) { return height - x(d.value); })
-				.attr("height", function(d) { return x(d.value); })
-				.attr("width", barWidth - 5)
-				.attr("fill", function(d) { return d.color; });
-
-			bar.append("text")
-				.attr("x", 5)
-				.attr("y", height-3)
-				// .attr("dy", "1em")
-				.text(function(d) { return d.type; });
+		initializeBarChart(data);
 
 	</script>
 
