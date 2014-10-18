@@ -34,7 +34,9 @@
 
     <!-- map generating code -->
     <script src="{% static 'mapApp/js/map.js' %}" charset="utf-8"></script>
-    <script src="{% static 'mapApp/js/stats.js' %}" charset="utf-8"></script>
+
+    <!-- d3 barchart -->
+    <script src="{% static 'mapApp/js/barchart.js' %}" charset="utf-8"></script>
 {% endblock %}
 
 
@@ -65,7 +67,6 @@
 			{ type: "hazard", 		value: {{ hazardsCount }}, 		color: "#" + icons["hazardIcon"].options.color }, 
 			{ type: "theft", 		value: {{ theftsCount }}, 		color: "#" + icons["theftIcon"].options.color }
 		];
-
 		initializeBarChart(data);
 
 	</script>
