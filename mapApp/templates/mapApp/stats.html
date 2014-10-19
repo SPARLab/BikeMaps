@@ -41,16 +41,27 @@
 
 
 {% block body %}
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-6">
-				<!-- Map of one month of reports -->
-				<div id="statsMap"></div>
-			</div>
 
-			<!-- Bar graph of Alert area points by type -->
-			<!-- See http://bost.ocks.org/mike/bar/ for bar chart tutorials -->
-			<div class="col-xs-6">
+	<style type="text/css">
+		#map { 
+			height: 260px; 
+			margin-top: 0px;
+		}
+
+	</style>
+	
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- Map of one month of reports -->
+				<div id="map"></div>
+			</div>
+		</div>
+		<!-- Bar graph of Alert area points by type -->
+		<!-- See http://bost.ocks.org/mike/bar/ for bar chart tutorials -->
+		<div class="row">
+			<div class="col-xs-7">
 				<svg id="barchart" width='100%' height='100%'></svg>
 			</div>
 		</div>
@@ -59,6 +70,11 @@
 	</div>
 
 	<script>
+		// Create the map (call to map.js)
+        initialize({% if request.mobile %} mobile=true {% endif %});
+
+
+
 		// Create dataset out of django context
 		// Note, data and counts are for last month of points in user alert areas only, not total points
 		var data = [ 

@@ -96,13 +96,138 @@ var incidentData = new L.MarkerClusterGroup({
     openPopup;
 
 
+function initializeGeoJSON() {
+    // Police data
+    L.geoJson(policeData, {
+        pointToLayer: function(feature, latlng) {
+            heatMap.addLatLng(latlng);
+
+            return L.marker(latlng, {
+                icon: icons["officialIcon"]
+            });
+        },
+        onEachFeature: function(feature, layer) {
+            var time = feature.properties.ACC_TIME;
+            if (time) {
+                hours = parseInt(time.substring(0, 2));
+                time = ", " + hours % 12 + ":" + time.substring(2) + (Math.floor(hours / 12) ? " p.m." : " a.m.")
+            } else {
+                time = '';
+            };
+            var date = feature.properties.ACC_DATE.split("/");
+            date = getMonthFromInt(parseInt(date[1])).substring(0, 3) + '. ' + parseInt(date[2]) + ', ' + date[0] + time; // Month dd, YYYY, hh:mm a.m.
+
+            layer.bindPopup('<strong>Type: </strong>Vehicle collision (' + feature.properties.ACC_TYPE.toLowerCase() + ')<br>' + '<strong>Data source: </strong>Victoria Police Dept. ' + '<a href="#" data-toggle="collapse" data-target="#police-metadata"><small>(metadata)</small></a><br>' + '<div id="police-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>Data available for the City of Victoria from 2008 to 2012.</small>' + '</div>' + '<strong>Date: </strong>' + date);
+        }
+    }).addTo(incidentData);
+
+    // ICBC Data
+    L.geoJson(icbcData, {
+        pointToLayer: function(feature, latlng) {
+            heatMap.addLatLng(latlng);
+
+            return L.marker(latlng, {
+                icon: icons["officialIcon"]
+            });
+        },
+        onEachFeature: function(feature, layer) {
+            var date = toTitleCase(feature.properties.Month).substring(0, 3) + ". " + feature.properties.Year;
+            layer.bindPopup('<strong>Data source: </strong>ICBC ' + '<a href="#" data-toggle="collapse" data-target="#icbc-metadata"><small>(metadata)</small></a><br>' + '<div id="icbc-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>Data available for British Columbia from 2009 to 2013. Incident characteristics not provided.</small>' + '</div>' + '<strong>Date: </strong>' + date);
+        }
+    }).addTo(incidentData);
+};
+
+
+function addControls(mobile) {
+    /* LAYER CONTROL */
+    layerControl = L.control.layers([], [], {
+        collapsed: mobile
+    });
+    addLegend();
+    layerControl.addTo(map);
+
+    /* GEOCODING SEARCH BAR CONTROL */
+    var geocoder = L.Control.geocoder({
+        position: "topleft"
+    }).addTo(map);
+
+    var geocodeMarker;
+    geocoder.markGeocode = function(result) {
+        map.fitBounds(result.bbox);
+
+        if (geocodeMarker) {
+            map.removeLayer(geocodeMarker);
+        }
+
+        geocodeMarker = new L.Marker(result.center, {
+            icon: icons["geocodeIcon"]
+        })
+            .bindPopup(result.name)
+            .addTo(map)
+            .openPopup();
+    };
+
+    /* ADD SCALE BAR */
+    L.control.scale({
+        position: 'bottomright'
+    }).addTo(map);
+
+    function addLegend() {
+        // Add layers
+        // Basemaps
+        // layerControl.addBaseLayer(skobbler, '<i class="fa fa-sun-o"></i> Light map');
+        // layerControl.addBaseLayer(skobblerNight, '<i class="fa fa-moon-o"></i> Dark map');
+
+        layerControl.addOverlay(stravaHM, 'Rider volume' +
+            '   <a data-target="#about-strava" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>' +
+            '<div id=strava-legend class="legend-subtext collapse in">' +
+            '<small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>' +
+            '</div>');
+
+        layerControl.addOverlay(incidentData,
+            'Incident locations<br>'
+
+            + '<div id=incident-legend class="marker-group legend-subtext collapse in">' + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icons["bikeRedIcon"].options.icon + '+' + icons["bikeRedIcon"].options.color + '.png">' + ' <small>Citizen collision report</small><br>'
+
+            + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["bikeYellowIcon"].options.icon + '+' + icons["bikeYellowIcon"].options.color + '.png"> <small>Citizen near miss report</small><br>'
+
+            + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["hazardIcon"].options.icon + '+' + icons["hazardIcon"].options.color + '.png"> <small>Cyclist hazard</small><br>'
+
+            + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["officialIcon"].options.icon + '+' + icons["officialIcon"].options.color + '.png"> <small>Official collision report</small><br>'
+
+            + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["theftIcon"].options.icon + '+' + icons["theftIcon"].options.color + '.png"> <small>Bike Theft</small>' + '<div class="clearfix"</div></div>'
+        );
+
+        if (!DISABLE_GEOFENCES) {
+            layerControl.addOverlay(alertAreas, 'Alert Areas' +
+                '   <a data-target="#about-alert-areas" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>' +
+                '<div id="alert-areas-legend" class="legend-subtext collapse in">' +
+                '<small class="alert-area-box"></small>' +
+                '</div>'
+            );
+        }
+
+        infrastructureLegendHTML = "Infrastructure<br>" +
+            '<div id="infrastructure-legend" class="legend-subtext collapse">' +
+            '<div class="bikerack"></div><small> Bike rack</small><br>' +
+            '<div class="bikelane solidlane thicklane"></div><small> Protected Bike Lane</small><br>' +
+            '<div class="bikelane solidlane"></div><small> Bike Lane</small><br>' +
+            '<div class="bikelane dotlane"></div><small> Other Cycling Route</small></div>';
+
+        layerControl.addOverlay(infrastructure, infrastructureLegendHTML);
+
+        layerControl.addOverlay(heatMap, 'Incident heatmap<br>' +
+            '<div id="hm-legend" class="legend-subtext collapse">' +
+            '<small class="rainbow-gradient gradient-bar">less <div class="pull-right">more</div></small>' +
+            '</div>');
+    }
+};
+
+
 // Purpose: Create the map with a tile layer and set the map global variable. Initialize geojson datasets, 
 //      add controls, and legend items. Mobile parameter allows for rendering items differently for mobile users.
 function initialize(mobile) {
     mobile = (typeof mobile !== 'undefined' ? mobile : false); //default value of mobile is false
-
-    // Static vector definitions 
-    initializeGeoJSON();
 
     // Map init and default layers 
     map = L.map('map', {
@@ -112,136 +237,8 @@ function initialize(mobile) {
         worldCopyJump: true
     });
 
-    // Add all controls to the map
-    addControls(mobile);
-
     $(document).ready(mapListen);
 
-    function initializeGeoJSON() {
-        // Police data
-        L.geoJson(policeData, {
-            pointToLayer: function(feature, latlng) {
-                heatMap.addLatLng(latlng);
-
-                return L.marker(latlng, {
-                    icon: icons["officialIcon"]
-                });
-            },
-            onEachFeature: function(feature, layer) {
-                var time = feature.properties.ACC_TIME;
-                if (time) {
-                    hours = parseInt(time.substring(0, 2));
-                    time = ", " + hours % 12 + ":" + time.substring(2) + (Math.floor(hours / 12) ? " p.m." : " a.m.")
-                } else {
-                    time = '';
-                };
-                var date = feature.properties.ACC_DATE.split("/");
-                date = getMonthFromInt(parseInt(date[1])).substring(0, 3) + '. ' + parseInt(date[2]) + ', ' + date[0] + time; // Month dd, YYYY, hh:mm a.m.
-
-                layer.bindPopup('<strong>Type: </strong>Vehicle collision (' + feature.properties.ACC_TYPE.toLowerCase() + ')<br>' + '<strong>Data source: </strong>Victoria Police Dept. ' + '<a href="#" data-toggle="collapse" data-target="#police-metadata"><small>(metadata)</small></a><br>' + '<div id="police-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>Data available for the City of Victoria from 2008 to 2012.</small>' + '</div>' + '<strong>Date: </strong>' + date);
-            }
-        }).addTo(incidentData);
-
-        // ICBC Data
-        L.geoJson(icbcData, {
-            pointToLayer: function(feature, latlng) {
-                heatMap.addLatLng(latlng);
-
-                return L.marker(latlng, {
-                    icon: icons["officialIcon"]
-                });
-            },
-            onEachFeature: function(feature, layer) {
-                var date = toTitleCase(feature.properties.Month).substring(0, 3) + ". " + feature.properties.Year;
-                layer.bindPopup('<strong>Data source: </strong>ICBC ' + '<a href="#" data-toggle="collapse" data-target="#icbc-metadata"><small>(metadata)</small></a><br>' + '<div id="icbc-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>Data available for British Columbia from 2009 to 2013. Incident characteristics not provided.</small>' + '</div>' + '<strong>Date: </strong>' + date);
-            }
-        }).addTo(incidentData);
-    };
-
-    function addControls(mobile) {
-        /* LAYER CONTROL */
-        layerControl = L.control.layers([], [], {
-            collapsed: mobile
-        });
-        addLegend();
-        layerControl.addTo(map);
-
-        /* GEOCODING SEARCH BAR CONTROL */
-        var geocoder = L.Control.geocoder({
-            position: "topleft"
-        }).addTo(map);
-
-        var geocodeMarker;
-        geocoder.markGeocode = function(result) {
-            map.fitBounds(result.bbox);
-
-            if (geocodeMarker) {
-                map.removeLayer(geocodeMarker);
-            }
-
-            geocodeMarker = new L.Marker(result.center, {
-                icon: icons["geocodeIcon"]
-            })
-                .bindPopup(result.name)
-                .addTo(map)
-                .openPopup();
-        };
-
-        /* ADD SCALE BAR */
-        L.control.scale({
-            position: 'bottomright'
-        }).addTo(map);
-
-        function addLegend() {
-            // Add layers
-            // Basemaps
-            // layerControl.addBaseLayer(skobbler, '<i class="fa fa-sun-o"></i> Light map');
-            // layerControl.addBaseLayer(skobblerNight, '<i class="fa fa-moon-o"></i> Dark map');
-
-            layerControl.addOverlay(stravaHM, 'Rider volume' +
-                '   <a data-target="#about-strava" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>' +
-                '<div id=strava-legend class="legend-subtext collapse in">' +
-                '<small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>' +
-                '</div>');
-
-            layerControl.addOverlay(incidentData,
-                'Incident locations<br>'
-
-                + '<div id=incident-legend class="marker-group legend-subtext collapse in">' + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icons["bikeRedIcon"].options.icon + '+' + icons["bikeRedIcon"].options.color + '.png">' + ' <small>Citizen collision report</small><br>'
-
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["bikeYellowIcon"].options.icon + '+' + icons["bikeYellowIcon"].options.color + '.png"> <small>Citizen near miss report</small><br>'
-
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["hazardIcon"].options.icon + '+' + icons["hazardIcon"].options.color + '.png"> <small>Cyclist hazard</small><br>'
-
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["officialIcon"].options.icon + '+' + icons["officialIcon"].options.color + '.png"> <small>Official collision report</small><br>'
-
-                + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["theftIcon"].options.icon + '+' + icons["theftIcon"].options.color + '.png"> <small>Bike Theft</small>' + '<div class="clearfix"</div></div>'
-            );
-
-            if (!DISABLE_GEOFENCES) {
-                layerControl.addOverlay(alertAreas, 'Alert Areas' +
-                    '   <a data-target="#about-alert-areas" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>' +
-                    '<div id="alert-areas-legend" class="legend-subtext collapse in">' +
-                    '<small class="alert-area-box"></small>' +
-                    '</div>'
-                );
-            }
-
-            infrastructureLegendHTML = "Infrastructure<br>" +
-                '<div id="infrastructure-legend" class="legend-subtext collapse">' +
-                '<div class="bikerack"></div><small> Bike rack</small><br>' +
-                '<div class="bikelane solidlane thicklane"></div><small> Protected Bike Lane</small><br>' +
-                '<div class="bikelane solidlane"></div><small> Bike Lane</small><br>' +
-                '<div class="bikelane dotlane"></div><small> Other Cycling Route</small></div>';
-
-            layerControl.addOverlay(infrastructure, infrastructureLegendHTML);
-
-            layerControl.addOverlay(heatMap, 'Incident heatmap<br>' +
-                '<div id="hm-legend" class="legend-subtext collapse">' +
-                '<small class="rainbow-gradient gradient-bar">less <div class="pull-right">more</div></small>' +
-                '</div>');
-        }
-    };
 
     function mapListen() {
         map.on('popupopen', function(e) {

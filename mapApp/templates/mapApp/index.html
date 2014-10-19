@@ -148,7 +148,9 @@
 
 
         // Create the map (call to map.js)
+        initializeGeoJSON();
         initialize({% if request.mobile %} mobile=true {% endif %});
+        addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
 
         // Set the appropriate map extend and zoom
         setView({% if zoom %} {{ lat }}, {{ lng }}, {{ zoom}} {% endif %});
