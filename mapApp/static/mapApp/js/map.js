@@ -109,7 +109,7 @@ function initialize(mobile) {
         center: [48, -100],
         zoom: 4,
         layers: [skobbler, stravaHM, incidentData, alertAreas],
-        // worldCopyJump: true
+        worldCopyJump: true
     });
 
     // Add all controls to the map

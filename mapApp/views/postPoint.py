@@ -1,8 +1,9 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 
 from django.contrib.gis.geos import GEOSGeometry
+import json
 from django.contrib import messages
 
 # Decorators
@@ -20,7 +21,6 @@ from mapApp.forms.theft import TheftForm
 
 from mapApp.views import alertUsers, indexContext
 
-
 @require_POST
 def postIncident(request):
 	incidentForm = IncidentForm(request.POST)
@@ -28,7 +28,7 @@ def postIncident(request):
 	
 	# Convert coords to valid geometry
 	try:
-		incidentForm.data['geom'] = GEOSGeometry(incidentForm.data['geom'])
+		incidentForm.data['geom'] = normalizeGeometry(incidentForm.data['geom'])
 	except(ValueError):
 		messages.error(request, '<strong>Error</strong><br>No point was selected for this type of report.')
 		return HttpResponseRedirect(reverse('mapApp:index')) 
@@ -55,7 +55,7 @@ def postHazard(request):
 	
 	# Convert coords to valid geometry
 	try :
-		hazardForm.data['geom'] = GEOSGeometry(hazardForm.data['geom'])
+		hazardForm.data['geom'] = normalizeGeometry(hazardForm.data['geom'])
 	except(ValueError):
 		messages.error(request, '<strong>Error</strong><br>No point was selected for this type of report.')
 		return HttpResponseRedirect(reverse('mapApp:index')) 
@@ -83,7 +83,7 @@ def postTheft(request):
 	
 	# Convert coords to valid geometry
 	try:
-		theftForm.data['geom'] = GEOSGeometry(theftForm.data['geom'])
+		theftForm.data['geom'] = normalizeGeometry(theftForm.data['geom'])
 	except(ValueError):
 		messages.error(request, '<strong>Error</strong><br>No point was selected for this type of report.')
 		return HttpResponseRedirect(reverse('mapApp:index')) 
@@ -103,3 +103,15 @@ def postTheft(request):
 
 	else: # Show form errors 
 		return render(request, 'mapApp/index.html', indexContext(request, theftForm=theftForm))
+
+# Convert text string to GEOS Geometry object and correct x y coordinates if out range (-180, 180]
+def normalizeGeometry(geom):
+	geom = json.loads(geom)
+	print geom
+	for i, c in enumerate(geom['coordinates']):
+		if c <= -180:
+			geom['coordinates'][i] = 180 + (c % -180)
+		elif c > 180:
+			geom['coordinates'][i] = -180 + (c % 180)
+	print geom
+	return GEOSGeometry(json.dumps(geom))
