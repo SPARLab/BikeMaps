@@ -107,9 +107,12 @@ def postTheft(request):
 
 # Convert text string to GEOS Geometry object and correct x y coordinates if out range (-180, 180]
 def normalizeGeometry(geom):
+	# Convert string GEOSGeometry object to python dict
 	geom = json.loads(geom)
 
+	# Normalize to range (-180, 180] using saw tooth function
 	for i, c in enumerate(geom['coordinates']):
-		geom['coordinates'][i] = (c+180 - (math.floor((c+180)/360))) - 180
+		geom['coordinates'][i] = (c+180 - ( math.floor( (c+180)/360 ) )*360) - 180
 	
+	# Encode and return GEOSGeometry object
 	return GEOSGeometry(json.dumps(geom))
