@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 from django.contrib.gis.geos import GEOSGeometry
 import json
+import math
 from django.contrib import messages
 
 # Decorators
@@ -107,11 +108,8 @@ def postTheft(request):
 # Convert text string to GEOS Geometry object and correct x y coordinates if out range (-180, 180]
 def normalizeGeometry(geom):
 	geom = json.loads(geom)
-	print geom
+
 	for i, c in enumerate(geom['coordinates']):
-		if c <= -180:
-			geom['coordinates'][i] = 180 + (c % -180)
-		elif c > 180:
-			geom['coordinates'][i] = -180 + (c % 180)
-	print geom
+		geom['coordinates'][i] = (c+180 - (math.floor((c+180)/360))) - 180
+	
 	return GEOSGeometry(json.dumps(geom))
