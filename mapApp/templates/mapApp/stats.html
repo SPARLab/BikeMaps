@@ -44,7 +44,7 @@
 
 	<style type="text/css">
 		#map { 
-			height: 260px; 
+			height: 100%;
 			margin-top: 0px;
 		}
 
@@ -53,20 +53,27 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-xs-12">
+			<div class="col-xs-12" style="height: 400px">
 				<!-- Map of one month of reports -->
 				<div id="map"></div>
 			</div>
 		</div>
-		<div class="clearfix visibile-xs"></div>
+		<div class-"row">	
 		<!-- Bar graph of Alert area points by type -->
 		<!-- See http://bost.ocks.org/mike/bar/ for bar chart tutorials -->
-		<div class="row">
-			<div class="col-xs-7">
+			<div class="col-xs-6">
 				<div class="panel panel-primary">
-				  <div class="panel-heading">This month's reports</div>
+				  <div class="panel-heading">Monthly totals</div>
 				  <div class="panel-body">
 					<svg id="barchart" width='100%' height='100%'></svg>
+				  </div>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="panel panel-primary">
+				  <div class="panel-heading">Trends</div>
+				  <div class="panel-body">
+				  	<!-- Different chart -->
 				  </div>
 				</div>
 			</div>
@@ -79,6 +86,29 @@
 		// Create the map (call to map.js)
         initialize({% if request.mobile %} mobile=true {% endif %});
 
+        // {% for incident in recentCollisions %}
+        //     getPoint( {{ incident.latlngList }}, "{{incident.incident_type}}", {{ incident.pk }}, 
+        //         '<strong>Type:</strong> {{ incident.incident }}<br>'
+        //         + '<strong>{% if incident.incident_type != "Fall" %}Incident with'
+        //         + '{% else %}Due to{% endif %}:</strong> {{ incident.incident_with }}<br>'
+        //         + '<strong>Date:</strong> {{ incident.incident_date }}'
+        //     );
+        // {% endfor %}
+
+        // // Load user hazards from the database
+        // {% for hazard in recentHazards %}
+        //     getPoint( {{ hazard.latlngList }}, "Hazard", {{ hazard.pk }},
+        //         '<strong>Hazard type:</strong> {{ hazard.hazard }}<br>'
+        //         + '<strong>Date:</strong> {{ hazard.hazard_date }}'
+        //     );
+        // {% endfor %}
+
+        // {% for theft in recentThefts %}
+        //     getPoint( {{ theft.latlngList }}, "Theft", {{ theft.pk }},
+        //         '<strong>Theft type:</strong> {{ theft.theft }}<br>'
+        //         + '<strong>Date:</strong> {{ theft.theft_date }}'
+        //         );
+        // {% endfor %}
 
 
 		// Create dataset out of django context
