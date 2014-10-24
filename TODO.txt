@@ -10,14 +10,13 @@
 * Request https admin page maps
 * FAQ on about
 * About spar people on about page
-* Easy way to add points from other sources
+* Easy way to add points from other sources (Leaflet AJAX?)
 * Broken modal popups on some browsers
 * Bigger reporting buttons
 
 ###LOWER PRIORITY
-* Expose hazards model as a WFS service
-* Make API to allow developer access to bikemaps data
-* Use Seth's API to send and receive data from seeclickfix
+* Expose hazards model as a WFS service (azgs-leaflet? Make WFS via QGIS and add to leaflet?)
+* Make API to allow developer access to bikemaps data (WFS again??)
 * User login cookies to prevent having to sign in every time
 * opt in for emails (double opt in if possible)
 * add bikelanes from OCM
