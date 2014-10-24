@@ -83,41 +83,75 @@
 	</div>
 
 	<script>
+	var collisionColor = "#" + icons["bikeRedIcon"].options.color,
+		nearmissColor = "#" + icons["bikeYellowIcon"].options.color,
+		hazardColor = "#" + icons["hazardIcon"].options.color,
+		theftColor = "#" + icons["theftIcon"].options.color
+
+	function setCircleMarker(latlng, typeColor, popupText) {
+    	L.circleMarker(latlng, {
+        	color: "#000",
+        	weight: 2,
+        	fillColor: typeColor,
+        	fillOpacity: 0.8,
+        }).setRadius(3).addTo(map).bindPopup(popupText);
+	    heatMap.addLatLng(latlng);
+	};
+
 		// Create the map (call to map.js)
         initialize({% if request.mobile %} mobile=true {% endif %});
 
-        // {% for incident in recentCollisions %}
-        //     getPoint( {{ incident.latlngList }}, "{{incident.incident_type}}", {{ incident.pk }}, 
-        //         '<strong>Type:</strong> {{ incident.incident }}<br>'
-        //         + '<strong>{% if incident.incident_type != "Fall" %}Incident with'
-        //         + '{% else %}Due to{% endif %}:</strong> {{ incident.incident_with }}<br>'
-        //         + '<strong>Date:</strong> {{ incident.incident_date }}'
-        //     );
-        // {% endfor %}
+        // Load user alert areas from the database
+        var areasLatLngList = [];
+        {% for polygon in geofences %}
+            areasLatLngList.push({{ polygon.latlngList }});
+            getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} ); 
+        {% endfor %}
 
-        // // Load user hazards from the database
-        // {% for hazard in recentHazards %}
-        //     getPoint( {{ hazard.latlngList }}, "Hazard", {{ hazard.pk }},
-        //         '<strong>Hazard type:</strong> {{ hazard.hazard }}<br>'
-        //         + '<strong>Date:</strong> {{ hazard.hazard_date }}'
-        //     );
-        // {% endfor %}
+   		// Fit map extent to alert areas boundary
+        map.fitBounds(L.latLngBounds(areasLatLngList));
 
-        // {% for theft in recentThefts %}
-        //     getPoint( {{ theft.latlngList }}, "Theft", {{ theft.pk }},
-        //         '<strong>Theft type:</strong> {{ theft.theft }}<br>'
-        //         + '<strong>Date:</strong> {{ theft.theft_date }}'
-        //         );
-        // {% endfor %}
+        // Load all point data
+        {% for theft in recentThefts %}
+            setCircleMarker({{theft.latlngList}}, theftColor,
+            	'<strong>Theft type:</strong> {{ theft.theft }}<br>'
+            	+ '<strong>Date:</strong> {{ theft.theft_date }}'
+            );
+        {% endfor %}
+
+        {% for hazard in recentHazards %}
+            setCircleMarker({{hazard.latlngList}}, hazardColor,
+                '<strong>Hazard type:</strong> {{ hazard.hazard }}<br>'
+                + '<strong>Date:</strong> {{ hazard.hazard_date }}'
+            );
+        {% endfor %}
+
+        {% for collision in recentCollisions %}
+            setCircleMarker({{collision.latlngList}}, collisionColor, 
+                '<strong>Type:</strong> {{ incident.incident }}<br>'
+                + '<strong>{% if incident.incident_type != "Fall" %}Incident with'
+                + '{% else %}Due to{% endif %}:</strong> {{ incident.incident_with }}<br>'
+                + '<strong>Date:</strong> {{ incident.incident_date }}'
+            );
+        {% endfor %}
+
+        {% for nearmiss in recentNearmisses %}
+	        setCircleMaker({{nearmiss.latlngList}}, nearmissColor, 
+                '<strong>Type:</strong> {{ incident.incident }}<br>'
+                + '<strong>{% if incident.incident_type != "Fall" %}Incident with'
+                + '{% else %}Due to{% endif %}:</strong> {{ incident.incident_with }}<br>'
+                + '<strong>Date:</strong> {{ incident.incident_date }}'
+            );
+        {% endfor %}
 
 
 		// Create dataset out of django context
 		// Note, data and counts are for last month of points in user alert areas only, not total points
 		var data = [ 
-			{ type: "collision", 	value: {{ collisionsCount }}, 	color: "#" + icons["bikeRedIcon"].options.color }, 
-			{ type: "nearmiss", 	value: {{ nearmissesCount }}, 	color: "#" + icons["bikeYellowIcon"].options.color }, 
-			{ type: "hazard", 		value: {{ hazardsCount }}, 		color: "#" + icons["hazardIcon"].options.color }, 
-			{ type: "theft", 		value: {{ theftsCount }}, 		color: "#" + icons["theftIcon"].options.color }
+			{ type: "collision", 	value: {{ collisionsCount }}, 	color: collisionColor }, 
+			{ type: "nearmiss", 	value: {{ nearmissesCount }}, 	color: nearmissColor }, 
+			{ type: "hazard", 		value: {{ hazardsCount }}, 		color: hazardColor }, 
+			{ type: "theft", 		value: {{ theftsCount }}, 		color: theftColor }
 		];
 		initializeBarChart(data);
 

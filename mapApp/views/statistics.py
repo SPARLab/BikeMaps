@@ -19,12 +19,13 @@ def stats(request):
 	monthPast = now - timedelta(1*365/12)
 
 	# Get the user's alertable points in the last month
-	recentIncidents = IncidentNotification.objects.filter(user=user.id).filter(date__range=[monthPast, now])
-	recentCollisions = recentIncidents.filter(action=IncidentNotification.INCIDENT)
-	recentNearmisses = recentIncidents.filter(action=IncidentNotification.NEARMISS)
+	recentIncidents = Incident.objects.filter(incidentNotification__user=user.id).filter(date__range=[monthPast, now])
+	recentCollisions = recentIncidents.filter(incidentNotification__action=IncidentNotification.INCIDENT)
+	recentNearmisses = recentIncidents.filter(incidentNotification__action=IncidentNotification.NEARMISS)
 
-	recentHazards = HazardNotification.objects.filter(user=user.id).filter(date__range=[monthPast, now])
-	recentThefts = TheftNotification.objects.filter(user=user.id).filter(date__range=[monthPast, now])
+	recentHazards = Hazard.objects.filter(hazardNotification__user=user.id).filter(date__range=[monthPast, now])
+	recentThefts = Theft.objects.filter(theftNotification__user=user.id).filter(date__range=[monthPast, now])
+
 
 	context = {
 		'user': user,
@@ -32,9 +33,7 @@ def stats(request):
 		'date_today': now,
 		'date_lastmonth': monthPast,
 	
-		# 'recentIncidents': Incident.objects.filter(date__range=[monthPast, now]),
-		# 'recentHazards': Hazard.objects.filter(date__range=[monthPast, now]),
-		# 'recentThefts': Theft.objects.filter(date__range=[monthPast, now]),
+		"geofences": AlertArea.objects.filter(user=user.id),
 
 		'recentCollisions': recentCollisions,
 		'recentNearmisses': recentNearmisses,
