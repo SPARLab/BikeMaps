@@ -136,7 +136,7 @@
         {% endfor %}
 
         {% for nearmiss in recentNearmisses %}
-	        setCircleMaker({{nearmiss.latlngList}}, nearmissColor, 
+	        setCircleMarker({{nearmiss.latlngList}}, nearmissColor, 
                 '<strong>Type:</strong> {{ incident.incident }}<br>'
                 + '<strong>{% if incident.incident_type != "Fall" %}Incident with'
                 + '{% else %}Due to{% endif %}:</strong> {{ incident.incident_with }}<br>'
