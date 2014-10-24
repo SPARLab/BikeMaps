@@ -71,7 +71,7 @@
 			</div>
 			<div class="col-xs-6">
 				<div class="panel panel-primary">
-				  <div class="panel-heading">Trends</div>
+				  <div class="panel-heading">Trend graph</div>
 				  <div class="panel-body">
 				  	<!-- Different chart -->
 				  </div>
@@ -91,15 +91,16 @@
 	function setCircleMarker(latlng, typeColor, popupText) {
     	L.circleMarker(latlng, {
         	color: "#000",
-        	weight: 2,
+        	weight: 1,
         	fillColor: typeColor,
-        	fillOpacity: 0.8,
+        	fillOpacity: 1,
         }).setRadius(3).addTo(map).bindPopup(popupText);
 	    heatMap.addLatLng(latlng);
 	};
 
 		// Create the map (call to map.js)
         initialize({% if request.mobile %} mobile=true {% endif %});
+        map.options.scrollWheelZoom = false;
 
         // Load user alert areas from the database
         var areasLatLngList = [];
@@ -111,6 +112,7 @@
    		// Fit map extent to alert areas boundary
         map.fitBounds(L.latLngBounds(areasLatLngList));
 
+
         // Load all point data
         {% for theft in recentThefts %}
             setCircleMarker({{theft.latlngList}}, theftColor,
@@ -118,14 +120,12 @@
             	+ '<strong>Date:</strong> {{ theft.theft_date }}'
             );
         {% endfor %}
-
         {% for hazard in recentHazards %}
             setCircleMarker({{hazard.latlngList}}, hazardColor,
                 '<strong>Hazard type:</strong> {{ hazard.hazard }}<br>'
                 + '<strong>Date:</strong> {{ hazard.hazard_date }}'
             );
         {% endfor %}
-
         {% for collision in recentCollisions %}
             setCircleMarker({{collision.latlngList}}, collisionColor, 
                 '<strong>Type:</strong> {{ incident.incident }}<br>'
@@ -134,7 +134,6 @@
                 + '<strong>Date:</strong> {{ incident.incident_date }}'
             );
         {% endfor %}
-
         {% for nearmiss in recentNearmisses %}
 	        setCircleMarker({{nearmiss.latlngList}}, nearmissColor, 
                 '<strong>Type:</strong> {{ incident.incident }}<br>'
@@ -155,6 +154,13 @@
 		];
 		initializeBarChart(data);
 
+		// Highlight barchart on mouseover along with corresponding points on map
+		$("#barchart rect").mouseenter(function(){
+			$(this).attr("stroke-width", "3"); // show rectangle highlighting
+			// show highlighted points on map
+		}).mouseleave(function(){
+			$(this).attr("stroke-width", "0");
+		});
 	</script>
 
 
