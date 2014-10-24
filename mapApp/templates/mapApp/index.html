@@ -141,11 +141,12 @@
                 );
         {% endfor %}
 
+        
+
         // Load user alert areas from the database
         {% for polygon in geofences %}
             getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} ); 
         {% endfor %}
-
 
         // Create the map (call to map.js)
         initializeGeoJSON();
@@ -154,6 +155,19 @@
 
         // Set the appropriate map extend and zoom
         setView({% if zoom %} {{ lat }}, {{ lng }}, {{ zoom}} {% endif %});
+
+        // Display number of points in user dropdown if admin is logged in
+        {% if request.user.is_administrator %}
+        $(".dropdown-menu ").append('<li role="presentation" class="divider"></li>');
+        $(".dropdown-menu ").append('<li role="presentation" class="dropdown-header">Points submitted</li>');
+        $(".dropdown-menu ").append('<li><a href="#"><small>Incidents: {{incidents|length}}</small></a></li>');
+        $(".dropdown-menu ").append('<li><a href="#"><small>Hazards: {{hazards|length}}</small></a></li>');
+        $(".dropdown-menu ").append('<li><a href="#"><small>Thefts: {{thefts|length}}</small></a></li>');
+        
+        var total = {{thefts|length}}+{{hazards|length}}+{{incidents|length}}
+        $(".dropdown-menu ").append('<li><a href="#"><small>Total: '+total+'</small></a></li>');
+        {% endif %}
+
     </script>
 
     <!-- Add modal help html -->
