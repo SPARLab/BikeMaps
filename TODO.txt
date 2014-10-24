@@ -1,6 +1,7 @@
 #TO DO
 
 ###HIGHER PRIORITY
+* Display more data in point popups
 * Email alerts monthly
 * Hazard deletion
 * Cleanup index.html code
@@ -11,6 +12,7 @@
 * About spar people on about page
 * Easy way to add points from other sources
 * Broken modal popups on some browsers
+* Bigger reporting buttons
 
 ###LOWER PRIORITY
 * Expose hazards model as a WFS service
