@@ -525,7 +525,11 @@ function makeNiceDate(d) {
     var d_month = getMonthFromInt(dt.getMonth() + 1).slice(0, 3); //Months are zero based
     var d_year = dt.getFullYear();
     var d_time = dt.toLocaleTimeString().split(":");
-    d_time = d_time[0] + ":" + d_time[1] + d_time[2].split(" ")[1];
+    var hour = d_time[0];
+    var minute = d_time[1];
+    var aft = d_time[2].split(" ")[1];
+
+    d_time = hour + ":" + minute + aft.toLowerCase();
 
     return d_month + ". " + d_date + ", " + d_year + ", " + d_time;
 }
