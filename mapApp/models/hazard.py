@@ -29,6 +29,7 @@ class Hazard(models.Model):
                 ('Parked car', 'Parked car'),
                 ('Traffic flow', 'Traffic flow'),
                 ('Driver behaviour', 'Driver behaviour'),
+                ('Cyclist behaviour', 'Cyclist behaviour'),
                 ('Pedestrian behaviour', 'Pedestrian behaviour'),
                 ('Congestion', 'Congestion'),
                 ('Broken glass', 'Broken glass on road'),
