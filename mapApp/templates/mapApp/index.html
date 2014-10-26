@@ -144,14 +144,15 @@
 
         // Display number of points in user dropdown if admin is logged in
         {% if request.user.is_administrator %}
-            $(".dropdown-menu ").append('<li role="presentation" class="divider"></li>');
-            $(".dropdown-menu ").append('<li role="presentation" class="dropdown-header">Points submitted</li>');
-            $(".dropdown-menu ").append('<li><a href="#"><small>Incidents: {{incidents|length}}</small></a></li>');
-            $(".dropdown-menu ").append('<li><a href="#"><small>Hazards: {{hazards|length}}</small></a></li>');
-            $(".dropdown-menu ").append('<li><a href="#"><small>Thefts: {{thefts|length}}</small></a></li>');
+            $(".user-menu").append('<li role="presentation" class="divider"></li>');
+            $(".user-menu").append('<li role="presentation" class="dropdown-header">Points submitted</li>');
+            $(".user-menu").append('<li><a href="#"><small>Collisions: {{collisions|length}}</small></a></li>');
+            $(".user-menu").append('<li><a href="#"><small>Near misses: {{nearmisses|length}}</small></a></li>');
+            $(".user-menu").append('<li><a href="#"><small>Hazards: {{hazards|length}}</small></a></li>');
+            $(".user-menu").append('<li><a href="#"><small>Thefts: {{thefts|length}}</small></a></li>');
             
             var total = {{thefts|length}}+{{hazards|length}}+{{incidents|length}}
-            $(".dropdown-menu ").append('<li><a href="#"><small>Total: '+total+'</small></a></li>');
+            $(".user-menu").append('<li><a href="#"><small>Total: '+total+'</small></a></li>');
         {% endif %}
 
     </script>
