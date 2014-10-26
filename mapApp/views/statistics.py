@@ -11,12 +11,13 @@ from django.contrib.auth.models import User
 from mapApp.models.alert_notification import IncidentNotification, HazardNotification, TheftNotification
 
 from datetime import datetime, timedelta
+from django.utils import timezone
 
 
 def stats(request):
 	user = request.user
 
-	now = datetime.now()
+	now = timezone.now()
 	monthPast = now - timedelta(1*365/12)
 
 	# Get the user's alertable points in the last month
@@ -29,11 +30,22 @@ def stats(request):
 
 	roi = AlertArea.objects.filter(user=user.id)
 
+	# recent sets = points that intersect an roi as defined by user and are reported in last month
+	recentCollisions = Incident.objects.none()
+	recentNearmisses = Incident.objects.none()
+	recentHazards = Hazard.objects.none()
+	recentThefts = Theft.objects.none()
+	# Find intersecting points
 	for g in roi:
-		oldCollisions = collisions.exclude(geom__intersects=g.geom)
-		oldNearmisses = nearmisses.exclude(geom__intersects=g.geom)
-		oldHazards = hazards.exclude(geom__intersects=g.geom)
-		oldThefts = thefts.exclude(geom__intersects=g.geom)
+		recentCollisions = recentCollisions | collisions.filter(geom__intersects=g.geom)
+		recentNearmisses = recentNearmisses | nearmisses.filter(geom__intersects=g.geom)
+		recentHazards = recentHazards | hazards.filter(geom__intersects=g.geom)
+		recentThefts = recentThefts | thefts.filter(geom__intersects=g.geom)
+	# Filter by date
+	recentCollisions = recentCollisions.filter(date__range=[monthPast, now])
+	recentNearmisses = recentNearmisses.filter(date__range=[monthPast, now])
+	recentHazards = recentHazards.filter(date__range=[monthPast, now])
+	recentThefts = recentThefts.filter(date__range=[monthPast, now])
 
 	context = {
 		'user': user,
@@ -43,15 +55,15 @@ def stats(request):
 	
 		"geofences": roi,
 
-		'oldCollisions': oldCollisions.exclude(date__range=[monthPast, now]),
-		'oldNearmisses': oldNearmisses.exclude(date__range=[monthPast, now]),
-		'oldHazards': oldHazards.exclude(date__range=[monthPast, now]),
-		'oldThefts': oldThefts.exclude(date__range=[monthPast, now]),
+		'recentCollisions': recentCollisions,
+		'recentNearmisses': recentNearmisses,
+		'recentHazards': recentHazards,
+		'recentThefts': recentThefts,
 
-		'recentCollisions': collisions.exclude(pk__in=oldCollisions),
-		'recentNearmisses': nearmisses.exclude(pk__in=oldNearmisses),
-		'recentHazards': hazards.exclude(pk__in=oldHazards),
-		'recentThefts': thefts.exclude(pk__in=oldThefts),
+		'otherCollisions': collisions.exclude(pk__in=recentCollisions),
+		'otherNearmisses': nearmisses.exclude(pk__in=recentNearmisses),
+		'otherHazards': hazards.exclude(pk__in=recentHazards),
+		'otherThefts': thefts.exclude(pk__in=recentThefts),
 
 	}
 

@@ -13,6 +13,7 @@
 * Easy way to add points from other sources (Leaflet AJAX?)
 * Broken modal popups on some browsers
 * Bigger reporting buttons
+* Fix naive datetime filtering in statistics.py view
 
 ###LOWER PRIORITY
 * Expose hazards model as a WFS service (azgs-leaflet? Make WFS via QGIS and add to leaflet?)

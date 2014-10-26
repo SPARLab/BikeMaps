@@ -94,15 +94,15 @@
         map.fitBounds(L.latLngBounds(areasLatLngList));
 
         // Load all point data
-    	var collisions = geojsonCircleMarker({{ oldCollisions|geojsonfeature|safe }}, "collision").addTo(map);
-    	var nearmisses = geojsonCircleMarker({{ oldNearmisses|geojsonfeature|safe }}, "nearmiss").addTo(map);
-	    var hazards = geojsonCircleMarker({{ oldHazards|geojsonfeature|safe }}, "hazard").addTo(map);
-	    var thefts = geojsonCircleMarker({{ oldThefts|geojsonfeature|safe }}, "theft").addTo(map);
+    	var otherCollisions = geojsonCircleMarker({{ otherCollisions|geojsonfeature|safe }}, "collision").addTo(map);
+    	var otherNearmisses = geojsonCircleMarker({{ otherNearmisses|geojsonfeature|safe }}, "nearmiss").addTo(map);
+	    var otherHazards = geojsonCircleMarker({{ otherHazards|geojsonfeature|safe }}, "hazard").addTo(map);
+	    var otherThefts = geojsonCircleMarker({{ otherThefts|geojsonfeature|safe }}, "theft").addTo(map);
 
-    	collisions = geojsonCircleMarker({{ recentCollisions|geojsonfeature|safe }}, "collision").addTo(map);
-    	nearmisses = geojsonCircleMarker({{ recentNearmisses|geojsonfeature|safe }}, "nearmiss").addTo(map);
-	    hazards = geojsonCircleMarker({{ recentHazards|geojsonfeature|safe }}, "hazard").addTo(map);
-	    thefts = geojsonCircleMarker({{ recentThefts|geojsonfeature|safe }}, "theft").addTo(map);
+    	var recentCollisions = geojsonCircleMarker({{ recentCollisions|geojsonfeature|safe }}, "collision").addTo(map);
+    	var recentNearmisses = geojsonCircleMarker({{ recentNearmisses|geojsonfeature|safe }}, "nearmiss").addTo(map);
+	    var recentHazards = geojsonCircleMarker({{ recentHazards|geojsonfeature|safe }}, "hazard").addTo(map);
+	    var recentThefts = geojsonCircleMarker({{ recentThefts|geojsonfeature|safe }}, "theft").addTo(map);
 
 		// Create dataset out of django context
 		// Note, data and counts are for last month of points in user alert areas only, not total points
@@ -122,13 +122,14 @@
 			
 			// show highlighted points on map
 			var layer = getLayer($(this).attr("type"));
-			layer.setStyle({
+			layer[0].setStyle({
 		        fillColor: '#0ff',
 		        fillOpacity: 1
 		    });
 
 		    if (!L.Browser.ie && !L.Browser.opera) {
-		        layer.bringToFront();
+		        layer[1].bringToFront();
+		        layer[0].bringToFront();
 		    }
 		}).mouseleave(function(){
 			// Unhighlight rect in char
@@ -136,17 +137,17 @@
 
 			// Unhighlight points on map
 			var type = $(this).attr("type");
-			getLayer(type).setStyle({
+			getLayer(type)[0].setStyle({
 				fillColor: getColor(type),
 		        fillOpacity: 0.8
 			});
 		});
 
 		function getLayer(type){
-			if(type == "collision") return collisions;
-			else if(type == "nearmiss") return nearmisses;	
-			else if(type == "hazard") return hazards;	
-			else return thefts;
+			if(type == "collision") return [recentCollisions, otherCollisions]
+			else if(type == "nearmiss") return [recentNearmisses, otherNearmisses];	
+			else if(type == "hazard") return [recentHazards, otherHazards];
+			else return [recentThefts, otherThefts];
 		}
 	</script>
 
