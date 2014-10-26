@@ -35,11 +35,11 @@ def editShape(request):
 		# Edit/Delete each object
 		for pk, newGeom, objType in zip(pks, newGeoms, objTypes):
 			# Get the correct model dataset
-			if objType == 'incident':
+			if objType == 'mapApp.incident':
 				objectSet = Incident.objects.all()
-			elif objType == 'theft':
+			elif objType == 'mapApp.theft':
 				objectSet = Theft.objects.all()
-			elif objType == 'hazard':
+			elif objType == 'mapApp.hazard':
 				objectSet = Hazard.objects.all()
 			elif objType == 'polygon':
 				objectSet = AlertArea.objects.filter(user=request.user)
@@ -61,11 +61,11 @@ def editShape(request):
 				shapeEdited = get_object_or_404(objectSet, pk=pk)
 				
 				# Delete associated notifications
-				if objType == 'incident':
+				if objType == 'mapApp.incident':
 					IncidentNotification.objects.filter(point=shapeEdited).delete()
-				elif objType == 'theft':
+				elif objType == 'mapApp.theft':
 					TheftNotification.objects.filter(point=shapeEdited).delete()
-				elif objType == 'hazard':
+				elif objType == 'mapApp.hazard':
 					HazardNotification.objects.filter(point=shapeEdited).delete()
 
 

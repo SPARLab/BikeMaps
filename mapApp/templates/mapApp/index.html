@@ -1,7 +1,7 @@
 {% extends "mapApp/base.html" %}
 
 <!-- HEAD STUFF -->
-{% load staticfiles crispy_forms_tags %}
+{% load staticfiles crispy_forms_tags geojson_tags %}
 {% block headerCSS %}
     <!-- Load leaflet -->
     <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
@@ -118,8 +118,10 @@
         // Initialize the map
         initialize({% if request.mobile %} mobile=true {% endif %});
 
-        {% load geojson_tags %}
-        // console.log({{ collisions|geojsonfeature:"incident,incident_with,incident_date"|safe }});
+        // Load user alert areas from the database
+        {% for polygon in geofences %}
+            getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} ); 
+        {% endfor %}
 
         // Load user points from the database
         var collisions = geojsonMakiMarker({{ collisions|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "collision");
@@ -132,14 +134,9 @@
         incidentData.addLayer(hazards);
         incidentData.addLayer(thefts);
         
-
-        // Load user alert areas from the database
-        {% for polygon in geofences %}
-            getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} ); 
-        {% endfor %}
-
-        // Create the map (call to map.js)
+        // Add all geojson auxiliary data
         initializeGeoJSON();
+
         addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
 
         // Set the appropriate map extend and zoom
