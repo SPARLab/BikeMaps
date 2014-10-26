@@ -129,7 +129,7 @@
     		},
     	});
     	collisions.addTo(map);
-    	
+
     	var nearmisses = L.geoJson({{ recentNearmisses|geojsonfeature|safe }}, {
     		pointToLayer: function(feature, latlng){
     			return L.circleMarker(latlng, geojsonMarkerOptions("nearmiss"));
@@ -168,8 +168,12 @@
 
 		// Highlight barchart on mouseover along with corresponding points on map
 		$("#barchart rect").mouseenter(function(){
-			$(this).attr("stroke-width", "3"); // show rectangle highlighting
-			var type = $(this).attr("pType");
+			// show rectangle highlighting
+			$(this).attr("stroke-width", "3"); 
+			
+			// show corresponding highlighted points
+			var type = $(this).attr("type");
+			console.log(type);
 			var layer;
 			if(type == "collision") layer = collisions;
 			else if(type == "nearmiss") layer = nearmisses;	
@@ -177,7 +181,8 @@
 			else layer = thefts;	
 			
 			layer.setStyle({
-		        color: '#0ff',
+		        fillColor: '#0ff',
+		        // radius: 5
 		    });
 
 		    if (!L.Browser.ie && !L.Browser.opera) {
@@ -185,7 +190,21 @@
 		    }
 			// show highlighted points on map
 		}).mouseleave(function(){
+			// Unhighlight rect in char
 			$(this).attr("stroke-width", "0");
+
+			// Unhighlight points on map
+			var type = $(this).attr("type");
+			var layer;
+			if(type == "collision") layer = collisions;
+			else if(type == "nearmiss") layer = nearmisses;	
+			else if(type == "hazard") layer = hazards;	
+			else layer = thefts;	
+			
+			layer.setStyle({
+				fillColor: getColor(type),
+		        // radius: 5
+			});
 			
 		});
 	</script>

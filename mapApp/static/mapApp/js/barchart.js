@@ -63,7 +63,7 @@ function initializeBarChart(data) {
     chart.selectAll(".bar")
         .data(data)
         .enter().append("rect")
-        .attr("pType", function(d) {
+        .attr("type", function(d) {
             return d.type;
         })
         .attr("fill", function(d) {
