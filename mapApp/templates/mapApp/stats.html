@@ -83,17 +83,6 @@
 	</div>
 
 	<script>
-		function getColor(t){
-			if (t == "collision")
-				return "#" + icons["bikeRedIcon"].options.color;
-			else if (t == "nearmiss")
-				return "#" + icons["bikeYellowIcon"].options.color;
-			else if (t == "hazard")
-				return "#" + icons["hazardIcon"].options.color;
-			else if (t == "theft")
-				return "#" + icons["theftIcon"].options.color;
-			else return "#333";
-		}
 
 		// Create the map (call to map.js)
         initialize({% if request.mobile %} mobile=true {% endif %});
@@ -108,53 +97,20 @@
    		// Fit map extent to alert areas boundary
         map.fitBounds(L.latLngBounds(areasLatLngList));
 
-
-
-
-        function geojsonMarkerOptions(type){
-        	return {
-			    radius: 3,
-			    fillColor: getColor(type),
-			    color: "#000",
-			    weight: 1,
-			    opacity: 1,
-			    fillOpacity: 0.8
-        	}
-		};
 		{% load geojson_tags %}
+		
         // Load all point data
-    	var collisions = L.geoJson({{ recentCollisions|geojsonfeature|safe }}, {
-    		pointToLayer: function(feature, latlng){
-    			return L.circleMarker(latlng, geojsonMarkerOptions("collision"));
-    		},
-    	});
+    	var collisions = geojsonCircleMarker({{ recentCollisions|geojsonfeature|safe }}, "collision");
     	collisions.addTo(map);
 
-    	var nearmisses = L.geoJson({{ recentNearmisses|geojsonfeature|safe }}, {
-    		pointToLayer: function(feature, latlng){
-    			return L.circleMarker(latlng, geojsonMarkerOptions("nearmiss"));
-    		}
-    	});
+    	var nearmisses = geojsonCircleMarker({{ recentNearmisses|geojsonfeature|safe }}, "nearmiss");
     	nearmisses.addTo(map);
 
-	    var hazards = L.geoJson({{ recentHazards|geojsonfeature|safe }}, {
-    		pointToLayer: function(feature, latlng){
-    			return L.circleMarker(latlng, geojsonMarkerOptions("hazard"));
-    		}
-    	});
+	    var hazards = geojsonCircleMarker({{ recentHazards|geojsonfeature|safe }}, "hazard");
     	hazards.addTo(map);
 
-	    var thefts = L.geoJson({{ recentThefts|geojsonfeature|safe }}, {
-    		pointToLayer: function(feature, latlng){
-    			return L.circleMarker(latlng, geojsonMarkerOptions("theft"));
-    		}
-    	});
+	    var thefts = geojsonCircleMarker({{ recentThefts|geojsonfeature|safe }}, "theft");
     	thefts.addTo(map);
-
-
-
-
-
 
 		// Create dataset out of django context
 		// Note, data and counts are for last month of points in user alert areas only, not total points

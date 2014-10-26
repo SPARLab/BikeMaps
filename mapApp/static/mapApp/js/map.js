@@ -512,3 +512,31 @@ function toTitleCase(s) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
 };
+
+
+function getColor(t) {
+    if (t == "collision")
+        return "#" + icons["bikeRedIcon"].options.color;
+    else if (t == "nearmiss")
+        return "#" + icons["bikeYellowIcon"].options.color;
+    else if (t == "hazard")
+        return "#" + icons["hazardIcon"].options.color;
+    else if (t == "theft")
+        return "#" + icons["theftIcon"].options.color;
+    else return "#333";
+};
+
+function geojsonCircleMarker(data, type) {
+    return L.geoJson(data, {
+        pointToLayer: function(feature, latlng) {
+            return L.circleMarker(latlng, {
+                radius: 3,
+                fillColor: getColor(type),
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            })
+        }
+    });
+};
