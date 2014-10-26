@@ -345,6 +345,7 @@ class Incident(models.Model):
         now = timezone.now()
         return now - datetime.timedelta(weeks=1) <= self.date < now
 
+    @property
     def incident_type(self):
         for (kind, choices) in INCIDENT_CHOICES:
             for c in choices:

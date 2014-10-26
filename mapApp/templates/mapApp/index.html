@@ -115,32 +115,22 @@
         });
         {% endif %}
         
-        
+        // Initialize the map
+        initialize({% if request.mobile %} mobile=true {% endif %});
+
+        {% load geojson_tags %}
+        // console.log({{ collisions|geojsonfeature:"incident,incident_with,incident_date"|safe }});
+
         // Load user points from the database
-        {% for incident in incidents %}
-            getPoint( {{ incident.latlngList }}, "{{incident.incident_type}}", {{ incident.pk }}, 
-                '<strong>Type:</strong> {{ incident.incident }}<br>'
-                + '<strong>{% if incident.incident_type != "Fall" %}Incident with'
-                + '{% else %}Due to{% endif %}:</strong> {{ incident.incident_with }}<br>'
-                + '<strong>Date:</strong> {{ incident.incident_date }}'
-            );
-        {% endfor %}
-
-        // Load user hazards from the database
-        {% for hazard in hazards %}
-            getPoint( {{ hazard.latlngList }}, "Hazard", {{ hazard.pk }},
-                '<strong>Hazard type:</strong> {{ hazard.hazard }}<br>'
-                + '<strong>Date:</strong> {{ hazard.hazard_date }}'
-            );
-        {% endfor %}
-
-        {% for theft in thefts %}
-            getPoint( {{ theft.latlngList }}, "Theft", {{ theft.pk }},
-                '<strong>Theft type:</strong> {{ theft.theft }}<br>'
-                + '<strong>Date:</strong> {{ theft.theft_date }}'
-                );
-        {% endfor %}
-
+        var collisions = geojsonMakiMarker({{ collisions|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "collision");
+        var nearmisses = geojsonMakiMarker({{ nearmisses|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "nearmiss");
+        var hazards = geojsonMakiMarker({{ hazards|geojsonfeature:"hazard,hazard_date"|safe }}, "hazard");
+        var thefts = geojsonMakiMarker({{ thefts|geojsonfeature:"theft,theft_date"|safe }}, "theft");
+        
+        incidentData.addLayer(collisions);
+        incidentData.addLayer(nearmisses);
+        incidentData.addLayer(hazards);
+        incidentData.addLayer(thefts);
         
 
         // Load user alert areas from the database
@@ -150,7 +140,6 @@
 
         // Create the map (call to map.js)
         initializeGeoJSON();
-        initialize({% if request.mobile %} mobile=true {% endif %});
         addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
 
         // Set the appropriate map extend and zoom
@@ -158,14 +147,14 @@
 
         // Display number of points in user dropdown if admin is logged in
         {% if request.user.is_administrator %}
-        $(".dropdown-menu ").append('<li role="presentation" class="divider"></li>');
-        $(".dropdown-menu ").append('<li role="presentation" class="dropdown-header">Points submitted</li>');
-        $(".dropdown-menu ").append('<li><a href="#"><small>Incidents: {{incidents|length}}</small></a></li>');
-        $(".dropdown-menu ").append('<li><a href="#"><small>Hazards: {{hazards|length}}</small></a></li>');
-        $(".dropdown-menu ").append('<li><a href="#"><small>Thefts: {{thefts|length}}</small></a></li>');
-        
-        var total = {{thefts|length}}+{{hazards|length}}+{{incidents|length}}
-        $(".dropdown-menu ").append('<li><a href="#"><small>Total: '+total+'</small></a></li>');
+            $(".dropdown-menu ").append('<li role="presentation" class="divider"></li>');
+            $(".dropdown-menu ").append('<li role="presentation" class="dropdown-header">Points submitted</li>');
+            $(".dropdown-menu ").append('<li><a href="#"><small>Incidents: {{incidents|length}}</small></a></li>');
+            $(".dropdown-menu ").append('<li><a href="#"><small>Hazards: {{hazards|length}}</small></a></li>');
+            $(".dropdown-menu ").append('<li><a href="#"><small>Thefts: {{thefts|length}}</small></a></li>');
+            
+            var total = {{thefts|length}}+{{hazards|length}}+{{incidents|length}}
+            $(".dropdown-menu ").append('<li><a href="#"><small>Total: '+total+'</small></a></li>');
         {% endif %}
 
     </script>

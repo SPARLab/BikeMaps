@@ -348,37 +348,6 @@ function locateUser(setView, watch) {
     });
 };
 
-// Purpose: Add a given latlng poing with the given information to the map. 
-// 		Add pk for easy lookup of marker for admin tasks
-function getPoint(latlng, type, pk, popupText) {
-    heatMap.addLatLng(latlng);
-
-    var icon, dataset;
-    if (type === "Collision" || type === "Fall") {
-        icon = icons["bikeRedIcon"];
-        dataset = "incident"
-    } else if (type === "Near miss") {
-        icon = icons["bikeYellowIcon"];
-        dataset = "incident"
-    } else if (type === "Hazard") {
-        icon = icons["hazardIcon"];
-        dataset = "hazard"
-    } else if (type === "Theft") {
-        icon = icons["theftIcon"];
-        dataset = "theft"
-    } else {
-        return;
-    }
-
-    marker = L.marker(latlng, {
-        icon: icon,
-        pk: pk,
-        objType: dataset
-    });
-
-    marker.bindPopup(popupText);
-    incidentData.addLayer(marker);
-};
 
 // Purpose: Add a given latlng list to the map as a polygon. Add pk attribute so polygon can be deleted by user.
 function getPolygon(latlng, pk) {
@@ -514,21 +483,45 @@ function toTitleCase(s) {
 };
 
 
-function getColor(t) {
-    if (t == "collision")
-        return "#" + icons["bikeRedIcon"].options.color;
-    else if (t == "nearmiss")
-        return "#" + icons["bikeYellowIcon"].options.color;
-    else if (t == "hazard")
-        return "#" + icons["hazardIcon"].options.color;
-    else if (t == "theft")
-        return "#" + icons["theftIcon"].options.color;
-    else return "#333";
+
+function getIcon(t) {
+    if (t === "collision")
+        return icons["bikeRedIcon"];
+    else if (t === "nearmiss")
+        return icons["bikeYellowIcon"];
+    else if (t === "hazard")
+        return icons["hazardIcon"];
+    else if (t === "theft")
+        return icons["theftIcon"];
+    else return;
 };
 
+function getColor(t) {
+    return "#" + getIcon(t).options.color
+};
+
+function getPopup(feature, type) {
+    var popup;
+    if (type === "collision" || type === "nearmiss") {
+        popup = '<strong>Type:</strong> ' + feature.properties.incident + '<br><strong>';
+        if (feature.properties.incident_type != "Fall") popup += 'Incident with';
+        else popup += 'Due to';
+        popup += ':</strong> ' + feature.properties.incident_with + '<br><strong>Date:</strong> ' + feature.properties.incident_date;
+
+    } else if (type === "hazard") {
+        popup = '<strong>Hazard type:</strong> ' + feature.properties.hazard + '<br><strong>Date:</strong> ' + feature.properties.hazard_date;
+    } else if (type === "theft") {
+        popup = '<strong>Theft type:</strong> ' + feature.properties.theft + '<br><strong>Date:</strong> ' + feature.properties.theft_date;
+    } else return "error";
+
+    return popup;
+};
+
+// Purpose: Convert a given geojson dataset to a CircleMarker point layer 
 function geojsonCircleMarker(data, type) {
     return L.geoJson(data, {
         pointToLayer: function(feature, latlng) {
+
             return L.circleMarker(latlng, {
                 radius: 3,
                 fillColor: getColor(type),
@@ -537,6 +530,24 @@ function geojsonCircleMarker(data, type) {
                 opacity: 1,
                 fillOpacity: 0.8
             })
+        }
+    });
+};
+
+// Purpose: Convert a given geojson dataset to a MakiMarker point layer 
+//  and add all latlngs to the heatmap and bind appropriate popups to markers
+function geojsonMakiMarker(data, type) {
+    return L.geoJson(data, {
+        pointToLayer: function(feature, latlng) {
+            heatMap.addLatLng(latlng);
+            return L.marker(latlng, {
+                icon: getIcon(type),
+                pk: feature.id,
+                objType: feature.properties.model
+            })
+        },
+        onEachFeature: function(feature, layer) {
+            layer.bindPopup(getPopup(feature, type));
         }
     });
 };

@@ -28,9 +28,12 @@ def index(request, lat=None, lng=None, zoom=None):
 
 # Define default context data for the index view. Forms can be overridden to display errors (used by other views)
 def indexContext(request, incidentForm=IncidentForm(), geofenceForm=GeofenceForm(), hazardForm=HazardForm(), theftForm=TheftForm()):
+	incidents = Incident.objects.all()
+	
 	return {
 		# Model data used by map
-		'incidents': Incident.objects.all(),
+		'collisions': incidents.exclude(incident__contains="Near collision"),
+		'nearmisses': incidents.filter(incident__contains="Near collision"),
 		'hazards': Hazard.objects.all(),
 		'thefts': Theft.objects.all(),
 		"geofences": AlertArea.objects.filter(user=request.user.id),
