@@ -520,16 +520,15 @@ function getPopup(feature, type) {
 };
 
 function makeNiceDate(d) {
-    var dt = new Date(d);
-    var d_date = dt.getDate();
-    var d_month = getMonthFromInt(dt.getMonth() + 1).slice(0, 3); //Months are zero based
-    var d_year = dt.getFullYear();
-    var d_time = dt.toLocaleTimeString();
+    d = d.split("T");
+    time = d[1].split(":");
+    date = d[0].split("-");
 
+    pm = parseInt(time[0]) / 12; // > 1 if true
+    time[0] = parseInt(time[0]) % 12;
 
-
-    return d_month + ". " + d_date + ", " + d_year + ", " + d_time;
-}
+    return getMonthFromInt(date[1]).slice(0, 3) + ". " + date[2] + ", " + date[0] + ", " + time[0] + ":" + time[1] + (pm > 1 ? "pm" : "am");
+};
 
 // Purpose: Convert a given geojson dataset to a CircleMarker point layer 
 function geojsonCircleMarker(data, type) {
