@@ -83,24 +83,20 @@
 	</div>
 
 	<script>
-	var collisionColor = "#" + icons["bikeRedIcon"].options.color,
-		nearmissColor = "#" + icons["bikeYellowIcon"].options.color,
-		hazardColor = "#" + icons["hazardIcon"].options.color,
-		theftColor = "#" + icons["theftIcon"].options.color
-
-	function setCircleMarker(latlng, typeColor, popupText) {
-    	L.circleMarker(latlng, {
-        	color: "#000",
-        	weight: 1,
-        	fillColor: typeColor,
-        	fillOpacity: 1,
-        }).setRadius(3).addTo(map).bindPopup(popupText);
-	    heatMap.addLatLng(latlng);
-	};
+		function getColor(t){
+			if (t == "collision")
+				return "#" + icons["bikeRedIcon"].options.color;
+			else if (t == "nearmiss")
+				return "#" + icons["bikeYellowIcon"].options.color;
+			else if (t == "hazard")
+				return "#" + icons["hazardIcon"].options.color;
+			else if (t == "theft")
+				return "#" + icons["theftIcon"].options.color;
+			else return "#333";
+		}
 
 		// Create the map (call to map.js)
         initialize({% if request.mobile %} mobile=true {% endif %});
-        map.options.scrollWheelZoom = false;
 
         // Load user alert areas from the database
         var areasLatLngList = [];
@@ -113,53 +109,84 @@
         map.fitBounds(L.latLngBounds(areasLatLngList));
 
 
+
+
+        function geojsonMarkerOptions(type){
+        	return {
+			    radius: 3,
+			    fillColor: getColor(type),
+			    color: "#000",
+			    weight: 1,
+			    opacity: 1,
+			    fillOpacity: 0.8
+        	}
+		};
+		{% load geojson_tags %}
         // Load all point data
-        {% for theft in recentThefts %}
-            setCircleMarker({{theft.latlngList}}, theftColor,
-            	'<strong>Theft type:</strong> {{ theft.theft }}<br>'
-            	+ '<strong>Date:</strong> {{ theft.theft_date }}'
-            );
-        {% endfor %}
-        {% for hazard in recentHazards %}
-            setCircleMarker({{hazard.latlngList}}, hazardColor,
-                '<strong>Hazard type:</strong> {{ hazard.hazard }}<br>'
-                + '<strong>Date:</strong> {{ hazard.hazard_date }}'
-            );
-        {% endfor %}
-        {% for collision in recentCollisions %}
-            setCircleMarker({{collision.latlngList}}, collisionColor, 
-                '<strong>Type:</strong> {{ incident.incident }}<br>'
-                + '<strong>{% if incident.incident_type != "Fall" %}Incident with'
-                + '{% else %}Due to{% endif %}:</strong> {{ incident.incident_with }}<br>'
-                + '<strong>Date:</strong> {{ incident.incident_date }}'
-            );
-        {% endfor %}
-        {% for nearmiss in recentNearmisses %}
-	        setCircleMarker({{nearmiss.latlngList}}, nearmissColor, 
-                '<strong>Type:</strong> {{ incident.incident }}<br>'
-                + '<strong>{% if incident.incident_type != "Fall" %}Incident with'
-                + '{% else %}Due to{% endif %}:</strong> {{ incident.incident_with }}<br>'
-                + '<strong>Date:</strong> {{ incident.incident_date }}'
-            );
-        {% endfor %}
+    	var collisions = L.geoJson({{ recentCollisions|geojsonfeature|safe }}, {
+    		pointToLayer: function(feature, latlng){
+    			return L.circleMarker(latlng, geojsonMarkerOptions("collision"));
+    		},
+    	});
+    	collisions.addTo(map);
+    	
+    	var nearmisses = L.geoJson({{ recentNearmisses|geojsonfeature|safe }}, {
+    		pointToLayer: function(feature, latlng){
+    			return L.circleMarker(latlng, geojsonMarkerOptions("nearmiss"));
+    		}
+    	});
+    	nearmisses.addTo(map);
+
+	    var hazards = L.geoJson({{ recentHazards|geojsonfeature|safe }}, {
+    		pointToLayer: function(feature, latlng){
+    			return L.circleMarker(latlng, geojsonMarkerOptions("hazard"));
+    		}
+    	});
+    	hazards.addTo(map);
+
+	    var thefts = L.geoJson({{ recentThefts|geojsonfeature|safe }}, {
+    		pointToLayer: function(feature, latlng){
+    			return L.circleMarker(latlng, geojsonMarkerOptions("theft"));
+    		}
+    	});
+    	thefts.addTo(map);
+
+
+
+
 
 
 		// Create dataset out of django context
 		// Note, data and counts are for last month of points in user alert areas only, not total points
 		var data = [ 
-			{ type: "collision", 	value: {{ collisionsCount }}, 	color: collisionColor }, 
-			{ type: "nearmiss", 	value: {{ nearmissesCount }}, 	color: nearmissColor }, 
-			{ type: "hazard", 		value: {{ hazardsCount }}, 		color: hazardColor }, 
-			{ type: "theft", 		value: {{ theftsCount }}, 		color: theftColor }
+			{ type: "collision", 	value: {{ collisionsCount }}, 	color: getColor("collision") }, 
+			{ type: "nearmiss", 	value: {{ nearmissesCount }}, 	color: getColor("nearmiss") }, 
+			{ type: "hazard", 		value: {{ hazardsCount }}, 		color: getColor("hazard") }, 
+			{ type: "theft", 		value: {{ theftsCount }}, 		color: getColor("theft") }
 		];
 		initializeBarChart(data);
 
 		// Highlight barchart on mouseover along with corresponding points on map
 		$("#barchart rect").mouseenter(function(){
 			$(this).attr("stroke-width", "3"); // show rectangle highlighting
+			var type = $(this).attr("pType");
+			var layer;
+			if(type == "collision") layer = collisions;
+			else if(type == "nearmiss") layer = nearmisses;	
+			else if(type == "hazard") layer = hazards;	
+			else layer = thefts;	
+			
+			layer.setStyle({
+		        color: '#0ff',
+		    });
+
+		    if (!L.Browser.ie && !L.Browser.opera) {
+		        layer.bringToFront();
+		    }
 			// show highlighted points on map
 		}).mouseleave(function(){
 			$(this).attr("stroke-width", "0");
+			
 		});
 	</script>
 

@@ -12,6 +12,7 @@ from mapApp.models.alert_notification import IncidentNotification, HazardNotific
 
 from datetime import datetime, timedelta
 
+
 def stats(request):
 	user = request.user
 

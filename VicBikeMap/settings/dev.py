@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'minidetector', # Mobile detector
     'django_cron', # Cron tasks
     'django.contrib.gis',
+    'djgeojson',
     'crispy_forms',
     'mapApp'
 )

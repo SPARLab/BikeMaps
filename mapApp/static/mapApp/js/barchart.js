@@ -63,7 +63,7 @@ function initializeBarChart(data) {
     chart.selectAll(".bar")
         .data(data)
         .enter().append("rect")
-        .attr("class", function(d) {
+        .attr("pType", function(d) {
             return d.type;
         })
         .attr("fill", function(d) {
@@ -71,7 +71,6 @@ function initializeBarChart(data) {
         })
         .attr("stroke", "#0ff")
         .attr("stroke-width", "0")
-
         .attr("x", function(d) {
             return x(d.type);
         })
