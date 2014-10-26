@@ -504,24 +504,36 @@ function getPopup(feature, type) {
     var popup;
     if (type === "collision" || type === "nearmiss") {
         popup = '<strong>Type:</strong> ' + feature.properties.incident + '<br><strong>';
-        if (feature.properties.incident_type != "Fall") popup += 'Incident with';
-        else popup += 'Due to';
-        popup += ':</strong> ' + feature.properties.incident_with + '<br><strong>Date:</strong> ' + feature.properties.incident_date;
+        if (feature.properties.incident_type != "Fall")
+            popup += 'Incident with';
+        else
+            popup += 'Due to';
+        popup += ':</strong> ' + feature.properties.incident_with + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.incident_date);
 
     } else if (type === "hazard") {
-        popup = '<strong>Hazard type:</strong> ' + feature.properties.hazard + '<br><strong>Date:</strong> ' + feature.properties.hazard_date;
+        popup = '<strong>Hazard type:</strong> ' + feature.properties.hazard + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.hazard_date);
     } else if (type === "theft") {
-        popup = '<strong>Theft type:</strong> ' + feature.properties.theft + '<br><strong>Date:</strong> ' + feature.properties.theft_date;
+        popup = '<strong>Theft type:</strong> ' + feature.properties.theft + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.theft_date);
     } else return "error";
 
     return popup;
 };
 
+function makeNiceDate(d) {
+    var dt = new Date(d);
+    var d_date = dt.getDate();
+    var d_month = getMonthFromInt(dt.getMonth() + 1).slice(0, 3); //Months are zero based
+    var d_year = dt.getFullYear();
+    var d_time = dt.toLocaleTimeString().split(":");
+    d_time = d_time[0] + ":" + d_time[1] + d_time[2].split(" ")[1].toLowerCase();
+
+    return d_month + ". " + d_date + ", " + d_year + ", " + d_time;
+}
+
 // Purpose: Convert a given geojson dataset to a CircleMarker point layer 
 function geojsonCircleMarker(data, type) {
     return L.geoJson(data, {
         pointToLayer: function(feature, latlng) {
-
             return L.circleMarker(latlng, {
                 radius: 3,
                 fillColor: getColor(type),
