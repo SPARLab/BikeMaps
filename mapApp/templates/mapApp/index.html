@@ -115,8 +115,6 @@
         });
         {% endif %}
         
-        // Initialize the map
-        initialize({% if request.mobile %} mobile=true {% endif %});
 
         // Load user alert areas from the database
         {% for polygon in geofences %}
@@ -137,6 +135,8 @@
         // Add all geojson auxiliary data
         initializeGeoJSON();
 
+        // Initialize the map
+        initialize({% if request.mobile %} mobile=true {% endif %});
         addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
 
         // Set the appropriate map extend and zoom
