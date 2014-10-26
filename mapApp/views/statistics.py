@@ -29,6 +29,11 @@ def stats(request):
 
 	roi = AlertArea.objects.filter(user=user.id)
 
+	for g in roi:
+		oldCollisions = collisions.exclude(geom__intersects=g.geom)
+		oldNearmisses = nearmisses.exclude(geom__intersects=g.geom)
+		oldHazards = hazards.exclude(geom__intersects=g.geom)
+		oldThefts = thefts.exclude(geom__intersects=g.geom)
 
 	context = {
 		'user': user,
@@ -38,15 +43,16 @@ def stats(request):
 	
 		"geofences": roi,
 
-		'oldCollisions': collisions.exclude(date__range=[monthPast, now]),
-		'oldNearmisses': nearmisses.exclude(date__range=[monthPast, now]),
-		'oldHazards': hazards.exclude(date__range=[monthPast, now]),
-		'oldThefts': thefts.exclude(date__range=[monthPast, now]),
+		'oldCollisions': oldCollisions.exclude(date__range=[monthPast, now]),
+		'oldNearmisses': oldNearmisses.exclude(date__range=[monthPast, now]),
+		'oldHazards': oldHazards.exclude(date__range=[monthPast, now]),
+		'oldThefts': oldThefts.exclude(date__range=[monthPast, now]),
 
-		'recentCollisions': collisions.filter(date__range=[monthPast, now]),
-		'recentNearmisses': nearmisses.filter(date__range=[monthPast, now]),
-		'recentHazards': hazards.filter(date__range=[monthPast, now]),
-		'recentThefts': thefts.filter(date__range=[monthPast, now]),
+		'recentCollisions': collisions.exclude(pk__in=oldCollisions),
+		'recentNearmisses': nearmisses.exclude(pk__in=oldNearmisses),
+		'recentHazards': hazards.exclude(pk__in=oldHazards),
+		'recentThefts': thefts.exclude(pk__in=oldThefts),
+
 	}
 
 	return render(request, 'mapApp/stats.html', context)
