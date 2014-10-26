@@ -529,7 +529,9 @@ function makeNiceDate(d) {
     var minute = d_time[1];
     var aft = d_time[2].split(" ")[1];
 
-    d_time = hour + ":" + minute + aft.toLowerCase();
+    console.log(d_time);
+
+    d_time = hour + ":" + minute + aft;
 
     return d_month + ". " + d_date + ", " + d_year + ", " + d_time;
 }
