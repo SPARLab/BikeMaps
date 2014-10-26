@@ -1,6 +1,7 @@
 #TO DO
 
 ###HIGHER PRIORITY
+* Add social media meta tags
 * Display more data in point popups
 * Email alerts monthly
 * Hazard deletion
