@@ -20,12 +20,14 @@ def stats(request):
 	monthPast = now - timedelta(1*365/12)
 
 	# Get the user's alertable points in the last month
-	recentIncidents = Incident.objects.filter(incidentNotification__user=user.id).filter(date__range=[monthPast, now])
-	recentCollisions = recentIncidents.filter(incidentNotification__action=IncidentNotification.INCIDENT)
-	recentNearmisses = recentIncidents.filter(incidentNotification__action=IncidentNotification.NEARMISS)
+	incidents = Incident.objects.all()#filter(incidentNotification__user=user.id)
+	nearmisses = incidents.filter(incident__contains="Near collision")
+	collisions = incidents.exclude(incident__contains="Near collision")
 
-	recentHazards = Hazard.objects.filter(hazardNotification__user=user.id).filter(date__range=[monthPast, now])
-	recentThefts = Theft.objects.filter(theftNotification__user=user.id).filter(date__range=[monthPast, now])
+	hazards = Hazard.objects.all()
+	thefts = Theft.objects.all()
+
+	roi = AlertArea.objects.filter(user=user.id)
 
 
 	context = {
@@ -34,17 +36,17 @@ def stats(request):
 		'date_today': now,
 		'date_lastmonth': monthPast,
 	
-		"geofences": AlertArea.objects.filter(user=user.id),
+		"geofences": roi,
 
-		'recentCollisions': recentCollisions,
-		'recentNearmisses': recentNearmisses,
-		'recentHazards': recentHazards,
-		'recentThefts': recentThefts,
+		'oldCollisions': collisions.exclude(date__range=[monthPast, now]),
+		'oldNearmisses': nearmisses.exclude(date__range=[monthPast, now]),
+		'oldHazards': hazards.exclude(date__range=[monthPast, now]),
+		'oldThefts': thefts.exclude(date__range=[monthPast, now]),
 
-		'collisionsCount': recentCollisions.count(),
-		'nearmissesCount': recentNearmisses.count(),
-		'hazardsCount': recentHazards.count(),
-		'theftsCount': recentThefts.count(),
+		'recentCollisions': collisions.filter(date__range=[monthPast, now]),
+		'recentNearmisses': nearmisses.filter(date__range=[monthPast, now]),
+		'recentHazards': hazards.filter(date__range=[monthPast, now]),
+		'recentThefts': thefts.filter(date__range=[monthPast, now]),
 	}
 
 	return render(request, 'mapApp/stats.html', context)

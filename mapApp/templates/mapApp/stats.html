@@ -1,5 +1,6 @@
 {% extends "mapApp/base.html" %}
 {% load staticfiles %}
+{% load geojson_tags %}
 
 
 {% block title %}
@@ -47,7 +48,6 @@
 			height: 100%;
 			margin-top: 0px;
 		}
-
 	</style>
 	
 
@@ -79,11 +79,9 @@
 			</div>
 		</div>
 
-
 	</div>
 
 	<script>
-
 		// Create the map (call to map.js)
         initialize({% if request.mobile %} mobile=true {% endif %});
 
@@ -97,72 +95,61 @@
    		// Fit map extent to alert areas boundary
         map.fitBounds(L.latLngBounds(areasLatLngList));
 
-		{% load geojson_tags %}
-		
         // Load all point data
-    	var collisions = geojsonCircleMarker({{ recentCollisions|geojsonfeature|safe }}, "collision");
-    	collisions.addTo(map);
+    	var collisions = geojsonCircleMarker({{ oldCollisions|geojsonfeature|safe }}, "collision").addTo(map);
+    	var nearmisses = geojsonCircleMarker({{ oldNearmisses|geojsonfeature|safe }}, "nearmiss").addTo(map);
+	    var hazards = geojsonCircleMarker({{ oldHazards|geojsonfeature|safe }}, "hazard").addTo(map);
+	    var thefts = geojsonCircleMarker({{ oldThefts|geojsonfeature|safe }}, "theft").addTo(map);
 
-    	var nearmisses = geojsonCircleMarker({{ recentNearmisses|geojsonfeature|safe }}, "nearmiss");
-    	nearmisses.addTo(map);
-
-	    var hazards = geojsonCircleMarker({{ recentHazards|geojsonfeature|safe }}, "hazard");
-    	hazards.addTo(map);
-
-	    var thefts = geojsonCircleMarker({{ recentThefts|geojsonfeature|safe }}, "theft");
-    	thefts.addTo(map);
+    	collisions = geojsonCircleMarker({{ recentCollisions|geojsonfeature|safe }}, "collision").addTo(map);
+    	nearmisses = geojsonCircleMarker({{ recentNearmisses|geojsonfeature|safe }}, "nearmiss").addTo(map);
+	    hazards = geojsonCircleMarker({{ recentHazards|geojsonfeature|safe }}, "hazard").addTo(map);
+	    thefts = geojsonCircleMarker({{ recentThefts|geojsonfeature|safe }}, "theft").addTo(map);
 
 		// Create dataset out of django context
 		// Note, data and counts are for last month of points in user alert areas only, not total points
 		var data = [ 
-			{ type: "collision", 	value: {{ collisionsCount }}, 	color: getColor("collision") }, 
-			{ type: "nearmiss", 	value: {{ nearmissesCount }}, 	color: getColor("nearmiss") }, 
-			{ type: "hazard", 		value: {{ hazardsCount }}, 		color: getColor("hazard") }, 
-			{ type: "theft", 		value: {{ theftsCount }}, 		color: getColor("theft") }
+			{ type: "collision", 	value: {{ recentCollisions.count }}, 	color: getColor("collision") }, 
+			{ type: "nearmiss", 	value: {{ recentNearmisses.count }}, 	color: getColor("nearmiss") }, 
+			{ type: "hazard", 		value: {{ recentHazards.count }}, 		color: getColor("hazard") }, 
+			{ type: "theft", 		value: {{ recentThefts.count }}, 		color: getColor("theft") }
 		];
 		initializeBarChart(data);
 
+		
 		// Highlight barchart on mouseover along with corresponding points on map
 		$("#barchart rect").mouseenter(function(){
-			// show rectangle highlighting
+			// highlight chart rectangle
 			$(this).attr("stroke-width", "3"); 
 			
-			// show corresponding highlighted points
-			var type = $(this).attr("type");
-			console.log(type);
-			var layer;
-			if(type == "collision") layer = collisions;
-			else if(type == "nearmiss") layer = nearmisses;	
-			else if(type == "hazard") layer = hazards;	
-			else layer = thefts;	
-			
+			// show highlighted points on map
+			var layer = getLayer($(this).attr("type"));
 			layer.setStyle({
 		        fillColor: '#0ff',
-		        // radius: 5
+		        fillOpacity: 1
 		    });
 
 		    if (!L.Browser.ie && !L.Browser.opera) {
 		        layer.bringToFront();
 		    }
-			// show highlighted points on map
 		}).mouseleave(function(){
 			// Unhighlight rect in char
 			$(this).attr("stroke-width", "0");
 
 			// Unhighlight points on map
 			var type = $(this).attr("type");
-			var layer;
-			if(type == "collision") layer = collisions;
-			else if(type == "nearmiss") layer = nearmisses;	
-			else if(type == "hazard") layer = hazards;	
-			else layer = thefts;	
-			
-			layer.setStyle({
+			getLayer(type).setStyle({
 				fillColor: getColor(type),
-		        // radius: 5
+		        fillOpacity: 0.8
 			});
-			
 		});
+
+		function getLayer(type){
+			if(type == "collision") return collisions;
+			else if(type == "nearmiss") return nearmisses;	
+			else if(type == "hazard") return hazards;	
+			else return thefts;
+		}
 	</script>
 
 
