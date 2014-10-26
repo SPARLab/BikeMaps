@@ -131,6 +131,7 @@ class Hazard(models.Model):
         now = timezone.now()
         return now - datetime.timedelta(weeks=1) <= self.date < now
 
+    @property
     def incident_type(self):
         return "Hazard"
 
