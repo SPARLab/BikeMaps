@@ -31,12 +31,11 @@ function initializeBarChart(data) {
     // y axis
     var yAxis = d3.svg.axis().scale(y)
         .orient("left").ticks(10);
-        .tickFormat(d3.format("d"))
-        .tickSubdivide(0);
+    // .tickFormat(d3.format("d"))
+    // .tickSubdivide(0);
 
     // x axis
-    var xAxis = d3.svg.axis()
-        .scale(x)
+    var xAxis = d3.svg.axis().scale(x)
         .orient("bottom");
 
     // SVG CHART ELEMENT
