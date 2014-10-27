@@ -127,10 +127,10 @@
         {% endfor %}
 
         // Load user points from the database
-        var collisions = geojsonMakiMarker({{ collisions|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "collision");
-        var nearmisses = geojsonMakiMarker({{ nearmisses|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "nearmiss");
-        var hazards = geojsonMakiMarker({{ hazards|geojsonfeature:"hazard,hazard_date"|safe }}, "hazard");
-        var thefts = geojsonMakiMarker({{ thefts|geojsonfeature:"theft,theft_date"|safe }}, "theft");
+        var collisions = geojsonMakiMarker({{ collisions|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "collision").addTo(incidentData);
+        var nearmisses = geojsonMakiMarker({{ nearmisses|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "nearmiss").addTo(incidentData);
+        var hazards = geojsonMakiMarker({{ hazards|geojsonfeature:"hazard,hazard_date"|safe }}, "hazard").addTo(incidentData);
+        var thefts = geojsonMakiMarker({{ thefts|geojsonfeature:"theft,theft_date"|safe }}, "theft").addTo(incidentData);
         
         incidentData.addLayer(collisions);
         incidentData.addLayer(nearmisses);
@@ -151,7 +151,7 @@
             $(".user-menu").append('<li><a href="#"><small>Hazards: {{hazards|length}}</small></a></li>');
             $(".user-menu").append('<li><a href="#"><small>Thefts: {{thefts|length}}</small></a></li>');
             
-            var total = {{thefts|length}}+{{hazards|length}}+{{incidents|length}}
+            var total = {{thefts|length}}+{{hazards|length}}+{{collisions|length}}+{{nearmisses|length}}
             $(".user-menu").append('<li><a href="#"><small>Total: '+total+'</small></a></li>');
         {% endif %}
 
