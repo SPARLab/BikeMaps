@@ -21,20 +21,16 @@ function initializeBarChart(data) {
         }))
         .rangeRoundBands([0, width], .1);
 
-    var y = d3.scale.linear() // function that translates data to a height value based on the value of d in data
-    .domain([0, d3.max(data, function(d) {
-        return d.value;
-    })])
+    var y = d3.scale.linear()
+        .domain([0, d3.max(data, function(d) {
+            return d.value;
+        })])
         .range([height, 0]);
 
     // AXES
     // y axis
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left")
-        .ticks(d3.max(data, function(d) {
-            return d.value
-        }))
+    var yAxis = d3.svg.axis().scale(y)
+        .orient("left").ticks(10);
         .tickFormat(d3.format("d"))
         .tickSubdivide(0);
 
