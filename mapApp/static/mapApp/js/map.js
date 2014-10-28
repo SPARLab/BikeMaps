@@ -520,10 +520,8 @@ function getPopup(feature, type) {
 };
 
 function makeNiceDate(d) {
-    var dt = new Date(d);
-    return dt.toLocaleString();
-
-
+    // "2014-10-28T10:00:00"
+    
     d = d.split("T");
     time = d[1].split(":");
     date = d[0].split("-");
