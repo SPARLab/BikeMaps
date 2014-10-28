@@ -528,6 +528,7 @@ function makeNiceDate(d) {
 
     pm = parseInt(time[0]) / 12; // > 1 if true
     time[0] = parseInt(time[0]) % 12;
+    if(time[0] === 0) time[0] = 12;
 
     return getMonthFromInt(date[1]).slice(0, 3) + ". " + date[2] + ", " + date[0] + ", " + time[0] + ":" + time[1] + (pm >= 1 ? "pm" : "am");
 };
