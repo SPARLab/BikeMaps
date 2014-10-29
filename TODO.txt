@@ -9,8 +9,6 @@
 * Fullscreen on mobile (sort of done if app is added to homepage, more to do)
 * Allow admin point moving on main map page
 * Request https admin page maps
-* FAQ on about
-* About spar people on about page
 * Easy way to add points from other sources (Leaflet AJAX?)
 * Broken modal popups on some browsers
 * Bigger reporting buttons
