@@ -1,7 +1,6 @@
 #TO DO
 
 ###HIGHER PRIORITY
-* Add social media meta tags
 * Display more data in point popups
 * Email alerts monthly
 * Hazard deletion
@@ -12,7 +11,7 @@
 * Easy way to add points from other sources (Leaflet AJAX?)
 * Broken modal popups on some browsers
 * Bigger reporting buttons
-* Fix naive datetime filtering in statistics.py view
+* Create Sponsors and supporters division on about page
 
 ###LOWER PRIORITY
 * Expose hazards model as a WFS service (azgs-leaflet? Make WFS via QGIS and add to leaflet?)
