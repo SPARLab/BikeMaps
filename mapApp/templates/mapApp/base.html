@@ -2,23 +2,37 @@
 <html lang="en">
 <head>
   {% load staticfiles spirit_tags bikemaps_tags%}
-  <meta name="Description" content="Cyclist safety maps from your cycling experience" >
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  
-  <!-- Allow fullscreen webapps on iOS and Chrome Mobile -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  
   <title>{% block title %}{% endblock %}</title>
+  <meta name="description" content="Map your cycling incidents, hazard, and theft locations so they can be analyzed to identify hot spots of cycling safety, risk, and crime."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
   <!-- Browser icon -->
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'mapApp/images/BikeMapsORG_Logo.ico' %}" />
 
+  <!-- Allow fullscreen webapps on iOS and Chrome Mobile -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@BikeMapsTeam">
+  <meta name="twitter:title" content="BikeMaps.org">
+  <meta name="twitter:description" content="Map your cycling incidents, hazard, and theft locations so they can be analyzed to identify hot spots of cycling safety, risk, and crime.">
+  <meta name="twitter:creator" content="@BikeMapsTeam">
+  <meta name="twitter:image" content="{% static 'mapApp/images/BikeMapsORG_Logo_md.png' %}">
+
+  <!-- Open Graph data -->
+  <meta property="og:title" content="BikeMaps.org" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.bikemaps.org/" />
+  <meta property="og:image" content="{% static 'mapApp/images/BikeMapsORG_Logo_md.png' %}" />
+  <meta property="og:description" content="Map your cycling incidents, hazard, and theft locations so they can be analyzed to identify hot spots of cycling safety, risk, and crime." /> 
+  <meta property="og:site_name" content="BikeMaps" />
+  <meta property="fb:admins" content="569635572" />
+
 
   <!-- LOAD CSS -->
   {% block headerCSS %} {% endblock %}
-
-  <!-- Load CSS -->
   <link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet" media="screen">
   <link href="{% static 'mapApp/css/style.css' %}" rel="stylesheet">
 
@@ -29,15 +43,10 @@
   <link href="{% static 'datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen"/>
 
   <!-- lOAD JS -->
-  <!-- Load JQuery -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
   {% block headerJS %} {% endblock %}
-
-  <!-- Load JS -->
   <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
-
-  <!-- Bootstrap datetime picker -->
+  <!-- datetime picker -->
   <script type="text/javascript" src="{% static 'datetimepicker/js/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
 </head>
 
