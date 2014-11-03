@@ -7,11 +7,11 @@
 * Cleanup index.html code
 * Fullscreen on mobile (sort of done if app is added to homepage, more to do)
 * Allow admin point moving on main map page
-* Request https admin page maps
+* Request https admin page maps (browsers are blocking insecure js from display by default)
 * Easy way to add points from other sources (Leaflet AJAX?)
 * Broken modal popups on some browsers
 * Bigger reporting buttons
-* Create Sponsors and supporters division on about page
+* Vertical center sponsors and supporters images
 
 ###LOWER PRIORITY
 * Expose hazards model as a WFS service (azgs-leaflet? Make WFS via QGIS and add to leaflet?)
@@ -31,6 +31,8 @@
 * Moderate comments > delete button not working
 * Date picker does not scroll with modal (bind to something?)
 * Leaflet draw does not work for mobile (currently using double tap work-around for mobile)
+* Some users reporting blank screen on browsing to site (may be old browser issue, display error message?)
+
 
 
 ##FROM TRISALYN
