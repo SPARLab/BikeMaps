@@ -59,20 +59,31 @@
 			</div>
 		<!-- Bar graph of Alert area points by type -->
 		<!-- See http://bost.ocks.org/mike/bar/ for bar chart tutorials -->
-			<div class="col-xs-6" style="padding: 5px">
-				<div class="panel panel-primary">
-				  <div class="panel-heading">Reports this month ({{date_lastmonth|date:"M d" }} - {{date_today|date:"M d"}})</div>
-				  <div class="panel-body">
-					<svg id="barchart" width='100%' height='100%'></svg>
-				  </div>
+			<div class="col-xs-6" style="height: 100%;">
+				<div class="col-xs-12" style="padding: 5px">
+					<div class="panel panel-primary">
+					  <div class="panel-heading">Reports this month ({{date_lastmonth|date:"M d" }} - {{date_today|date:"M d"}})</div>
+					  <div class="panel-body">
+						<svg id="barchart" width='100%' height='100%'></svg>
+					  </div>
+					</div>
 				</div>
-			</div>
-			<div class="col-xs-6" style="padding: 5px">
-				<div class="panel panel-primary">
-				  <div class="panel-heading">Trend graph</div>
-				  <div class="panel-body">
-				  	Line chart here
-				  </div>
+				<div class="col-xs-12" style="padding: 5px">
+					<div class="panel panel-primary">
+					  <div class="panel-heading">Trend graph</div>
+					  <div class="panel-body">
+						<svg id="linechart" width='100%' height='100%'></svg>
+					  	Line chart here
+					  </div>
+					</div>
+				</div>
+				<div class="col-xs-12" style="padding: 5px">
+					<div class="panel panel-primary">
+					  <div class="panel-heading">Messages</div>
+					  <div class="panel-body">
+					  	Rotating display of messages
+					  </div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -83,15 +94,16 @@
 		// Create the map (call to map.js)
         initialize({% if request.mobile %} mobile=true {% endif %});
 
-        // Load user alert areas from the database
+
+   		// Fit map extent to alert areas boundary
         var areasLatLngList = [];
         {% for polygon in geofences %}
             areasLatLngList.push({{ polygon.latlngList }});
+	        // Add polygon to map
             getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} ); 
         {% endfor %}
-
-   		// Fit map extent to alert areas boundary
         map.fitBounds(L.latLngBounds(areasLatLngList));
+
 
         // Load all point data
     	var otherCollisions = geojsonCircleMarker({{ otherCollisions|geojsonfeature|safe }}, "collision").addTo(map);

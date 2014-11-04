@@ -1,7 +1,7 @@
-// TODO add axis
-//  Make height nicer
-//  Make chart responsive to window resize
+// TODO
+//  Make barchart responsive to window resize
 
+// Initialize the SVG barchart via calls to d3.js library
 function initializeBarChart(data) {
     var margin = {
         top: 20,
@@ -84,8 +84,8 @@ function initializeBarChart(data) {
 };
 
 
+// Controls the highlight of barchart rectangles and corresponding points on map. Called by initialize barchart
 function highlightPoints(){
-    // Highlight barchart on mouseover along with corresponding points on map
     $("#barchart rect").mouseenter(function(){
         // highlight chart rectangle
         $(this).attr("stroke-width", "3"); 
@@ -114,10 +114,16 @@ function highlightPoints(){
     });
 };
 
-
+// Helper method returns the var layer names in stats.html using simple type parameter. eg, calling with type 'collision' returns all the collision layers
 function getLayer(type){
     if(type == "collision") return [recentCollisions, otherCollisions]
     else if(type == "nearmiss") return [recentNearmisses, otherNearmisses]; 
     else if(type == "hazard") return [recentHazards, otherHazards];
     else return [recentThefts, otherThefts];
+};
+
+
+// Initialize the SVG linechart via calls to the d3.js library
+function initializeLineChart(data){
+    return;
 };
