@@ -37,7 +37,7 @@
     <script src="{% static 'mapApp/js/map.js' %}" charset="utf-8"></script>
 
     <!-- d3 barchart -->
-    <script src="{% static 'mapApp/js/barchart.js' %}" charset="utf-8"></script>
+    <script src="{% static 'mapApp/js/stats.js' %}" charset="utf-8"></script>
 {% endblock %}
 
 
@@ -113,42 +113,6 @@
 			{ type: "theft", 		value: {{ recentThefts.count }}, 		color: getColor("theft") }
 		];
 		initializeBarChart(data);
-
-		
-		// Highlight barchart on mouseover along with corresponding points on map
-		$("#barchart rect").mouseenter(function(){
-			// highlight chart rectangle
-			$(this).attr("stroke-width", "3"); 
-			
-			// show highlighted points on map
-			var layer = getLayer($(this).attr("type"));
-			layer[0].setStyle({
-		        fillColor: '#0ff',
-		        fillOpacity: 1
-		    });
-
-		    if (!L.Browser.ie && !L.Browser.opera) {
-		        layer[1].bringToFront();
-		        layer[0].bringToFront();
-		    }
-		}).mouseleave(function(){
-			// Unhighlight rect in char
-			$(this).attr("stroke-width", "0");
-
-			// Unhighlight points on map
-			var type = $(this).attr("type");
-			getLayer(type)[0].setStyle({
-				fillColor: getColor(type),
-		        fillOpacity: 0.8
-			});
-		});
-
-		function getLayer(type){
-			if(type == "collision") return [recentCollisions, otherCollisions]
-			else if(type == "nearmiss") return [recentNearmisses, otherNearmisses];	
-			else if(type == "hazard") return [recentHazards, otherHazards];
-			else return [recentThefts, otherThefts];
-		}
 	</script>
 
 

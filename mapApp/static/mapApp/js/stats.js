@@ -1,5 +1,5 @@
 // TODO add axis
-// 	Make height nicer
+//  Make height nicer
 //  Make chart responsive to window resize
 
 function initializeBarChart(data) {
@@ -25,17 +25,20 @@ function initializeBarChart(data) {
         .domain([0, d3.max(data, function(d) {
             return d.value;
         })])
+        .nice(10)
         .range([height, 0]);
 
     // AXES
     // y axis
     var yAxis = d3.svg.axis().scale(y)
-        .orient("left").ticks(10);
-    // .tickFormat(d3.format("d"))
-    // .tickSubdivide(0);
+        .orient("left")
+        // .ticks(10)
+        .tickSubdivide(0)
+        .tickFormat(d3.format("d"));
 
     // x axis
-    var xAxis = d3.svg.axis().scale(x)
+    var xAxis = d3.svg.axis()
+        .scale(x)
         .orient("bottom");
 
     // SVG CHART ELEMENT
@@ -58,9 +61,14 @@ function initializeBarChart(data) {
     chart.selectAll(".bar")
         .data(data)
         .enter().append("rect")
+        .attr("type", function(d) {
+            return d.type;
+        })
         .attr("fill", function(d) {
             return d.color;
         })
+        .attr("stroke", "#0ff")
+        .attr("stroke-width", "0")
         .attr("x", function(d) {
             return x(d.type);
         })
@@ -72,5 +80,44 @@ function initializeBarChart(data) {
         })
         .attr("width", x.rangeBand());
 
+    highlightPoints();
+};
 
+
+function highlightPoints(){
+    // Highlight barchart on mouseover along with corresponding points on map
+    $("#barchart rect").mouseenter(function(){
+        // highlight chart rectangle
+        $(this).attr("stroke-width", "3"); 
+        
+        // show highlighted points on map
+        var layer = getLayer($(this).attr("type"));
+        layer[0].setStyle({
+            fillColor: '#0ff',
+            fillOpacity: 1
+        });
+
+        if (!L.Browser.ie && !L.Browser.opera) {
+            layer[1].bringToFront();
+            layer[0].bringToFront();
+        }
+    }).mouseleave(function(){
+        // Unhighlight rect in char
+        $(this).attr("stroke-width", "0");
+
+        // Unhighlight points on map
+        var type = $(this).attr("type");
+        getLayer(type)[0].setStyle({
+            fillColor: getColor(type),
+            fillOpacity: 0.8
+        });
+    });
+};
+
+
+function getLayer(type){
+    if(type == "collision") return [recentCollisions, otherCollisions]
+    else if(type == "nearmiss") return [recentNearmisses, otherNearmisses]; 
+    else if(type == "hazard") return [recentHazards, otherHazards];
+    else return [recentThefts, otherThefts];
 };
