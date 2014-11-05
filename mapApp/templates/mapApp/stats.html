@@ -126,16 +126,6 @@
 			hazardsThisMonth = filterGeoJSONByDate(data.hazards, oneMonthAgo, now),
 			theftsThisMonth = filterGeoJSONByDate(data.thefts, oneMonthAgo, now),
 
-			collisionsOneMonthAgo = filterGeoJSONByDate(data.collisions, twoMonthsAgo, oneMonthAgo),
-			nearmissesOneMonthAgo = filterGeoJSONByDate(data.nearmisses, twoMonthsAgo, oneMonthAgo),
-			hazardsOneMonthAgo = filterGeoJSONByDate(data.hazards, twoMonthsAgo, oneMonthAgo),
-			theftsOneMonthAgo = filterGeoJSONByDate(data.thefts, twoMonthsAgo, oneMonthAgo),
-
-			collisionsTwoMonthsAgo = filterGeoJSONByDate(data.collisions, threeMonthsAgo, twoMonthsAgo),
-			nearmissesTwoMonthsAgo = filterGeoJSONByDate(data.nearmisses, threeMonthsAgo, twoMonthsAgo),
-			hazardsTwoMonthsAgo = filterGeoJSONByDate(data.hazards, threeMonthsAgo, twoMonthsAgo),
-			theftsTwoMonthsAgo = filterGeoJSONByDate(data.thefts, threeMonthsAgo, twoMonthsAgo);
-
         // Add points to map, create layers used by stats.js to highlight points on map
     		// All points in the polygon that occured in the previous month
 		var recentCollisionsLayer = geojsonCircleMarker(collisionsThisMonth, "collision").addTo(map),
@@ -163,32 +153,32 @@
 				type: "collision",
 				value: [
 					collisionsThisMonth.features.length,
-					collisionsOneMonthAgo.features.length,
-					collisionsTwoMonthsAgo.features.length
+					filterGeoJSONByDate(data.collisions, twoMonthsAgo, oneMonthAgo).features.length,
+					filterGeoJSONByDate(data.collisions, threeMonthsAgo, twoMonthsAgo).features.length
 				],
 				color: getColor("collision")
 			},{
 				type: "nearmiss",
 				value: [
-					nearmissesThisMonth.features.length,
+					filterGeoJSONByDate(data.nearmisses, twoMonthsAgo, oneMonthAgo).features.length,
 					nearmissesOneMonthAgo.features.length,
-					nearmissesTwoMonthsAgo.features.length
+					filterGeoJSONByDate(data.nearmisses, threeMonthsAgo, twoMonthsAgo).features.length
 				],
 				color: getColor("nearmiss")
 			},{
 				type: "hazard",
 				value: [
 					hazardsThisMonth.features.length,
-					hazardsOneMonthAgo.features.length,
-					hazardsTwoMonthsAgo.features.length
+					filterGeoJSONByDate(data.hazards, twoMonthsAgo, oneMonthAgo).features.length,
+					filterGeoJSONByDate(data.hazards, threeMonthsAgo, twoMonthsAgo).features.length
 				],
 				color: getColor("hazard")
 			},{
 				type: "theft",
 				value: [
 					theftsThisMonth.features.length,
-					theftsOneMonthAgo.features.length,
-					theftsTwoMonthsAgo.features.length
+					filterGeoJSONByDate(data.thefts, twoMonthsAgo, oneMonthAgo).features.length,
+					filterGeoJSONByDate(data.thefts, threeMonthsAgo, twoMonthsAgo).features.length
 				],
 				color: getColor("theft")
 			}
