@@ -135,11 +135,13 @@
 
 
         // Add points to map, create layers used by stats.js to highlight points on map
+    		// All points in the polygon that occured in the previous month
     	var recentCollisionsLayer = geojsonCircleMarker(collisionsThisMonth, "collision").addTo(map),
     		recentNearmissesLayer = geojsonCircleMarker(nearmissesThisMonth, "nearmiss").addTo(map),
 	    	recentHazardsLayer = geojsonCircleMarker(hazardsThisMonth, "hazard").addTo(map),
 	    	recentTheftsLayer = geojsonCircleMarker(theftsThisMonth, "theft").addTo(map),
-
+	    	// Any point not in recentXLayer
+	    	// TODO these don't include recent points outside of the polygon, only old ones
     		otherCollisionsLayer = geojsonCircleMarker(filterGeoJSONByDate({{ collisions|geojsonfeature:"date"|safe }}, null, oneMonthAgo), "collision").addTo(map),
     		otherNearmissesLayer = geojsonCircleMarker(filterGeoJSONByDate({{ nearmisses|geojsonfeature:"date"|safe }}, null, oneMonthAgo), "nearmiss").addTo(map),
 	    	otherHazardsLayer = geojsonCircleMarker(filterGeoJSONByDate({{ hazards|geojsonfeature:"date"|safe }}, null, oneMonthAgo), "hazard").addTo(map),
