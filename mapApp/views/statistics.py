@@ -40,6 +40,11 @@ def stats(request):
 
 		'geofences': rois,
 
+		'collisions': collisions,
+		'nearmisses': nearmisses,
+		'hazards': hazards,
+		'thefts': thefts,
+
 		'collisionsInPoly': collisionsInPoly,
 		'nearmissesInPoly': nearmissesInPoly,
 		'hazardsInPoly': hazardsInPoly,

@@ -120,35 +120,40 @@
 		var collisionsThisMonth = filterGeoJSONByDate({{ collisionsInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now),
 			nearmissesThisMonth = filterGeoJSONByDate({{ nearmissesInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now),
 			hazardsThisMonth = filterGeoJSONByDate({{ hazardsInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now),
-			theftsThisMonth = filterGeoJSONByDate({{ theftsInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now);
+			theftsThisMonth = filterGeoJSONByDate({{ theftsInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now),
+
+			collisionsOneMonthAgo = filterGeoJSONByDate({{ collisionsInPoly|geojsonfeature:"date"|safe }}, twoMonthsAgo, oneMonthAgo),
+			nearmissesOneMonthAgo = filterGeoJSONByDate({{ nearmissesInPoly|geojsonfeature:"date"|safe }}, twoMonthsAgo, oneMonthAgo),
+			hazardsOneMonthAgo = filterGeoJSONByDate({{ hazardsInPoly|geojsonfeature:"date"|safe }}, twoMonthsAgo, oneMonthAgo),
+			theftsOneMonthAgo = filterGeoJSONByDate({{ theftsInPoly|geojsonfeature:"date"|safe }}, twoMonthsAgo, oneMonthAgo),
+
+			collisionsTwoMonthsAgo = filterGeoJSONByDate({{ collisionsInPoly|geojsonfeature:"date"|safe }}, threeMonthsAgo, twoMonthsAgo),
+			nearmissesTwoMonthsAgo = filterGeoJSONByDate({{ nearmissesInPoly|geojsonfeature:"date"|safe }}, threeMonthsAgo, twoMonthsAgo),
+			hazardsTwoMonthsAgo = filterGeoJSONByDate({{ hazardsInPoly|geojsonfeature:"date"|safe }}, threeMonthsAgo, twoMonthsAgo),
+			theftsTwoMonthsAgo = filterGeoJSONByDate({{ theftsInPoly|geojsonfeature:"date"|safe }}, threeMonthsAgo, twoMonthsAgo);
 
 
-		// TODO filter by other date ranges to get different snapshots of database
 
+        // Add points to map, create layers used by stats.js to highlight points on map
+    	var recentCollisionsLayer = geojsonCircleMarker(collisionsThisMonth, "collision").addTo(map),
+    		recentNearmissesLayer = geojsonCircleMarker(nearmissesThisMonth, "nearmiss").addTo(map),
+	    	recentHazardsLayer = geojsonCircleMarker(hazardsThisMonth, "hazard").addTo(map),
+	    	recentTheftsLayer = geojsonCircleMarker(theftsThisMonth, "theft").addTo(map),
 
-        // Add points to map
-    	var recentCollisions = geojsonCircleMarker(collisionsThisMonth, "collision").addTo(map);
-    	var recentNearmisses = geojsonCircleMarker(nearmissesThisMonth, "nearmiss").addTo(map);
-	    var recentHazards = geojsonCircleMarker(hazardsThisMonth, "hazard").addTo(map);
-	    var recentThefts = geojsonCircleMarker(theftsThisMonth, "theft").addTo(map);
-
-
-	    // TODO Should include all points not in recentX layer
-    	var otherCollisions = geojsonCircleMarker({{ collisionsOutPoly|geojsonfeature|safe }}, "collision").addTo(map);
-    	var otherNearmisses = geojsonCircleMarker({{ nearmissesOutPoly|geojsonfeature|safe }}, "nearmiss").addTo(map);
-	    var otherHazards = geojsonCircleMarker({{ hazardsOutPoly|geojsonfeature|safe }}, "hazard").addTo(map);
-	    var otherThefts = geojsonCircleMarker({{ theftsOutPoly|geojsonfeature|safe }}, "theft").addTo(map);
+    		otherCollisionsLayer = geojsonCircleMarker(filterGeoJSONByDate({{ collisions|geojsonfeature:"date"|safe }}, null, oneMonthAgo), "collision").addTo(map),
+    		otherNearmissesLayer = geojsonCircleMarker(filterGeoJSONByDate({{ nearmisses|geojsonfeature:"date"|safe }}, null, oneMonthAgo), "nearmiss").addTo(map),
+	    	otherHazardsLayer = geojsonCircleMarker(filterGeoJSONByDate({{ hazards|geojsonfeature:"date"|safe }}, null, oneMonthAgo), "hazard").addTo(map),
+	    	otherTheftsLayer = geojsonCircleMarker(filterGeoJSONByDate({{ thefts|geojsonfeature:"date"|safe }}, null, oneMonthAgo), "theft").addTo(map);
 
 
 		// Create dataset out of django context
 		// Note, data and counts are for last month of points in user alert areas only, not total points
-		var data = [ 
+		initializeBarChart([ 
 			{ type: "collision", 	value: collisionsThisMonth.features.length, 	color: getColor("collision") }, 
 			{ type: "nearmiss", 	value: nearmissesThisMonth.features.length, 	color: getColor("nearmiss") }, 
 			{ type: "hazard", 		value: hazardsThisMonth.features.length, 		color: getColor("hazard") }, 
 			{ type: "theft", 		value: theftsThisMonth.features.length, 		color: getColor("theft") }
-		];
-		initializeBarChart(data);
+		]);
 
 
 		// Filter a GeoJSON object with date property by a range starting with startDate, ending with endDate
