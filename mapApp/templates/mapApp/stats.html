@@ -123,18 +123,22 @@
 			theftsThisMonth = filterGeoJSONByDate({{ theftsInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now);
 
 
+		// TODO filter by other date ranges to get different snapshots of database
+
+
         // Add points to map
     	var recentCollisions = geojsonCircleMarker(collisionsThisMonth, "collision").addTo(map);
     	var recentNearmisses = geojsonCircleMarker(nearmissesThisMonth, "nearmiss").addTo(map);
 	    var recentHazards = geojsonCircleMarker(hazardsThisMonth, "hazard").addTo(map);
 	    var recentThefts = geojsonCircleMarker(theftsThisMonth, "theft").addTo(map);
 
+
+	    // TODO Should include all points not in recentX layer
     	var otherCollisions = geojsonCircleMarker({{ collisionsOutPoly|geojsonfeature|safe }}, "collision").addTo(map);
     	var otherNearmisses = geojsonCircleMarker({{ nearmissesOutPoly|geojsonfeature|safe }}, "nearmiss").addTo(map);
 	    var otherHazards = geojsonCircleMarker({{ hazardsOutPoly|geojsonfeature|safe }}, "hazard").addTo(map);
 	    var otherThefts = geojsonCircleMarker({{ theftsOutPoly|geojsonfeature|safe }}, "theft").addTo(map);
 
-	    console.log(theftsThisMonth);
 
 		// Create dataset out of django context
 		// Note, data and counts are for last month of points in user alert areas only, not total points
@@ -146,14 +150,20 @@
 		];
 		initializeBarChart(data);
 
-		// startDate is exclusive, endDate is inclusive
+
+		// Filter a GeoJSON object with date property by a range starting with startDate, ending with endDate
+		// 	startDate is exclusive, endDate is inclusive. 
+		// 	if startDate null, all dates prior or equal to endDate inclusive
 		function filterGeoJSONByDate(geojson, startDate, endDate){
 			var result = geojson;
-			result.features = $.grep(geojson.features, function(n,i){
-				return (moment(n.properties.date) > startDate && moment(n.properties.date) <= endDate);
-			});
+			result.features = $.grep(geojson.features, function(n,i){ return (moment(n.properties.date) <= endDate); });
+			
+			if(startDate)
+				result.features = $.grep(geojson.features, function(n,i){ return (moment(n.properties.date) > startDate); });
+			
 			return result;
 		};
+
 	</script>
 
 
