@@ -117,10 +117,10 @@ function highlightPoints(){
 
 // Helper method returns the var layer names in stats.html using simple type parameter. eg, calling with type 'collision' returns all the collision layers
 function getLayer(type){
-    if(type == "collision") return [recentCollisionsLayer, otherCollisionsLayer]
-    else if(type == "nearmiss") return [recentNearmissesLayer, otherNearmissesLayer]; 
-    else if(type == "hazard") return [recentHazardsLayer, otherHazardsLayer];
-    else return [recentTheftsLayer, otherTheftsLayer];
+    if(type == "collision") return [recentCollisionsLayer, allCollisionsLayer]
+    else if(type == "nearmiss") return [recentNearmissesLayer, allNearmissesLayer]; 
+    else if(type == "hazard") return [recentHazardsLayer, allHazardsLayer];
+    else return [recentTheftsLayer, allTheftsLayer];
 };
 
 

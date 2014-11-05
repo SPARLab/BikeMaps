@@ -1,7 +1,3 @@
-<!-- TODO
-		Filter geojson data client side rather than server side
-
- -->
 {% extends "mapApp/base.html" %}
 {% load staticfiles %}
 {% load geojson_tags %}
@@ -117,6 +113,7 @@
 			threeMonthsAgo = moment().subtract(3, 'months');
 
 		// Filter by date to get different datasets
+		// TODO do this in stats.js
 		var collisionsThisMonth = filterGeoJSONByDate({{ collisionsInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now),
 			nearmissesThisMonth = filterGeoJSONByDate({{ nearmissesInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now),
 			hazardsThisMonth = filterGeoJSONByDate({{ hazardsInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now),
@@ -140,12 +137,12 @@
     		recentNearmissesLayer = geojsonCircleMarker(nearmissesThisMonth, "nearmiss").addTo(map),
 	    	recentHazardsLayer = geojsonCircleMarker(hazardsThisMonth, "hazard").addTo(map),
 	    	recentTheftsLayer = geojsonCircleMarker(theftsThisMonth, "theft").addTo(map),
-	    	// Any point not in recentXLayer
-	    	// TODO these don't include recent points outside of the polygon, only old ones
-    		otherCollisionsLayer = geojsonCircleMarker(filterGeoJSONByDate({{ collisions|geojsonfeature:"date"|safe }}, null, oneMonthAgo), "collision").addTo(map),
-    		otherNearmissesLayer = geojsonCircleMarker(filterGeoJSONByDate({{ nearmisses|geojsonfeature:"date"|safe }}, null, oneMonthAgo), "nearmiss").addTo(map),
-	    	otherHazardsLayer = geojsonCircleMarker(filterGeoJSONByDate({{ hazards|geojsonfeature:"date"|safe }}, null, oneMonthAgo), "hazard").addTo(map),
-	    	otherTheftsLayer = geojsonCircleMarker(filterGeoJSONByDate({{ thefts|geojsonfeature:"date"|safe }}, null, oneMonthAgo), "theft").addTo(map);
+
+    		allCollisionsLayer = geojsonCircleMarker({{ collisions|geojsonfeature|safe }}, "collision").addTo(map),
+    		allNearmissesLayer = geojsonCircleMarker({{ nearmisses|geojsonfeature|safe }}, "nearmiss").addTo(map),
+	    	allHazardsLayer = geojsonCircleMarker({{ hazards|geojsonfeature|safe }}, "hazard").addTo(map),
+	    	allTheftsLayer = geojsonCircleMarker({{ thefts|geojsonfeature|safe }}, "theft").addTo(map);
+
 
 
 		// Create dataset out of django context
@@ -156,6 +153,16 @@
 			{ type: "hazard", 		value: hazardsThisMonth.features.length, 		color: getColor("hazard") }, 
 			{ type: "theft", 		value: theftsThisMonth.features.length, 		color: getColor("theft") }
 		]);
+
+		// TODO document, clean up this code
+		// initializeLineChart([
+		// 	{ type: "collision",	value: [ collisionsThisMonth.features.length, .features.length, .features.length ],	color: getColor("collision") }, 
+		// 	{ type: "nearmiss", 	value: [ nearmissesThisMonth.features.length, .features.length, .features.length ],	color: getColor("nearmiss") }, 
+		// 	{ type: "hazard", 		value: [ hazardsThisMonth.features.length, .features.length, .features.length ],	color: getColor("hazard") }, 
+		// 	{ type: "theft", 		value: [ theftsThisMonth.features.length, .features.length, .features.length ],		color: getColor("theft") }
+		// ]);
+
+
 
 
 		// Filter a GeoJSON object with date property by a range starting with startDate, ending with endDate
