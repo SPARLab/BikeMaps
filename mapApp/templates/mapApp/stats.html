@@ -1,3 +1,7 @@
+<!-- TODO
+		Filter geojson data client side rather than server side
+
+ -->
 {% extends "mapApp/base.html" %}
 {% load staticfiles %}
 {% load geojson_tags %}
@@ -21,6 +25,9 @@
     <!-- d3 v3.4.8 -->
     <script src="{% static 'd3/d3.min.js' %}" charset="utf-8"></script>
     
+    <!-- moment.js date library -->
+    <script src="{% static 'moment/moment.min.js' %}"></script>
+
     <!-- Load leaflet -->
     <script src="{% static 'leaflet/leaflet.js' %}"></script>
 
@@ -62,7 +69,7 @@
 			<div class="col-xs-6" style="height: 100%;">
 				<div class="col-xs-12" style="padding: 5px">
 					<div class="panel panel-primary">
-					  <div class="panel-heading">Reports this month ({{date_lastmonth|date:"M d" }} - {{date_today|date:"M d"}})</div>
+					  <div class="panel-heading">Reports this month ( - )</div>
 					  <div class="panel-body">
 						<svg id="barchart" width='100%' height='100%'></svg>
 					  </div>
@@ -94,7 +101,6 @@
 		// Create the map (call to map.js)
         initialize({% if request.mobile %} mobile=true {% endif %});
 
-
    		// Fit map extent to alert areas boundary
         var areasLatLngList = [];
         {% for polygon in geofences %}
@@ -104,27 +110,50 @@
         {% endfor %}
         map.fitBounds(L.latLngBounds(areasLatLngList));
 
+        // Make dates to use for filtering 
+		var now = moment(),
+			oneMonthAgo = moment().subtract(1, 'month'),
+			twoMonthsAgo = moment().subtract(2, 'months'),
+			threeMonthsAgo = moment().subtract(3, 'months');
 
-        // Load all point data
-    	var otherCollisions = geojsonCircleMarker({{ otherCollisions|geojsonfeature|safe }}, "collision").addTo(map);
-    	var otherNearmisses = geojsonCircleMarker({{ otherNearmisses|geojsonfeature|safe }}, "nearmiss").addTo(map);
-	    var otherHazards = geojsonCircleMarker({{ otherHazards|geojsonfeature|safe }}, "hazard").addTo(map);
-	    var otherThefts = geojsonCircleMarker({{ otherThefts|geojsonfeature|safe }}, "theft").addTo(map);
+		// Filter by date to get different datasets
+		var collisionsThisMonth = filterGeoJSONByDate({{ collisionsInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now),
+			nearmissesThisMonth = filterGeoJSONByDate({{ nearmissesInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now),
+			hazardsThisMonth = filterGeoJSONByDate({{ hazardsInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now),
+			theftsThisMonth = filterGeoJSONByDate({{ theftsInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now);
 
-    	var recentCollisions = geojsonCircleMarker({{ recentCollisions|geojsonfeature|safe }}, "collision").addTo(map);
-    	var recentNearmisses = geojsonCircleMarker({{ recentNearmisses|geojsonfeature|safe }}, "nearmiss").addTo(map);
-	    var recentHazards = geojsonCircleMarker({{ recentHazards|geojsonfeature|safe }}, "hazard").addTo(map);
-	    var recentThefts = geojsonCircleMarker({{ recentThefts|geojsonfeature|safe }}, "theft").addTo(map);
+
+        // Add points to map
+    	var recentCollisions = geojsonCircleMarker(collisionsThisMonth, "collision").addTo(map);
+    	var recentNearmisses = geojsonCircleMarker(nearmissesThisMonth, "nearmiss").addTo(map);
+	    var recentHazards = geojsonCircleMarker(hazardsThisMonth, "hazard").addTo(map);
+	    var recentThefts = geojsonCircleMarker(theftsThisMonth, "theft").addTo(map);
+
+    	var otherCollisions = geojsonCircleMarker({{ collisionsOutPoly|geojsonfeature|safe }}, "collision").addTo(map);
+    	var otherNearmisses = geojsonCircleMarker({{ nearmissesOutPoly|geojsonfeature|safe }}, "nearmiss").addTo(map);
+	    var otherHazards = geojsonCircleMarker({{ hazardsOutPoly|geojsonfeature|safe }}, "hazard").addTo(map);
+	    var otherThefts = geojsonCircleMarker({{ theftsOutPoly|geojsonfeature|safe }}, "theft").addTo(map);
+
+	    console.log(theftsThisMonth);
 
 		// Create dataset out of django context
 		// Note, data and counts are for last month of points in user alert areas only, not total points
 		var data = [ 
-			{ type: "collision", 	value: {{ recentCollisions.count }}, 	color: getColor("collision") }, 
-			{ type: "nearmiss", 	value: {{ recentNearmisses.count }}, 	color: getColor("nearmiss") }, 
-			{ type: "hazard", 		value: {{ recentHazards.count }}, 		color: getColor("hazard") }, 
-			{ type: "theft", 		value: {{ recentThefts.count }}, 		color: getColor("theft") }
+			{ type: "collision", 	value: collisionsThisMonth.features.length, 	color: getColor("collision") }, 
+			{ type: "nearmiss", 	value: nearmissesThisMonth.features.length, 	color: getColor("nearmiss") }, 
+			{ type: "hazard", 		value: hazardsThisMonth.features.length, 		color: getColor("hazard") }, 
+			{ type: "theft", 		value: theftsThisMonth.features.length, 		color: getColor("theft") }
 		];
 		initializeBarChart(data);
+
+		// startDate is exclusive, endDate is inclusive
+		function filterGeoJSONByDate(geojson, startDate, endDate){
+			var result = geojson;
+			result.features = $.grep(geojson.features, function(n,i){
+				return (moment(n.properties.date) > startDate && moment(n.properties.date) <= endDate);
+			});
+			return result;
+		};
 	</script>
 
 

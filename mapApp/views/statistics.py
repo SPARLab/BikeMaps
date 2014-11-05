@@ -10,15 +10,8 @@ from mapApp.models.alert_area import AlertArea
 from django.contrib.auth.models import User
 from mapApp.models.alert_notification import IncidentNotification, HazardNotification, TheftNotification
 
-from datetime import datetime, timedelta
-from django.utils import timezone
-
-
 def stats(request):
 	user = request.user
-
-	now = timezone.now()
-	monthPast = now - timedelta(1*365/12)
 
 	# Get the user's alertable points in the last month
 	incidents = Incident.objects.all()#filter(incidentNotification__user=user.id)
@@ -28,43 +21,34 @@ def stats(request):
 	hazards = Hazard.objects.all()
 	thefts = Theft.objects.all()
 
-	roi = AlertArea.objects.filter(user=user.id)
+	rois = AlertArea.objects.filter(user=user.id)
 
-	# recent sets = points that intersect an roi as defined by user and are reported in last month
-	recentCollisions = Incident.objects.none()
-	recentNearmisses = Incident.objects.none()
-	recentHazards = Hazard.objects.none()
-	recentThefts = Theft.objects.none()
+	# recent sets = points that intersect an rois as defined by user and are reported in last month
+	collisionsInPoly = Incident.objects.none()
+	nearmissesInPoly = Incident.objects.none()
+	hazardsInPoly = Hazard.objects.none()
+	theftsInPoly = Theft.objects.none()
 	# Find intersecting points
-	for g in roi:
-		recentCollisions = recentCollisions | collisions.filter(geom__intersects=g.geom)
-		recentNearmisses = recentNearmisses | nearmisses.filter(geom__intersects=g.geom)
-		recentHazards = recentHazards | hazards.filter(geom__intersects=g.geom)
-		recentThefts = recentThefts | thefts.filter(geom__intersects=g.geom)
-	# Filter by date
-	recentCollisions = recentCollisions.filter(date__range=[monthPast, now])
-	recentNearmisses = recentNearmisses.filter(date__range=[monthPast, now])
-	recentHazards = recentHazards.filter(date__range=[monthPast, now])
-	recentThefts = recentThefts.filter(date__range=[monthPast, now])
+	for g in rois:
+		collisionsInPoly = collisionsInPoly | collisions.filter(geom__intersects=g.geom)
+		nearmissesInPoly = nearmissesInPoly | nearmisses.filter(geom__intersects=g.geom)
+		hazardsInPoly = hazardsInPoly | hazards.filter(geom__intersects=g.geom)
+		theftsInPoly = theftsInPoly | thefts.filter(geom__intersects=g.geom)
 
 	context = {
 		'user': user,
 
-		'date_today': now,
-		'date_lastmonth': monthPast,
-	
-		"geofences": roi,
+		'geofences': rois,
 
-		'recentCollisions': recentCollisions,
-		'recentNearmisses': recentNearmisses,
-		'recentHazards': recentHazards,
-		'recentThefts': recentThefts,
+		'collisionsInPoly': collisionsInPoly,
+		'nearmissesInPoly': nearmissesInPoly,
+		'hazardsInPoly': hazardsInPoly,
+		'theftsInPoly': theftsInPoly,
 
-		'otherCollisions': collisions.exclude(pk__in=recentCollisions),
-		'otherNearmisses': nearmisses.exclude(pk__in=recentNearmisses),
-		'otherHazards': hazards.exclude(pk__in=recentHazards),
-		'otherThefts': thefts.exclude(pk__in=recentThefts),
-
+		'collisionsOutPoly': collisions.exclude(pk__in=collisionsInPoly),
+		'nearmissesOutPoly': nearmisses.exclude(pk__in=nearmissesInPoly),
+		'hazardsOutPoly': hazards.exclude(pk__in=hazardsInPoly),
+		'theftsOutPoly': thefts.exclude(pk__in=theftsInPoly),
 	}
 
 	return render(request, 'mapApp/stats.html', context)
