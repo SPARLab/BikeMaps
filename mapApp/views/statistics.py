@@ -50,10 +50,10 @@ def stats(request):
 		'hazardsInPoly': hazardsInPoly,
 		'theftsInPoly': theftsInPoly,
 
-		'collisionsOutPoly': collisions.exclude(pk__in=collisionsInPoly),
-		'nearmissesOutPoly': nearmisses.exclude(pk__in=nearmissesInPoly),
-		'hazardsOutPoly': hazards.exclude(pk__in=hazardsInPoly),
-		'theftsOutPoly': thefts.exclude(pk__in=theftsInPoly),
+		# 'collisionsOutPoly': collisions.exclude(pk__in=collisionsInPoly),
+		# 'nearmissesOutPoly': nearmisses.exclude(pk__in=nearmissesInPoly),
+		# 'hazardsOutPoly': hazards.exclude(pk__in=hazardsInPoly),
+		# 'theftsOutPoly': thefts.exclude(pk__in=theftsInPoly),
 	}
 
 	return render(request, 'mapApp/stats.html', context)

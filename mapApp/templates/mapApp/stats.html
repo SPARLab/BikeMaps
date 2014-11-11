@@ -97,55 +97,56 @@
 
 	<script>
 		// Create the map (call to map.js)
-        initialize(scrollZoom=false {% if request.mobile %}, mobile=true {% endif %});
+    initialize(scrollZoom=false {% if request.mobile %}, mobile=true {% endif %});
 
-   		// Fit map extent to alert areas boundary
-        var areasLatLngList = [];
-        {% for polygon in geofences %}
-            areasLatLngList.push({{ polygon.latlngList }});
-	        // Add polygon to map
-            getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} );
-        {% endfor %}
-        map.fitBounds(L.latLngBounds(areasLatLngList));
+   	// Fit map extent to alert areas boundary
+    var areasLatLngList = [];
+    {% for polygon in geofences %}
+    	areasLatLngList.push({{ polygon.latlngList }});
+      // Add polygon to map
+        getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} );
+    {% endfor %}
+    map.fitBounds(L.latLngBounds(areasLatLngList));
 
-        // Make dates to use for filtering
-		var now = moment(),
-			oneMonthAgo = moment().subtract(1, 'month'),
-			twoMonthsAgo = moment().subtract(2, 'months'),
-			threeMonthsAgo = moment().subtract(3, 'months');
+    var data = {
+			// Points in a user polygon
+			collisionsROI: {{ collisionsInPoly|geojsonfeature:"date"|safe }},
+			nearmissesROI: {{ nearmissesInPoly|geojsonfeature:"date"|safe }},
+			hazardsROI: 	{{ hazardsInPoly|geojsonfeature:"date"|safe }},
+			theftsROI: 	{{ theftsInPoly|geojsonfeature:"date"|safe }},
+
+			// All points
+			collisions: {{ collisions|geojsonfeature:"date"|safe }},
+			nearmisses: {{ nearmisses|geojsonfeature:"date"|safe }},
+			hazards: 	{{ hazards|geojsonfeature:"date"|safe }},
+			thefts: 	{{ thefts|geojsonfeature:"date"|safe }},
+
+			// Make dates to use for filtering
+			now: moment(),
+			oneMonthAgo: moment().subtract(1, 'month'),
+			twoMonthsAgo: moment().subtract(2, 'months'),
+			threeMonthsAgo: moment().subtract(3, 'months')
+		};
+
 
 		// Filter by date to get different datasets
 		// TODO do this in stats.js
-		var collisionsThisMonth = filterGeoJSONByDate({{ collisionsInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now),
-			nearmissesThisMonth = filterGeoJSONByDate({{ nearmissesInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now),
-			hazardsThisMonth = filterGeoJSONByDate({{ hazardsInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now),
-			theftsThisMonth = filterGeoJSONByDate({{ theftsInPoly|geojsonfeature:"date"|safe }}, oneMonthAgo, now),
+		var collisionsThisMonth = filterGeoJSONByDate(data.collisionsROI, data.oneMonthAgo, data.now),
+			nearmissesThisMonth = filterGeoJSONByDate(data.nearmissesROI, data.oneMonthAgo, data.now),
+			hazardsThisMonth = filterGeoJSONByDate(data.hazardsROI, data.oneMonthAgo, data.now),
+			theftsThisMonth = filterGeoJSONByDate(data.theftsROI, data.oneMonthAgo, data.now);
 
-			collisionsOneMonthAgo = filterGeoJSONByDate({{ collisionsInPoly|geojsonfeature:"date"|safe }}, twoMonthsAgo, oneMonthAgo),
-			nearmissesOneMonthAgo = filterGeoJSONByDate({{ nearmissesInPoly|geojsonfeature:"date"|safe }}, twoMonthsAgo, oneMonthAgo),
-			hazardsOneMonthAgo = filterGeoJSONByDate({{ hazardsInPoly|geojsonfeature:"date"|safe }}, twoMonthsAgo, oneMonthAgo),
-			theftsOneMonthAgo = filterGeoJSONByDate({{ theftsInPoly|geojsonfeature:"date"|safe }}, twoMonthsAgo, oneMonthAgo),
+    // Add points to map, create layers used by stats.js to highlight points on map
+		// All points in the polygon that occured in the previous month
+		var recentCollisionsLayer = geojsonCircleMarker(collisionsThisMonth, "collision").addTo(map),
+			recentNearmissesLayer = geojsonCircleMarker(nearmissesThisMonth, "nearmiss").addTo(map),
+			recentHazardsLayer = geojsonCircleMarker(hazardsThisMonth, "hazard").addTo(map),
+			recentTheftsLayer = geojsonCircleMarker(theftsThisMonth, "theft").addTo(map),
 
-			collisionsTwoMonthsAgo = filterGeoJSONByDate({{ collisionsInPoly|geojsonfeature:"date"|safe }}, threeMonthsAgo, twoMonthsAgo),
-			nearmissesTwoMonthsAgo = filterGeoJSONByDate({{ nearmissesInPoly|geojsonfeature:"date"|safe }}, threeMonthsAgo, twoMonthsAgo),
-			hazardsTwoMonthsAgo = filterGeoJSONByDate({{ hazardsInPoly|geojsonfeature:"date"|safe }}, threeMonthsAgo, twoMonthsAgo),
-			theftsTwoMonthsAgo = filterGeoJSONByDate({{ theftsInPoly|geojsonfeature:"date"|safe }}, threeMonthsAgo, twoMonthsAgo);
-
-
-
-        // Add points to map, create layers used by stats.js to highlight points on map
-    		// All points in the polygon that occured in the previous month
-    	var recentCollisionsLayer = geojsonCircleMarker(collisionsThisMonth, "collision").addTo(map),
-    		recentNearmissesLayer = geojsonCircleMarker(nearmissesThisMonth, "nearmiss").addTo(map),
-	    	recentHazardsLayer = geojsonCircleMarker(hazardsThisMonth, "hazard").addTo(map),
-	    	recentTheftsLayer = geojsonCircleMarker(theftsThisMonth, "theft").addTo(map),
-
-    		allCollisionsLayer = geojsonCircleMarker({{ collisions|geojsonfeature|safe }}, "collision").addTo(map),
-    		allNearmissesLayer = geojsonCircleMarker({{ nearmisses|geojsonfeature|safe }}, "nearmiss").addTo(map),
-	    	allHazardsLayer = geojsonCircleMarker({{ hazards|geojsonfeature|safe }}, "hazard").addTo(map),
-	    	allTheftsLayer = geojsonCircleMarker({{ thefts|geojsonfeature|safe }}, "theft").addTo(map);
-
-
+			allCollisionsLayer = geojsonCircleMarker(data.collisions, "collision").addTo(map),
+			allNearmissesLayer = geojsonCircleMarker(data.nearmisses, "nearmiss").addTo(map),
+			allHazardsLayer = geojsonCircleMarker(data.hazards, "hazard").addTo(map),
+			allTheftsLayer = geojsonCircleMarker(data.thefts, "theft").addTo(map);
 
 		// Create dataset out of django context
 		// Note, data and counts are for last month of points in user alert areas only, not total points
@@ -166,7 +167,6 @@
 
 
 
-
 		// Filter a GeoJSON object with date property by a range starting with startDate, ending with endDate
 		// 	startDate is exclusive, endDate is inclusive.
 		// 	if startDate null, all dates prior or equal to endDate inclusive
@@ -181,8 +181,5 @@
 		};
 
 	</script>
-
-
-	<!-- Longterm: fancier graphs that monitor change -->
 
 {% endblock %}

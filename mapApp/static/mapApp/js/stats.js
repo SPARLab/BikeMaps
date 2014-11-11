@@ -89,8 +89,8 @@ function initializeBarChart(data) {
 function highlightPoints(){
     $("#barchart rect").mouseenter(function(){
         // highlight chart rectangle
-        $(this).attr("stroke-width", "3"); 
-        
+        $(this).attr("stroke-width", "3");
+
         // show highlighted points on map
         var layer = getLayer($(this).attr("type"));
         layer[0].setStyle({
@@ -118,7 +118,7 @@ function highlightPoints(){
 // Helper method returns the var layer names in stats.html using simple type parameter. eg, calling with type 'collision' returns all the collision layers
 function getLayer(type){
     if(type == "collision") return [recentCollisionsLayer, allCollisionsLayer]
-    else if(type == "nearmiss") return [recentNearmissesLayer, allNearmissesLayer]; 
+    else if(type == "nearmiss") return [recentNearmissesLayer, allNearmissesLayer];
     else if(type == "hazard") return [recentHazardsLayer, allHazardsLayer];
     else return [recentTheftsLayer, allTheftsLayer];
 };
