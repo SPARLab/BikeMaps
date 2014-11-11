@@ -20,7 +20,7 @@
 {% block headerJS %}
     <!-- d3 v3.4.8 -->
     <script src="{% static 'd3/d3.min.js' %}" charset="utf-8"></script>
-    
+
     <!-- moment.js date library -->
     <script src="{% static 'moment/moment.min.js' %}"></script>
 
@@ -47,22 +47,22 @@
 {% block body %}
 
 	<style type="text/css">
-		#map { 
+		#map {
 			height: 100%;
 			margin-top: 0px;
 		}
 	</style>
-	
+
 
 	<div class="container-fluid" style="height: 100%">
 		<div class="row"style="height: 100%">
-			<div class="col-xs-6" style="height: 100%;">
+			<div class="col-xs-12 col-md-6" style="height: 100%;">
 				<!-- Map of one month of reports -->
 				<div id="map"></div>
 			</div>
 		<!-- Bar graph of Alert area points by type -->
 		<!-- See http://bost.ocks.org/mike/bar/ for bar chart tutorials -->
-			<div class="col-xs-6" style="height: 100%;">
+			<div class="col-xs-12 col-md-6" style="height: 100%;">
 				<div class="col-xs-12" style="padding: 5px">
 					<div class="panel panel-primary">
 					  <div class="panel-heading">Reports this month ( - )</div>
@@ -71,6 +71,7 @@
 					  </div>
 					</div>
 				</div>
+				<!--
 				<div class="col-xs-12" style="padding: 5px">
 					<div class="panel panel-primary">
 					  <div class="panel-heading">Trend graph</div>
@@ -80,6 +81,7 @@
 					  </div>
 					</div>
 				</div>
+				-->
 				<div class="col-xs-12" style="padding: 5px">
 					<div class="panel panel-primary">
 					  <div class="panel-heading">Messages</div>
@@ -95,18 +97,18 @@
 
 	<script>
 		// Create the map (call to map.js)
-        initialize({% if request.mobile %} mobile=true {% endif %});
+        initialize(scrollZoom=false {% if request.mobile %}, mobile=true {% endif %});
 
    		// Fit map extent to alert areas boundary
         var areasLatLngList = [];
         {% for polygon in geofences %}
             areasLatLngList.push({{ polygon.latlngList }});
 	        // Add polygon to map
-            getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} ); 
+            getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} );
         {% endfor %}
         map.fitBounds(L.latLngBounds(areasLatLngList));
 
-        // Make dates to use for filtering 
+        // Make dates to use for filtering
 		var now = moment(),
 			oneMonthAgo = moment().subtract(1, 'month'),
 			twoMonthsAgo = moment().subtract(2, 'months'),
@@ -147,18 +149,18 @@
 
 		// Create dataset out of django context
 		// Note, data and counts are for last month of points in user alert areas only, not total points
-		initializeBarChart([ 
-			{ type: "collision", 	value: collisionsThisMonth.features.length, 	color: getColor("collision") }, 
-			{ type: "nearmiss", 	value: nearmissesThisMonth.features.length, 	color: getColor("nearmiss") }, 
-			{ type: "hazard", 		value: hazardsThisMonth.features.length, 		color: getColor("hazard") }, 
+		initializeBarChart([
+			{ type: "collision", 	value: collisionsThisMonth.features.length, 	color: getColor("collision") },
+			{ type: "nearmiss", 	value: nearmissesThisMonth.features.length, 	color: getColor("nearmiss") },
+			{ type: "hazard", 		value: hazardsThisMonth.features.length, 		color: getColor("hazard") },
 			{ type: "theft", 		value: theftsThisMonth.features.length, 		color: getColor("theft") }
 		]);
 
 		// TODO document, clean up this code
 		// initializeLineChart([
-		// 	{ type: "collision",	value: [ collisionsThisMonth.features.length, .features.length, .features.length ],	color: getColor("collision") }, 
-		// 	{ type: "nearmiss", 	value: [ nearmissesThisMonth.features.length, .features.length, .features.length ],	color: getColor("nearmiss") }, 
-		// 	{ type: "hazard", 		value: [ hazardsThisMonth.features.length, .features.length, .features.length ],	color: getColor("hazard") }, 
+		// 	{ type: "collision",	value: [ collisionsThisMonth.features.length, .features.length, .features.length ],	color: getColor("collision") },
+		// 	{ type: "nearmiss", 	value: [ nearmissesThisMonth.features.length, .features.length, .features.length ],	color: getColor("nearmiss") },
+		// 	{ type: "hazard", 		value: [ hazardsThisMonth.features.length, .features.length, .features.length ],	color: getColor("hazard") },
 		// 	{ type: "theft", 		value: [ theftsThisMonth.features.length, .features.length, .features.length ],		color: getColor("theft") }
 		// ]);
 
@@ -166,15 +168,15 @@
 
 
 		// Filter a GeoJSON object with date property by a range starting with startDate, ending with endDate
-		// 	startDate is exclusive, endDate is inclusive. 
+		// 	startDate is exclusive, endDate is inclusive.
 		// 	if startDate null, all dates prior or equal to endDate inclusive
 		function filterGeoJSONByDate(geojson, startDate, endDate){
 			var result = geojson;
 			result.features = $.grep(geojson.features, function(n,i){ return (moment(n.properties.date) <= endDate); });
-			
+
 			if(startDate)
 				result.features = $.grep(geojson.features, function(n,i){ return (moment(n.properties.date) > startDate); });
-			
+
 			return result;
 		};
 

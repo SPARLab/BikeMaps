@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.draw/dist/leaflet.draw.css' %}">
 
     <!-- Leaflet Geocoder -->
-    <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}"> 
+    <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}">
 {% endblock %}
 
 {% block headerJS %}
@@ -34,12 +34,12 @@
     {% if not request.mobile %}
     <!-- Load draw pluging -->
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/Leaflet.draw.js' %}"></script>
-    
+
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.Poly.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.SimpleShape.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.Circle.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/Edit.Rectangle.js' %}"></script>
-    
+
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Feature.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Polyline.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/handler/Draw.Polygon.js' %}"></script>
@@ -61,21 +61,21 @@
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/draw/DrawToolbar.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/EditToolbar.js' %}"></script>
     <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/EditToolbar.Edit.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/EditToolbar.Delete.js' %}"></script> 
+    <script src="{% static 'leaflet/plugins/leaflet.draw/src/edit/handler/EditToolbar.Delete.js' %}"></script>
     {% endif %}
 
     <!-- Used for pie chart creation -->
     <!-- d3 v3.4.8 -->
-    <script src="{% static 'd3/d3.min.js' %}" charset="utf-8"></script> 
+    <script src="{% static 'd3/d3.min.js' %}" charset="utf-8"></script>
 
     <!-- Leaflet Geocoder -->
-    <script src="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script> 
+    <script src="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script>
 
     <!-- Tooltips script -->
     <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
-    
+
     <!-- GeoJSON sources -->
-    <script src="{% static 'mapApp/data/policeData.js' %}"></script> 
+    <script src="{% static 'mapApp/data/policeData.js' %}"></script>
     <script src="{% static 'mapApp/data/icbcData.js' %}"></script>
 
     <!-- Load app js -->
@@ -88,8 +88,8 @@
 {% block body %}
     {% crispy geofenceForm %}
     {% include 'mapApp/incident_form.html' %}
-    
-    <!-- Leaflet map --> 
+
+    <!-- Leaflet map -->
     <div id="map"></div>
 
     <!-- JS to control message display and feature creation -->
@@ -114,16 +114,16 @@
             $('#geofenceForm').modal('show');
         });
         {% endif %}
-        
+
         // Add all geojson auxiliary data
         initializeGeoJSON();
 
         // Initialize the map
-        initialize({% if request.mobile %} mobile=true {% endif %});
+        initialize(scrollZoom=true {% if request.mobile %}, mobile=true {% endif %});
 
         // Load user alert areas from the database
         {% for polygon in geofences %}
-            getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} ); 
+            getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} );
         {% endfor %}
 
         // Load user points from the database
@@ -131,12 +131,12 @@
         var nearmisses = geojsonMakiMarker({{ nearmisses|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "nearmiss").addTo(incidentData);
         var hazards = geojsonMakiMarker({{ hazards|geojsonfeature:"hazard,hazard_date"|safe }}, "hazard").addTo(incidentData);
         var thefts = geojsonMakiMarker({{ thefts|geojsonfeature:"theft,theft_date"|safe }}, "theft").addTo(incidentData);
-        
+
         incidentData.addLayer(collisions);
         incidentData.addLayer(nearmisses);
         incidentData.addLayer(hazards);
         incidentData.addLayer(thefts);
-        
+
         addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
 
         // Set the appropriate map extend and zoom
@@ -150,7 +150,7 @@
             $(".user-menu").append('<li><a href="#"><small>Near misses: {{nearmisses|length}}</small></a></li>');
             $(".user-menu").append('<li><a href="#"><small>Hazards: {{hazards|length}}</small></a></li>');
             $(".user-menu").append('<li><a href="#"><small>Thefts: {{thefts|length}}</small></a></li>');
-            
+
             var total = {{thefts|length}}+{{hazards|length}}+{{collisions|length}}+{{nearmisses|length}}
             $(".user-menu").append('<li><a href="#"><small>Total: '+total+'</small></a></li>');
         {% endif %}
@@ -159,7 +159,7 @@
 
     <!-- Add modal help html -->
     {% include 'mapApp/util/tips.html' %}
-    
+
     <!-- Add draw controls and actions -->
     {% include 'mapApp/util/draw.html' %}
 

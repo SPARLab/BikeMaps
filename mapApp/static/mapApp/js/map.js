@@ -224,17 +224,18 @@ function addControls(mobile) {
 };
 
 
-// Purpose: Create the map with a tile layer and set the map global variable. Initialize geojson datasets, 
+// Purpose: Create the map with a tile layer and set the map global variable. Initialize geojson datasets,
 //      add controls, and legend items. Mobile parameter allows for rendering items differently for mobile users.
-function initialize(mobile) {
+function initialize(scrollZoom, mobile) {
     mobile = (typeof mobile !== 'undefined' ? mobile : false); //default value of mobile is false
 
-    // Map init and default layers 
+    // Map init and default layers
     map = L.map('map', {
         center: [48, -100],
         zoom: 4,
         layers: [skobbler, stravaHM, incidentData, alertAreas],
-        worldCopyJump: true
+        worldCopyJump: true,
+        scrollWheelZoom: scrollZoom
     });
 
     $(document).ready(mapListen);
@@ -326,7 +327,7 @@ function initialize(mobile) {
     };
 };
 
-// Purpose: Locate the user and add their location to the map. 
+// Purpose: Locate the user and add their location to the map.
 // 		Given lat, lng, and zoom, go to that point, else to user location
 function setView(lat, lng, zoom) {
     if (zoom) {
@@ -338,7 +339,7 @@ function setView(lat, lng, zoom) {
 };
 
 // Purpose: Find the user via GPS or internet connection.
-//      Parameters to determine if the maps view should be set to that location and if the position should be polled and updated 
+//      Parameters to determine if the maps view should be set to that location and if the position should be polled and updated
 function locateUser(setView, watch) {
     this.map.locate({
         setView: setView,
@@ -521,7 +522,7 @@ function getPopup(feature, type) {
 
 function makeNiceDate(d) {
     // "2014-10-28T10:00:00"
-    
+
     d = d.split("T");
     time = d[1].split(":");
     date = d[0].split("-");
@@ -533,7 +534,7 @@ function makeNiceDate(d) {
     return getMonthFromInt(date[1]).slice(0, 3) + ". " + date[2] + ", " + date[0] + ", " + time[0] + ":" + time[1] + (pm >= 1 ? "pm" : "am");
 };
 
-// Purpose: Convert a given geojson dataset to a CircleMarker point layer 
+// Purpose: Convert a given geojson dataset to a CircleMarker point layer
 function geojsonCircleMarker(data, type) {
     return L.geoJson(data, {
         pointToLayer: function(feature, latlng) {
@@ -549,7 +550,7 @@ function geojsonCircleMarker(data, type) {
     });
 };
 
-// Purpose: Convert a given geojson dataset to a MakiMarker point layer 
+// Purpose: Convert a given geojson dataset to a MakiMarker point layer
 //  and add all latlngs to the heatmap and bind appropriate popups to markers
 function geojsonMakiMarker(data, type) {
     return L.geoJson(data, {
