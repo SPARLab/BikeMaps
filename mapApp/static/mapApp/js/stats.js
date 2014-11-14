@@ -12,7 +12,7 @@ function initializeBarChart(data) {
     };
 
     var width = 500 - margin.left - margin.right,
-        height = width / 2 - margin.top - margin.bottom,
+        height = 250 - margin.top - margin.bottom,
         barWidth = width / data.length;
 
     // SCALES
