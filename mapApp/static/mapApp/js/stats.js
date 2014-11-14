@@ -11,7 +11,7 @@ function initializeBarChart(data) {
         left: 40
     };
 
-    var width = $('#barchart').width() - margin.left - margin.right,
+    var width = 500 - margin.left - margin.right,
         height = width / 2 - margin.top - margin.bottom,
         barWidth = width / data.length;
 
@@ -46,8 +46,8 @@ function initializeBarChart(data) {
     var chart = d3.select("#barchart")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-        // .append("g")
-        // .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     chart.append("g")
         .attr("class", "y axis")
