@@ -60,24 +60,36 @@
 	<div class="container-fluid" style="height: 100%">
 		<div class="row"style="height: 100%">
 
-			<div class="col-xs-12 col-md-6" style="height: 100%;">
+			<div class="col-xs-12 col-sm-6" style="height: 100%;">
 				<!-- Map of one month of reports -->
 				<div id="map"></div>
 			</div>
 
-			<div class="col-xs-12 col-md-6" style="height: 100%;">
+			<div class="col-xs-12 col-sm-6" style="height: 100%;">
 
 				<!-- Bar graph of Alert area points by type -->
 				<!-- See http://bost.ocks.org/mike/bar/ for bar chart tutorials -->
-				<div class="col-xs-12" style="padding: 5px">
-					<div class="panel panel-primary">
+				<div class="col-xs-12" style="padding: 5px" height="50%">
+					<div class="panel panel-primary" height='100%'>
 					  <div class="panel-heading">Reports this month ( - )</div>
-					  <div class="panel-body">
-						<svg id="barchart" width='100%' height='100%'></svg>
+					  <div class="panel-body" style="max-height: 40%;">
+						<svg id="barchart"
+							viewBox="-40 -20 500 250"
+						    preserveAspectRatio="xMidYMid">
+						</svg>
 					  </div>
 					</div>
 				</div>
-
+				<script charset="utf-8">
+					var barchart = $("#barchart"),
+						aspect = barchart.width() / barchart.height(),
+					    container = barchart.parent();
+					$(window).on("resize", function() {
+						var targetWidth = container.width();
+					    barchart.attr("width", targetWidth);
+					    barchart.attr("height", targetWidth / aspect);
+					}).trigger("resize");
+				</script>
 				<!--
 				<div class="col-xs-12" style="padding: 5px">
 					<div class="panel panel-primary">
