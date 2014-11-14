@@ -46,14 +46,14 @@
 		.item{
 		    background: #aaa;
 		    text-align: center;
-		    height: 400px !important;
+		    height: 500px !important;
 				padding: 5px;
 		}
 	</style>
 
 
 	<div class="container-fluid" style="height: 100%;">
-		<div class="row"style="height: 90%;">
+		<div class="row" style="height: 90%;">
 
 			<div class="col-xs-12 col-sm-6" style="height: 100%;">
 				<!-- Map of one month of reports -->
@@ -174,7 +174,7 @@
 			threeMonthsAgo: moment().subtract(3, 'months')
 		};
 
-
+		// Add date information to barchart title
 		$('#barchart-title').append(" ( " + data.oneMonthAgo.format("MMM D, YYYY") + " - " + data.now.format("MMM D, YYYY") + " )")
 
 		// Filter by date to get different datasets
