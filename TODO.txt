@@ -1,6 +1,8 @@
 #TO DO
 
 ###HIGHER PRIORITY
+* Create blog app
+* Add Karen safety information
 * Display more data in point popups
 * Email alerts monthly
 * Hazard deletion
@@ -45,8 +47,8 @@ BikeMaps – Functionality
 
 
 ##FROM DARREN
-- When you search for a word/phrase that returns multiple results, the text of the results is truncated. 
-	Try searching for 'shell' for example. The list of results should probably expand horizontally to accommodate 
+- When you search for a word/phrase that returns multiple results, the text of the results is truncated.
+	Try searching for 'shell' for example. The list of results should probably expand horizontally to accommodate
 	the width of the result items or the text in the result items may even need to wrap if it is sufficiently long
 - The search function doesn't seem to work from my Android phone.
 - When using a phone, it would be nice if the address bar could be
