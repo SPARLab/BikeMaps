@@ -65,7 +65,7 @@
 				<!-- See http://bost.ocks.org/mike/bar/ for bar chart tutorials -->
 				<div class="col-xs-12" style="padding: 5px">
 					<div class="panel panel-primary">
-					  <div class="panel-heading">Reports this month ( - )</div>
+					  <div class="panel-heading" id="barchart-title">Reports this month</div>
 					  <div class="panel-body">
 						<svg id="barchart"
 							viewBox="0 0 500 250"
@@ -74,22 +74,7 @@
 					  </div>
 					</div>
 				</div>
-				<script charset="utf-8">
-					var barchart = $("#barchart"),
-						container = barchart.parent();
-					$(window).ready(function() {
-						var targetWidth = container.width();
-							barchart.attr("width", targetWidth);
-							barchart.attr("height", targetWidth / 2);
-					}).trigger("resize");
-					$(window).on("resize", function() {
-						targetWidth = container.width();
-					  barchart.attr("width", targetWidth);
-					  barchart.attr("height", targetWidth / 2);
-					}).trigger("resize");
-				</script>
-				<!--
-				-->
+
 				<!--
 				<div class="col-xs-12" style="padding: 5px">
 					<div class="panel panel-primary">
@@ -145,6 +130,21 @@
 	</div>
 
 	<script>
+		// Make barchart resize responsive
+		var barchart = $("#barchart"),
+			container = barchart.parent();
+		$(window).ready(function() {
+			var targetWidth = container.width();
+				barchart.attr("width", targetWidth);
+				barchart.attr("height", targetWidth / 2);
+		}).trigger("resize");
+		$(window).on("resize", function() {
+			targetWidth = container.width();
+			barchart.attr("width", targetWidth);
+			barchart.attr("height", targetWidth / 2);
+		}).trigger("resize");
+
+
 		// Create the map (call to map.js)
     initialize(scrollZoom=false {% if request.mobile %}, mobile=true {% endif %});
 
@@ -177,6 +177,8 @@
 			threeMonthsAgo: moment().subtract(3, 'months')
 		};
 
+
+		$('#barchart-title').append(" ( " + data.oneMonthAgo.format("MMM D, YYYY") + " - " + data.now.format("MMM D, YYYY") + " )")
 
 		// Filter by date to get different datasets
 		// TODO do this in stats.js
