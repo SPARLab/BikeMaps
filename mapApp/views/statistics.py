@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 # Import models
 from mapApp.models.incident import Incident
@@ -10,6 +11,7 @@ from mapApp.models.alert_area import AlertArea
 from django.contrib.auth.models import User
 from mapApp.models.alert_notification import IncidentNotification, HazardNotification, TheftNotification
 
+@login_required
 def stats(request):
 	user = request.user
 
