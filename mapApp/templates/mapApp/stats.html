@@ -198,12 +198,16 @@
 
 		// Create dataset out of django context
 		// Note, data and counts are for last month of points in user alert areas only, not total points
+		{% if geofences %}
 		initializeBarChart([
 			{ type: "collision", 	value: collisionsThisMonth.features.length, 	color: getColor("collision") },
 			{ type: "nearmiss", 	value: nearmissesThisMonth.features.length, 	color: getColor("nearmiss") },
 			{ type: "hazard", 		value: hazardsThisMonth.features.length, 		color: getColor("hazard") },
 			{ type: "theft", 		value: theftsThisMonth.features.length, 		color: getColor("theft") }
 		]);
+		{% else %}
+		console.log("no geofences");
+		{% endif %}
 
 		// TODO document, clean up this code
 		// initializeLineChart([
