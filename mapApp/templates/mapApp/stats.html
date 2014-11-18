@@ -37,6 +37,15 @@
 
 
 {% block body %}
+	<!-- Generate fb like button -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
 
 	<style type="text/css">
 		#map {
@@ -53,7 +62,7 @@
 
 
 	<div class="container-fluid" style="height: 100%;">
-		<div class="row" style="height: 90%;">
+		<div class="row" style="height: 100%;">
 
 			<div class="col-xs-12 col-sm-6" style="height: 100%;">
 				<!-- Map of one month of reports -->
@@ -65,12 +74,45 @@
 				<!-- See http://bost.ocks.org/mike/bar/ for bar chart tutorials -->
 				<div class="panel panel-primary">
 				  <div class="panel-heading" id="barchart-title">Reports this month</div>
-				  <div class="panel-body">
+				  <div class="panel-body" id="barchart-body">
 					<svg id="barchart"
 						viewBox="0 0 500 250"
 					  preserveAspectRatio="xMidYMid">
 					</svg>
 				  </div>
+				</div>
+
+				<!-- Shameless self promotion material -->
+				<div class="well">
+					<h4 class="text-center">Check out BikeMaps on Facebook and Twitter!</h4>
+					<br>
+					<div class="row">
+						<!-- Facebook like button -->
+						<div class="col-xs-6">
+							<div class="fb-like" data-href="https://www.facebook.com/pages/BikeMapsorg/337283939811392" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+						</div
+
+						<!-- Twitter follow button -->
+						<div class="col-xs-6 text-right">
+							<a class="twitter-follow-button"
+							  href="https://twitter.com/BikeMapsTeam"
+							  data-show-count="false"
+							  data-lang="en">
+								Follow @BikeMapsTeam
+							</a>
+							<script type="text/javascript">
+							window.twttr = (function (d, s, id) {
+							  var t, js, fjs = d.getElementsByTagName(s)[0];
+							  if (d.getElementById(id)) return;
+							  js = d.createElement(s); js.id = id;
+							  js.src= "https://platform.twitter.com/widgets.js";
+							  fjs.parentNode.insertBefore(js, fjs);
+							  return window.twttr || (t = { _e: [], ready: function (f) { t._e.push(f) } });
+							}(document, "script", "twitter-wjs"));
+							</script>
+						</div>
+					</div>
+
 				</div>
 
 				<!-- <div class="panel panel-primary">
@@ -84,6 +126,7 @@
 		</div>
 
 
+		{% comment %}
 		<div class="row" style="margin-top: 15px;">
 			<div class="col-xs-12" style: "padding: 5px;">
 				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -122,6 +165,7 @@
 				  </a>
 				</div>
 			</div>
+			{% endcomment %}
 
 		</div>
 	</div>
@@ -145,14 +189,16 @@
 		// Create the map (call to map.js)
     initialize(scrollZoom=false {% if request.mobile %}, mobile=true {% endif %});
 
-   	// Fit map extent to alert areas boundary
     var areasLatLngList = [];
     {% for polygon in geofences %}
     	areasLatLngList.push({{ polygon.latlngList }});
       // Add polygon to map
-        getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} );
+      getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} );
     {% endfor %}
-    map.fitBounds(L.latLngBounds(areasLatLngList));
+   	// Fit map extent to alert areas boundary
+		if (areasLatLngList.length > 0) {
+	    map.fitBounds(L.latLngBounds(areasLatLngList));
+		}
 
     var data = {
 			// Points in a user polygon
@@ -198,15 +244,15 @@
 
 		// Create dataset out of django context
 		// Note, data and counts are for last month of points in user alert areas only, not total points
-		{% if geofences %}
-		initializeBarChart([
-			{ type: "collision", 	value: collisionsThisMonth.features.length, 	color: getColor("collision") },
-			{ type: "nearmiss", 	value: nearmissesThisMonth.features.length, 	color: getColor("nearmiss") },
-			{ type: "hazard", 		value: hazardsThisMonth.features.length, 		color: getColor("hazard") },
-			{ type: "theft", 		value: theftsThisMonth.features.length, 		color: getColor("theft") }
-		]);
+		{% if geofences|length > 0 %}
+			initializeBarChart([
+				{ type: "collision", 	value: collisionsThisMonth.features.length, 	color: getColor("collision") },
+				{ type: "nearmiss", 	value: nearmissesThisMonth.features.length, 	color: getColor("nearmiss") },
+				{ type: "hazard", 		value: hazardsThisMonth.features.length, 		color: getColor("hazard") },
+				{ type: "theft", 		value: theftsThisMonth.features.length, 		color: getColor("theft") }
+			]);
 		{% else %}
-		console.log("no geofences");
+			$('#barchart-body').append("<p>Trace out an alert area on the main map page to see data visualizations for that area.</p>");
 		{% endif %}
 
 		// TODO document, clean up this code
