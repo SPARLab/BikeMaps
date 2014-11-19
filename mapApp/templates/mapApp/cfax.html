@@ -40,6 +40,9 @@
     #data li{
       padding-top: 5px;
     }
+    .highlight{
+      background: #0ff;
+    }
   </style>
 
 
@@ -73,24 +76,26 @@
     ]);
 
     // Add data (calls to map.js)
-    var collisionsLayer = geojsonCircleMarker( {{ collisions|geojsonfeature|safe }} , "collision").addTo(map),
-        nearmissesLayer = geojsonCircleMarker( {{ nearmisses|geojsonfeature|safe }} , "nearmiss").addTo(map),
-        hazardsLayer = geojsonCircleMarker( {{ hazards|geojsonfeature|safe }} , "hazard").addTo(map),
-        theftsLayer = geojsonCircleMarker( {{ thefts|geojsonfeature|safe }} , "theft").addTo(map);
+    var collisionsLayer = geojsonCircleMarker( {{ collisions|geojsonfeature:"pk"|safe }} , "collision").addTo(map),
+        nearmissesLayer = geojsonCircleMarker( {{ nearmisses|geojsonfeature:"pk"|safe }} , "nearmiss").addTo(map),
+        hazardsLayer = geojsonCircleMarker( {{ hazards|geojsonfeature:"pk"|safe }} , "hazard").addTo(map),
+        theftsLayer = geojsonCircleMarker( {{ thefts|geojsonfeature:"pk"|safe }} , "theft").addTo(map);
 
     $('#data').append('<h2>Collisions</h2>');
-    pprint("collision", {{ collisions|geojsonfeature:"incident,incident_with,incident_date,incident_detail"|safe }});
+    pprint("collision", {{ collisions|geojsonfeature:"incident,incident_with,incident_date,incident_detail,pk"|safe }});
 
     $('#data').append('<h2>Nearmisses</h2>');
-    pprint("nearmiss", {{ nearmisses|geojsonfeature:"incident,incident_with,incident_date,incident_detail"|safe }});
+    pprint("nearmiss", {{ nearmisses|geojsonfeature:"incident,incident_with,incident_date,incident_detail,pk"|safe }});
 
     $('#data').append('<h2>Hazards</h2>');
-    pprint("hazard", {{ hazards|geojsonfeature:"hazard,hazard_date,hazard_detail"|safe }});
+    pprint("hazard", {{ hazards|geojsonfeature:"hazard,hazard_date,hazard_detail,pk"|safe }});
 
     $('#data').append('<h2>Thefts</h2>');
-    pprint("theft", {{ thefts|geojsonfeature:"theft,theft_date,theft_detail"|safe }});
+    pprint("theft", {{ thefts|geojsonfeature:"theft,theft_date,theft_detail,pk"|safe }});
 
-    
+    $('#data li').hover(function(){
+      $(this).toggleClass('highlight');
+    });
 
 
     // Print different point types in a nice formatted list TODO move to new js file
