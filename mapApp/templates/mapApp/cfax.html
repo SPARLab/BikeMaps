@@ -44,7 +44,7 @@
         <!-- Map of one month of reports -->
         <div id="map"></div>
       </div>
-      <div class="col-xs-4" style="height: 100%;">
+      <div class="col-xs-4" style="height: 100%; overflow: scroll;">
         <!-- Map of one month of reports -->
         <div id="data"></div>
       </div>
@@ -77,14 +77,17 @@
     {% for d in collisions %}
       $('#data').append("{{ d|safe|pprint }}");
     {% endfor %}
+
     $('#data').append('<h1>Nearmisses<h1>');
     {% for d in nearmisses %}
       $('#data').append("{{ d|safe|pprint }}");
     {% endfor %}
+
     $('#data').append('<h1>Hazards<h1>');
     {% for d in hazards %}
       $('#data').append("{{ d|safe|pprint }}");
     {% endfor %}
+
     $('#data').append('<h1>Thefts<h1>');
     {% for d in thefts %}
       $('#data').append("{{ d|safe|pprint }}");
