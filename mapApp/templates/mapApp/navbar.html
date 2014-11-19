@@ -3,11 +3,12 @@
 
 {% url 'mapApp:index' as index %}
 {% url 'mapApp:about' as about %}
-{% url 'mapApp:getIncidents' as getIncidents %} 
-{% url 'mapApp:getHazards' as getHazards %} 
-{% url 'mapApp:getThefts' as getThefts %} 
+{% url 'mapApp:getIncidents' as getIncidents %}
+{% url 'mapApp:getHazards' as getHazards %}
+{% url 'mapApp:getThefts' as getThefts %}
+{% url 'mapApp:stats' as stats %}
 {% url 'spirit:index' as forum %}
-{% url 'admin:index' as mapAdmin %} 
+{% url 'admin:index' as mapAdmin %}
 
 {% url 'spirit:admin' as spiritAdmin %}
 
@@ -45,7 +46,7 @@
 
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Share </span><span class="glyphicon glyphicon-share"></span> <span class="caret"></a>
-            <ul class="dropdown-menu" role="menu">          
+            <ul class="dropdown-menu" role="menu">
             <li><a href="https://www.facebook.com/sharer/sharer.php?u=bikemaps.org&t=BikeMaps.org%20is%20the%20coolest" target="_blank">
                 <i class="fa fa-facebook"></i> Facebook</a></li>
             <li><a href="http://twitter.com/intent/tweet?text=Take%20a%20look%20at%20reported%20cycling%20incidents%20in%20your%20community%20here!%20&url=http%3A%2F%2Fbikemaps.org" target="_blank">
@@ -59,9 +60,9 @@
             <li><a href="http://www.stumbleupon.com/submit?url=bikemaps.org&title=BikeMaps.org#sthash.2MHzi8oM.dpuf" target="_blank">
                 <i class="fa fa-stumbleupon"></i> StumbleUpon</a></li>
           </ul>
-        </li>          
+        </li>
       </ul>
-      
+
       <ul class="nav navbar-nav navbar-right">
         {% if request.user.is_authenticated %}
           {% has_alerts user as has_notifications %}
@@ -72,6 +73,7 @@
               <ul class="user-menu dropdown-menu" role="menu">
                 <li><a href="{{ profile }}">Profile</a></li>
                 <li><a href="{{ logout }}">Log out</a></li>
+                <!-- <li><a href="{{ stats }}">Stats</a></li> -->
                 {% if request.user.is_administrator %}
                 <li role="presentation" class="divider"></li>
                 <li role="presentation" class="dropdown-header">Admin options</li>
@@ -80,17 +82,17 @@
                 <li><a href="{{ getHazards }}"><small>Export Hazards <span class="glyphicon glyphicon-download"></span></small></a></li>
                 <li><a href="{{ getThefts }}"><small>Export Thefts <span class="glyphicon glyphicon-download"></span></small></a></li>
                 {% endif %}
-        
+
         {% else %}
 
           <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Guest<span class="caret"></span></a>
 
               <ul class="dropdown-menu" role="menu">
-              <li><a href="{{ login }}">Log in</a></li> 
-              <li><a href="{{ register }}">Register</a></li> 
-        
-        {% endif %}    
+              <li><a href="{{ login }}">Log in</a></li>
+              <li><a href="{{ register }}">Register</a></li>
+
+        {% endif %}
             </ul>
           </li>
 
