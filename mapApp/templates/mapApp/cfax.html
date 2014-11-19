@@ -14,18 +14,20 @@
 {% endblock %}
 
 {% block headerJS %}
-    <!-- Load leaflet -->
-    <script src="{% static 'leaflet/leaflet.js' %}"></script>
-    <!-- Load marker clustering -->
-    <script src="{% static 'leaflet/plugins/leaflet.markercluster/leaflet.markercluster-src.js' %}"></script>
-    <!-- Load Maki Markers Icons -->
-    <script src="{% static 'leaflet/plugins/maki-markers/Leaflet.MakiMarkers.js' %}"></script>
-    <!-- Load heatmap -->
-    <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
-    <!-- map generating code -->
-    <script src="{% static 'mapApp/js/map.js' %}" charset="utf-8"></script>
-    <!-- d3 barchart -->
-    <script src="{% static 'mapApp/js/stats.js' %}" charset="utf-8"></script>
+  <!-- moment.js date library -->
+  <script src="{% static 'moment/moment.min.js' %}"></script>
+  <!-- Load leaflet -->
+  <script src="{% static 'leaflet/leaflet.js' %}"></script>
+  <!-- Load marker clustering -->
+  <script src="{% static 'leaflet/plugins/leaflet.markercluster/leaflet.markercluster-src.js' %}"></script>
+  <!-- Load Maki Markers Icons -->
+  <script src="{% static 'leaflet/plugins/maki-markers/Leaflet.MakiMarkers.js' %}"></script>
+  <!-- Load heatmap -->
+  <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
+  <!-- map generating code -->
+  <script src="{% static 'mapApp/js/map.js' %}" charset="utf-8"></script>
+  <!-- d3 barchart -->
+  <script src="{% static 'mapApp/js/stats.js' %}" charset="utf-8"></script>
 {% endblock %}
 
 
@@ -34,6 +36,9 @@
     #map {
       height: 100%;
       margin-top: 0px;
+    }
+    #data li{
+      padding-top: 5px;
     }
   </style>
 
@@ -68,32 +73,61 @@
     ]);
 
     // Add data (calls to map.js)
-    var allCollisionsLayer = geojsonCircleMarker( {{ collisions|geojsonfeature|safe }} , "collision").addTo(map),
-        allNearmissesLayer = geojsonCircleMarker( {{ nearmisses|geojsonfeature|safe }} , "nearmiss").addTo(map),
-        allHazardsLayer = geojsonCircleMarker( {{ hazards|geojsonfeature|safe }} , "hazard").addTo(map),
-        allTheftsLayer = geojsonCircleMarker( {{ thefts|geojsonfeature|safe }} , "theft").addTo(map);
+    var collisionsLayer = geojsonCircleMarker( {{ collisions|geojsonfeature|safe }} , "collision").addTo(map),
+        nearmissesLayer = geojsonCircleMarker( {{ nearmisses|geojsonfeature|safe }} , "nearmiss").addTo(map),
+        hazardsLayer = geojsonCircleMarker( {{ hazards|geojsonfeature|safe }} , "hazard").addTo(map),
+        theftsLayer = geojsonCircleMarker( {{ thefts|geojsonfeature|safe }} , "theft").addTo(map);
 
-    $('#data').append('<h1>Collisions<h1>');
-    {% for d in collisions %}
-      $('#data').append("{{ d|safe|pprint }}");
-    {% endfor %}
+    $('#data').append('<h2>Collisions</h2>');
+    pprint("collision", {{ collisions|geojsonfeature:"incident,incident_with,incident_date,incident_detail"|safe }});
 
-    $('#data').append('<h1>Nearmisses<h1>');
-    {% for d in nearmisses %}
-      $('#data').append("{{ d|safe|pprint }}");
-    {% endfor %}
+    $('#data').append('<h2>Nearmisses</h2>');
+    pprint("nearmiss", {{ nearmisses|geojsonfeature:"incident,incident_with,incident_date,incident_detail"|safe }});
 
-    $('#data').append('<h1>Hazards<h1>');
-    {% for d in hazards %}
-      $('#data').append("{{ d|safe|pprint }}");
-    {% endfor %}
+    $('#data').append('<h2>Hazards</h2>');
+    pprint("hazard", {{ hazards|geojsonfeature:"hazard,hazard_date,hazard_detail"|safe }});
 
-    $('#data').append('<h1>Thefts<h1>');
-    {% for d in thefts %}
-      $('#data').append("{{ d|safe|pprint }}");
-    {% endfor %}
+    $('#data').append('<h2>Thefts</h2>');
+    pprint("theft", {{ thefts|geojsonfeature:"theft,theft_date,theft_detail"|safe }});
+
+    
+
+
+    // Print different point types in a nice formatted list TODO move to new js file
+    function pprint(type, jsonData){
+      var str = "<ol>";
+      jsonData.features.forEach(function(obj) {
+        if(type === "collision" || type === "nearmiss"){
+          str += "<li><strong>Date: </strong>" + moment(obj.properties.incident_date).calendar() + "<br>"
+            + "<strong>Type: </strong>" + obj.properties.incident + " (" + obj.properties.incident_with + ")<br>";
+            if(obj.properties.incident_detail != ''){
+              str+= "<strong>Description: </strong>" + obj.properties.incident_detail + "</li>";
+            }
+        }
+        else if(type === "hazard"){
+          str += "<li><strong>Date: </strong>" + moment(obj.properties.hazard_date).calendar() + "<br>"
+            + "<strong>Type: </strong>" + obj.properties.hazard + "<br>";
+            if(obj.properties.hazard_detail != ''){
+              str += "<strong>Description: </strong>" + obj.properties.hazard_detail + "</li>";
+            };
+        }
+        else if(type === "theft"){
+          str += "<li><strong>Date: </strong>" + moment(obj.properties.theft_date).calendar() + "<br>"
+            + "<strong>Type: </strong>" + obj.properties.theft + "<br>";
+          if(obj.properties.theft_detail != ''){
+            str += "<strong>Description: </strong>" + obj.properties.theft_detail + "</li>";
+          };
+        }
+        else{
+          console.log("Unknown type error in pprint");
+        }
+      });
+
+      $('#data').append(str + "</ol>");
+    };
 
 
   </script>
+
 
 {% endblock %}
