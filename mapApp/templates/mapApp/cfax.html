@@ -1,8 +1,56 @@
 {% extends "mapApp/base.html" %}
+{% load staticfiles %}
+{% load geojson_tags %}
+
+
+{% block title %}
+  BikeMaps CFAX
+{% endblock %}
+
+
+{% block headerCSS %}
+  <!-- Load leaflet -->
+  <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
+{% endblock %}
+
+{% block headerJS %}
+    <!-- Load leaflet -->
+    <script src="{% static 'leaflet/leaflet.js' %}"></script>
+    <!-- map generating code -->
+    <script src="{% static 'mapApp/js/map.js' %}" charset="utf-8"></script>
+    <!-- d3 barchart -->
+    <script src="{% static 'mapApp/js/stats.js' %}" charset="utf-8"></script>
+{% endblock %}
+
 
 {% block body %}
+  <style type="text/css">
+    #map {
+      height: 100%;
+      margin-top: 0px;
+    }
+  </style>
 
-{{ now|pprint }}
-{{ yesterday|pprint }}
+
+  <div class="container-fluid" style="height: 100%;">
+    <div class="row" style="height: 100%;">
+      <div class="col-xs-12" style="height: 100%;">
+        <!-- Map of one month of reports -->
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    // Create the map (call to map.js)
+    initialize(scrollZoom=false {% if request.mobile %}, mobile=true {% endif %});
+
+    var allCollisionsLayer = geojsonCircleMarker( {{ collisions|geojson|safe }} , "collision").addTo(map),
+        allNearmissesLayer = geojsonCircleMarker( {{ nearmisses|geojson|safe }} , "nearmiss").addTo(map),
+        allHazardsLayer = geojsonCircleMarker( {{ hazards|geojson|safe }} , "hazard").addTo(map),
+        allTheftsLayer = geojsonCircleMarker( {{ thefts|geojson|safe }} , "theft").addTo(map);
+        
+  </script>
 
 {% endblock %}
