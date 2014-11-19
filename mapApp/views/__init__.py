@@ -6,3 +6,4 @@ from editShape import editShape
 from exportData import getIncidents, getHazards, getThefts
 from termsAndConditions import termsAndConditions
 from statistics import stats
+from cfax import cfax
