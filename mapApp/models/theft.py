@@ -14,8 +14,8 @@ THEFT_CHOICES = (
     ('Minor bike component', 'Minor bike component (e.g. lights, topbar padding, bell, etc.)')
 )
 BOOLEAN_CHOICES = (
-    ('Y', 'Yes'), 
-    ('N', 'No'), 
+    ('Y', 'Yes'),
+    ('N', 'No'),
     ('I don\'t know', 'I don\'t know')
 )
 HOW_LOCKED_CHOICES = (
@@ -69,9 +69,9 @@ LIGHTING_CHOICES =  (
 class Theft(models.Model):
     ########### THEFT FIELDS
     date = models.DateTimeField(
-        'Date reported', 
+        'Date reported',
         auto_now_add=True   # Date is set automatically when object created
-    ) 
+    )
     # Spatial fields
     # Default CRS -> WGS84
     geom = models.PointField(
@@ -84,8 +84,8 @@ class Theft(models.Model):
     )
 
     theft = models.CharField(
-        'What was stolen?', 
-        max_length=100, 
+        'What was stolen?',
+        max_length=100,
         choices=THEFT_CHOICES
     )
 
@@ -124,33 +124,47 @@ class Theft(models.Model):
         choices=((True, 'Yes'),(False, 'No'))
     )
 
+    police_report_num = models.CharField(
+        'If you filed a police report, what is the report number?',
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
     insurance_claim = models.NullBooleanField(
         'Did you file an insurance claim?',
         choices=((True, 'Yes'),(False, 'No'))
+    )
+
+    insurance_claim_num = models.CharField(
+        'If you filed an insurance claim, what is the claim number?',
+        max_length=100,
+        blank=True,
+        null=True
     )
     ###########
 
     regular_cyclist = models.CharField(
         'Do you bike at least once a week?',
-        max_length=30, 
-        choices=BOOLEAN_CHOICES, 
-        blank=True, 
+        max_length=30,
+        choices=BOOLEAN_CHOICES,
+        blank=True,
         null=True
     )
     #######################
 
     ########## DETAILS FIELDS
     theft_detail = models.TextField(
-        'Please give a brief description about what happened.', 
-        max_length=300, 
-        blank=True, 
+        'Please give a brief description about what happened.',
+        max_length=300,
+        blank=True,
         null=True
     )
     ##############
 
     # reverses latlngs and turns tuple of tuples into list of lists
     def latlngList(self):
-        return list(self.geom)[::-1]   
+        return list(self.geom)[::-1]
 
     def was_published_recently(self):
         now = timezone.now()
@@ -160,7 +174,7 @@ class Theft(models.Model):
     def incident_type(self):
         return "Theft"
 
-    # For admin site 
+    # For admin site
     was_published_recently.admin_order_field = 'date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Reported this week?'

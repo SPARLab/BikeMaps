@@ -23,8 +23,6 @@ class TheftForm(forms.ModelForm):
                 Field('locked_to'),
                 Field('lighting'),
                 Field('traffic'),
-                Field("police_report"),
-                Field("insurance_claim"),
             ),
             AccordionGroup(
                 'Description',
@@ -34,15 +32,19 @@ class TheftForm(forms.ModelForm):
             AccordionGroup(
                 'Personal Details',
                 Field('regular_cyclist'),
+                Field("police_report"),
+                Field("police_report_num"),
+                Field("insurance_claim"),
+                Field("insurance_claim_num"),
                 css_id = 'theft-personal'
             )
         ),
         Div(
             HTML("""
                 <input type='checkbox' class='terms_theft'>
-                    <strong> I have read and understand the 
+                    <strong> I have read and understand the
                     <a href="{% url 'mapApp:termsAndConditions' %}" target=_blank>terms and conditions</a></strong>
-                
+
                 <script>
                 $(".terms_theft").change(function() {
                     if(this.checked) {
@@ -65,7 +67,7 @@ class TheftForm(forms.ModelForm):
                         }
                         $("#div_id_lock select option").show();
                         $("#div_id_lock select option[value='NA']").hide();
-                    }    
+                    }
                 });
 
 
@@ -83,7 +85,7 @@ class TheftForm(forms.ModelForm):
 
     class Meta:
         model = Theft
-        fields = ['geom', 'theft_date', 'theft', 'how_locked', 
-            'lock', 'locked_to', 'lighting', 'traffic', 'police_report', 
-            'insurance_claim', 'theft_detail', 'regular_cyclist'
+        fields = ['geom', 'theft_date', 'theft', 'how_locked',
+            'lock', 'locked_to', 'lighting', 'traffic', 'police_report', 'police_report_num',
+            'insurance_claim', 'insurance_claim_num', 'theft_detail', 'regular_cyclist'
         ]
