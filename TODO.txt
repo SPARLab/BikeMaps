@@ -1,7 +1,7 @@
 #TO DO
 
 ###HIGHER PRIORITY
-* Add police and insurance claim number to forms
+* Daily cfax reports
 * Create blog app
 * Add Karen safety information
 * Display more data in point popups
