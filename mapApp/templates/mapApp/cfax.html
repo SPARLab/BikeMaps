@@ -16,6 +16,12 @@
 {% block headerJS %}
     <!-- Load leaflet -->
     <script src="{% static 'leaflet/leaflet.js' %}"></script>
+    <!-- Load marker clustering -->
+    <script src="{% static 'leaflet/plugins/leaflet.markercluster/leaflet.markercluster-src.js' %}"></script>
+    <!-- Load Maki Markers Icons -->
+    <script src="{% static 'leaflet/plugins/maki-markers/Leaflet.MakiMarkers.js' %}"></script>
+    <!-- Load heatmap -->
+    <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
     <!-- map generating code -->
     <script src="{% static 'mapApp/js/map.js' %}" charset="utf-8"></script>
     <!-- d3 barchart -->
@@ -34,23 +40,57 @@
 
   <div class="container-fluid" style="height: 100%;">
     <div class="row" style="height: 100%;">
-      <div class="col-xs-12" style="height: 100%;">
+      <div class="col-xs-8" style="height: 100%;">
         <!-- Map of one month of reports -->
         <div id="map"></div>
+      </div>
+      <div class="col-xs-4" style="height: 100%;">
+        <!-- Map of one month of reports -->
+        <div id="data"></div>
       </div>
     </div>
   </div>
 
 
   <script>
-    // Create the map (call to map.js)
-    initialize(scrollZoom=false {% if request.mobile %}, mobile=true {% endif %});
+    // Map init and default layers
+    map = L.map('map', {
+        layers: [L.tileLayer('https://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/011011321101/10/{z}/{x}/{y}.png@2x', {
+          minZoom: 2,
+          attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'})
+        ],
+        worldCopyJump: true,
+    }).fitBounds([
+      [48.40185599006367, -123.34625244140624], //Top
+      [48.69821216562637, -123.44650268554688], //Bottom
+      [48.45653041501911, -123.26660156249999], //Right
+      [48.47565256743914, -123.4588623046875] //Left
+    ]);
 
-    var allCollisionsLayer = geojsonCircleMarker( {{ collisions|geojson|safe }} , "collision").addTo(map),
-        allNearmissesLayer = geojsonCircleMarker( {{ nearmisses|geojson|safe }} , "nearmiss").addTo(map),
-        allHazardsLayer = geojsonCircleMarker( {{ hazards|geojson|safe }} , "hazard").addTo(map),
-        allTheftsLayer = geojsonCircleMarker( {{ thefts|geojson|safe }} , "theft").addTo(map);
-        
+    // Add data (calls to map.js)
+    var allCollisionsLayer = geojsonCircleMarker( {{ collisions|geojsonfeature|safe }} , "collision").addTo(map),
+        allNearmissesLayer = geojsonCircleMarker( {{ nearmisses|geojsonfeature|safe }} , "nearmiss").addTo(map),
+        allHazardsLayer = geojsonCircleMarker( {{ hazards|geojsonfeature|safe }} , "hazard").addTo(map),
+        allTheftsLayer = geojsonCircleMarker( {{ thefts|geojsonfeature|safe }} , "theft").addTo(map);
+
+    $('#data').append('<h1>Collisions<h1>');
+    {% for d in collisions %}
+      $('#data').append("{{ d|safe|pprint }}");
+    {% endfor %}
+    $('#data').append('<h1>Nearmisses<h1>');
+    {% for d in nearmisses %}
+      $('#data').append("{{ d|safe|pprint }}");
+    {% endfor %}
+    $('#data').append('<h1>Hazards<h1>');
+    {% for d in hazards %}
+      $('#data').append("{{ d|safe|pprint }}");
+    {% endfor %}
+    $('#data').append('<h1>Thefts<h1>');
+    {% for d in thefts %}
+      $('#data').append("{{ d|safe|pprint }}");
+    {% endfor %}
+
+
   </script>
 
 {% endblock %}
