@@ -76,10 +76,10 @@
     ]);
 
     // Add data (calls to map.js)
-    var collisionsLayer = geojsonCircleMarker( {{ collisions|geojsonfeature:"pk"|safe }} , "collision").addTo(map),
-        nearmissesLayer = geojsonCircleMarker( {{ nearmisses|geojsonfeature:"pk"|safe }} , "nearmiss").addTo(map),
-        hazardsLayer = geojsonCircleMarker( {{ hazards|geojsonfeature:"pk"|safe }} , "hazard").addTo(map),
-        theftsLayer = geojsonCircleMarker( {{ thefts|geojsonfeature:"pk"|safe }} , "theft").addTo(map);
+    var collisionsLayer = geojsonCircleMarker( {{ collisions|geojsonfeature|safe }} , "collision").addTo(map),
+        nearmissesLayer = geojsonCircleMarker( {{ nearmisses|geojsonfeature|safe }} , "nearmiss").addTo(map),
+        hazardsLayer = geojsonCircleMarker( {{ hazards|geojsonfeature|safe }} , "hazard").addTo(map),
+        theftsLayer = geojsonCircleMarker( {{ thefts|geojsonfeature|safe }} , "theft").addTo(map);
 
     $('#data').append('<h2>Collisions</h2>');
     pprint("collision", {{ collisions|geojsonfeature:"incident,incident_with,incident_date,incident_detail,pk"|safe }});
@@ -93,8 +93,33 @@
     $('#data').append('<h2>Thefts</h2>');
     pprint("theft", {{ thefts|geojsonfeature:"theft,theft_date,theft_detail,pk"|safe }});
 
+
+    // Highlight list item and TODO highlight corresponding pnt on map
     $('#data li').hover(function(){
       $(this).toggleClass('highlight');
+      var layer = $(this).attr('layer'),
+          pk = $(this).attr('pk');
+
+      // Highlight corresponding point
+      if(layer === "collision"){
+        collisionsLayer.eachLayer(function(layer){
+          if(layer.feature.id == pk){
+            layer.setStyle({
+                fillColor: '#0ff',
+                fillOpacity: 1
+            });
+          }
+        });
+      }else if(layer === "nearmiss"){
+        console.log(nearmissesLayer);
+
+      }else if(layer === "hazard"){
+        console.log(hazardsLayer);
+
+      }else if(layer === "theft"){
+        console.log(theftsLayer);
+
+      }
     });
 
 
@@ -102,22 +127,33 @@
     function pprint(type, jsonData){
       var str = "<ol>";
       jsonData.features.forEach(function(obj) {
-        if(type === "collision" || type === "nearmiss"){
-          str += "<li><strong>Date: </strong>" + moment(obj.properties.incident_date).calendar() + "<br>"
+        if(type === "collision"){
+          str += "<li layer='collision' pk=" + obj.properties.pk + ">"
+            + "<strong>Date: </strong>" + moment(obj.properties.incident_date).calendar() + "<br>"
+            + "<strong>Type: </strong>" + obj.properties.incident + " (" + obj.properties.incident_with + ")<br>";
+            if(obj.properties.incident_detail != ''){
+              str+= "<strong>Description: </strong>" + obj.properties.incident_detail + "</li>";
+            }
+        }
+        else if(type === "nearmiss") {
+          str += "<li layer='nearmiss' pk=" + obj.properties.pk + ">"
+            + "<strong>Date: </strong>" + moment(obj.properties.incident_date).calendar() + "<br>"
             + "<strong>Type: </strong>" + obj.properties.incident + " (" + obj.properties.incident_with + ")<br>";
             if(obj.properties.incident_detail != ''){
               str+= "<strong>Description: </strong>" + obj.properties.incident_detail + "</li>";
             }
         }
         else if(type === "hazard"){
-          str += "<li><strong>Date: </strong>" + moment(obj.properties.hazard_date).calendar() + "<br>"
+          str += "<li layer='hazard' pk=" + obj.properties.pk + ">"
+            + "<strong>Date: </strong>" + moment(obj.properties.hazard_date).calendar() + "<br>"
             + "<strong>Type: </strong>" + obj.properties.hazard + "<br>";
             if(obj.properties.hazard_detail != ''){
               str += "<strong>Description: </strong>" + obj.properties.hazard_detail + "</li>";
             };
         }
         else if(type === "theft"){
-          str += "<li><strong>Date: </strong>" + moment(obj.properties.theft_date).calendar() + "<br>"
+          str += "<li layer='theft' pk=" + obj.properties.pk + ">"
+            + "<strong>Date: </strong>" + moment(obj.properties.theft_date).calendar() + "<br>"
             + "<strong>Type: </strong>" + obj.properties.theft + "<br>";
           if(obj.properties.theft_detail != ''){
             str += "<strong>Description: </strong>" + obj.properties.theft_detail + "</li>";
