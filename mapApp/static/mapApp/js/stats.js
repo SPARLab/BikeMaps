@@ -1,5 +1,4 @@
 // TODO
-// Make barchart responsive to window resize
 // On mouse rollover, display the number of points in each category on barchart
 
 // Initialize the SVG barchart via calls to d3.js library
