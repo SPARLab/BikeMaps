@@ -101,9 +101,20 @@
       var layer = $(this).attr('layer'),
           pk = $(this).attr('pk');
 
-      // TODO Highlight corresponding point
+      // Highlight and zoom to corresponding point
       if(layer === "collision"){
-        collisionsLayer.eachLayer(function(layer){
+        zoomToPoint(collisionsLayer);
+      }else if(layer === "nearmiss"){
+        zoomToPoint(nearmissesLayer);
+      }else if(layer === "hazard"){
+        zoomToPoint(hazardsLayer);
+      }else if(layer === "theft"){
+        zoomToPoint(theftsLayer);
+      }
+
+      // function to handle highlighting and zooming to specified point in layer
+      function zoomToPoint(pointLayer){
+        pointLayer.eachLayer(function(layer){
           if(layer.feature.id == pk){
             map.fitBounds(layer.getBounds());
             layer.bringToFront();
@@ -112,20 +123,27 @@
                 fillOpacity: 1
             });
           }
-          // TODO zoom map to point
-
         });
-      }else if(layer === "nearmiss"){
-        return;
-
-      }else if(layer === "hazard"){
-        return;
-
-      }else if(layer === "theft"){
-        return;
-
       }
     });
+
+    $('#data li').mouseleave(function(){
+      resetLayerStyle(collisionsLayer, "collision");
+      resetLayerStyle(nearmissesLayer, "nearmiss");
+      resetLayerStyle(hazardsLayer, "hazard");
+      resetLayerStyle(theftsLayer, "theft");
+
+
+      function resetLayerStyle(pointsLayer, type){
+        pointsLayer.eachLayer(function(layer){
+          layer.setStyle({
+            fillColor: getColor(type),
+            fillOpacity: 0.8
+          });
+        });
+      }
+    });
+
 
 
     // Print different point types in a nice formatted list TODO move to new js file
