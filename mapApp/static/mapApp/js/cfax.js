@@ -1,6 +1,7 @@
 // Global layer variables
 var collisionsLayer, nearmissesLayer, hazardsLayer, theftsLayer;
 
+// Create the a simple leaflet map centered around Victoria
 function initializeCfaxMap(){
   // Map init and default layers
   map = L.map('map', {
@@ -17,6 +18,7 @@ function initializeCfaxMap(){
   ]);
 };
 
+// add data defined in data variable to data panel and to map as L.circleMarker
 function addData(data){
   collisionsLayer = geojsonCircleMarker( data.collisions , "collision").addTo(map);
   nearmissesLayer = geojsonCircleMarker( data.nearmisses , "nearmiss").addTo(map);
@@ -43,6 +45,7 @@ function highlightPoint(type, pk){
   });
 }
 
+// Return a highlighted point to it's original color
 function unhighlightPoint(type){
   getPointLayer(type).eachLayer(function(layer){
     layer.setStyle({
@@ -52,6 +55,7 @@ function unhighlightPoint(type){
   });
 }
 
+// Given a incident type, return the layer where points of that type are located
 function getPointLayer(type){
   switch(type){
     case "collision": return collisionsLayer;

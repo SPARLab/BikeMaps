@@ -10,11 +10,10 @@ var iconColors = {
     "location": "#CC2A01"
 };
 
-
+// Given type, return the icon color as defined in iconColors
 function getColor(t) {
     return iconColors[t];
 };
-
 
 // Purpose: Convert a given geojson dataset to a CircleMarker point layer
 function geojsonCircleMarker(data, type) {
