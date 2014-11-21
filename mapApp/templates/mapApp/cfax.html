@@ -41,7 +41,7 @@
       padding-top: 5px;
     }
     .highlight{
-      background: #0ff;
+      background: #ddd;
     }
   </style>
 
@@ -116,7 +116,7 @@
       function zoomToPoint(pointLayer){
         pointLayer.eachLayer(function(layer){
           if(layer.feature.id == pk){
-            map.fitBounds(layer.getBounds());
+            map.panTo(layer.getBounds().getCenter());
             layer.bringToFront();
             layer.setStyle({
                 fillColor: '#0ff',
@@ -132,7 +132,6 @@
       resetLayerStyle(nearmissesLayer, "nearmiss");
       resetLayerStyle(hazardsLayer, "hazard");
       resetLayerStyle(theftsLayer, "theft");
-
 
       function resetLayerStyle(pointsLayer, type){
         pointsLayer.eachLayer(function(layer){

@@ -20,7 +20,7 @@ def cfax(request):
     thefts = Theft.objects.all()
 
     now = datetime.datetime.now()
-    yesterday = now - datetime.timedelta(days=1)
+    yesterday = now - datetime.timedelta(days=7)
 
     context = {
         "now": now.isoformat(),
