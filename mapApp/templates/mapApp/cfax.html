@@ -26,8 +26,8 @@
   <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
   <!-- map generating code -->
   <script src="{% static 'mapApp/js/map.js' %}" charset="utf-8"></script>
-  <!-- d3 barchart -->
-  <script src="{% static 'mapApp/js/stats.js' %}" charset="utf-8"></script>
+  <!-- cfax initialization and control logic -->
+  <script src="{% static 'mapApp/js/cfax.js' %}" charset="utf-8"></script>
 {% endblock %}
 
 
@@ -61,140 +61,32 @@
 
 
   <script>
-    // Map init and default layers
-    map = L.map('map', {
-        layers: [L.tileLayer('https://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/011011321101/10/{z}/{x}/{y}.png@2x', {
-          minZoom: 2,
-          attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'})
-        ],
-        worldCopyJump: true,
-    }).fitBounds([
-      [48.40185599006367, -123.34625244140624], //Top
-      [48.69821216562637, -123.44650268554688], //Bottom
-      [48.45653041501911, -123.26660156249999], //Right
-      [48.47565256743914, -123.4588623046875] //Left
-    ]);
-
-    // Add data (calls to map.js)
-    var collisionsLayer = geojsonCircleMarker( {{ collisions|geojsonfeature|safe }} , "collision").addTo(map),
-        nearmissesLayer = geojsonCircleMarker( {{ nearmisses|geojsonfeature|safe }} , "nearmiss").addTo(map),
-        hazardsLayer = geojsonCircleMarker( {{ hazards|geojsonfeature|safe }} , "hazard").addTo(map),
-        theftsLayer = geojsonCircleMarker( {{ thefts|geojsonfeature|safe }} , "theft").addTo(map);
-
-    $('#data').append('<h2>Collisions</h2>');
-    pprint("collision", {{ collisions|geojsonfeature:"incident,incident_with,incident_date,incident_detail,pk"|safe }});
-
-    $('#data').append('<h2>Nearmisses</h2>');
-    pprint("nearmiss", {{ nearmisses|geojsonfeature:"incident,incident_with,incident_date,incident_detail,pk"|safe }});
-
-    $('#data').append('<h2>Hazards</h2>');
-    pprint("hazard", {{ hazards|geojsonfeature:"hazard,hazard_date,hazard_detail,pk"|safe }});
-
-    $('#data').append('<h2>Thefts</h2>');
-    pprint("theft", {{ thefts|geojsonfeature:"theft,theft_date,theft_detail,pk"|safe }});
-
-
-    // Highlight list item and TODO highlight corresponding pnt on map
-    $('#data li').hover(function(){
-      // Highlight list item
-      $(this).toggleClass('highlight');
-      var layer = $(this).attr('layer'),
-          pk = $(this).attr('pk');
-
-      // Highlight and zoom to corresponding point
-      if(layer === "collision"){
-        zoomToPoint(collisionsLayer);
-      }else if(layer === "nearmiss"){
-        zoomToPoint(nearmissesLayer);
-      }else if(layer === "hazard"){
-        zoomToPoint(hazardsLayer);
-      }else if(layer === "theft"){
-        zoomToPoint(theftsLayer);
+    $(document).ready(function(){
+      var data = {
+        "collisions": {{ collisions|geojsonfeature:"incident,incident_with,incident_date,incident_detail,pk"|safe }},
+        "nearmisses": {{ nearmisses|geojsonfeature:"incident,incident_with,incident_date,incident_detail,pk"|safe }},
+        "hazards": {{ hazards|geojsonfeature:"hazard,hazard_date,hazard_detail,pk"|safe }},
+        "thefts": {{ thefts|geojsonfeature:"theft,theft_date,theft_detail,pk"|safe }}
       }
 
-      // function to handle highlighting and zooming to specified point in layer
-      function zoomToPoint(pointLayer){
-        pointLayer.eachLayer(function(layer){
-          if(layer.feature.id == pk){
-            map.panTo(layer.getBounds().getCenter());
-            layer.bringToFront();
-            layer.setStyle({
-                fillColor: '#0ff',
-                fillOpacity: 1
-            });
-          }
-        });
-      }
+      // Create the map object (call to cfax.js)
+      initializeCfaxMap();
+
+      // Add data (calls to cfax.js)
+      addData(data);
+
+      // Toggle data and point highlighting
+      $('#data li').hover(function(){
+        // Highlight list item
+        $(this).toggleClass('highlight');
+        // highlight corresponding point (call to cfax.js)
+        highlightPoint($(this).attr('layer'), $(this).attr('pk'));
+      });
+      $('#data li').mouseleave(function(){
+        // unhighlight all points (call to cfax.js)
+        unhighlightPoint($(this).attr('layer'));
+      });
     });
-
-    $('#data li').mouseleave(function(){
-      resetLayerStyle(collisionsLayer, "collision");
-      resetLayerStyle(nearmissesLayer, "nearmiss");
-      resetLayerStyle(hazardsLayer, "hazard");
-      resetLayerStyle(theftsLayer, "theft");
-
-      function resetLayerStyle(pointsLayer, type){
-        pointsLayer.eachLayer(function(layer){
-          layer.setStyle({
-            fillColor: getColor(type),
-            fillOpacity: 0.8
-          });
-        });
-      }
-    });
-
-
-
-    // Print different point types in a nice formatted list TODO move to new js file
-    function pprint(type, jsonData){
-      var str = "<ol>";
-      if(jsonData.features.length === 0){
-        str += "<em>No reports this week</em>";
-      }
-      else{
-        jsonData.features.forEach(function(obj) {
-          if(type === "collision"){
-            str += "<li layer='collision' pk=" + obj.properties.pk + ">"
-              + "<strong>Date: </strong>" + moment(obj.properties.incident_date).calendar() + "<br>"
-              + "<strong>Type: </strong>" + obj.properties.incident + " (" + obj.properties.incident_with + ")<br>";
-              if(obj.properties.incident_detail != ''){
-                str+= "<strong>Description: </strong>" + obj.properties.incident_detail + "</li>";
-              }
-          }
-          else if(type === "nearmiss") {
-            str += "<li layer='nearmiss' pk=" + obj.properties.pk + ">"
-              + "<strong>Date: </strong>" + moment(obj.properties.incident_date).calendar() + "<br>"
-              + "<strong>Type: </strong>" + obj.properties.incident + " (" + obj.properties.incident_with + ")<br>";
-              if(obj.properties.incident_detail != ''){
-                str+= "<strong>Description: </strong>" + obj.properties.incident_detail + "</li>";
-              }
-          }
-          else if(type === "hazard"){
-            str += "<li layer='hazard' pk=" + obj.properties.pk + ">"
-              + "<strong>Date: </strong>" + moment(obj.properties.hazard_date).calendar() + "<br>"
-              + "<strong>Type: </strong>" + obj.properties.hazard + "<br>";
-              if(obj.properties.hazard_detail != ''){
-                str += "<strong>Description: </strong>" + obj.properties.hazard_detail + "</li>";
-              };
-          }
-          else if(type === "theft"){
-            str += "<li layer='theft' pk=" + obj.properties.pk + ">"
-              + "<strong>Date: </strong>" + moment(obj.properties.theft_date).calendar() + "<br>"
-              + "<strong>Type: </strong>" + obj.properties.theft + "<br>";
-            if(obj.properties.theft_detail != ''){
-              str += "<strong>Description: </strong>" + obj.properties.theft_detail + "</li>";
-            };
-          }
-          else{
-            console.log("Unknown type error in pprint");
-          }
-        });
-      }
-
-      $('#data').append(str + "</ol>");
-    };
-
-
   </script>
 
 
