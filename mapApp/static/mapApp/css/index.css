@@ -1,0 +1,130 @@
+#map {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-top: 60px;
+  z-index: 0;
+}
+
+/* Marker clustering */
+.marker-cluster-pie g.arc{
+  fill-opacity: 0.8;
+}
+.marker-cluster-pie .center{
+  fill-opacity: 0.7;
+}
+.pieLabel{
+  font-family: sans-serif;
+}
+
+
+/* Leaflet legend on map */
+.legend-subtext {
+  margin-left: 18px;
+}
+.marker-group {
+  line-height: 30px;
+}
+.marker-group img{
+  width: 20px;
+    height: 50px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.8;
+    background-size: 20px;
+    margin-bottom: -20px;
+}
+
+/* Stops bouncing of elements when collapsing out legend */
+#location-legend{
+  max-height: 30px;
+}
+#incident-legend{
+  max-height: 150px;
+}
+
+/* Legend gradients*/
+.strava-gradient{
+  background: rgba(255,102,17,0);
+  background: -moz-linear-gradient(left, rgba(255,102,17,0) 0%, rgba(255,102,17,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,102,17,0)), color-stop(100%, rgba(255,102,17,1)));
+  background: -webkit-linear-gradient(left, rgba(255,102,17,0) 0%, rgba(255,102,17,1) 100%);
+  background: -o-linear-gradient(left, rgba(255,102,17,0) 0%, rgba(255,102,17,1) 100%);
+  background: -ms-linear-gradient(left, rgba(255,102,17,0) 0%, rgba(255,102,17,1) 100%);
+  background: linear-gradient(to right, rgba(255,102,17,0) 0%, rgba(255,102,17,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff6611', endColorstr='#ff6611', GradientType=1 );
+}
+
+.rainbow-gradient{
+    background: red; /* not working, let's see some red */
+    background: -moz-linear-gradient( left ,
+        blue 0%,
+        cyan 25%,
+        lime 50%,
+        yellow 55%,
+        red 100%);
+    background: -webkit-gradient(linear,  left bottom,  right bottom,
+        color-stop(0%, blue),
+        color-stop(25%, cyan),
+        color-stop(50%, lime),
+        color-stop(55%, yellow),
+        color-stop(100%, red));
+}
+
+.gradient-bar {
+  height: 5px;
+  width: 150px;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.alert-area-box{
+  background: rgba(59, 153, 114, 0.1);
+  border: 2px solid rgba(59, 153, 114, 0.6);
+  height: 20px;
+  width: 32.36px; /*THE GOLDEN RATIO*/
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.bikerack{
+    display:inline-block;
+    background: #666666;
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    border: 1px solid black;
+    opacity: 0.5;
+    /*margin-top: -15px;*/
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+.bikelane{
+  display:inline-block;
+    background: #666666;
+    width: 30px;
+    margin-right: 5px;
+}
+.solidlane{
+  height:2px;
+  background: #ff0080;
+}
+.thicklane{
+  height: 3.5px;
+
+}
+.dotlane{
+  height: 3px;
+   border: 1px solid #ff0080;
+    background: #ff0080; /* not working, let's see some red */
+    background: repeating-linear-gradient(
+      to right,
+      #ff0080,
+      #ff0080 3px,
+      #ffffff 3px,
+      #ffffff 6px
+  );
+}

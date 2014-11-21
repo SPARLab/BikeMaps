@@ -1,0 +1,16 @@
+.map-col{
+  height: 100%;
+  padding: 0 !important;
+}
+
+#map {
+  height: 100%;
+  margin-top: 0px;
+}
+
+.item{
+    background: #aaa;
+    text-align: center;
+    height: 500px !important;
+    padding: 5px;
+}

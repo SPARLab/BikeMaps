@@ -1,0 +1,17 @@
+.map-col{
+  height: 100%;
+  padding: 0 !important;
+}
+
+#map {
+  height: 100%;
+  margin-top: 0px;
+}
+
+#data li{
+  padding-top: 5px;
+}
+
+.highlight{
+  background: #ddd;
+}

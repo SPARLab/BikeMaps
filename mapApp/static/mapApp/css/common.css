@@ -1,0 +1,182 @@
+@font-face {
+	font-family: faktos;
+	src: url('../font/faktos.regular.ttf');
+}
+
+html {
+	height: 100%;
+}
+body {
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	padding-top: 60px;
+	max-width: 100%;
+}
+
+button {
+  margin: 0 5px;
+}
+
+textarea {
+	resize: none; /* removes resize handle from text area inputs */
+}
+
+#message {
+	position: fixed;
+	right: 1em;
+	bottom: 1em;
+	width: auto;
+	z-index: 1;
+}
+
+.about{
+	/*background: #18bc9c;*/
+	margin-top: 40px;
+}
+
+.nav{
+	font-size: 15px;
+}
+
+.nav li{
+	margin-left: 0px;
+}
+
+.navbar-brand img{
+	float: left;
+	height: 45px;
+	margin-top: -10px;
+	margin-right: 5px;
+}
+
+.navbar {
+	font-family: faktos;
+}
+
+.navbar-default .navbar-nav>li>a {
+	color: #00aeac;
+	font-weight: lighter;
+	/*-webkit-text-stroke: 1px #2c3e50;*/
+}
+.navbar-default .navbar-nav>li>a>span {
+	/*-webkit-text-stroke: 0px;*/
+}
+
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.open>a:focus,
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:hover {
+	color: #f18904;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #fff;
+}
+
+body h1{
+	font-family: faktos;
+}
+
+/* Alert bell highlighting*/
+.is-highlighted{
+	color: #D2850B;
+}
+
+#help{
+	position: fixed;
+	left: 10px;
+	bottom: 2.5em;
+	z-index: 1;
+}
+
+/* FORUM */
+.comment a{
+	color: #979797;
+}
+
+.comment{
+	color: #979797;
+}
+
+.reply-markdown a{
+	color: #979797;
+}
+
+.breadcrumb{
+	background: none;
+}
+
+#cogsDropdown{
+	background: none;
+}
+
+/* search control */
+.leaflet-control-geocoder-icon {
+	background-image: url(../images/geocoder_alt.png);
+	background-size: 83%;
+}
+
+.leaflet-control-geocoder{
+	-webkit-box-shadow: rgba(0, 0, 0, 0.65098) 0px 1px 5px 0px;
+}
+
+.leaflet-control-geocoder:hover{
+	background: #f4f4f4;
+}
+
+/* Override spirt user dropdown*/
+.dropdown-menu{
+	font-family: sans-serif;
+}
+
+.dropdown-menu>.divider{
+	height: 1px;
+	width: 100%;
+}
+
+.dropdown-menu>li>a{
+	width: 100%;
+}
+.dropdown-menu>li{
+	width: 100%;
+}
+
+/* General text alteration from bootstrap defaults*/
+li a {
+	color: #2c3e50;
+}
+
+#polygon-sprite{
+	width: 25px;
+    height: 25px;
+    display: inline-block;
+    background: url(../../leaflet/plugins/leaflet.draw/dist/images/spritesheet.png) -32px 3px;
+    margin-top: -9px;
+}
+
+.metadata small{
+	display: block;
+	margin-left:5px;
+}
+
+.terms-conditions p{
+	font-size: 15px;
+	/*text-indent:15px;*/
+}
+
+.terms-conditions h1{
+	font-size: 32px;
+}
+
+/* Mobile info popup on mobile phones */
+.tip-msg{
+	position: absolute;
+	top: 60px;
+	left: 0px;
+	right: 0px;
+	height: 23px;
+}

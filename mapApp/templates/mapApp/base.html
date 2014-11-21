@@ -26,7 +26,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://bikemaps.org/" />
   <meta property="og:image" content="https://bikemaps.org/static/mapApp/images/BikeMapsSocialMediaLogo.jpg" />
-  <meta property="og:description" content="Map your cycling incidents, hazard, and theft locations so they can be analyzed to identify hot spots of cycling safety, risk, and crime." /> 
+  <meta property="og:description" content="Map your cycling incidents, hazard, and theft locations so they can be analyzed to identify hot spots of cycling safety, risk, and crime." />
   <meta property="og:site_name" content="BikeMaps" />
   <meta property="fb:admins" content="569635572" />
 
@@ -34,7 +34,7 @@
   <!-- LOAD CSS -->
   {% block headerCSS %} {% endblock %}
   <link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet" media="screen">
-  <link href="{% static 'mapApp/css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'mapApp/css/common.css' %}" rel="stylesheet">
 
   <!-- Load icons -->
   <link href="{% static 'font-awesome-4.1.0/css/font-awesome.min.css' %}" rel="stylesheet">
@@ -67,7 +67,7 @@
   </div>
 
   {% block body %}{% endblock %}
-  
+
   <!-- Fade out message -->
   <script>
     $(window).load(function(){
@@ -78,10 +78,10 @@
       $('input[type=submit]').click(function(){
         $(this).prop("disabled", true);
         $(this).closest("form").trigger('submit');
-      });  
+      });
     });
   </script>
-  
+
   <!-- Google analytics tracker -->
   {% include 'mapApp/util/google-analytics.html' %}
 </body>

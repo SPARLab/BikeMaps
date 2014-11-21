@@ -2,13 +2,13 @@
 {% load staticfiles %}
 {% load geojson_tags %}
 
-
 {% block title %}
   BikeMaps CFAX
 {% endblock %}
 
-
 {% block headerCSS %}
+  <!-- Load page styles -->
+  <link rel="stylesheet" href="{% static 'mapApp/css/cfax.css' %}"/>
   <!-- Load leaflet -->
   <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
 {% endblock %}
@@ -26,23 +26,9 @@
 
 
 {% block body %}
-  <style type="text/css">
-    #map {
-      height: 100%;
-      margin-top: 0px;
-    }
-    #data li{
-      padding-top: 5px;
-    }
-    .highlight{
-      background: #ddd;
-    }
-  </style>
-
-
   <div class="container-fluid" style="height: 100%;">
     <div class="row" style="height: 100%;">
-      <div class="col-xs-8" style="height: 100%;">
+      <div class="col-xs-8 map-col">
         <!-- Map of one month of reports -->
         <div id="map"></div>
       </div>
@@ -52,7 +38,6 @@
       </div>
     </div>
   </div>
-
 
   <script>
     // Create geojson datasets from django context to pass to cfax.js more easily
@@ -70,17 +55,8 @@
       // Add data (calls to cfax.js)
       addData(data);
 
-      // Toggle data and point highlighting
-      $('#data li').hover(function(){
-        // Highlight list item
-        $(this).toggleClass('highlight');
-        // highlight corresponding point (call to cfax.js)
-        highlightPoint($(this).attr('layer'), $(this).attr('pk'));
-      });
-      $('#data li').mouseleave(function(){
-        // unhighlight all points (call to cfax.js)
-        unhighlightPoint($(this).attr('layer'));
-      });
+      // listen for data hover to highlight points and data (call to cfax.js)
+      listenForHover();
     });
   </script>
 {% endblock %}

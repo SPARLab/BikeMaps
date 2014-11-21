@@ -113,3 +113,19 @@ function pprint(title, jsonData){
   }
   $('#data').append(str + "</ol>");
 };
+
+
+
+function listenForHover(){
+  // Toggle data and point highlighting
+  $('#data li').hover(function(){
+    // Highlight list item
+    $(this).toggleClass('highlight');
+    // highlight corresponding point (call to cfax.js)
+    highlightPoint($(this).attr('layer'), $(this).attr('pk'));
+  });
+  $('#data li').mouseleave(function(){
+    // unhighlight all points (call to cfax.js)
+    unhighlightPoint($(this).attr('layer'));
+  });
+}
