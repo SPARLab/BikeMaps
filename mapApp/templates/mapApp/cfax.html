@@ -61,17 +61,18 @@
 
 
   <script>
+    // Create geojson datasets from django context to pass to cfax.js more easily
+    var data = {
+      "collisions": {{ collisions|geojsonfeature:"incident,incident_with,incident_date,incident_detail,pk"|safe }},
+      "nearmisses": {{ nearmisses|geojsonfeature:"incident,incident_with,incident_date,incident_detail,pk"|safe }},
+      "hazards": {{ hazards|geojsonfeature:"hazard,hazard_date,hazard_detail,pk"|safe }},
+      "thefts": {{ thefts|geojsonfeature:"theft,theft_date,theft_detail,pk"|safe }}
+    }
+
+    // Create the map object (call to cfax.js)
+    initializeCfaxMap();
+
     $(document).ready(function(){
-      var data = {
-        "collisions": {{ collisions|geojsonfeature:"incident,incident_with,incident_date,incident_detail,pk"|safe }},
-        "nearmisses": {{ nearmisses|geojsonfeature:"incident,incident_with,incident_date,incident_detail,pk"|safe }},
-        "hazards": {{ hazards|geojsonfeature:"hazard,hazard_date,hazard_detail,pk"|safe }},
-        "thefts": {{ thefts|geojsonfeature:"theft,theft_date,theft_detail,pk"|safe }}
-      }
-
-      // Create the map object (call to cfax.js)
-      initializeCfaxMap();
-
       // Add data (calls to cfax.js)
       addData(data);
 
@@ -88,6 +89,4 @@
       });
     });
   </script>
-
-
 {% endblock %}
