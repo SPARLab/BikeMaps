@@ -7,42 +7,42 @@ var map;
 var icons = {
     "bikeRedIcon": L.MakiMarkers.icon({
         icon: "bicycle",
-        color: "#d9534f",
+        color: getColor("collision"),
         size: "m"
     }),
     "bikeYellowIcon": L.MakiMarkers.icon({
         icon: "bicycle",
-        color: "#f0ad4e",
+        color: getColor("nearmiss"),
         size: "m"
     }),
     "bikeGreyIcon": L.MakiMarkers.icon({
         icon: "bicycle",
-        color: "#999999",
+        color: getColor("undefined"),
         size: "m"
     }),
     "hazardIcon": L.MakiMarkers.icon({
         icon: "triangle",
-        color: "#3eab45",
+        color: getColor("hazard"),
         size: "m"
     }),
     "theftIcon": L.MakiMarkers.icon({
         icon: "bicycle",
-        color: "#000000",
+        color: getColor("theft"),
         size: "m"
     }),
     "officialIcon": L.MakiMarkers.icon({
         icon: "police",
-        color: "#1D84A6",
+        color: getColor("official"),
         size: "m"
     }),
     "geocodeIcon": L.MakiMarkers.icon({
         icon: "embassy",
-        color: "#CC2A01",
+        color: getColor("geocode"),
         size: "l"
     }),
     "locationIcon": L.MakiMarkers.icon({
         icon: "star",
-        color: "#CC2A01",
+        color: getColor("location"),
         size: "s"
     })
 };
@@ -483,8 +483,6 @@ function toTitleCase(s) {
     });
 };
 
-
-
 function getIcon(t) {
     if (t === "collision")
         return icons["bikeRedIcon"];
@@ -495,10 +493,6 @@ function getIcon(t) {
     else if (t === "theft")
         return icons["theftIcon"];
     else return;
-};
-
-function getColor(t) {
-    return "#" + getIcon(t).options.color
 };
 
 function getPopup(feature, type) {
@@ -532,22 +526,6 @@ function makeNiceDate(d) {
     if(time[0] === 0) time[0] = 12;
 
     return getMonthFromInt(date[1]).slice(0, 3) + ". " + date[2] + ", " + date[0] + ", " + time[0] + ":" + time[1] + (pm >= 1 ? "pm" : "am");
-};
-
-// Purpose: Convert a given geojson dataset to a CircleMarker point layer
-function geojsonCircleMarker(data, type) {
-    return L.geoJson(data, {
-        pointToLayer: function(feature, latlng) {
-            return L.circleMarker(latlng, {
-                radius: 3,
-                fillColor: getColor(type),
-                color: "#000",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.8
-            })
-        }
-    });
 };
 
 // Purpose: Convert a given geojson dataset to a MakiMarker point layer
