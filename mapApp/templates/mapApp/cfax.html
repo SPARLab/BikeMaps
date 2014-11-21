@@ -96,28 +96,33 @@
 
     // Highlight list item and TODO highlight corresponding pnt on map
     $('#data li').hover(function(){
+      // Highlight list item
       $(this).toggleClass('highlight');
       var layer = $(this).attr('layer'),
           pk = $(this).attr('pk');
 
-      // Highlight corresponding point
+      // TODO Highlight corresponding point
       if(layer === "collision"){
         collisionsLayer.eachLayer(function(layer){
           if(layer.feature.id == pk){
+            map.fitBounds(layer.getBounds());
+            layer.bringToFront();
             layer.setStyle({
                 fillColor: '#0ff',
                 fillOpacity: 1
             });
           }
+          // TODO zoom map to point
+
         });
       }else if(layer === "nearmiss"){
-        console.log(nearmissesLayer);
+        return;
 
       }else if(layer === "hazard"){
-        console.log(hazardsLayer);
+        return;
 
       }else if(layer === "theft"){
-        console.log(theftsLayer);
+        return;
 
       }
     });
