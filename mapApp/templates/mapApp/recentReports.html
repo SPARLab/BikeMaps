@@ -3,12 +3,12 @@
 {% load geojson_tags %}
 
 {% block title %}
-  BikeMaps CFAX
+  BikeMaps Recent Reports
 {% endblock %}
 
 {% block headerCSS %}
   <!-- Load page styles -->
-  <link rel="stylesheet" href="{% static 'mapApp/css/cfax.css' %}"/>
+  <link rel="stylesheet" href="{% static 'mapApp/css/recentReports.css' %}"/>
   <!-- Load leaflet -->
   <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
 {% endblock %}
@@ -20,8 +20,8 @@
   <script src="{% static 'leaflet/leaflet.js' %}"></script>
   <!-- icon color definitions and geojson point function -->
   <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
-  <!-- cfax initialization and control logic -->
-  <script src="{% static 'mapApp/js/cfax.js' %}" charset="utf-8"></script>
+  <!-- recentReports initialization and control logic -->
+  <script src="{% static 'mapApp/js/recentReports.js' %}" charset="utf-8"></script>
 {% endblock %}
 
 
@@ -40,7 +40,7 @@
   </div>
 
   <script>
-    // Create geojson datasets from django context to pass to cfax.js more easily
+    // Create geojson datasets from django context to pass to recentReports.js more easily
     var data = {
       "collisions": {{ collisions|geojsonfeature:"incident,incident_with,incident_date,incident_detail,pk"|safe }},
       "nearmisses": {{ nearmisses|geojsonfeature:"incident,incident_with,incident_date,incident_detail,pk"|safe }},
@@ -49,14 +49,14 @@
       "rois": {{ geofences|geojsonfeature|safe}}
     }
 
-    // Create the map object (call to cfax.js)
+    // Create the map object (call to recentReports.js)
     initializeCfaxMap();
 
     $(document).ready(function(){
       {% if geofences %}
-          // Add data (call to cfax.js)
+          // Add data (call to recentReports.js)
           addData(data);
-          // listen for data hover to highlight points and data (call to cfax.js)
+          // listen for data hover to highlight points and data (call to recentReports.js)
           listenForHover();
       {% else %}
         map.fitWorld();

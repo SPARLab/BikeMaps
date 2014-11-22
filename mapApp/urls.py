@@ -36,5 +36,5 @@ urlpatterns = patterns('',
 
 
 	url(r'stats/$', views.stats, name='stats'),
-	url(r'cfax/$', views.cfax, name='cfax'),
+	url(r'recent/$', views.recentReports, name='recent'),
 )

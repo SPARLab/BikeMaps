@@ -10,8 +10,8 @@ from mapApp.models.alert_area import AlertArea
 
 import datetime
 
-# @login_required
-def cfax(request):
+@login_required
+def recentReports(request):
     user = request.user
 
     # Get the user's alertable points in the last month
@@ -51,4 +51,4 @@ def cfax(request):
         'geofences': rois
     }
 
-    return render(request, 'mapApp/cfax.html', context)
+    return render(request, 'mapApp/recentReports.html', context)
