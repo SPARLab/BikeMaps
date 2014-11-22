@@ -115,7 +115,7 @@ function pprint(title, jsonData){
 };
 
 
-
+// Listen for and handle hovering over list item in data pane
 function listenForHover(){
   // Toggle data and point highlighting
   $('#data li').hover(function(){
