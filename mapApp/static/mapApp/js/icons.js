@@ -40,5 +40,5 @@ function geojsonPolygonMarker(data) {
       opacity: 0.6,
       fillOpacity: 0.1,
     }
-  })
-}
+  });
+};
