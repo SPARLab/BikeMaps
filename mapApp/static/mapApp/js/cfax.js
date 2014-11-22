@@ -10,21 +10,27 @@ function initializeCfaxMap(){
         attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'})
       ],
       worldCopyJump: true,
-  }).fitBounds([
-    [48.40185599006367, -123.34625244140624], //Top
-    [48.69821216562637, -123.44650268554688], //Bottom
-    [48.45653041501911, -123.26660156249999], //Right
-    [48.47565256743914, -123.4588623046875] //Left
-  ]);
+  });//.fitBounds([
+  //   [48.40185599006367, -123.34625244140624], //Top
+  //   [48.69821216562637, -123.44650268554688], //Bottom
+  //   [48.45653041501911, -123.26660156249999], //Right
+  //   [48.47565256743914, -123.4588623046875] //Left
+  // ]);
 };
 
 // add data defined in data variable to data panel and to map as L.circleMarker
 function addData(data){
+  // Add geojson features to map
   collisionsLayer = geojsonCircleMarker( data.collisions , "collision").addTo(map);
   nearmissesLayer = geojsonCircleMarker( data.nearmisses , "nearmiss").addTo(map);
   hazardsLayer = geojsonCircleMarker( data.hazards , "hazard").addTo(map);
   theftsLayer = geojsonCircleMarker( data.thefts , "theft").addTo(map);
+  rois = geojsonPolygonMarker(data.rois).addTo(map);
 
+  // Fit map extent to alert areas boundary
+  map.fitBounds(rois);
+  
+  // Add text to data column
   pprint("Collisions", data.collisions);
   pprint("Nearmisses", data.nearmisses);
   pprint("Hazards", data.hazards);

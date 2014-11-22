@@ -45,18 +45,28 @@
       "collisions": {{ collisions|geojsonfeature:"incident,incident_with,incident_date,incident_detail,pk"|safe }},
       "nearmisses": {{ nearmisses|geojsonfeature:"incident,incident_with,incident_date,incident_detail,pk"|safe }},
       "hazards": {{ hazards|geojsonfeature:"hazard,hazard_date,hazard_detail,pk"|safe }},
-      "thefts": {{ thefts|geojsonfeature:"theft,theft_date,theft_detail,pk"|safe }}
+      "thefts": {{ thefts|geojsonfeature:"theft,theft_date,theft_detail,pk"|safe }},
+      "rois": {{ geofences|geojsonfeature|safe}}
     }
 
     // Create the map object (call to cfax.js)
     initializeCfaxMap();
 
     $(document).ready(function(){
-      // Add data (calls to cfax.js)
-      addData(data);
-
-      // listen for data hover to highlight points and data (call to cfax.js)
-      listenForHover();
+      {% if geofences %}
+          // Add data (call to cfax.js)
+          addData(data);
+          // listen for data hover to highlight points and data (call to cfax.js)
+          listenForHover();
+      {% else %}
+        map.fitWorld();
+        $('#data').append('<h2>Instructions:</h2><ol>'
+          + '<li>Login in to your account</li>'
+          + '<li>Trace an alert area on the home page map</li>'
+          + '<li>Visit this page to see recent incidents in your alert area</li>'
+        + '</ol>');
+    {% endif %}
     });
+
   </script>
 {% endblock %}

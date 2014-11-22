@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 # Import models
 from mapApp.models.incident import Incident
@@ -9,6 +10,7 @@ from mapApp.models.alert_area import AlertArea
 
 import datetime
 
+# @login_required
 def cfax(request):
     user = request.user
 
@@ -45,6 +47,8 @@ def cfax(request):
         'nearmisses': nearmissesInPoly.filter(incident_date__range=[yesterday, now]),
         'hazards': hazardsInPoly.filter(hazard_date__range=[yesterday, now]),
         'thefts': theftsInPoly.filter(theft_date__range=[yesterday, now]),
+
+        'geofences': rois
     }
 
     return render(request, 'mapApp/cfax.html', context)

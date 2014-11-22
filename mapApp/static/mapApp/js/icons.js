@@ -12,21 +12,33 @@ var iconColors = {
 
 // Given type, return the icon color as defined in iconColors
 function getColor(t) {
-    return iconColors[t];
+  return iconColors[t];
 };
 
 // Purpose: Convert a given geojson dataset to a CircleMarker point layer
 function geojsonCircleMarker(data, type) {
-    return L.geoJson(data, {
-        pointToLayer: function(feature, latlng) {
-            return L.circleMarker(latlng, {
-                radius: 3,
-                fillColor: getColor(type),
-                color: "#000",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.8
-            })
-        }
-    });
+  return L.geoJson(data, {
+    pointToLayer: function(feature, latlng) {
+      return L.circleMarker(latlng, {
+        radius: 3,
+        fillColor: getColor(type),
+        color: "#000",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.8
+      })
+    }
+  });
 };
+
+// Purpose: Convert a given geojson polygon dataset to a polygon layer
+function geojsonPolygonMarker(data) {
+  return L.geoJson(data, {
+    style: {
+      color: '#3b9972',
+      weight: 2,
+      opacity: 0.6,
+      fillOpacity: 0.1,
+    }
+  })
+}
