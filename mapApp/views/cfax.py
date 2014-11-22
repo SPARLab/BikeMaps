@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from mapApp.models.incident import Incident
 from mapApp.models.hazard import Hazard
 from mapApp.models.theft import Theft
+from mapApp.models.alert_area import AlertArea
 
 import datetime
 
@@ -19,6 +20,20 @@ def cfax(request):
     hazards = Hazard.objects.all()
     thefts = Theft.objects.all()
 
+    # Get only points that intersect user alert areas
+    rois = AlertArea.objects.filter(user=user.id)
+    # recent sets = points that intersect an rois as defined by user and are reported in last month
+    collisionsInPoly = Incident.objects.none()
+    nearmissesInPoly = Incident.objects.none()
+    hazardsInPoly = Hazard.objects.none()
+    theftsInPoly = Theft.objects.none()
+    # Find intersecting points
+    for g in rois:
+        collisionsInPoly = collisionsInPoly | collisions.filter(geom__intersects=g.geom)
+        nearmissesInPoly = nearmissesInPoly | nearmisses.filter(geom__intersects=g.geom)
+        hazardsInPoly = hazardsInPoly | hazards.filter(geom__intersects=g.geom)
+        theftsInPoly = theftsInPoly | thefts.filter(geom__intersects=g.geom)
+
     now = datetime.datetime.now()
     yesterday = now - datetime.timedelta(days=7)
 
@@ -26,10 +41,10 @@ def cfax(request):
         "now": now.isoformat(),
         'yesterday': yesterday.isoformat(),
 
-        'collisions': collisions.filter(incident_date__range=[yesterday, now]),
-        'nearmisses': nearmisses.filter(incident_date__range=[yesterday, now]),
-        'hazards': hazards.filter(hazard_date__range=[yesterday, now]),
-        'thefts': thefts.filter(theft_date__range=[yesterday, now]),
+        'collisions': collisionsInPoly.filter(incident_date__range=[yesterday, now]),
+        'nearmisses': nearmissesInPoly.filter(incident_date__range=[yesterday, now]),
+        'hazards': hazardsInPoly.filter(hazard_date__range=[yesterday, now]),
+        'thefts': theftsInPoly.filter(theft_date__range=[yesterday, now]),
     }
 
     return render(request, 'mapApp/cfax.html', context)
