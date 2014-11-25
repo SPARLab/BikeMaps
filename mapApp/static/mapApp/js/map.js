@@ -56,6 +56,9 @@ var incidentData = new L.MarkerClusterGroup({
         weight: 3
     },
     iconCreateFunction: createPieCluster
+}).on('click', function(e){
+  var layer = e.layer;
+  layer.bindPopup(getPopup(layer)).openPopup();
 }),
 
     alertAreas = new L.FeatureGroup([]),
@@ -495,8 +498,10 @@ function getIcon(t) {
     else return;
 };
 
-function getPopup(feature, type) {
-    var popup;
+function getPopup(layer) {
+    var feature = layer.feature,
+        type = layer.options.ftype,
+        popup;
     if (type === "collision" || type === "nearmiss") {
         popup = '<strong>Type:</strong> ' + feature.properties.incident + '<br><strong>';
         if (feature.properties.incident_type != "Fall")
@@ -536,12 +541,9 @@ function geojsonMakiMarker(data, type) {
             heatMap.addLatLng(latlng);
             return L.marker(latlng, {
                 icon: getIcon(type),
-                pk: feature.id,
+                ftype: type,
                 objType: feature.properties.model
             })
         },
-        onEachFeature: function(feature, layer) {
-            layer.bindPopup(getPopup(feature, type));
-        }
     });
 };
