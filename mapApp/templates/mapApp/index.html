@@ -133,10 +133,6 @@
         {% endfor %}
 
         // Load user points from the database
-        // var collisions = geojsonMakiMarker({{ collisions|geojsonfeature|safe }}, "collision").addTo(incidentData);
-        // var nearmisses = geojsonMakiMarker({{ nearmisses|geojsonfeature|safe }}, "nearmiss").addTo(incidentData);
-        // var hazards = geojsonMakiMarker({{ hazards|geojsonfeature|safe }}, "hazard").addTo(incidentData);
-        // var thefts = geojsonMakiMarker({{ thefts|geojsonfeature|safe }}, "theft").addTo(incidentData);
         var collisions = geojsonMakiMarker({{ collisions|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "collision").addTo(incidentData);
         var nearmisses = geojsonMakiMarker({{ nearmisses|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "nearmiss").addTo(incidentData);
         var hazards = geojsonMakiMarker({{ hazards|geojsonfeature:"hazard,hazard_date"|safe }}, "hazard").addTo(incidentData);
