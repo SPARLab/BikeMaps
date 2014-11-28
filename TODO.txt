@@ -1,7 +1,6 @@
 #TO DO
 
 ###HIGHER PRIORITY
-* Daily cfax reports
 * Create blog app
 * Add Karen safety information
 * Display more data in point popups
@@ -29,7 +28,8 @@
 * improve incidents heatmap
 * flagged comment alerts for admins
 * Pictures of hazards uploading
-* Make use of AJAX to prevent unnecessary page redirects. Leaflet.AJAX for geojson data?
+* Make use of AJAX to prevent unnecessary page redirects
+* Change app name
 
 ###BUGS
 * Moderate comments > delete button not working
