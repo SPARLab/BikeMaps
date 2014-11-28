@@ -11,10 +11,17 @@
 .item{
     background: #aaa;
     text-align: center;
-    height: 500px !important;
     padding: 5px;
+}
+
+.carousel,.item,.active{height:100%;}
+.carousel-inner{height:100%;}
+
+#carousel-col{
+  height: 48%;
 }
 
 #graph-panel{
   height:100%;
+  padding: 15px;
 }
