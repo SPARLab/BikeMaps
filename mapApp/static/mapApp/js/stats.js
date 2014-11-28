@@ -122,6 +122,16 @@ function getLayer(type){
     else return [recentTheftsLayer, allTheftsLayer];
 };
 
+// Filter a GeoJSON object with date property by a range starting with startDate, ending with endDate
+// 	startDate is exclusive, endDate is inclusive.
+// 	if startDate null, all dates prior or equal to endDate inclusive
+function filterGeoJSONByDate(geojson, startDate, endDate){
+  var result = geojson;
+  result.features = $.grep(geojson.features, function(n,i){ return (moment(n.properties.date) <= endDate); });
+  if(startDate)
+    result.features = $.grep(geojson.features, function(n,i){ return (moment(n.properties.date) > startDate); });
+  return result;
+};
 
 // Initialize the SVG linechart via calls to the d3.js library
 function initializeLineChart(data){

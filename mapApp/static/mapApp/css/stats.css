@@ -14,3 +14,7 @@
     height: 500px !important;
     padding: 5px;
 }
+
+#graph-panel{
+  height:100%;
+}

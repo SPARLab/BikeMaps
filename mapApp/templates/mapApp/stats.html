@@ -42,7 +42,6 @@
 
 
 {% block body %}
-	<!-- Generate fb like button -->
 	<div id="fb-root"></div>
 	<script>(function(d, s, id) {
 	  var js, fjs = d.getElementsByTagName(s)[0];
@@ -60,23 +59,23 @@
 				<div id="map"></div>
 			</div>
 
-			<div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+			<div id="graph-panel" class="col-xs-12 col-sm-6" style="margin-top: 15px;">
 				<!-- Bar graph of Alert area points by type -->
 				<!-- See http://bost.ocks.org/mike/bar/ for bar chart tutorials -->
-				<div class="panel panel-primary">
-				  <div class="panel-heading" id="barchart-title">Reports this month</div>
-				  <div class="panel-body" id="barchart-body">
-					<svg id="barchart"
-						viewBox="0 0 500 250"
-					  preserveAspectRatio="xMidYMid">
-					</svg>
-				  </div>
+				<div class="col-xs-12">
+					<div class="panel panel-primary">
+					  <div class="panel-heading" id="barchart-title">Reports this month</div>
+					  <div class="panel-body" id="barchart-body">
+						<svg id="barchart"
+							viewBox="0 0 500 250"
+						  preserveAspectRatio="none">
+						</svg>
+					  </div>
+					</div>
 				</div>
-			</div>
 
-			<!-- Shameless self promotion material -->
-			<div class="row" style="margin-top: 15px;">
-				<div class="col-xs-12 col-sm-6" style: "padding: 5px;">
+				<!-- Shameless self promotion material -->
+				<div class="col-xs-12">
 					<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 					  <!-- Indicators -->
 					  <ol class="carousel-indicators">
@@ -103,28 +102,17 @@
 					    <div class="item">
 								<h4>Check out BikeMaps on Facebook and Twitter!</h4>
 								<!-- Facebook like button -->
-								<div class="col-xs-6">
-									<div class="fb-like" data-href="https://www.facebook.com/pages/BikeMapsorg/337283939811392" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+								<div class="col-xs-12 text-center">
+									<!-- Facebook -->
+									<div style="background: white;" class="fb-like-box" data-href="https://www.facebook.com/pages/BikeMapsorg/337283939811392" data-colorscheme="light" data-show-faces="false" data-header="true" data-stream="true" data-show-border="true"></div>
 								</div>
 
 								<!-- Twitter follow button -->
-								<div class="col-xs-6 text-right">
-									<a class="twitter-follow-button"
-										href="https://twitter.com/BikeMapsTeam"
-										data-show-count="false"
-										data-lang="en">
-										Follow @BikeMapsTeam
-									</a>
-									<script type="text/javascript">
-									window.twttr = (function (d, s, id) {
-										var t, js, fjs = d.getElementsByTagName(s)[0];
-										if (d.getElementById(id)) return;
-										js = d.createElement(s); js.id = id;
-										js.src= "https://platform.twitter.com/widgets.js";
-										fjs.parentNode.insertBefore(js, fjs);
-										return window.twttr || (t = { _e: [], ready: function (f) { t._e.push(f) } });
-									}(document, "script", "twitter-wjs"));
-									</script>
+								<div class="col-xs-12 text-center">
+										<a href="https://twitter.com/BikeMapsTeam" class="twitter-follow-button" data-show-count="true" data-show-screen-name="true" data-size="large">Follow @BikeMapsTeam</a>
+										<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+											if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+										</script>
 								</div>
 					    </div>
 					  </div>
@@ -140,8 +128,8 @@
 					  </a>
 					</div>
 				</div>
-			</div>
 
+			</div>
 		</div>
 	</div>
 
@@ -150,14 +138,16 @@
 		var barchart = $("#barchart"),
 			container = barchart.parent();
 		$(window).ready(function() {
+			var targetHeight = ($("#graph-panel").height() - 200);
 			var targetWidth = container.width();
 				barchart.attr("width", targetWidth);
-				barchart.attr("height", targetWidth / 2);
+				barchart.attr("height", targetHeight/2);
 		}).trigger("resize");
 		$(window).on("resize", function() {
+			targetHeight = ($("#graph-panel").height() - 200);
 			targetWidth = container.width();
 			barchart.attr("width", targetWidth);
-			barchart.attr("height", targetWidth / 2);
+			barchart.attr("height", targetHeight/2);
 		}).trigger("resize");
 
 
@@ -229,18 +219,6 @@
 		{% else %}
 			$('#barchart-body').append("<p>Trace out an alert area on the main map page to see data visualizations for that area.</p>");
 		{% endif %}
-
-
-		// Filter a GeoJSON object with date property by a range starting with startDate, ending with endDate
-		// 	startDate is exclusive, endDate is inclusive.
-		// 	if startDate null, all dates prior or equal to endDate inclusive
-		function filterGeoJSONByDate(geojson, startDate, endDate){
-			var result = geojson;
-			result.features = $.grep(geojson.features, function(n,i){ return (moment(n.properties.date) <= endDate); });
-			if(startDate)
-				result.features = $.grep(geojson.features, function(n,i){ return (moment(n.properties.date) > startDate); });
-			return result;
-		};
 
 	</script>
 
