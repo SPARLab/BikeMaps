@@ -106,22 +106,10 @@ function initializeGeoJSON() {
             heatMap.addLatLng(latlng);
 
             return L.marker(latlng, {
-                icon: icons["officialIcon"]
+                icon: icons["officialIcon"],
+                ftype: "police"
             });
         },
-        onEachFeature: function(feature, layer) {
-            var time = feature.properties.ACC_TIME;
-            if (time) {
-                hours = parseInt(time.substring(0, 2));
-                time = ", " + hours % 12 + ":" + time.substring(2) + (Math.floor(hours / 12) ? " p.m." : " a.m.")
-            } else {
-                time = '';
-            };
-            var date = feature.properties.ACC_DATE.split("/");
-            date = getMonthFromInt(parseInt(date[1])).substring(0, 3) + '. ' + parseInt(date[2]) + ', ' + date[0] + time; // Month dd, YYYY, hh:mm a.m.
-
-            layer.bindPopup('<strong>Type: </strong>Vehicle collision (' + feature.properties.ACC_TYPE.toLowerCase() + ')<br>' + '<strong>Data source: </strong>Victoria Police Dept. ' + '<a href="#" data-toggle="collapse" data-target="#police-metadata"><small>(metadata)</small></a><br>' + '<div id="police-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>Data available for the City of Victoria from 2008 to 2012.</small>' + '</div>' + '<strong>Date: </strong>' + date);
-        }
     }).addTo(incidentData);
 
     // ICBC Data
@@ -130,12 +118,9 @@ function initializeGeoJSON() {
             heatMap.addLatLng(latlng);
 
             return L.marker(latlng, {
-                icon: icons["officialIcon"]
+                icon: icons["officialIcon"],
+                ftype: "icbc"
             });
-        },
-        onEachFeature: function(feature, layer) {
-            var date = toTitleCase(feature.properties.Month).substring(0, 3) + ". " + feature.properties.Year;
-            layer.bindPopup('<strong>Data source: </strong>ICBC ' + '<a href="#" data-toggle="collapse" data-target="#icbc-metadata"><small>(metadata)</small></a><br>' + '<div id="icbc-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>Data available for British Columbia from 2009 to 2013. Incident characteristics not provided.</small>' + '</div>' + '<strong>Date: </strong>' + date);
         }
     }).addTo(incidentData);
 };
@@ -502,6 +487,7 @@ function getPopup(layer) {
     var feature = layer.feature,
         type = layer.options.ftype,
         popup;
+  
     if (type === "collision" || type === "nearmiss") {
         popup = '<strong>Type:</strong> ' + feature.properties.incident + '<br><strong>';
         if (feature.properties.incident_type != "Fall")
@@ -512,8 +498,27 @@ function getPopup(layer) {
 
     } else if (type === "hazard") {
         popup = '<strong>Hazard type:</strong> ' + feature.properties.hazard + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.hazard_date);
+
     } else if (type === "theft") {
         popup = '<strong>Theft type:</strong> ' + feature.properties.theft + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.theft_date);
+
+    } else if (type === "icbc") {
+        var date = toTitleCase(feature.properties.Month).substring(0, 3) + ". " + feature.properties.Year;
+        popup = '<strong>Data source: </strong>ICBC ' + '<a href="#" data-toggle="collapse" data-target="#icbc-metadata"><small>(metadata)</small></a><br>' + '<div id="icbc-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>Data available for British Columbia from 2009 to 2013. Incident characteristics not provided.</small>' + '</div>' + '<strong>Date: </strong>' + date
+
+    }else if (type == "police") {
+        var time = feature.properties.ACC_TIME;
+        if (time) {
+          hours = parseInt(time.substring(0, 2));
+          time = ", " + hours % 12 + ":" + time.substring(2) + (Math.floor(hours / 12) ? " p.m." : " a.m.")
+        } else {
+          time = '';
+        };
+        var date = feature.properties.ACC_DATE.split("/");
+        date = getMonthFromInt(parseInt(date[1])).substring(0, 3) + '. ' + parseInt(date[2]) + ', ' + date[0] + time; // Month dd, YYYY, hh:mm a.m.
+
+        popup = '<strong>Type: </strong>Vehicle collision (' + feature.properties.ACC_TYPE.toLowerCase() + ')<br>' + '<strong>Data source: </strong>Victoria Police Dept. ' + '<a href="#" data-toggle="collapse" data-target="#police-metadata"><small>(metadata)</small></a><br>' + '<div id="police-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>Data available for the City of Victoria from 2008 to 2012.</small>' + '</div>' + '<strong>Date: </strong>' + date
+
     } else return "error";
 
     return popup;
