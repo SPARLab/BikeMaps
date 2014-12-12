@@ -10,7 +10,7 @@
 
 {% block headerCSS %}
 	<!-- Load leaflet -->
-	<link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 
 	<!-- Barchart style -->
 	<link rel="stylesheet" href="{% static 'mapApp/css/barchart.css' %}"/>
@@ -21,11 +21,11 @@
 
 {% block headerJS %}
     <!-- d3 v3.4.8 -->
-    <script src="{% static 'd3/d3.min.js' %}" charset="utf-8"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
     <!-- moment.js date library -->
-    <script src="{% static 'moment/moment.min.js' %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
     <!-- Load leaflet -->
-    <script src="{% static 'leaflet/leaflet.js' %}"></script>
+		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 		<!-- Icon definitions -->
     <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
     <!-- Load marker clustering -->

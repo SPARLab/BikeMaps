@@ -6,7 +6,7 @@
 {% load staticfiles crispy_forms_tags geojson_tags %}
 {% block headerCSS %}
     <!-- Load leaflet -->
-    <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 
     <!-- Load marker clustering -->
     <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.markercluster/MarkerCluster.css' %}">
@@ -25,7 +25,7 @@
 {% block headerJS %}
     <!-- LOAD JS -->
     <!-- Load leaflet -->
-    <script src="{% static 'leaflet/leaflet.js' %}"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
     <!-- Load marker clustering -->
     <script src="{% static 'leaflet/plugins/leaflet.markercluster/leaflet.markercluster-src.js' %}"></script>
