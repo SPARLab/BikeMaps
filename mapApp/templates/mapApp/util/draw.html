@@ -1,16 +1,18 @@
 <!-- Javascript saved as html to allow for use of Django template tags within the code -->
 <script>
-{% if not request.mobile %}
-    desktopDrawing();
-{% else %}
-    mobileDrawing();
-{% endif %}
+$(document).ready(function(){
+  {% if not request.mobile %}
+      desktopDrawing();
+  {% else %}
+      mobileDrawing();
+  {% endif %}
+});
 
 function desktopDrawing(){
     /* DRAWING CONTROL TOOLTIPS */
     L.drawLocal.draw.toolbar.buttons.marker = 'Add a new marker.';
     L.drawLocal.draw.handlers.marker.tooltip.start = 'Place me where the incident, hazard, or theft occurred.';
-    
+
     L.drawLocal.draw.toolbar.buttons.polygon = 'Trace an area to receive incident alerts.';
     L.drawLocal.draw.handlers.polygon.tooltip.start = 'Trace the area you would like to receive alerts for.';
     // L.drawLocal.draw.handlers.polygon.tooltip.cont = 'Click to continue drawing shape.';
@@ -19,13 +21,13 @@ function desktopDrawing(){
     L.drawLocal.edit.toolbar.buttons.edit = 'Edit alert area.';
     L.drawLocal.edit.handlers.edit.tooltip.text = 'Drag handles to edit alert areas. Be sure to save your changes.';
     L.drawLocal.edit.handlers.edit.tooltip.subtext = 'Click cancel to undo changes.';
-        
+
     L.drawLocal.edit.toolbar.buttons.remove = 'Delete alert areas.';
     L.drawLocal.edit.handlers.remove.tooltip.text = 'Click the alert areas to remove';
-    
+
     L.drawLocal.edit.toolbar.buttons.editDisabled = 'No alert areas to edit.';
     L.drawLocal.edit.toolbar.buttons.removeDisabled = 'No alert areas to delete.';
-    
+
 
     {% with DISABLE_GEOFENCES=False %}
     /* ADD THE CONTROL TO LEAFLET MAP */
@@ -38,14 +40,14 @@ function desktopDrawing(){
             marker: {
                 icon:icons["bikeGreyIcon"]
             },
-            polygon: 
+            polygon:
                 {% if request.user.is_authenticated and not DISABLE_GEOFENCES %}
                 { allowIntersection: false }
                 {% else %}
                 false
                 {% endif %}
         },
-        edit: 
+        edit:
             {% if request.user.is_authenticated and not DISABLE_GEOFENCES %}
             { featureGroup: alertAreas }
             {% else %}
@@ -62,7 +64,7 @@ function desktopDrawing(){
 
     map.addControl(new L.Control.Draw({
         position: 'bottomright',
-        draw: false,        
+        draw: false,
         edit: {
             edit: false,
             featureGroup: incidentData
@@ -76,20 +78,20 @@ function desktopDrawing(){
         map.on('draw:created', function (e) {
             var type = e.layerType,
                 layer = e.layer;
-            
+
             if (type === 'marker') {
                 // Set form geometry field to click location
                 $('#incidentForm').modal('show');
                 var geom = JSON.stringify(layer.toGeoJSON().geometry);
 
-                document.getElementById("point").value = geom; 
-                document.getElementById("hazPoint").value = geom; 
-                document.getElementById("theftPoint").value = geom; 
+                document.getElementById("point").value = geom;
+                document.getElementById("hazPoint").value = geom;
+                document.getElementById("theftPoint").value = geom;
             }
             if (type === 'polygon') {
                 // Set form geometry field to click location
-                document.getElementById("geofence").value = JSON.stringify(layer.toGeoJSON().geometry);                             
-                document.getElementById("userEmail").value = "{{ request.user.email }}";               
+                document.getElementById("geofence").value = JSON.stringify(layer.toGeoJSON().geometry);
+                document.getElementById("userEmail").value = "{{ request.user.email }}";
                 $('#geofenceForm').modal('show');
             }
         });
@@ -112,7 +114,7 @@ function desktopDrawing(){
             var layers = e.layers;
             // Fill out form
             layers.eachLayer(function (layer) {
-                if(layer.options.pk){   
+                if(layer.options.pk){
                     document.getElementById("editPk").value += (layer.options.pk + ';');
                     document.getElementById("editGeom").value += (JSON.stringify(layer.toGeoJSON().geometry) + ";");
                     document.getElementById("objType").value += (layer.options.objType+ ';');
@@ -138,8 +140,8 @@ function mobileDrawing(){
         console.log("DOUBLE CLICK");
         var geom = '{"type":"Point","coordinates":['+e.latlng.lng+','+e.latlng.lat+']}';
         $('#incidentForm').modal('show');
-        document.getElementById("point").value = geom; 
-        document.getElementById("hazPoint").value = geom; 
+        document.getElementById("point").value = geom;
+        document.getElementById("hazPoint").value = geom;
         document.getElementById("theftPoint").value = geom;
     });
 }

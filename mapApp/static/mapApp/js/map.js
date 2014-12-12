@@ -280,7 +280,7 @@ function initialize(scrollZoom, mobile) {
             }
         };
 
-        //Listener events for toggling legend items
+        //Listener events for toggling legend items.
         map.on('overlayremove', collapseLegendItem);
         map.on('overlayadd', showLegendItem);
 

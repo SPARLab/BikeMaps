@@ -128,3 +128,7 @@
       #ffffff 6px
   );
 }
+
+.modal-dialog{
+  z-index: 1040;
+}
