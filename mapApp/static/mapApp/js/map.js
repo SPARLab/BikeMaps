@@ -73,14 +73,20 @@ var incidentData = new L.MarkerClusterGroup({
 
     // Tile layers
     // Skobbler settings flag reference at http://developer.skobbler.com/getting-started/web#sec0
-    skobbler = L.tileLayer('https://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/0111113120/10/{z}/{x}/{y}.png@2x', {
-        minZoom: 2,
-        attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
+    MapQuestOpen_OSM = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
+      attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      subdomains: '1234'
     }),
-
+    // skobbler = L.tileLayer('https://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/0111113120/10/{z}/{x}/{y}.png@2x', {
+    //     minZoom: 2,
+    //     attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
+    // }),
     // skobblerNight = L.tileLayer('https://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/0111113120/2/{z}/{x}/{y}.png@2x', {
     //     minZoom: 2,
     //     attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
+    // }),
+    // OpenStreetMap_Mapnik = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     // }),
 
     stravaHM = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
@@ -221,15 +227,12 @@ function initialize(scrollZoom, mobile) {
     map = L.map('map', {
         center: [48, -100],
         zoom: 4,
-        layers: [skobbler, stravaHM, incidentData, alertAreas],
+        layers: [MapQuestOpen_OSM, stravaHM, incidentData, alertAreas],
         worldCopyJump: true,
         scrollWheelZoom: scrollZoom
     });
 
-    $(document).ready(mapListen);
-
-
-    function mapListen() {
+    $(document).ready(function() {
         map.on('popupopen', function(e) {
             openPopup = e.popup;
         });
@@ -312,7 +315,7 @@ function initialize(scrollZoom, mobile) {
                 $('#alert-areas-legend').collapse('show');
             }
         };
-    };
+    });
 };
 
 // Purpose: Locate the user and add their location to the map.
@@ -487,7 +490,7 @@ function getPopup(layer) {
     var feature = layer.feature,
         type = layer.options.ftype,
         popup;
-  
+
     if (type === "collision" || type === "nearmiss") {
         popup = '<strong>Type:</strong> ' + feature.properties.incident + '<br><strong>';
         if (feature.properties.incident_type != "Fall")
