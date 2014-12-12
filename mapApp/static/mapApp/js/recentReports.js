@@ -5,10 +5,10 @@ var collisionsLayer, nearmissesLayer, hazardsLayer, theftsLayer;
 function initializeCfaxMap(){
   // Map init and default layers
   map = L.map('map', {
-      layers: [L.tileLayer('https://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/011011321101/10/{z}/{x}/{y}.png@2x', {
-        minZoom: 2,
-        attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'})
-      ],
+      layers: [L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
+        attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        subdomains: '1234'
+      })],
       worldCopyJump: true,
   });
 };
