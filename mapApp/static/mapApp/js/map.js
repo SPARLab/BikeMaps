@@ -106,7 +106,9 @@ var incidentData = new L.MarkerClusterGroup({
 
 
 function loadGeojsonAjax(src, type){
+  incidentData.fire("data:loading");
   L.Util.ajax(src).then(function(data){
+    incidentData.fire("data:loaded");
     L.geoJson(data, {
       pointToLayer: function(feature, latlng) {
         heatMap.addLatLng(latlng);
