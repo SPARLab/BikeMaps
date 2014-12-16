@@ -10,7 +10,7 @@
 
 # Ignore compiled python files
 *.pyc
-/VicBikeMap/settings/prod.py
+*/settings/prod.py
 /static/
 /media/
 .DS_store
