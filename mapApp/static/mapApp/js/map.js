@@ -105,30 +105,18 @@ var incidentData = new L.MarkerClusterGroup({
     openPopup;
 
 
-function initializeGeoJSON(policeData, icbcData) {
-    // Police data
-    L.geoJson(policeData, {
-        pointToLayer: function(feature, latlng) {
-            heatMap.addLatLng(latlng);
-
-            return L.marker(latlng, {
-                icon: icons["officialIcon"],
-                ftype: "police"
-            });
-        },
+function loadGeojsonAjax(src, type){
+  L.Util.ajax(src).then(function(data){
+    L.geoJson(data, {
+      pointToLayer: function(feature, latlng) {
+        heatMap.addLatLng(latlng);
+        return L.marker(latlng, {
+          icon: icons["officialIcon"],
+          ftype: type
+        });
+      }
     }).addTo(incidentData);
-
-    // ICBC Data
-    L.geoJson(icbcData, {
-        pointToLayer: function(feature, latlng) {
-            heatMap.addLatLng(latlng);
-
-            return L.marker(latlng, {
-                icon: icons["officialIcon"],
-                ftype: "icbc"
-            });
-        }
-    }).addTo(incidentData);
+  });
 };
 
 

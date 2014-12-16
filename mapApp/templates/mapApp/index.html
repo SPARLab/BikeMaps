@@ -54,10 +54,6 @@
     <!-- Leaflet-ajax -->
     <script src="{% static 'leaflet/plugins/leaflet-ajax/dist/leaflet.ajax.min.js' %}"></script>
 
-    <!-- GeoJSON sources -->
-    <!-- // <script src="{% static 'mapApp/data/policeData.js' %}"></script> -->
-    <!-- // <script src="{% static 'mapApp/data/icbcData.js' %}"></script> -->
-
     <!-- Load icon definitions -->
     <script src="{% static 'mapApp/js/icons.js' %}"></script>
 
@@ -98,35 +94,15 @@
 
         $(document).ready(function(){
           // Add all geojson auxiliary data
-          // var policeData = L.geoJson.ajax("{% static 'mapApp/data/policeData.json' %}");
-          L.Util.ajax("{% static 'mapApp/data/icbcData.geojson' %}").then(function(data){
-            L.geoJson(data, {
-              pointToLayer: function(feature, latlng) {
-                heatMap.addLatLng(latlng);
-                return L.marker(latlng, {
-                  icon: icons["officialIcon"],
-                  ftype: "icbc"
-                });
-              }
-            }).addTo(incidentData);
-          });
-          L.Util.ajax("{% static 'mapApp/data/policeData.geojson' %}").then(function(data){
-            L.geoJson(data, {
-              pointToLayer: function(feature, latlng) {
-                heatMap.addLatLng(latlng);
-                return L.marker(latlng, {
-                  icon: icons["officialIcon"],
-                  ftype: "police"
-                });
-              }
-            }).addTo(incidentData);
+          var officialData = [
+            ["{% static 'mapApp/data/policeData.geojson' %}", "police"],
+            ["{% static 'mapApp/data/icbcData.geojson' %}", "icbc"]
+          ].forEach(function(item){
+            loadGeojsonAjax(item[0], item[1]);
           });
 
           // Initialize the map
           initialize(scrollZoom=true {% if request.mobile %}, mobile=true {% endif %});
-
-          // console.log(policeData);
-          // initializeGeoJSON(policeData, icbcData);
 
           // Load user alert areas from the database
           {% for polygon in geofences %}
