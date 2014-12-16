@@ -1,0 +1,29 @@
+{
+  "name": "leaflet.ajax",
+  "version": "1.1.0",
+  "description": "AJAX and JSONP in Leaflet",
+  "main": "dist/leaflet.ajax.js",
+  "directories": {
+    "example": "example"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-contrib-jshint": "~0.6.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/calvinmetcalf/leaflet-ajax.git"
+  },
+  "keywords": [
+    "leaflet",
+    "ajax",
+    "geojson"
+  ],
+  "author": "Calvin Metcalf",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/calvinmetcalf/leaflet-ajax/issues"
+  }
+}

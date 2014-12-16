@@ -105,7 +105,7 @@ var incidentData = new L.MarkerClusterGroup({
     openPopup;
 
 
-function initializeGeoJSON() {
+function initializeGeoJSON(policeData, icbcData) {
     // Police data
     L.geoJson(policeData, {
         pointToLayer: function(feature, latlng) {
