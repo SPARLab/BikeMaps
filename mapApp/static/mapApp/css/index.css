@@ -31,27 +31,24 @@
 }*/
 #incident-legend{
   max-height: 150px;
-  line-height: 5px;
+  line-height: 20px;
 }
 .marker-group i{
   height: 20px;
   width: 20px;
   border-radius: 10px;
+  padding-top: 4px;
 }
 .marker-group>i.fa-bicycle{
-  padding-top: 4px;
   padding-left: 2px;
 }
 .marker-group>i.fa-warning{
-  padding-top: 4px;
   padding-left: 4px;
 }
 .marker-group>i.fa-certificate{
-  padding-top: 4px;
   padding-left: 5px;
 }
 .marker-group>i.fa-user{
-  padding-top: 4px;
   padding-left: 5px;
 }
 
