@@ -1,13 +1,13 @@
 // Icon definitions
 var iconColors = {
-    "collision": "#d9534f",
-    "nearmiss": "#f0ad4e",
-    "hazard": "#3eab45",
-    "theft": "#000000",
-    "official": "#1D84A6",
+    "collision": "#d63e2a",
+    "nearmiss": "#f3952f",
+    "hazard": "#72b026",
+    "theft": "#a3a3a3",
+    "official": "#436978",
     "undefined": "#999999",
-    "geocode": "#CC2A01",
-    "location": "#CC2A01"
+    "geocode": "#a23336",
+    "location": "#a23336"
 };
 
 // Given type, return the icon color as defined in iconColors

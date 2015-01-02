@@ -19,6 +19,9 @@
 
     <!-- Local styles -->
     <link rel="stylesheet" href="{% static 'mapApp/css/index.css' %}">
+
+    <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
+
 {% endblock %}
 
 {% block headerJS %}
@@ -39,6 +42,10 @@
     <!-- Load draw pluging -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js"></script>
     <!-- // <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw-src.js"></script> -->
+
+    <!-- Awesome markers -->
+    <script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
+
     {% endif %}
 
     <!-- Used for pie chart creation -->

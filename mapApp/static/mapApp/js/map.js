@@ -4,46 +4,55 @@ var DISABLE_GEOFENCES = false;
 var map;
 
 // Icon definitions
+L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
 var icons = {
-    "bikeRedIcon": L.MakiMarkers.icon({
-        icon: "bicycle",
-        color: getColor("collision"),
-        size: "m"
+    "bikeRedIcon": L.AwesomeMarkers.icon({
+        icon: "fa-bicycle",
+        markerColor: 'red',
+        iconColor: 'black',
+        color: getColor("collision")
     }),
-    "bikeYellowIcon": L.MakiMarkers.icon({
-        icon: "bicycle",
-        color: getColor("nearmiss"),
-        size: "m"
+    "bikeYellowIcon": L.AwesomeMarkers.icon({
+        icon: "fa-bicycle",
+        markerColor: 'orange',
+        iconColor: 'black',
+        color: getColor("nearmiss")
     }),
-    "bikeGreyIcon": L.MakiMarkers.icon({
-        icon: "bicycle",
-        color: getColor("undefined"),
-        size: "m"
+    "bikeGreyIcon": L.AwesomeMarkers.icon({
+        icon: "fa-bicycle",
+        markerColor: 'lightblue',
+        iconColor: 'black',
+        color: getColor("undefined")
     }),
-    "hazardIcon": L.MakiMarkers.icon({
-        icon: "triangle",
-        color: getColor("hazard"),
-        size: "m"
+    "hazardIcon": L.AwesomeMarkers.icon({
+        icon: "fa-warning",
+        markerColor: 'green',
+        iconColor: 'black',
+        color: getColor("hazard")
     }),
-    "theftIcon": L.MakiMarkers.icon({
-        icon: "bicycle",
-        color: getColor("theft"),
-        size: "m"
+    "theftIcon": L.AwesomeMarkers.icon({
+        icon: "fa-bicycle",
+        markerColor: 'lightgray',
+        iconColor: 'black',
+        color: getColor("theft")
     }),
-    "officialIcon": L.MakiMarkers.icon({
-        icon: "police",
-        color: getColor("official"),
-        size: "m"
+    "officialIcon": L.AwesomeMarkers.icon({
+        icon: "fa-certificate",
+        markerColor: 'cadetblue',
+        iconColor: 'orange',
+        color: getColor("official")
     }),
-    "geocodeIcon": L.MakiMarkers.icon({
-        icon: "embassy",
-        color: getColor("geocode"),
-        size: "l"
+    "geocodeIcon": L.AwesomeMarkers.icon({
+        icon: "fa-flag",
+        markerColor: 'darkred',
+        iconColor: 'black',
+        color: getColor("geocode")
     }),
-    "locationIcon": L.MakiMarkers.icon({
-        icon: "star",
-        color: getColor("location"),
-        size: "s"
+    "locationIcon": L.AwesomeMarkers.icon({
+        icon: "fa-user",
+        markerColor: 'darkred',
+        iconColor: 'black',
+        color: getColor("location")
     })
 };
 
@@ -170,16 +179,13 @@ function addControls(mobile) {
 
         layerControl.addOverlay(incidentData,
             'Incident locations<br>'
-
-            + '<div id=incident-legend class="marker-group legend-subtext collapse in">' + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icons["bikeRedIcon"].options.icon + '+' + icons["bikeRedIcon"].options.color + '.png">' + ' <small>Citizen collision report</small><br>'
-
-            + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["bikeYellowIcon"].options.icon + '+' + icons["bikeYellowIcon"].options.color + '.png"> <small>Citizen near miss report</small><br>'
-
-            + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["hazardIcon"].options.icon + '+' + icons["hazardIcon"].options.color + '.png"> <small>Cyclist hazard</small><br>'
-
-            + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["officialIcon"].options.icon + '+' + icons["officialIcon"].options.color + '.png"> <small>Official collision report</small><br>'
-
-            + '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s-' + icons["theftIcon"].options.icon + '+' + icons["theftIcon"].options.color + '.png"> <small>Bike Theft</small>' + '<div class="clearfix"</div></div>'
+            + '<div id=incident-legend class="marker-group legend-subtext collapse in">'
+            + '<i style="background-color: ' + getColor("collision") + ';" class="fa fa-bicycle icon-black"></i><small> Citizen collision report</small><br>'
+            + '<i style="background-color: ' + getColor("nearmiss") + ';" class="fa fa-bicycle icon-black"></i><small> Citizen near miss report</small><br>'
+            + '<i style="background-color: ' + getColor("hazard") + ';" class="fa fa-warning icon-black"></i><small> Cyclist hazard</small><br>'
+            + '<i style="background-color: ' + getColor("theft") + ';" class="fa fa-bicycle icon-black"></i><small> Bike Theft</small><br>'
+            + '<i style="background-color: ' + getColor("official") + '; color: orange" class="fa fa-certificate"></i><small> Official collision report</small><br>'
+            + '<div class="clearfix"</div></div>'
         );
 
         if (!DISABLE_GEOFENCES) {
@@ -261,7 +267,7 @@ function initialize(scrollZoom, mobile) {
                 locationGroup = L.layerGroup([marker, circle]);
                 layerControl.addOverlay(locationGroup, 'Detected location<br>' +
                     '<div id="location-legend" class="marker-group legend-subtext collapse">' +
-                    '<img src="https://api.tiles.mapbox.com/v3/marker/pin-s' + '-' + icons["locationIcon"].options.icon + '+' + icons["locationIcon"].options.color + '.png"> <small>You are here</small></div>' +
+                    '<i style="background-color: '+ getColor("location") +';" class="fa fa-user icon-black"></i><small> You are here</small></div>' +
                     '</div>');
                 locationGroup.addTo(map);
 
@@ -367,7 +373,7 @@ function createPieCluster(cluster) {
 
     // Make array of icons data
     data = $.map(icons, function(v) {
-        return v;
+      return v;
     })
 
     // Build the svg layer
@@ -411,7 +417,7 @@ function createPieCluster(cluster) {
         g.append('path')
             .attr("d", arc)
             .style("fill", function(d) {
-                return '#' + d.data.options.color;
+                return d.data.options.color;
             });
 
         // Add center fill
