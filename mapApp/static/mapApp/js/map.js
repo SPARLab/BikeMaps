@@ -539,7 +539,7 @@ function makeNiceDate(d) {
 
 // Purpose: Convert a given geojson dataset to a MakiMarker point layer
 //  and add all latlngs to the heatmap and bind appropriate popups to markers
-function geojsonMakiMarker(data, type) {
+function geojsonMarker(data, type) {
     return L.geoJson(data, {
         pointToLayer: function(feature, latlng) {
             heatMap.addLatLng(latlng);

@@ -117,10 +117,10 @@
           {% endfor %}
 
           // Load user points from the database
-          var collisions = geojsonMakiMarker({{ collisions|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "collision").addTo(incidentData);
-          var nearmisses = geojsonMakiMarker({{ nearmisses|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "nearmiss").addTo(incidentData);
-          var hazards = geojsonMakiMarker({{ hazards|geojsonfeature:"hazard,hazard_date"|safe }}, "hazard").addTo(incidentData);
-          var thefts = geojsonMakiMarker({{ thefts|geojsonfeature:"theft,theft_date"|safe }}, "theft").addTo(incidentData);
+          var collisions = geojsonMarker({{ collisions|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "collision").addTo(incidentData);
+          var nearmisses = geojsonMarker({{ nearmisses|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "nearmiss").addTo(incidentData);
+          var hazards = geojsonMarker({{ hazards|geojsonfeature:"hazard,hazard_date"|safe }}, "hazard").addTo(incidentData);
+          var thefts = geojsonMarker({{ thefts|geojsonfeature:"theft,theft_date"|safe }}, "theft").addTo(incidentData);
 
 
           addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
