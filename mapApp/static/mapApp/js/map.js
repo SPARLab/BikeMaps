@@ -98,18 +98,18 @@ var incidentData = new L.MarkerClusterGroup({
     //   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     // }),
 
-    stravaHM = L.tileLayer('http://gometry.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
-        minZoom: 3,
-        maxZoom: 17,
-        opacity: 0.8,
-        attribution: 'Ridership data &copy <a href=http://labs.strava.com/heatmap/>Strava labs</a>'
+    stravaHM = L.tileLayer('http://globalheat.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
+      minZoom: 3,
+      maxZoom: 17,
+      opacity: 0.8,
+      attribution: '<a href=http://labs.strava.com/heatmap/>http://labs.strava.com/heatmap/</a>'
     }),
 
     infrastructure = L.tileLayer.wms("https://bikemaps.org/WMS", {
-        layers: 'bikemaps_infrastructure',
-        format: 'image/png',
-        transparent: true,
-        version: '1.3.0'
+      layers: 'bikemaps_infrastructure',
+      format: 'image/png',
+      transparent: true,
+      version: '1.3.0'
     }),
     openPopup;
 
