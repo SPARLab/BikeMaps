@@ -11,10 +11,10 @@
 {% block headerCSS %}
 	<!-- Load leaflet -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-
+	<!-- Awesome markers -->
+	<link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
 	<!-- Barchart style -->
 	<link rel="stylesheet" href="{% static 'mapApp/css/barchart.css' %}"/>
-
 	<!-- Local styles -->
 	<link rel="stylesheet" href="{% static 'mapApp/css/stats.css' %}"/>
 {% endblock %}
@@ -34,6 +34,8 @@
     <script src="{% static 'leaflet/plugins/maki-markers/Leaflet.MakiMarkers.js' %}"></script>
     <!-- Load heatmap -->
     <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
+		<!-- Awesome markers -->
+		<script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
     <!-- map generating code -->
     <script src="{% static 'mapApp/js/map.js' %}" charset="utf-8"></script>
     <!-- d3 barchart -->
