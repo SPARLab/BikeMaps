@@ -127,6 +127,23 @@
           var hazardsLayers = hazards.getLayers();
           var theftsLayers = thefts.getLayers();
 
+          $("#collisionCheckbox").change(function(){
+            if(this.checked){ incidentData.addLayers(collisionsLayers); }
+            else{ incidentData.removeLayers(collisionsLayers); }
+          });
+          $("#nearmissCheckbox").change(function(){
+            if(this.checked){ incidentData.addLayers(nearmissesLayers); }
+            else{ incidentData.removeLayers(nearmissesLayers); }
+          });
+          $("#hazardCheckbox").change(function(){
+            if(this.checked){ incidentData.addLayers(hazardsLayers); }
+            else{ incidentData.removeLayers(hazardsLayers); }
+          });
+          $("#theftCheckbox").change(function(){
+            if(this.checked){ incidentData.addLayers(theftsLayers); }
+            else{ incidentData.removeLayers(theftsLayers); }
+          });
+
           addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
 
           // Set the appropriate map extend and zoom
@@ -145,12 +162,6 @@
             var total = {{thefts|length}}+{{hazards|length}}+{{collisions|length}}+{{nearmisses|length}}
             $(".user-menu").append('<li><a href="#"><small>Total: '+total+'</small></a></li>');
         {% endif %}
-
-        $(document).ready(function(){
-          $("#collisionCheckbox").change(function(){
-            console.log("CHECKED");
-          });
-        });
 
     </script>
 
