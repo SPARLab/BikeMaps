@@ -103,12 +103,8 @@
           initialize(scrollZoom=true {% if request.mobile %}, mobile=true {% endif %});
 
           // Add all geojson auxiliary data
-          var officialData = [
-            ["{% static 'mapApp/data/policeData.geojson' %}", "police"],
-            ["{% static 'mapApp/data/icbcData.geojson' %}", "icbc"]
-          ].forEach(function(item){
-            loadGeojsonAjax(item[0], item[1]);
-          });
+          loadGeojsonAjax("{% static 'mapApp/data/policeData.geojson' %}", "police");
+          loadGeojsonAjax("{% static 'mapApp/data/icbcData.geojson' %}", "icbc");
 
 
           // Load user alert areas from the database
@@ -117,31 +113,25 @@
           {% endfor %}
 
           // Load user points from the database
-          var collisions = geojsonMarker({{ collisions|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "collision").addTo(incidentData);
-          var nearmisses = geojsonMarker({{ nearmisses|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "nearmiss").addTo(incidentData);
-          var hazards = geojsonMarker({{ hazards|geojsonfeature:"hazard,hazard_date"|safe }}, "hazard").addTo(incidentData);
-          var thefts = geojsonMarker({{ thefts|geojsonfeature:"theft,theft_date"|safe }}, "theft").addTo(incidentData);
+          var collisions = geojsonMarker({{ collisions|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "collision").addTo(incidentData).getLayers();
+          var nearmisses = geojsonMarker({{ nearmisses|geojsonfeature:"incident,incident_type,incident_with,incident_date"|safe }}, "nearmiss").addTo(incidentData).getLayers();
+          var hazards = geojsonMarker({{ hazards|geojsonfeature:"hazard,hazard_date"|safe }}, "hazard").addTo(incidentData).getLayers();
+          var thefts = geojsonMarker({{ thefts|geojsonfeature:"theft,theft_date"|safe }}, "theft").addTo(incidentData).getLayers();
 
-          var collisionsLayers = collisions.getLayers();
-          var nearmissesLayers = nearmisses.getLayers();
-          var hazardsLayers = hazards.getLayers();
-          var theftsLayers = thefts.getLayers();
-
-          $("#collisionCheckbox").change(function(){
-            if(this.checked){ incidentData.addLayers(collisionsLayers); }
-            else{ incidentData.removeLayers(collisionsLayers); }
-          });
-          $("#nearmissCheckbox").change(function(){
-            if(this.checked){ incidentData.addLayers(nearmissesLayers); }
-            else{ incidentData.removeLayers(nearmissesLayers); }
-          });
-          $("#hazardCheckbox").change(function(){
-            if(this.checked){ incidentData.addLayers(hazardsLayers); }
-            else{ incidentData.removeLayers(hazardsLayers); }
-          });
-          $("#theftCheckbox").change(function(){
-            if(this.checked){ incidentData.addLayers(theftsLayers); }
-            else{ incidentData.removeLayers(theftsLayers); }
+          $("#collisionCheckbox").change(function(){ this.checked ? incidentData.addLayers(collisions) : incidentData.removeLayers(collisions); });
+          $("#nearmissCheckbox").change(function(){this.checked ? incidentData.addLayers(nearmisses) : incidentData.removeLayers(nearmisses); });
+          $("#hazardCheckbox").change(function(){this.checked ? incidentData.addLayers(hazards) : incidentData.removeLayers(hazards); });
+          $("#theftCheckbox").change(function(){this.checked ? incidentData.addLayers(thefts) : incidentData.removeLayers(thefts); });
+          $("#officialCheckbox").change(function(){
+            if(this.checked){
+              officialData.getLayers().forEach(function(l){
+                incidentData.addLayers(l.getLayers())
+              });
+            }else{
+              officialData.getLayers().forEach(function(l){
+                incidentData.removeLayers(l.getLayers())
+              });
+            }
           });
 
           addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});

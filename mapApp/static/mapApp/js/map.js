@@ -115,6 +115,7 @@ var incidentData = new L.MarkerClusterGroup({
 
 // Purpose: A function for adding official report data efficiently and asynchronously.
 //    Accepts the geojson feature and the datatype (unused but added for potential future requirements) and initiates the spinner while data is loading
+var officialData = L.layerGroup()
 function loadGeojsonAjax(src, type){
   incidentData.fire("data:loading");
   L.Util.ajax(src).then(function(data){
@@ -127,7 +128,7 @@ function loadGeojsonAjax(src, type){
           ftype: type
         });
       }
-    }).addTo(incidentData);
+    }).addTo(incidentData).addTo(officialData);
   });
 };
 
