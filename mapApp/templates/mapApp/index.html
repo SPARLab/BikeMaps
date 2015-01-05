@@ -122,6 +122,10 @@
           var hazards = geojsonMarker({{ hazards|geojsonfeature:"hazard,hazard_date"|safe }}, "hazard").addTo(incidentData);
           var thefts = geojsonMarker({{ thefts|geojsonfeature:"theft,theft_date"|safe }}, "theft").addTo(incidentData);
 
+          var collisionsLayers = collisions.getLayers();
+          var nearmissesLayers = nearmisses.getLayers();
+          var hazardsLayers = hazards.getLayers();
+          var theftsLayers = thefts.getLayers();
 
           addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
 
@@ -141,6 +145,12 @@
             var total = {{thefts|length}}+{{hazards|length}}+{{collisions|length}}+{{nearmisses|length}}
             $(".user-menu").append('<li><a href="#"><small>Total: '+total+'</small></a></li>');
         {% endif %}
+
+        $(document).ready(function(){
+          $("#collisionCheckbox").change(function(){
+            console.log("CHECKED");
+          });
+        });
 
     </script>
 

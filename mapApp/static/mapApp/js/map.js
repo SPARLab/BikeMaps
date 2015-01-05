@@ -113,7 +113,8 @@ var incidentData = new L.MarkerClusterGroup({
     }),
     openPopup;
 
-
+// Purpose: A function for adding official report data efficiently and asynchronously.
+//    Accepts the geojson feature and the datatype (unused but added for potential future requirements) and initiates the spinner while data is loading
 function loadGeojsonAjax(src, type){
   incidentData.fire("data:loading");
   L.Util.ajax(src).then(function(data){
@@ -335,7 +336,6 @@ function locateUser(setView, watch) {
         enableHighAccuracy: true
     });
 };
-
 
 // Purpose: Add a given latlng list to the map as a polygon. Add pk attribute so polygon can be deleted by user.
 function getPolygon(latlng, pk) {
