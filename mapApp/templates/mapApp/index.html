@@ -118,23 +118,13 @@
           var hazards = geojsonMarker({{ hazards|geojsonfeature:"hazard,hazard_date"|safe }}, "hazard").addTo(incidentData).getLayers();
           var thefts = geojsonMarker({{ thefts|geojsonfeature:"theft,theft_date"|safe }}, "theft").addTo(incidentData).getLayers();
 
+          addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
+
           $("#collisionCheckbox").change(function(){ this.checked ? incidentData.addLayers(collisions) : incidentData.removeLayers(collisions); });
           $("#nearmissCheckbox").change(function(){this.checked ? incidentData.addLayers(nearmisses) : incidentData.removeLayers(nearmisses); });
           $("#hazardCheckbox").change(function(){this.checked ? incidentData.addLayers(hazards) : incidentData.removeLayers(hazards); });
           $("#theftCheckbox").change(function(){this.checked ? incidentData.addLayers(thefts) : incidentData.removeLayers(thefts); });
-          $("#officialCheckbox").change(function(){
-            if(this.checked){
-              officialData.getLayers().forEach(function(l){
-                incidentData.addLayers(l.getLayers())
-              });
-            }else{
-              officialData.getLayers().forEach(function(l){
-                incidentData.removeLayers(l.getLayers())
-              });
-            }
-          });
-
-          addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
+          $("#officialCheckbox").change(function(){this.checked ? officialData.getLayers().forEach(function(l){incidentData.addLayers(l.getLayers())}) : officialData.getLayers().forEach(function(l){ incidentData.removeLayers(l.getLayers())}); });
 
           // Set the appropriate map extend and zoom
           setView({% if zoom %} {{ lat }}, {{ lng }}, {{ zoom}} {% endif %});
