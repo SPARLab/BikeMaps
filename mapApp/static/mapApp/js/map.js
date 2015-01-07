@@ -182,12 +182,21 @@ function addControls(mobile) {
 // Purpose: Locate the user and add their location to the map.
 // 		Given lat, lng, and zoom, go to that point, else to user location
 function setView(lat, lng, zoom) {
-    if (zoom) {
-        this.map.setView(L.latLng(lat, lng), zoom);
-        locateUser(setView = false, watch = false);
-    } else {
-        locateUser(setView = true, watch = false);
-    }
+  var marker;
+
+  map.on("locationfound", function(location) {
+    if (!marker)
+      marker = L.userMarker(location.latlng, {smallIcon:true, circleOpts:{weight: 1, opacity: 0.3, fillOpacity: 0.05}}).addTo(map);
+      marker.setLatLng(location.latlng);
+      marker.setAccuracy(location.accuracy);
+  });
+
+  if (zoom) {
+      this.map.setView(L.latLng(lat, lng), zoom);
+      locateUser(setView = false, watch = false);
+  } else {
+      locateUser(setView = true, watch = false);
+  }
 };
 
 // Purpose: Find the user via GPS or internet connection.

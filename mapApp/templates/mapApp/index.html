@@ -1,38 +1,31 @@
 {% extends "mapApp/base.html" %}
 
 {% block title %}BikeMaps{% endblock %}
-
-<!-- HEAD STUFF -->
 {% load staticfiles crispy_forms_tags geojson_tags %}
+
 {% block headerCSS %}
     <!-- Load leaflet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-
     <!-- Load marker clustering -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css">
-
     <!-- Load draw pluging -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css">
-
     <!-- Leaflet Geocoder -->
     <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}">
-
     <!-- font-awesome icons -->
     <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
-
+    <!-- user marker plugin -->
+    <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-usermarker/src/leaflet.usermarker.css' %}">
     <!-- Local styles -->
     <link rel="stylesheet" href="{% static 'mapApp/css/index.css' %}">
 
 {% endblock %}
 
 {% block headerJS %}
-    <!-- LOAD JS -->
     <!-- Load leaflet -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-
     <!-- Load marker clustering -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js"></script>
-
     <!-- Load heatmap -->
     <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
 
@@ -43,27 +36,23 @@
     {% endif %}
 
     <!-- Awesome markers -->
-    <script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
-
+    <script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
     <!-- Used for pie chart creation -->
     <!-- d3 v3.4.8 -->
     <script src="{% static 'd3/d3.min.js' %}" charset="utf-8"></script>
-
     <!-- Leaflet Geocoder -->
     <script src="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script>
-
     <!-- Tooltips script -->
     <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
-
     <!-- Leaflet-ajax -->
     <script src="{% static 'leaflet/plugins/leaflet-ajax/dist/leaflet.ajax.min.js' %}"></script>
     <!-- Spinner -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
     <script src="{% static 'leaflet-spin/leaflet.spin.js' %}"></script>
-
+    <!-- usermarker plugin -->
+    <script src="{% static 'leaflet/plugins/leaflet-usermarker/src/leaflet.usermarker.js' %}"></script>
     <!-- Load icon definitions -->
     <script src="{% static 'mapApp/js/icons.js' %}"></script>
-
     <!-- Load app js -->
     <script src="{% static 'mapApp/js/map.js' %}"></script>
     <script src="{% static 'mapApp/js/override.js' %}"></script>
