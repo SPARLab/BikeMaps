@@ -178,56 +178,6 @@ function addControls(mobile) {
     addGeocoderControl();
     addScaleControl();
 };
-    // $(document).ready(function() {
-    //     map.on('popupopen', function(e) {
-    //         openPopup = e.popup;
-    //     });
-    //
-    //     // Listener events for locating the user
-    //     map.on('locationfound', onLocationFound);
-    //
-    //     function onLocationFound(e) {
-    //         var radius = Math.round((((e.accuracy / 2) + 0.00001) * 100) / 100); //Round accuracy to two decimal places
-    //
-    //         if (locationGroup) {
-    //             /*Update the coordinates of the marker*/
-    //             locationGroup.eachLayer(function(layer) {
-    //                 layer.setLatLng(e.latlng);
-    //                 if (layer._mRadius) {
-    //                     layer.setRadius(radius);
-    //                 } else {
-    //                     layer.getPopup().setContent("You are within " + radius + " meters of this point");
-    //                 }
-    //             });
-    //         } else {
-    //             /*Location not previously found, create marker and legend item*/
-    //             var marker = L.marker(e.latlng, {
-    //                 icon: icons["locationIcon"]
-    //             })
-    //                 .bindPopup("You are within " + radius + " meters of this point"),
-    //
-    //                 circle = L.circle(e.latlng, radius, {
-    //                     color: "#" + icons["locationIcon"].options.color,
-    //                     weight: 1,
-    //                     opacity: 0.3,
-    //                     clickable: false,
-    //                     fillOpacity: 0.05
-    //                 });
-    //
-    //             locationGroup = L.layerGroup([marker, circle]);
-    //             layerControl.addOverlay(locationGroup, 'Detected location<br>' +
-    //                 '<div id="location-legend" class="marker-group legend-subtext collapse">' +
-    //                 '<i style="background-color: '+ getColor("location") +';" class="fa fa-user icon-black"></i><small> You are here</small></div>' +
-    //                 '</div>');
-    //             locationGroup.addTo(map);
-    //
-    //             // Watch location of user without resetting viewpane
-    //             locateUser(setView = false, watch = true);
-    //         }
-    //     };
-    //
-  // });
-
 
 // Purpose: Locate the user and add their location to the map.
 // 		Given lat, lng, and zoom, go to that point, else to user location
