@@ -17,10 +17,11 @@
     <!-- Leaflet Geocoder -->
     <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}">
 
+    <!-- font-awesome icons -->
+    <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
+
     <!-- Local styles -->
     <link rel="stylesheet" href="{% static 'mapApp/css/index.css' %}">
-
-    <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
 
 {% endblock %}
 
@@ -80,7 +81,7 @@
     <!-- JS to control message display and feature creation -->
     <script>
         // Initialize the map
-        initialize(scrollZoom=true {% if request.mobile %}, mobile=true {% endif %});
+        initialize(scrollZoom=true);
         addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
 
         // Load user points from the database

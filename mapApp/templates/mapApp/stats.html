@@ -11,7 +11,7 @@
 {% block headerCSS %}
 	<!-- Load leaflet -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-	<!-- Awesome markers -->
+	<!-- font-awesome icons -->
 	<link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
 	<!-- Barchart style -->
 	<link rel="stylesheet" href="{% static 'mapApp/css/barchart.css' %}"/>
@@ -26,16 +26,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
     <!-- Load leaflet -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+		<!-- Awesome markers -->
+		<script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
 		<!-- Icon definitions -->
     <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
     <!-- Load marker clustering -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js"></script>
-    <!-- Load Maki Markers Icons -->
-    <script src="{% static 'leaflet/plugins/maki-markers/Leaflet.MakiMarkers.js' %}"></script>
     <!-- Load heatmap -->
     <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
-		<!-- Awesome markers -->
-		<script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
     <!-- map generating code -->
     <script src="{% static 'mapApp/js/map.js' %}" charset="utf-8"></script>
     <!-- d3 barchart -->
@@ -132,7 +130,7 @@
 
 	<script>
 		// Create the map (call to map.js)
-    initialize(scrollZoom=false {% if request.mobile %}, mobile=true {% endif %});
+    initialize(scrollZoom=false);
 
     var areasLatLngList = [];
     {% for polygon in geofences %}

@@ -3,59 +3,6 @@ var DISABLE_GEOFENCES = false;
 /* GLOBAL VARIABLES */
 var map;
 
-// Icon definitions
-L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
-var icons = {
-    "bikeRedIcon": L.AwesomeMarkers.icon({
-        icon: "fa-bicycle",
-        markerColor: 'red',
-        iconColor: 'black',
-        color: getColor("collision")
-    }),
-    "bikeYellowIcon": L.AwesomeMarkers.icon({
-        icon: "fa-bicycle",
-        markerColor: 'orange',
-        iconColor: 'black',
-        color: getColor("nearmiss")
-    }),
-    "bikeGreyIcon": L.AwesomeMarkers.icon({
-        icon: "fa-bicycle",
-        markerColor: 'lightblue',
-        iconColor: 'black',
-        color: getColor("undefined")
-    }),
-    "hazardIcon": L.AwesomeMarkers.icon({
-        icon: "fa-warning",
-        markerColor: 'green',
-        iconColor: 'black',
-        color: getColor("hazard")
-    }),
-    "theftIcon": L.AwesomeMarkers.icon({
-        icon: "fa-bicycle",
-        markerColor: 'lightgray',
-        iconColor: 'black',
-        color: getColor("theft")
-    }),
-    "officialIcon": L.AwesomeMarkers.icon({
-        icon: "fa-certificate",
-        markerColor: 'cadetblue',
-        iconColor: 'orange',
-        color: getColor("official")
-    }),
-    "geocodeIcon": L.AwesomeMarkers.icon({
-        icon: "fa-flag",
-        markerColor: 'darkred',
-        iconColor: 'black',
-        color: getColor("geocode")
-    }),
-    "locationIcon": L.AwesomeMarkers.icon({
-        icon: "fa-user",
-        markerColor: 'darkred',
-        iconColor: 'black',
-        color: getColor("location")
-    })
-};
-
 // Layer datasets
 // Cluster group for all accident data
 var incidentData = new L.MarkerClusterGroup({
@@ -81,22 +28,10 @@ var incidentData = new L.MarkerClusterGroup({
     locationGroup,
 
     // Tile layers
-    // Skobbler settings flag reference at http://developer.skobbler.com/getting-started/web#sec0
     MapQuestOpen_OSM = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
       attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       subdomains: '1234'
     }),
-    // skobbler = L.tileLayer('https://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/0111113120/10/{z}/{x}/{y}.png@2x', {
-    //     minZoom: 2,
-    //     attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
-    // }),
-    // skobblerNight = L.tileLayer('https://tiles1-b586b1453a9d82677351c34485e59108.skobblermaps.com/TileService/tiles/2.0/0111113120/2/{z}/{x}/{y}.png@2x', {
-    //     minZoom: 2,
-    //     attribution: '© Tiles: <a href="http://maps.skobbler.com/">skobbler</a>, Map data: <a href=http://openstreetmap.org>OpenStreetMap</a> contributors, CC-BY-SA'
-    // }),
-    // OpenStreetMap_Mapnik = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    // }),
 
     stravaHM = L.tileLayer('http://globalheat.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
       minZoom: 3,
@@ -111,209 +46,188 @@ var incidentData = new L.MarkerClusterGroup({
       transparent: true,
       version: '1.3.0'
     }),
-    openPopup;
+    openPopup,
+    officialData = L.layerGroup()
 
-// Purpose: A function for adding official report data efficiently and asynchronously.
-//    Accepts the geojson feature and the datatype (unused but added for potential future requirements) and initiates the spinner while data is loading
-var officialData = L.layerGroup()
-function loadGeojsonAjax(src, type){
-  incidentData.fire("data:loading");
-  L.Util.ajax(src).then(function(data){
-    incidentData.fire("data:loaded");
-    L.geoJson(data, {
-      pointToLayer: function(feature, latlng) {
-        heatMap.addLatLng(latlng);
-        return L.marker(latlng, {
-          icon: icons["officialIcon"],
-          ftype: type
-        });
-      }
-    }).addTo(incidentData).addTo(officialData);
+// Purpose: Create the map with a tile layer and set the map global variable. Mobile parameter allows for rendering items differently for mobile users.
+function initialize(scrollZoom) {
+  // Map init and default layers
+  map = L.map('map', {
+    center: [48, -100],
+    zoom: 4,
+    layers: [MapQuestOpen_OSM, stravaHM, incidentData, alertAreas],
+    worldCopyJump: true,
+    scrollWheelZoom: scrollZoom
   });
 };
 
+// Add layer control to map
+function addLayerControl(mobile){
+  layerControl = L.control.layers([], [], { collapsed: mobile });
+  layerControl.addOverlay(stravaHM, 'Rider volume'
+    + '   <a data-target="#about-strava" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>'
+    + '<div id=strava-legend class="legend-subtext collapse in">'
+    + '<small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>'
+    + '</div>'
+  );
 
-function addControls(mobile) {
-    /* LAYER CONTROL */
-    layerControl = L.control.layers([], [], {
-        collapsed: mobile
-    });
-    addLegend();
-    layerControl.addTo(map);
+  layerControl.addOverlay(incidentData,
+    'Incident locations<br>'
+    + '<div id=incident-legend class="marker-group legend-subtext collapse in">'
+    + '<input type="checkbox" id="collisionCheckbox" checked> <i style="background-color: ' +getColor("collision")+ ';" class="fa fa-bicycle icon-black"></i><small> Citizen collision report</small><br>'
+    + '<input type="checkbox" id="nearmissCheckbox" checked> <i style="background-color: ' +getColor("nearmiss")+ ';" class="fa fa-bicycle icon-black"></i><small> Citizen near miss report</small><br>'
+    + '<input type="checkbox" id="hazardCheckbox" checked> <i style="background-color: ' +getColor("hazard")+ ';" class="fa fa-warning icon-black"></i><small> Cyclist hazard</small><br>'
+    + '<input type="checkbox" id="theftCheckbox" checked> <i style="background-color: ' +getColor("theft")+ ';" class="fa fa-bicycle icon-black"></i><small> Bike Theft</small><br>'
+    + '<input type="checkbox" id="officialCheckbox" checked> <i style="background-color: ' +getColor("official")+ '; color: orange" class="fa fa-certificate"></i><small> Official collision report</small><br></div>'
+  );
 
-    /* GEOCODING SEARCH BAR CONTROL */
-    var geocoder = L.Control.geocoder({
-        position: "topleft"
-    }).addTo(map);
+  if (!DISABLE_GEOFENCES) {
+    layerControl.addOverlay(alertAreas, 'Alert Areas'
+      +'   <a data-target="#about-alert-areas" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>'
+      +'<div id="alert-areas-legend" class="legend-subtext collapse in">'
+      +'<small class="alert-area-box"></small>'
+      +'</div>'
+    );
+  }
 
-    var geocodeMarker;
-    geocoder.markGeocode = function(result) {
-        map.fitBounds(result.bbox);
+  layerControl.addOverlay(infrastructure,
+    "Infrastructure<br>"
+    + '<div id="infrastructure-legend" class="legend-subtext collapse">'
+    + '<div class="bikerack"></div><small> Bike rack</small><br>'
+    + '<div class="bikelane solidlane thicklane"></div><small> Protected Bike Lane</small><br>'
+    + '<div class="bikelane solidlane"></div><small> Bike Lane</small><br>'
+    + '<div class="bikelane dotlane"></div><small> Other Cycling Route</small></div>'
+  );
 
-        if (geocodeMarker) {
-            map.removeLayer(geocodeMarker);
-        }
+  layerControl.addOverlay(heatMap, 'Incident heatmap<br>'
+    + '<div id="hm-legend" class="legend-subtext collapse">'
+    + '<small class="rainbow-gradient gradient-bar">less <div class="pull-right">more</div></small>'
+    + '</div>'
+  );
 
-        geocodeMarker = new L.Marker(result.center, {
-            icon: icons["geocodeIcon"]
-        })
-            .bindPopup(result.name)
-            .addTo(map)
-            .openPopup();
+  layerControl.addTo(map);
+
+  $(document).ready(function() {
+    //Listener events for toggling legend items.
+    map.on('overlayremove', collapseLegendItem);
+    map.on('overlayadd', showLegendItem);
+
+    function collapseLegendItem(e) {
+      if (e.name.match('Incident locations.')) {
+        $('#incident-legend').collapse('hide');
+      } else if (e.name.match('Rider volume.')) {
+        $('#strava-legend').collapse('hide');
+      } else if (e.name.match('Infrastructure.')) {
+        $('#infrastructure-legend').collapse('hide');
+      } else if (e.name.match('Incident heatmap.')) {
+        $('#hm-legend').collapse('hide');
+      } else if (e.name.match('Detected location.')) {
+        $('#location-legend').collapse('hide');
+      } else if (e.name.match('Alert Areas.')) {
+        $('#alert-areas-legend').collapse('hide');
+      }
     };
 
-    /* ADD SCALE BAR */
-    L.control.scale({
-        position: 'bottomright'
-    }).addTo(map);
-
-    function addLegend() {
-        // Add layers
-        // Basemaps
-        // layerControl.addBaseLayer(skobbler, '<i class="fa fa-sun-o"></i> Light map');
-        // layerControl.addBaseLayer(skobblerNight, '<i class="fa fa-moon-o"></i> Dark map');
-
-        layerControl.addOverlay(stravaHM, 'Rider volume' +
-            '   <a data-target="#about-strava" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>' +
-            '<div id=strava-legend class="legend-subtext collapse in">' +
-            '<small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>' +
-            '</div>');
-
-        layerControl.addOverlay(incidentData,
-            'Incident locations<br>'
-            + '<div id=incident-legend class="marker-group legend-subtext collapse in">'
-            + '<input type="checkbox" id="collisionCheckbox" checked> <i style="background-color: ' +getColor("collision")+ ';" class="fa fa-bicycle icon-black"></i><small> Citizen collision report</small><br>'
-            + '<input type="checkbox" id="nearmissCheckbox" checked> <i style="background-color: ' +getColor("nearmiss")+ ';" class="fa fa-bicycle icon-black"></i><small> Citizen near miss report</small><br>'
-            + '<input type="checkbox" id="hazardCheckbox" checked> <i style="background-color: ' +getColor("hazard")+ ';" class="fa fa-warning icon-black"></i><small> Cyclist hazard</small><br>'
-            + '<input type="checkbox" id="theftCheckbox" checked> <i style="background-color: ' +getColor("theft")+ ';" class="fa fa-bicycle icon-black"></i><small> Bike Theft</small><br>'
-            + '<input type="checkbox" id="officialCheckbox" checked> <i style="background-color: ' +getColor("official")+ '; color: orange" class="fa fa-certificate"></i><small> Official collision report</small><br></div>'
-        );
-
-        if (!DISABLE_GEOFENCES) {
-            layerControl.addOverlay(alertAreas, 'Alert Areas' +
-                '   <a data-target="#about-alert-areas" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>' +
-                '<div id="alert-areas-legend" class="legend-subtext collapse in">' +
-                '<small class="alert-area-box"></small>' +
-                '</div>'
-            );
-        }
-
-        infrastructureLegendHTML = "Infrastructure<br>" +
-            '<div id="infrastructure-legend" class="legend-subtext collapse">' +
-            '<div class="bikerack"></div><small> Bike rack</small><br>' +
-            '<div class="bikelane solidlane thicklane"></div><small> Protected Bike Lane</small><br>' +
-            '<div class="bikelane solidlane"></div><small> Bike Lane</small><br>' +
-            '<div class="bikelane dotlane"></div><small> Other Cycling Route</small></div>';
-
-        layerControl.addOverlay(infrastructure, infrastructureLegendHTML);
-
-        layerControl.addOverlay(heatMap, 'Incident heatmap<br>' +
-            '<div id="hm-legend" class="legend-subtext collapse">' +
-            '<small class="rainbow-gradient gradient-bar">less <div class="pull-right">more</div></small>' +
-            '</div>');
-    }
+    function showLegendItem(e) {
+      if (e.name.match('Incident locations.')) {
+        $('#incident-legend').collapse('show');
+      } else if (e.name.match('Rider volume.')) {
+        $('#strava-legend').collapse('show');
+      } else if (e.name.match('Infrastructure.')) {
+        $('#infrastructure-legend').collapse('show');
+      } else if (e.name.match('Incident heatmap.')) {
+        $('#hm-legend').collapse('show');
+      } else if (e.name.match('Detected location.')) {
+        $('#location-legend').collapse('show');
+      } else if (e.name.match('Alert Areas.')) {
+        $('#alert-areas-legend').collapse('show');
+      }
+    };
+  });
 };
 
+// Add geocoder control
+function addGeocoderControl(){
+  var geocoder = L.Control.geocoder({
+    position: "topleft"
+  }).addTo(map);
+  var geocodeMarker;
+  geocoder.markGeocode = function(result) {
+    map.fitBounds(result.bbox);
+    geocodeMarker && map.removeLayer(geocodeMarker); //remove old marker if it exists
 
-// Purpose: Create the map with a tile layer and set the map global variable. Initialize geojson datasets,
-//      add controls, and legend items. Mobile parameter allows for rendering items differently for mobile users.
-function initialize(scrollZoom, mobile) {
-    mobile = (typeof mobile !== 'undefined' ? mobile : false); //default value of mobile is false
-
-    // Map init and default layers
-    map = L.map('map', {
-        center: [48, -100],
-        zoom: 4,
-        layers: [MapQuestOpen_OSM, stravaHM, incidentData, alertAreas],
-        worldCopyJump: true,
-        scrollWheelZoom: scrollZoom
-    });
-
-    $(document).ready(function() {
-        map.on('popupopen', function(e) {
-            openPopup = e.popup;
-        });
-
-        // Listener events for locating the user
-        map.on('locationfound', onLocationFound);
-
-        function onLocationFound(e) {
-            var radius = Math.round((((e.accuracy / 2) + 0.00001) * 100) / 100); //Round accuracy to two decimal places
-
-            if (locationGroup) {
-                /*Update the coordinates of the marker*/
-                locationGroup.eachLayer(function(layer) {
-                    layer.setLatLng(e.latlng);
-                    if (layer._mRadius) {
-                        layer.setRadius(radius);
-                    } else {
-                        layer.getPopup().setContent("You are within " + radius + " meters of this point");
-                    }
-                });
-            } else {
-                /*Location not previously found, create marker and legend item*/
-                var marker = L.marker(e.latlng, {
-                    icon: icons["locationIcon"]
-                })
-                    .bindPopup("You are within " + radius + " meters of this point"),
-
-                    circle = L.circle(e.latlng, radius, {
-                        color: "#" + icons["locationIcon"].options.color,
-                        weight: 1,
-                        opacity: 0.3,
-                        clickable: false,
-                        fillOpacity: 0.05
-                    });
-
-                locationGroup = L.layerGroup([marker, circle]);
-                layerControl.addOverlay(locationGroup, 'Detected location<br>' +
-                    '<div id="location-legend" class="marker-group legend-subtext collapse">' +
-                    '<i style="background-color: '+ getColor("location") +';" class="fa fa-user icon-black"></i><small> You are here</small></div>' +
-                    '</div>');
-                locationGroup.addTo(map);
-
-                // Watch location of user without resetting viewpane
-                locateUser(setView = false, watch = true);
-            }
-        };
-
-        //Listener events for toggling legend items.
-        map.on('overlayremove', collapseLegendItem);
-        map.on('overlayadd', showLegendItem);
-
-        function collapseLegendItem(e) {
-            if (e.name.match('Incident locations.')) {
-                $('#incident-legend').collapse('hide');
-            } else if (e.name.match('Rider volume.')) {
-                $('#strava-legend').collapse('hide');
-            } else if (e.name.match('Infrastructure.')) {
-                $('#infrastructure-legend').collapse('hide');
-            } else if (e.name.match('Incident heatmap.')) {
-                $('#hm-legend').collapse('hide');
-            } else if (e.name.match('Detected location.')) {
-                $('#location-legend').collapse('hide');
-            } else if (e.name.match('Alert Areas.')) {
-                $('#alert-areas-legend').collapse('hide');
-            }
-        };
-
-        function showLegendItem(e) {
-            if (e.name.match('Incident locations.')) {
-                $('#incident-legend').collapse('show');
-            } else if (e.name.match('Rider volume.')) {
-                $('#strava-legend').collapse('show');
-            } else if (e.name.match('Infrastructure.')) {
-                $('#infrastructure-legend').collapse('show');
-            } else if (e.name.match('Incident heatmap.')) {
-                $('#hm-legend').collapse('show');
-            } else if (e.name.match('Detected location.')) {
-                $('#location-legend').collapse('show');
-            } else if (e.name.match('Alert Areas.')) {
-                $('#alert-areas-legend').collapse('show');
-            }
-        };
-    });
+    geocodeMarker = new L.Marker(result.center, {
+      icon: icons["geocodeIcon"]
+    })
+    .bindPopup(result.name)
+    .addTo(map)
+    .openPopup();
+  };
 };
+
+// Add scalebar
+function addScaleControl(){
+  L.control.scale({
+    position: 'bottomright'
+  }).addTo(map);
+}
+
+// Add leaflet control panels and functions to control their behavior
+function addControls(mobile) {
+    addLayerControl(mobile);
+    addGeocoderControl();
+    addScaleControl();
+};
+    // $(document).ready(function() {
+    //     map.on('popupopen', function(e) {
+    //         openPopup = e.popup;
+    //     });
+    //
+    //     // Listener events for locating the user
+    //     map.on('locationfound', onLocationFound);
+    //
+    //     function onLocationFound(e) {
+    //         var radius = Math.round((((e.accuracy / 2) + 0.00001) * 100) / 100); //Round accuracy to two decimal places
+    //
+    //         if (locationGroup) {
+    //             /*Update the coordinates of the marker*/
+    //             locationGroup.eachLayer(function(layer) {
+    //                 layer.setLatLng(e.latlng);
+    //                 if (layer._mRadius) {
+    //                     layer.setRadius(radius);
+    //                 } else {
+    //                     layer.getPopup().setContent("You are within " + radius + " meters of this point");
+    //                 }
+    //             });
+    //         } else {
+    //             /*Location not previously found, create marker and legend item*/
+    //             var marker = L.marker(e.latlng, {
+    //                 icon: icons["locationIcon"]
+    //             })
+    //                 .bindPopup("You are within " + radius + " meters of this point"),
+    //
+    //                 circle = L.circle(e.latlng, radius, {
+    //                     color: "#" + icons["locationIcon"].options.color,
+    //                     weight: 1,
+    //                     opacity: 0.3,
+    //                     clickable: false,
+    //                     fillOpacity: 0.05
+    //                 });
+    //
+    //             locationGroup = L.layerGroup([marker, circle]);
+    //             layerControl.addOverlay(locationGroup, 'Detected location<br>' +
+    //                 '<div id="location-legend" class="marker-group legend-subtext collapse">' +
+    //                 '<i style="background-color: '+ getColor("location") +';" class="fa fa-user icon-black"></i><small> You are here</small></div>' +
+    //                 '</div>');
+    //             locationGroup.addTo(map);
+    //
+    //             // Watch location of user without resetting viewpane
+    //             locateUser(setView = false, watch = true);
+    //         }
+    //     };
+    //
+  // });
+
 
 // Purpose: Locate the user and add their location to the map.
 // 		Given lat, lng, and zoom, go to that point, else to user location
@@ -348,6 +262,24 @@ function getPolygon(latlng, pk) {
         /*Mark the polygon with it's database id*/
         objType: 'polygon'
     }));
+};
+
+// Purpose: A function for adding official report data efficiently and asynchronously.
+//    Accepts the geojson feature and the datatype (unused but added for potential future requirements) and initiates the spinner while data is loading
+function loadGeojsonAjax(src, type){
+  incidentData.fire("data:loading");
+  L.Util.ajax(src).then(function(data){
+    incidentData.fire("data:loaded");
+    L.geoJson(data, {
+      pointToLayer: function(feature, latlng) {
+        heatMap.addLatLng(latlng);
+        return L.marker(latlng, {
+          icon: icons["officialIcon"],
+          ftype: type
+        });
+      }
+    }).addTo(incidentData).addTo(officialData);
+  });
 };
 
 // Purpose: Initializes the Pie chart cluster icons by getting the needed attributes from each cluster
@@ -457,7 +389,6 @@ function createPieCluster(cluster) {
 };
 
 
-
 // HELPER FUNCTIONS
 function getMonthFromInt(num) {
     months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -468,18 +399,6 @@ function toTitleCase(s) {
     return s.replace(/\w\S*/g, function(txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
-};
-
-function getIcon(t) {
-    if (t === "collision")
-        return icons["bikeRedIcon"];
-    else if (t === "nearmiss")
-        return icons["bikeYellowIcon"];
-    else if (t === "hazard")
-        return icons["hazardIcon"];
-    else if (t === "theft")
-        return icons["theftIcon"];
-    else return;
 };
 
 function getPopup(layer) {

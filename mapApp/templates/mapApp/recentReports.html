@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="{% static 'mapApp/css/recentReports.css' %}"/>
   <!-- Load leaflet -->
   <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
+  <!-- font-awesome icons -->
+  <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
 {% endblock %}
 
 {% block headerJS %}
@@ -18,6 +20,8 @@
   <script src="{% static 'moment/moment.min.js' %}"></script>
   <!-- Load leaflet -->
   <script src="{% static 'leaflet/leaflet.js' %}"></script>
+  <!-- Awesome markers -->
+  <script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
   <!-- icon color definitions and geojson point function -->
   <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
   <!-- recentReports initialization and control logic -->

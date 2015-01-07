@@ -15,6 +15,59 @@ function getColor(t) {
   return iconColors[t];
 };
 
+// Icon definitions
+L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
+var icons = {
+  "bikeRedIcon": L.AwesomeMarkers.icon({
+    icon: "fa-bicycle",
+    markerColor: 'red',
+    iconColor: 'black',
+    color: getColor("collision")
+  }),
+  "bikeYellowIcon": L.AwesomeMarkers.icon({
+    icon: "fa-bicycle",
+    markerColor: 'orange',
+    iconColor: 'black',
+    color: getColor("nearmiss")
+  }),
+  "bikeGreyIcon": L.AwesomeMarkers.icon({
+    icon: "fa-bicycle",
+    markerColor: 'lightblue',
+    iconColor: 'black',
+    color: getColor("undefined")
+  }),
+  "hazardIcon": L.AwesomeMarkers.icon({
+    icon: "fa-warning",
+    markerColor: 'green',
+    iconColor: 'black',
+    color: getColor("hazard")
+  }),
+  "theftIcon": L.AwesomeMarkers.icon({
+    icon: "fa-bicycle",
+    markerColor: 'lightgray',
+    iconColor: 'black',
+    color: getColor("theft")
+  }),
+  "officialIcon": L.AwesomeMarkers.icon({
+    icon: "fa-certificate",
+    markerColor: 'cadetblue',
+    iconColor: 'orange',
+    color: getColor("official")
+  }),
+  "geocodeIcon": L.AwesomeMarkers.icon({
+    icon: "fa-flag",
+    markerColor: 'darkred',
+    iconColor: 'black',
+    color: getColor("geocode")
+  }),
+  "locationIcon": L.AwesomeMarkers.icon({
+    icon: "fa-user",
+    markerColor: 'darkred',
+    iconColor: 'black',
+    color: getColor("location")
+  })
+};
+
 // Purpose: Convert a given geojson dataset to a CircleMarker point layer
 function geojsonCircleMarker(data, type) {
   return L.geoJson(data, {
@@ -41,4 +94,17 @@ function geojsonPolygonMarker(data) {
       fillOpacity: 0.1,
     }
   });
+};
+
+// Get the appropriate icon from dataset name
+function getIcon(t) {
+  if (t === "collision")
+    return icons["bikeRedIcon"];
+  else if (t === "nearmiss")
+    return icons["bikeYellowIcon"];
+  else if (t === "hazard")
+    return icons["hazardIcon"];
+  else if (t === "theft")
+    return icons["theftIcon"];
+  else return;
 };
