@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}">
     <!-- font-awesome icons -->
     <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
+    <!-- bootstrap slider -->
+    <link rel="stylesheet" href="{% static 'bootstrap-slider/css/bootstrap-slider.min.css' %}">
     <!-- user marker plugin -->
     <link rel="stylesheet" href="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.css' %}">
     <!-- Local styles -->
@@ -49,10 +51,14 @@
     <!-- Spinner -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
     <script src="{% static 'leaflet-spin/leaflet.spin.js' %}"></script>
+    <!-- Bootstrap slider -->
+    <script src="{% static 'bootstrap-slider/bootstrap-slider.js' %}"></script>
     <!-- usermarker plugin -->
     <script src="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.js' %}"></script>
     <!-- Load icon definitions -->
     <script src="{% static 'mapApp/js/icons.js' %}"></script>
+    <!-- moment -->
+    <script src="{% static 'moment/moment.min.js' %}"></script>
     <!-- Load app js -->
     <script src="{% static 'mapApp/js/map.js' %}"></script>
     <script src="{% static 'mapApp/js/override.js' %}"></script>
@@ -132,8 +138,47 @@
               var total = {{thefts|length}}+{{hazards|length}}+{{collisions|length}}+{{nearmisses|length}}
               $(".user-menu").append('<li><a href="#"><small>Total: '+total+'</small></a></li>');
           {% endif %}
+
+          //vvvvv EXPERIMENTAL vvvvv
+
+          var sliderControl = L.control({position:'bottomright'});
+
+          sliderControl.onAdd = function(map) {
+            var container = L.DomUtil.create('div', 'slider-control')
+            container.innerHTML = '<input class="slider"></input>';
+
+            return container;
+          };
+
+          $("input.slider").ready(function(){
+            var mySlider = $("input.slider").slider({
+              max: 10000000000000,
+              range: true,
+              value: [0, 10000000000000],
+
+              formatter: function(val){
+                return (moment(val[0]).format("D/M/YY") + " : " + moment(val[1]).format("D/M/YY"));
+              },
+
+            });
+          });
+
+          map.addControl(sliderControl);
+
+
+          //^^^^^^^^^^^^^^^^^^^^^^^^
         });
     </script>
+
+    <style media="screen">
+      .slider-control{
+        padding: 6px 8px;
+        font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+        background: white;
+        box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+        border-radius: 5px;
+      }
+    </style>
 
     <!-- Add modal help html -->
     {% include 'mapApp/util/tips.html' %}
