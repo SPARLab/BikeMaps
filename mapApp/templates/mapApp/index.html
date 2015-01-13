@@ -119,7 +119,7 @@
           });
           {% endif %}
 
-          // Not delayed enough so legend items aren't detected??? Works if added in browser console
+          // Add and remove layers individually from the clusters
           $("#collisionCheckbox").change(function(){ this.checked ? incidentData.addLayers(collisions) : incidentData.removeLayers(collisions); });
           $("#nearmissCheckbox").change(function(){ this.checked ? incidentData.addLayers(nearmisses) : incidentData.removeLayers(nearmisses); });
           $("#hazardCheckbox").change(function(){ this.checked ? incidentData.addLayers(hazards) : incidentData.removeLayers(hazards); });
@@ -150,21 +150,66 @@
             return container;
           };
 
+          // Initialize the slider
           $("input.slider").ready(function(){
             var mySlider = $("input.slider").slider({
-              max: 10000000000000,
+              step: 1,
+              max: 45*12,
+              min: 30*12,
               range: true,
-              value: [0, 10000000000000],
+              // value: [30*12, 45*12],
 
               formatter: function(val){
-                return (moment(val[0]).format("D/M/YY") + " : " + moment(val[1]).format("D/M/YY"));
+                return sliderDate(val[0]).format("MMM-YYYY") + " : " + sliderDate(val[1]).format("MMM-YYYY");
               },
 
             });
           });
-
+          // Add slider control to the map
           map.addControl(sliderControl);
 
+          // Convert months since epoch into a formatted date string
+          function sliderDate(m){
+            return moment({
+              year: 1970 + m/12,
+              month: m%12
+            });
+          };
+
+
+          var collisionsUnfiltered = collisions,
+              nearmissesUnfiltered = nearmisses,
+              hazardsUnfiltered = hazards,
+              theftsUnfiltered = thefts;
+          // Handle slider filtering
+          $("input.slider").on("slideStop", function(e) {
+            incidentData.clearLayers();
+
+            var start_date = sliderDate(e.value[0])
+            var end_date = sliderDate(e.value[1])
+
+            collisions = collisionsUnfiltered.filter(function(feature, layer){
+              var incident_date = moment(feature.feature.properties.incident_date);
+              return incident_date >= start_date && incident_date < end_date;
+            });
+            nearmisses = nearmissesUnfiltered.filter(function(feature, layer){
+              var incident_date = moment(feature.feature.properties.incident_date);
+              return incident_date >= start_date && incident_date < end_date;
+            });
+            thefts = theftsUnfiltered.filter(function(feature, layer){
+              var theft_date = moment(feature.feature.properties.theft_date);
+              return theft_date >= start_date && theft_date < end_date;
+            });
+            hazards = hazardsUnfiltered.filter(function(feature, layer){
+              var hazard_date = moment(feature.feature.properties.hazard_date);
+              return hazard_date >= start_date && hazard_date < end_date;
+            });
+
+            $("#collisionCheckbox").is(":checked") && incidentData.addLayers(collisions);
+            $("#nearmissCheckbox").is(":checked") && incidentData.addLayers(nearmisses);
+            $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
+            $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
+          });
 
           //^^^^^^^^^^^^^^^^^^^^^^^^
         });
