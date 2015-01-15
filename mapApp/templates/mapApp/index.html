@@ -124,7 +124,7 @@
           $("#nearmissCheckbox").change(function(){ this.checked ? incidentData.addLayers(nearmisses) : incidentData.removeLayers(nearmisses); });
           $("#hazardCheckbox").change(function(){ this.checked ? incidentData.addLayers(hazards) : incidentData.removeLayers(hazards); });
           $("#theftCheckbox").change(function(){ this.checked ? incidentData.addLayers(thefts) : incidentData.removeLayers(thefts); });
-          $("#officialCheckbox").change(function(){ this.checked ? officialData.eachLayer(function(l){incidentData.addLayers(l.getLayers())}) : officialData.eachLayer(function(l){ incidentData.removeLayers(l.getLayers())}); });
+          $("#officialCheckbox").change(function(){ this.checked ? incidentData.addLayers(officialData) : incidentData.removeLayers(officialData); });
 
           // Display number of points in user dropdown if admin is logged in
           {% if request.user.is_administrator %}
@@ -154,6 +154,7 @@
           $("input.slider").ready(function(){
             var mySlider = $("input.slider").slider({
               step: 1,
+              // TODO edit these to something deterministic
               max: 45*12,
               min: 30*12,
               range: true,
@@ -204,15 +205,9 @@
               d = moment(feature.feature.properties.hazard_date);
               return d >= start_date && d < end_date;
             });
-
-            officialData = officialUnfiltered;
-            officialData.eachLayer(function(g){
-              g.eachLayer(function (l) {
-                d = l.feature.properties.ACC_DATE ? moment(l.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: l.feature.properties.Year, M: 0, d:1});
-                if(d < start_date || d >= end_date){
-                  g.removeLayer(l);
-                }
-              });
+            officialData = officialUnfiltered.filter(function(feature, layer){
+              d = feature.feature.properties.ACC_DATE ? moment(feature.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: feature.feature.properties.Year, M: 0, d:1});
+              return d >= start_date && d < end_date;
             });
 
             // Add filtered layer back if checkbox is checked
@@ -220,7 +215,7 @@
             $("#nearmissCheckbox").is(":checked") && incidentData.addLayers(nearmisses);
             $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
             $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
-            $("#officialCheckbox").is(":checked") && officialData.eachLayer(function(l){incidentData.addLayers(l.getLayers())});
+            $("#officialCheckbox").is(":checked") && incidentData.addLayers(officialData);
           });
 
           //^^^^^^^^^^^^^^^^^^^^^^^^
@@ -242,6 +237,4 @@
 
     <!-- Add draw controls and actions -->
     {% include 'mapApp/util/draw.html' %}
-
-    <!-- TODO add mobile controls to record paths or take pictures etc. -->
 {% endblock %}

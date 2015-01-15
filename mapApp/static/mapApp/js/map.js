@@ -46,8 +46,7 @@ var incidentData = new L.MarkerClusterGroup({
       transparent: true,
       version: '1.3.0'
     }),
-    openPopup,
-    officialData = L.layerGroup()
+    officialData = [];
 
 // Purpose: Create the map with a tile layer and set the map global variable. Mobile parameter allows for rendering items differently for mobile users.
 function initialize(scrollZoom) {
@@ -229,15 +228,16 @@ function loadGeojsonAjax(src, type){
   incidentData.fire("data:loading");
   L.Util.ajax(src).then(function(data){
     incidentData.fire("data:loaded");
-    L.geoJson(data, {
+    var g = L.geoJson(data, {
       pointToLayer: function(feature, latlng) {
         heatMap.addLatLng(latlng);
         return L.marker(latlng, {
           icon: icons["officialIcon"],
           ftype: type
-        });
+        }).addTo(incidentData);
       }
-    }).addTo(incidentData).addTo(officialData);
+    });
+    officialData.push.apply(officialData, g.getLayers());
   });
 };
 
