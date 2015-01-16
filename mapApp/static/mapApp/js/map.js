@@ -115,35 +115,21 @@ function addLayerControl(mobile){
     map.on('overlayadd', showLegendItem);
 
     function collapseLegendItem(e) {
-      if (e.name.match('Incident locations.')) {
-        $('#incident-legend').collapse('hide');
-      } else if (e.name.match('Rider volume.')) {
-        $('#strava-legend').collapse('hide');
-      } else if (e.name.match('Infrastructure.')) {
-        $('#infrastructure-legend').collapse('hide');
-      } else if (e.name.match('Incident heatmap.')) {
-        $('#hm-legend').collapse('hide');
-      } else if (e.name.match('Detected location.')) {
-        $('#location-legend').collapse('hide');
-      } else if (e.name.match('Alert Areas.')) {
-        $('#alert-areas-legend').collapse('hide');
-      }
+      e.name.match('Incident locations.') && $('#incident-legend').collapse('hide');
+      e.name.match('Rider volume.') && $('#strava-legend').collapse('hide');
+      e.name.match('Infrastructure.') && $('#infrastructure-legend').collapse('hide');
+      e.name.match('Incident heatmap.') && $('#hm-legend').collapse('hide');
+      e.name.match('Detected location.') && $('#location-legend').collapse('hide');
+      e.name.match('Alert Areas.') && $('#alert-areas-legend').collapse('hide');
     };
 
     function showLegendItem(e) {
-      if (e.name.match('Incident locations.')) {
-        $('#incident-legend').collapse('show');
-      } else if (e.name.match('Rider volume.')) {
-        $('#strava-legend').collapse('show');
-      } else if (e.name.match('Infrastructure.')) {
-        $('#infrastructure-legend').collapse('show');
-      } else if (e.name.match('Incident heatmap.')) {
-        $('#hm-legend').collapse('show');
-      } else if (e.name.match('Detected location.')) {
-        $('#location-legend').collapse('show');
-      } else if (e.name.match('Alert Areas.')) {
-        $('#alert-areas-legend').collapse('show');
-      }
+      e.name.match('Incident locations.') && $('#incident-legend').collapse('show');
+      e.name.match('Rider volume.') && $('#strava-legend').collapse('show');
+      e.name.match('Infrastructure.') && $('#infrastructure-legend').collapse('show');
+      e.name.match('Incident heatmap.') && $('#hm-legend').collapse('show');
+      e.name.match('Detected location.') && $('#location-legend').collapse('show');
+      e.name.match('Alert Areas.') && $('#alert-areas-legend').collapse('show');
     };
   });
 };
