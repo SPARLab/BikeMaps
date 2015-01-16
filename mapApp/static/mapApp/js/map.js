@@ -115,6 +115,7 @@ function addLayerControl(mobile){
     map.on('overlayadd', showLegendItem);
 
     function collapseLegendItem(e) {
+      // compact if/then statements
       e.name.match('Incident locations.') && $('#incident-legend').collapse('hide');
       e.name.match('Rider volume.') && $('#strava-legend').collapse('hide');
       e.name.match('Infrastructure.') && $('#infrastructure-legend').collapse('hide');

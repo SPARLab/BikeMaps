@@ -1,7 +1,6 @@
 // Overrides the default leaflet layer control to allow for checkboxes that control sublayers
 L.Control.Layers = L.Control.Layers.extend({
   _onInputClick: function () {
-    // L.DomEvent.stop(this);
     var inputs = this._form.getElementsByClassName('leaflet-control-layers-selector'), //this is the line changed from the source code, selects by class rather than selecting all input tags
     input, layer, hasLayer;
     var addedLayers = [],
