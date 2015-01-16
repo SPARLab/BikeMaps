@@ -77,7 +77,10 @@ function addLayerControl(mobile){
     + '<input type="checkbox" id="nearmissCheckbox" checked> <i style="background-color: ' +getColor("nearmiss")+ ';" class="fa fa-bicycle icon-black"></i><small> Citizen near miss report</small><br>'
     + '<input type="checkbox" id="hazardCheckbox" checked> <i style="background-color: ' +getColor("hazard")+ ';" class="fa fa-warning icon-black"></i><small> Cyclist hazard</small><br>'
     + '<input type="checkbox" id="theftCheckbox" checked> <i style="background-color: ' +getColor("theft")+ ';" class="fa fa-bicycle icon-black"></i><small> Bike Theft</small><br>'
-    + '<input type="checkbox" id="officialCheckbox" checked> <i style="background-color: ' +getColor("official")+ '; color: orange" class="fa fa-certificate"></i><small> Official collision report</small><br></div>'
+    + '<input type="checkbox" id="officialCheckbox" checked> <i style="background-color: ' +getColor("official")+ '; color: orange" class="fa fa-certificate"></i><small> Official collision report</small><br>'
+    + '<input class="slider"></input><br>'
+    + '</div>'
+
   );
 
   if (!DISABLE_GEOFENCES) {

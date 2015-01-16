@@ -140,25 +140,16 @@
           {% endif %}
 
           //vvvvv EXPERIMENTAL vvvvv
-
-          var sliderControl = L.control({position:'bottomright'});
-
-          sliderControl.onAdd = function(map) {
-            var container = L.DomUtil.create('div', 'slider-control')
-            container.innerHTML = '<input class="slider"></input>';
-
-            return container;
-          };
-
           // Initialize the slider
           $("input.slider").ready(function(){
             var mySlider = $("input.slider").slider({
               step: 1,
               // TODO edit these to something deterministic
-              max: 45*12,
-              min: 30*12,
+              max: (moment().weekYear() - 1970) * 12, //current year * 12
+              min: (moment().weekYear() - 1980) * 12, //ten years ago * 12
               range: true,
-              // value: [30*12, 45*12],
+
+              // handle:'custom',
 
               formatter: function(val){
                 return sliderDate(val[0]).format("MMM-YYYY") + " : " + sliderDate(val[1]).format("MMM-YYYY");
@@ -166,8 +157,6 @@
 
             });
           });
-          // Add slider control to the map
-          map.addControl(sliderControl);
 
           // Convert months since epoch into a moment.js date object
           function sliderDate(m){
@@ -221,14 +210,12 @@
           //^^^^^^^^^^^^^^^^^^^^^^^^
         });
     </script>
-
     <style media="screen">
-      .slider-control{
-        padding: 6px 8px;
-        font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
-        background: white;
-        box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-        border-radius: 5px;
+      .slider.slider-horizontal{
+        width: 150px;
+      }
+      .slider-selection{
+        background: #BABABA;
       }
     </style>
 
