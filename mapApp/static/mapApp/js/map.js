@@ -33,7 +33,7 @@ var incidentData = new L.MarkerClusterGroup({
       subdomains: '1234'
     }),
 
-    stravaHM = L.tileLayer('http://d2z9m7k9h4f0yp.cloudfront.net/tiles/cycling/color5/{z}/{x}/{y}.png', {
+    stravaHM = L.tileLayer('https://d2z9m7k9h4f0yp.cloudfront.net/tiles/cycling/color5/{z}/{x}/{y}.png', {
       minZoom: 3,
       maxZoom: 17,
       opacity: 0.8,
