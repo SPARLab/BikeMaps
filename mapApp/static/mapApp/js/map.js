@@ -78,7 +78,8 @@ function addLayerControl(mobile){
     + '<input type="checkbox" id="hazardCheckbox" checked> <i style="background-color: ' +getColor("hazard")+ ';" class="fa fa-warning icon-black"></i><small> Cyclist hazard</small><br>'
     + '<input type="checkbox" id="theftCheckbox" checked> <i style="background-color: ' +getColor("theft")+ ';" class="fa fa-bicycle icon-black"></i><small> Bike Theft</small><br>'
     + '<input type="checkbox" id="officialCheckbox" checked> <i style="background-color: ' +getColor("official")+ '; color: orange" class="fa fa-certificate"></i><small> Official collision report</small><br>'
-    + '<input class="slider"></input><br>'
+    + '<div class="filter">Filter from <span class="start-date"></span> to <span class="end-date"></span><br>'
+    + '<input class="slider"></input></div><br>'
     + '</div>'
 
   );

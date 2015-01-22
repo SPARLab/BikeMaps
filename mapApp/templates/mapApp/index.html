@@ -148,6 +148,7 @@
               max: (moment().weekYear() - 1970) * 12, //current year * 12
               min: (moment().weekYear() - 1980) * 12, //ten years ago * 12
               range: true,
+              tooltip: 'hide',
 
               // handle:'custom',
 
@@ -205,6 +206,11 @@
             $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
             $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
             $("#officialCheckbox").is(":checked") && incidentData.addLayers(officialData);
+          });
+
+          $("input.slider").on("slide", function(e) {
+            $("div.filter .start-date").text(sliderDate(e.value[0]).format("MMM-YYYY"));
+            $("div.filter .end-date").text(sliderDate(e.value[1]).format("MMM-YYYY"));
           });
 
           //^^^^^^^^^^^^^^^^^^^^^^^^
