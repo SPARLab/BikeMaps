@@ -70,8 +70,23 @@
     {% crispy geofenceForm %}
     {% include 'mapApp/incident_form.html' %}
 
+    <div class="container-fluid" style="height: 100%;">
+      <div class="row" style="height: 100%;">
+        <div class="col-xs-2 legend">
+          Legend
+        </div>
+
+        <div class="col-xs-10" style="height: 100%;">
+          Map
+          <div id="map"></div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- Leaflet map -->
-    <div id="map"></div>
+
+
 
     <!-- JS to control message display and feature creation -->
     <script>
