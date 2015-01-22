@@ -14,6 +14,27 @@ body {
 	padding-top: 60px;
 	max-width: 100%;
 }
+/*Common background colors*/
+.collision{
+	background: #d63e2a;
+	color: black;
+}
+.nearmiss{
+	background: #f3952f;
+	color: black;
+}
+.hazard{
+	background: #72b026;
+	color: black;
+}
+.theft{
+	background: #a3a3a3;
+	color: black;
+}
+.official{
+	background: #436978;
+	color: orange;
+}
 
 button {
   margin: 0 5px;

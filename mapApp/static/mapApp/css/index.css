@@ -7,6 +7,7 @@
 #legend{
   background: #2c3e50;
   height: 100%;
+  color: #dddddd;
 }
 
 /* Marker clustering */
@@ -35,10 +36,10 @@
   line-height: 20px;
 }
 .marker-group i{
-  height: 20px;
-  width: 20px;
+  height: 21px;
+  width: 23px;
+  padding-top: 3px;
   border-radius: 10px;
-  padding-top: 4px;
 }
 .marker-group>i.fa-bicycle{
   padding-left: 2px;

@@ -63,52 +63,10 @@ function initialize(scrollZoom) {
 // Add layer control to map
 function addLayerControl(mobile){
   layerControl = L.control.layers([], [], { collapsed: mobile });
-  layerControl.addOverlay(stravaHM, 'Rider volume'
-    + '   <a data-target="#about-strava" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>'
-    + '<div id=strava-legend class="legend-subtext collapse in">'
-    + '<small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>'
-    + '</div>'
-  );
 
-  layerControl.addOverlay(incidentData,
-    'Incident locations<br>'
-    + '<div id=incident-legend class="marker-group legend-subtext collapse in">'
-    + '<input type="checkbox" id="collisionCheckbox" checked> <i style="background-color: ' +getColor("collision")+ ';" class="fa fa-bicycle icon-black"></i><small> Citizen collision report</small><br>'
-    + '<input type="checkbox" id="nearmissCheckbox" checked> <i style="background-color: ' +getColor("nearmiss")+ ';" class="fa fa-bicycle icon-black"></i><small> Citizen near miss report</small><br>'
-    + '<input type="checkbox" id="hazardCheckbox" checked> <i style="background-color: ' +getColor("hazard")+ ';" class="fa fa-warning icon-black"></i><small> Cyclist hazard</small><br>'
-    + '<input type="checkbox" id="theftCheckbox" checked> <i style="background-color: ' +getColor("theft")+ ';" class="fa fa-bicycle icon-black"></i><small> Bike Theft</small><br>'
-    + '<input type="checkbox" id="officialCheckbox" checked> <i style="background-color: ' +getColor("official")+ '; color: orange" class="fa fa-certificate"></i><small> Official collision report</small><br>'
-    + '<div class="filter">Filter from <span class="start-date"></span> to <span class="end-date"></span><br>'
-    + '<input class="slider"></input></div><br>'
-    + '</div>'
 
-  );
 
-  if (!DISABLE_GEOFENCES) {
-    layerControl.addOverlay(alertAreas, 'Alert Areas'
-      +'   <a data-target="#about-alert-areas" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>'
-      +'<div id="alert-areas-legend" class="legend-subtext collapse in">'
-      +'<small class="alert-area-box"></small>'
-      +'</div>'
-    );
-  }
-
-  layerControl.addOverlay(infrastructure,
-    "Infrastructure<br>"
-    + '<div id="infrastructure-legend" class="legend-subtext collapse">'
-    + '<div class="bikerack"></div><small> Bike rack</small><br>'
-    + '<div class="bikelane solidlane thicklane"></div><small> Protected Bike Lane</small><br>'
-    + '<div class="bikelane solidlane"></div><small> Bike Lane</small><br>'
-    + '<div class="bikelane dotlane"></div><small> Other Cycling Route</small></div>'
-  );
-
-  layerControl.addOverlay(heatMap, 'Incident heatmap<br>'
-    + '<div id="hm-legend" class="legend-subtext collapse">'
-    + '<small class="rainbow-gradient gradient-bar">less <div class="pull-right">more</div></small>'
-    + '</div>'
-  );
-
-  layerControl.addTo(map);
+  // layerControl.addTo(map);
 
   $(document).ready(function() {
     //Listener events for toggling legend items.
