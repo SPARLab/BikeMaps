@@ -60,40 +60,6 @@ function initialize(scrollZoom) {
   });
 };
 
-// Add layer control to map
-function addLayerControl(mobile){
-  layerControl = L.control.layers([], [], { collapsed: mobile });
-
-
-
-  // layerControl.addTo(map);
-
-  $(document).ready(function() {
-    //Listener events for toggling legend items.
-    map.on('overlayremove', collapseLegendItem);
-    map.on('overlayadd', showLegendItem);
-
-    function collapseLegendItem(e) {
-      // compact if/then statements
-      e.name.match('Incident locations.') && $('#incident-legend').collapse('hide');
-      e.name.match('Rider volume.') && $('#strava-legend').collapse('hide');
-      e.name.match('Infrastructure.') && $('#infrastructure-legend').collapse('hide');
-      e.name.match('Incident heatmap.') && $('#hm-legend').collapse('hide');
-      e.name.match('Detected location.') && $('#location-legend').collapse('hide');
-      e.name.match('Alert Areas.') && $('#alert-areas-legend').collapse('hide');
-    };
-
-    function showLegendItem(e) {
-      e.name.match('Incident locations.') && $('#incident-legend').collapse('show');
-      e.name.match('Rider volume.') && $('#strava-legend').collapse('show');
-      e.name.match('Infrastructure.') && $('#infrastructure-legend').collapse('show');
-      e.name.match('Incident heatmap.') && $('#hm-legend').collapse('show');
-      e.name.match('Detected location.') && $('#location-legend').collapse('show');
-      e.name.match('Alert Areas.') && $('#alert-areas-legend').collapse('show');
-    };
-  });
-};
-
 // Add geocoder control
 function addGeocoderControl(){
   var geocoder = L.Control.geocoder({
@@ -122,7 +88,6 @@ function addScaleControl(){
 
 // Add leaflet control panels and functions to control their behavior
 function addControls(mobile) {
-    addLayerControl(mobile);
     addGeocoderControl();
     addScaleControl();
 };

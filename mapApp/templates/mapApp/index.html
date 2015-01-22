@@ -77,58 +77,7 @@
 
         <!-- Legend -->
         <div class="col-xs-3" id="legend">
-          <div class="legend-group">
-            <div class="legend-group">
-
-            <input class="layer-toggle" type="checkbox" value="incidentData" checked>
-            Incidents
-            <div class="marker-group legend-subtext collapse in">
-              <input type="checkbox" id="collisionCheckbox" checked> <i class="collision fa fa-bicycle icon-black"></i><small> Citizen collision report</small><br>
-              <input type="checkbox" id="nearmissCheckbox" checked> <i class="nearmiss fa fa-bicycle icon-black"></i><small> Citizen near miss report</small><br>
-              <input type="checkbox" id="hazardCheckbox" checked> <i class="hazard fa fa-warning icon-black"></i><small> Cyclist hazard</small><br>
-              <input type="checkbox" id="theftCheckbox" checked> <i class="theft fa fa-bicycle icon-black"></i><small> Bike Theft</small><br>
-              <input type="checkbox" id="officialCheckbox" checked> <i class="official fa fa-certificate"></i><small> Official collision report</small><br>
-              <div class="filter">Filter from <span class="start-date"></span> to <span class="end-date"></span><br>
-              <input class="slider"></input></div><br>
-            </div>
-          </div>
-
-          <div class="legend-group">
-            <input class="layer-toggle" type="checkbox" value="stravaHM" checked>
-            Rider volume
-            <a data-target="#about-strava" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>
-            <div class="legend-subtext collapse in">
-              <small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>
-            </div>
-          </div>
-
-          <div class="legend-group">
-            <input class="layer-toggle" type="checkbox" value="alertAreas" checked>
-            Alert Areas
-            <a data-target="#about-alert-areas" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>
-            <div class="legend-subtext collapse in">
-              <small class="alert-area-box"></small>
-            </div>
-          </div>
-
-          <div class="legend-group">
-            <input class="layer-toggle" type="checkbox" value="infrastructure">
-            Infrastructure
-            <div class="legend-subtext collapse">
-              <div class="bikerack"></div><small> Bike rack</small><br>
-              <div class="bikelane solidlane thicklane"></div><small> Protected Bike Lane</small><br>
-              <div class="bikelane solidlane"></div><small> Bike Lane</small><br>
-              <div class="bikelane dotlane"></div><small> Other Cycling Route</small>
-            </div>
-          </div>
-
-          <div class="legend-group">
-            <input class="layer-toggle" type="checkbox" value="heatMap">
-            Incident heatmap
-            <div class="legend-subtext collapse">
-              <small class="rainbow-gradient gradient-bar">less <div class="pull-right">more</div></small>
-            </div>
-          </div>
+          {% include 'mapApp/mapLegend.html' %}
         </div>
       </div>
     </div>
@@ -139,21 +88,6 @@
 
     <!-- JS to control message display and feature creation -->
     <script>
-        $( "input.layer-toggle" ).click(function(e) {
-          layerClicked = window[e.target.value];
-          checked = e.target.checked;
-          subLegend = $(e.target).siblings(".legend-subtext");
-          if(checked){
-            map.addLayer(layerClicked);
-            subLegend.collapse("show");
-          }
-          else if (map.hasLayer(layerClicked) && !checked) {
-            map.removeLayer(layerClicked);
-            subLegend.collapse("hide");
-          }
-        });
-
-
         // Initialize the map
         initialize(scrollZoom=true);
         addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
