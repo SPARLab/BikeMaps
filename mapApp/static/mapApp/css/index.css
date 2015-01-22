@@ -1,8 +1,12 @@
 #map {
   height: 100%;
-  width: 100%;
   overflow: hidden;
   z-index: 0;
+}
+
+#legend{
+  background: #2c3e50;
+  height: 100%;
 }
 
 /* Marker clustering */

@@ -64,7 +64,7 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
- 
+
 
 <!-- 'Get help' message -->
 {% if not request.mobile %}
@@ -78,11 +78,11 @@
 
 /* Show the dropdown help message */
 $(document).ready(function(){
-    $('#map').animate({marginTop: "+=23"});
+    $('.page-body').animate({paddingTop: "+=23"});
     $('.tip-msg').hide().animate({height:'show'});
 
     $('.tip-msg .close').click(function(){
-        $('#map').animate({marginTop: "-=23"});
+        $('.page-body').animate({paddingTop: "-=23"});
         $('.tip-msg').animate({height:'hide'});
     });
 
@@ -101,16 +101,16 @@ $(document).ready(function(){
     /* Hide the message*/
     $('#map').animate({marginTop: "-=23"});
     $('.tip-msg').animate({height:'hide'});
-    
+
     /* Display the first tip, then other tips sequentially */
     showTutorial(['.leaflet-draw-draw-marker', '.leaflet-control-geocoder', '.leaflet-control-layers', '.leaflet-draw-draw-polygon'], 0);
     function showTutorial(p, i){
       if( i === p.length-1)
         return;
       $(p[i]).popover('show').on('shown.bs.popover', function(){
-        setTimeout(function(){ 
-          $(p[i]).popover('hide'); 
-          showTutorial(p, i+1); 
+        setTimeout(function(){
+          $(p[i]).popover('hide');
+          showTutorial(p, i+1);
         }, 6000);
       });
     };
