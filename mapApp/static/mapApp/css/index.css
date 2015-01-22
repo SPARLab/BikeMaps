@@ -1,13 +1,25 @@
-#map {
+.page-body,#map{
   height: 100%;
-  overflow: hidden;
-  z-index: 0;
 }
-
+#map{
+  height: 80%;
+  width: 100%;
+  float: left;
+}
 #legend{
+  display: none;
+}
+.legend-visible #map{
+  width: 80%;
+}
+.legend-visible #legend{
+  display: block;
+  width: 230px;
+  padding-left:15px;
   background: #2c3e50;
   height: 100%;
   color: #dddddd;
+  overflow: scroll;
 }
 
 /* Marker clustering */

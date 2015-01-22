@@ -70,16 +70,14 @@
     {% crispy geofenceForm %}
     {% include 'mapApp/incident_form.html' %}
 
-    <div class="container-fluid page-body" style="height: 100%;">
-      <div class="row" style="height: 100%;">
+    <div class="page-body legend-visible">
         <!-- Leaflet map -->
-        <div class="col-xs-9" id="map"></div>
+        <div id="map"></div>
 
         <!-- Legend -->
-        <div class="col-xs-3" id="legend">
+        <div id="legend">
           {% include 'mapApp/mapLegend.html' %}
         </div>
-      </div>
     </div>
 
 
@@ -88,6 +86,7 @@
 
     <!-- JS to control message display and feature creation -->
     <script>
+
         // Initialize the map
         initialize(scrollZoom=true);
         addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
