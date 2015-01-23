@@ -72,27 +72,5 @@
         subLegend.collapse("hide");
       }
     });
-
-    // Filter checkbox handler
-    $("#filterCheckbox").click(function() {
-      if(this.checked) {
-        var sliderVal = $('input.slider').slider('getValue')
-        $("input.slider").slider("enable");
-        $("div.filter .start-date").text(sliderDate(sliderVal[0]).format("MMM-YYYY"));
-        $("div.filter .end-date").text(sliderDate(sliderVal[1]).format("MMM-YYYY"));
-      }
-      else {
-        $("input.slider").slider("disable");
-        $("div.filter .start-date").text("");
-        $("div.filter .end-date").text("");
-      }
-    });
   });
-
-  function sliderDate(m){
-    return moment({
-      year: 1970 + m/12,
-      month: m%12
-    });
-  };
 </script>

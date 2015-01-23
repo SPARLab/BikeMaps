@@ -183,11 +183,13 @@
               hazardsUnfiltered = hazards,
               theftsUnfiltered = thefts,
               officialUnfiltered = officialData;
-          $("input.slider").on("slideStop", function(e) {
+          $("input.slider").on("slideStop", function(e){ filterPoints(e.value[0], e.value[1]) });
+
+          function filterPoints(start_date, end_date) {
+            var d;
+            start_date = sliderDate(start_date);
+            end_date = sliderDate(end_date);
             incidentData.clearLayers();
-            var start_date = sliderDate(e.value[0]),
-                end_date = sliderDate(e.value[1]),
-                d;
 
             collisions = collisionsUnfiltered.filter(function(feature, layer){
               d = moment(feature.feature.properties.incident_date);
@@ -216,15 +218,52 @@
             $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
             $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
             $("#officialCheckbox").is(":checked") && incidentData.addLayers(officialData);
-          });
+          };
+
+          // Add unfiltered data back
+          function resetPoints(){
+            incidentData.clearLayers();
+            collisions = collisionsUnfiltered,
+            nearmisses = nearmissesUnfiltered,
+            hazards = hazardsUnfiltered,
+            thefts = theftsUnfiltered,
+            officialData = officialUnfiltered;
+            $("#collisionCheckbox").is(":checked") && incidentData.addLayers(collisions);
+            $("#nearmissCheckbox").is(":checked") && incidentData.addLayers(nearmisses);
+            $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
+            $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
+            $("#officialCheckbox").is(":checked") && incidentData.addLayers(officialData);
+          };
 
           $("input.slider").on("slide", function(e) {
             $("div.filter .start-date").text(sliderDate(e.value[0]).format("MMM-YYYY"));
             $("div.filter .end-date").text(sliderDate(e.value[1]).format("MMM-YYYY"));
           });
 
+
+          // Filter checkbox handler
+          $("#filterCheckbox").click(function() {
+            if(this.checked) {
+              var sliderVal = $('input.slider').slider('getValue')
+              $("input.slider").slider("enable");
+              $("div.filter .start-date").text(sliderDate(sliderVal[0]).format("MMM-YYYY"));
+              $("div.filter .end-date").text(sliderDate(sliderVal[1]).format("MMM-YYYY"));
+              // Add filtered points to map
+              console.log();
+              filterPoints(sliderVal[0], sliderVal[1])
+            }
+            else {
+              $("input.slider").slider("disable");
+              $("div.filter .start-date").text("");
+              $("div.filter .end-date").text("");
+              // Add all points back to map
+              resetPoints();
+            }
+          });
           //^^^^^^^^^^^^^^^^^^^^^^^^
         });
+
+
     </script>
 
     <!-- Add modal help html -->
