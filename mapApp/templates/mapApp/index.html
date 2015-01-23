@@ -70,19 +70,15 @@
     {% crispy geofenceForm %}
     {% include 'mapApp/incident_form.html' %}
 
-    <div class="page-body legend-visible">
+    <div class="page-body">
         <!-- Leaflet map -->
         <div id="map"></div>
 
         <!-- Legend -->
-        <div id="legend">
+        <div id="legend" class="leaflet-container panel">
           {% include 'mapApp/mapLegend.html' %}
         </div>
     </div>
-
-
-
-
 
     <!-- JS to control message display and feature creation -->
     <script>
@@ -228,14 +224,6 @@
           //^^^^^^^^^^^^^^^^^^^^^^^^
         });
     </script>
-    <style media="screen">
-      .slider.slider-horizontal{
-        width: 150px;
-      }
-      .slider-selection{
-        background: #BABABA;
-      }
-    </style>
 
     <!-- Add modal help html -->
     {% include 'mapApp/util/tips.html' %}

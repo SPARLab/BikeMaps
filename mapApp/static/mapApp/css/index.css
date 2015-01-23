@@ -2,24 +2,56 @@
   height: 100%;
 }
 #map{
-  height: 80%;
+  height: 100%;
   width: 100%;
   float: left;
+  z-index: 0;
 }
-#legend{
-  display: none;
-  width: 20%;
-  padding-left:15px;
-  background: #2c3e50;
-  height: 100%;
-  color: #dddddd;
+#legend.panel{
+  width: auto;
+  height: auto;
+  max-height: 75%;
+  padding: 5px 10px;
+  margin: 10px;
+  position: absolute;
+  right: 0;
   overflow: scroll;
+  z-index: 1;
+  color: #000000;
+  background: #ffffff;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+  border-radius: 4px;
 }
-.legend-visible #map{
-  width: 80%;
+
+/*Legend filter text formatting*/
+.end-date{
+  margin-left: 44px;
 }
-.legend-visible #legend{
-  display: block;
+.filter{
+  padding: 5px 0px;
+}
+
+/* Bootstrap-slider customization */
+.slider{
+  margin-right: 10px;
+  margin-left: 10px
+}
+.slider.slider-horizontal{
+  width: 130px;
+}
+.slider-handle.custom::before {
+  line-height: 18px;
+  font-size: 22px;
+  color: #1a242f;
+}
+.min-slider-handle.custom::before {
+  content: '\029D6'; /*unicode star character*/
+}
+.max-slider-handle.custom::before {
+  content: '\029D7'; /*unicode star character*/
+}
+.slider-selection {
+  background: #18bc9c;
 }
 
 /* Marker clustering */
@@ -38,23 +70,18 @@
 .legend-subtext {
   margin-left: 18px;
 }
-
-/* Stops bouncing of elements when collapsing out legend */
-/*#location-legend{
-  max-height: 30px;
-}*/
 #incident-legend{
   max-height: 150px;
   line-height: 20px;
 }
 .marker-group i{
-  height: 21px;
-  width: 23px;
-  padding-top: 3px;
+  height: 20px;
+  width: 21px;
+  padding-top: 4px;
   border-radius: 10px;
 }
 .marker-group>i.fa-bicycle{
-  padding-left: 2px;
+  padding-left: 2.5px;
 }
 .marker-group>i.fa-warning{
   padding-left: 4px;
