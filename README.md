@@ -2,8 +2,8 @@ BikeMaps
 =========
 [http://bikemaps.org]
 
-### A [SPARLab](http://www.geog.uvic.ca/spar/) project. 
-A database driven webapp that allows users to submit bike accidents and near-misses. Data is analyzed to detect areas/routes with high traffic and rates of incidents. 
+### A [SPARLab](http://www.geog.uvic.ca/spar/) project.
+A database driven webapp that allows users to submit bike accidents and near-misses. Data is analyzed to detect areas/routes with high traffic and rates of incidents.
 
 ##### Dependancies
   + Python 2.7
@@ -30,10 +30,10 @@ Additionally, the forum Django app "Spirit" (located at http://spirit-project.co
 ./manage.py loaddata spirit_init
 ```
 
-A full list of required python packages can be found in requirements.txt and can be installed via pip 
+A full list of required python packages can be found in requirements.txt and can be installed via pip
     `pip install -r requirements.txt`
 
-If all dependancies have been met, running `./manage.py runserver` should start the development server at 127.0.0.1
+If all dependancies have been met, running `./manage.py runserver` should start the development server at 127.0.0.1:8000
 
 _Note: There are additional requirements for serving this application in a production setting, and the relevant Django documentation should be consulted in this scenario. This repo does not provide production settings for security reasons._
 
