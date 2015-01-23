@@ -7,8 +7,16 @@
     <input type="checkbox" id="hazardCheckbox" checked> <i class="hazard fa fa-warning icon-black"></i><small> Cyclist hazard</small><br>
     <input type="checkbox" id="theftCheckbox" checked> <i class="theft fa fa-bicycle icon-black"></i><small> Bike Theft</small><br>
     <input type="checkbox" id="officialCheckbox" checked> <i class="official fa fa-certificate"></i><small> Official collision report</small><br>
-  <div class="filter">Filter from: <span class="start-date"></span><br>to: <span class="end-date"></span><br>
-    <input class="slider fa" data-slider-handle="custom"></input></div>
+
+    <input id="filterCheckbox" type="checkbox"> <i class="empty-circle fa fa-filter"></i><small> Filter</small>
+    <div class="filter">
+      <div class="date-container">
+        <small><span class="start-date"></span></small>
+        <small><span class="end-date pull-right"></span></small>
+      </div>
+
+      <input class="slider"></input>
+    </div>
   </div>
 </div>
 
@@ -64,5 +72,27 @@
         subLegend.collapse("hide");
       }
     });
-  })
+
+    // Filter checkbox handler
+    $("#filterCheckbox").click(function() {
+      if(this.checked) {
+        var sliderVal = $('input.slider').slider('getValue')
+        $("input.slider").slider("enable");
+        $("div.filter .start-date").text(sliderDate(sliderVal[0]).format("MMM-YYYY"));
+        $("div.filter .end-date").text(sliderDate(sliderVal[1]).format("MMM-YYYY"));
+      }
+      else {
+        $("input.slider").slider("disable");
+        $("div.filter .start-date").text("");
+        $("div.filter .end-date").text("");
+      }
+    });
+  });
+
+  function sliderDate(m){
+    return moment({
+      year: 1970 + m/12,
+      month: m%12
+    });
+  };
 </script>

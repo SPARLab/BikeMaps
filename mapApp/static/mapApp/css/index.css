@@ -24,17 +24,19 @@
 }
 
 /*Legend filter text formatting*/
-.end-date{
+span.date{
   margin-left: 44px;
 }
 .filter{
-  padding: 5px 0px;
+  padding: 0 10px;
+}
+.date-container{
+  padding: 0 10px;
 }
 
 /* Bootstrap-slider customization */
 .slider{
-  margin-right: 10px;
-  margin-left: 10px
+  margin: 0px 10px;
 }
 .slider.slider-horizontal{
   width: 130px;
@@ -52,6 +54,13 @@
 }
 .slider-selection {
   background: #18bc9c;
+}
+.slider-disabled .slider-selection{
+  opacity: 0.3;
+}
+.slider-disabled .slider-handle{
+  background-image: none !important;
+  opacity: 0.3;
 }
 
 /* Marker clustering */
@@ -86,13 +95,9 @@
 .marker-group>i.fa-warning{
   padding-left: 4px;
 }
-.marker-group>i.fa-certificate{
+.marker-group>i.fa-certificate, .marker-group>i.fa-user, .marker-group>i.fa-filter{
   padding-left: 5px;
 }
-.marker-group>i.fa-user{
-  padding-left: 5px;
-}
-
 
 /* Legend gradients*/
 .strava-gradient{

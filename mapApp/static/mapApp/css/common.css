@@ -35,6 +35,9 @@ body {
 	background: #436978;
 	color: orange;
 }
+.empty-circle{
+	background: #eeeeee;
+}
 
 button {
   margin: 0 5px;

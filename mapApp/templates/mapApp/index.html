@@ -157,6 +157,8 @@
               min: (moment().weekYear() - 1980) * 12, //ten years ago * 12
               range: true,
               tooltip: 'hide',
+              enabled: false,
+              handle: 'custom',
 
               // handle:'custom',
 
@@ -189,23 +191,23 @@
 
             collisions = collisionsUnfiltered.filter(function(feature, layer){
               d = moment(feature.feature.properties.incident_date);
-              return d >= start_date && d < end_date;
+              return d >= start_date && d <= end_date;
             });
             nearmisses = nearmissesUnfiltered.filter(function(feature, layer){
               d = moment(feature.feature.properties.incident_date);
-              return d >= start_date && d < end_date;
+              return d >= start_date && d <= end_date;
             });
             thefts = theftsUnfiltered.filter(function(feature, layer){
               d = moment(feature.feature.properties.theft_date);
-              return d >= start_date && d < end_date;
+              return d >= start_date && d <= end_date;
             });
             hazards = hazardsUnfiltered.filter(function(feature, layer){
               d = moment(feature.feature.properties.hazard_date);
-              return d >= start_date && d < end_date;
+              return d >= start_date && d <= end_date;
             });
             officialData = officialUnfiltered.filter(function(feature, layer){
               d = feature.feature.properties.ACC_DATE ? moment(feature.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: feature.feature.properties.Year, M: 0, d:1});
-              return d >= start_date && d < end_date;
+              return d >= start_date && d <= end_date;
             });
 
             // Add filtered layer back if checkbox is checked
