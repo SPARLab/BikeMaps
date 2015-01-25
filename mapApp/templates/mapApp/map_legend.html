@@ -87,44 +87,38 @@
     });
   });
 
-
+  $(document).ready(function(){
+    var _container = $('#legend .leaflet-control-layers'),
+        _link = $('#legend .leaflet-control-layers-toggle'),
+        _map = $('#map');
   // if (this.options.collapsed) {
-  //   if (!L.Browser.android) {
-  //     L.DomEvent.on(container, {
-  //       mouseenter: this._expand,
-  //       mouseleave: this._collapse
-  //     }, this);
-  //   }
-  //
-  //   var link = this._layersLink = L.DomUtil.create('a', className + '-toggle', container);
-  //   link.href = '#';
-  //   link.title = 'Layers';
-  //
-  //   if (L.Browser.touch) {
-  //     L.DomEvent
-  //     .on(link, 'click', L.DomEvent.stop)
-  //     .on(link, 'click', this._expand, this);
-  //   } else {
-  //     L.DomEvent.on(link, 'focus', this._expand, this);
-  //   }
-  //
-  //   // work around for Firefox Android issue https://github.com/Leaflet/Leaflet/issues/2033
-  //   L.DomEvent.on(form, 'click', function () {
-  //     setTimeout(L.bind(this._onInputClick, this), 0);
-  //   }, this);
-  //
-  //   this._map.on('click', this._collapse, this);
-  //   // TODO keyboard accessibility
-  // } else {
-  //   this._expand();
-  // }
-  //
-  // _expand: function () {
-  //   L.DomUtil.addClass(this._container, 'leaflet-control-layers-expanded');
-  // },
-  //
-  // _collapse: function () {
-  //   L.DomUtil.removeClass(this._container, 'leaflet-control-layers-expanded');
-  // }
+
+
+    if (!L.Browser.android) {
+      _container.mouseenter(_expand);
+      _container.mouseleave(_collapse);
+    } else if (L.Browser.touch) {
+      _link.click(_expand);
+    } else {
+      _link.focus(_expand);
+    }
+
+    //   L.DomEvent.on(form, 'click', function () {
+    //     setTimeout(L.bind(this._onInputClick, this), 0);
+    //   }, this);
+    //
+    _map.click(_collapse);
+    // } else {
+    //   this._expand();
+    // }
+
+    function _expand() {
+      _container.addClass('leaflet-control-layers-expanded');
+    };
+
+    function _collapse() {
+      _container.removeClass('leaflet-control-layers-expanded');
+    };
+  });
 
 </script>
