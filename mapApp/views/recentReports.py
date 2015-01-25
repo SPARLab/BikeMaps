@@ -51,4 +51,4 @@ def recentReports(request):
         'geofences': rois
     }
 
-    return render(request, 'mapApp/recentReports.html', context)
+    return render(request, 'mapApp/recent_reports.html', context)
