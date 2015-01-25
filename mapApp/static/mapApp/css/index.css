@@ -7,21 +7,6 @@
   float: left;
   z-index: 0;
 }
-/*#legend.panel{
-  width: auto;
-  height: auto;
-  max-height: 75%;
-  padding: 5px 10px;
-  margin: 10px;
-  position: absolute;
-  right: 0;
-  overflow: scroll;
-  z-index: 1;
-  color: #000000;
-  background: #ffffff;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
-  border-radius: 4px;
-}*/
 
 /*Legend filter text formatting*/
 span.date{
@@ -47,10 +32,10 @@ span.date{
   color: #1a242f;
 }
 .min-slider-handle.custom::before {
-  content: '\029D6'; /*unicode star character*/
+  content: '\029D6'; /*unicode timer character*/
 }
 .max-slider-handle.custom::before {
-  content: '\029D7'; /*unicode star character*/
+  content: '\029D7'; /*unicode timer filled character*/
 }
 .slider-selection {
   background: #18bc9c;
