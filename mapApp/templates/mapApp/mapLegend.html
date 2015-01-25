@@ -1,61 +1,74 @@
-<div class="legend-group">
-  <input class="layer-toggle" type="checkbox" value="incidentData" checked>
-  Incidents
-  <div class="marker-group legend-subtext collapse in">
-    <input type="checkbox" id="collisionCheckbox" checked> <i class="collision fa fa-bicycle icon-black"></i><small> Citizen collision report</small><br>
-    <input type="checkbox" id="nearmissCheckbox" checked> <i class="nearmiss fa fa-bicycle icon-black"></i><small> Citizen near miss report</small><br>
-    <input type="checkbox" id="hazardCheckbox" checked> <i class="hazard fa fa-warning icon-black"></i><small> Cyclist hazard</small><br>
-    <input type="checkbox" id="theftCheckbox" checked> <i class="theft fa fa-bicycle icon-black"></i><small> Bike Theft</small><br>
-    <input type="checkbox" id="officialCheckbox" checked> <i class="official fa fa-certificate"></i><small> Official collision report</small><br>
+<div id="legend" class="leaflet-container leaflet-control-container">
+  <div class="leaflet-top leaflet-right">
+    <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
+      <a class="leaflet-control-layers-toggle" href="#" title="Layers"></a>
+      <form class="leaflet-control-layers-list">
+        <div class="leaflet-control-layers-overlays">
 
-    <input id="filterCheckbox" type="checkbox"> <i class="empty-circle fa fa-filter"></i><small> Filter</small>
-    <div class="filter">
-      <div class="date-container">
-        <small><span class="start-date"></span></small>
-        <small><span class="end-date pull-right"></span></small>
-      </div>
+          <div class="legend-group">
+            <input class="layer-toggle" type="checkbox" value="incidentData" checked>
+            Incidents
+            <div class="marker-group legend-subtext collapse in">
+              <input type="checkbox" id="collisionCheckbox" checked> <i class="collision fa fa-bicycle icon-black"></i><small> Citizen collision report</small><br>
+              <input type="checkbox" id="nearmissCheckbox" checked> <i class="nearmiss fa fa-bicycle icon-black"></i><small> Citizen near miss report</small><br>
+              <input type="checkbox" id="hazardCheckbox" checked> <i class="hazard fa fa-warning icon-black"></i><small> Cyclist hazard</small><br>
+              <input type="checkbox" id="theftCheckbox" checked> <i class="theft fa fa-bicycle icon-black"></i><small> Bike Theft</small><br>
+              <input type="checkbox" id="officialCheckbox" checked> <i class="official fa fa-certificate"></i><small> Official collision report</small><br>
 
-      <input class="slider"></input>
+              <input id="filterCheckbox" type="checkbox"> <i class="empty-circle fa fa-filter"></i><small> Filter</small>
+              <div class="filter">
+                <div class="date-container">
+                  <small><span class="start-date"></span></small>
+                  <small><span class="end-date pull-right"></span></small>
+                </div>
+
+                <input class="slider"></input>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend-group">
+            <input class="layer-toggle" type="checkbox" value="stravaHM" checked>
+            Rider volume
+            <a data-target="#about-strava" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>
+            <div class="legend-subtext collapse in">
+              <small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>
+            </div>
+          </div>
+
+          <div class="legend-group">
+            <input class="layer-toggle" type="checkbox" value="alertAreas" checked>
+            Alert Areas
+            <a data-target="#about-alert-areas" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>
+            <div class="legend-subtext collapse in">
+              <small class="alert-area-box"></small>
+            </div>
+          </div>
+
+          <div class="legend-group">
+            <input class="layer-toggle" type="checkbox" value="infrastructure">
+            Infrastructure
+            <div class="legend-subtext collapse">
+              <div class="bikerack"></div><small> Bike rack</small><br>
+              <div class="bikelane solidlane thicklane"></div><small> Protected Bike Lane</small><br>
+              <div class="bikelane solidlane"></div><small> Bike Lane</small><br>
+              <div class="bikelane dotlane"></div><small> Other Cycling Route</small>
+            </div>
+          </div>
+
+          <div class="legend-group">
+            <input class="layer-toggle" type="checkbox" value="heatMap">
+            Incident heatmap
+            <div class="legend-subtext collapse">
+              <small class="rainbow-gradient gradient-bar">less <div class="pull-right">more</div></small>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
 
-<div class="legend-group">
-  <input class="layer-toggle" type="checkbox" value="stravaHM" checked>
-  Rider volume
-  <a data-target="#about-strava" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>
-  <div class="legend-subtext collapse in">
-    <small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>
-  </div>
-</div>
-
-<div class="legend-group">
-  <input class="layer-toggle" type="checkbox" value="alertAreas" checked>
-  Alert Areas
-  <a data-target="#about-alert-areas" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>
-  <div class="legend-subtext collapse in">
-    <small class="alert-area-box"></small>
-  </div>
-</div>
-
-<div class="legend-group">
-  <input class="layer-toggle" type="checkbox" value="infrastructure">
-  Infrastructure
-  <div class="legend-subtext collapse">
-    <div class="bikerack"></div><small> Bike rack</small><br>
-    <div class="bikelane solidlane thicklane"></div><small> Protected Bike Lane</small><br>
-    <div class="bikelane solidlane"></div><small> Bike Lane</small><br>
-    <div class="bikelane dotlane"></div><small> Other Cycling Route</small>
-  </div>
-</div>
-
-<div class="legend-group">
-  <input class="layer-toggle" type="checkbox" value="heatMap">
-  Incident heatmap
-  <div class="legend-subtext collapse">
-    <small class="rainbow-gradient gradient-bar">less <div class="pull-right">more</div></small>
-  </div>
-</div>
 
 <script charset="utf-8">
   $(document).ready(function(){
@@ -73,4 +86,45 @@
       }
     });
   });
+
+
+  // if (this.options.collapsed) {
+  //   if (!L.Browser.android) {
+  //     L.DomEvent.on(container, {
+  //       mouseenter: this._expand,
+  //       mouseleave: this._collapse
+  //     }, this);
+  //   }
+  //
+  //   var link = this._layersLink = L.DomUtil.create('a', className + '-toggle', container);
+  //   link.href = '#';
+  //   link.title = 'Layers';
+  //
+  //   if (L.Browser.touch) {
+  //     L.DomEvent
+  //     .on(link, 'click', L.DomEvent.stop)
+  //     .on(link, 'click', this._expand, this);
+  //   } else {
+  //     L.DomEvent.on(link, 'focus', this._expand, this);
+  //   }
+  //
+  //   // work around for Firefox Android issue https://github.com/Leaflet/Leaflet/issues/2033
+  //   L.DomEvent.on(form, 'click', function () {
+  //     setTimeout(L.bind(this._onInputClick, this), 0);
+  //   }, this);
+  //
+  //   this._map.on('click', this._collapse, this);
+  //   // TODO keyboard accessibility
+  // } else {
+  //   this._expand();
+  // }
+  //
+  // _expand: function () {
+  //   L.DomUtil.addClass(this._container, 'leaflet-control-layers-expanded');
+  // },
+  //
+  // _collapse: function () {
+  //   L.DomUtil.removeClass(this._container, 'leaflet-control-layers-expanded');
+  // }
+
 </script>
