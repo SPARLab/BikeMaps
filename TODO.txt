@@ -1,10 +1,12 @@
 #TO DO
 
 ###HIGHER PRIORITY
+* Track down memory/DOM issues
+* Try search engine optimization ie keywords as meta tags?
 * Add Karen safety information
 * Display more data in point popups
 * Automate monthly emails of stats page
-* Hazard deletion
+* Hazard deletion system for resolved hazards (eg broken glass on road)
 * Cleanup index.html code
 * Cleanup stats.html code a lot ****
 * Fullscreen on mobile (sort of done if app is added to homepage, more to do)
@@ -31,28 +33,13 @@
 * Change app name
 * Clear all button in alerts "mark all as read"
 * Kill forum app
+*	Intersection search
+*	Linking the occurrence of a near-miss, crash, and theft to weather.
+*	Alert emails to include graphics
+* Improve search (text hard to read, Android problems?)
 
 ###BUGS
 * Moderate comments > delete button not working
 * Date picker does not scroll with modal (bind to something?)
 * Leaflet draw does not work for mobile (currently using double tap work-around for mobile)
 * Some users reporting blank screen on browsing to site (may be old browser issue, display error message?)
-
-
-
-##FROM TRISALYN
-BikeMaps – Functionality
--	Intersection search
--	Linking the occurrence of a near-miss, crash, and theft to weather.
--	Alert emails to include graphics
--	Prize entry for registered users
--	Sliders and query tools on the website so people can see where recent crashes are or the difference between day and night incidents.
-
-
-##FROM DARREN
-- When you search for a word/phrase that returns multiple results, the text of the results is truncated.
-	Try searching for 'shell' for example. The list of results should probably expand horizontally to accommodate
-	the width of the result items or the text in the result items may even need to wrap if it is sufficiently long
-- The search function doesn't seem to work from my Android phone.
-- When using a phone, it would be nice if the address bar could be
-	hidden as it occupies valuable screen real estate, especially when in landscape mode.

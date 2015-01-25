@@ -63,6 +63,7 @@
               <small class="rainbow-gradient gradient-bar">less <div class="pull-right">more</div></small>
             </div>
           </div>
+
         </div>
       </form>
     </div>
@@ -72,6 +73,7 @@
 
 <script charset="utf-8">
   $(document).ready(function(){
+    // Control sublegend collapsing
     $("input.layer-toggle").click(function(e) {
       layerClicked = window[e.target.value];
       checked = e.target.checked;
@@ -85,9 +87,9 @@
         subLegend.collapse("hide");
       }
     });
-  });
 
-  $(document).ready(function(){
+
+    // Control legend collapsing (modified code from leaflet/src/L.control.layers)
     var _container = $('#legend .leaflet-control-layers'),
         _link = $('#legend .leaflet-control-layers-toggle'),
         _map = $('#map');
@@ -95,16 +97,18 @@
     if (!L.Browser.android) {
       _container.mouseenter(_expand);
       _container.mouseleave(_collapse);
-    } else if (L.Browser.touch) {
+    }
+    else if (L.Browser.touch) {
       _link.click(_expand);
     } else {
       _link.focus(_expand);
     }
 
-    //   L.DomEvent.on(form, 'click', function () {
-    //     setTimeout(L.bind(this._onInputClick, this), 0);
-    //   }, this);
-    //
+      // L.DomEvent.on(form, 'click', function () {
+      //   setTimeout(L.bind(this._onInputClick, this), 0);
+      // }, this);
+
+
     _map.click(_collapse);
 
     function _expand() {
