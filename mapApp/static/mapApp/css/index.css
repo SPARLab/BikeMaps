@@ -30,13 +30,19 @@ span.date{
   line-height: 18px;
   font-size: 22px;
   color: #1a242f;
+  font-family: FontAwesome;
+  position:relative;
+  top: 1px;
 }
 .min-slider-handle.custom::before {
-  content: '\029D6'; /*unicode timer character*/
+  content: '\f10c';
+  right: 6px;
 }
 .max-slider-handle.custom::before {
-  content: '\029D7'; /*unicode timer filled character*/
+  content: '\f111';
+  left: 7px;
 }
+
 .slider-selection {
   background: #18bc9c;
 }
@@ -59,18 +65,13 @@ span.date{
   font-family: sans-serif;
 }
 
-
 /* Leaflet legend on map */
 .legend-subtext {
   margin-left: 18px;
 }
-#incident-legend{
-  max-height: 150px;
-  line-height: 20px;
-}
-.marker-group i{
+.marker-group>i{
   height: 20px;
-  width: 21px;
+  width: 20px;
   padding-top: 4px;
   border-radius: 10px;
 }
@@ -82,6 +83,10 @@ span.date{
 }
 .marker-group>i.fa-certificate, .marker-group>i.fa-user, .marker-group>i.fa-filter{
   padding-left: 5px;
+}
+.marker-group span.fa-stack{
+  margin-top: -2px;
+  margin-left: -2px;
 }
 
 /* Legend gradients*/
