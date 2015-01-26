@@ -96,25 +96,28 @@
     // Control legend collapsing (modified code from leaflet/src/L.control.layers)
     var container = $('#legend .leaflet-control-layers');
 
-    if(window.innerWidth < 700){ // TODO implement if not small screen {
-      var link = $('#legend .leaflet-control-layers-toggle'),
-          map = $('#map.leaflet-map-pane');
+    $(window).resize( function(e){
+      if($(window).width() < 700){ // TODO implement if not small screen {
+        var link = $('#legend .leaflet-control-layers-toggle'),
+        map = $('#map.leaflet-map-pane');
 
-      if (!L.Browser.android) {
-        container.mouseenter(expand);
-        container.mouseleave(collapse);
-      } else if (L.Browser.touch) {
-        link.click(expand);
-      } else {
-        link.focus(expand);
+        if (!L.Browser.android) {
+          container.mouseenter(expand);
+          container.mouseleave(collapse);
+        } else if (L.Browser.touch) {
+          link.click(expand);
+        } else {
+          link.focus(expand);
+        }
+
+        map.click(collapse);
       }
 
-      map.click(collapse);
-    }
-
-    else {
-      expand();
-    }
+      else {
+        expand();
+      }
+    });
+    $(window).trigger('resize'); //Call event handler on load
 
     function expand() {
       container.addClass('leaflet-control-layers-expanded');
