@@ -96,9 +96,9 @@
     // Control legend collapsing (modified code from leaflet/src/L.control.layers)
     var container = $('#legend .leaflet-control-layers');
 
-    if(false){ // TODO implement if not small screen {
+    if(window.innerWidth < 700){ // TODO implement if not small screen {
       var link = $('#legend .leaflet-control-layers-toggle'),
-          map = $('#map');
+          map = $('#map.leaflet-map-pane');
 
       if (!L.Browser.android) {
         container.mouseenter(expand);

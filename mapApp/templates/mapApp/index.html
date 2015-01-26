@@ -151,20 +151,17 @@
           $("input.slider").ready(function(){
             var mySlider = $("input.slider").slider({
               step: 1,
-              // TODO edit these to something deterministic
               max: (moment().weekYear() - 1970) * 12, //current year * 12
               min: (moment().weekYear() - 1980) * 12, //ten years ago * 12
+
               range: true,
               tooltip: 'hide',
               enabled: false,
               handle: 'custom',
 
-              // handle:'custom',
-
               formatter: function(val){
                 return sliderDate(val[0]).format("MMM-YYYY") + " : " + sliderDate(val[1]).format("MMM-YYYY");
-              },
-
+              }
             });
           });
 
@@ -187,7 +184,8 @@
           function filterPoints(start_date, end_date) {
             var d;
             start_date = sliderDate(start_date);
-            end_date = sliderDate(end_date);
+            end_date = sliderDate(end_date).add(1,'M').subtract(1,'d'); //Get the last day of the month
+
             incidentData.clearLayers();
 
             collisions = collisionsUnfiltered.filter(function(feature, layer){
