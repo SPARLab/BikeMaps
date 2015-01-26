@@ -99,12 +99,14 @@
     $(window).resize( function(e){
       if($(window).width() < 700){ // TODO implement if not small screen {
         var link = $('#legend .leaflet-control-layers-toggle'),
-        map = $('#map');
+        map = $('#map.leaflet-map-pane');
 
         if (!L.Browser.android) {
           container.mouseenter(expand);
           container.mouseleave(collapse);
-        } else if (L.Browser.touch) {
+        }
+
+        if (L.Browser.touch) {
           link.click(expand);
         } else {
           link.focus(expand);
