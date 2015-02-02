@@ -6,7 +6,7 @@
 html, body {
 	height: 100%;
 	width: 100%;
-	overflow: hidden;
+	overflow: scroll;
 }
 body {
 	margin: 0px;
@@ -201,4 +201,7 @@ li a {
 	left: 0px;
 	right: 0px;
 	height: 23px;
+}
+.modal-dialog{
+	z-index: 1100;
 }
