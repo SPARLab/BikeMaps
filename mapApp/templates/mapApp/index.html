@@ -178,11 +178,11 @@
               nearmissesUnfiltered = nearmisses,
               hazardsUnfiltered = hazards,
               theftsUnfiltered = thefts,
-              officialUnfiltered = officialData;
+              officialUnfiltered = [];
           $("input.slider").on("slideStop", function(e){ filterPoints(e.value[0], e.value[1]) });
 
           function filterPoints(start_date, end_date) {
-            var d;
+            var d, p;
             start_date = sliderDate(start_date);
             end_date = sliderDate(end_date).add(1,'M').subtract(1,'d'); //Get the last day of the month
 
@@ -204,10 +204,33 @@
               d = moment(feature.feature.properties.hazard_date);
               return d >= start_date && d <= end_date;
             });
-            officialData = officialUnfiltered.filter(function(feature, layer){
-              d = feature.feature.properties.ACC_DATE ? moment(feature.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: feature.feature.properties.Year, M: 0, d:1});
-              return d >= start_date && d <= end_date;
-            });
+
+            // Filtering official data with minimal memory requirement increases
+            var tmp = [];
+            for (var i in officialData){
+              p = officialData[i];
+              d = p.feature.properties.ACC_DATE ? moment(p.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: p.feature.properties.Year, M: 0, d:1});
+
+              if(d < start_date || d > end_date)
+                officialUnfiltered.push(p);
+                officialData.splice(i, 1);
+            }
+            for (var i in officialUnfiltered){
+              p = officialUnfiltered[i];
+              d = p.feature.properties.ACC_DATE ? moment(p.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: p.feature.properties.Year, M: 0, d:1});
+
+              if(d >= start_date && d <= end_date)
+                officialData.push(p);
+              else
+                tmp.push(p);
+            }
+            officialUnfiltered = tmp;
+
+            // THE OLD WAY (clean but memory heavy)
+            // officialData = officialUnfiltered.filter(function(feature, layer){
+            //   d = feature.feature.properties.ACC_DATE ? moment(feature.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: feature.feature.properties.Year, M: 0, d:1});
+            //   return d >= start_date && d <= end_date;
+            // });
 
             // Add filtered layer back if checkbox is checked
             $("#collisionCheckbox").is(":checked") && incidentData.addLayers(collisions);
