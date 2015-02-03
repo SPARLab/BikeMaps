@@ -183,7 +183,7 @@
               nearmissesUnfiltered = nearmisses,
               hazardsUnfiltered = hazards,
               theftsUnfiltered = thefts,
-              officialUnfiltered = [];
+              officialUnfiltered = officialData;
           $("input.slider").on("slideStop", function(e){ filterPoints(e.value[0], e.value[1]) });
 
           function filterPoints(start_date, end_date) {
