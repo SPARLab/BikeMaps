@@ -45,6 +45,31 @@ USE_L10N = True
 
 USE_TZ = False
 
+# Application definitions
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    # forum
+    'spirit',
+    'haystack',
+    'djconfig',
+
+    # mapApp requirements
+    'compressor',
+    'minidetector', # Mobile detector
+    'django_cron', # Cron tasks
+    'django.contrib.gis',
+    'djgeojson',
+    'crispy_forms',
+    'mapApp'
+)
+
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
@@ -66,3 +91,15 @@ SERIALIZATION_MODULES = {
 CRON_CLASSES = [
     "mapApp.cron.UserAlertEmails",
 ]
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder'
+]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')

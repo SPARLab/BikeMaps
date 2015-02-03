@@ -18,34 +18,9 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
-
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-
-# Application definitions
-
-INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    
-    # forum
-    'spirit',
-    'haystack',
-    'djconfig',
-
-    # mapApp requirements
-    'minidetector', # Mobile detector
-    'django_cron', # Cron tasks
-    'django.contrib.gis',
-    'djgeojson',
-    'crispy_forms',
-    'mapApp'
-)
+COMPRESS_ENABLED = True
 
 # Database
 DATABASES = {
@@ -56,24 +31,8 @@ DATABASES = {
         'NAME': 'bikeDB',
         'USER': 'postgres'
         # 'PASSWORD': 'SUPER_SECRET'
-
-        
     }
 }
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
-
-STATIC_URL = '/static/'
-
-STATIC_PATH = os.path.join(BASE_DIR,'static')
-
-STATICFILES_DIRS = (
-    STATIC_PATH,
-)
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #Dummy backend for development that writes to stdout
 

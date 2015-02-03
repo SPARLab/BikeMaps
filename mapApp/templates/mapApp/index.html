@@ -1,15 +1,16 @@
 {% extends "mapApp/base.html" %}
 
 {% block title %}BikeMaps{% endblock %}
-{% load staticfiles crispy_forms_tags geojson_tags %}
+{% load staticfiles crispy_forms_tags geojson_tags compress %}
 
 {% block headerCSS %}
-    <!-- Load leaflet -->
+<!-- Load leaflet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
     <!-- Load marker clustering -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css">
     <!-- Load draw pluging -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css">
+  {% compress css %}
     <!-- Leaflet Geocoder -->
     <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}">
     <!-- font-awesome icons -->
@@ -20,6 +21,7 @@
     <link rel="stylesheet" href="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.css' %}">
     <!-- Local styles -->
     <link rel="stylesheet" href="{% static 'mapApp/css/index.css' %}">
+  {% endcompress %}
 
 {% endblock %}
 
@@ -28,8 +30,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
     <!-- Load marker clustering -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js"></script>
-    <!-- Load heatmap -->
-    <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
 
     {% if not request.mobile %}
     <!-- Load draw pluging -->
@@ -37,6 +37,11 @@
     <!-- // <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw-src.js"></script> -->
     {% endif %}
 
+    <!-- Spinner -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
+  {% compress js %}
+    <!-- Load heatmap -->
+    <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
     <!-- Awesome markers -->
     <script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
     <!-- Used for pie chart creation -->
@@ -49,7 +54,6 @@
     <!-- Leaflet-ajax -->
     <script src="{% static 'leaflet/plugins/leaflet-ajax/dist/leaflet.ajax.min.js' %}"></script>
     <!-- Spinner -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
     <script src="{% static 'leaflet-spin/leaflet.spin.js' %}"></script>
     <!-- Bootstrap slider -->
     <script src="{% static 'bootstrap-slider/bootstrap-slider.js' %}"></script>
@@ -62,6 +66,7 @@
     <!-- Load app js -->
     <script src="{% static 'mapApp/js/map.js' %}"></script>
     <script src="{% static 'mapApp/js/override.js' %}"></script>
+  {% endcompress %}
 
 {% endblock %}
 
@@ -206,31 +211,31 @@
             });
 
             // Filtering official data with minimal memory requirement increases
-            var tmp = [];
-            for (var i in officialData){
-              p = officialData[i];
-              d = p.feature.properties.ACC_DATE ? moment(p.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: p.feature.properties.Year, M: 0, d:1});
-
-              if(d < start_date || d > end_date)
-                officialUnfiltered.push(p);
-                officialData.splice(i, 1);
-            }
-            for (var i in officialUnfiltered){
-              p = officialUnfiltered[i];
-              d = p.feature.properties.ACC_DATE ? moment(p.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: p.feature.properties.Year, M: 0, d:1});
-
-              if(d >= start_date && d <= end_date)
-                officialData.push(p);
-              else
-                tmp.push(p);
-            }
-            officialUnfiltered = tmp;
+            // for (var i in officialData){
+            //   p = officialData[i];
+            //   d = p.feature.properties.ACC_DATE ? moment(p.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: p.feature.properties.Year, M: 0, d:1});
+            //
+            //   if(d < start_date || d > end_date){
+            //     officialUnfiltered.push(p);
+            //     officialData.splice(i, 1);
+            //   }
+            // }
+            //
+            // for (var i in officialUnfiltered){
+            //   p = officialUnfiltered[i];
+            //   d = p.feature.properties.ACC_DATE ? moment(p.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: p.feature.properties.Year, M: 0, d:1});
+            //
+            //   if(d >= start_date && d <= end_date){
+            //     officialData.push(p);
+            //     officialUnfiltered.splice(i, 1);
+            //   }
+            // }
 
             // THE OLD WAY (clean but memory heavy)
-            // officialData = officialUnfiltered.filter(function(feature, layer){
-            //   d = feature.feature.properties.ACC_DATE ? moment(feature.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: feature.feature.properties.Year, M: 0, d:1});
-            //   return d >= start_date && d <= end_date;
-            // });
+            officialData = officialUnfiltered.filter(function(feature, layer){
+              d = feature.feature.properties.ACC_DATE ? moment(feature.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: feature.feature.properties.Year, M: 0, d:1});
+              return d >= start_date && d <= end_date;
+            });
 
             // Add filtered layer back if checkbox is checked
             $("#collisionCheckbox").is(":checked") && incidentData.addLayers(collisions);
