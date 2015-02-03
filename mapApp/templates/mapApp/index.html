@@ -86,7 +86,6 @@
 
     <!-- JS to control message display and feature creation -->
     <script>
-
         // Initialize the map
         initialize(scrollZoom=true);
         addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
@@ -112,23 +111,23 @@
         $(document).ready(function(){
           // Show modals if there are from errors
           {% if incidentForm.errors %}
-          $(window).load(function(){
-            $('#incidentForm').modal('show');
-          });
+            $(window).load(function(){
+              $('#incidentForm').modal('show');
+            });
           {% elif hazardForm.errors %}
-          $(window).load(function(){
-            $('.nav-tabs a[href="#hazardReport"]').tab('show')
-            $('#incidentForm').modal('show');
-          });
+            $(window).load(function(){
+              $('.nav-tabs a[href="#hazardReport"]').tab('show')
+              $('#incidentForm').modal('show');
+            });
           {% elif theftForm.errors %}
-          $(window).load(function(){
-            $('.nav-tabs a[href="#theftReport"]').tab('show')
-            $('#incidentForm').modal('show');
-          });
+            $(window).load(function(){
+              $('.nav-tabs a[href="#theftReport"]').tab('show')
+              $('#incidentForm').modal('show');
+            });
           {% elif geofenceForm.errors %}
-          $(window).load(function(){
-            $('#geofenceForm').modal('show');
-          });
+            $(window).load(function(){
+              $('#geofenceForm').modal('show');
+            });
           {% endif %}
 
           // Add and remove layers individually from the clusters
@@ -209,29 +208,6 @@
               d = moment(feature.feature.properties.hazard_date);
               return d >= start_date && d <= end_date;
             });
-
-            // Filtering official data with minimal memory requirement increases
-            // for (var i in officialData){
-            //   p = officialData[i];
-            //   d = p.feature.properties.ACC_DATE ? moment(p.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: p.feature.properties.Year, M: 0, d:1});
-            //
-            //   if(d < start_date || d > end_date){
-            //     officialUnfiltered.push(p);
-            //     officialData.splice(i, 1);
-            //   }
-            // }
-            //
-            // for (var i in officialUnfiltered){
-            //   p = officialUnfiltered[i];
-            //   d = p.feature.properties.ACC_DATE ? moment(p.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: p.feature.properties.Year, M: 0, d:1});
-            //
-            //   if(d >= start_date && d <= end_date){
-            //     officialData.push(p);
-            //     officialUnfiltered.splice(i, 1);
-            //   }
-            // }
-
-            // THE OLD WAY (clean but memory heavy)
             officialData = officialUnfiltered.filter(function(feature, layer){
               d = feature.feature.properties.ACC_DATE ? moment(feature.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: feature.feature.properties.Year, M: 0, d:1});
               return d >= start_date && d <= end_date;
@@ -287,8 +263,6 @@
           });
           //^^^^^^^^^^^^^^^^^^^^^^^^
         });
-
-
     </script>
 
     <!-- Add modal help html -->
