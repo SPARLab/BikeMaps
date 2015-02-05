@@ -1,15 +1,16 @@
 {% extends "mapApp/base.html" %}
 
 {% block title %}BikeMaps{% endblock %}
-{% load staticfiles crispy_forms_tags geojson_tags %}
+{% load staticfiles crispy_forms_tags geojson_tags compress %}
 
 {% block headerCSS %}
-    <!-- Load leaflet -->
+<!-- Load leaflet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
     <!-- Load marker clustering -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css">
     <!-- Load draw pluging -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css">
+  {% compress css %}
     <!-- Leaflet Geocoder -->
     <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}">
     <!-- font-awesome icons -->
@@ -20,6 +21,7 @@
     <link rel="stylesheet" href="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.css' %}">
     <!-- Local styles -->
     <link rel="stylesheet" href="{% static 'mapApp/css/index.css' %}">
+  {% endcompress %}
 
 {% endblock %}
 
@@ -28,8 +30,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
     <!-- Load marker clustering -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js"></script>
-    <!-- Load heatmap -->
-    <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
 
     {% if not request.mobile %}
     <!-- Load draw pluging -->
@@ -37,6 +37,11 @@
     <!-- // <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw-src.js"></script> -->
     {% endif %}
 
+    <!-- Spinner -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
+  {% compress js %}
+    <!-- Load heatmap -->
+    <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
     <!-- Awesome markers -->
     <script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
     <!-- Used for pie chart creation -->
@@ -49,7 +54,6 @@
     <!-- Leaflet-ajax -->
     <script src="{% static 'leaflet/plugins/leaflet-ajax/dist/leaflet.ajax.min.js' %}"></script>
     <!-- Spinner -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
     <script src="{% static 'leaflet-spin/leaflet.spin.js' %}"></script>
     <!-- Bootstrap slider -->
     <script src="{% static 'bootstrap-slider/bootstrap-slider.js' %}"></script>
@@ -62,6 +66,7 @@
     <!-- Load app js -->
     <script src="{% static 'mapApp/js/map.js' %}"></script>
     <script src="{% static 'mapApp/js/override.js' %}"></script>
+  {% endcompress %}
 
 {% endblock %}
 
@@ -81,7 +86,6 @@
 
     <!-- JS to control message display and feature creation -->
     <script>
-
         // Initialize the map
         initialize(scrollZoom=true);
         addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
@@ -107,23 +111,23 @@
         $(document).ready(function(){
           // Show modals if there are from errors
           {% if incidentForm.errors %}
-          $(window).load(function(){
-            $('#incidentForm').modal('show');
-          });
+            $(window).load(function(){
+              $('#incidentForm').modal('show');
+            });
           {% elif hazardForm.errors %}
-          $(window).load(function(){
-            $('.nav-tabs a[href="#hazardReport"]').tab('show')
-            $('#incidentForm').modal('show');
-          });
+            $(window).load(function(){
+              $('.nav-tabs a[href="#hazardReport"]').tab('show')
+              $('#incidentForm').modal('show');
+            });
           {% elif theftForm.errors %}
-          $(window).load(function(){
-            $('.nav-tabs a[href="#theftReport"]').tab('show')
-            $('#incidentForm').modal('show');
-          });
+            $(window).load(function(){
+              $('.nav-tabs a[href="#theftReport"]').tab('show')
+              $('#incidentForm').modal('show');
+            });
           {% elif geofenceForm.errors %}
-          $(window).load(function(){
-            $('#geofenceForm').modal('show');
-          });
+            $(window).load(function(){
+              $('#geofenceForm').modal('show');
+            });
           {% endif %}
 
           // Add and remove layers individually from the clusters
@@ -182,7 +186,7 @@
           $("input.slider").on("slideStop", function(e){ filterPoints(e.value[0], e.value[1]) });
 
           function filterPoints(start_date, end_date) {
-            var d;
+            var d, p;
             start_date = sliderDate(start_date);
             end_date = sliderDate(end_date).add(1,'M').subtract(1,'d'); //Get the last day of the month
 
@@ -259,8 +263,6 @@
           });
           //^^^^^^^^^^^^^^^^^^^^^^^^
         });
-
-
     </script>
 
     <!-- Add modal help html -->

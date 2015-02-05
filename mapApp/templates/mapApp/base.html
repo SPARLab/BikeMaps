@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  {% load staticfiles spirit_tags bikemaps_tags%}
+  {% load staticfiles spirit_tags bikemaps_tags compress %}
   <title>{% block title %}{% endblock %}</title>
   <meta name="description" content="Map your cycling incidents, hazard, and theft locations so they can be analyzed to identify hot spots of cycling safety, risk, and crime."/>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  
+
   <!-- Browser icon -->
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'mapApp/images/BikeMapsORG_Logo.ico' %}" />
 
@@ -33,21 +33,26 @@
 
   <!-- LOAD CSS -->
   {% block headerCSS %} {% endblock %}
-  <link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet" media="screen">
-  <link href="{% static 'mapApp/css/common.css' %}" rel="stylesheet">
-
   <!-- Load icons -->
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
+  <!-- Bootstrap -->
+  {% compress css %}
+  <link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet" media="screen">
+  <link href="{% static 'mapApp/css/common.css' %}" rel="stylesheet">
+
   <!-- Bootstrap datetime picker -->
   <link href="{% static 'datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen"/>
+  {% endcompress %}
 
   <!-- lOAD JS -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   {% block headerJS %} {% endblock %}
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  {% compress js %}
   <!-- datetime picker -->
   <script type="text/javascript" src="{% static 'datetimepicker/js/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
+  {% endcompress %}
 </head>
 
 
