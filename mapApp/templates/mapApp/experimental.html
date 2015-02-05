@@ -1,0 +1,80 @@
+{% extends "mapApp/base.html" %}
+{% load staticfiles %}
+{% load geojson_tags %}
+
+{% block title %}
+Experimental charting
+{% endblock %}
+
+
+{% block headerCSS %}
+  <!-- Load leaflet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+  <!-- font-awesome icons -->
+  <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
+  <!-- Local styles -->
+  <style media="screen">
+
+  </style>
+{% endblock %}
+
+
+{% block headerJS %}
+<!-- d3 v3.4.8 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+<!-- moment.js date library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<!-- Load leaflet -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+<!-- Awesome markers -->
+<script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
+<!-- Icon definitions -->
+<script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
+{% endblock %}
+
+
+{% block body %}
+  <!-- D3 parallel coords chart -->
+  <script charset="utf-8">
+    var dataset = [
+      {{ collisions|length }},
+      {{ nearmisses|length }},
+      {{ hazards|length }},
+      {{ thefts|length }}
+    ]
+
+    var color = d3.scale.ordinal()
+      .range([getColor("collision"), getColor("nearmiss"), getColor("hazard"), getColor("theft")])
+
+    var margin = {top: 30, right: 10, bottom: 10, left: 10},
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom,
+        radius = Math.min(width, height) / 2;
+
+    var svg = d3.select("body").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    var arc = d3.svg.arc()
+      .outerRadius(radius - 10)
+      .innerRadius(0);
+
+    var pie = d3.layout.pie()
+      .sort(null)
+      .value(function(d){ return d; });
+
+    var g = svg.selectAll(".arc")
+      .data(pie(dataset))
+      .enter().append("g")
+      .attr("class", "arc");
+
+    g.append("path")
+      .attr("d", arc)
+      .style("fill", function(d, i) { return color(i); });
+
+
+
+  </script>
+{% endblock %}

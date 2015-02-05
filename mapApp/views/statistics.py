@@ -42,6 +42,7 @@ def stats(request):
 
 		'geofences': rois,
 
+		'incidents': incidents,
 		'collisions': collisions,
 		'nearmisses': nearmisses,
 		'hazards': hazards,
@@ -59,3 +60,27 @@ def stats(request):
 	}
 
 	return render(request, 'mapApp/stats.html', context)
+
+
+@login_required
+def experimental(request):
+	user = request.user
+
+	# Get the user's alertable points in the last month
+	incidents = Incident.objects.all()#filter(incidentNotification__user=user.id)
+	nearmisses = incidents.filter(incident__contains="Near collision")
+	collisions = incidents.exclude(incident__contains="Near collision")
+
+	hazards = Hazard.objects.all()
+	thefts = Theft.objects.all()
+
+	context = {
+		'user': user,
+
+		'collisions': collisions,
+		'nearmisses': nearmisses,
+		'hazards': hazards,
+		'thefts': thefts,
+	}
+
+	return render(request, 'mapApp/experimental.html', context)
