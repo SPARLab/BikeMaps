@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('mapApp.urls', namespace="mapApp")),
     url(r'^forum/', include('spirit.urls', namespace="spirit", app_name="spirit")),
+    url(r'^robots.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /experimental", mimetype="text/plain"))
 )
 
 # urlpatterns += patterns('',
