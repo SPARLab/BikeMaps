@@ -14,6 +14,10 @@ Experimental charting
   <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
   <!-- Local styles -->
   <style media="screen">
+    svg .arc {
+      stroke: black;
+      stroke-width: 1px;
+    }
 
   </style>
 {% endblock %}
@@ -47,8 +51,8 @@ Experimental charting
       .range([getColor("collision"), getColor("nearmiss"), getColor("hazard"), getColor("theft")])
 
     var margin = {top: 30, right: 10, bottom: 10, left: 10},
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom,
+        width = 250 - margin.left - margin.right,
+        height = 250 - margin.top - margin.bottom,
         radius = Math.min(width, height) / 2;
 
     var svg = d3.select("body").append("svg")
@@ -73,8 +77,6 @@ Experimental charting
     g.append("path")
       .attr("d", arc)
       .style("fill", function(d, i) { return color(i); });
-
-
 
   </script>
 {% endblock %}
