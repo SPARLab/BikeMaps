@@ -162,6 +162,7 @@ function loadGeojsonAjax(src, type){
 //		and passing them to the pieChart function
 function serializeClusterData(cluster) {
     var children = cluster.getAllChildMarkers(),
+        n = 0,
         colorRef = {};
 
     for (var icon in icons) {
@@ -176,12 +177,15 @@ function serializeClusterData(cluster) {
         // Match childColor to icon in icons
         var icon = colorRef[child.options.icon.options.color];
         icons[icon].count++;
+        n++;
     });
 
     // Make array of icons data
-    return $.map(icons, function(v) {
+    var data = $.map(icons, function(v) {
       return v;
     });
+    data.push(n);
+    return data;
 };
 
 
@@ -190,7 +194,8 @@ function serializeClusterData(cluster) {
 // 	inputs: data as list of objects containing "type", "count", "color", outer chart radius, inner chart radius, and total points for cluster
 // 	output: L.DivIcon donut chart where each "type" is mapped to the corresponding "color" with a proportional section corresponding to "count"
 function pieChart(data) {
-    var total = data.length;
+    var total = data.pop();
+
     outerR = (total >= 10 ? (total < 50 ? 20 : 25) : 15),
     innerR = (total >= 10 ? (total < 50 ? 10 : 13) : 7);
 
@@ -250,7 +255,6 @@ function pieChart(data) {
         iconSize: new L.Point(40, 40)
     });
 
-
     // Purpose: Helper function to convert xmlNode to a string
     function serializeXmlNode(xmlNode) {
         if (typeof window.XMLSerializer != "undefined") {
@@ -287,6 +291,9 @@ function getPopup(layer) {
         else
             popup += 'Due to';
         popup += ':</strong> ' + feature.properties.incident_with + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.incident_date);
+        if(feature.properties.incident_detail){
+          popup += '<br><strong>Details:</strong>' + feature.properties.incident_detail;
+        }
 
     } else if (type === "hazard") {
         popup = '<strong>Hazard type:</strong> ' + feature.properties.hazard + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.hazard_date);
