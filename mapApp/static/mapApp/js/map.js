@@ -295,19 +295,19 @@ function getPopup(layer) {
             popup += 'Due to';
         popup += ':</strong> ' + feature.properties.incident_with + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.incident_date);
         if(feature.properties.incident_detail){
-          popup += '<br><strong>Details:</strong> <div class="popup-details">' + feature.properties.incident_detail + '</div>';
+          popup += '<br><div class="popup-details"><strong>Details:</strong> ' + feature.properties.incident_detail + '</div>';
         }
 
     } else if (type === "hazard") {
         popup = '<strong>Hazard type:</strong> ' + feature.properties.hazard + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.hazard_date);
         if(feature.properties.hazard_detail){
-          popup += '<br><strong>Details:</strong> <div class="popup-details">' + feature.properties.hazard_detail + '</div>';
+          popup += '<br><div class="popup-details"><strong>Details:</strong> ' + feature.properties.hazard_detail + '</div>';
         }
 
     } else if (type === "theft") {
         popup = '<strong>Theft type:</strong> ' + feature.properties.theft + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.theft_date);
         if(feature.properties.theft_detail){
-          popup += '<br><strong>Details:</strong> <div class="popup-details">' + feature.properties.theft_detail + '</div>';
+          popup += '<br><div class="popup-details"><strong>Details:</strong> ' + feature.properties.theft_detail + '</div>';
         }
 
     } else if (type === "icbc") {
