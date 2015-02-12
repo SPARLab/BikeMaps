@@ -20,7 +20,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-COMPRESS_ENABLED = True
+COMPRESS_ENABLED = False
 
 # Database
 DATABASES = {

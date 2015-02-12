@@ -11,7 +11,10 @@ var incidentData = new L.MarkerClusterGroup({
         color: '#2c3e50',
         weight: 3
     },
-    iconCreateFunction: createPieCluster
+    iconCreateFunction: function(cluster){
+      var data = serializeClusterData(cluster);
+      return pieChart(data);
+    },
 }).on('click', function(e){
   var layer = e.layer;
   layer.bindPopup(getPopup(layer)).openPopup();
@@ -157,9 +160,8 @@ function loadGeojsonAjax(src, type){
 
 // Purpose: Initializes the Pie chart cluster icons by getting the needed attributes from each cluster
 //		and passing them to the pieChart function
-function createPieCluster(cluster) {
+function serializeClusterData(cluster) {
     var children = cluster.getAllChildMarkers(),
-        n = children.length,
         colorRef = {};
 
     for (var icon in icons) {
@@ -177,87 +179,86 @@ function createPieCluster(cluster) {
     });
 
     // Make array of icons data
-    data = $.map(icons, function(v) {
+    return $.map(icons, function(v) {
       return v;
-    })
+    });
+};
 
-    // Build the svg layer
-    return pieChart(data, n);
 
-    // pieChart
-    // 	Purpose: Builds the svg DivIcons
-    // 	inputs: data as list of objects containing "type", "count", "color", outer chart radius, inner chart radius, and total points for cluster
-    // 	output: L.DivIcon donut chart where each "type" is mapped to the corresponding "color" with a proportional section corresponding to "count"
-    function pieChart(data, total) {
-        outerR = (total >= 10 ? (total < 50 ? 20 : 25) : 15),
-        innerR = (total >= 10 ? (total < 50 ? 10 : 13) : 7);
+// pieChart
+// 	Purpose: Builds the svg DivIcons
+// 	inputs: data as list of objects containing "type", "count", "color", outer chart radius, inner chart radius, and total points for cluster
+// 	output: L.DivIcon donut chart where each "type" is mapped to the corresponding "color" with a proportional section corresponding to "count"
+function pieChart(data) {
+    var total = data.length;
+    outerR = (total >= 10 ? (total < 50 ? 20 : 25) : 15),
+    innerR = (total >= 10 ? (total < 50 ? 10 : 13) : 7);
 
-        var arc = d3.svg.arc()
-            .outerRadius(outerR)
-            .innerRadius(innerR);
+    var arc = d3.svg.arc()
+        .outerRadius(outerR)
+        .innerRadius(innerR);
 
-        var pie = d3.layout.pie()
-            .sort(null)
-            .value(function(d) {
-                return d.count;
-            });
-
-        // Define the svg layer
-        var width = 50,
-            height = 50;
-        var svg = document.createElementNS(d3.ns.prefix.svg, 'svg');
-        var vis = d3.select(svg)
-            .data(data)
-            .attr('class', 'marker-cluster-pie')
-            .attr('width', width)
-            .attr('height', height)
-            .append("g")
-            .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
-
-        var g = vis.selectAll(".arc")
-            .data(pie(data))
-            .enter().append("g")
-            .attr('class', 'arc');
-
-        g.append('path')
-            .attr("d", arc)
-            .style("fill", function(d) {
-                return d.data.options.color;
-            });
-
-        // Add center fill
-        vis.append("circle")
-            .attr("cx", 0)
-            .attr("cy", 0)
-            .attr("r", innerR)
-            .attr('class', 'center')
-            .attr("fill", "#f1f1f1");
-
-        // Add count text
-        vis.append('text')
-            .attr('class', 'pieLabel')
-            .attr('text-anchor', 'middle')
-            .attr('dy', '.3em')
-            .text(total)
-
-        var html = serializeXmlNode(svg);
-
-        return new L.DivIcon({
-            html: html,
-            className: 'marker-cluster',
-            iconSize: new L.Point(40, 40)
+    var pie = d3.layout.pie()
+        .sort(null)
+        .value(function(d) {
+            return d.count;
         });
 
+    // Define the svg layer
+    var width = 50,
+        height = 50;
+    var svg = document.createElementNS(d3.ns.prefix.svg, 'svg');
+    var vis = d3.select(svg)
+        .data(data)
+        .attr('class', 'marker-cluster-pie')
+        .attr('width', width)
+        .attr('height', height)
+        .append("g")
+        .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
-        // Purpose: Helper function to convert xmlNode to a string
-        function serializeXmlNode(xmlNode) {
-            if (typeof window.XMLSerializer != "undefined") {
-                return (new window.XMLSerializer()).serializeToString(xmlNode);
-            } else if (typeof xmlNode.xml != "undefined") {
-                return xmlNode.xml;
-            }
-            return "";
-        };
+    var g = vis.selectAll(".arc")
+        .data(pie(data))
+        .enter().append("g")
+        .attr('class', 'arc');
+
+    g.append('path')
+        .attr("d", arc)
+        .style("fill", function(d) {
+            return d.data.options.color;
+        });
+
+    // Add center fill
+    vis.append("circle")
+        .attr("cx", 0)
+        .attr("cy", 0)
+        .attr("r", innerR)
+        .attr('class', 'center')
+        .attr("fill", "#f1f1f1");
+
+    // Add count text
+    vis.append('text')
+        .attr('class', 'pieLabel')
+        .attr('text-anchor', 'middle')
+        .attr('dy', '.3em')
+        .text(total)
+
+    var html = serializeXmlNode(svg);
+
+    return new L.DivIcon({
+        html: html,
+        className: 'marker-cluster',
+        iconSize: new L.Point(40, 40)
+    });
+
+
+    // Purpose: Helper function to convert xmlNode to a string
+    function serializeXmlNode(xmlNode) {
+        if (typeof window.XMLSerializer != "undefined") {
+            return (new window.XMLSerializer()).serializeToString(xmlNode);
+        } else if (typeof xmlNode.xml != "undefined") {
+            return xmlNode.xml;
+        }
+        return "";
     };
 };
 
