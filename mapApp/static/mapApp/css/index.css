@@ -176,3 +176,8 @@ span.date{
 .modal-dialog{
   z-index: 4000;
 }
+
+.popup-details{
+  margin-left: 5px;
+  text-indent: -5px;
+}
