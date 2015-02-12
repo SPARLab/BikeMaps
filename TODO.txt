@@ -11,6 +11,7 @@
 * Cleanup stats.html code a lot ****
 * Fullscreen on mobile (sort of done if app is added to homepage, more to do)
 * Allow admin point moving on main map page
+* Change from blanketed https requests to selected https requests to avoid unsafe script warnings
 * Request https admin page maps (browsers are blocking insecure js from display by default)
 * Serve some pages over http to get around unsafe site resources warnings
 * Broken modal popups on some browsers
