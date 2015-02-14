@@ -16,12 +16,12 @@ class HazardForm(forms.ModelForm):
             AccordionGroup(
                 'Hazard Details',
                 Field('geom', type="hidden", id="hazPoint"), # Coords passed after click on map from static/mapApp/js/map.js
-                Field('hazard_date', id="hazard_date", template='mapApp/util/datepicker.html', autocomplete='off'),
+                Field('date', id="date", template='mapApp/util/datepicker.html', autocomplete='off'),
                 Field('hazard', id="hazard-type"),#, template='mapApp/util/multiselect_field.html'),
             ),
             AccordionGroup(
                 'Description',
-                Field('hazard_detail', placeholder='optional'),
+                Field('details', placeholder='optional'),
                 css_id = 'hazard-description'
             ),
             AccordionGroup(
@@ -36,9 +36,9 @@ class HazardForm(forms.ModelForm):
         Div(
             HTML("""
                 <input type='checkbox' class='terms_hazard'>
-                <strong> I have read and understand the 
+                <strong> I have read and understand the
                 <a href="{% url 'mapApp:termsAndConditions' %}" target=_blank>terms and conditions</a></strong>
-                
+
                 <script>
                   $(".terms_hazard").change(function() {
                     if(this.checked) {
@@ -61,5 +61,5 @@ class HazardForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Hazard
-        fields = ['geom', 'hazard_date', 'hazard', 'hazard_detail', 'age', 'birthmonth', 'sex', 'regular_cyclist']
+        # model = Hazard
+        fields = '__all__'

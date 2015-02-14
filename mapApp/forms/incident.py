@@ -53,9 +53,9 @@ class IncidentForm(forms.ModelForm):
         Div(
             HTML("""
                 <input type='checkbox' class='terms_incident'>
-                    <strong> I have read and understand the 
+                    <strong> I have read and understand the
                     <a href="{% url 'mapApp:termsAndConditions' %}" target=_blank>terms and conditions</a></strong>
-                
+
                 <script>
                   $(".terms_incident").change(function() {
                     if(this.checked) {
@@ -77,8 +77,5 @@ class IncidentForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Incident
-        fields = ['geom', 'incident_date', 'incident', 'incident_with', 'injury', 'trip_purpose', 'road_conditions', 
-            'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain', 'direction', 'turning', 
-            'incident_detail', 'age', 'birthmonth', 'sex', 'regular_cyclist', 'helmet', 'intoxicated'
-        ]
+        # model = Incident
+        fields = '__all__'

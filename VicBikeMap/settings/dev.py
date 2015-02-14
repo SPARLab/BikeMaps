@@ -28,7 +28,7 @@ DATABASES = {
         # PostgreSQL database connection on Taylor's Windows computer
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         # 'OPTIONS': {'charset': 'utf8mb4'},
-        'NAME': 'bikeDB',
+        'NAME': 'bikemaps_db',
         'USER': 'postgres'
         # 'PASSWORD': 'SUPER_SECRET'
     }

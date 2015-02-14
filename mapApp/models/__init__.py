@@ -1,3 +1,4 @@
+from point import Point
 from incident import Incident
 from hazard import Hazard
 from theft import Theft

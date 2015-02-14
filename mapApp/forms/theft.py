@@ -16,7 +16,7 @@ class TheftForm(forms.ModelForm):
             AccordionGroup(
                 'Theft Details',
                 Field('geom', type="hidden", id="theftPoint"), # Coords passed after click on map from static/mapApp/js/map.js
-                Field('theft_date', id="theft_date", template='mapApp/util/datepicker.html', autocomplete='off'),
+                Field('date', id="theft_date", template='mapApp/util/datepicker.html', autocomplete='off'),
                 Field('theft'),
                 Field('how_locked'),
                 Field('lock'),
@@ -26,7 +26,7 @@ class TheftForm(forms.ModelForm):
             ),
             AccordionGroup(
                 'Description',
-                Field('theft_detail', placeholder='optional'),
+                Field('details', placeholder='optional'),
                 css_id = 'theft-description'
             ),
             AccordionGroup(
@@ -85,7 +85,4 @@ class TheftForm(forms.ModelForm):
 
     class Meta:
         model = Theft
-        fields = ['geom', 'theft_date', 'theft', 'how_locked',
-            'lock', 'locked_to', 'lighting', 'traffic', 'police_report', 'police_report_num',
-            'insurance_claim', 'insurance_claim_num', 'theft_detail', 'regular_cyclist'
-        ]
+        fields = '__all__'

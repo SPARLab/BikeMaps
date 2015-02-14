@@ -1,11 +1,6 @@
-from django.utils.translation import ugettext as _
 from django.conf import settings
-
 from django.contrib.gis.db import models
-
-import datetime
-from time import strftime, gmtime
-from django.utils import timezone
+from point import Point
 
 
 ############
@@ -123,23 +118,6 @@ TERRAIN_CHOICES = (
     ('Flat', 'Flat'),
     ('Don\'t remember', 'I don\'t remember')
 )
-
-# AGE_CHOICES = (("2001", "2001"), ("2000", "2000") ... ("1915", "1915")) Based on current year minus youngest age a person can report and year for 100-year-old
-YOUNGEST_AGE = 13
-youngestYear = int(strftime("%Y", gmtime())) - YOUNGEST_AGE
-AGE_CHOICES = []
-for y in xrange(100):
-    AGE_CHOICES.append((str(youngestYear-y), str(youngestYear-y)))
-
-from calendar import month_name as month
-MONTH_CHOICES = [(str(i+1), str(month[i+1])) for i in xrange(12)]
-
-
-SEX_CHOICES = (
-    ('M', 'Male'),
-    ('F', 'Female'),
-    ('Other', 'Other')
-)
 BOOLEAN_CHOICES = (
     ('Y', 'Yes'),
     ('N', 'No'),
@@ -168,24 +146,11 @@ TURNING_CHOICES = (
 # Incident class.
 # Main class for Incident Report. Contains all required, non-required, and spatial fields. Setup to allow easy export to a singular shapefile.
 # Captures all data about the accident and environmental conditions when the bike incident occurred.
-class Incident(models.Model):
+class Incident(Point):
+    point = models.OneToOneField(Point, parent_link=True)
+
     ########### INCIDENT FIELDS
-    date = models.DateTimeField(
-        'Date reported',
-        auto_now_add=True   # Date is set automatically when object created
-    )
-    # Spatial fields
-    # Default CRS -> WGS84
-    geom = models.PointField(
-        'Location'
-    )
-    objects = models.GeoManager() # Required to conduct geographic queries
-
-    incident_date = models.DateTimeField(
-        'When was the incident?'
-    )
-
-    incident = models.CharField(
+    incident_type = models.CharField(
         'What type of incident was it?',
         max_length=150,
         choices=INCIDENT_CHOICES
@@ -215,27 +180,6 @@ class Incident(models.Model):
 
     ############## PERSONAL DETAILS FIELDS
     # Personal details about the participant (all optional)
-    age = models.CharField(
-        'What is your birth year?',
-        max_length=15,
-        choices=AGE_CHOICES,
-        blank=True,
-        null=True
-    )
-    birthmonth = models.CharField(
-        'What is your birth month?',
-        max_length=15,
-        choices=MONTH_CHOICES,
-        blank=True,
-        null=True
-    )
-    sex = models.CharField(
-        'Please select your sex',
-        max_length=10,
-        choices=SEX_CHOICES,
-        blank=True,
-        null=True
-    )
     regular_cyclist = models.CharField(
         'Do you bike at least once a week?',
         max_length=50,
@@ -318,14 +262,6 @@ class Incident(models.Model):
     )
     ########################
 
-    ########## DETAILS FIELDS
-    incident_detail = models.TextField(
-        'Please give a brief description of the incident',
-        max_length=300,
-        blank=True,
-        null=True
-    )
-
     # Placeholder for automatically added weather using an HTTP_GET from rss?
     weather = models.CharField(
         'What was the weather like?',
@@ -334,31 +270,3 @@ class Incident(models.Model):
         null=True
     )
     ##############
-
-
-    # reverses latlngs and turns tuple of tuples into list of lists
-    def latlngList(self):
-        return list(self.geom)[::-1]
-
-
-    def was_published_recently(self):
-        now = timezone.now()
-        return now - datetime.timedelta(weeks=1) <= self.date < now
-
-    @property
-    def incident_type(self):
-        for (kind, choices) in INCIDENT_CHOICES:
-            for c in choices:
-                if self.incident in c: return kind
-
-    # For admin site
-    was_published_recently.admin_order_field = 'date'
-    was_published_recently.boolean = True
-    was_published_recently.short_description = 'Reported this week?'
-
-    # toString()
-    def __unicode__(self):
-        return unicode(self.incident_date)
-
-    class Meta:
-        app_label = 'mapApp'
