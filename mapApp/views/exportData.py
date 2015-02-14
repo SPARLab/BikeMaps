@@ -3,14 +3,10 @@ from django.http import HttpResponse
 from djgeojson.serializers import Serializer as GeoJSONSerializer
 import time
 
+from mapApp.models import Incident, Hazard, Theft
+
 # Decorators
 from spirit.utils.decorators import administrator_required
-
-# Models
-from mapApp.models.incident import Incident
-from mapApp.models.hazard import Hazard
-from mapApp.models.theft import Theft
-
 
 @administrator_required
 def getIncidents(request):

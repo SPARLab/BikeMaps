@@ -10,16 +10,8 @@ from django.contrib import messages
 # Decorators
 from django.views.decorators.http import require_POST
 
-# Models
-from mapApp.models.incident import Incident
-from mapApp.models.hazard import Hazard
-from mapApp.models.theft import Theft
-
-# Forms
-from mapApp.forms.incident import IncidentForm
-from mapApp.forms.hazard import HazardForm
-from mapApp.forms.theft import TheftForm
-
+from mapApp.models import Incident, Hazard, Theft
+from mapApp.forms import IncidentForm, HazardForm, TheftForm
 from mapApp.views import alertUsers, indexContext
 
 @require_POST

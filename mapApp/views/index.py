@@ -1,16 +1,7 @@
 from django.shortcuts import render
 
-# Import models
-from mapApp.models import Point
-from mapApp.models import AlertArea
-
-# Import forms
-from mapApp.forms import IncidentForm
-from mapApp.forms import GeofenceForm
-from mapApp.forms import EditForm
-from mapApp.forms import HazardForm
-from mapApp.forms import TheftForm
-
+from mapApp.models import Point, AlertArea
+from mapApp.forms import IncidentForm, GeofenceForm, EditForm, HazardForm, TheftForm
 
 def index(request, lat=None, lng=None, zoom=None):
 	context = indexContext(request)

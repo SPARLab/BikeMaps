@@ -9,17 +9,9 @@ from django.contrib.gis.geos import GEOSGeometry
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 
-# Models
-from mapApp.models.incident import Incident
-from mapApp.models.hazard import Hazard
-from mapApp.models.theft import Theft
-from mapApp.models.alert_area import AlertArea
+from mapApp.models import Incident, Hazard, Theft, AlertArea, IncidentNotification, HazardNotification, TheftNotification
 
-# Forms
-from mapApp.forms.edit_geom import EditForm
-
-# Notifications
-from mapApp.models.alert_notification import IncidentNotification, HazardNotification, TheftNotification
+from mapApp.forms import EditForm
 
 @require_POST
 @login_required
@@ -53,13 +45,13 @@ def editShape(request):
 					shapeEdited.geom = GEOSGeometry(newGeom)	# edit the object geometry
 				except(ValueError):
 					messages.error(request, '<strong>Error</strong><br>Invalid geometry error.')
-					return HttpResponseRedirect(reverse('mapApp:index')) 
+					return HttpResponseRedirect(reverse('mapApp:index'))
 				shapeEdited.save()
-			
+
 			# Delete
 			elif (editType == 'delete'):
 				shapeEdited = get_object_or_404(objectSet, pk=pk)
-				
+
 				# Delete associated notifications
 				if objType == 'mapApp.incident':
 					IncidentNotification.objects.filter(point=shapeEdited).delete()
@@ -73,5 +65,5 @@ def editShape(request):
 
 		message = str(len(pks)) + ' ' + editType + ('s' if len(pks)>1 else '') + ' successful'
 		messages.success(request, message)
-		
+
 	return HttpResponseRedirect(reverse('mapApp:index'))
