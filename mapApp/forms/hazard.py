@@ -61,5 +61,5 @@ class HazardForm(forms.ModelForm):
     )
 
     class Meta:
-        # model = Hazard
+        model = Hazard
         fields = '__all__'

@@ -4,7 +4,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import Accordion, AccordionGroup, FormActions, Div
 from crispy_forms.layout import Layout, Field, HTML, Submit, Reset
 
-from mapApp.models.incident import Incident
+from mapApp.models import Incident
 
 
 class IncidentForm(forms.ModelForm):
@@ -17,8 +17,8 @@ class IncidentForm(forms.ModelForm):
             AccordionGroup(
                 'Incident Details',
                 Field('geom', type="hidden", id="point"), # Coords passed after click on map from static/mapApp/js/map.js
-                Field('incident_date', id="incident_date", template='mapApp/util/datepicker.html', autocomplete='off'),
-                Field('incident'),
+                Field('date', id="date", template='mapApp/util/datepicker.html', autocomplete='off'),
+                Field('incident_type'),
                 Field('incident_with'),
                 Field('injury'),
                 Field('trip_purpose'),
@@ -36,7 +36,7 @@ class IncidentForm(forms.ModelForm):
             ),
             AccordionGroup(
                 'Description',
-                Field('incident_detail', placeholder='optional'),
+                Field('details', placeholder='optional'),
                 css_id='incident-description'
             ),
             AccordionGroup(
@@ -77,5 +77,5 @@ class IncidentForm(forms.ModelForm):
     )
 
     class Meta:
-        # model = Incident
+        model = Incident
         fields = '__all__'

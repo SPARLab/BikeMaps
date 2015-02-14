@@ -1,17 +1,15 @@
 from django.shortcuts import render
 
 # Import models
-from mapApp.models.incident import Incident
-from mapApp.models.hazard import Hazard
-from mapApp.models.theft import Theft
-from mapApp.models.alert_area import AlertArea
+from mapApp.models import Point
+from mapApp.models import AlertArea
 
 # Import forms
-# from mapApp.forms.incident import IncidentForm
-# from mapApp.forms.geofences import GeofenceForm
-# from mapApp.forms.edit_geom import EditForm
-# from mapApp.forms.hazard import HazardForm
-# from mapApp.forms.theft import TheftForm
+from mapApp.forms import IncidentForm
+from mapApp.forms import GeofenceForm
+from mapApp.forms import EditForm
+from mapApp.forms import HazardForm
+from mapApp.forms import TheftForm
 
 
 def index(request, lat=None, lng=None, zoom=None):
@@ -28,21 +26,21 @@ def index(request, lat=None, lng=None, zoom=None):
 
 # Define default context data for the index view. Forms can be overridden to display errors (used by other views)
 def indexContext(request):#, incidentForm=IncidentForm(), geofenceForm=GeofenceForm(), hazardForm=HazardForm(), theftForm=TheftForm()):
-	incidents = Incident.objects.all()
+	points = Point.objects.all()
 
 	return {
 		# Model data used by map
-		'collisions': incidents.exclude(incident__contains="Near collision"),
-		'nearmisses': incidents.filter(incident__contains="Near collision"),
-		'hazards': Hazard.objects.all(),
-		'thefts': Theft.objects.all(),
+		'collisions': points.filter(p_type__exact="collision"),
+		'nearmisses': points.filter(p_type__exact="nearmiss"),
+		'hazards': points.filter(p_type__exact="hazard"),
+		'thefts': points.filter(p_type__exact="theft"),
 		"geofences": AlertArea.objects.filter(user=request.user.id),
 
 		# Form data used by map
-		# "incidentForm": incidentForm,
-		# "geofenceForm": geofenceForm,
-		# "hazardForm": hazardForm,
-		# "theftForm": theftForm,
-		#
-		# "editForm": EditForm()
+		"incidentForm": IncidentForm,
+		"geofenceForm": GeofenceForm,
+		"hazardForm": HazardForm,
+		"theftForm": TheftForm,
+
+		"editForm": EditForm()
 	}
