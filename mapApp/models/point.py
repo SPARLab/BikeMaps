@@ -49,6 +49,7 @@ class Point(models.Model):
     )
 
     p_type = models.CharField(
+        'Type of report',
         max_length=150,
         choices=TYPE_CHOICES,
     )
@@ -88,7 +89,7 @@ class Point(models.Model):
 
     def was_published_recently(self):
         now = timezone.now()
-        return now - datetime.timedelta(weeks=1) <= self.date < now
+        return now - datetime.timedelta(weeks=1) <= self.report_date < now
 
     # For admin site
     was_published_recently.admin_order_field = 'report_date'
