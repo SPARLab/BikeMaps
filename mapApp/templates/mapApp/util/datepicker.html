@@ -17,7 +17,7 @@
 
 
 	<div class="controls">
-	    <div class="input-group date form_datetime" id="{{ field.auto_id }}" data-date-format='yyyy-mm-dd hh:ii' data-link-field="{{ field.auto_id }}" >
+	    <div class="input-group date form_datetime" id="{{ field.id_for_label }}" data-date-format='yyyy-mm-dd hh:ii' data-link-field="{{ field.auto_id }}" >
 	        {% crispy_field field %}
 	        <!-- <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> -->
 			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -30,7 +30,7 @@
 
 
 <script type="text/javascript">
-    $('#{{ field.auto_id }}').datetimepicker({
+    $('#{{ field.id_for_label }}').datetimepicker({
 		autoclose: 1,
         todayBtn:  0,
 		autoclose: 1,

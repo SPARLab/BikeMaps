@@ -5,33 +5,33 @@ import datetime
 from time import strftime, gmtime
 from django.utils import timezone
 
-TYPE_CHOICES = (
-    ('collision', 'collision'),
-    ('nearmiss', 'nearmiss'),
-    ('theft', 'theft'),
-    ('hazard', 'hazard'),
-    ('fall', 'fall')
-)
-
-YOUNGEST_AGE = 13
-youngestYear = int(strftime("%Y", gmtime())) - YOUNGEST_AGE
-AGE_CHOICES = []
-for y in xrange(100):
-    AGE_CHOICES.append((str(youngestYear-y), str(youngestYear-y)))
-
-from calendar import month_name as month
-MONTH_CHOICES = [(str(i+1), str(month[i+1])) for i in xrange(12)]
-
-SEX_CHOICES = (
-    ('M', 'Male'),
-    ('F', 'Female'),
-    ('Other', 'Other')
-)
-
 ##########
 # Hazard class.
 # Class for Hazard Reports. Contains all required, non-required, and spatial fields. Setup to allow easy export to a singular shapefile.
 class Point(models.Model):
+    TYPE_CHOICES = (
+        ('collision', 'collision'),
+        ('nearmiss', 'nearmiss'),
+        ('theft', 'theft'),
+        ('hazard', 'hazard'),
+        ('fall', 'fall')
+    )
+
+    YOUNGEST_AGE = 13
+    youngestYear = int(strftime("%Y", gmtime())) - YOUNGEST_AGE
+    AGE_CHOICES = []
+    for y in xrange(100):
+        AGE_CHOICES.append((str(youngestYear-y), str(youngestYear-y)))
+
+    from calendar import month_name as month
+    MONTH_CHOICES = [(str(i+1), str(month[i+1])) for i in xrange(12)]
+
+    SEX_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('Other', 'Other')
+    )
+
     ########### POINT FIELDS
     report_date = models.DateTimeField(
         'Date reported',

@@ -64,7 +64,7 @@ def postHazard(request):
 		return HttpResponseRedirect(reverse('mapApp:index'))
 
 	# Set p_type
-	hazardFor.data['p_type'] = 'hazard'
+	hazardForm.data['p_type'] = 'hazard'
 
 	if hazardForm.is_valid():
 		hazard = hazardForm.save()
