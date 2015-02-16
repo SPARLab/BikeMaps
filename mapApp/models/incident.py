@@ -3,172 +3,168 @@ from django.contrib.gis.db import models
 from point import Point
 
 
-############
-# Response options for CharField data types
-#
-INCIDENT_CHOICES = (
-    ('Collision', (
-            ('Collision with stationary object or vehicle', 'Collision with a stationary object or vehicle'),
-            ('Collision with moving object or vehicle', 'Collision with a moving object or vehicle'),
-        )
-    ),
-    ('Near miss', (
-            ('Near collision with stationary object or vehicle', 'Near miss with a stationary object or vehicle'),
-            ('Near collision with moving object or vehicle', 'Near miss with a moving object or vehicle'),
-        )
-    ),
-    ('Fall', (
-            ('Fall', 'Lost control and fell'),
-        )
-    )
-)
-INCIDENT_WITH_CHOICES = (
-    ('Vehicle', (
-            ('Vehicle, head on', 'Head on'),
-            ('Vehicle, side', 'Side impact'),
-            ('Vehicle, angle', 'Angle impact'),
-            ('Vehicle, rear end', 'Rear end'),
-            ('Vehicle, open door', 'Open vehicle door'),
-        )
-    ),
-    ('Person/animal', (
-            ('Another cyclist', 'Another cyclist'),
-            ('Pedestrian', 'Pedestrian'),
-            ('Animal', 'Animal'),
-        )
-    ),
-    ('Infrastructure', (
-            ('Curb', 'Curb'),
-            ('Train Tracks', 'Train Tracks'),
-            ('Pothole', 'Pothole'),
-            ('Lane divider', 'Lane divider'),
-            ('Sign/Post', 'Sign/Post'),
-            ('Roadway', 'Roadway'),
-        )
-    ),
-    ('Other', 'Other (please describe)')
-)
-
-INJURY_CHOICES = (
-    ('Yes', (
-            ('Injury, no treatment', 'Medical treatment not required'),
-            ('Injury, saw family doctor', 'Saw a family doctor'),
-            ('Injury, hospital emergency visit', 'Visited the hospital emergency dept.'),
-            ('Injury, hospitalized', 'Overnight stay in hospital')
-        )
-    ),
-    ('No', (
-            ('No injury', 'No injury'),
-        )
-    )
-)
-
-PURPOSE_CHOICES = (
-    ("Commute", "To/from work or school"),
-    ("Exercise or recreation", "Exercise or recreation"),
-    ("Social reason", "Social reason (e.g., movies, visit friends)"),
-    ("Personal business", "Personal business"),
-    ("During work", "During work")
-)
-ROAD_COND_CHOICES = (
-    ('Dry', 'Dry'),
-    ('Wet','Wet'),
-    ('Loose sand, gravel, or dirt', 'Loose sand, gravel, or dirt'),
-    ('Icy','Icy'),
-    ('Snowy','Snowy'),
-    ('Don\'t remember', 'I don\'t remember')
-)
-SIGHTLINES_CHOICES = (
-    ('No obstructions', 'No obstructions'),
-    ('View obstructed', 'View obstructed'),
-    ('Glare or reflection', 'Glare or reflection'),
-    ('Obstruction on road', 'Obstruction on road'),
-    ('Don\'t Remember', 'Don\'t Remember')
-)
-RIDING_ON_CHOICES = (
-    ('Busy street', (
-            ('Busy street bike lane', 'On a painted bike lane'),
-            ('Busy street, no bike facilities', 'On road with no bike facilities')
-        )
-    ),
-    ('Quiet street', (
-            ('Quiet street bike lane', 'On a painted bike lane'),
-            ('Quiet street, no bike facilities', 'On road with no bike facilities')
-        )
-    ),
-    ('Not on the street', (
-            ('Cycle track', 'On a physically separated bike lane (cycle track)'),
-            ('Mixed use trail', 'On a mixed use trail'),
-            ('Sidewalk', 'On the sidewalk'),
-        )
-    ),
-    ('Don\'t remember', 'I don\'t remember')
-)
-LIGHTS_CHOICES = (
-    ("NL", "No Lights"),
-    ("FB", "Front and back lights"),
-    ("F", "Front lights only"),
-    ("B", "Back lights only"),
-    ('Don\'t remember', 'I don\'t remember')
-
-)
-TERRAIN_CHOICES = (
-    ('Uphill', 'Uphill'),
-    ('Downhill','Downhill'),
-    ('Flat', 'Flat'),
-    ('Don\'t remember', 'I don\'t remember')
-)
-BOOLEAN_CHOICES = (
-    ('Y', 'Yes'),
-    ('N', 'No'),
-    ('I don\'t know', 'I don\'t know')
-)
-CARDINAL_DIRECTIONS_CHOICES = (
-    ('N','N'),
-    ('NE','NE'),
-    ('E','E'),
-    ('SE','SE'),
-    ('S','S'),
-    ('SW','SW'),
-    ('W','W'),
-    ('NW', 'NW'),
-    ('I don\'t know', 'I don\'t know')
-)
-TURNING_CHOICES = (
-    ('Heading straight','Heading straight'),
-    ('Turning left','Turning left'),
-    ('Turning right','Turning right'),
-    ('I don\'t remember', 'I don\'t remember')
-)
-
-
 ##########
 # Incident class.
 # Main class for Incident Report. Contains all required, non-required, and spatial fields. Setup to allow easy export to a singular shapefile.
 # Captures all data about the accident and environmental conditions when the bike incident occurred.
 class Incident(Point):
+    ############
+    # Response options for CharField data types
+    #
+    INCIDENT_CHOICES = (
+        ('Collision', (
+                ('Collision with stationary object or vehicle', 'Collision with a stationary object or vehicle'),
+                ('Collision with moving object or vehicle', 'Collision with a moving object or vehicle'),
+            )
+        ),
+        ('Near miss', (
+                ('Near collision with stationary object or vehicle', 'Near miss with a stationary object or vehicle'),
+                ('Near collision with moving object or vehicle', 'Near miss with a moving object or vehicle'),
+            )
+        ),
+        ('Fall', (
+                ('Fall', 'Lost control and fell'),
+            )
+        )
+    )
+    INCIDENT_WITH_CHOICES = (
+        ('Vehicle', (
+                ('Vehicle, head on', 'Head on'),
+                ('Vehicle, side', 'Side impact'),
+                ('Vehicle, angle', 'Angle impact'),
+                ('Vehicle, rear end', 'Rear end'),
+                ('Vehicle, open door', 'Open vehicle door'),
+            )
+        ),
+        ('Person/animal', (
+                ('Another cyclist', 'Another cyclist'),
+                ('Pedestrian', 'Pedestrian'),
+                ('Animal', 'Animal'),
+            )
+        ),
+        ('Infrastructure', (
+                ('Curb', 'Curb'),
+                ('Train Tracks', 'Train Tracks'),
+                ('Pothole', 'Pothole'),
+                ('Lane divider', 'Lane divider'),
+                ('Sign/Post', 'Sign/Post'),
+                ('Roadway', 'Roadway'),
+            )
+        ),
+        ('Other', 'Other (please describe)')
+    )
+
+    INJURY_CHOICES = (
+        ('Yes', (
+                ('Injury, no treatment', 'Medical treatment not required'),
+                ('Injury, saw family doctor', 'Saw a family doctor'),
+                ('Injury, hospital emergency visit', 'Visited the hospital emergency dept.'),
+                ('Injury, hospitalized', 'Overnight stay in hospital')
+            )
+        ),
+        ('No', (
+                ('No injury', 'No injury'),
+            )
+        )
+    )
+
+    PURPOSE_CHOICES = (
+        ("Commute", "To/from work or school"),
+        ("Exercise or recreation", "Exercise or recreation"),
+        ("Social reason", "Social reason (e.g., movies, visit friends)"),
+        ("Personal business", "Personal business"),
+        ("During work", "During work")
+    )
+    ROAD_COND_CHOICES = (
+        ('Dry', 'Dry'),
+        ('Wet','Wet'),
+        ('Loose sand, gravel, or dirt', 'Loose sand, gravel, or dirt'),
+        ('Icy','Icy'),
+        ('Snowy','Snowy'),
+        ('Don\'t remember', 'I don\'t remember')
+    )
+    SIGHTLINES_CHOICES = (
+        ('No obstructions', 'No obstructions'),
+        ('View obstructed', 'View obstructed'),
+        ('Glare or reflection', 'Glare or reflection'),
+        ('Obstruction on road', 'Obstruction on road'),
+        ('Don\'t Remember', 'Don\'t Remember')
+    )
+    RIDING_ON_CHOICES = (
+        ('Busy street', (
+                ('Busy street bike lane', 'On a painted bike lane'),
+                ('Busy street, no bike facilities', 'On road with no bike facilities')
+            )
+        ),
+        ('Quiet street', (
+                ('Quiet street bike lane', 'On a painted bike lane'),
+                ('Quiet street, no bike facilities', 'On road with no bike facilities')
+            )
+        ),
+        ('Not on the street', (
+                ('Cycle track', 'On a physically separated bike lane (cycle track)'),
+                ('Mixed use trail', 'On a mixed use trail'),
+                ('Sidewalk', 'On the sidewalk'),
+            )
+        ),
+        ('Don\'t remember', 'I don\'t remember')
+    )
+    LIGHTS_CHOICES = (
+        ("NL", "No Lights"),
+        ("FB", "Front and back lights"),
+        ("F", "Front lights only"),
+        ("B", "Back lights only"),
+        ('Don\'t remember', 'I don\'t remember')
+
+    )
+    TERRAIN_CHOICES = (
+        ('Uphill', 'Uphill'),
+        ('Downhill','Downhill'),
+        ('Flat', 'Flat'),
+        ('Don\'t remember', 'I don\'t remember')
+    )
+    BOOLEAN_CHOICES = (
+        ('Y', 'Yes'),
+        ('N', 'No'),
+        ('I don\'t know', 'I don\'t know')
+    )
+    CARDINAL_DIRECTIONS_CHOICES = (
+        ('N','N'),
+        ('NE','NE'),
+        ('E','E'),
+        ('SE','SE'),
+        ('S','S'),
+        ('SW','SW'),
+        ('W','W'),
+        ('NW', 'NW'),
+        ('I don\'t know', 'I don\'t know')
+    )
+    TURNING_CHOICES = (
+        ('Heading straight','Heading straight'),
+        ('Turning left','Turning left'),
+        ('Turning right','Turning right'),
+        ('I don\'t remember', 'I don\'t remember')
+    )
+
+    ############
+    # FIELDS
     point = models.OneToOneField(Point, parent_link=True)
 
-    ########### INCIDENT FIELDS
     incident_type = models.CharField(
         'What type of incident was it?',
         max_length=150,
         choices=INCIDENT_CHOICES
     )
-
     incident_with = models.CharField(
         'What sort of object did you collide or nearly collide with?',
         max_length=100,
         choices=INCIDENT_WITH_CHOICES
     )
-
-    # Injury details (all optional)
     injury = models.CharField(
         'Were you injured?',
         max_length=50,
         choices= INJURY_CHOICES # Without this, field has 'Unknown' for None rather than the desired "---------"
     )
-
     trip_purpose = models.CharField(
         'What was the purpose of your trip?',
         max_length=50,
@@ -176,10 +172,6 @@ class Incident(Point):
         blank=True,
         null=True
     )
-    ###########
-
-    ############## PERSONAL DETAILS FIELDS
-    # Personal details about the participant (all optional)
     regular_cyclist = models.CharField(
         'Do you bike at least once a week?',
         max_length=50,
@@ -201,9 +193,6 @@ class Incident(Point):
         blank=True,
         null=True
     )
-    #######################
-
-    ############### CONDITIONS FIELDS
     road_conditions = models.CharField(
         'What were the road conditions?',
         max_length=50,
@@ -260,8 +249,6 @@ class Incident(Point):
         blank=True,
         null=True
     )
-    ########################
-
     # Placeholder for automatically added weather using an HTTP_GET from rss?
     weather = models.CharField(
         'What was the weather like?',

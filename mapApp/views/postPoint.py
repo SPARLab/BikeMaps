@@ -16,7 +16,6 @@ from mapApp.views import alertUsers, indexContext
 
 @require_POST
 def postIncident(request):
-	pass
 	incidentForm = IncidentForm(request.POST)
 	incidentForm.data = incidentForm.data.copy()
 
@@ -27,6 +26,10 @@ def postIncident(request):
 		messages.error(request, '<strong>Error</strong><br>No point was selected for this type of report.')
 		return HttpResponseRedirect(reverse('mapApp:index'))
 
+	# Set p_type field to collision, nearmiss, or fall
+	incidentForm.data['p_type'] = getIncidentType(incidentForm.data['incident_type'])
+
+	# Validate and submit to db
 	if incidentForm.is_valid():
 		incident = incidentForm.save()
 		alertUsers(request, incident)
@@ -42,9 +45,14 @@ def postIncident(request):
 	else: # Show form errors
 		return render(request, 'mapApp/index.html', indexContext(request, incidentForm=incidentForm))
 
+def getIncidentType(usr_choice):
+	for t,choice in Incident.INCIDENT_CHOICES:
+		for p,q in choice:
+			if p == usr_choice:
+				return t.replace(" ", "").lower()
+
 @require_POST
 def postHazard(request):
-	pass
 	hazardForm = HazardForm(request.POST)
 	hazardForm.data = hazardForm.data.copy()
 
@@ -54,6 +62,9 @@ def postHazard(request):
 	except(ValueError):
 		messages.error(request, '<strong>Error</strong><br>No point was selected for this type of report.')
 		return HttpResponseRedirect(reverse('mapApp:index'))
+
+	# Set p_type
+	hazardFor.data['p_type'] = 'hazard'
 
 	if hazardForm.is_valid():
 		hazard = hazardForm.save()
@@ -73,7 +84,6 @@ def postHazard(request):
 
 @require_POST
 def postTheft(request):
-	pass
 	theftForm = TheftForm(request.POST)
 	theftForm.data = theftForm.data.copy()
 
@@ -83,6 +93,9 @@ def postTheft(request):
 	except(ValueError):
 		messages.error(request, '<strong>Error</strong><br>No point was selected for this type of report.')
 		return HttpResponseRedirect(reverse('mapApp:index'))
+
+	# Set p_type
+	theftForm.data['p_type'] = 'theft'
 
 	if theftForm.is_valid():
 		theft = theftForm.save()

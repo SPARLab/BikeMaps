@@ -9,7 +9,8 @@ TYPE_CHOICES = (
     ('collision', 'collision'),
     ('nearmiss', 'nearmiss'),
     ('theft', 'theft'),
-    ('hazard', 'hazard')
+    ('hazard', 'hazard'),
+    ('fall', 'fall')
 )
 
 YOUNGEST_AGE = 13
