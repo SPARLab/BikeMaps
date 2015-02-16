@@ -22,7 +22,6 @@ class IncidentForm(forms.ModelForm):
                 Field('incident_with'),
                 Field('injury'),
                 Field('trip_purpose'),
-                Field('p_type'),
             ),
             AccordionGroup(
                 'Conditions',
