@@ -2,6 +2,7 @@
 
 {% url 'mapApp:index' as index %}
 {% url 'mapApp:about' as about %}
+{% url 'mapApp:getPoints' as getPoints %}
 {% url 'mapApp:getIncidents' as getIncidents %}
 {% url 'mapApp:getHazards' as getHazards %}
 {% url 'mapApp:getThefts' as getThefts %}
@@ -77,6 +78,7 @@
                 <li role="presentation" class="divider"></li>
                 <li role="presentation" class="dropdown-header">Admin options</li>
                 <li><a href="{{ spiritAdmin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
+                <li><a href="{{ getPoints }}"><small>Export Points <span class="glyphicon glyphicon-download"></span></small></a></li>
                 <li><a href="{{ getIncidents }}"><small>Export Incidents <span class="glyphicon glyphicon-download"></span></small></a></li>
                 <li><a href="{{ getHazards }}"><small>Export Hazards <span class="glyphicon glyphicon-download"></span></small></a></li>
                 <li><a href="{{ getThefts }}"><small>Export Thefts <span class="glyphicon glyphicon-download"></span></small></a></li>
