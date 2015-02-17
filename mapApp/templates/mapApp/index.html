@@ -98,7 +98,8 @@
 
         // Add all geojson auxiliary data
         loadGeojsonAjax("{% static 'mapApp/data/policeData.geojson' %}", "police");
-        loadGeojsonAjax("{% static 'mapApp/data/icbcData.geojson' %}", "icbc");
+        // Uncomment this to add icbc data back
+        // loadGeojsonAjax("{% static 'mapApp/data/icbcData.geojson' %}", "icbc");
 
         // Load user alert areas from the database
         {% for polygon in geofences %}
