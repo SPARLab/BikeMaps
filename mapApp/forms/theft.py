@@ -4,7 +4,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import Accordion, AccordionGroup, FormActions, Div
 from crispy_forms.layout import Layout, Field, HTML, Button, Submit, Reset, HTML
 
-from mapApp.models.theft import Theft
+from mapApp.models import Theft
 
 class TheftForm(forms.ModelForm):
     helper = FormHelper()
@@ -16,8 +16,8 @@ class TheftForm(forms.ModelForm):
             AccordionGroup(
                 'Theft Details',
                 Field('geom', type="hidden", id="theftPoint"), # Coords passed after click on map from static/mapApp/js/map.js
-                Field('theft_date', id="theft_date", template='mapApp/util/datepicker.html', autocomplete='off'),
-                Field('theft'),
+                Field('date', id="theft_date", template='mapApp/util/datepicker.html', autocomplete='off'),
+                Field('theft_type'),
                 Field('how_locked'),
                 Field('lock'),
                 Field('locked_to'),
@@ -26,7 +26,7 @@ class TheftForm(forms.ModelForm):
             ),
             AccordionGroup(
                 'Description',
-                Field('theft_detail', placeholder='optional'),
+                Field('details', placeholder='optional'),
                 css_id = 'theft-description'
             ),
             AccordionGroup(
@@ -85,7 +85,4 @@ class TheftForm(forms.ModelForm):
 
     class Meta:
         model = Theft
-        fields = ['geom', 'theft_date', 'theft', 'how_locked',
-            'lock', 'locked_to', 'lighting', 'traffic', 'police_report', 'police_report_num',
-            'insurance_claim', 'insurance_claim_num', 'theft_detail', 'regular_cyclist'
-        ]
+        fields = '__all__'

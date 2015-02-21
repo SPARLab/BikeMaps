@@ -3,14 +3,18 @@ from django.http import HttpResponse
 from djgeojson.serializers import Serializer as GeoJSONSerializer
 import time
 
+from mapApp.models import Point, Incident, Hazard, Theft
+
 # Decorators
 from spirit.utils.decorators import administrator_required
 
-# Models
-from mapApp.models.incident import Incident
-from mapApp.models.hazard import Hazard
-from mapApp.models.theft import Theft
+@administrator_required
+def getPoints(request):
+	data = GeoJSONSerializer().serialize(Point.objects.all(), indent=2, use_natural_keys=True)
 
+	response = HttpResponse(data, content_type="application/json")
+	response['Content-Disposition'] = 'attachment; filename="bikemaps_points_%s.json' % time.strftime("%x_%H-%M")
+	return response
 
 @administrator_required
 def getIncidents(request):

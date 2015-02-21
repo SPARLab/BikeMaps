@@ -4,7 +4,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import Accordion, AccordionGroup, FormActions, Div
 from crispy_forms.layout import Layout, Field, HTML, Submit, Reset
 
-from mapApp.models.incident import Incident
+from mapApp.models import Incident
 
 
 class IncidentForm(forms.ModelForm):
@@ -17,8 +17,8 @@ class IncidentForm(forms.ModelForm):
             AccordionGroup(
                 'Incident Details',
                 Field('geom', type="hidden", id="point"), # Coords passed after click on map from static/mapApp/js/map.js
-                Field('incident_date', id="incident_date", template='mapApp/util/datepicker.html', autocomplete='off'),
-                Field('incident'),
+                Field('date', id="incident_date", template='mapApp/util/datepicker.html', autocomplete='off'),
+                Field('incident_type'),
                 Field('incident_with'),
                 Field('injury'),
                 Field('trip_purpose'),
@@ -36,7 +36,7 @@ class IncidentForm(forms.ModelForm):
             ),
             AccordionGroup(
                 'Description',
-                Field('incident_detail', placeholder='optional'),
+                Field('details', placeholder='optional'),
                 css_id='incident-description'
             ),
             AccordionGroup(
@@ -53,9 +53,9 @@ class IncidentForm(forms.ModelForm):
         Div(
             HTML("""
                 <input type='checkbox' class='terms_incident'>
-                    <strong> I have read and understand the 
+                    <strong> I have read and understand the
                     <a href="{% url 'mapApp:termsAndConditions' %}" target=_blank>terms and conditions</a></strong>
-                
+
                 <script>
                   $(".terms_incident").change(function() {
                     if(this.checked) {
@@ -78,7 +78,4 @@ class IncidentForm(forms.ModelForm):
 
     class Meta:
         model = Incident
-        fields = ['geom', 'incident_date', 'incident', 'incident_with', 'injury', 'trip_purpose', 'road_conditions', 
-            'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain', 'direction', 'turning', 
-            'incident_detail', 'age', 'birthmonth', 'sex', 'regular_cyclist', 'helmet', 'intoxicated'
-        ]
+        fields = '__all__'

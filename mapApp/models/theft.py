@@ -1,89 +1,71 @@
-from django.utils.translation import ugettext as _
 from django.conf import settings
-
 from django.contrib.gis.db import models
-
-import datetime
-from django.utils import timezone
-
-
-THEFT_CHOICES = (
-    ('Bike (value < $1000)', 'Bike (value < $1000)'),
-    ('Bike (value >= $1000)', 'Bike (value >= $1000)'),
-    ('Major bike component', 'Major bike component (e.g. tire, seat, handlebars, etc.)'),
-    ('Minor bike component', 'Minor bike component (e.g. lights, topbar padding, bell, etc.)')
-)
-BOOLEAN_CHOICES = (
-    ('Y', 'Yes'),
-    ('N', 'No'),
-    ('I don\'t know', 'I don\'t know')
-)
-HOW_LOCKED_CHOICES = (
-    ('Yes', (
-            ('Frame locked', 'Frame locked'),
-            ('Frame and tire locked', 'Frame and tire locked'),
-            ('Frame and both tires locked', 'Frame and both tires locked'),
-            ('Tire(s) locked', 'Tire(s) locked'),
-          )
-    ),
-    ('No', (
-            ('Not locked', 'Not locked'),
-        )
-    )
-)
-LOCK_CHOICES = (
-    ('U-Lock', 'U-Lock'),
-    ('Cable lock', 'Cable lock'),
-    ('U-Lock and cable', 'U-Lock and cable'),
-    ('Padlock', 'Padlock'),
-    ('NA', 'Not locked'),
-)
-LOCKED_TO_CHOICES = (
-    ('Outdoor bike rack', 'At an outdoor bike rack'),
-    ('Indoor bike rack', 'At an indoor bike rack (e.g. parking garage, bike room)'),
-    ('Bike locker', 'Inside a bike locker'),
-    ('Street sign', 'Against street sign'),
-    ('Fence/railing', 'Against a fence or railing'),
-    ('Bench', 'Against a public bench'),
-    ('Indoors/lobby', 'Inside a building/lobby'),
-    ('Other', 'Other (please describe)')
-)
-TRAFFIC_CHOICES = (
-    ('Very High', 'Very heavy (pedestrians passing by in a nearly constant stream)'),
-    ('High', 'Heavy (pedestrians passing by regularly)'),
-    ('Medium', 'Moderate (irregular pedestrian with busy vehicle traffic)'),
-    ('Low', 'Light (irregular pedestrian with light to moderate vehicle traffic)'),
-    ('Very Low', 'Very light (little pedestrian and vehicle traffic)'),
-    ('I don\'t know', 'I don\'t know')
-)
-LIGHTING_CHOICES =  (
-    ('Good', 'Well lit (e.g. bright daylight)'),
-    ('Moderate', 'Moderately well lit (e.g. streetlights, parking garage)'),
-    ('Poor', 'Poorly lit (e.g. night, unlit alleyway)'),
-    ('I don\'t know', 'I don\'t know')
-)
+from point import Point
 
 ##########
 # Theft class.
 # Class for Theft Reports. Contains all required, non-required, and spatial fields. Setup to allow easy export to a singular shapefile.
-class Theft(models.Model):
-    ########### THEFT FIELDS
-    date = models.DateTimeField(
-        'Date reported',
-        auto_now_add=True   # Date is set automatically when object created
+class Theft(Point):
+    THEFT_CHOICES = (
+        ('Bike (value < $1000)', 'Bike (value < $1000)'),
+        ('Bike (value >= $1000)', 'Bike (value >= $1000)'),
+        ('Major bike component', 'Major bike component (e.g. tire, seat, handlebars, etc.)'),
+        ('Minor bike component', 'Minor bike component (e.g. lights, topbar padding, bell, etc.)')
     )
-    # Spatial fields
-    # Default CRS -> WGS84
-    geom = models.PointField(
-        'Location'
+    BOOLEAN_CHOICES = (
+        ('Y', 'Yes'),
+        ('N', 'No'),
+        ('I don\'t know', 'I don\'t know')
     )
-    objects = models.GeoManager() # Required to conduct geographic queries
+    HOW_LOCKED_CHOICES = (
+        ('Yes', (
+                ('Frame locked', 'Frame locked'),
+                ('Frame and tire locked', 'Frame and tire locked'),
+                ('Frame and both tires locked', 'Frame and both tires locked'),
+                ('Tire(s) locked', 'Tire(s) locked'),
+              )
+        ),
+        ('No', (
+                ('Not locked', 'Not locked'),
+            )
+        )
+    )
+    LOCK_CHOICES = (
+        ('U-Lock', 'U-Lock'),
+        ('Cable lock', 'Cable lock'),
+        ('U-Lock and cable', 'U-Lock and cable'),
+        ('Padlock', 'Padlock'),
+        ('NA', 'Not locked'),
+    )
+    LOCKED_TO_CHOICES = (
+        ('Outdoor bike rack', 'At an outdoor bike rack'),
+        ('Indoor bike rack', 'At an indoor bike rack (e.g. parking garage, bike room)'),
+        ('Bike locker', 'Inside a bike locker'),
+        ('Street sign', 'Against street sign'),
+        ('Fence/railing', 'Against a fence or railing'),
+        ('Bench', 'Against a public bench'),
+        ('Indoors/lobby', 'Inside a building/lobby'),
+        ('Other', 'Other (please describe)')
+    )
+    TRAFFIC_CHOICES = (
+        ('Very High', 'Very heavy (pedestrians passing by in a nearly constant stream)'),
+        ('High', 'Heavy (pedestrians passing by regularly)'),
+        ('Medium', 'Moderate (irregular pedestrian with busy vehicle traffic)'),
+        ('Low', 'Light (irregular pedestrian with light to moderate vehicle traffic)'),
+        ('Very Low', 'Very light (little pedestrian and vehicle traffic)'),
+        ('I don\'t know', 'I don\'t know')
+    )
+    LIGHTING_CHOICES =  (
+        ('Good', 'Well lit (e.g. bright daylight)'),
+        ('Moderate', 'Moderately well lit (e.g. streetlights, parking garage)'),
+        ('Poor', 'Poorly lit (e.g. night, unlit alleyway)'),
+        ('I don\'t know', 'I don\'t know')
+    )
 
-    theft_date = models.DateTimeField(
-        'When did notice that you had been robbed?'
-    )
+    #################### FIELDS
+    point = models.OneToOneField(Point, parent_link=True)
 
-    theft = models.CharField(
+    theft_type = models.CharField(
         'What was stolen?',
         max_length=100,
         choices=THEFT_CHOICES
@@ -152,36 +134,3 @@ class Theft(models.Model):
         null=True
     )
     #######################
-
-    ########## DETAILS FIELDS
-    theft_detail = models.TextField(
-        'Please give a brief description about what happened.',
-        max_length=300,
-        blank=True,
-        null=True
-    )
-    ##############
-
-    # reverses latlngs and turns tuple of tuples into list of lists
-    def latlngList(self):
-        return list(self.geom)[::-1]
-
-    def was_published_recently(self):
-        now = timezone.now()
-        return now - datetime.timedelta(weeks=1) <= self.date < now
-
-    @property
-    def incident_type(self):
-        return "Theft"
-
-    # For admin site
-    was_published_recently.admin_order_field = 'date'
-    was_published_recently.boolean = True
-    was_published_recently.short_description = 'Reported this week?'
-
-    # toString()
-    def __unicode__(self):
-        return unicode(self.theft_date)
-
-    class Meta:
-        app_label = 'mapApp'

@@ -15,6 +15,7 @@
     * "Why we need personal details" button/popup on report form
     * Blog app with built in content management system for easy updating (ie like wordpress WYSIWYG system)
     * Terms and Conditions update regarding new display of details information
+    * Add Karen safety information
     * Cleanup index.html code
     * Cleanup stats.html code a lot ****
 

@@ -1,24 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-
-# Import models
-from mapApp.models.incident import Incident
-from mapApp.models.hazard import Hazard
-from mapApp.models.theft import Theft
-from mapApp.models.alert_area import AlertArea
-
 import datetime
+
+from mapApp.models import Incident, Hazard, Theft, AlertArea
 
 @login_required
 def recentReports(request):
     user = request.user
 
     # Get the user's alertable points in the last month
-    incidents = Incident.objects.all()#filter(incidentNotification__user=user.id)
-    nearmisses = incidents.filter(incident__contains="Near collision")
-    collisions = incidents.exclude(incident__contains="Near collision")
-
+    collisions = Incident.objects.filter(p_type__exact="collision") | Incident.objects.filter(p_type__exact="fall")
+    nearmisses = Incident.objects.filter(p_type__exact="nearmiss")
     hazards = Hazard.objects.all()
     thefts = Theft.objects.all()
 
@@ -43,10 +36,10 @@ def recentReports(request):
         "now": now.isoformat(),
         'yesterday': yesterday.isoformat(),
 
-        'collisions': collisionsInPoly.filter(incident_date__range=[yesterday, now]),
-        'nearmisses': nearmissesInPoly.filter(incident_date__range=[yesterday, now]),
-        'hazards': hazardsInPoly.filter(hazard_date__range=[yesterday, now]),
-        'thefts': theftsInPoly.filter(theft_date__range=[yesterday, now]),
+        'collisions': collisionsInPoly.filter(date__range=[yesterday, now]),
+        'nearmisses': nearmissesInPoly.filter(date__range=[yesterday, now]),
+        'hazards': hazardsInPoly.filter(date__range=[yesterday, now]),
+        'thefts': theftsInPoly.filter(date__range=[yesterday, now]),
 
         'geofences': rois
     }

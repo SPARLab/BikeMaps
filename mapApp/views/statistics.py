@@ -2,24 +2,18 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
-# Import models
-from mapApp.models.incident import Incident
-from mapApp.models.hazard import Hazard
-from mapApp.models.theft import Theft
-from mapApp.models.alert_area import AlertArea
-
 from django.contrib.auth.models import User
 from mapApp.models.alert_notification import IncidentNotification, HazardNotification, TheftNotification
+
+from mapApp.models import Incident, Hazard, Theft, AlertArea
 
 @login_required
 def stats(request):
 	user = request.user
 
 	# Get the user's alertable points in the last month
-	incidents = Incident.objects.all()#filter(incidentNotification__user=user.id)
-	nearmisses = incidents.filter(incident__contains="Near collision")
-	collisions = incidents.exclude(incident__contains="Near collision")
-
+	collisions = Incident.objects.filter(p_type__exact="collision") | Incident.objects.filter(p_type__exact="fall")
+	nearmisses = Incident.objects.filter(p_type__exact="nearmiss")
 	hazards = Hazard.objects.all()
 	thefts = Theft.objects.all()
 
@@ -42,7 +36,6 @@ def stats(request):
 
 		'geofences': rois,
 
-		'incidents': incidents,
 		'collisions': collisions,
 		'nearmisses': nearmisses,
 		'hazards': hazards,
@@ -52,11 +45,6 @@ def stats(request):
 		'nearmissesInPoly': nearmissesInPoly,
 		'hazardsInPoly': hazardsInPoly,
 		'theftsInPoly': theftsInPoly,
-
-		# 'collisionsOutPoly': collisions.exclude(pk__in=collisionsInPoly),
-		# 'nearmissesOutPoly': nearmisses.exclude(pk__in=nearmissesInPoly),
-		# 'hazardsOutPoly': hazards.exclude(pk__in=hazardsInPoly),
-		# 'theftsOutPoly': thefts.exclude(pk__in=theftsInPoly),
 	}
 
 	return render(request, 'mapApp/stats.html', context)
@@ -66,11 +54,8 @@ def stats(request):
 def experimental(request):
 	user = request.user
 
-	# Get the user's alertable points in the last month
-	incidents = Incident.objects.all()#filter(incidentNotification__user=user.id)
-	nearmisses = incidents.filter(incident__contains="Near collision")
-	collisions = incidents.exclude(incident__contains="Near collision")
-
+	collisions = Incident.objects.filter(p_type__exact="collision") | Incident.objects.filter(p_type__exact="fall")
+	nearmisses = Incident.objects.filter(p_type__exact="nearmiss")
 	hazards = Hazard.objects.all()
 	thefts = Theft.objects.all()
 

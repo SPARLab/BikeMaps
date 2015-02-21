@@ -24,6 +24,7 @@ urlpatterns = patterns('',
 	url(r'^contact/$', views.contact, name='contact'),
 
 	# Called by admin data export button
+	url(r'^points.json$', views.getPoints, name='getPoints'),
 	url(r'^incidents.json$', views.getIncidents, name='getIncidents'),
 	url(r'^hazards.json$', views.getHazards, name='getHazards'),
 	url(r'^thefts.json$', views.getThefts, name='getThefts'),
@@ -37,6 +38,6 @@ urlpatterns = patterns('',
 
 	url(r'stats/$', views.stats, name='stats'),
 	url(r'recent/$', views.recentReports, name='recent'),
-	
+
 	url(r'experimental/$', views.experimental, name='experimental'),
 )

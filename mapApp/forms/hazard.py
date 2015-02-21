@@ -4,7 +4,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import Accordion, AccordionGroup, FormActions, Div
 from crispy_forms.layout import Layout, Field, HTML, Button, Submit, Reset, HTML
 
-from mapApp.models.hazard import Hazard
+from mapApp.models import Hazard
 
 class HazardForm(forms.ModelForm):
     helper = FormHelper()
@@ -16,12 +16,12 @@ class HazardForm(forms.ModelForm):
             AccordionGroup(
                 'Hazard Details',
                 Field('geom', type="hidden", id="hazPoint"), # Coords passed after click on map from static/mapApp/js/map.js
-                Field('hazard_date', id="hazard_date", template='mapApp/util/datepicker.html', autocomplete='off'),
-                Field('hazard', id="hazard-type"),#, template='mapApp/util/multiselect_field.html'),
+                Field('date', id="hazard_date", template='mapApp/util/datepicker.html', autocomplete='off'),
+                Field('hazard_type', id="hazard-type"),#, template='mapApp/util/multiselect_field.html'),
             ),
             AccordionGroup(
                 'Description',
-                Field('hazard_detail', placeholder='optional'),
+                Field('details', placeholder='optional'),
                 css_id = 'hazard-description'
             ),
             AccordionGroup(
@@ -36,9 +36,9 @@ class HazardForm(forms.ModelForm):
         Div(
             HTML("""
                 <input type='checkbox' class='terms_hazard'>
-                <strong> I have read and understand the 
+                <strong> I have read and understand the
                 <a href="{% url 'mapApp:termsAndConditions' %}" target=_blank>terms and conditions</a></strong>
-                
+
                 <script>
                   $(".terms_hazard").change(function() {
                     if(this.checked) {
@@ -62,4 +62,4 @@ class HazardForm(forms.ModelForm):
 
     class Meta:
         model = Hazard
-        fields = ['geom', 'hazard_date', 'hazard', 'hazard_detail', 'age', 'birthmonth', 'sex', 'regular_cyclist']
+        fields = '__all__'
