@@ -151,13 +151,13 @@
               $(".user-menu").append('<li><a href="#"><small>Total: '+total+'</small></a></li>');
           {% endif %}
 
-          //vvvvv EXPERIMENTAL vvvvv
+          //vvvvv SLIDER LOGIC should be moved to new .js file. Issue is passing incident data references vvvvv
           // Initialize the slider
           $("input.slider").ready(function(){
             var mySlider = $("input.slider").slider({
               step: 1,
-              max: (moment().weekYear() - 1970) * 12, //current year * 12
-              min: (moment().weekYear() - 1980) * 12, //ten years ago * 12
+              max: (moment().weekYear() - 1970) * 12 + moment().month(), //months since epoch
+              min: (moment().weekYear() - 1980) * 12  + moment().month(), //months since epoch minus 10 years
 
               range: true,
               tooltip: 'hide',
@@ -194,19 +194,19 @@
             incidentData.clearLayers();
 
             collisions = collisionsUnfiltered.filter(function(feature, layer){
-              d = moment(feature.feature.properties.incident_date);
+              d = moment(feature.feature.properties.date);
               return d >= start_date && d <= end_date;
             });
             nearmisses = nearmissesUnfiltered.filter(function(feature, layer){
-              d = moment(feature.feature.properties.incident_date);
+              d = moment(feature.feature.properties.date);
               return d >= start_date && d <= end_date;
             });
             thefts = theftsUnfiltered.filter(function(feature, layer){
-              d = moment(feature.feature.properties.theft_date);
+              d = moment(feature.feature.properties.date);
               return d >= start_date && d <= end_date;
             });
             hazards = hazardsUnfiltered.filter(function(feature, layer){
-              d = moment(feature.feature.properties.hazard_date);
+              d = moment(feature.feature.properties.date);
               return d >= start_date && d <= end_date;
             });
             officialData = officialUnfiltered.filter(function(feature, layer){
