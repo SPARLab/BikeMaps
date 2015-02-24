@@ -14,7 +14,8 @@ class Point(models.Model):
         ('nearmiss', 'nearmiss'),
         ('theft', 'theft'),
         ('hazard', 'hazard'),
-        ('fall', 'fall')
+        ('fall', 'fall'),
+        ('official', 'official')
     )
 
     YOUNGEST_AGE = 13
