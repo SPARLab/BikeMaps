@@ -30,3 +30,6 @@ class Official(Point):
     who_added = models.CharField(
         max_length=100,
     )
+
+    def __str__(self):
+        return "Source: " + self.data_source + "; Type: " + self.official_type + "; Date: " + self.date.isoformat()
