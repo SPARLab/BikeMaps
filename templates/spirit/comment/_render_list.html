@@ -56,6 +56,8 @@
                     </div>
                 </div>
 
+				{# Remove user ability to perform comment actions #}
+				{% comment %}
                 {% if user.is_authenticated and not c.action %}
                     <ul class="comment-actions">
                         {% if user.is_moderator %}
@@ -108,6 +110,8 @@
                         <li><a href="{% url "spirit:comment-undelete" c.pk %}"><i class="fa fa-times"></i> {% trans "undelete" %}</a></li>
                     </ul>
                 {% endif %}
+				
+			{% endcomment %}
 
             {% endif %}
 

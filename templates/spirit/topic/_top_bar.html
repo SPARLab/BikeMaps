@@ -26,12 +26,15 @@
 
 
 		</div>
-
-        <div class="new-topic">
+		
+		{# Remove Create Topic button from forums #}
+		{% comment %}
+		<div class="new-topic">
             {% if category %}
                 <a class="button" href="{% url "spirit:topic-publish" category.pk %}">{% trans "Create Topic" %}</a>
             {% else %}
                 <a class="button" href="{% url "spirit:topic-publish" %}">{% trans "Create Topic" %}</a>
             {% endif %}
 		</div>
+		{% endcomment %}
 	</div>

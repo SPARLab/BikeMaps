@@ -88,6 +88,8 @@
             </div>
         </div>
 
+		{# Remove ability to comment on topics #}
+		{% comment %}
         {% if user.is_authenticated %}
             {% if not topic.is_closed %}
                 <div id="reply" class="reply">
@@ -124,5 +126,6 @@
                 });
             </script>
         {% endif %}
+		{% endcomment %}
 
 {% endblock %}
