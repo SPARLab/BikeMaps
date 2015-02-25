@@ -44,7 +44,7 @@ class Point(models.Model):
     objects = models.GeoManager() # Required to conduct geographic queries
 
     # Personal details about the participant (all optional)
-    date = models.DateField(
+    date = models.DateTimeField(
         'When was the incident?',
         default=None
     )
