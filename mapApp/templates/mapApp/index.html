@@ -90,10 +90,10 @@
         addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
 
         // Load user points from the database
-        var collisions = geojsonMarker({{ collisions|geojsonfeature:"incident_type,incident_with,date,time,details"|safe }}, "collision").addTo(incidentData).getLayers();
-        var nearmisses = geojsonMarker({{ nearmisses|geojsonfeature:"incident_type,incident_with,date,time,details"|safe }}, "nearmiss").addTo(incidentData).getLayers();
-        var hazards = geojsonMarker({{ hazards|geojsonfeature:"hazard_type,date,time,details"|safe }}, "hazard").addTo(incidentData).getLayers();
-        var thefts = geojsonMarker({{ thefts|geojsonfeature:"theft_type,date,time,details"|safe }}, "theft").addTo(incidentData).getLayers();
+        var collisions = geojsonMarker({{ collisions|geojsonfeature:"incident_type,incident_with,date,details"|safe }}, "collision").addTo(incidentData).getLayers();
+        var nearmisses = geojsonMarker({{ nearmisses|geojsonfeature:"incident_type,incident_with,date,details"|safe }}, "nearmiss").addTo(incidentData).getLayers();
+        var hazards = geojsonMarker({{ hazards|geojsonfeature:"hazard_type,date,details"|safe }}, "hazard").addTo(incidentData).getLayers();
+        var thefts = geojsonMarker({{ thefts|geojsonfeature:"theft_type,date,details"|safe }}, "theft").addTo(incidentData).getLayers();
 
         // Add all geojson auxiliary data
         loadGeojsonAjax("{% static 'mapApp/data/policeData.geojson' %}", "police");

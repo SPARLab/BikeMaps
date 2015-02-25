@@ -293,19 +293,19 @@ function getPopup(layer) {
             popup += 'Incident with';
         else
             popup += 'Due to';
-        popup += ':</strong> ' + feature.properties.incident_with + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.date, feature.properties.time);
+        popup += ':</strong> ' + feature.properties.incident_with + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.date);
         if(feature.properties.details){
           popup += '<br><div class="popup-details"><strong>Details:</strong> ' + feature.properties.details + '</div>';
         }
 
     } else if (type === "hazard") {
-        popup = '<strong>Hazard type:</strong> ' + feature.properties.hazard_type + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.date, feature.properties.time);
+        popup = '<strong>Hazard type:</strong> ' + feature.properties.hazard_type + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.date);
         if(feature.properties.details){
           popup += '<br><div class="popup-details"><strong>Details:</strong> ' + feature.properties.details + '</div>';
         }
 
     } else if (type === "theft") {
-        popup = '<strong>Theft type:</strong> ' + feature.properties.theft_type + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.date, feature.properties.time);
+        popup = '<strong>Theft type:</strong> ' + feature.properties.theft_type + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.date);
         if(feature.properties.details){
           popup += '<br><div class="popup-details"><strong>Details:</strong> ' + feature.properties.details + '</div>';
         }
@@ -332,8 +332,18 @@ function getPopup(layer) {
     return popup;
 };
 
-function makeNiceDate(d, t){
-    return moment(d + " " + t).format("MMM. Do YYYY, h:mm a")
+function makeNiceDate(d) {
+    // "2014-10-28T10:00:00"
+
+    d = d.split("T");
+    time = d[1].split(":");
+    date = d[0].split("-");
+
+    pm = parseInt(time[0]) / 12; // > 1 if true
+    time[0] = parseInt(time[0]) % 12;
+    if(time[0] === 0) time[0] = 12;
+
+    return getMonthFromInt(date[1]).slice(0, 3) + ". " + date[2] + ", " + date[0] + ", " + time[0] + ":" + time[1] + (pm >= 1 ? "pm" : "am");
 };
 
 // Purpose: Convert a given geojson dataset to a MakiMarker point layer
