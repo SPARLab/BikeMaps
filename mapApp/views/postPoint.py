@@ -3,7 +3,8 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 
 from django.contrib.gis.geos import GEOSGeometry
-import json, math, datetime
+import json
+import math
 from django.contrib import messages
 
 # Decorators
@@ -21,11 +22,8 @@ def postIncident(request):
 	# Convert coords to valid geometry
 	try:
 		incidentForm.data['geom'] = normalizeGeometry(incidentForm.data['geom'])
-		dt = datetime.datetime.strptime(incidentForm.data['date'], "%Y-%m-%d %H:%M")
-		incidentForm.data['time'] = dt.time()
-		incidentForm.data['date'] = dt.date()
 	except(ValueError):
-		messages.error(request, '<strong>Error</strong><br>There was an error with the form submission.')
+		messages.error(request, '<strong>Error</strong><br>No point was selected for this type of report.')
 		return HttpResponseRedirect(reverse('mapApp:index'))
 
 	# Set p_type field to collision, nearmiss, or fall
@@ -61,11 +59,8 @@ def postHazard(request):
 	# Convert coords to valid geometry
 	try :
 		hazardForm.data['geom'] = normalizeGeometry(hazardForm.data['geom'])
-		dt = datetime.datetime.strptime(hazardForm.data['date'], "%Y-%m-%d %H:%M")
-		hazardForm.data['time'] = dt.time()
-		hazardForm.data['date'] = dt.date()
 	except(ValueError):
-		messages.error(request, '<strong>Error</strong><br>There was an error with the form submission.')
+		messages.error(request, '<strong>Error</strong><br>No point was selected for this type of report.')
 		return HttpResponseRedirect(reverse('mapApp:index'))
 
 	# Set p_type
@@ -85,7 +80,6 @@ def postHazard(request):
 		))
 
 	else: # Show form errors
-		return HttpResponse(hazardForm)
 		return render(request, 'mapApp/index.html', indexContext(request, hazardForm=hazardForm))
 
 @require_POST
@@ -96,11 +90,8 @@ def postTheft(request):
 	# Convert coords to valid geometry
 	try:
 		theftForm.data['geom'] = normalizeGeometry(theftForm.data['geom'])
-		dt = datetime.datetime.strptime(theftForm.data['date'], "%Y-%m-%d %H:%M")
-		theftForm.data['time'] = dt.time()
-		theftForm.data['date'] = dt.date()
 	except(ValueError):
-		messages.error(request, '<strong>Error</strong><br>There was an error with the form submission.')
+		messages.error(request, '<strong>Error</strong><br>No point was selected for this type of report.')
 		return HttpResponseRedirect(reverse('mapApp:index'))
 
 	# Set p_type
