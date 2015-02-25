@@ -48,11 +48,7 @@ class Point(models.Model):
         'When was the incident?',
         default=None
     )
-    time = models.TimeField(
-        'What time did it occur?',
-        default=None,
-        null=True
-    )
+
     p_type = models.CharField(
         'Type of report',
         max_length=150,
