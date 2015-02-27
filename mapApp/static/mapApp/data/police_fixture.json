@@ -1,0 +1,3656 @@
+[
+    {
+        "pk":1,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433299",
+            "details":"Left turn - traffic on left",
+            "date":"2008-09-20T14:48:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":2,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433321",
+            "details":"Left turn - traffic on left",
+            "date":"2008-03-26T11:50:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":3,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433327",
+            "details":"Right angle",
+            "date":"2008-11-07T14:25:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":4,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433332",
+            "details":"Left turn opposing",
+            "date":"2011-09-07T07:35:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":5,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433338",
+            "details":"Overtaking",
+            "date":"2012-06-08T22:10:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":6,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433343",
+            "details":"Right angle",
+            "date":"2011-01-19T16:10:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":7,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433348",
+            "details":"Right turn across path",
+            "date":"2008-08-08T13:40:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":8,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433353",
+            "details":"Overtaking",
+            "date":"2009-09-15T17:35:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":9,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433358",
+            "details":"Overtaking",
+            "date":"2010-07-17T01:20:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":10,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433363",
+            "details":"Left turn opposing",
+            "date":"2009-04-15T17:43:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":11,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433368",
+            "details":"Right angle",
+            "date":"2010-07-19T08:30:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":12,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433373",
+            "details":"Right turn - traffic on left",
+            "date":"2011-06-03T00:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":13,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433379",
+            "details":"Right angle",
+            "date":"2011-08-18T19:29:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":14,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433384",
+            "details":"Right turn - traffic on left",
+            "date":"2012-05-29T16:10:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":15,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433389",
+            "details":"Overtaking",
+            "date":"2012-05-12T15:45:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":16,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433394",
+            "details":"Overtaking",
+            "date":"2010-02-05T21:49:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":17,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433399",
+            "details":"Right turn across path",
+            "date":"2008-06-25T19:09:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":18,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433404",
+            "details":"Left turn - traffic on right",
+            "date":"2009-07-19T11:54:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":19,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433409",
+            "details":"Overtaking",
+            "date":"2010-12-15T09:33:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":20,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433415",
+            "details":"Left turn opposing",
+            "date":"2011-08-18T18:19:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":21,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433420",
+            "details":"Right angle",
+            "date":"2009-09-07T13:41:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":22,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433425",
+            "details":"Right angle",
+            "date":"2009-08-04T14:18:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":23,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433430",
+            "details":"Right angle",
+            "date":"2008-08-08T11:15:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":24,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433435",
+            "details":"Rear end",
+            "date":"2011-02-04T07:04:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":25,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433440",
+            "details":"Head on",
+            "date":"2009-10-26T07:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":26,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433445",
+            "details":"Right angle",
+            "date":"2012-12-13T18:39:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":27,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433450",
+            "details":"Left turn - traffic on left",
+            "date":"2012-09-06T07:27:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":28,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433456",
+            "details":"Left turn opposing",
+            "date":"2009-09-30T12:42:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":29,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433461",
+            "details":"Right angle",
+            "date":"2012-06-01T22:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":30,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433466",
+            "details":"Left turn opposing",
+            "date":"2012-08-10T05:55:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":31,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433471",
+            "details":"Right angle",
+            "date":"2012-06-13T13:31:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":32,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433476",
+            "details":"Left turn - traffic on right",
+            "date":"2012-03-21T20:27:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":33,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433481",
+            "details":"Backing",
+            "date":"2012-09-01T17:04:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":34,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433486",
+            "details":"Right angle",
+            "date":"2009-08-28T07:58:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":35,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433491",
+            "details":"Right angle",
+            "date":"2008-11-04T23:51:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":36,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433496",
+            "details":"Right angle",
+            "date":"2009-04-17T18:49:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":37,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433502",
+            "details":"Left turn - traffic on left",
+            "date":"2009-11-16T11:15:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":38,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433507",
+            "details":"Right angle",
+            "date":"2012-05-31T21:48:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":39,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433512",
+            "details":"Left turn - traffic on left",
+            "date":"2012-11-20T17:40:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":40,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433517",
+            "details":"Overtaking",
+            "date":"2010-08-01T09:56:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":41,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433522",
+            "details":"Side swipe",
+            "date":"2010-10-22T08:37:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":42,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433527",
+            "details":"Right turn across path",
+            "date":"2008-07-21T09:22:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":43,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433532",
+            "details":"Overtaking",
+            "date":"2012-09-04T11:25:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":44,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433537",
+            "details":"Rear end",
+            "date":"2009-08-28T23:52:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":45,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433542",
+            "details":"Overtaking left",
+            "date":"2012-09-18T08:08:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":46,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433548",
+            "details":"Overtaking",
+            "date":"2012-07-19T09:04:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":47,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433553",
+            "details":"Left turn opposing",
+            "date":"2012-11-11T14:34:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":48,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433558",
+            "details":"Left turn opposing",
+            "date":"2009-06-02T06:48:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":49,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433563",
+            "details":"Left turn opposing",
+            "date":"2008-06-30T07:31:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":50,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433568",
+            "details":"Right angle",
+            "date":"2009-06-29T07:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":51,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433573",
+            "details":"Overtaking",
+            "date":"2010-11-18T16:23:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":52,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433578",
+            "details":"Right angle",
+            "date":"2010-08-31T13:20:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":53,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433583",
+            "details":"Left turn opposing",
+            "date":"2011-04-10T22:24:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":54,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433588",
+            "details":"Right angle",
+            "date":"2011-03-26T00:40:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":55,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433594",
+            "details":"Right angle",
+            "date":"2012-12-11T16:09:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":56,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433599",
+            "details":"Rear end",
+            "date":"2009-10-26T15:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":57,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433604",
+            "details":"Right angle",
+            "date":"2010-02-28T07:15:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":58,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433609",
+            "details":"Right angle",
+            "date":"2008-12-10T07:44:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":59,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433614",
+            "details":"Right angle",
+            "date":"2009-04-22T17:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":60,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433619",
+            "details":"Single vehicle",
+            "date":"2010-12-02T18:32:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":61,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433624",
+            "details":"Right angle",
+            "date":"2012-09-12T19:02:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":62,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433629",
+            "details":"Overtaking",
+            "date":"2011-11-28T14:08:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":63,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433634",
+            "details":"Right angle",
+            "date":"2009-09-15T16:07:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":64,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433639",
+            "details":"Right turn - traffic on right",
+            "date":"2008-07-13T15:22:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":65,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433645",
+            "details":"Left turn opposing",
+            "date":"2012-07-31T10:20:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":66,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433650",
+            "details":"Left turn opposing",
+            "date":"2010-12-08T06:45:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":67,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433655",
+            "details":"Right angle",
+            "date":"2008-04-26T21:35:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":68,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433660",
+            "details":"Left turn opposing",
+            "date":"2009-01-19T18:31:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":69,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433665",
+            "details":"Overtaking",
+            "date":"2010-08-24T16:43:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":70,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433670",
+            "details":"Changing lanes",
+            "date":"2009-05-28T19:14:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":71,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433675",
+            "details":"Left turn opposing",
+            "date":"2011-01-23T13:26:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":72,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433680",
+            "details":"Right turn across path",
+            "date":"2008-07-02T15:23:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":73,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433685",
+            "details":"Right angle",
+            "date":"2008-11-03T17:21:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":74,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433691",
+            "details":"Left turn opposing",
+            "date":"2012-11-13T22:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":75,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433696",
+            "details":"Right angle",
+            "date":"2010-07-24T23:26:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":76,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433701",
+            "details":"Left turn opposing",
+            "date":"2012-02-15T13:55:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":77,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433706",
+            "details":"Right turn - traffic on right",
+            "date":"2009-06-15T21:20:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":78,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433711",
+            "details":"Right angle",
+            "date":"2009-02-15T14:23:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":79,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433716",
+            "details":"Left turn opposing",
+            "date":"2012-08-07T07:18:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":80,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433721",
+            "details":"Right turn across path",
+            "date":"2008-10-18T12:20:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":81,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433726",
+            "details":"Overtaking",
+            "date":"2012-01-10T12:19:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":82,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433731",
+            "details":"Rear end",
+            "date":"2011-06-28T12:05:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":83,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433736",
+            "details":"Rear end",
+            "date":"2011-05-14T22:46:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":84,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433741",
+            "details":"Left turn - traffic on left",
+            "date":"2011-06-17T14:23:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":85,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433746",
+            "details":"Right angle",
+            "date":"2012-05-05T21:19:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":86,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433751",
+            "details":"Right angle",
+            "date":"2011-06-30T07:54:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":87,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433756",
+            "details":"Right turn - traffic on right",
+            "date":"2008-03-26T12:22:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":88,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433761",
+            "details":"Overtaking",
+            "date":"2010-03-06T14:35:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":89,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433766",
+            "details":"Left turn opposing",
+            "date":"2008-12-11T11:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":90,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433771",
+            "details":"Right turn - traffic on right",
+            "date":"2008-04-27T14:37:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":91,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433777",
+            "details":"Left turn - traffic on left",
+            "date":"2009-10-26T17:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":92,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433782",
+            "details":"Left turn - traffic on left",
+            "date":"2009-01-22T07:35:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":93,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433787",
+            "details":"Rear end",
+            "date":"2008-11-23T17:58:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":94,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433792",
+            "details":"Left turn opposing",
+            "date":"2011-02-09T00:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":95,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433797",
+            "details":"Left turn opposing",
+            "date":"2008-12-11T17:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":96,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433802",
+            "details":"Right angle",
+            "date":"2010-05-02T14:27:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":97,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433807",
+            "details":"Left turn opposing",
+            "date":"2010-07-06T07:35:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":98,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433812",
+            "details":"Right turn - traffic on right",
+            "date":"2012-10-08T15:07:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":99,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433817",
+            "details":"Overtaking",
+            "date":"2009-09-15T23:10:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":100,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433822",
+            "details":"Right angle",
+            "date":"2009-06-24T15:24:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":101,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433827",
+            "details":"Left turn opposing",
+            "date":"2009-07-21T17:12:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":102,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433832",
+            "details":"Left turn opposing",
+            "date":"2009-03-14T13:25:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":103,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433837",
+            "details":"Rear end",
+            "date":"2011-09-24T12:12:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":104,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433843",
+            "details":"Left turn opposing",
+            "date":"2008-04-18T16:21:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":105,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433848",
+            "details":"Overtaking",
+            "date":"2008-06-24T18:31:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":106,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433853",
+            "details":"Overtaking",
+            "date":"2012-04-01T12:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":107,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433858",
+            "details":"Rear end",
+            "date":"2008-08-02T07:03:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":108,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433863",
+            "details":"Right angle",
+            "date":"2010-11-15T16:30:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":109,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433868",
+            "details":"Rear end",
+            "date":"2010-06-14T18:27:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":110,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433873",
+            "details":"Left turn - traffic on right",
+            "date":"2009-11-24T15:31:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":111,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433879",
+            "details":"Rear end",
+            "date":"2011-12-30T00:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":112,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433884",
+            "details":"Rear end",
+            "date":"2009-05-21T17:05:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":113,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433889",
+            "details":"Right angle",
+            "date":"2012-01-25T17:39:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":114,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433894",
+            "details":"Overtaking",
+            "date":"2012-09-25T07:51:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":115,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433899",
+            "details":"Overtaking",
+            "date":"2012-05-29T09:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":116,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433904",
+            "details":"Rear end",
+            "date":"2009-03-31T07:30:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":117,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433909",
+            "details":"Right turn - traffic on left",
+            "date":"2008-08-13T20:49:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":118,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433915",
+            "details":"Left turn opposing",
+            "date":"2010-05-09T10:47:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":119,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433920",
+            "details":"Right turn across path",
+            "date":"2008-10-10T15:28:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":120,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433925",
+            "details":"Overtaking",
+            "date":"2010-11-28T18:06:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":121,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433930",
+            "details":"Right turn - traffic on left",
+            "date":"2011-03-30T21:40:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":122,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433935",
+            "details":"Right turn - traffic on left",
+            "date":"2009-06-04T16:24:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":123,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433940",
+            "details":"Left turn - traffic on left",
+            "date":"2008-01-15T19:44:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":124,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433945",
+            "details":"Left turn - traffic on left",
+            "date":"2011-03-04T01:17:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":125,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433951",
+            "details":"Left turn - traffic on left",
+            "date":"2009-12-10T17:04:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":126,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433956",
+            "details":"Left turn - traffic on right",
+            "date":"2008-09-15T16:56:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":127,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433961",
+            "details":"Overtaking",
+            "date":"2009-01-24T19:18:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":128,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433966",
+            "details":"Right angle",
+            "date":"2012-11-02T02:17:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":129,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433971",
+            "details":"Right turn - traffic on left",
+            "date":"2010-05-14T18:37:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":130,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433976",
+            "details":"Overtaking",
+            "date":"2011-06-22T15:11:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":131,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433981",
+            "details":"Overtaking",
+            "date":"2010-11-12T12:12:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":132,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433986",
+            "details":"Right turn - traffic on left",
+            "date":"2010-11-29T17:28:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":133,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433991",
+            "details":"Overtaking",
+            "date":"2011-04-06T11:51:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":134,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.433997",
+            "details":"Rear end",
+            "date":"2009-09-13T17:10:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":135,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434002",
+            "details":"Overtaking",
+            "date":"2010-07-06T17:14:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":136,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434007",
+            "details":"Left turn opposing",
+            "date":"2010-12-27T06:41:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":137,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434012",
+            "details":"Left turn opposing",
+            "date":"2009-08-05T17:11:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":138,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434017",
+            "details":"Right angle",
+            "date":"2009-03-03T06:41:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":139,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434022",
+            "details":"Right angle",
+            "date":"2012-07-19T18:20:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":140,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434027",
+            "details":"Left turn opposing",
+            "date":"2008-01-23T17:42:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":141,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434032",
+            "details":"Right angle",
+            "date":"2009-05-01T23:30:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":142,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434037",
+            "details":"Rear end",
+            "date":"2011-05-09T14:29:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":143,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434043",
+            "details":"Right turn across path",
+            "date":"2011-09-03T10:30:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":144,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434048",
+            "details":"Right turn - traffic on right",
+            "date":"2008-05-07T11:34:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":145,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434053",
+            "details":"Overtaking",
+            "date":"2009-12-12T16:54:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":146,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434058",
+            "details":"Left turn - traffic on right",
+            "date":"2008-09-12T09:55:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":147,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434063",
+            "details":"Right angle",
+            "date":"2012-07-07T10:15:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":148,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434068",
+            "details":"Right turn - traffic on left",
+            "date":"2008-06-25T20:30:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":149,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434073",
+            "details":"Right turn across path",
+            "date":"2009-07-23T17:38:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":150,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434078",
+            "details":"Overtaking",
+            "date":"2010-06-22T13:25:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":151,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434084",
+            "details":"Rear end",
+            "date":"2011-07-22T15:25:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":152,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434089",
+            "details":"Overtaking",
+            "date":"2009-06-25T17:04:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":153,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434094",
+            "details":"Overtaking",
+            "date":"2012-06-19T17:18:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":154,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434099",
+            "details":"Rear end",
+            "date":"2012-07-23T14:57:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":155,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434105",
+            "details":"Changing lanes",
+            "date":"2009-06-08T10:58:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":156,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434128",
+            "details":"Overtaking",
+            "date":"2009-04-02T12:02:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":157,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434134",
+            "details":"Overtaking",
+            "date":"2010-05-21T14:51:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":158,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434139",
+            "details":"Overtaking",
+            "date":"2011-10-19T14:13:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":159,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434145",
+            "details":"Overtaking",
+            "date":"2010-08-26T09:39:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":160,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434150",
+            "details":"Rear end",
+            "date":"2008-09-05T09:22:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":161,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434155",
+            "details":"Right turn across path",
+            "date":"2008-09-09T08:38:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":162,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434160",
+            "details":"Overtaking",
+            "date":"2011-03-21T10:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":163,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434166",
+            "details":"Left turn opposing",
+            "date":"2008-12-02T08:18:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":164,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434171",
+            "details":"Left turn opposing",
+            "date":"2010-05-08T11:29:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":165,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434176",
+            "details":"Overtaking",
+            "date":"2010-05-16T11:33:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":166,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434181",
+            "details":"Right angle",
+            "date":"2009-09-24T11:36:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":167,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434186",
+            "details":"Overtaking",
+            "date":"2011-02-09T09:10:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":168,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434191",
+            "details":"Overtaking",
+            "date":"2008-04-03T08:02:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":169,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434196",
+            "details":"Right angle",
+            "date":"2012-09-06T07:41:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":170,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434202",
+            "details":"Side swipe",
+            "date":"2011-08-03T08:45:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":171,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434207",
+            "details":"Overtaking",
+            "date":"2009-04-11T15:10:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":172,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434212",
+            "details":"Right turn across path",
+            "date":"2008-10-06T21:20:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":173,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434217",
+            "details":"Right angle",
+            "date":"2011-07-05T16:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":174,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434222",
+            "details":"Left turn - traffic on left",
+            "date":"2009-05-28T06:48:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":175,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434227",
+            "details":"Head on",
+            "date":"2011-06-21T15:07:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":176,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434232",
+            "details":"Head on",
+            "date":"2011-06-21T15:07:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":177,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434237",
+            "details":"Overtaking",
+            "date":"2012-07-13T10:41:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":178,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434242",
+            "details":"Overtaking",
+            "date":"2011-03-10T15:02:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":179,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434248",
+            "details":"Overtaking",
+            "date":"2008-07-04T13:27:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":180,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434253",
+            "details":"Overtaking",
+            "date":"2009-04-25T16:20:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":181,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434258",
+            "details":"Overtaking",
+            "date":"2009-06-07T20:59:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":182,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434265",
+            "details":"Overtaking",
+            "date":"2008-01-31T11:02:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":183,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434270",
+            "details":"Left turn opposing",
+            "date":"2010-05-17T15:37:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":184,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434275",
+            "details":"Left turn opposing",
+            "date":"2010-11-19T12:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":185,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434281",
+            "details":"Right angle",
+            "date":"2012-07-28T09:55:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":186,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434286",
+            "details":"Right angle",
+            "date":"2010-04-07T14:40:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":187,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434351",
+            "details":"Overtaking",
+            "date":"2010-03-05T12:48:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":188,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434361",
+            "details":"Right angle",
+            "date":"2011-05-26T14:56:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":189,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434367",
+            "details":"Right angle",
+            "date":"2009-06-27T12:08:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":190,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434372",
+            "details":"Right angle",
+            "date":"2010-05-14T18:30:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":191,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434378",
+            "details":"Left turn opposing",
+            "date":"2008-07-28T08:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":192,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434384",
+            "details":"Right turn - traffic on left",
+            "date":"2011-01-10T10:13:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":193,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434389",
+            "details":"Right angle",
+            "date":"2008-06-30T16:04:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":194,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434395",
+            "details":"Side swipe",
+            "date":"2010-05-11T17:50:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":195,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434400",
+            "details":"Changing lanes",
+            "date":"2009-05-26T13:50:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":196,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434406",
+            "details":"Right angle",
+            "date":"2009-06-13T09:35:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":197,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434412",
+            "details":"Rear end",
+            "date":"2011-10-07T08:17:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":198,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434417",
+            "details":"Overtaking",
+            "date":"2012-08-29T16:34:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":199,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434422",
+            "details":"Rear end",
+            "date":"2011-05-10T16:35:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":200,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434428",
+            "details":"Right angle",
+            "date":"2009-03-11T18:57:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":201,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434434",
+            "details":"Rear end",
+            "date":"2009-08-25T08:04:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":202,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434439",
+            "details":"Overtaking",
+            "date":"2012-09-27T13:12:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":203,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434445",
+            "details":"Rear end",
+            "date":"2011-07-03T11:31:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":204,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434450",
+            "details":"Overtaking",
+            "date":"2011-04-27T11:10:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":205,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434456",
+            "details":"Left turn - traffic on left",
+            "date":"2010-10-11T19:02:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":206,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434461",
+            "details":"Right angle",
+            "date":"2010-06-15T12:35:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":207,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434467",
+            "details":"Right angle",
+            "date":"2008-07-03T14:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":208,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434472",
+            "details":"Left turn - traffic on left",
+            "date":"2008-09-19T08:05:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":209,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434478",
+            "details":"Right turn - traffic on left",
+            "date":"2011-02-15T22:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":210,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434484",
+            "details":"Left turn opposing",
+            "date":"2011-09-17T23:09:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":211,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434489",
+            "details":"Right angle",
+            "date":"2012-10-15T07:26:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":212,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434495",
+            "details":"Right turn - traffic on left",
+            "date":"2009-11-25T17:11:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":213,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434501",
+            "details":"Right turn - traffic on left",
+            "date":"2011-11-28T11:18:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":214,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434506",
+            "details":"Right turn - traffic on left",
+            "date":"2010-05-02T15:13:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":215,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434512",
+            "details":"Right angle",
+            "date":"2009-11-06T16:10:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":216,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434517",
+            "details":"Overtaking",
+            "date":"2009-07-28T18:12:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":217,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434522",
+            "details":"Left turn - traffic on right",
+            "date":"2008-07-16T08:46:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":218,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434528",
+            "details":"Left turn opposing",
+            "date":"2012-07-25T12:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":219,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434534",
+            "details":"Left turn opposing",
+            "date":"2009-06-20T17:38:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":220,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434539",
+            "details":"Overtaking",
+            "date":"2011-10-11T09:01:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":221,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434545",
+            "details":"Right angle",
+            "date":"2008-04-08T16:05:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":222,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434551",
+            "details":"Right angle",
+            "date":"2008-05-09T08:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":223,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434556",
+            "details":"Right turn - traffic on left",
+            "date":"2010-03-30T06:44:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":224,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434562",
+            "details":"Overtaking",
+            "date":"2012-08-27T18:30:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":225,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434567",
+            "details":"Right turn - traffic on left",
+            "date":"2008-01-15T19:27:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":226,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434573",
+            "details":"Right turn - traffic on right",
+            "date":"2012-03-24T15:46:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":227,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434578",
+            "details":"Left turn - traffic on left",
+            "date":"2009-12-04T19:24:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":228,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434584",
+            "details":"Overtaking",
+            "date":"2011-12-05T09:15:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":229,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434590",
+            "details":"Right angle",
+            "date":"2009-08-28T00:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":230,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434595",
+            "details":"Overtaking",
+            "date":"2008-05-15T20:21:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":231,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434601",
+            "details":"Side swipe",
+            "date":"2010-08-17T11:57:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":232,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434606",
+            "details":"Rear end",
+            "date":"2009-08-03T00:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":233,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434612",
+            "details":"Left turn opposing",
+            "date":"2008-03-31T18:55:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":234,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434617",
+            "details":"Overtaking",
+            "date":"2008-12-10T13:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":235,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434623",
+            "details":"Right turn - traffic on left",
+            "date":"2012-10-23T08:26:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":236,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434629",
+            "details":"Right angle",
+            "date":"2010-05-03T14:05:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":237,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434634",
+            "details":"Left turn opposing",
+            "date":"2011-07-06T15:00:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":238,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434640",
+            "details":"Head on",
+            "date":"2008-06-02T15:56:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":239,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434645",
+            "details":"Left turn - traffic on left",
+            "date":"2012-06-18T17:49:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":240,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434650",
+            "details":"Right angle",
+            "date":"2008-06-22T15:57:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":241,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434656",
+            "details":"Overtaking",
+            "date":"2010-06-27T14:35:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":242,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434661",
+            "details":"Rear end",
+            "date":"2009-05-25T08:24:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":243,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434666",
+            "details":"Right angle",
+            "date":"2012-05-22T16:19:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":244,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434671",
+            "details":"Right angle",
+            "date":"2012-02-17T16:31:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":245,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434676",
+            "details":"Rear end",
+            "date":"2011-09-29T12:57:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":246,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434681",
+            "details":"Right turn - traffic on right",
+            "date":"2009-11-09T15:39:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":247,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434686",
+            "details":"Right turn - traffic on right",
+            "date":"2008-03-24T16:10:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":248,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434691",
+            "details":"Overtaking",
+            "date":"2008-05-25T10:50:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":249,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434696",
+            "details":"Overtaking",
+            "date":"2012-09-17T11:06:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":250,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434702",
+            "details":"Overtaking",
+            "date":"2008-07-31T13:15:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":251,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434707",
+            "details":"Rear end",
+            "date":"2010-12-07T17:31:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":252,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434712",
+            "details":"Overtaking",
+            "date":"2012-07-26T16:54:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":253,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434717",
+            "details":"Overtaking",
+            "date":"2008-01-22T11:56:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":254,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434722",
+            "details":"Right angle",
+            "date":"2010-01-08T18:35:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":255,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434728",
+            "details":"Left turn - traffic on right",
+            "date":"2009-11-14T17:55:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":256,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434733",
+            "details":"Changing lanes",
+            "date":"2009-04-27T18:30:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":257,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434738",
+            "details":"Left turn opposing",
+            "date":"2011-04-11T07:56:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":258,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434743",
+            "details":"Right turn - traffic on left",
+            "date":"2008-11-17T08:33:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":259,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434748",
+            "details":"Overtaking",
+            "date":"2011-07-27T16:14:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":260,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434753",
+            "details":"Overtaking",
+            "date":"2010-07-07T10:52:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    },
+    {
+        "pk":261,
+        "model":"mapApp.official",
+        "fields":{
+            "data_source":"Victoria Police Dept.",
+            "official_type":"Vehicle collision",
+            "who_added":"Taylor",
+            "p_type":"official",
+            "report_date":"2015-02-26T23:14:40.434758",
+            "details":"Rear end",
+            "date":"2011-06-16T12:03:00",
+            "metadata":"Data available for the City of Victoria from 2008 to 2012."
+        }
+    }
+]
