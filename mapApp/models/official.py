@@ -8,16 +8,6 @@ from point import Point
 class Official(Point):
     point = models.OneToOneField(Point, parent_link=True)
 
-    # Fields
-    # incident_type
-    # date -> in Point
-    # data_source
-    # metadata
-    # details -> in Point
-    #
-    # p_type -> in Point (should always be 'official')
-    # who_added
-
     official_type = models.CharField(
         max_length=200,
     )
