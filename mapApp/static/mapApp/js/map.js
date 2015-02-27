@@ -139,25 +139,6 @@ function getPolygon(latlng, pk) {
     }));
 };
 
-// Purpose: A function for adding official report data efficiently and asynchronously.
-//    Accepts the geojson feature and the datatype (unused but added for potential future requirements) and initiates the spinner while data is loading
-function loadGeojsonAjax(src, type){
-  incidentData.fire("data:loading");
-  L.Util.ajax(src).then(function(data){
-    incidentData.fire("data:loaded");
-    var g = L.geoJson(data, {
-      pointToLayer: function(feature, latlng) {
-        heatMap.addLatLng(latlng);
-        return L.marker(latlng, {
-          icon: icons["officialIcon"],
-          ftype: type
-        }).addTo(incidentData);
-      }
-    });
-    officialData.push.apply(officialData, g.getLayers());
-  });
-};
-
 // Purpose: Initializes the Pie chart cluster icons by getting the needed attributes from each cluster
 //		and passing them to the pieChart function
 function serializeClusterData(cluster) {
@@ -271,17 +252,6 @@ function pieChart(data) {
 
 
 // HELPER FUNCTIONS
-function getMonthFromInt(num) {
-    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-    return months[num - 1];
-};
-
-function toTitleCase(s) {
-    return s.replace(/\w\S*/g, function(txt) {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-};
-
 function getPopup(layer) {
     var feature = layer.feature,
         type = layer.options.ftype,
@@ -293,57 +263,31 @@ function getPopup(layer) {
             popup += 'Incident with';
         else
             popup += 'Due to';
-        popup += ':</strong> ' + feature.properties.incident_with + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.date);
+        popup += ':</strong> ' + feature.properties.incident_with + '<br><strong>Date:</strong> ' + moment(feature.properties.date).format("MMM. D YYYY, h:mma");
         if(feature.properties.details){
           popup += '<br><div class="popup-details"><strong>Details:</strong> ' + feature.properties.details + '</div>';
         }
 
     } else if (type === "hazard") {
-        popup = '<strong>Hazard type:</strong> ' + feature.properties.hazard_type + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.date);
+        popup = '<strong>Hazard type:</strong> ' + feature.properties.hazard_type + '<br><strong>Date:</strong> ' + moment(feature.properties.date).format("MMM. D YYYY, h:mma");
         if(feature.properties.details){
           popup += '<br><div class="popup-details"><strong>Details:</strong> ' + feature.properties.details + '</div>';
         }
 
     } else if (type === "theft") {
-        popup = '<strong>Theft type:</strong> ' + feature.properties.theft_type + '<br><strong>Date:</strong> ' + makeNiceDate(feature.properties.date);
+        popup = '<strong>Theft type:</strong> ' + feature.properties.theft_type + '<br><strong>Date:</strong> ' + moment(feature.properties.date).format("MMM. D YYYY, h:mma");
         if(feature.properties.details){
           popup += '<br><div class="popup-details"><strong>Details:</strong> ' + feature.properties.details + '</div>';
         }
 
-    } else if (type === "icbc") {
-        var date = toTitleCase(feature.properties.Month).substring(0, 3) + ". " + feature.properties.Year;
-        popup = '<strong>Data source: </strong>ICBC ' + '<a href="#" data-toggle="collapse" data-target="#icbc-metadata"><small>(metadata)</small></a><br>' + '<div id="icbc-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>Data available for British Columbia from 2009 to 2013. Incident characteristics not provided.</small>' + '</div>' + '<strong>Date: </strong>' + date
-
-    }else if (type == "police") {
-        var time = feature.properties.ACC_TIME;
-        if (time) {
-          hours = parseInt(time.substring(0, 2));
-          time = ", " + hours % 12 + ":" + time.substring(2) + (Math.floor(hours / 12) ? " p.m." : " a.m.")
-        } else {
-          time = '';
-        };
-        var date = feature.properties.ACC_DATE.split("/");
-        date = getMonthFromInt(parseInt(date[1])).substring(0, 3) + '. ' + parseInt(date[2]) + ', ' + date[0] + time; // Month dd, YYYY, hh:mm a.m.
-
-        popup = '<strong>Type: </strong>Vehicle collision (' + feature.properties.ACC_TYPE.toLowerCase() + ')<br>' + '<strong>Data source: </strong>Victoria Police Dept. ' + '<a href="#" data-toggle="collapse" data-target="#police-metadata"><small>(metadata)</small></a><br>' + '<div id="police-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>Data available for the City of Victoria from 2008 to 2012.</small>' + '</div>' + '<strong>Date: </strong>' + date
+    } else if (type === "official") {
+        // Need to add official_type and details
+        var date = "placeholder";
+        popup = '<strong>Data source: </strong> ' + feature.properties.data_source + '<a href="#" data-toggle="collapse" data-target="#official-metadata"><small>(metadata)</small></a><br>' + '<div id="official-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>' + feature.properties.metadata + '</small></div><strong>Date: </strong>' + date
 
     } else return "error";
 
     return popup;
-};
-
-function makeNiceDate(d) {
-    // "2014-10-28T10:00:00"
-
-    d = d.split("T");
-    time = d[1].split(":");
-    date = d[0].split("-");
-
-    pm = parseInt(time[0]) / 12; // > 1 if true
-    time[0] = parseInt(time[0]) % 12;
-    if(time[0] === 0) time[0] = 12;
-
-    return getMonthFromInt(date[1]).slice(0, 3) + ". " + date[2] + ", " + date[0] + ", " + time[0] + ":" + time[1] + (pm >= 1 ? "pm" : "am");
 };
 
 // Purpose: Convert a given geojson dataset to a MakiMarker point layer
