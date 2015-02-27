@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from mapApp.models import Incident, Theft, Hazard, AlertArea
+from mapApp.models import Incident, Theft, Hazard, Official, AlertArea
 from mapApp.forms import IncidentForm, GeofenceForm, EditForm, HazardForm, TheftForm
 
 def index(request, lat=None, lng=None, zoom=None):
@@ -23,6 +23,7 @@ def indexContext(request, incidentForm=IncidentForm(), geofenceForm=GeofenceForm
 		'nearmisses': Incident.objects.filter(p_type__exact="nearmiss"),
 		'hazards': Hazard.objects.all(),
 		'thefts': Theft.objects.all(),
+		'officials': Official.objects.all(),
 		"geofences": AlertArea.objects.filter(user=request.user.id),
 
 		# Form data used by map

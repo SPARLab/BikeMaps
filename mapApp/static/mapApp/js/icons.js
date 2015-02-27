@@ -106,5 +106,7 @@ function getIcon(t) {
     return icons["hazardIcon"];
   else if (t === "theft")
     return icons["theftIcon"];
+  else if (t === "official")
+    return icons["officialIcon"];
   else return;
 };

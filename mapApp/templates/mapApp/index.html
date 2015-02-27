@@ -94,11 +94,7 @@
         var nearmisses = geojsonMarker({{ nearmisses|geojsonfeature:"incident_type,incident_with,date,details"|safe }}, "nearmiss").addTo(incidentData).getLayers();
         var hazards = geojsonMarker({{ hazards|geojsonfeature:"hazard_type,date,details"|safe }}, "hazard").addTo(incidentData).getLayers();
         var thefts = geojsonMarker({{ thefts|geojsonfeature:"theft_type,date,details"|safe }}, "theft").addTo(incidentData).getLayers();
-
-        // Add all geojson auxiliary data
-        loadGeojsonAjax("{% static 'mapApp/data/policeData.geojson' %}", "police");
-        // Uncomment this to add icbc data back
-        // loadGeojsonAjax("{% static 'mapApp/data/icbcData.geojson' %}", "icbc");
+        var officials = geojsonMarker({{ officials|geojsonfeature:"official_type,date,time,details,metadata,data_source"|safe }}, "official").addTo(incidentData).getLayers();
 
         // Load user alert areas from the database
         {% for polygon in geofences %}
