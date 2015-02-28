@@ -14,11 +14,19 @@ Experimental charting
   <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
   <!-- Local styles -->
   <style media="screen">
-    /*svg .arc {
-      stroke: #2c3e50;
-      stroke-width: 1px;
-    }*/
-
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+  path.slice{
+    stroke-width:2px;
+  }
+  polyline{
+    opacity: .3;
+    stroke: black;
+    stroke-width: 2px;
+    fill: none;
+  }
   </style>
 {% endblock %}
 
@@ -60,58 +68,91 @@ Experimental charting
       },
     ]
 
-    var margin = {top: 30, right: 10, bottom: 10, left: 10},
-        width = 400 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom,
-        radius = Math.min(width, height) / 2;
+    var svg = d3.select("body")
+      .append("svg")
+      .append("g");
 
-    var svg = d3.select("body").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    svg.append("g")
+    	.attr("class", "slices");
+    svg.append("g")
+    	.attr("class", "labels");
+    svg.append("g")
+    	.attr("class", "lines");
 
-    var arc = d3.svg.arc()
-      .outerRadius(radius - 10)
-      .innerRadius(50);
+    var width = 960,
+      height = 450,
+    	radius = Math.min(width, height) / 2;
 
     var pie = d3.layout.pie()
       .sort(null)
       .value(function(d){ return d.count; });
 
-    var g = svg.selectAll(".arc")
-      .data(pie(dataset))
-      .enter().append("g")
-      .attr("class", "arc");
-
-    g.append("path")
-      .attr("d", arc)
-      .style("fill", function(d) { return d.data.color; });
+    var arc = d3.svg.arc()
+    	.outerRadius(radius * 0.8)
+    	.innerRadius(radius * 0.4);
 
     var outerArc = d3.svg.arc()
-      .innerRadius(radius * 0.9)
-      .outerRadius(radius * 0.9);
+    	.innerRadius(radius * 0.9)
+    	.outerRadius(radius * 0.9);
 
-    var text = svg.selectAll("text")
-      .data(pie(dataset))
-      .enter().append("text")
-      .attr("dy", ".35em")
-      .text(function(d){
-        return d.data.count;
-      })
-      .attr("transform", function(d) {
-        var pos = outerArc.centroid(d);
-        pos[0] = radius * (midAngle(d) < Math.PI ? 1: -1);
-        return "translate("+ pos +")";
-      })
-      .attr("text-anchor", function(d){
-        return midAngle(d) < Math.PI ? "start":"end";
-      });
+    svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-    function midAngle(d){
-      return d.startAngle + (d.endAngle - d.startAngle)/2;
-    }
+    var key = function(d){ return d.data.name; };
 
+
+    /* ------- PIE SLICES -------*/
+  	var slice = svg.select(".slices").selectAll("path.slice")
+  		.data(pie(dataset), key);
+
+  	slice.enter()
+  		.insert("path")
+  		.style("fill", function(d) { return d.data.color; })
+  		.attr("class", "slice");
+
+    slice
+  		.attr("d", function(d) {
+  			return arc(d);
+  		});
+
+
+    /* ------- TEXT LABELS -------*/
+  	var text = svg.select(".labels").selectAll("text")
+  		.data(pie(dataset), key);
+
+  	text.enter()
+  		.append("text")
+  		.attr("dy", ".35em")
+  		.text(function(d) {
+  			return d.data.name;
+  		});
+
+  	function midAngle(d){
+  		return d.startAngle + (d.endAngle - d.startAngle)/2;
+  	}
+
+  	text
+  		.attr("transform", function(d) {
+  				var pos = outerArc.centroid(d);
+  				pos[0] = radius * (midAngle(d) < Math.PI ? 1 : -1);
+  				return "translate("+ pos +")";
+  		})
+  		.style("text-anchor", function(d){
+  				return midAngle(d) < Math.PI ? "start":"end";
+  		});
+
+    /* ------- SLICE TO TEXT POLYLINES -------*/
+  	var polyline = svg.select(".lines").selectAll("polyline")
+  		.data(pie(dataset), key);
+
+  	polyline.enter()
+  		.append("polyline");
+
+  	polyline
+  		.attr("points", function(d){
+  				var pos = outerArc.centroid(d);
+  				pos[0] = radius * 0.95 * (midAngle(d) < Math.PI ? 1 : -1);
+  				return [arc.centroid(d), outerArc.centroid(d), pos];
+  		});
 
   </script>
 {% endblock %}
