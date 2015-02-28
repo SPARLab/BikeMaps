@@ -131,7 +131,7 @@
           $("#nearmissCheckbox").change(function(){ this.checked ? incidentData.addLayers(nearmisses) : incidentData.removeLayers(nearmisses); });
           $("#hazardCheckbox").change(function(){ this.checked ? incidentData.addLayers(hazards) : incidentData.removeLayers(hazards); });
           $("#theftCheckbox").change(function(){ this.checked ? incidentData.addLayers(thefts) : incidentData.removeLayers(thefts); });
-          $("#officialCheckbox").change(function(){ this.checked ? incidentData.addLayers(officialData) : incidentData.removeLayers(officialData); });
+          $("#officialCheckbox").change(function(){ this.checked ? incidentData.addLayers(officials) : incidentData.removeLayers(officials); });
 
           // Display number of points in user dropdown if admin is logged in
           {% if request.user.is_administrator %}
@@ -178,7 +178,7 @@
               nearmissesUnfiltered = nearmisses,
               hazardsUnfiltered = hazards,
               theftsUnfiltered = thefts,
-              officialUnfiltered = officialData;
+              officialUnfiltered = officials;
           $("input.slider").on("slideStop", function(e){ filterPoints(e.value[0], e.value[1]) });
 
           function filterPoints(start_date, end_date) {
@@ -204,8 +204,8 @@
               d = moment(feature.feature.properties.date);
               return d >= start_date && d <= end_date;
             });
-            officialData = officialUnfiltered.filter(function(feature, layer){
-              d = feature.feature.properties.ACC_DATE ? moment(feature.feature.properties.ACC_DATE, "YYYY/MM/DD") : moment({y: feature.feature.properties.Year, M: 0, d:1});
+            officials = officialUnfiltered.filter(function(feature, layer){
+              d = moment(feature.feature.properties.date);
               return d >= start_date && d <= end_date;
             });
 
@@ -214,7 +214,7 @@
             $("#nearmissCheckbox").is(":checked") && incidentData.addLayers(nearmisses);
             $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
             $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
-            $("#officialCheckbox").is(":checked") && incidentData.addLayers(officialData);
+            $("#officialCheckbox").is(":checked") && incidentData.addLayers(officials);
           };
 
           // Add unfiltered data back
@@ -224,12 +224,12 @@
             nearmisses = nearmissesUnfiltered,
             hazards = hazardsUnfiltered,
             thefts = theftsUnfiltered,
-            officialData = officialUnfiltered;
+            officials = officialUnfiltered;
             $("#collisionCheckbox").is(":checked") && incidentData.addLayers(collisions);
             $("#nearmissCheckbox").is(":checked") && incidentData.addLayers(nearmisses);
             $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
             $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
-            $("#officialCheckbox").is(":checked") && incidentData.addLayers(officialData);
+            $("#officialCheckbox").is(":checked") && incidentData.addLayers(officials);
           };
 
           $("input.slider").on("slide", function(e) {
@@ -246,7 +246,6 @@
               $("div.filter .start-date").text(sliderDate(sliderVal[0]).format("MMM-YYYY"));
               $("div.filter .end-date").text(sliderDate(sliderVal[1]).format("MMM-YYYY"));
               // Add filtered points to map
-              console.log();
               filterPoints(sliderVal[0], sliderVal[1])
             }
             else {

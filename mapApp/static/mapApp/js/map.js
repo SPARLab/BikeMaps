@@ -171,7 +171,6 @@ function serializeClusterData(cluster) {
   return data;
 };
 
-
 // pieChart
 // 	Purpose: Builds the svg DivIcons
 // 	inputs: data as list of objects containing "type", "count", "color", outer chart radius, inner chart radius, and total points for cluster
@@ -250,7 +249,6 @@ function pieChart(data) {
   };
 };
 
-
 // HELPER FUNCTIONS
 function getPopup(layer) {
     var feature = layer.feature,
@@ -263,27 +261,35 @@ function getPopup(layer) {
             popup += 'Incident with';
         else
             popup += 'Due to';
-        popup += ':</strong> ' + feature.properties.incident_with + '<br><strong>Date:</strong> ' + moment(feature.properties.date).format("MMM. D YYYY, h:mma");
+        popup += ':</strong> ' + feature.properties.incident_with + '<br><strong>Date:</strong> ' + moment(feature.properties.date).format("MMM. D, YYYY, h:mma");
         if(feature.properties.details){
           popup += '<br><div class="popup-details"><strong>Details:</strong> ' + feature.properties.details + '</div>';
         }
 
     } else if (type === "hazard") {
-        popup = '<strong>Hazard type:</strong> ' + feature.properties.hazard_type + '<br><strong>Date:</strong> ' + moment(feature.properties.date).format("MMM. D YYYY, h:mma");
+        popup = '<strong>Hazard type:</strong> ' + feature.properties.hazard_type + '<br><strong>Date:</strong> ' + moment(feature.properties.date).format("MMM. D, YYYY, h:mma");
         if(feature.properties.details){
           popup += '<br><div class="popup-details"><strong>Details:</strong> ' + feature.properties.details + '</div>';
         }
 
     } else if (type === "theft") {
-        popup = '<strong>Theft type:</strong> ' + feature.properties.theft_type + '<br><strong>Date:</strong> ' + moment(feature.properties.date).format("MMM. D YYYY, h:mma");
+        popup = '<strong>Theft type:</strong> ' + feature.properties.theft_type + '<br><strong>Date:</strong> ' + moment(feature.properties.date).format("MMM. D, YYYY, h:mma");
         if(feature.properties.details){
           popup += '<br><div class="popup-details"><strong>Details:</strong> ' + feature.properties.details + '</div>';
         }
 
     } else if (type === "official") {
-        // Need to add official_type and details
-        var date = "placeholder";
-        popup = '<strong>Data source: </strong> ' + feature.properties.data_source + '<a href="#" data-toggle="collapse" data-target="#official-metadata"><small>(metadata)</small></a><br>' + '<div id="official-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>' + feature.properties.metadata + '</small></div><strong>Date: </strong>' + date
+        popup = "<strong>Type:</strong> " + feature.properties.official_type;
+        if(feature.properties.details){
+          popup += " (" + feature.properties.details + ")";
+        }
+        if(feature.properties.time){
+          var date = moment(feature.properties.date + "T" + feature.properties.time).format("MMM. D, YYYY, h:mma");
+        }else{
+          var date = moment(feature.properties.date).format("MMM. D, YYYY");
+        }
+        popup += '<br><strong>Date:</strong> ' + date;
+        popup += '<br><strong>Data source: </strong> ' + feature.properties.data_source + '<a href="#" data-toggle="collapse" data-target="#official-metadata"><small> (metadata)</small></a><br>' + '<div id="official-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>' + feature.properties.metadata + '</small></div>';
 
     } else return "error";
 
