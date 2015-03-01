@@ -4,7 +4,7 @@
 //      *  'name' is the data label, e.g. 'Collisions'
 //      *  'count' is the number of items in that class, e.g. '8'
 //      *  'color' will be used to fill the pie slice, 'e.g. #333228791'
-//   * The chart is appended to the DOM as a child of the body element.
+//   * The chart is appended to the DOM as a child of the 'element' parameter.
 //
 //   example dataset
 //   var data = [
@@ -27,8 +27,8 @@
 //     },
 //   ]
 
-function doughnutChart(data) {
-  var svg = d3.select("body")
+function doughnutChart(data, element) {
+  var svg = d3.select(element)
     .append("svg")
     .append("g");
 
