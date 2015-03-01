@@ -42,6 +42,8 @@ Experimental charting
 <script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
 <!-- Icon definitions -->
 <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
+<!-- moment -->
+<script src="{% static 'moment/moment.min.js' %}"></script>
 
 <!-- Viz functions -->
 <!-- Doughnut chart -->
@@ -71,7 +73,26 @@ Experimental charting
           "color": getColor("theft"),
       },
     ]
-    doughnutChart(data, "body");
+    // doughnutChart(data, "body");
+
+    // Create month-wise dataset of counts for each collision type
+    data = {}
+
+    {% for p in points %}
+      var p_type = ('{{ p.p_type|safe }}' == 'fall' ? 'collision':'{{ p.p_type|safe }}'),
+        date = moment("{{ p.date|safe }}").format("MM-YYYY");
+
+      if(!data[p_type])
+        data[p_type] = {};
+
+      data[p_type][date] = data[p_type][date] + 1 || 1;
+    {% endfor %}
+    console.log(data);
+
+    
+
+
+
 
   </script>
 {% endblock %}
