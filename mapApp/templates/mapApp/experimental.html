@@ -49,33 +49,46 @@ Experimental charting
 {% block body %}
   <div id="pieTypes"></div>
 
-  <!-- D3 parallel coords chart -->
   <script charset="utf-8">
     data = {{ points|geojsonfeature:"report_date,date,p_type"|safe}}['features'];
 
-    var pieTypes = dc.pieChart('#pieTypes');
-
-    var ndx           = crossfilter(data),
-        runDimension  = ndx.dimension(function(d) {return d['properties']['p_type'];}),
-        sumGroup = runDimension.group().reduceCount();
-
+    // map p_types of points to nice label
+    var labels = {
+      "collision": "Collisions",
+      "nearmiss": "Nearmisses",
+      "hazard": "Hazards",
+      "theft": "Thefts",
+      "fall": "Falls",
+    }
     var colorScale = d3.scale.ordinal()
       .domain(["collision", "nearmiss", "hazard", "theft", "fall"])
       .range([iconColors.collision, iconColors.nearmiss, iconColors.hazard, iconColors.theft, "#eeeeee"]);
 
+    // Define charts
+    var pieTypes = dc.pieChart('#pieTypes');
+
+    // Pie chart for number of each type of report
+    var ndx           = crossfilter(data),
+        runDimension  = ndx.dimension(function(d) {return d['properties']['p_type'];}),
+        sumGroup = runDimension.group().reduceCount();
+
     pieTypes
       .width(300)
       .height(300)
-      .innerRadius(50)
+      // .innerRadius(50)
       .dimension(runDimension)
       .group(sumGroup)
-
+      .ordering(function(d){ return -d.value })
+      .label(function(d){return labels[d.data.key];})
       .colors(colorScale.range())
       .colorAccessor(function(d){return colorScale.domain().indexOf(d.data.key);});
 
-      // .legend(dc.legend());
-
     pieTypes.render();
+
+    // TODO
+    // Add reset buttons
+    // Add filtering functionality
+    // More charts..
 
   </script>
 {% endblock %}
