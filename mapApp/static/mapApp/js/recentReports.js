@@ -1,9 +1,7 @@
 // Global layer variables
 var collisionsLayer, nearmissesLayer, hazardsLayer, theftsLayer;
 
-// Create the a simple leaflet map centered around Victoria
-function initializeCfaxMap(){
-  // Map init and default layers
+// Initialize the leaflet map
   map = L.map('map', {
       layers: [L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
         attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -11,7 +9,23 @@ function initializeCfaxMap(){
       })],
       worldCopyJump: true,
   });
-};
+
+// Add data to the map
+$(document).ready(function(){
+  if(data.rois.features.length > 0){
+    // Add data (call to recentReports.js)
+    addData(data);
+    // listen for data hover to highlight points and data (call to recentReports.js)
+    listenForHover();
+  } else {
+    map.fitWorld();
+    $('#data').append('<h2>Instructions:</h2><ol>'
+                    + '<li>Login in to your account</li>'
+                    + '<li>Trace an alert area on the home page map</li>'
+                    + '<li>Visit this page to see recent incidents in your alert area</li>'
+                    + '</ol>');
+  }
+});
 
 // add data defined in data variable to data panel and to map as L.circleMarker
 function addData(data){
@@ -114,7 +128,6 @@ function pprint(title, jsonData){
   }
   $('#data').append(str + "</ol>");
 };
-
 
 // Listen for and handle hovering over list item in data pane
 function listenForHover(){

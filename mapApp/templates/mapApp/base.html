@@ -31,28 +31,13 @@
   <meta property="fb:admins" content="569635572" />
 
 
-  <!-- LOAD CSS -->
-  {% block headerCSS %} {% endblock %}
-  <!-- Load icons -->
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-  <!-- Bootstrap -->
+  <!-- EXTERNAL CSS -->
   {% compress css %}
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet" media="screen">
   <link href="{% static 'mapApp/css/common.css' %}" rel="stylesheet">
-
-  <!-- Bootstrap datetime picker -->
-  <link href="{% static 'datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen"/>
   {% endcompress %}
-
-  <!-- lOAD JS -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  {% block headerJS %} {% endblock %}
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-  {% compress js %}
-  <!-- datetime picker -->
-  <script type="text/javascript" src="{% static 'datetimepicker/js/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
-  {% endcompress %}
+  {% block headerCSS %}{% endblock %}
 </head>
 
 
@@ -73,8 +58,17 @@
 
   {% block body %}{% endblock %}
 
-  <!-- Fade out message -->
+  <!-- Google analytics tracker -->
+  {% include 'mapApp/util/google-analytics.html' %}
+
+  <!-- EXTERNAL JS -->
+  {% compress js %}
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  {% endcompress %}
+  {% block footerJS %}{% endblock %}
   <script>
+    // Fade out message
     $(window).load(function(){
       setTimeout(function(){ $('#data-post-alert').fadeOut() }, 7000);
     });
@@ -86,9 +80,6 @@
       });
     });
   </script>
-
-  <!-- Google analytics tracker -->
-  {% include 'mapApp/util/google-analytics.html' %}
 </body>
 
 </html>

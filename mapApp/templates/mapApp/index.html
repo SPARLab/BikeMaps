@@ -1,268 +1,103 @@
 {% extends "mapApp/base.html" %}
+<!-- TODO -->
+<!-- Separate JS out of tips.html, incident_form.html, and draw.html so that only javascript is rendered at the bottom of body -->
 
 {% block title %}BikeMaps{% endblock %}
 {% load staticfiles crispy_forms_tags geojson_tags compress %}
 
 {% block headerCSS %}
-<!-- Load leaflet -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-    <!-- Load marker clustering -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css">
-    <!-- Load draw pluging -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css">
   {% compress css %}
-    <!-- Leaflet Geocoder -->
-    <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}">
-    <!-- font-awesome icons -->
-    <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
-    <!-- bootstrap slider -->
     <link rel="stylesheet" href="{% static 'bootstrap-slider/css/bootstrap-slider.min.css' %}">
-    <!-- user marker plugin -->
+    <link href="{% static 'datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css">
+    <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}">
+    <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
     <link rel="stylesheet" href="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.css' %}">
-    <!-- Local styles -->
     <link rel="stylesheet" href="{% static 'mapApp/css/index.css' %}">
   {% endcompress %}
 {% endblock %}
 
-{% block headerJS %}
-    <!-- Load leaflet -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-    <!-- Load marker clustering -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js"></script>
-
-    {% if not request.mobile %}
-    <!-- Load draw pluging -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js"></script>
-    <!-- // <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw-src.js"></script> -->
-    {% endif %}
-
-    <!-- Spinner -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
-  {% compress js %}
-    <!-- Load heatmap -->
-    <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
-    <!-- Awesome markers -->
-    <script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
-    <!-- Used for pie chart creation -->
-    <!-- d3 v3.4.8 -->
-    <script src="{% static 'd3/d3.min.js' %}" charset="utf-8"></script>
-    <!-- Leaflet Geocoder -->
-    <script src="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script>
-    <!-- Tooltips script -->
-    <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
-    <!-- Leaflet-ajax -->
-    <script src="{% static 'leaflet/plugins/leaflet-ajax/dist/leaflet.ajax.min.js' %}"></script>
-    <!-- Spinner -->
-    <script src="{% static 'leaflet-spin/leaflet.spin.js' %}"></script>
-    <!-- Bootstrap slider -->
-    <script src="{% static 'bootstrap-slider/bootstrap-slider.js' %}"></script>
-    <!-- usermarker plugin -->
-    <script src="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.js' %}"></script>
-    <!-- Load icon definitions -->
-    <script src="{% static 'mapApp/js/icons.js' %}"></script>
-    <!-- moment -->
-    <script src="{% static 'moment/moment.min.js' %}"></script>
-    <!-- Load app js -->
-    <script src="{% static 'mapApp/js/map.js' %}"></script>
-    <script src="{% static 'mapApp/js/override.js' %}"></script>
-  {% endcompress %}
-
-{% endblock %}
-
-<!-- BODY -->
 {% block body %}
-    {% crispy geofenceForm %}
-    {% include 'mapApp/incident_form.html' %}
-
     <div class="page-body">
-        <!-- Leaflet map -->
         <div id="map">
-
-          <!-- Legend -->
           {% include 'mapApp/map_legend.html' %}
         </div>
     </div>
+{% endblock %}
 
-    <!-- JS to control message display and feature creation -->
-    <script>
-        // Initialize the map
-        initialize(scrollZoom=true);
-        addControls(mobile={% if request.mobile %}true{% else %}false{% endif %});
+{% block footerJS %}
+  {% compress js %}
+    <script src="{% static 'bootstrap-slider/bootstrap-slider.js' %}"></script>
+    <script type="text/javascript" src="{% static 'datetimepicker/js/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js"></script>
+    <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
+    <script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    <script src="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.js' %}"></script>
+    <script src="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script>
+    <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
+    <script src="{% static 'mapApp/js/icons.js' %}"></script>
+    <script src="{% static 'mapApp/js/map.js' %}"></script>
+  {% endcompress %}
+  <script>
+    // Fire modal if any form errors
+    $(document).ready(function(){
+      {% if incidentForm.errors %}
+        $('#incidentForm').modal('show');
+      {% elif hazardForm.errors %}
+        $('.nav-tabs a[href="#hazardReport"]').tab('show')
+        $('#incidentForm').modal('show');
+      {% elif theftForm.errors %}
+        $('.nav-tabs a[href="#theftReport"]').tab('show')
+        $('#incidentForm').modal('show');
+      {% elif geofenceForm.errors %}
+        $('#geofenceForm').modal('show');
+      {% endif %}
+    });
 
-        // Load user points from the database
-        var collisions = geojsonMarker({{ collisions|geojsonfeature:"incident_type,incident_with,date,details"|safe }}, "collision").addTo(incidentData).getLayers();
-        var nearmisses = geojsonMarker({{ nearmisses|geojsonfeature:"incident_type,incident_with,date,details"|safe }}, "nearmiss").addTo(incidentData).getLayers();
-        var hazards = geojsonMarker({{ hazards|geojsonfeature:"hazard_type,date,details"|safe }}, "hazard").addTo(incidentData).getLayers();
-        var thefts = geojsonMarker({{ thefts|geojsonfeature:"theft_type,date,details"|safe }}, "theft").addTo(incidentData).getLayers();
-        var officials = geojsonMarker({{ officials|geojsonfeature:"official_type,date,time,details,metadata,data_source"|safe }}, "official").addTo(incidentData).getLayers();
+    // Convert database querysets to geojsons
+    var collisions = {{ collisions|geojsonfeature:"incident_type,incident_with,date,details"|safe }},
+        nearmisses = {{ nearmisses|geojsonfeature:"incident_type,incident_with,date,details"|safe }},
+        hazards = {{ hazards|geojsonfeature:"hazard_type,date,details"|safe }},
+        thefts = {{ thefts|geojsonfeature:"theft_type,date,details"|safe }},
+        officials = {{ officials|geojsonfeature:"official_type,date,time,details,metadata,data_source"|safe }},
+        geofences = {{ geofences|geojsonfeature|safe }};
 
-        // Load user alert areas from the database
-        {% for polygon in geofences %}
-            getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} );
-        {% endfor %}
+    // if zoom parameter in url, set variables
+    {% if zoom %}
+      var zoom = {{ zoom }},
+          lat = {{ lat }},
+          lng = {{ lng }};
+    {% endif %}
 
-        // Set the appropriate map extend and zoom
-        setView({% if zoom %} {{ lat }}, {{ lng }}, {{ zoom}} {% endif %});
+    // Display number of points in user dropdown if admin is logged in
+    {% if request.user.is_administrator %}
+      $(".user-menu").append('<li role="presentation" class="divider"></li>');
+      $(".user-menu").append('<li role="presentation" class="dropdown-header">Points submitted</li>');
+      $(".user-menu").append('<li><a href="#"><small>Collisions: {{collisions|length}}</small></a></li>');
+      $(".user-menu").append('<li><a href="#"><small>Near misses: {{nearmisses|length}}</small></a></li>');
+      $(".user-menu").append('<li><a href="#"><small>Hazards: {{hazards|length}}</small></a></li>');
+      $(".user-menu").append('<li><a href="#"><small>Thefts: {{thefts|length}}</small></a></li>');
 
-        $(document).ready(function(){
-          // Show modals if there are from errors
-          {% if incidentForm.errors %}
-            $(window).load(function(){
-              $('#incidentForm').modal('show');
-            });
-          {% elif hazardForm.errors %}
-            $(window).load(function(){
-              $('.nav-tabs a[href="#hazardReport"]').tab('show')
-              $('#incidentForm').modal('show');
-            });
-          {% elif theftForm.errors %}
-            $(window).load(function(){
-              $('.nav-tabs a[href="#theftReport"]').tab('show')
-              $('#incidentForm').modal('show');
-            });
-          {% elif geofenceForm.errors %}
-            $(window).load(function(){
-              $('#geofenceForm').modal('show');
-            });
-          {% endif %}
+      var total = {{thefts|length}}+{{hazards|length}}+{{collisions|length}}+{{nearmisses|length}}
+      $(".user-menu").append('<li><a href="#"><small>Total: '+total+'</small></a></li>');
+    {% endif %}
+  </script>
+  <script src="{% static 'mapApp/js/index.js' %}"></script>
+  <script src="{% static 'mapApp/js/legend_collapse.js' %}"></script>
 
-          // Add and remove layers individually from the clusters
-          $("#collisionCheckbox").change(function(){ this.checked ? incidentData.addLayers(collisions) : incidentData.removeLayers(collisions); });
-          $("#nearmissCheckbox").change(function(){ this.checked ? incidentData.addLayers(nearmisses) : incidentData.removeLayers(nearmisses); });
-          $("#hazardCheckbox").change(function(){ this.checked ? incidentData.addLayers(hazards) : incidentData.removeLayers(hazards); });
-          $("#theftCheckbox").change(function(){ this.checked ? incidentData.addLayers(thefts) : incidentData.removeLayers(thefts); });
-          $("#officialCheckbox").change(function(){ this.checked ? incidentData.addLayers(officials) : incidentData.removeLayers(officials); });
+  {% crispy geofenceForm %}
+  {% include 'mapApp/incident_form.html' %}
 
-          // Display number of points in user dropdown if admin is logged in
-          {% if request.user.is_administrator %}
-              $(".user-menu").append('<li role="presentation" class="divider"></li>');
-              $(".user-menu").append('<li role="presentation" class="dropdown-header">Points submitted</li>');
-              $(".user-menu").append('<li><a href="#"><small>Collisions: {{collisions|length}}</small></a></li>');
-              $(".user-menu").append('<li><a href="#"><small>Near misses: {{nearmisses|length}}</small></a></li>');
-              $(".user-menu").append('<li><a href="#"><small>Hazards: {{hazards|length}}</small></a></li>');
-              $(".user-menu").append('<li><a href="#"><small>Thefts: {{thefts|length}}</small></a></li>');
+  <!-- Add modal help html -->
+  {% include 'mapApp/util/tips.html' %}
 
-              var total = {{thefts|length}}+{{hazards|length}}+{{collisions|length}}+{{nearmisses|length}}
-              $(".user-menu").append('<li><a href="#"><small>Total: '+total+'</small></a></li>');
-          {% endif %}
+  <!-- Add draw controls and actions -->
+  {% include 'mapApp/util/draw.html' %}
 
-          //vvvvv SLIDER LOGIC should be moved to new .js file. Issue is passing incident data references vvvvv
-          // Initialize the slider
-          $("input.slider").ready(function(){
-            var mySlider = $("input.slider").slider({
-              step: 1,
-              max: (moment().weekYear() - 1970) * 12 + moment().month(), //months since epoch
-              min: (moment().weekYear() - 1980) * 12  + moment().month(), //months since epoch minus 10 years
-
-              range: true,
-              tooltip: 'hide',
-              enabled: false,
-              handle: 'custom',
-
-              formatter: function(val){
-                return sliderDate(val[0]).format("MMM-YYYY") + " : " + sliderDate(val[1]).format("MMM-YYYY");
-              }
-            });
-          });
-
-          // Convert months since epoch into a moment.js date object
-          function sliderDate(m){
-            return moment({
-              year: 1970 + m/12,
-              month: m%12
-            });
-          };
-
-          // Handle slider filtering
-          var collisionsUnfiltered = collisions,
-              nearmissesUnfiltered = nearmisses,
-              hazardsUnfiltered = hazards,
-              theftsUnfiltered = thefts,
-              officialUnfiltered = officials;
-          $("input.slider").on("slideStop", function(e){ filterPoints(e.value[0], e.value[1]) });
-
-          function filterPoints(start_date, end_date) {
-            var d, p;
-            start_date = sliderDate(start_date);
-            end_date = sliderDate(end_date).add(1,'M').subtract(1,'d'); //Get the last day of the month
-
-            incidentData.clearLayers();
-
-            collisions = collisionsUnfiltered.filter(function(feature, layer){
-              d = moment(feature.feature.properties.date);
-              return d >= start_date && d <= end_date;
-            });
-            nearmisses = nearmissesUnfiltered.filter(function(feature, layer){
-              d = moment(feature.feature.properties.date);
-              return d >= start_date && d <= end_date;
-            });
-            thefts = theftsUnfiltered.filter(function(feature, layer){
-              d = moment(feature.feature.properties.date);
-              return d >= start_date && d <= end_date;
-            });
-            hazards = hazardsUnfiltered.filter(function(feature, layer){
-              d = moment(feature.feature.properties.date);
-              return d >= start_date && d <= end_date;
-            });
-            officials = officialUnfiltered.filter(function(feature, layer){
-              d = moment(feature.feature.properties.date);
-              return d >= start_date && d <= end_date;
-            });
-
-            // Add filtered layer back if checkbox is checked
-            $("#collisionCheckbox").is(":checked") && incidentData.addLayers(collisions);
-            $("#nearmissCheckbox").is(":checked") && incidentData.addLayers(nearmisses);
-            $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
-            $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
-            $("#officialCheckbox").is(":checked") && incidentData.addLayers(officials);
-          };
-
-          // Add unfiltered data back
-          function resetPoints(){
-            incidentData.clearLayers();
-            collisions = collisionsUnfiltered,
-            nearmisses = nearmissesUnfiltered,
-            hazards = hazardsUnfiltered,
-            thefts = theftsUnfiltered,
-            officials = officialUnfiltered;
-            $("#collisionCheckbox").is(":checked") && incidentData.addLayers(collisions);
-            $("#nearmissCheckbox").is(":checked") && incidentData.addLayers(nearmisses);
-            $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
-            $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
-            $("#officialCheckbox").is(":checked") && incidentData.addLayers(officials);
-          };
-
-          $("input.slider").on("slide", function(e) {
-            $("div.filter .start-date").text(sliderDate(e.value[0]).format("MMM-YYYY"));
-            $("div.filter .end-date").text(sliderDate(e.value[1]).format("MMM-YYYY"));
-          });
-
-
-          // Filter checkbox handler
-          $("#filterCheckbox").click(function() {
-            if(this.checked) {
-              var sliderVal = $('input.slider').slider('getValue')
-              $("input.slider").slider("enable");
-              $("div.filter .start-date").text(sliderDate(sliderVal[0]).format("MMM-YYYY"));
-              $("div.filter .end-date").text(sliderDate(sliderVal[1]).format("MMM-YYYY"));
-              // Add filtered points to map
-              filterPoints(sliderVal[0], sliderVal[1])
-            }
-            else {
-              $("input.slider").slider("disable");
-              $("div.filter .start-date").text("");
-              $("div.filter .end-date").text("");
-              // Add all points back to map
-              resetPoints();
-            }
-          });
-          //^^^^^^^^^^^^^^^^^^^^^^^^
-        });
-    </script>
-
-    <!-- Add modal help html -->
-    {% include 'mapApp/util/tips.html' %}
-
-    <!-- Add draw controls and actions -->
-    {% include 'mapApp/util/draw.html' %}
 {% endblock %}

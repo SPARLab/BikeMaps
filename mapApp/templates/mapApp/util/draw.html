@@ -28,8 +28,6 @@ function desktopDrawing(){
     L.drawLocal.edit.toolbar.buttons.editDisabled = 'No alert areas to edit.';
     L.drawLocal.edit.toolbar.buttons.removeDisabled = 'No alert areas to delete.';
 
-
-    {% with DISABLE_GEOFENCES=False %}
     /* ADD THE CONTROL TO LEAFLET MAP */
     {% if not request.mobile %}
     map.addControl(new L.Control.Draw({
@@ -41,21 +39,20 @@ function desktopDrawing(){
                 icon:icons["bikeGreyIcon"]
             },
             polygon:
-                {% if request.user.is_authenticated and not DISABLE_GEOFENCES %}
+                {% if request.user.is_authenticated %}
                 { allowIntersection: false }
                 {% else %}
                 false
                 {% endif %}
         },
         edit:
-            {% if request.user.is_authenticated and not DISABLE_GEOFENCES %}
+            {% if request.user.is_authenticated %}
             { featureGroup: alertAreas }
             {% else %}
             false
             {% endif %}
     }));
     {% endif %}
-    {% endwith %}
 
     // Add a point editing control for admins
     {% if request.user.is_administrator %}
