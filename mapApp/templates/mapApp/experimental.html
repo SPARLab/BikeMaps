@@ -8,10 +8,10 @@ Experimental charting
 
 
 {% block headerCSS %}
-  <!-- Load leaflet -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-  <!-- font-awesome icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css">
   <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.css">
+
   <!-- Local styles -->
   <style media="screen">
   svg {
@@ -32,18 +32,13 @@ Experimental charting
 
 
 {% block headerJS %}
-<!-- d3 v3.4.8 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
-<!-- moment.js date library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.11/crossfilter.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
-<!-- Load leaflet -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-<!-- Awesome markers -->
 <script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
-<!-- Icon definitions -->
 <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
-<!-- moment -->
-<script src="{% static 'moment/moment.min.js' %}"></script>
 
 <!-- Viz functions -->
 <!-- Doughnut chart -->
@@ -73,25 +68,27 @@ Experimental charting
           "color": getColor("theft"),
       },
     ]
-    // doughnutChart(data, "body");
+    doughnutChart(data, "body");
 
     // Create month-wise dataset of counts for each collision type
-    data = {}
+    // {% for p in points %}
+    //   var p_type = ('{{ p.p_type|safe }}' == 'fall' ? 'collision':'{{ p.p_type|safe }}'),
+    //     date = moment("{{ p.date|safe }}").format("MM-YYYY");
+    //
+    //   if(!data[p_type])
+    //     data[p_type] = {};
+    //
+    //   data[p_type][date] = data[p_type][date] + 1 || 1;
+    // {% endfor %}
 
-    {% for p in points %}
-      var p_type = ('{{ p.p_type|safe }}' == 'fall' ? 'collision':'{{ p.p_type|safe }}'),
-        date = moment("{{ p.date|safe }}").format("MM-YYYY");
 
-      if(!data[p_type])
-        data[p_type] = {};
-
-      data[p_type][date] = data[p_type][date] + 1 || 1;
-    {% endfor %}
+    data = {
+        "collision": {{ collisions|geojsonfeature:"date,report_date"|safe }},
+        "nearmiss": {{ nearmisses|geojsonfeature:"date,report_date"|safe }},
+        "hazard": {{ hazards|geojsonfeature:"date,report_date"|safe }},
+        "theft": {{ thefts|geojsonfeature:"date,report_date"|safe }},
+    }
     console.log(data);
-
-    
-
-
 
 
   </script>
