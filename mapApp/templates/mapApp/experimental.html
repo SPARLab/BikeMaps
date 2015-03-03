@@ -47,49 +47,35 @@ Experimental charting
 
 
 {% block body %}
+  <div id="pieTypes"></div>
+
   <!-- D3 parallel coords chart -->
   <script charset="utf-8">
-    var data = [
-      {
-          "name": "Collisions",
-          "count": {{ collisions|length }},
-          "color": getColor("collision"),
-      },{
-          "name": "Near misses",
-          "count": {{ nearmisses|length }},
-          "color": getColor("nearmiss"),
-      },{
-          "name": "Hazards",
-          "count": {{ hazards|length }},
-          "color": getColor("hazard"),
-      },{
-          "name": "Thefts",
-          "count": {{ thefts|length }},
-          "color": getColor("theft"),
-      },
-    ]
-    doughnutChart(data, "body");
+    data = {{ points|geojsonfeature:"report_date,date,p_type"|safe}}['features'];
 
-    // Create month-wise dataset of counts for each collision type
-    // {% for p in points %}
-    //   var p_type = ('{{ p.p_type|safe }}' == 'fall' ? 'collision':'{{ p.p_type|safe }}'),
-    //     date = moment("{{ p.date|safe }}").format("MM-YYYY");
-    //
-    //   if(!data[p_type])
-    //     data[p_type] = {};
-    //
-    //   data[p_type][date] = data[p_type][date] + 1 || 1;
-    // {% endfor %}
+    var pieTypes = dc.pieChart('#pieTypes');
 
+    var ndx           = crossfilter(data),
+        runDimension  = ndx.dimension(function(d) {return d['properties']['p_type'];}),
+        sumGroup = runDimension.group().reduceCount();
 
-    data = {
-        "collision": {{ collisions|geojsonfeature:"date,report_date"|safe }},
-        "nearmiss": {{ nearmisses|geojsonfeature:"date,report_date"|safe }},
-        "hazard": {{ hazards|geojsonfeature:"date,report_date"|safe }},
-        "theft": {{ thefts|geojsonfeature:"date,report_date"|safe }},
-    }
-    console.log(data);
+    var colorScale = d3.scale.ordinal()
+      .domain(["collision", "nearmiss", "hazard", "theft", "fall"])
+      .range([iconColors.collision, iconColors.nearmiss, iconColors.hazard, iconColors.theft, "#eeeeee"]);
 
+    pieTypes
+      .width(300)
+      .height(300)
+      .innerRadius(50)
+      .dimension(runDimension)
+      .group(sumGroup)
+
+      .colors(colorScale.range())
+      .colorAccessor(function(d){return colorScale.domain().indexOf(d.data.key);});
+
+      // .legend(dc.legend());
+
+    pieTypes.render();
 
   </script>
 {% endblock %}
