@@ -8,39 +8,34 @@ Experimental charting
 
 
 {% block headerCSS %}
-  <!-- Load leaflet -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-  <!-- font-awesome icons -->
   <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
-  <!-- Local styles -->
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/dc/1.7.0/dc.css" media="screen">
+
   <style media="screen">
-  svg {
-    width: 100%;
-    height: 100%;
-  }
-  path.slice{
-    stroke-width:2px;
-  }
-  polyline{
-    opacity: .3;
-    stroke: black;
-    stroke-width: 2px;
-    fill: none;
-  }
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+    path.slice{
+      stroke-width:2px;
+    }
+    polyline{
+      opacity: .3;
+      stroke: black;
+      stroke-width: 2px;
+      fill: none;
+    }
   </style>
 {% endblock %}
 
-
 {% block headerJS %}
-<!-- d3 v3.4.8 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
-<!-- moment.js date library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.11/crossfilter.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/dc/1.7.0/dc.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
-<!-- Load leaflet -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-<!-- Awesome markers -->
 <script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
-<!-- Icon definitions -->
 <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
 
 <!-- Viz functions -->
@@ -72,6 +67,15 @@ Experimental charting
       },
     ]
     doughnutChart(data);
-  
+
+    data = {
+      "collision": {{ collisions|geojsonfeature:"date,report_date"|safe }},
+      "nearmiss": {{ nearmisses|geojsonfeature:"date,report_date"|safe }},
+      "hazard": {{ hazards|geojsonfeature:"date,report_date"|safe }},
+      "theft": {{ thefts|geojsonfeature:"date,report_date"|safe }}
+    };
+
+    console.log(data);
+
   </script>
 {% endblock %}
