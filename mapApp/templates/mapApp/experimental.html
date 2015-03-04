@@ -40,12 +40,11 @@ Experimental charting
       "nearmiss": "Nearmisses",
       "hazard": "Hazards",
       "theft": "Thefts",
-      "fall": "Falls",
     }
     // map p_type to appropriate icon color
     var colorScale = d3.scale.ordinal()
-      .domain(["collision", "nearmiss", "hazard", "theft", "fall"])
-      .range([iconColors.collision, iconColors.nearmiss, iconColors.hazard, iconColors.theft, "#eeeeee"]);
+      .domain(["collision", "nearmiss", "hazard", "theft"])
+      .range([iconColors.collision, iconColors.nearmiss, iconColors.hazard, iconColors.theft]);
 
 
     // Define charts

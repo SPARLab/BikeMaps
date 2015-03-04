@@ -338,7 +338,7 @@ function getPopup(layer) {
 
   if (type === "collision" || type === "nearmiss") {
     popup = '<strong>Type:</strong> ' + feature.properties.incident_type + '<br><strong>';
-    if (feature.properties.p_type != "Fall") popup += 'Incident with';
+    if (feature.properties.incident_type != "Fall") popup += 'Incident with';
     else popup += 'Due to';
     popup += ':</strong> ' + feature.properties.incident_with + '<br><strong>Date:</strong> ' + moment(feature.properties.date).format("MMM. D, YYYY, h:mma");
 

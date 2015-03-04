@@ -49,7 +49,8 @@ def getIncidentType(usr_choice):
 	for t,choice in Incident.INCIDENT_CHOICES:
 		for p,q in choice:
 			if p == usr_choice:
-				return t.replace(" ", "").lower()
+				if t == "Fall": return "collision"
+				else: return t.replace(" ", "").lower()
 
 @require_POST
 def postHazard(request):

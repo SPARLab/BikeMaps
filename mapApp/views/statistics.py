@@ -54,7 +54,7 @@ def stats(request):
 def experimental(request):
 	user = request.user
 
-	collisions = Incident.objects.filter(p_type__exact="collision") | Incident.objects.filter(p_type__exact="fall")
+	collisions = Incident.objects.filter(p_type__exact="collision")
 	nearmisses = Incident.objects.filter(p_type__exact="nearmiss")
 
 	context = {
