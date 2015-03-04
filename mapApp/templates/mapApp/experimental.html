@@ -28,7 +28,7 @@ Experimental charting
   </div>
 
   <div id="barWeek" class="text-center">
-    <strong>Reports this week</strong>
+    <strong>Reports Summary by Weekday</strong>
     <a class='reset' href='javascript:barWeek.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
     <br>
   </div>
@@ -124,9 +124,9 @@ Experimental charting
     barWeek
       .width(700)
       .height(300)
-      .margins({top: 10, right: 50, bottom: 30, left: 40})
+      .margins({top: 10, right: 10, bottom: 20, left: 35})
       .x(d3.scale.linear().domain([-0.5,6.5]))
-      .xAxisLabel("Weekday")
+      // .xAxisLabel("Weekday")
       .y(d3.scale.linear())
       .yAxisLabel("Count")
       .centerBar(true)
