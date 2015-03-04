@@ -11,12 +11,26 @@ Experimental charting
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css">
   <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.css">
+  <style>
+    /*#barWeek rect {
+      stroke: none;
+      fill: none;
+    }*/
+  </style>
+
 {% endblock %}
 
 {% block body %}
-  <div id="pieTypes">
-    Total Number of reports
+  <div id="pieTypes" class="text-center">
+    <strong>Total Number of reports</strong>
     <a class='reset' href='javascript:pieTypes.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+    <br>
+  </div>
+
+  <div id="barWeek" class="text-center">
+    <strong>Reports this week</strong>
+    <a class='reset' href='javascript:barWeek.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+    <br>
   </div>
 
 {% endblock %}
@@ -30,11 +44,15 @@ Experimental charting
   <script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
   <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
 
-  <script src="{% static 'mapApp/js/viz/doughnut.js' %}" charset="utf-8"></script>
+  <!-- <script src="{% static 'mapApp/js/viz/doughnut.js' %}" charset="utf-8"></script> -->
   <script charset="utf-8">
     data = {{ points|geojsonfeature:"report_date,date,p_type"|safe}}['features'];
 
-    // map p_types of points to nice label
+    // {% for p in points %
+    // console.log("{{ p.incident.incident_type|safe}}");
+    // {% endfor %
+
+    // map p_types of points to nice labe
     var labels = {
       "collision": "Collisions",
       "nearmiss": "Nearmisses",
@@ -46,20 +64,22 @@ Experimental charting
       .domain(["collision", "nearmiss", "hazard", "theft"])
       .range([iconColors.collision, iconColors.nearmiss, iconColors.hazard, iconColors.theft]);
 
-
     // Define charts
-    var pieTypes = dc.pieChart('#pieTypes');
+    var pieTypes = dc.pieChart("#pieTypes");
+    var barWeek = dc.barChart("#barWeek");
 
 
     // Pie chart for number of each type of report
     var ndx           = crossfilter(data),
-        typeDimension  = ndx.dimension(function(d) {return d['properties']['p_type'];}),
-        countTypes = typeDimension.group().reduceCount();
+        typeDimension = ndx.dimension(function(d) {return d['properties']['p_type'];}),
+        countTypes    = typeDimension.group().reduceCount();
+
+    var dayOfWeekDimension
 
     pieTypes
       .width(300)
       .height(300)
-      // .innerRadius(50)
+      .innerRadius(50)
       .dimension(typeDimension)
       .group(countTypes)
       .ordering(function(d){ return -d.value })
@@ -68,12 +88,69 @@ Experimental charting
       .colorAccessor(function(d){return colorScale.domain().indexOf(d.data.key);});
 
 
+    // Bar chart for reports this week
+    var weekdayScale = d3.scale.quantize()
+        .domain([0,1,2,3,4,5,6])
+        .range(moment.weekdays());
+
+    var weekdayDimension = ndx.dimension(function(d) {return moment(d['properties']['date']).weekday()}),
+        weekdayCount = weekdayDimension.group().reduce(
+          function (p,v) {
+            var p_type = v.properties.p_type;
+            if(p_type === "collision") p.collision++;
+            else if(p_type === "nearmiss") p.nearmiss++;
+            else if(p_type === "hazard") p.hazard++;
+            else if(p_type === "theft") p.theft++;
+            return p;
+          },
+          function (p,v) {
+            var p_type = v.properties.p_type;
+            if(p_type === "collision") p.collision--;
+            else if(p_type === "nearmiss") p.nearmiss--;
+            else if(p_type === "hazard") p.hazard--;
+            else if(p_type === "theft") p.theft--;
+            return p;
+          },
+          function () {
+            return {
+              collision: 0,
+              nearmiss: 0,
+              hazard: 0,
+              theft: 0
+            };
+          }
+        );
+
+    barWeek
+      .width(700)
+      .height(300)
+      .margins({top: 10, right: 50, bottom: 30, left: 40})
+      .x(d3.scale.linear().domain([-0.5,6.5]))
+      .xAxisLabel("Weekday")
+      .y(d3.scale.linear())
+      .yAxisLabel("Count")
+      .centerBar(true)
+      .elasticY(true)
+      .dimension(weekdayDimension)
+      .group(weekdayCount, "Collisions").valueAccessor(function(d){return d.value.collision; })
+      .stack(weekdayCount, "Nearmisses", function(d){ return d.value.nearmiss; })
+      .stack(weekdayCount, "Hazards", function(d){ return d.value.hazard; })
+      .stack(weekdayCount, "Thefts", function(d){ return d.value.theft; })
+      .brushOn(true)
+      .colors(colorScale.range())
+      .colorAccessor(function(d){return d.layer;});
+
+    barWeek.xAxis().tickValues([0,1,2,3,4,5,6]);
+    barWeek.xAxis().tickFormat(function(v){ return weekdayScale(v); });
+    barWeek.render();
+
+
     // TODO
-    // Add reset buttons
-    // Add filtering functionality
+    // Filter weekdays data to only be for this week
     // More charts..
 
     dc.renderAll();
     dc.redrawAll();
   </script>
+
 {% endblock %}
