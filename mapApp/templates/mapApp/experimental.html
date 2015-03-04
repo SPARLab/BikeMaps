@@ -21,17 +21,35 @@ Experimental charting
 {% endblock %}
 
 {% block body %}
-  <div id="pieTypes" class="text-center">
-    <strong>Total Number of reports</strong>
-    <a class='reset' href='javascript:pieTypes.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
-    <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div id="scatter" class="text-center">
+          <strong>Title</strong>
+          <a class='reset' href='javascript:scatter.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-4">
+        <div id="pieTypes" class="text-center">
+          <strong>Total Number of reports</strong>
+          <a class='reset' href='javascript:pieTypes.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+          <br>
+        </div>
+      </div>
+
+      <div class="col-xs-8">
+        <div id="barWeek" class="text-center">
+          <strong>Reports Summary by Weekday</strong>
+          <a class='reset' href='javascript:barWeek.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+          <br>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div id="barWeek" class="text-center">
-    <strong>Reports Summary by Weekday</strong>
-    <a class='reset' href='javascript:barWeek.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
-    <br>
-  </div>
 
 {% endblock %}
 
@@ -67,6 +85,7 @@ Experimental charting
     // Define charts
     var pieTypes = dc.pieChart("#pieTypes");
     var barWeek = dc.barChart("#barWeek");
+    // var scatter = dc.bubbleChart("#scatter");
 
 
     // Pie chart for number of each type of report
@@ -93,7 +112,7 @@ Experimental charting
         .domain([0,1,2,3,4,5,6])
         .range(moment.weekdays());
 
-    var weekdayDimension = ndx.dimension(function(d) {return moment(d['properties']['date']).weekday()}),
+    var weekdayDimension = ndx.dimension(function(d) {return (moment(d['properties']['date']).weekday()+6)%7 }),
         weekdayCount = weekdayDimension.group().reduce(
           function (p,v) {
             var p_type = v.properties.p_type;
@@ -126,7 +145,6 @@ Experimental charting
       .height(300)
       .margins({top: 10, right: 10, bottom: 20, left: 35})
       .x(d3.scale.linear().domain([-0.5,6.5]))
-      // .xAxisLabel("Weekday")
       .y(d3.scale.linear())
       .yAxisLabel("Count")
       .centerBar(true)
@@ -141,11 +159,36 @@ Experimental charting
       .colorAccessor(function(d){return d.layer;});
 
     barWeek.xAxis().tickValues([0,1,2,3,4,5,6]);
-    barWeek.xAxis().tickFormat(function(v){ return weekdayScale(v); });
+    barWeek.xAxis().tickFormat(function(v){ return weekdayScale((v+1)%7); });
     barWeek.render();
 
 
+    // Bubble scatter plot
+    // Incident type as bubble, count of type as radius
+    // X axis is day delay to report
+    // Y axis is ...
+
+    // scatter
+    //   .width(700)
+    //   .height(300)
+    //   .x()
+    //   .y()
+    //
+    //   .dimension()
+    //   .group()
+    //   .radiusValueAccessor()
+    //   // .r() // Try default
+    //   // .minRadiusWithLabel([radius]) //Try default
+    //   // .maxBubbleRelativeSize([relativeSize]) // Try default
+    //
+    //   .elasticRadius(true)
+    //   .elasticX(true)
+    //   .elasticY(true)
+
+
+
     // TODO
+    // Move weekend to end of bar chart
     // Filter weekdays data to only be for this week
     // More charts..
 
