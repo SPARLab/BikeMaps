@@ -62,57 +62,36 @@ Experimental charting
   <script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
   <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
 
-  <!-- <script src="{% static 'mapApp/js/viz/doughnut.js' %}" charset="utf-8"></script> -->
   <script charset="utf-8">
-    data = {{ points|geojsonfeature:"report_date,date,p_type"|safe}}['features'];
-
-    // {% for p in points %
-    // console.log("{{ p.incident.incident_type|safe}}");
-    // {% endfor %
-
-    // map p_types of points to nice labe
+    // map p_types of points to nice labels
     var labels = {
       "collision": "Collisions",
       "nearmiss": "Nearmisses",
       "hazard": "Hazards",
       "theft": "Thefts",
     }
-    // map p_type to appropriate icon color
+    // Define scales
+    // map p_type to appropriate colors
     var colorScale = d3.scale.ordinal()
       .domain(["collision", "nearmiss", "hazard", "theft"])
       .range([iconColors.collision, iconColors.nearmiss, iconColors.hazard, iconColors.theft]);
 
-    // Define charts
-    var pieTypes = dc.pieChart("#pieTypes");
-    var barWeek = dc.barChart("#barWeek");
-    // var scatter = dc.bubbleChart("#scatter");
-
-
-    // Pie chart for number of each type of report
-    var ndx           = crossfilter(data),
-        typeDimension = ndx.dimension(function(d) {return d['properties']['p_type'];}),
-        countTypes    = typeDimension.group().reduceCount();
-
-    var dayOfWeekDimension
-
-    pieTypes
-      .width(300)
-      .height(300)
-      .innerRadius(50)
-      .dimension(typeDimension)
-      .group(countTypes)
-      .ordering(function(d){ return -d.value })
-      .label(function(d){return labels[d.data.key];})
-      .colors(colorScale.range())
-      .colorAccessor(function(d){return colorScale.domain().indexOf(d.data.key);});
-
-
-    // Bar chart for reports this week
     var weekdayScale = d3.scale.quantize()
         .domain([0,1,2,3,4,5,6])
         .range(moment.weekdays());
 
-    var weekdayDimension = ndx.dimension(function(d) {return (moment(d['properties']['date']).weekday()+6)%7 }),
+    // Define charts
+    var pieTypes = dc.pieChart("#pieTypes");
+    var barWeek = dc.barChart("#barWeek");
+    var scatter = dc.bubbleChart("#scatter");
+
+    // Define crossfilter dataset
+    var data = crossfilter({{ points|geojsonfeature:"report_date,date,p_type"|safe}}['features']);
+    // Define dimensions
+    var typeDimension = data.dimension(function(d) {return d['properties']['p_type'];}),
+        weekdayDimension = data.dimension(function(d) {return (moment(d['properties']['date']).weekday()+6)%7 }),
+    // Define groups
+    var countTypes = typeDimension.group().reduceCount(),
         weekdayCount = weekdayDimension.group().reduce(
           function (p,v) {
             var p_type = v.properties.p_type;
@@ -140,6 +119,21 @@ Experimental charting
           }
         );
 
+
+    // Pie chart for number of each type of report
+    pieTypes
+      .width(300)
+      .height(300)
+      .innerRadius(50)
+      .dimension(typeDimension)
+      .group(countTypes)
+      .ordering(function(d){ return -d.value })
+      .label(function(d){return labels[d.data.key];})
+      .colors(colorScale.range())
+      .colorAccessor(function(d){return colorScale.domain().indexOf(d.data.key);});
+
+
+    // Bar chart for reports this week
     barWeek
       .width(700)
       .height(300)
@@ -164,33 +158,32 @@ Experimental charting
 
 
     // Bubble scatter plot
-    // Incident type as bubble, count of type as radius
-    // X axis is day delay to report
-    // Y axis is ...
+      // Incident type as bubble, count of type as radius
+      // X axis is day delay to report
+      // Y axis is ...
 
-    // scatter
-    //   .width(700)
-    //   .height(300)
-    //   .x()
-    //   .y()
-    //
-    //   .dimension()
-    //   .group()
-    //   .radiusValueAccessor()
-    //   // .r() // Try default
-    //   // .minRadiusWithLabel([radius]) //Try default
-    //   // .maxBubbleRelativeSize([relativeSize]) // Try default
-    //
-    //   .elasticRadius(true)
-    //   .elasticX(true)
-    //   .elasticY(true)
+    scatter
+      .width(700)
+      .height(300)
+      .x()
+      .y()
+
+      .dimension()
+      .group()
+      .radiusValueAccessor()
+      // .r() // Try default
+      // .minRadiusWithLabel([radius]) //Try default
+      // .maxBubbleRelativeSize([relativeSize]) // Try default
+
+      .elasticRadius(true)
+      .elasticX(true)
+      .elasticY(true)
 
 
 
     // TODO
-    // Move weekend to end of bar chart
-    // Filter weekdays data to only be for this week
     // More charts..
+    // Create new js file for dc script
 
     dc.renderAll();
     dc.redrawAll();
