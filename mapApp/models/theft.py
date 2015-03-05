@@ -65,7 +65,7 @@ class Theft(Point):
     #################### FIELDS
     point = models.OneToOneField(Point, parent_link=True)
 
-    theft_type = models.CharField(
+    i_type = models.CharField(
         'What was stolen?',
         max_length=100,
         choices=THEFT_CHOICES

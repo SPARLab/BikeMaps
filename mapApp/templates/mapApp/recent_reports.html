@@ -35,10 +35,10 @@
   <script>
     // Create geojson datasets from django context to pass to recentReports.js more easily
     var data = {
-      "collisions": {{ collisions|geojsonfeature:"incident_type,incident_with,date,time,details,pk"|safe }},
-      "nearmisses": {{ nearmisses|geojsonfeature:"incident_type,incident_with,date,time,details,pk"|safe }},
-      "hazards": {{ hazards|geojsonfeature:"hazard_type,date,time,details,pk"|safe }},
-      "thefts": {{ thefts|geojsonfeature:"theft_type,date,time,details,pk"|safe }},
+      "collisions": {{ collisions|geojsonfeature:"i_type,incident_with,date,time,details,pk"|safe }},
+      "nearmisses": {{ nearmisses|geojsonfeature:"i_type,incident_with,date,time,details,pk"|safe }},
+      "hazards": {{ hazards|geojsonfeature:"i_type,date,time,details,pk"|safe }},
+      "thefts": {{ thefts|geojsonfeature:"i_type,date,time,details,pk"|safe }},
       "rois": {{ geofences|geojsonfeature|safe}}
     }
   </script>

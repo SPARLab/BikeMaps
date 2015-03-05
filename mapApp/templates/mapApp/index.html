@@ -61,10 +61,10 @@
     });
 
     // Convert database querysets to geojsons
-    var collisions = {{ collisions|geojsonfeature:"incident_type,incident_with,date,details"|safe }},
-        nearmisses = {{ nearmisses|geojsonfeature:"incident_type,incident_with,date,details"|safe }},
-        hazards = {{ hazards|geojsonfeature:"hazard_type,date,details"|safe }},
-        thefts = {{ thefts|geojsonfeature:"theft_type,date,details"|safe }},
+    var collisions = {{ collisions|geojsonfeature:"i_type,incident_with,date,details"|safe }},
+        nearmisses = {{ nearmisses|geojsonfeature:"i_type,incident_with,date,details"|safe }},
+        hazards = {{ hazards|geojsonfeature:"i_type,date,details"|safe }},
+        thefts = {{ thefts|geojsonfeature:"i_type,date,details"|safe }},
         officials = {{ officials|geojsonfeature:"official_type,date,time,details,metadata,data_source"|safe }},
         geofences = {{ geofences|geojsonfeature|safe }};
 

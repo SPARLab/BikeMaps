@@ -92,7 +92,7 @@ function pprint(title, jsonData){
       if(title === "Collisions"){
         str += "<li layer='collision' pk=" + obj.properties.pk + ">"
           + "<strong>Date: </strong>" + moment(obj.properties.date).calendar() + "<br>"
-          + "<strong>Type: </strong>" + obj.properties.incident_type + " (" + obj.properties.incident_with + ")<br>";
+          + "<strong>Type: </strong>" + obj.properties.i_type + " (" + obj.properties.incident_with + ")<br>";
           if(obj.properties.incident_detail != ''){
             str+= "<strong>Description: </strong>" + obj.properties.incident_detail + "</li>";
           }
@@ -100,7 +100,7 @@ function pprint(title, jsonData){
       else if(title === "Nearmisses") {
         str += "<li layer='nearmiss' pk=" + obj.properties.pk + ">"
           + "<strong>Date: </strong>" + moment(obj.properties.date).calendar() + "<br>"
-          + "<strong>Type: </strong>" + obj.properties.incident_type + " (" + obj.properties.incident_with + ")<br>";
+          + "<strong>Type: </strong>" + obj.properties.i_type + " (" + obj.properties.incident_with + ")<br>";
           if(obj.properties.details != ''){
             str+= "<strong>Description: </strong>" + obj.properties.details + "</li>";
           }
@@ -108,7 +108,7 @@ function pprint(title, jsonData){
       else if(title === "Hazards"){
         str += "<li layer='hazard' pk=" + obj.properties.pk + ">"
           + "<strong>Date: </strong>" + moment(obj.properties.date).calendar() + "<br>"
-          + "<strong>Type: </strong>" + obj.properties.hazard_type + "<br>";
+          + "<strong>Type: </strong>" + obj.properties.i_type + "<br>";
           if(obj.properties.details != ''){
             str += "<strong>Description: </strong>" + obj.properties.details + "</li>";
           };
@@ -116,7 +116,7 @@ function pprint(title, jsonData){
       else if(title === "Thefts"){
         str += "<li layer='theft' pk=" + obj.properties.pk + ">"
           + "<strong>Date: </strong>" + moment(obj.properties.date).calendar() + "<br>"
-          + "<strong>Type: </strong>" + obj.properties.theft_type + "<br>";
+          + "<strong>Type: </strong>" + obj.properties.i_type + "<br>";
         if(obj.properties.details != ''){
           str += "<strong>Description: </strong>" + obj.properties.details + "</li>";
         };
