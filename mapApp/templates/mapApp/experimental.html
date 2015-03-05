@@ -63,6 +63,14 @@ Experimental charting
   <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
 
   <script charset="utf-8">
+    var collisions = {{ collisions|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
+    var nearmisses = {{ nearmisses|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
+    var hazards = {{ hazards|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
+    var thefts = {{ thefts|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
+
+    var data = collisions.concat(nearmisses).concat(hazards).concat(thefts);
+
+
     // map p_types of points to nice labels
     var labels = {
       "collision": "Collisions",
@@ -83,15 +91,15 @@ Experimental charting
     // Define charts
     var pieTypes = dc.pieChart("#pieTypes");
     var barWeek = dc.barChart("#barWeek");
-    var scatter = dc.bubbleChart("#scatter");
+    // var scatter = dc.bubbleChart("#scatter");
 
     // Define crossfilter dataset
-    var data = crossfilter({{ points|geojsonfeature:"report_date,date,p_type"|safe}}['features']);
+    var xf = crossfilter(data);
     // Define dimensions
-    var typeDimension = data.dimension(function(d) {return d['properties']['p_type'];}),
-        weekdayDimension = data.dimension(function(d) {return (moment(d['properties']['date']).weekday()+6)%7 }),
+    var p_typeDimension = xf.dimension(function(d) {return d['properties']['p_type'];}),
+        weekdayDimension = xf.dimension(function(d) {return (moment(d['properties']['date']).weekday()+6)%7 });
     // Define groups
-    var countTypes = typeDimension.group().reduceCount(),
+    var countTypes = p_typeDimension.group().reduceCount(),
         weekdayCount = weekdayDimension.group().reduce(
           function (p,v) {
             var p_type = v.properties.p_type;
@@ -124,14 +132,15 @@ Experimental charting
     pieTypes
       .width(300)
       .height(300)
-      .innerRadius(50)
-      .dimension(typeDimension)
+      // .innerRadius(50)
+      .dimension(p_typeDimension)
       .group(countTypes)
       .ordering(function(d){ return -d.value })
       .label(function(d){return labels[d.data.key];})
       .colors(colorScale.range())
       .colorAccessor(function(d){return colorScale.domain().indexOf(d.data.key);});
 
+    pieTypes.render();
 
     // Bar chart for reports this week
     barWeek
@@ -162,22 +171,37 @@ Experimental charting
       // X axis is day delay to report
       // Y axis is ...
 
-    scatter
-      .width(700)
-      .height(300)
-      .x()
-      .y()
+      // var i_typeDimension = xf.dimension(function(d) {return d['properties']['i_type'];});
+      //
+      // var tempGroup = i_typeDimension.group().reduce(
+      //   function(p,v){
+      //     console.log(v);
+      //     return p += 1;
+      //   },
+      //   function(p,v){
+      //     return p -= 1;
+      //   },
+      //   function(){
+      //     return 0;
+      //   }
+      // );
 
-      .dimension()
-      .group()
-      .radiusValueAccessor()
-      // .r() // Try default
-      // .minRadiusWithLabel([radius]) //Try default
-      // .maxBubbleRelativeSize([relativeSize]) // Try default
-
-      .elasticRadius(true)
-      .elasticX(true)
-      .elasticY(true)
+    // scatter
+    //   .width(700)
+    //   .height(300)
+    //   .x()
+    //   .y()
+    //
+    //   .dimension()
+    //   .group()
+    //   .radiusValueAccessor()
+    //   // .r() // Try default
+    //   // .minRadiusWithLabel([radius]) //Try default
+    //   // .maxBubbleRelativeSize([relativeSize]) // Try default
+    //
+    //   .elasticRadius(true)
+    //   .elasticX(true)
+    //   .elasticY(true)
 
 
 
