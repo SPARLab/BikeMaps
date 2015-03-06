@@ -7,3 +7,4 @@ from exportData import getPoints, getIncidents, getHazards, getThefts
 from termsAndConditions import termsAndConditions
 from statistics import stats, experimental
 from recentReports import recentReports
+from exportDataApi import getPointsApi, getIncidentsApi, getHazardsApi, getTheftsApi, getOfficialApi
