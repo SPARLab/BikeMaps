@@ -48,12 +48,13 @@ Experimental charting
       </div>
 
       <div class="col-xs-12">
-        <div id="barYear" class="text-center">
-            <strong>Reports Per Day for the Past Year</strong>
-            <a class='reset' href='javascript:barYear.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+        <div id="barDate" class="text-center">
+            <strong>Incidents Per Day for the Past Year</strong>
+            <a class='reset' href='javascript:barDate.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
             <br>
         </div>
       </div>
+      <a class='reset' href='javascript:dc.filterAll();dc.renderAll();'>reset all</a>
     </div>
   </div>
 
@@ -99,12 +100,11 @@ Experimental charting
     // Define charts
     var pieTypes = dc.pieChart("#pieTypes");
     var barWeek = dc.barChart("#barWeek");
-    var barYear = dc.barChart("#barYear");
-
-    // var scatter = dc.bubbleChart("#scatter");
+    var barDate = dc.barChart("#barDate");
 
     // Define crossfilter dataset
     var xf = crossfilter(data);
+
     // Define dimensions
     var p_typeDimension = xf.dimension(function(d) {return d['properties']['p_type'];}),
         weekdayDimension = xf.dimension(function(d) {return (moment(d['properties']['date']).weekday()+6)%7 }),
@@ -202,9 +202,9 @@ Experimental charting
     barWeek.render();
 
     // bar chart of total reports per day
-    barYear
+    barDate
       .width(1000)
-      .height(200)
+      .height(175)
       .x(d3.scale.linear().domain([-360, 0]))
       .yAxisLabel("Count")
       .centerBar(true)
@@ -218,55 +218,13 @@ Experimental charting
       .colors(colorScale.range())
       .colorAccessor(function(d){return d.layer;});
 
-    barYear.yAxis().tickFormat(d3.format("d"));
-    barYear.xAxis().tickFormat(function(v){ return moment().add(v, "days").format("MMM. D"); });
-    // barYear.xAxis().tickValues(); //TODO make first of each month?
-    barYear.render();
-
-
+    barDate.yAxis().tickFormat(d3.format("d"));
+    barDate.xAxis().tickFormat(function(v){ return moment().add(v, "days").format("MMM. D"); });
+    // barDate.xAxis().tickValues(); //TODO make first of each month?
+    barDate.render();
 
     // bar chart of delay in reporting
 
-
-
-
-
-    // Bubble scatter plot
-      // Incident type as bubble, count of type as radius
-      // X axis is day delay to report
-      // Y axis is ...
-
-      // var i_typeDimension = xf.dimension(function(d) {return d['properties']['i_type'];});
-      //
-      // var tempGroup = i_typeDimension.group().reduce(
-      //   function(p,v){
-      //     console.log(v);
-      //     return p += 1;
-      //   },
-      //   function(p,v){
-      //     return p -= 1;
-      //   },
-      //   function(){
-      //     return 0;
-      //   }
-      // );
-
-    // scatter
-    //   .width(700)
-    //   .height(300)
-    //   .x()
-    //   .y()
-    //
-    //   .dimension()
-    //   .group()
-    //   .radiusValueAccessor()
-    //   // .r() // Try default
-    //   // .minRadiusWithLabel([radius]) //Try default
-    //   // .maxBubbleRelativeSize([relativeSize]) // Try default
-    //
-    //   .elasticRadius(true)
-    //   .elasticX(true)
-    //   .elasticY(true)
 
     // Leaflet heatmap
     // var map = L.map('map', {
