@@ -33,7 +33,7 @@ Experimental charting
     <div class="row">
       <div class="col-xs-4">
         <div id="pieTypes" class="text-center">
-          <strong>Total Number of reports</strong>
+          <strong>Total number of reports</strong>
           <a class='reset' href='javascript:pieTypes.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
           <br>
         </div>
@@ -41,7 +41,7 @@ Experimental charting
 
       <div class="col-xs-8">
         <div id="barWeek" class="text-center">
-          <strong>Reports Summary by Weekday</strong>
+          <strong>Reports summary by weekday</strong>
           <a class='reset' href='javascript:barWeek.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
           <br>
         </div>
@@ -49,13 +49,24 @@ Experimental charting
 
       <div class="col-xs-12">
         <div id="barDate" class="text-center">
-            <strong>Incidents Per Day for the Past Year</strong>
+            <strong>Incidents per day for the past year</strong>
             <a class='reset' href='javascript:barDate.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
             <br>
         </div>
       </div>
-      <a class='reset' href='javascript:dc.filterAll();dc.renderAll();'>reset all</a>
     </div>
+
+      <div class="col-xs-6">
+        <div id="delayRows" class="text-center">
+            <strong>Average days of delay before incident reported by report type</strong>
+            <a class='reset' href='javascript:delayRows.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+            <br>
+        </div>
+      </div>
+
+
+
+      <a class='reset' href='javascript:dc.filterAll();dc.renderAll();'>reset all</a>
   </div>
 
 
@@ -106,64 +117,46 @@ Experimental charting
     var xf = crossfilter(data);
 
     // Define dimensions
-    var p_typeDimension = xf.dimension(function(d) {return d['properties']['p_type'];}),
-        weekdayDimension = xf.dimension(function(d) {return (moment(d['properties']['date']).weekday()+6)%7 }),
+    var p_typeDimension = xf.dimension(function(d) {return d.properties.p_type;}),
+        weekdayDimension = xf.dimension(function(d) {return (moment(d.properties.date).weekday()+6)%7 }),
         dateDimension = xf.dimension(function(d){ return moment(d.properties.date).diff(moment(), "days"); });
 
     // Define groups
+    // Reusable reduce function for counting different types of reports
+    function reduceAddTypeCount() {
+      return function(p,v){
+        var p_type = v.properties.p_type;
+        if(p_type === "collision") p.collision++;
+        else if(p_type === "nearmiss") p.nearmiss++;
+        else if(p_type === "hazard") p.hazard++;
+        else if(p_type === "theft") p.theft++;
+        return p;
+      };
+    };
+    function reduceRemoveTypeCount() {
+      return function(p,v){
+        var p_type = v.properties.p_type;
+        if(p_type === "collision") p.collision--;
+        else if(p_type === "nearmiss") p.nearmiss--;
+        else if(p_type === "hazard") p.hazard--;
+        else if(p_type === "theft") p.theft--;
+        return p;
+      };
+    };
+    function reduceInitTypeCount() {
+      return function(){
+        return {
+          collision: 0,
+          nearmiss: 0,
+          hazard: 0,
+          theft: 0
+        };
+      };
+    }
+
     var countTypes = p_typeDimension.group().reduceCount(),
-        weekdayCount = weekdayDimension.group().reduce(
-          function (p,v) {
-            var p_type = v.properties.p_type;
-            if(p_type === "collision") p.collision++;
-            else if(p_type === "nearmiss") p.nearmiss++;
-            else if(p_type === "hazard") p.hazard++;
-            else if(p_type === "theft") p.theft++;
-            return p;
-          },
-          function (p,v) {
-            var p_type = v.properties.p_type;
-            if(p_type === "collision") p.collision--;
-            else if(p_type === "nearmiss") p.nearmiss--;
-            else if(p_type === "hazard") p.hazard--;
-            else if(p_type === "theft") p.theft--;
-            return p;
-          },
-          function () {
-            return {
-              collision: 0,
-              nearmiss: 0,
-              hazard: 0,
-              theft: 0
-            };
-          }
-        ),
-        countPerDay = dateDimension.group().reduce(
-          function (p,v) {
-            var p_type = v.properties.p_type;
-            if(p_type === "collision") p.collision++;
-            else if(p_type === "nearmiss") p.nearmiss++;
-            else if(p_type === "hazard") p.hazard++;
-            else if(p_type === "theft") p.theft++;
-            return p;
-          },
-          function (p,v) {
-            var p_type = v.properties.p_type;
-            if(p_type === "collision") p.collision--;
-            else if(p_type === "nearmiss") p.nearmiss--;
-            else if(p_type === "hazard") p.hazard--;
-            else if(p_type === "theft") p.theft--;
-            return p;
-          },
-          function () {
-            return {
-              collision: 0,
-              nearmiss: 0,
-              hazard: 0,
-              theft: 0
-            };
-          }
-        );
+        weekdayCount = weekdayDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount()),
+        countPerDay = dateDimension.group().reduceCount();
 
     // Pie chart for number of each type of report
     pieTypes
@@ -210,13 +203,8 @@ Experimental charting
       .centerBar(true)
       .elasticY(true)
       .dimension(dateDimension)
-      .group(countPerDay, "Collisions").valueAccessor(function(d){return d.value.collision; })
-      .stack(countPerDay, "Nearmisses", function(d){ return d.value.nearmiss; })
-      .stack(countPerDay, "Hazards", function(d){ return d.value.hazard; })
-      .stack(countPerDay, "Thefts", function(d){ return d.value.theft; })
-      .brushOn(true)
-      .colors(colorScale.range())
-      .colorAccessor(function(d){return d.layer;});
+      .group(countPerDay)
+      .brushOn(true);
 
     barDate.yAxis().tickFormat(d3.format("d"));
     barDate.xAxis().tickFormat(function(v){ return moment().add(v, "days").format("MMM. D"); });
@@ -224,6 +212,43 @@ Experimental charting
     barDate.render();
 
     // bar chart of delay in reporting
+    var i_typeDimension = xf.dimension(function(d){ return d.properties.i_type });
+    var aveDelayGroup = i_typeDimension.group().reduce(
+      function(p,v) {
+        ++p.count
+        p.sum += moment(v.properties.report_date).diff(moment(v.properties.date), "days");
+        p.avg = (p.count !== 0 ? p.sum/p.count : 0);
+        p.p_type = v.properties.p_type;
+        return p;
+      },
+      function(p,v) {
+        --p.count
+        p.sum -= moment(v.properties.report_date).diff(moment(v.properties.date), "days");
+        p.avg = (p.count !== 0 ? p.sum/p.count : 0);
+        return p;
+      },
+      function(){
+        return {count:0, sum:0, avg:0, p_type:""};
+      }
+    );
+
+    var delayRows = dc.rowChart("#delayRows");
+
+    delayRows
+      .width(500)
+      .height(400)
+      .dimension(i_typeDimension).keyAccessor(function(d){ return d.key; })
+      .group(aveDelayGroup).valueAccessor(function(d){ return d.value.avg; })
+      .ordering(function(d){ return -d.value.avg })
+      // .xAxisLabel("Days")
+      .elasticX(true)
+      .renderLabel(false)
+      .colors(colorScale.range())
+      .colorAccessor(function(d){ return colorScale.domain().indexOf(d.value.p_type); });
+
+    delayRows.render();
+
+
 
 
     // Leaflet heatmap
@@ -254,6 +279,9 @@ Experimental charting
 
     // TODO
     // More charts..
+    // Edit title popup of delay chart
+    // Calc standard dev for delay chart and provide
+    // Add labels for delay chart
     // Create new js file for dc script
 
     dc.renderAll();
