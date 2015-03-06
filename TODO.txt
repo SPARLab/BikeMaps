@@ -7,8 +7,7 @@
     * Fix ICBC loading problems
     * Serve some pages over http to get around unsafe site resources warnings (do during new server setup since this will have to be configured then anyway)
     * Setup new server
-    * Hide Forum navbar link
-    * Add "Contact Us" navbar link
+    * Add "Contact Us" navbar link - dependent on use of AJAX to avoid redirects
     * Colour report buttons / make them more obvious
     * /stats page navbar link
     * /recent page navbar link (maybe instead of alerts bell?)
