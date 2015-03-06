@@ -12,24 +12,23 @@ Experimental charting
   <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.css">
   <style>
-    /*#barWeek rect {
-      stroke: none;
-      fill: none;
-    }*/
+    #map{
+      height: 100%
+    }
   </style>
 
 {% endblock %}
 
 {% block body %}
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12">
+  <div class="container" style="margin-top: 15px;">
+    <!-- <div class="row">
+      <!-- <div class="col-xs-8" style="height: 400px;">
+        <div id="map"></div>
         <div id="scatter" class="text-center">
           <strong>Title</strong>
           <a class='reset' href='javascript:scatter.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
         </div>
-      </div>
-    </div>
+      </div> -->
 
     <div class="row">
       <div class="col-xs-4">
@@ -47,6 +46,14 @@ Experimental charting
           <br>
         </div>
       </div>
+
+      <div class="col-xs-12">
+        <div id="barYear" class="text-center">
+            <strong>Reports Per Day for the Past Year</strong>
+            <a class='reset' href='javascript:barYear.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+            <br>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -54,15 +61,16 @@ Experimental charting
 {% endblock %}
 
 {% block footerJS %}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.11/crossfilter.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-  <script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
-  <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
+  <script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}"></script>
+  <script src="{% static 'mapApp/js/map.js' %}"></script>
+  <script src="{% static 'mapApp/js/icons.js' %}"></script>
 
-  <script charset="utf-8">
+  <script>
     var collisions = {{ collisions|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
     var nearmisses = {{ nearmisses|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
     var hazards = {{ hazards|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
@@ -91,13 +99,17 @@ Experimental charting
     // Define charts
     var pieTypes = dc.pieChart("#pieTypes");
     var barWeek = dc.barChart("#barWeek");
+    var barYear = dc.barChart("#barYear");
+
     // var scatter = dc.bubbleChart("#scatter");
 
     // Define crossfilter dataset
     var xf = crossfilter(data);
     // Define dimensions
     var p_typeDimension = xf.dimension(function(d) {return d['properties']['p_type'];}),
-        weekdayDimension = xf.dimension(function(d) {return (moment(d['properties']['date']).weekday()+6)%7 });
+        weekdayDimension = xf.dimension(function(d) {return (moment(d['properties']['date']).weekday()+6)%7 }),
+        dateDimension = xf.dimension(function(d){ return moment(d.properties.date).diff(moment(), "days"); });
+
     // Define groups
     var countTypes = p_typeDimension.group().reduceCount(),
         weekdayCount = weekdayDimension.group().reduce(
@@ -125,8 +137,33 @@ Experimental charting
               theft: 0
             };
           }
+        ),
+        countPerDay = dateDimension.group().reduce(
+          function (p,v) {
+            var p_type = v.properties.p_type;
+            if(p_type === "collision") p.collision++;
+            else if(p_type === "nearmiss") p.nearmiss++;
+            else if(p_type === "hazard") p.hazard++;
+            else if(p_type === "theft") p.theft++;
+            return p;
+          },
+          function (p,v) {
+            var p_type = v.properties.p_type;
+            if(p_type === "collision") p.collision--;
+            else if(p_type === "nearmiss") p.nearmiss--;
+            else if(p_type === "hazard") p.hazard--;
+            else if(p_type === "theft") p.theft--;
+            return p;
+          },
+          function () {
+            return {
+              collision: 0,
+              nearmiss: 0,
+              hazard: 0,
+              theft: 0
+            };
+          }
         );
-
 
     // Pie chart for number of each type of report
     pieTypes
@@ -146,9 +183,7 @@ Experimental charting
     barWeek
       .width(700)
       .height(300)
-      .margins({top: 10, right: 10, bottom: 20, left: 35})
       .x(d3.scale.linear().domain([-0.5,6.5]))
-      .y(d3.scale.linear())
       .yAxisLabel("Count")
       .centerBar(true)
       .elasticY(true)
@@ -161,9 +196,39 @@ Experimental charting
       .colors(colorScale.range())
       .colorAccessor(function(d){return d.layer;});
 
+    barWeek.yAxis().tickFormat(d3.format("d"));
     barWeek.xAxis().tickValues([0,1,2,3,4,5,6]);
     barWeek.xAxis().tickFormat(function(v){ return weekdayScale((v+1)%7); });
     barWeek.render();
+
+    // bar chart of total reports per day
+    barYear
+      .width(1000)
+      .height(200)
+      .x(d3.scale.linear().domain([-360, 0]))
+      .yAxisLabel("Count")
+      .centerBar(true)
+      .elasticY(true)
+      .dimension(dateDimension)
+      .group(countPerDay, "Collisions").valueAccessor(function(d){return d.value.collision; })
+      .stack(countPerDay, "Nearmisses", function(d){ return d.value.nearmiss; })
+      .stack(countPerDay, "Hazards", function(d){ return d.value.hazard; })
+      .stack(countPerDay, "Thefts", function(d){ return d.value.theft; })
+      .brushOn(true)
+      .colors(colorScale.range())
+      .colorAccessor(function(d){return d.layer;});
+
+    barYear.yAxis().tickFormat(d3.format("d"));
+    barYear.xAxis().tickFormat(function(v){ return moment().add(v, "days").format("MMM. D"); });
+    // barYear.xAxis().tickValues(); //TODO make first of each month?
+    barYear.render();
+
+
+
+    // bar chart of delay in reporting
+
+
+
 
 
     // Bubble scatter plot
@@ -203,7 +268,31 @@ Experimental charting
     //   .elasticX(true)
     //   .elasticY(true)
 
+    // Leaflet heatmap
+    // var map = L.map('map', {
+    //   center: [51.505, -0.09],
+    //   zoom: 13,
+    //   layers: [MapQuestOpen_OSM]
+    // });
 
+    // geometryGroup = p_typeDimension.group().reduce(
+    //   function(p,v){
+    //     // console.log(v);
+    //     p.push(v.geometry.coordinates.join());
+    //     return p;
+    //   },
+    //   function(p,v){
+    //     console.log(v);
+    //     var i = p.indexOf(v.geometry.coords.join());
+    //     console.log(i);
+    //     if (i > -1)
+    //       p.splice(i, 1);
+    //     return p;
+    //   },
+    //   function(){
+    //     return [];
+    //   }
+    // );
 
     // TODO
     // More charts..
