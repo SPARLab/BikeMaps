@@ -65,7 +65,7 @@
         nearmisses = {{ nearmisses|geojsonfeature:"i_type,incident_with,date,details"|safe }},
         hazards = {{ hazards|geojsonfeature:"i_type,date,details"|safe }},
         thefts = {{ thefts|geojsonfeature:"i_type,date,details"|safe }},
-        officials = {{ officials|geojsonfeature:"official_type,date,time,details,metadata,data_source"|safe }},
+        officials = []//{{ officials|geojsonfeature:"official_type,date,time,details,metadata,data_source"|safe }},
         geofences = {{ geofences|geojsonfeature|safe }};
 
     // if zoom parameter in url, set variables

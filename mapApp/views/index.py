@@ -23,7 +23,7 @@ def indexContext(request, incidentForm=IncidentForm(), geofenceForm=GeofenceForm
 		'nearmisses': Incident.objects.filter(p_type__exact="nearmiss"),
 		'hazards': Hazard.objects.all(),
 		'thefts': Theft.objects.all(),
-		'officials': Official.objects.all(),
+		# 'officials': Official.objects.all(),
 		"geofences": AlertArea.objects.filter(user=request.user.id),
 
 		# Form data used by map
