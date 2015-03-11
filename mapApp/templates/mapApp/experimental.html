@@ -20,33 +20,36 @@ Experimental charting
 {% endblock %}
 
 {% block body %}
-  <div class="container" style="margin-top: 15px;">
-    <!-- <div class="row">
-      <!-- <div class="col-xs-8" style="height: 400px;">
+  <div class="container-fluid" style="margin-top: 15px;">
+    <div class="row">
+      <div class="col-xs-8" style="height: 500px;">
         <div id="map"></div>
-        <div id="scatter" class="text-center">
-          <strong>Title</strong>
-          <a class='reset' href='javascript:scatter.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+      </div>
+
+      <div class="col-xs-4">
+        <div class="col-xs-12">
+          <a class='reset btn btn-primary btn-block' href='javascript:dc.filterAll();dc.renderAll();'>reset all</a>
         </div>
-      </div> -->
+
+        <div class="col-xs-12">
+          <div id="pieTypes" class="text-center">
+            <strong>Total number of reports</strong>
+            <a class='reset' href='javascript:pieTypes.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+            <br>
+          </div>
+        </div>
+
+        <div class="col-xs-12">
+          <div id="barWeek" class="text-center">
+            <strong>Reports summary by weekday</strong>
+            <a class='reset' href='javascript:barWeek.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="row">
-      <div class="col-xs-4">
-        <div id="pieTypes" class="text-center">
-          <strong>Total number of reports</strong>
-          <a class='reset' href='javascript:pieTypes.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
-          <br>
-        </div>
-      </div>
-
-      <div class="col-xs-8">
-        <div id="barWeek" class="text-center">
-          <strong>Reports summary by weekday</strong>
-          <a class='reset' href='javascript:barWeek.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
-          <br>
-        </div>
-      </div>
-
       <div class="col-xs-12">
         <div id="barDate" class="text-center">
             <strong>Incidents per day for the past year</strong>
@@ -54,7 +57,6 @@ Experimental charting
             <br>
         </div>
       </div>
-    </div>
 
       <div class="col-xs-6">
         <div id="delayRows" class="text-center">
@@ -63,10 +65,7 @@ Experimental charting
             <br>
         </div>
       </div>
-
-
-
-      <a class='reset' href='javascript:dc.filterAll();dc.renderAll();'>reset all</a>
+    </div>
   </div>
 
 
@@ -78,6 +77,8 @@ Experimental charting
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+  <script src="{% static 'leaflet/plugins/leaflet-heatmap/heatmap.min.js' %}"></script>
+  <script src="{% static 'leaflet/plugins/leaflet-heatmap/leaflet-heatmap.js' %}"></script>
   <script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}"></script>
   <script src="{% static 'mapApp/js/map.js' %}"></script>
   <script src="{% static 'mapApp/js/icons.js' %}"></script>
@@ -112,6 +113,7 @@ Experimental charting
     var pieTypes = dc.pieChart("#pieTypes");
     var barWeek = dc.barChart("#barWeek");
     var barDate = dc.barChart("#barDate");
+    var delayRows = dc.rowChart("#delayRows");
 
     // Define crossfilter dataset
     var xf = crossfilter(data);
@@ -119,7 +121,8 @@ Experimental charting
     // Define dimensions
     var p_typeDimension = xf.dimension(function(d) {return d.properties.p_type;}),
         weekdayDimension = xf.dimension(function(d) {return (moment(d.properties.date).weekday()+6)%7 }),
-        dateDimension = xf.dimension(function(d){ return moment(d.properties.date).diff(moment(), "days"); });
+        dateDimension = xf.dimension(function(d){ return moment(d.properties.date).diff(moment(), "days"); }),
+        i_typeDimension = xf.dimension(function(d){ return d.properties.i_type });
 
     // Define groups
     // Reusable reduce function for counting different types of reports
@@ -156,12 +159,30 @@ Experimental charting
 
     var countTypes = p_typeDimension.group().reduceCount(),
         weekdayCount = weekdayDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount()),
-        countPerDay = dateDimension.group().reduceCount();
+        countPerDay = dateDimension.group().reduceCount(),
+        aveDelayGroup = i_typeDimension.group().reduce(
+          function(p,v) {
+            ++p.count
+            p.sum += moment(v.properties.report_date).diff(moment(v.properties.date), "days");
+            p.avg = (p.count !== 0 ? p.sum/p.count : 0);
+            p.p_type = v.properties.p_type;
+            return p;
+          },
+          function(p,v) {
+            --p.count
+            p.sum -= moment(v.properties.report_date).diff(moment(v.properties.date), "days");
+            p.avg = (p.count !== 0 ? p.sum/p.count : 0);
+            return p;
+          },
+          function(){
+            return {count:0, sum:0, avg:0, p_type:""};
+          }
+        );
 
     // Pie chart for number of each type of report
     pieTypes
-      .width(300)
-      .height(300)
+      .width(500)
+      .height(200)
       // .innerRadius(50)
       .dimension(p_typeDimension)
       .group(countTypes)
@@ -169,13 +190,12 @@ Experimental charting
       .label(function(d){return labels[d.data.key];})
       .colors(colorScale.range())
       .colorAccessor(function(d){return colorScale.domain().indexOf(d.data.key);});
-
     pieTypes.render();
 
     // Bar chart for reports this week
     barWeek
-      .width(700)
-      .height(300)
+      .width(500)
+      .height(200)
       .x(d3.scale.linear().domain([-0.5,6.5]))
       .yAxisLabel("Count")
       .centerBar(true)
@@ -188,7 +208,6 @@ Experimental charting
       .brushOn(true)
       .colors(colorScale.range())
       .colorAccessor(function(d){return d.layer;});
-
     barWeek.yAxis().tickFormat(d3.format("d"));
     barWeek.xAxis().tickValues([0,1,2,3,4,5,6]);
     barWeek.xAxis().tickFormat(function(v){ return weekdayScale((v+1)%7); });
@@ -196,7 +215,7 @@ Experimental charting
 
     // bar chart of total reports per day
     barDate
-      .width(1000)
+      .width(1500)
       .height(175)
       .x(d3.scale.linear().domain([-360, 0]))
       .yAxisLabel("Count")
@@ -205,80 +224,103 @@ Experimental charting
       .dimension(dateDimension)
       .group(countPerDay)
       .brushOn(true);
-
     barDate.yAxis().tickFormat(d3.format("d"));
     barDate.xAxis().tickFormat(function(v){ return moment().add(v, "days").format("MMM. D"); });
     // barDate.xAxis().tickValues(); //TODO make first of each month?
     barDate.render();
 
     // bar chart of delay in reporting
-    var i_typeDimension = xf.dimension(function(d){ return d.properties.i_type });
-    var aveDelayGroup = i_typeDimension.group().reduce(
-      function(p,v) {
-        ++p.count
-        p.sum += moment(v.properties.report_date).diff(moment(v.properties.date), "days");
-        p.avg = (p.count !== 0 ? p.sum/p.count : 0);
-        p.p_type = v.properties.p_type;
-        return p;
-      },
-      function(p,v) {
-        --p.count
-        p.sum -= moment(v.properties.report_date).diff(moment(v.properties.date), "days");
-        p.avg = (p.count !== 0 ? p.sum/p.count : 0);
-        return p;
-      },
-      function(){
-        return {count:0, sum:0, avg:0, p_type:""};
-      }
-    );
-
-    var delayRows = dc.rowChart("#delayRows");
-
     delayRows
       .width(500)
       .height(400)
       .dimension(i_typeDimension).keyAccessor(function(d){ return d.key; })
       .group(aveDelayGroup).valueAccessor(function(d){ return d.value.avg; })
       .ordering(function(d){ return -d.value.avg })
-      // .xAxisLabel("Days")
       .elasticX(true)
       .renderLabel(false)
       .colors(colorScale.range())
       .colorAccessor(function(d){ return colorScale.domain().indexOf(d.value.p_type); });
-
     delayRows.render();
 
 
-
-
     // Leaflet heatmap
-    // var map = L.map('map', {
-    //   center: [51.505, -0.09],
-    //   zoom: 13,
-    //   layers: [MapQuestOpen_OSM]
-    // });
+    var heatLayer = new HeatmapOverlay({
+      "radius": 40,
+      "maxOpacity": .5,
+      // "scaleRadius": true,
+      "useLocalExtrema": true,
+      latField: 'lat',
+      lngField: 'lng',
+      valueField: 'count'
+    });
 
-    // geometryGroup = p_typeDimension.group().reduce(
-    //   function(p,v){
-    //     // console.log(v);
-    //     p.push(v.geometry.coordinates.join());
-    //     return p;
-    //   },
-    //   function(p,v){
-    //     console.log(v);
-    //     var i = p.indexOf(v.geometry.coords.join());
-    //     console.log(i);
-    //     if (i > -1)
-    //       p.splice(i, 1);
-    //     return p;
-    //   },
-    //   function(){
-    //     return [];
-    //   }
-    // );
+    var map = L.map('map', {
+      center: [48.427, -123.33],
+      zoom: 13,
+      scrollWheelZoom: true,
+      worldCopyJump: true,
+      layers: [Mapnik_BW, heatLayer]
+    });
+
+    // Add crossfilter data to map
+    var point_data, heat_data, lat, lng;
+    changeMap();
+    function changeMap(){
+      heat_data = {
+        max: 8,
+        data: []
+      };
+      p_typeDimension.top(Infinity).forEach(function(feature){
+        lng = feature.geometry.coordinates[0];
+        lat = feature.geometry.coordinates[1];
+        heat_data.data.push({
+          lat: lat,
+          lng: lng,
+          count: 1
+        });
+      });
+      //
+      heatLayer.setData(heat_data);
+
+      // if (map.hasLayer(point_data)){
+      //   map.removeLayer(point_data);
+      // }
+      //
+      // point_data = L.geoJson(p_typeDimension.top(Infinity), {
+      //   pointToLayer: function(feature, latlng) {
+      //     return L.circleMarker(latlng, {
+      //       radius: 3,
+      //       fillColor: getColor(feature.properties.p_type),
+      //       color: "#000",
+      //       weight: 1,
+      //       opacity: 1,
+      //       fillOpacity: 0.8
+      //     })
+      //   }
+      // });
+      //
+      // map.addLayer(point_data);
+    };
+
+    // Event triggers for any filtering action to apply to map as well
+    pieTypes.on("filtered", function(chart, filter){
+      changeMap();
+    });
+    barWeek.on("filtered", function(chart, filter){
+      changeMap();
+    });
+    barDate.on("filtered", function(chart, filter){
+      changeMap();
+    });
+    delayRows.on("filtered", function(chart, filter){
+      changeMap();
+    });
+
 
     // TODO
-    // More charts..
+    // Change pie to bar chart
+    // Reorganize bootstrap grid layout
+    //
     // Edit title popup of delay chart
     // Calc standard dev for delay chart and provide
     // Add labels for delay chart
