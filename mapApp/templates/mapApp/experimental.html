@@ -226,10 +226,15 @@ Experimental charting
       .brushOn(true);
     barDate.yAxis().tickFormat(d3.format("d"));
     barDate.xAxis().tickFormat(function(v){ return moment().add(v, "days").format("MMM. D"); });
-    // barDate.xAxis().tickValues(); //TODO make first of each month?
+    barDate.xAxis().tickValues(function(){
+      var firsts = [];
+      // Calculate the day difference between now and the first of every month
+      for(var i = 0; i<12; i++) firsts.push(moment().subtract(moment().date()-1, "days").subtract(i, "months").diff(moment(), "days"));
+      return firsts;
+    });
     barDate.render();
 
-    // bar chart of delay in reporting
+    // row chart of delay in reporting
     delayRows
       .width(500)
       .height(400)
@@ -267,7 +272,6 @@ Experimental charting
     changeMap();
     function changeMap(){
       heat_data = {
-        max: 8,
         data: []
       };
       p_typeDimension.top(Infinity).forEach(function(feature){
@@ -279,7 +283,6 @@ Experimental charting
           count: 1
         });
       });
-      //
       heatLayer.setData(heat_data);
 
       // if (map.hasLayer(point_data)){
@@ -319,7 +322,6 @@ Experimental charting
 
     // TODO
     // Change pie to bar chart
-    // Reorganize bootstrap grid layout
     //
     // Edit title popup of delay chart
     // Calc standard dev for delay chart and provide
