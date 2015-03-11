@@ -246,7 +246,7 @@ Experimental charting
       "radius": 25,
       "maxOpacity": .5,
       // "scaleRadius": true,
-      "useLocalExtrema": false,
+      "useLocalExtrema": true,
       latField: 'lat',
       lngField: 'lng',
       valueField: 'count'
@@ -255,29 +255,49 @@ Experimental charting
     var map = L.map('map', {
       center: [48.427, -123.33],
       zoom: 13,
-      scrollWheelZoom: false,
+      scrollWheelZoom: true,
       worldCopyJump: true,
-      layers: [MapQuestOpen_OSM, heatLayer]
+      layers: [Mapnik_BW, heatLayer]
     });
 
     // Add crossfilter data to map
-    var point_data, lat, lng;
+    var point_data, heat_data, lat, lng;
     changeMap();
     function changeMap(){
-      point_data = {
+      heat_data = {
         max: 8,
         data: []
       };
       p_typeDimension.top(Infinity).forEach(function(feature){
         lng = feature.geometry.coordinates[0];
         lat = feature.geometry.coordinates[1];
-        point_data.data.push({
+        heat_data.data.push({
           lat: lat,
           lng: lng,
           count: 1
         });
       });
-      heatLayer.setData(point_data);
+      //
+      heatLayer.setData(heat_data);
+
+      // if (map.hasLayer(point_data)){
+      //   map.removeLayer(point_data);
+      // }
+      //
+      // point_data = L.geoJson(p_typeDimension.top(Infinity), {
+      //   pointToLayer: function(feature, latlng) {
+      //     return L.circleMarker(latlng, {
+      //       radius: 3,
+      //       fillColor: getColor(feature.properties.p_type),
+      //       color: "#000",
+      //       weight: 1,
+      //       opacity: 1,
+      //       fillOpacity: 0.8
+      //     })
+      //   }
+      // });
+      //
+      // map.addLayer(point_data);
     };
 
     // Event triggers for any filtering action to apply to map as well
@@ -297,6 +317,7 @@ Experimental charting
 
     // TODO
     // Change pie to bar chart
+    // Make map heatmap
     // Reorganize bootstrap grid layout
     //
     // Edit title popup of delay chart
