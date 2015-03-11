@@ -242,46 +242,42 @@ Experimental charting
 
 
     // Leaflet heatmap
-    // var heatLayer = HeatmapOverlay({
-    //   "radius": 2,
-    //   "maxOpacity": .8,
-    //   "scaleRadius": true,
-    //   "useLocalExtrema": true,
-    //   latField: 'lat',
-    //   lngField: 'lng',
-    //   valueField: 'count'
-    // });
+    var heatLayer = new HeatmapOverlay({
+      "radius": 25,
+      "maxOpacity": .5,
+      // "scaleRadius": true,
+      "useLocalExtrema": false,
+      latField: 'lat',
+      lngField: 'lng',
+      valueField: 'count'
+    });
 
     var map = L.map('map', {
-      center: [51.505, -0.09],
+      center: [48.427, -123.33],
       zoom: 13,
       scrollWheelZoom: false,
       worldCopyJump: true,
-      layers: [MapQuestOpen_OSM]
+      layers: [MapQuestOpen_OSM, heatLayer]
     });
 
     // Add crossfilter data to map
-    var point_data;
+    var point_data, lat, lng;
     changeMap();
     function changeMap(){
-      if (map.hasLayer(point_data)){
-        map.removeLayer(point_data);
-      }
-
-      point_data = L.geoJson(p_typeDimension.top(Infinity), {
-        pointToLayer: function(feature, latlng) {
-          return L.circleMarker(latlng, {
-            radius: 3,
-            fillColor: getColor(feature.properties.p_type),
-            color: "#000",
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8
-          })
-        }
+      point_data = {
+        max: 8,
+        data: []
+      };
+      p_typeDimension.top(Infinity).forEach(function(feature){
+        lng = feature.geometry.coordinates[0];
+        lat = feature.geometry.coordinates[1];
+        point_data.data.push({
+          lat: lat,
+          lng: lng,
+          count: 1
+        });
       });
-
-      map.addLayer(point_data);
+      heatLayer.setData(point_data);
     };
 
     // Event triggers for any filtering action to apply to map as well
@@ -301,7 +297,6 @@ Experimental charting
 
     // TODO
     // Change pie to bar chart
-    // Make map heatmap
     // Reorganize bootstrap grid layout
     //
     // Edit title popup of delay chart
