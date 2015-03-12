@@ -87,8 +87,8 @@ Experimental charting
   <script src="{% static 'leaflet/plugins/leaflet-heatmap/heatmap.min.js' %}"></script>
   <script src="{% static 'leaflet/plugins/leaflet-heatmap/leaflet-heatmap.js' %}"></script>
   <script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}"></script>
-  <script src="{% static 'mapApp/js/map.js' %}"></script>
   <script src="{% static 'mapApp/js/icons.js' %}"></script>
+  <script src="{% static 'mapApp/js/map.js' %}"></script>
 
   <script>
     var collisions = {{ collisions|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
@@ -196,7 +196,8 @@ Experimental charting
       .ordering(function(d){ return -d.value })
       .label(function(d){return labels[d.data.key];})
       .colors(colorScale.range())
-      .colorAccessor(function(d){return colorScale.domain().indexOf(d.data.key);});
+      .colorAccessor(function(d){return colorScale.domain().indexOf(d.data.key);})
+      .on('filtered', changeMap);
     pieTypes.render();
 
     // Bar chart for reports this week
@@ -214,7 +215,8 @@ Experimental charting
       .stack(weekdayCount, "Thefts", function(d){ return d.value.theft; })
       .brushOn(true)
       .colors(colorScale.range())
-      .colorAccessor(function(d){return d.layer;});
+      .colorAccessor(function(d){return d.layer;})
+      .on('filtered', changeMap);
     barWeek.yAxis().tickFormat(d3.format("d"));
     barWeek.xAxis().tickValues([0,1,2,3,4,5,6]);
     barWeek.xAxis().tickFormat(function(v){ return weekdayScale((v+1)%7); });
@@ -230,7 +232,8 @@ Experimental charting
       .elasticY(true)
       .dimension(dateDimension)
       .group(countPerDay)
-      .brushOn(true);
+      .brushOn(true)
+      .on('filtered', changeMap);
     barDate.yAxis().tickFormat(d3.format("d"));
     barDate.xAxis().tickFormat(function(v){ return moment().add(v, "days").format("MMM. D"); });
     barDate.xAxis().tickValues(function(){
@@ -251,7 +254,8 @@ Experimental charting
       .elasticX(true)
       .renderLabel(false)
       .colors(colorScale.range())
-      .colorAccessor(function(d){ return colorScale.domain().indexOf(d.value.p_type); });
+      .colorAccessor(function(d){ return colorScale.domain().indexOf(d.value.p_type); })
+      .on('filtered', changeMap);
     delayRows.render();
 
 
@@ -259,8 +263,6 @@ Experimental charting
     var heatLayer = new HeatmapOverlay({
       "radius": 40,
       "maxOpacity": .5,
-      // "scaleRadius": true,
-      "useLocalExtrema": true,
       latField: 'lat',
       lngField: 'lng',
       valueField: 'count'
@@ -275,58 +277,21 @@ Experimental charting
       layers: [Mapnik_BW, heatLayer]
     });
 
-    // Add crossfilter data to map
-    var point_data, heat_data, lat, lng;
+    var heat_data;
     changeMap();
+
+    // Add crossfilter data to map
     function changeMap(){
-      heat_data = {
-        data: []
-      };
+      heat_data = { data: [] };
       p_typeDimension.top(Infinity).forEach(function(feature){
-        lng = feature.geometry.coordinates[0];
-        lat = feature.geometry.coordinates[1];
         heat_data.data.push({
-          lat: lat,
-          lng: lng,
+          lat: feature.geometry.coordinates[1],
+          lng: feature.geometry.coordinates[0],
           count: 1
         });
       });
       heatLayer.setData(heat_data);
-
-      // if (map.hasLayer(point_data)){
-      //   map.removeLayer(point_data);
-      // }
-      //
-      // point_data = L.geoJson(p_typeDimension.top(Infinity), {
-      //   pointToLayer: function(feature, latlng) {
-      //     return L.circleMarker(latlng, {
-      //       radius: 3,
-      //       fillColor: getColor(feature.properties.p_type),
-      //       color: "#000",
-      //       weight: 1,
-      //       opacity: 1,
-      //       fillOpacity: 0.8
-      //     })
-      //   }
-      // });
-      //
-      // map.addLayer(point_data);
     };
-
-    // Event triggers for any filtering action to apply to map as well
-    pieTypes.on("filtered", function(chart, filter){
-      changeMap();
-    });
-    barWeek.on("filtered", function(chart, filter){
-      changeMap();
-    });
-    barDate.on("filtered", function(chart, filter){
-      changeMap();
-    });
-    delayRows.on("filtered", function(chart, filter){
-      changeMap();
-    });
-
 
     // TODO
     // Change pie to bar chart
