@@ -260,14 +260,8 @@ Experimental charting
 
 
     // Leaflet heatmap
-    var heatLayer = new HeatmapOverlay({
-      "radius": 40,
-      "maxOpacity": .5,
-      latField: 'lat',
-      lngField: 'lng',
-      valueField: 'count'
-    });
-
+    var heatLayer = new HeatmapOverlay({ "radius": 40, "maxOpacity": 0.3 });
+    var heat_data;
     var map = L.map('map', {
       center: [15,6],
       zoom: 1,
@@ -275,19 +269,15 @@ Experimental charting
       scrollWheelZoom: true,
       worldCopyJump: true,
       layers: [Mapnik_BW, heatLayer]
-    });
+    }).on('load', changeMap());
 
-    var heat_data;
-    changeMap();
-
-    // Add crossfilter data to map
     function changeMap(){
       heat_data = { data: [] };
       p_typeDimension.top(Infinity).forEach(function(feature){
         heat_data.data.push({
-          lat: feature.geometry.coordinates[1],
-          lng: feature.geometry.coordinates[0],
-          count: 1
+          'lat': feature.geometry.coordinates[1],
+          'lng': feature.geometry.coordinates[0],
+          'value': 1
         });
       });
       heatLayer.setData(heat_data);
