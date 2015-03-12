@@ -11,6 +11,7 @@ Experimental charting
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css">
   <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.css">
+
   <style>
     #map{
       height: 100%;
@@ -74,7 +75,7 @@ Experimental charting
         </div>
       </div>
 
-      <div class="col-xs-12 col-sm-12 col-md-6">
+      <div class="hidden col-xs-12 col-sm-12 col-md-6">
         <div id="delayRows" class="text-center center-chart">
             <strong>Average days of delay before incident reported by report type</strong>
             <a class='reset btn btn-danger btn-xs' href='javascript:delayRows.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
@@ -172,7 +173,6 @@ Experimental charting
         };
       };
     }
-
     var countTypes = p_typeDimension.group().reduceCount(),
         weekdayCount = weekdayDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount()),
         countPerDay = dateDimension.group().reduceCount(),
