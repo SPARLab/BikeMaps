@@ -50,21 +50,15 @@ def stats(request):
 	return render(request, 'mapApp/stats.html', context)
 
 
-@login_required
-def experimental(request):
-	user = request.user
-
+def vis(request):
 	collisions = Incident.objects.filter(p_type__exact="collision")
 	nearmisses = Incident.objects.filter(p_type__exact="nearmiss")
 
 	context = {
-		'user': user,
-
 		'collisions': collisions,
 		'nearmisses': nearmisses,
 		'hazards': Hazard.objects.all(),
 		'thefts': Theft.objects.all(),
 		'points': Point.objects.all()
 	}
-
-	return render(request, 'mapApp/experimental.html', context)
+	return render(request, 'mapApp/vis.html', context)
