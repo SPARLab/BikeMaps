@@ -37,7 +37,9 @@
 
         <li {% ifequal request.path index %} class="active" {% endifequal %}><a href="{{ index }}">Home <span class="glyphicon glyphicon-map-marker"></span></a></li
         >
-		
+        <li {% ifequal request.path index %} class="active" {% endifequal %}><a href="{{ vis }}">Visualization <span class="glyphicon glyphicon-stats"></span></a></li
+        >
+
 		{# Hide the Forum link from the navbar #}
 		{% comment %}
         {% with request.path|slice:":7" as forumPath %}
