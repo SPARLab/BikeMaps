@@ -150,7 +150,7 @@ class Incident(Point):
     # FIELDS
     point = models.OneToOneField(Point, parent_link=True)
 
-    incident_type = models.CharField(
+    i_type = models.CharField(
         'What type of incident was it?',
         max_length=150,
         choices=INCIDENT_CHOICES

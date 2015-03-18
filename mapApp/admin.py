@@ -21,11 +21,11 @@ class IncidentAdmin(admin.OSMGeoAdmin):
 	# Allow for filtering of report date
 	list_filter = ['report_date', 'date', 'p_type']
 
-	list_display = ('pk','report_date','date', 'incident_type', 'incident_with','was_published_recently')
+	list_display = ('pk','report_date','date', 'i_type', 'incident_with','was_published_recently')
 
 	fieldsets = [
 	    ('Location', {'fields': ['geom']}),
-	    ('Incident', {'fields': ['date', 'incident_type', 'incident_with', 'injury', 'trip_purpose']}),
+	    ('Incident', {'fields': ['date', 'i_type', 'incident_with', 'injury', 'trip_purpose']}),
 	    ('Detail', {'fields': ['details'], 'classes':['collapse']}),
 	    ('Personal', {'fields': ['age', 'birthmonth', 'sex', 'regular_cyclist', 'helmet', 'intoxicated'], 'classes':['collapse']}),
 	    ('Conditions', {'fields': ['road_conditions', 'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain', 'direction', 'turning'], 'classes':['collapse']}),
@@ -44,11 +44,11 @@ class HazardAdmin(admin.OSMGeoAdmin):
 	# Allow for filtering of report date
 	list_filter = ['report_date', 'date']
 
-	list_display = ('pk','report_date','date', 'hazard_type','was_published_recently')
+	list_display = ('pk','report_date','date', 'i_type','was_published_recently')
 
 	fieldsets = [
 	    ('Location', {'fields': ['geom']}),
-	    ('Hazard', {'fields': ['date', 'hazard_type']}),
+	    ('Hazard', {'fields': ['date', 'i_type']}),
 	    ('Detail', {'fields': ['details'], 'classes':['collapse']}),
 	    ('Personal', {'fields': ['age', 'birthmonth', 'sex', 'regular_cyclist'], 'classes':['collapse']})
 	]
@@ -63,11 +63,11 @@ class TheftAdmin(admin.OSMGeoAdmin):
 	# Allow for filtering of report date
 	list_filter = ['report_date', 'date']
 
-	list_display = ('pk','report_date','date', 'theft_type','was_published_recently')
+	list_display = ('pk','report_date','date', 'i_type','was_published_recently')
 
 	fieldsets = [
 	    ('Location', {'fields': ['geom']}),
-	    ('Theft', {'fields': ['date', 'theft_type', 'how_locked', 'lock', 'locked_to', 'lighting', 'traffic', 'police_report', 'insurance_claim']}),
+	    ('Theft', {'fields': ['date', 'i_type', 'how_locked', 'lock', 'locked_to', 'lighting', 'traffic', 'police_report', 'insurance_claim']}),
 	    ('Detail', {'fields': ['details'], 'classes':['collapse']}),
 	    ('Personal', {'fields': ['regular_cyclist'], 'classes':['collapse']})
 	]

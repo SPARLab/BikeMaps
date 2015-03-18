@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from mapApp.models.alert_notification import IncidentNotification, HazardNotification, TheftNotification
 
-from mapApp.models import Incident, Hazard, Theft, AlertArea
+from mapApp.models import Incident, Hazard, Theft, AlertArea, Point
 
 @login_required
 def stats(request):
@@ -50,22 +50,15 @@ def stats(request):
 	return render(request, 'mapApp/stats.html', context)
 
 
-@login_required
-def experimental(request):
-	user = request.user
-
-	collisions = Incident.objects.filter(p_type__exact="collision") | Incident.objects.filter(p_type__exact="fall")
+def vis(request):
+	collisions = Incident.objects.filter(p_type__exact="collision")
 	nearmisses = Incident.objects.filter(p_type__exact="nearmiss")
-	hazards = Hazard.objects.all()
-	thefts = Theft.objects.all()
 
 	context = {
-		'user': user,
-
 		'collisions': collisions,
 		'nearmisses': nearmisses,
-		'hazards': hazards,
-		'thefts': thefts,
+		'hazards': Hazard.objects.all(),
+		'thefts': Theft.objects.all(),
+		'points': Point.objects.all()
 	}
-
-	return render(request, 'mapApp/experimental.html', context)
+	return render(request, 'mapApp/vis.html', context)

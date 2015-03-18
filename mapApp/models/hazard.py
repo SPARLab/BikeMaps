@@ -40,7 +40,7 @@ class Hazard(Point):
 
     point = models.OneToOneField(Point, parent_link=True)
 
-    hazard_type = models.CharField(
+    i_type = models.CharField(
         'What type of hazard was it?',
         max_length=150,
         choices=HAZARD_CHOICES

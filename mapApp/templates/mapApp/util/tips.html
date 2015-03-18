@@ -78,13 +78,13 @@
 
 /* Show the dropdown help message */
 $(document).ready(function(){
-    $('.page-body').animate({paddingTop: "+=23"});
-    $('.tip-msg').hide().animate({height:'show'});
+  $('.page-body').animate({paddingTop: "+=23"});
+  $('.tip-msg').hide().animate({height:'show'});
 
-    $('.tip-msg .close').click(function(){
-        $('.page-body').animate({paddingTop: "-=23"});
-        $('.tip-msg').animate({height:'hide'});
-    });
+  $('.tip-msg .close').click(function(){
+    $('.page-body').animate({paddingTop: "-=23"});
+    $('.tip-msg').animate({height:'hide'});
+  });
 
   //POPOVERS
   // Add marker
@@ -107,14 +107,14 @@ $(document).ready(function(){
     function showTutorial(p, i){
       if( i === p.length-1)
         return;
-      $(p[i]).popover('show').on('shown.bs.popover', function(){
-        setTimeout(function(){
-          $(p[i]).popover('hide');
-          showTutorial(p, i+1);
-        }, 6000);
-      });
-    };
+        $(p[i]).popover('show').on('shown.bs.popover', function(){
+          setTimeout(function(){
+            $(p[i]).popover('hide');
+            showTutorial(p, i+1);
+          }, 6000);
+        });
+      };
+    });
   });
-});
-</script>
+  </script>
 {% endif %}

@@ -40,6 +40,7 @@ urlpatterns = patterns('',
 	url(r'recent/$', views.recentReports, name='recent'),
 
 	url(r'experimental/$', views.experimental, name='experimental'),
+        url(r'vis/$', views.vis, name='vis'),
 
         # Called by app to retrieve points wihtin a given bounding box
         url(r'^points_api.json$', views.getPointsApi, name='getPoints'),
@@ -48,4 +49,6 @@ urlpatterns = patterns('',
         url(r'^thefts_api.json$', views.getTheftsApi, name='getPoints'),
         url(r'^official_api.json$', views.getOfficialApi, name='getPoints'),
                        
+
+
 )

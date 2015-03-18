@@ -7,27 +7,10 @@
 {% endblock %}
 
 {% block headerCSS %}
-  <!-- Load page styles -->
-  <link rel="stylesheet" href="{% static 'mapApp/css/recentReports.css' %}"/>
-  <!-- Load leaflet -->
-  <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
-  <!-- font-awesome icons -->
   <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
+  <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
+  <link rel="stylesheet" href="{% static 'mapApp/css/recentReports.css' %}"/>
 {% endblock %}
-
-{% block headerJS %}
-  <!-- moment.js date library -->
-  <script src="{% static 'moment/moment.min.js' %}"></script>
-  <!-- Load leaflet -->
-  <script src="{% static 'leaflet/leaflet.js' %}"></script>
-  <!-- Awesome markers -->
-  <script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
-  <!-- icon color definitions and geojson point function -->
-  <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
-  <!-- recentReports initialization and control logic -->
-  <script src="{% static 'mapApp/js/recentReports.js' %}" charset="utf-8"></script>
-{% endblock %}
-
 
 {% block body %}
   <div class="container-fluid" style="height: 100%;">
@@ -42,35 +25,24 @@
       </div>
     </div>
   </div>
+{% endblock %}
 
+{% block footerJS %}
+  <script src="{% static 'leaflet/leaflet.js' %}"></script>
+  <script src="{% static 'moment/moment.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
+  <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
   <script>
     // Create geojson datasets from django context to pass to recentReports.js more easily
     var data = {
-      "collisions": {{ collisions|geojsonfeature:"incident_type,incident_with,date,time,details,pk"|safe }},
-      "nearmisses": {{ nearmisses|geojsonfeature:"incident_type,incident_with,date,time,details,pk"|safe }},
-      "hazards": {{ hazards|geojsonfeature:"hazard_type,date,time,details,pk"|safe }},
-      "thefts": {{ thefts|geojsonfeature:"theft_type,date,time,details,pk"|safe }},
+      "collisions": {{ collisions|geojsonfeature:"i_type,incident_with,date,time,details,pk"|safe }},
+      "nearmisses": {{ nearmisses|geojsonfeature:"i_type,incident_with,date,time,details,pk"|safe }},
+      "hazards": {{ hazards|geojsonfeature:"i_type,date,time,details,pk"|safe }},
+      "thefts": {{ thefts|geojsonfeature:"i_type,date,time,details,pk"|safe }},
       "rois": {{ geofences|geojsonfeature|safe}}
     }
-
-    // Create the map object (call to recentReports.js)
-    initializeCfaxMap();
-
-    $(document).ready(function(){
-      {% if geofences %}
-          // Add data (call to recentReports.js)
-          addData(data);
-          // listen for data hover to highlight points and data (call to recentReports.js)
-          listenForHover();
-      {% else %}
-        map.fitWorld();
-        $('#data').append('<h2>Instructions:</h2><ol>'
-          + '<li>Login in to your account</li>'
-          + '<li>Trace an alert area on the home page map</li>'
-          + '<li>Visit this page to see recent incidents in your alert area</li>'
-        + '</ol>');
-    {% endif %}
-    });
-
   </script>
+  <script src="{% static 'mapApp/js/recentReports.js' %}" charset="utf-8"></script>
+
+
 {% endblock %}

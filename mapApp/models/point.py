@@ -14,7 +14,6 @@ class Point(models.Model):
         ('nearmiss', 'nearmiss'),
         ('theft', 'theft'),
         ('hazard', 'hazard'),
-        ('fall', 'fall'),
         ('official', 'official')
     )
 

@@ -1,45 +1,18 @@
 {% extends "mapApp/base.html" %}
-{% load staticfiles %}
-{% load geojson_tags %}
-
+{% load staticfiles geojson_tags compress %}
 
 {% block title %}
 	Monthly statistics
 {% endblock %}
 
-
 {% block headerCSS %}
-	<!-- Load leaflet -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-	<!-- font-awesome icons -->
-	<link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
-	<!-- Barchart style -->
-	<link rel="stylesheet" href="{% static 'mapApp/css/barchart.css' %}"/>
-	<!-- Local styles -->
-	<link rel="stylesheet" href="{% static 'mapApp/css/stats.css' %}"/>
+	{% compress css %}
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+		<link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
+		<link rel="stylesheet" href="{% static 'mapApp/css/barchart.css' %}"/>
+		<link rel="stylesheet" href="{% static 'mapApp/css/stats.css' %}"/>
+	{% endcompress %}
 {% endblock %}
-
-{% block headerJS %}
-    <!-- d3 v3.4.8 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
-    <!-- moment.js date library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
-    <!-- Load leaflet -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-		<!-- Awesome markers -->
-		<script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
-		<!-- Icon definitions -->
-    <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
-    <!-- Load marker clustering -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js"></script>
-    <!-- Load heatmap -->
-    <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
-    <!-- map generating code -->
-    <script src="{% static 'mapApp/js/map.js' %}" charset="utf-8"></script>
-    <!-- d3 barchart -->
-    <script src="{% static 'mapApp/js/stats.js' %}" charset="utf-8"></script>
-{% endblock %}
-
 
 {% block body %}
 	<div id="fb-root"></div>
@@ -49,7 +22,8 @@
 	  js = d.createElement(s); js.id = id;
 	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
 	  fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script>
+	}(document, 'script', 'facebook-jssdk'));
+	</script>
 
 	<div class="container-fluid" style="height: 100%;">
 		<div class="row" style="height: 100%;">
@@ -125,79 +99,99 @@
 		</div>
 	</div>
 
+{% endblock %}
 
+{% block footerJS %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+<script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}"></script>
+<script src="{% static 'mapApp/js/icons.js' %}"></script>
+<script src="{% static 'mapApp/js/map.js' %}"></script>
+<script src="{% static 'mapApp/js/stats.js' %}"></script>
+<script>
+	// Create the map
+	var map = L.map('map', {
+		layers: [MapQuestOpen_OSM],
+		worldCopyJump: true,
+		scrollWheelZoom: false
+	});
 
-
-	<script>
-		// Create the map (call to map.js)
-    initialize(scrollZoom=false);
-
-    var areasLatLngList = [];
-    {% for polygon in geofences %}
-    	areasLatLngList.push({{ polygon.latlngList }});
-      // Add polygon to map
-      getPolygon( {{ polygon.latlngList }}, {{ polygon.pk }} );
-    {% endfor %}
-   	// Fit map extent to alert areas boundary
-		if (areasLatLngList.length > 0) {
-	    map.fitBounds(L.latLngBounds(areasLatLngList));
+	var geofences = {{ geofences|geojsonfeature|safe }};
+	geofences = L.geoJson(geofences, {
+		style: function(feature) {
+			return {
+				color: '#3b9972',
+				weight: 2,
+				opacity: 0.6,
+				fillOpacity: 0.1,
+				pk: feature.id,
+				/*Mark the polygon with it's database id*/
+				objType: 'polygon'
+			}
 		}
+	}).addTo(map)
+	// var bounds = coordsToLatLngs(geofences);
 
-    var data = {
-			// Points in a user polygon
-			collisionsROI: {{ collisionsInPoly|geojsonfeature:"date"|safe }},
-			nearmissesROI: {{ nearmissesInPoly|geojsonfeature:"date"|safe }},
-			hazardsROI: 	{{ hazardsInPoly|geojsonfeature:"date"|safe }},
-			theftsROI: 	{{ theftsInPoly|geojsonfeature:"date"|safe }},
+	// Fit map extent to alert areas boundary
+	if (geofences.getLayers().length > 0) {
+		map.fitBounds(geofences.getBounds());
+	}
 
-			// All points
-			collisions: {{ collisions|geojsonfeature:"date"|safe }},
-			nearmisses: {{ nearmisses|geojsonfeature:"date"|safe }},
-			hazards: 	{{ hazards|geojsonfeature:"date"|safe }},
-			thefts: 	{{ thefts|geojsonfeature:"date"|safe }},
+	var data = {
+		// Points in a user polygon
+		collisionsROI: {{ collisionsInPoly|geojsonfeature:"date"|safe }},
+		nearmissesROI: {{ nearmissesInPoly|geojsonfeature:"date"|safe }},
+		hazardsROI: 	{{ hazardsInPoly|geojsonfeature:"date"|safe }},
+		theftsROI: 	{{ theftsInPoly|geojsonfeature:"date"|safe }},
 
-			// Make dates to use for filtering
-			now: moment(),
-			oneMonthAgo: moment().subtract(1, 'month'),
-			twoMonthsAgo: moment().subtract(2, 'months'),
-			threeMonthsAgo: moment().subtract(3, 'months')
-		};
+		// All points
+		collisions: {{ collisions|geojsonfeature:"date"|safe }},
+		nearmisses: {{ nearmisses|geojsonfeature:"date"|safe }},
+		hazards: 	{{ hazards|geojsonfeature:"date"|safe }},
+		thefts: 	{{ thefts|geojsonfeature:"date"|safe }},
 
-		// Add date information to barchart title
-		$('#barchart-title').append(" ( " + data.oneMonthAgo.format("MMM D, YYYY") + " - " + data.now.format("MMM D, YYYY") + " )")
+		// Make dates to use for filtering
+		now: moment(),
+		oneMonthAgo: moment().subtract(1, 'month'),
+		twoMonthsAgo: moment().subtract(2, 'months'),
+		threeMonthsAgo: moment().subtract(3, 'months')
+	};
 
-		// Filter by date to get different datasets
-		// TODO do this in stats.js
-		var collisionsThisMonth = filterGeoJSONByDate(data.collisionsROI, data.oneMonthAgo, data.now),
-			nearmissesThisMonth = filterGeoJSONByDate(data.nearmissesROI, data.oneMonthAgo, data.now),
-			hazardsThisMonth = filterGeoJSONByDate(data.hazardsROI, data.oneMonthAgo, data.now),
-			theftsThisMonth = filterGeoJSONByDate(data.theftsROI, data.oneMonthAgo, data.now);
+	// Add date information to barchart title
+	$('#barchart-title').append(" ( " + data.oneMonthAgo.format("MMM D, YYYY") + " - " + data.now.format("MMM D, YYYY") + " )")
 
-    // Add points to map, create layers used by stats.js to highlight points on map
-		// All points in the polygon that occured in the previous month
-		var recentCollisionsLayer = geojsonCircleMarker(collisionsThisMonth, "collision").addTo(map),
-			recentNearmissesLayer = geojsonCircleMarker(nearmissesThisMonth, "nearmiss").addTo(map),
-			recentHazardsLayer = geojsonCircleMarker(hazardsThisMonth, "hazard").addTo(map),
-			recentTheftsLayer = geojsonCircleMarker(theftsThisMonth, "theft").addTo(map),
+	// Filter by date to get different datasets
+	// TODO do this in stats.js
+	var collisionsThisMonth = filterGeoJSONByDate(data.collisionsROI, data.oneMonthAgo, data.now),
+	nearmissesThisMonth = filterGeoJSONByDate(data.nearmissesROI, data.oneMonthAgo, data.now),
+	hazardsThisMonth = filterGeoJSONByDate(data.hazardsROI, data.oneMonthAgo, data.now),
+	theftsThisMonth = filterGeoJSONByDate(data.theftsROI, data.oneMonthAgo, data.now);
 
-			allCollisionsLayer = geojsonCircleMarker(data.collisions, "collision").addTo(map),
-			allNearmissesLayer = geojsonCircleMarker(data.nearmisses, "nearmiss").addTo(map),
-			allHazardsLayer = geojsonCircleMarker(data.hazards, "hazard").addTo(map),
-			allTheftsLayer = geojsonCircleMarker(data.thefts, "theft").addTo(map);
+	// Add points to map, create layers used by stats.js to highlight points on map
+	// All points in the polygon that occured in the previous month
+	var recentCollisionsLayer = geojsonCircleMarker(collisionsThisMonth, "collision").addTo(map),
+	recentNearmissesLayer = geojsonCircleMarker(nearmissesThisMonth, "nearmiss").addTo(map),
+	recentHazardsLayer = geojsonCircleMarker(hazardsThisMonth, "hazard").addTo(map),
+	recentTheftsLayer = geojsonCircleMarker(theftsThisMonth, "theft").addTo(map),
 
-		// Create dataset out of django context
-		// Note, data and counts are for last month of points in user alert areas only, not total points
-		{% if geofences|length > 0 %}
-			initializeBarChart([
-				{ type: "collision", 	value: collisionsThisMonth.features.length, 	color: getColor("collision") },
-				{ type: "nearmiss", 	value: nearmissesThisMonth.features.length, 	color: getColor("nearmiss") },
-				{ type: "hazard", 		value: hazardsThisMonth.features.length, 		color: getColor("hazard") },
-				{ type: "theft", 		value: theftsThisMonth.features.length, 		color: getColor("theft") }
-			]);
-		{% else %}
-			$('#barchart-body').append("<p>Trace out an alert area on the main map page to see data visualizations for that area.</p>");
-		{% endif %}
+	allCollisionsLayer = geojsonCircleMarker(data.collisions, "collision").addTo(map),
+	allNearmissesLayer = geojsonCircleMarker(data.nearmisses, "nearmiss").addTo(map),
+	allHazardsLayer = geojsonCircleMarker(data.hazards, "hazard").addTo(map),
+	allTheftsLayer = geojsonCircleMarker(data.thefts, "theft").addTo(map);
 
-	</script>
+	// Create dataset out of django context
+	// Note, data and counts are for last month of points in user alert areas only, not total points
+	{% if geofences|length > 0 %}
+	initializeBarChart([
+	{ type: "collision", 	value: collisionsThisMonth.features.length, 	color: getColor("collision") },
+	{ type: "nearmiss", 	value: nearmissesThisMonth.features.length, 	color: getColor("nearmiss") },
+	{ type: "hazard", 		value: hazardsThisMonth.features.length, 		color: getColor("hazard") },
+	{ type: "theft", 		value: theftsThisMonth.features.length, 		color: getColor("theft") }
+	]);
+	{% else %}
+	$('#barchart-body').append("<p>Trace out an alert area on the main map page to see data visualizations for that area.</p>");
+	{% endif %}
 
+</script>
 {% endblock %}
