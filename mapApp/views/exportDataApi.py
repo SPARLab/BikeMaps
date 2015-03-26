@@ -15,13 +15,40 @@ def getPointsApi(request):
     bbox = stringToPolygon(bbstr)
 
     # Filter for points in the bounding box
-    points = Point.objects.filter(geom__within=bbox)
+    points = list(Point.objects.filter(geom__within=bbox))
 
     # Serialize the points into GeoJson
     data = GeoJSONSerializer().serialize(points, indent=2, use_natural_keys=True)
 
     return HttpResponse(data, content_type="application/json")
 
+# Query for collisions based on a bounding box
+def getCollisionsApi(request):
+    # Extract bounding box Url parameter
+    bbstr = request.GET.get('bbox', '-180,-90,180,90')
+    bbox = stringToPolygon(bbstr)
+
+    # Filter for points in the bounding box
+    points = list(Incident.objects.filter(p_type__exact="collision").filter(geom__within=bbox) | Incident.objects.filter(p_type__exact="fall").filter(geom__within=bbox))
+
+    # Serialize the points into GeoJson
+    data = GeoJSONSerializer().serialize(points, indent=2, use_natural_keys=True)
+
+    return HttpResponse(data, content_type="application/json")
+
+# Query for near misses based on a bounding box
+def getNearmissApi(request):
+    # Extract bounding box Url parameter
+    bbstr = request.GET.get('bbox', '-180,-90,180,90')
+    bbox = stringToPolygon(bbstr)
+
+    # Filter for points in the bounding box
+    points = list(Incident.objects.filter(p_type__exact="nearmiss").filter(geom__within=bbox))
+
+    # Serialize the points into GeoJson
+    data = GeoJSONSerializer().serialize(points, indent=2, use_natural_keys=True)
+
+    return HttpResponse(data, content_type="application/json")
 
 # Query for incidents based on a bounding box
 def getIncidentsApi(request):
@@ -30,7 +57,7 @@ def getIncidentsApi(request):
     bbox = stringToPolygon(bbstr)
 
     # Filter for points in the bounding box
-    points = Incident.objects.filter(geom__within=bbox)
+    points = list(Incident.objects.filter(geom__within=bbox))
 
     # Serialize the points into GeoJson
     data = GeoJSONSerializer().serialize(points, indent=2, use_natural_keys=True)
@@ -45,7 +72,7 @@ def getHazardsApi(request):
     bbox = stringToPolygon(bbstr)
 
     # Filter for points in the bounding box
-    points = Hazard.objects.filter(geom__within=bbox)
+    points = list(Hazard.objects.filter(geom__within=bbox))
 
     # Serialize the points into GeoJson
     data = GeoJSONSerializer().serialize(points, indent=2, use_natural_keys=True)
@@ -60,7 +87,7 @@ def getTheftsApi(request):
     bbox = stringToPolygon(bbstr)
 
     # Filter for points in the bounding box
-    points = Theft.objects.filter(geom__within=bbox)
+    points = list(Theft.objects.filter(geom__within=bbox))
 
     # Serialize the points into GeoJson
     data = GeoJSONSerializer().serialize(points, indent=2, use_natural_keys=True)
@@ -75,7 +102,7 @@ def getOfficialApi(request):
     bbox = stringToPolygon(bbstr)
 
     # Filter for points in the bounding box
-    points = Official.objects.filter(geom__within=bbox)
+    points = list(Official.objects.filter(geom__within=bbox))
 
     # Serialize the points into GeoJson
     data = GeoJSONSerializer().serialize(points, indent=2, use_natural_keys=True)

@@ -16,6 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -67,7 +68,12 @@ INSTALLED_APPS = (
     'django.contrib.gis',
     'djgeojson',
     'crispy_forms',
-    'mapApp'
+    'mapApp',
+
+    # api requirements
+    'corsheaders',
+    'rest_framework',
+    'rest_framework_gis',
 )
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]

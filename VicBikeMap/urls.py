@@ -5,6 +5,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^', include('mapApp.urls', namespace="mapApp")),
     url(r'^forum/', include('spirit.urls', namespace="spirit", app_name="spirit")),
     url(r'^robots.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /experimental", mimetype="text/plain"))
