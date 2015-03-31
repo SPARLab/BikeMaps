@@ -4,7 +4,7 @@ from django.http import Http404
 from django.contrib.gis.geos import Polygon
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import generics, permissions, status
+from rest_framework import authentication, generics, permissions, status
 from spirit.models import User
 from django.views.decorators.csrf import csrf_exempt
 from mapApp.permissions import IsOwnerOrReadOnly
@@ -14,7 +14,7 @@ class CollisionList(APIView):
     List all collisions, or create a new collision.
     """
     def get(self, request, format=None):
-        
+      
         # Extract bounding box Url parameter
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
@@ -124,7 +124,7 @@ class AlertAreaList(APIView):
     """
     List all alert areas, or create a new alert area.
     """
-
+    authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
     
     def get(self, request, format=None):
@@ -147,7 +147,7 @@ class AlertAreaDetail(APIView):
     """
     Retrieve, update or delete an alert area instance.
     """
-
+    authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
     
     def get_object(self, pk):

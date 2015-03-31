@@ -73,7 +73,9 @@ INSTALLED_APPS = (
     # api requirements
     'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
     'rest_framework_gis',
+    'rest_auth'
 )
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
