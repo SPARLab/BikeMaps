@@ -12,7 +12,7 @@ from django.views.decorators.http import require_POST
 
 from mapApp.models import Incident, Hazard, Theft
 from mapApp.forms import IncidentForm, HazardForm, TheftForm
-from mapApp.views import alertUsers, indexContext
+from mapApp.views import alertUsers, indexContext, pushNotification
 
 @require_POST
 def postIncident(request):
@@ -33,6 +33,7 @@ def postIncident(request):
 	if incidentForm.is_valid():
 		incident = incidentForm.save()
 		alertUsers(request, incident)
+		pushNotification.pushNotification(incident)
 
 		messages.success(request, '<strong>Thank you!</strong><br>Your incident marker was successfully added.')
 		return HttpResponseRedirect(reverse('mapApp:index', \
@@ -70,6 +71,7 @@ def postHazard(request):
 	if hazardForm.is_valid():
 		hazard = hazardForm.save()
 		alertUsers(request, hazard)
+		pushNotification.pushNotification(hazard)
 
 		messages.success(request, '<strong>Thank you!</strong><br>Your hazard marker was successfully added.')
 		return HttpResponseRedirect(reverse('mapApp:index', \
@@ -101,6 +103,7 @@ def postTheft(request):
 	if theftForm.is_valid():
 		theft = theftForm.save()
 		alertUsers(request, theft)
+		pushNotification.pushNotification(theft)
 
 		messages.success(request, '<strong>Thank you!</strong><br>Your theft marker was successfully added.')
 		return HttpResponseRedirect(reverse('mapApp:index', \

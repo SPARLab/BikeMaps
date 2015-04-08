@@ -1,5 +1,5 @@
 from mapApp.models import Incident, Hazard, Theft, Official, AlertArea
-from mapApp.serializers import IncidentSerializer, HazardSerializer, TheftSerializer, OfficialSerializer, AlertAreaSerializer, UserSerializer
+from mapApp.serializers import IncidentSerializer, HazardSerializer, TheftSerializer, OfficialSerializer, AlertAreaSerializer, UserSerializer, GCMDeviceSerializer
 from django.http import Http404
 from django.contrib.gis.geos import Polygon
 from rest_framework.views import APIView
@@ -8,6 +8,7 @@ from rest_framework import authentication, generics, permissions, status
 from spirit.models import User
 from django.views.decorators.csrf import csrf_exempt
 from mapApp.permissions import IsOwnerOrReadOnly
+from push_notifications.models import GCMDevice, APNSDevice
 
 class CollisionList(APIView):
     """
@@ -135,12 +136,9 @@ class AlertAreaList(APIView):
     def post(self, request, format=None):
         serializer = AlertAreaSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(user=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
 
 
 class AlertAreaDetail(APIView):
@@ -184,6 +182,25 @@ class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+
+class GCMDeviceList(APIView):
+    """
+    List all GCMDevices, or create a new GCMDevice.
+    """
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
+    
+    def get(self, request, format=None):
+        gcmDevices = list(GCMDevice.objects.filter(user=request.user))
+        serializer = GCMDeviceSerializer(gcmDevices, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = GCMDeviceSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=self.request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # Helper - Create bounding box as a polygon

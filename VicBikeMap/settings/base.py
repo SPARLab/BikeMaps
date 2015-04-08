@@ -75,7 +75,10 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_gis',
-    'rest_auth'
+    'rest_auth',
+
+    # push notification requirement
+    "push_notifications"
 )
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
@@ -112,3 +115,9 @@ STATICFILES_FINDERS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+
+PUSH_NOTIFICATIONS_SETTINGS = {
+        "GCM_API_KEY": "AIzaSyAAIoOHr1BA28ulBsWQ7FNWfCmPeZp-aaw",
+        "APNS_CERTIFICATE": "/path/to/your/certificate.pem",
+}
