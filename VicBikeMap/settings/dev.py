@@ -27,10 +27,15 @@ DATABASES = {
     'default': {
         # PostgreSQL database connection on Taylor's Windows computer
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        # 'OPTIONS': {'charset': 'utf8mb4'},
         'NAME': 'bikeDB',
         'USER': 'postgres'
         # 'PASSWORD': 'SUPER_SECRET'
+    }
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
 }
 
