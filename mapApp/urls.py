@@ -39,5 +39,5 @@ urlpatterns = patterns('',
 	url(r'stats/$', views.stats, name='stats'),
 	url(r'recent/$', views.recentReports, name='recent'),
 
-	url(r'experimental/$', views.experimental, name='experimental'),
+	url(r'vis/$', views.vis, name='vis'),
 )

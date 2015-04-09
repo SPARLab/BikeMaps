@@ -1,0 +1,326 @@
+{% extends "mapApp/base.html" %}
+{% load staticfiles %}
+{% load geojson_tags %}
+
+{% block title %}
+Bikemaps Data Visualization
+{% endblock %}
+
+
+{% block headerCSS %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css">
+  <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.css">
+
+  <style>
+    #map{
+      height: 100%;
+    }
+    .center-chart{
+      width: 100%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 8px;
+    }
+
+    #barTypes .x.axis path {
+      display: none;
+    }
+  </style>
+
+{% endblock %}
+
+{% block body %}
+  <div class="container" style="margin-top: 15px;">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <a class='reset btn btn-danger btn-sm pull-right' href='javascript:dc.filterAll();dc.renderAll();'>reset all</a>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-7" style="height: 450px;">
+        <div id="map" class="center-chart"></div>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-5">
+        <div class="col-xs-12 col-sm-6 col-md-12">
+          <!-- <div id="pieTypes" class="text-center center-chart">
+            <strong>Total number of reports</strong>
+            <a class='reset btn btn-danger btn-xs' href='javascript:pieTypes.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+            <br>
+          </div> -->
+          <div id="barTypes" class="text-center center-chart">
+            <strong>Total reports by type</strong>
+            <a class='reset btn btn-danger btn-xs' href='javascript:barTypes.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+            <br>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-12">
+          <div id="barWeek" class="text-center center-chart">
+            <strong>Reports summary by weekday</strong>
+            <a class='reset btn btn-danger btn-xs' href='javascript:barWeek.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="hidden-xs col-sm-12 col-md-12">
+        <div id="barDate" class="text-center center-chart">
+            <strong>Incidents per day for the past year</strong>
+            <a class='reset btn btn-danger btn-xs' href='javascript:barDate.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+            <br>
+        </div>
+      </div>
+
+      <div class="hidden col-xs-12 col-sm-12 col-md-6">
+        <div id="delayRows" class="text-center center-chart">
+            <strong>Average days of delay before incident reported by report type</strong>
+            <a class='reset btn btn-danger btn-xs' href='javascript:delayRows.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+            <br>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
+
+{% block footerJS %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.11/crossfilter.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+  <script src="{% static 'leaflet/plugins/leaflet-heatmap/heatmap.min.js' %}"></script>
+  <script src="{% static 'leaflet/plugins/leaflet-heatmap/leaflet-heatmap.js' %}"></script>
+  <script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}"></script>
+  <script src="{% static 'mapApp/js/icons.js' %}"></script>
+  <script src="{% static 'mapApp/js/map.js' %}"></script>
+
+  <script>
+    var collisions = {{ collisions|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
+    var nearmisses = {{ nearmisses|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
+    var hazards = {{ hazards|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
+    var thefts = {{ thefts|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
+
+    var data = collisions.concat(nearmisses).concat(hazards).concat(thefts);
+
+
+    // map p_types of points to nice labels
+    var labels = {
+      "collision": "Collisions",
+      "nearmiss": "Nearmisses",
+      "hazard": "Hazards",
+      "theft": "Thefts",
+    }
+    // Define scales
+    // map p_type to appropriate colors
+    var colorScale = d3.scale.ordinal()
+      .domain(["collision", "nearmiss", "hazard", "theft"])
+      .range([iconColors.collision, iconColors.nearmiss, iconColors.hazard, iconColors.theft]);
+    var weekdayScale = d3.scale.quantize()
+        .domain([0,1,2,3,4,5,6])
+        .range(moment.weekdaysShort());
+
+    // Define charts
+    var barTypes = dc.barChart('#barTypes'),
+        barWeek = dc.barChart("#barWeek"),
+        barDate = dc.barChart("#barDate"),
+        delayRows = dc.rowChart("#delayRows");
+    // pieTypes = dc.pieChart("#pieTypes"),
+
+    // Define crossfilter dataset
+    var xf = crossfilter(data);
+
+    // Define dimensions
+    var p_typeDimension = xf.dimension(function(d) {return d.properties.p_type;}),
+        weekdayDimension = xf.dimension(function(d) {return (moment(d.properties.date).weekday()+6)%7 }),
+        dateDimension = xf.dimension(function(d){ return moment(d.properties.date).diff(moment(), "days"); }),
+        i_typeDimension = xf.dimension(function(d){ return d.properties.i_type });
+
+    // Define groups
+    // Reusable reduce function for counting different types of reports
+    function reduceAddTypeCount() {
+      return function(p,v){
+        var p_type = v.properties.p_type;
+        if(p_type === "collision") p.collision++;
+        else if(p_type === "nearmiss") p.nearmiss++;
+        else if(p_type === "hazard") p.hazard++;
+        else if(p_type === "theft") p.theft++;
+        return p;
+      };
+    };
+    function reduceRemoveTypeCount() {
+      return function(p,v){
+        var p_type = v.properties.p_type;
+        if(p_type === "collision") p.collision--;
+        else if(p_type === "nearmiss") p.nearmiss--;
+        else if(p_type === "hazard") p.hazard--;
+        else if(p_type === "theft") p.theft--;
+        return p;
+      };
+    };
+    function reduceInitTypeCount() {
+      return function(){
+        return {
+          collision: 0,
+          nearmiss: 0,
+          hazard: 0,
+          theft: 0
+        };
+      };
+    }
+    var countTypes = p_typeDimension.group().reduceCount(),
+        weekdayCount = weekdayDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount()),
+        countPerDay = dateDimension.group().reduceCount(),
+        aveDelayGroup = i_typeDimension.group().reduce(
+          function(p,v) {
+            ++p.count
+            p.sum += moment(v.properties.report_date).diff(moment(v.properties.date), "days");
+            p.avg = (p.count !== 0 ? p.sum/p.count : 0);
+            p.p_type = v.properties.p_type;
+            return p;
+          },
+          function(p,v) {
+            --p.count
+            p.sum -= moment(v.properties.report_date).diff(moment(v.properties.date), "days");
+            p.avg = (p.count !== 0 ? p.sum/p.count : 0);
+            return p;
+          },
+          function(){
+            return {count:0, sum:0, avg:0, p_type:""};
+          }
+        );
+
+    // Pie chart for number of each type of report
+    // pieTypes
+    //   .width(150)
+    //   .height(150)
+    //   // .innerRadius(50)
+    //   .dimension(p_typeDimension)
+    //   .group(countTypes)
+    //   .ordering(function(d){ return -d.value })
+    //   .label(function(d){return labels[d.data.key];})
+    //   .colors(colorScale.range())
+    //   .colorAccessor(function(d){return colorScale.domain().indexOf(d.data.key);})
+    //   .on('filtered', changeMap);
+    // pieTypes.render();
+    // bar chart of counts of p_types
+
+    barTypes
+      .width(400)
+      .height(200)
+      .x(d3.scale.ordinal().domain(["collision", "nearmiss", "hazard", "theft"]))
+      .xUnits(dc.units.ordinal)
+      .yAxisLabel("Count")
+      .centerBar(true)
+      .elasticY(true)
+      .dimension(p_typeDimension)
+      .group(countTypes)
+      .colors(colorScale.range())
+      .colorAccessor(function(d){return colorScale.domain().indexOf(d.data.key);})
+      .on('filtered', changeMap);
+    barTypes.xAxis()
+      .tickFormat(function(v){ return labels[v]; });
+    barTypes.render();
+
+    // Bar chart for reports this week
+    barWeek
+      .width(400)
+      .height(200)
+      .x(d3.scale.linear().domain([-0.5,6.5]))
+      .yAxisLabel("Count")
+      .centerBar(true)
+      .elasticY(true)
+      .dimension(weekdayDimension)
+      .group(weekdayCount, "Collisions").valueAccessor(function(d){return d.value.collision; })
+      .stack(weekdayCount, "Nearmisses", function(d){ return d.value.nearmiss; })
+      .stack(weekdayCount, "Hazards", function(d){ return d.value.hazard; })
+      .stack(weekdayCount, "Thefts", function(d){ return d.value.theft; })
+      .brushOn(true)
+      .colors(colorScale.range())
+      .colorAccessor(function(d){return d.layer;})
+      .on('filtered', changeMap);
+    barWeek.yAxis()
+      .tickFormat(d3.format("d"));
+    barWeek.xAxis()
+      .tickValues([0,1,2,3,4,5,6])
+      .tickFormat(function(v){ return weekdayScale((v+1)%7); });
+    barWeek.render();
+
+    // bar chart of total reports per day
+    barDate
+      .width(800)
+      .height(175)
+      .x(d3.scale.linear().domain([-360, 0]))
+      .yAxisLabel("Count")
+      .centerBar(true)
+      .elasticY(true)
+      .dimension(dateDimension)
+      .group(countPerDay)
+      .brushOn(true)
+      .on('filtered', changeMap);
+    barDate.yAxis()
+      .tickFormat(d3.format("d"));
+    barDate.xAxis()
+      .tickFormat(function(v){ return moment().add(v, "days").format("MMM. D"); })
+      .tickValues(function(){
+        var firsts = [];
+        // Calculate the day difference between now and the first of every month
+        for(var i = 0; i<12; i++) firsts.push(moment().subtract(moment().date()-1, "days").subtract(i, "months").diff(moment(), "days"));
+        return firsts;
+      });
+    barDate.render();
+
+    // row chart of delay in reporting
+    delayRows
+      .width(500)
+      .height(400)
+      .dimension(i_typeDimension).keyAccessor(function(d){ return d.key; })
+      .group(aveDelayGroup).valueAccessor(function(d){ return d.value.avg; })
+      .ordering(function(d){ return -d.value.avg })
+      .elasticX(true)
+      .renderLabel(false)
+      .colors(colorScale.range())
+      .colorAccessor(function(d){ return colorScale.domain().indexOf(d.value.p_type); })
+      .on('filtered', changeMap);
+    delayRows.render();
+
+    // Leaflet heatmap
+    var heatLayer = new HeatmapOverlay({ "radius": 40, "maxOpacity": 0.3 });
+    var heat_data;
+    var map = L.map('map', {
+      center: [15,6],
+      zoom: 1,
+      minZoom: 1,
+      scrollWheelZoom: true,
+      worldCopyJump: true,
+      layers: [Mapnik_BW, heatLayer]
+    }).on('load', changeMap());
+
+    function changeMap(){
+      heat_data = { data: [] };
+      p_typeDimension.top(Infinity).forEach(function(feature){
+        heat_data.data.push({
+          'lat': feature.geometry.coordinates[1],
+          'lng': feature.geometry.coordinates[0],
+          'value': 1
+        });
+      });
+      heatLayer.setData(heat_data);
+    };
+
+    // TODO
+    // Edit title popup of delay chart
+    // Calc standard dev for delay chart and provide
+    // Add labels for delay chart
+    // Create new js file for dc script
+
+    dc.renderAll();
+    dc.redrawAll();
+  </script>
+
+{% endblock %}
