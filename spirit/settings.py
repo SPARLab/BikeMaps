@@ -58,7 +58,7 @@ INSTALLED_APPS = (
 
     'spirit',
     'haystack',
-    'djconfig',
+    #'djconfig',
     #'debug_toolbar'
 )
 
@@ -121,21 +121,21 @@ TEMPLATE_LOADERS = (
 
 # django-djconfig
 
-DJC_BACKEND = 'djconfig'
+#DJC_BACKEND = 'djconfig'
 
-CACHES.update({
-    'djconfig': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    },
-})
+#CACHES.update({
+#    'djconfig': {
+#        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+#    },
+#})
 
-MIDDLEWARE_CLASSES += (
-    'djconfig.middleware.DjConfigLocMemMiddleware',
-)
+#MIDDLEWARE_CLASSES += (
+#    'djconfig.middleware.DjConfigLocMemMiddleware',
+#)
 
-TEMPLATE_CONTEXT_PROCESSORS += (
-    'djconfig.context_processors.config',
-)
+#TEMPLATE_CONTEXT_PROCESSORS += (
+#    'djconfig.context_processors.config',
+#)
 
 # django-haystack
 

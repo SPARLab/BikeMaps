@@ -13,7 +13,7 @@ var MapQuestOpen_OSM = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z
       opacity: 0.8,
       attribution: '<a href=http://labs.strava.com/heatmap/>http://labs.strava.com/heatmap/</a>'
     }),
-    infrastructure = L.tileLayer.wms("https://bikemaps.org/WMS", {
+    infrastructure = L.tileLayer.wms("https://sparii.geog.uvic.ca/WMS", {
       layers: 'bikemaps_infrastructure',
       format: 'image/png',
       transparent: true,

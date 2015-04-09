@@ -93,6 +93,7 @@ CRON_CLASSES = [
     "mapApp.cron.UserAlertEmails",
 ]
 
+#STATIC_URL = 'https://sparii.geog.uvic.ca:8080/static/'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
