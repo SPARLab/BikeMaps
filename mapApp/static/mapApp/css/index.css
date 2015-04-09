@@ -181,3 +181,12 @@ span.date{
   margin-left: 5px;
   text-indent: -5px;
 }
+
+.no-margins{
+  margin: 0px;
+}
+
+/*Add padding to next form input after personal details info collapse*/
+.whyPersonalCollapse + .form-group{
+  padding-top: 15px;
+}

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import cache_page
 
 from django.contrib.auth.models import User
 from mapApp.models.alert_notification import IncidentNotification, HazardNotification, TheftNotification
@@ -49,7 +50,7 @@ def stats(request):
 
 	return render(request, 'mapApp/stats.html', context)
 
-
+@cache_page(60 * 15)
 def vis(request):
 	collisions = Incident.objects.filter(p_type__exact="collision")
 	nearmisses = Incident.objects.filter(p_type__exact="nearmiss")

@@ -26,6 +26,19 @@ class HazardForm(forms.ModelForm):
             ),
             AccordionGroup(
                 'Personal Details',
+                HTML("""
+                    <a class="text-info" data-toggle="collapse" href=".whyPersonalCollapse" aria-expanded="false" aria-controls="whyPersonalCollapse">
+                        <span class="glyphicon glyphicon-question-sign"></span><strong> Why Are We Asking for Personal Details?</strong>
+                    </a>
+                    <div class="collapse whyPersonalCollapse">
+                        <div class="well no-margins">
+                            Personal details such as age and gender are routinely collected in health research including studies examining cycling injuries
+                            (e.g., Cripton et al. 2015). In addition, details such as rider experience and gender have been shown to be important predictors
+                            of cycling safety and risk (Beck et al. 2007). The goal of BikeMaps.org is to gather more comprehensive data to better assess cycling
+                            safety and risk. Providing personal details will allow us to more accurately fill in these data gaps.
+                        </div>
+                    </div>
+                """),
                 Field('age'),
                 Field('birthmonth'),
                 Field('sex'),
