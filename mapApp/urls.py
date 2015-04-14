@@ -61,5 +61,6 @@ urlpatterns += format_suffix_patterns([
     url(r'^alertareas/(?P<pk>[0-9]+)/$', views.AlertAreaDetail.as_view()),
     url(r'^users/$', views.UserList.as_view()),
     url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
-    url(r'^gcmdevices/$', views.GCMDeviceList.as_view(), name='gcmdevice-list')
+    url(r'^gcmdevices/$', views.GCMDeviceList.as_view(), name='gcmdevice-list'),
+    url(r'^gcmdevices/(?P<pk>[0-9]+)/$', views.GCMDeviceDetail.as_view(), name='gcmdevice-detail')
 ])

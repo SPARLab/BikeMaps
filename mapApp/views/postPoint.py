@@ -73,6 +73,9 @@ def postHazard(request):
 		alertUsers(request, hazard)
 		pushNotification.pushNotification(hazard)
 
+
+		#messages.success(request, resp.results.message_id)
+
 		messages.success(request, '<strong>Thank you!</strong><br>Your hazard marker was successfully added.')
 		return HttpResponseRedirect(reverse('mapApp:index', \
 			kwargs=({										\

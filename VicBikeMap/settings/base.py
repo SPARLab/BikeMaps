@@ -117,7 +117,17 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 
+
+
 PUSH_NOTIFICATIONS_SETTINGS = {
         "GCM_API_KEY": "AIzaSyAAIoOHr1BA28ulBsWQ7FNWfCmPeZp-aaw",
         "APNS_CERTIFICATE": "/path/to/your/certificate.pem",
 }
+
+REST_SESSION_LOGIN = False
+
+#REST_FRAMEWORK = {
+ #   'DEFAULT_AUTHENTICATION_CLASSES': (
+  #      'rest_framework.authentication.BasicAuthentication',
+   # )
+#}

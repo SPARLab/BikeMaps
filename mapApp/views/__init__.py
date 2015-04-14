@@ -8,6 +8,6 @@ from termsAndConditions import termsAndConditions
 from statistics import stats, vis
 from recentReports import recentReports
 from exportDataApi import getPointsApi, getCollisionsApi, getNearmissApi, getIncidentsApi, getHazardsApi, getTheftsApi, getOfficialApi
-from restApi import CollisionList, NearmissList, HazardList, TheftList, OfficialList, UserList, UserDetail, AlertAreaList, AlertAreaDetail, GCMDeviceList
+from restApi import CollisionList, NearmissList, HazardList, TheftList, OfficialList, UserList, UserDetail, AlertAreaList, AlertAreaDetail, GCMDeviceList, GCMDeviceDetail
 from pushNotification import pushNotification
 

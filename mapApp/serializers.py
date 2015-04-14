@@ -70,7 +70,7 @@ class GCMDeviceSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
     class Meta:
         model = GCMDevice
-        fields = ('name', 'active', 'user', 'date_created', 'registration_id')
+        fields = ('pk', 'name', 'active', 'user', 'date_created', 'registration_id')
 
 
 class APNSDeviceSerializer(serializers.ModelSerializer):
