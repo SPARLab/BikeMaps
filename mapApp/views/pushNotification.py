@@ -25,7 +25,10 @@ def pushNotification(point):
     payload = payloadHelper(point)
 
     if payload:
-        GCMDevices.send_message(None, extra=payload)
+        if point.p_type == "hazard":
+            GCMDevices.send_message("New hazard reported", extra=payload)
+        else:
+            GCMDevices.send_message("New incident reported", extra=payload)
     
 
 def payloadHelper(point):
