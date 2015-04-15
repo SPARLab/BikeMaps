@@ -29,8 +29,8 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         # 'OPTIONS': {'charset': 'utf8mb4'},
         'NAME': 'bikeDB',
-        'USER': 'postgres',
-        'PASSWORD': 'spatial'
+        'USER': 'postgres'
+        # 'PASSWORD': 'SUPER_SECRET'
     }
 }
 

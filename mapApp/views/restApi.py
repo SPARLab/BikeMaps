@@ -208,23 +208,30 @@ class GCMDeviceDetail(APIView):
     """
     List all GCMDevices, or create a new GCMDevice.
     """
-    #authentication_classes = (authentication.TokenAuthentication,)
-    #permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
 
-    def get_object(self, registration_id):
+    def get_object(self, pk):
         try:
-            return GCMDevice.objects.get(registration_id=registration_id)
+            return GCMDevice.objects.get(pk=pk)
         except GCMDevice.DoesNotExist:
             raise Http404
 
-    def get(self, request, registration_id, format=None):
-        gcmDevice = self.get_object(registration_id)
+    def get(self, request, pk, format=None):
+        gcmDevice = self.get_object(pk)
         serializer = GCMDeviceSerializer(gcmDevice)
         return Response(serializer.data)
 
-    
-    def delete(self, request, registration_id, format=None):
-        gcmDevice = self.get_object(registration_id)
+    def put(self, request, pk, format=None):
+        gcmDevice = self.get_object(pk)
+        serializer = GCMDeviceSerializer(gcmDevice, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        gcmDevice = self.get_object(pk)
         gcmDevice.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
