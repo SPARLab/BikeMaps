@@ -204,3 +204,8 @@ li a {
 .modal-dialog{
 	z-index: 1100;
 }
+
+.apa-list li {
+	padding-left: 3em;
+  text-indent: -2em;
+}
