@@ -48,4 +48,4 @@ _Note: There are additional requirements for serving this application in a produ
 ##### People
   + Dr. Trisalyn Nelson (Project Lead)
   + Taylor Denouden (Developer)
-  + James Stephaniuk (Developer)
+  + Darren Boss (Developer)
