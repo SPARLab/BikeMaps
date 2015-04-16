@@ -1,9 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 from mapApp.models import Incident, Theft, Hazard, Official, AlertArea
 from mapApp.forms import IncidentForm, GeofenceForm, EditForm, HazardForm, TheftForm
+
+from itertools import chain
 from django.core.cache import cache
+import pickle
+import logging
+logger = logging.getLogger(__name__)
 
 def index(request, lat=None, lng=None, zoom=None):
 	context = indexContext(request)
@@ -19,22 +23,31 @@ def index(request, lat=None, lng=None, zoom=None):
 
 # Define default context data for the index view. Forms can be overridden to display errors (used by other views)
 def indexContext(request, incidentForm=IncidentForm(), geofenceForm=GeofenceForm(), hazardForm=HazardForm(), theftForm=TheftForm()):
-	# Try to get official reports from cache
-	officials = cache.get('officialObjects')
-	if not officials:
-		# If cache miss, get from database and put in cache
-		officials = Official.objects.all()
-		cache.set('officialObjects', 60*60)
-	# else:
-	# 	return HttpResponse("Cache hit!")
+	# Cache official collisions in slices to stay below 1Mb cache limit of memcached
+	CACHE_SLICE = 1000
+	oLen = Official.objects.count()
+	officialResult = Official.objects.none()
+
+	cacheKeys = [ ("officials_" + str(i)) for i in xrange(oLen/CACHE_SLICE + 1) ]
+	officialsPickled = cache.get_many(cacheKeys)
+
+	for key in cacheKeys:
+		if key not in officialsPickled.keys():
+			i = int(key.split("_")[1])*CACHE_SLICE
+			officialSlice = Official.objects.all()[i:i+CACHE_SLICE]
+			cache.set(key, pickle.dumps(officialSlice), 60*60)
+		else:
+			officialSlice = pickle.loads(officialsPickled[key])
+
+		officialResult = list(chain(officialResult, officialSlice)) # Concat slice and result querysets
 
 	return {
 		# Model data used by map
-		'collisions': Incident.objects.filter(p_type__exact="collision") | Incident.objects.filter(p_type__exact="fall"),
+		'collisions': Incident.objects.filter(p_type__exact="collision"),
 		'nearmisses': Incident.objects.filter(p_type__exact="nearmiss"),
 		'hazards': Hazard.objects.all(),
 		'thefts': Theft.objects.all(),
-		'officials': officials,
+		'officials': officialResult,
 		"geofences": AlertArea.objects.filter(user=request.user.id),
 
 		# Form data used by map
