@@ -17,6 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.gzip.GZipMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -67,8 +68,11 @@ INSTALLED_APPS = (
     'django.contrib.gis',
     'djgeojson',
     'crispy_forms',
-    'mapApp'
+    'mapApp',
+    'debug_toolbar',
 )
+
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
@@ -105,3 +109,5 @@ STATICFILES_FINDERS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+INTERNAL_IPS = ('127.0.0.1')

@@ -42,7 +42,7 @@ def indexContext(request, incidentForm=IncidentForm(), geofenceForm=GeofenceForm
 		officialResult = list(chain(officialResult, officialSlice)) # Concat slice and result querysets
 
 	# Put all incidents in django cache
-	incidents = Incident.objects.only('p_type', 'id').select_related('point').all()
+	incidents = Incident.objects.select_related('point').all()
 
 	return {
 		# Model data used by map
