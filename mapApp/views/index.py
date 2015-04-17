@@ -42,14 +42,14 @@ def indexContext(request, incidentForm=IncidentForm(), geofenceForm=GeofenceForm
 		officialResult = list(chain(officialResult, officialSlice)) # Concat slice and result querysets
 
 	# Put all incidents in django cache
-	incidents = Incident.objects.only('p_type').all()
+	incidents = Incident.objects.only('p_type', 'id').select_related('point').all()
 
 	return {
 		# Model data used by map
 		'collisions': incidents.filter(p_type__exact="collision"),
 		'nearmisses': incidents.filter(p_type__exact="nearmiss"),
-		'hazards': Hazard.objects.all(),
-		'thefts': Theft.objects.all(),
+		'hazards': Hazard.objects.select_related('point').all(),
+		'thefts': Theft.objects.select_related('point').all(),
 		'officials': officialResult,
 		"geofences": AlertArea.objects.filter(user=request.user.id),
 
