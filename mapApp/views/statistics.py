@@ -52,12 +52,11 @@ def stats(request):
 
 @cache_page(60 * 15)
 def vis(request):
-	collisions = Incident.objects.filter(p_type__exact="collision")
-	nearmisses = Incident.objects.filter(p_type__exact="nearmiss")
+	incidents = Incident.objects.only('p_type').all()
 
 	context = {
-		'collisions': collisions,
-		'nearmisses': nearmisses,
+		'collisions': incidents.filter(p_type__exact="collision"),
+		'nearmisses': incidents.filter(p_type__exact="nearmiss"),
 		'hazards': Hazard.objects.all(),
 		'thefts': Theft.objects.all(),
 		'points': Point.objects.all()

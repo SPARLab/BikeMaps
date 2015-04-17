@@ -6,8 +6,8 @@ from mapApp.forms import IncidentForm, GeofenceForm, EditForm, HazardForm, Theft
 from itertools import chain
 from django.core.cache import cache
 import pickle
-import logging
-logger = logging.getLogger(__name__)
+# import logging
+# logger = logging.getLogger(__name__)
 
 def index(request, lat=None, lng=None, zoom=None):
 	context = indexContext(request)
@@ -41,10 +41,13 @@ def indexContext(request, incidentForm=IncidentForm(), geofenceForm=GeofenceForm
 
 		officialResult = list(chain(officialResult, officialSlice)) # Concat slice and result querysets
 
+	# Put all incidents in django cache
+	incidents = Incident.objects.only('p_type').all()
+
 	return {
 		# Model data used by map
-		'collisions': Incident.objects.filter(p_type__exact="collision"),
-		'nearmisses': Incident.objects.filter(p_type__exact="nearmiss"),
+		'collisions': incidents.filter(p_type__exact="collision"),
+		'nearmisses': incidents.filter(p_type__exact="nearmiss"),
 		'hazards': Hazard.objects.all(),
 		'thefts': Theft.objects.all(),
 		'officials': officialResult,
