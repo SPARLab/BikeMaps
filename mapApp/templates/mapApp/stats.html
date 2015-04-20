@@ -163,10 +163,10 @@
 
 	// Filter by date to get different datasets
 	// TODO do this in stats.js
-	var collisionsThisMonth = filterGeoJSONByDate(data.collisionsROI, data.oneMonthAgo, data.now),
-	nearmissesThisMonth = filterGeoJSONByDate(data.nearmissesROI, data.oneMonthAgo, data.now),
-	hazardsThisMonth = filterGeoJSONByDate(data.hazardsROI, data.oneMonthAgo, data.now),
-	theftsThisMonth = filterGeoJSONByDate(data.theftsROI, data.oneMonthAgo, data.now);
+	var collisionsThisMonth = data.collisionsROI,
+	nearmissesThisMonth = data.nearmissesROI,
+	hazardsThisMonth = data.hazardsROI,
+	theftsThisMonth = data.theftsROI;
 
 	// Add points to map, create layers used by stats.js to highlight points on map
 	// All points in the polygon that occured in the previous month
