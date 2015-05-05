@@ -40,6 +40,8 @@ CACHES = {
     }
 }
 
+STATIC_URL = '/static/'
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #Dummy backend for development that writes to stdout
 
 SESSION_COOKIE_SECURE = False
