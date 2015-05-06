@@ -50,7 +50,7 @@ def stats(request):
 
 	return render(request, 'mapApp/stats.html', context)
 
-@cache_page(60 * 15)
+# @cache_page(60 * 15)
 def vis(request):
 	incidents = Incident.objects.only('p_type').all()
 
@@ -59,6 +59,7 @@ def vis(request):
 		'nearmisses': incidents.filter(p_type__exact="nearmiss"),
 		'hazards': Hazard.objects.all(),
 		'thefts': Theft.objects.all(),
-		'points': Point.objects.all()
+		'points': Point.objects.all(),
+		'alertAreas': AlertArea.objects.filter(user=request.user.id)
 	}
 	return render(request, 'mapApp/vis.html', context)

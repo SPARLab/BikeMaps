@@ -1,5 +1,5 @@
 {% extends "mapApp/base.html" %}
-{% load staticfiles geojson_tags %}
+{% load staticfiles geojson_tags cache %}
 
 {% block title %}
 Bikemaps Data Visualization
@@ -74,12 +74,16 @@ Bikemaps Data Visualization
   <script src="{% static 'mapApp/js/icons.js' %}"></script>
   <script src="{% static 'mapApp/js/map.js' %}"></script>
   <script>
-    var collisions = {{ collisions|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
-    var nearmisses = {{ nearmisses|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
-    var hazards = {{ hazards|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
-    var thefts = {{ thefts|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
+    var alertAreas = L.geoJson({{ alertAreas|geojsonfeature|safe }});
 
-    var data = collisions.concat(nearmisses).concat(hazards).concat(thefts);
+    {% cache 500 data %}
+      var collisions = {{ collisions|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'],
+          nearmisses = {{ nearmisses|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'],
+          hazards = {{ hazards|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'],
+          thefts = {{ thefts|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
+
+      var data = collisions.concat(nearmisses).concat(hazards).concat(thefts);
+    {% endcache %}
   </script>
   <script src="{% static 'mapApp/js/vis.js' %}"></script>
 

@@ -185,6 +185,11 @@ function changeMap(){
   heatLayer.setData(heat_data);
 };
 
+// Fit map extent to alert areas boundary
+if (alertAreas.getLayers().length > 0) {
+  map.fitBounds(alertAreas.getBounds());
+}
+
 
 dc.renderAll();
 dc.redrawAll();
