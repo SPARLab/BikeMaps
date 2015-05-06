@@ -75,7 +75,7 @@ textarea {
 	font-family: faktos;
 }
 
-.navbar-default .navbar-nav>li>a {
+.navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a:focus {
 	color: #00aeac;
 	font-weight: lighter;
 	/*-webkit-text-stroke: 1px #2c3e50;*/
