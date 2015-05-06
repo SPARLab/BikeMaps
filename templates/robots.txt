@@ -1,0 +1,17 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /forum/
+
+Disallow: /incident_submit/
+Disallow: /hazard_submit/
+Disallow: /theft_submit/
+Disallow: /poly_submit/
+
+Disallow: /read_alert/
+Disallow: /contact/
+Disallow: /edit/
+
+Disallow: /points.json
+Disallow: /incidents.json
+Disallow: /hazards.json
+Disallow: /thefts.json

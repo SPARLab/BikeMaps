@@ -18,7 +18,7 @@ urlpatterns = patterns('',
 	url(r'^incident_submit/$', views.postIncident, name='postIncident'),
 	url(r'^hazard_submit/$', views.postHazard, name='postHazard'),
 	url(r'^theft_submit/$', views.postTheft, name='postTheft'),
-	url(r'^new_alert/$', views.postAlertPolygon, name='postAlertPolygon'),
+	url(r'^poly_submit/$', views.postAlertPolygon, name='postAlertPolygon'),
 
 	# Called from email form
 	url(r'^contact/$', views.contact, name='contact'),
