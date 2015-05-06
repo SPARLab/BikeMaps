@@ -1,0 +1,14 @@
+#map{
+  height: 100%;
+}
+.center-chart{
+  width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 8px;
+}
+
+#barTypes .x.axis path {
+  display: none;
+}
