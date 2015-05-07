@@ -94,7 +94,7 @@ function pprint(title, jsonData){
           + "<strong>Date: </strong>" + moment(obj.properties.date).calendar() + "<br>"
           + "<strong>Type: </strong>" + obj.properties.i_type + " (" + obj.properties.incident_with + ")<br>";
           if(obj.properties.incident_detail != ''){
-            str+= "<strong>Description: </strong>" + obj.properties.incident_detail + "</li>";
+            str+= "<strong>Description: </strong>" + obj.properties.details + "</li>";
           }
       }
       else if(title === "Nearmisses") {
