@@ -6,8 +6,8 @@ from time import strftime, gmtime
 from django.utils import timezone
 
 ##########
-# Hazard class.
-# Class for Hazard Reports. Contains all required, non-required, and spatial fields. Setup to allow easy export to a singular shapefile.
+# Point class.
+# Serves as abstract model inheritance class for all user generated map data points
 class Point(models.Model):
     TYPE_CHOICES = (
         ('collision', 'collision'),
