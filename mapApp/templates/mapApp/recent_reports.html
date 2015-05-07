@@ -8,7 +8,7 @@
 
 {% block headerCSS %}
   <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
-  <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
   <link rel="stylesheet" href="{% static 'mapApp/css/recentReports.css' %}"/>
 {% endblock %}
 
@@ -28,7 +28,7 @@
 {% endblock %}
 
 {% block footerJS %}
-  <script src="{% static 'leaflet/leaflet.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
   <script src="{% static 'moment/moment.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
   <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
