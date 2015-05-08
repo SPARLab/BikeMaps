@@ -3,15 +3,13 @@
 {% url 'mapApp:index' as index %}
 {% url 'mapApp:vis' as vis %}
 {% url 'mapApp:about' as about %}
+{% url 'mapApp:alerts' as alerts %}
+
+{% url 'admin:index' as admin %}
 {% url 'mapApp:getPoints' as getPoints %}
 {% url 'mapApp:getIncidents' as getIncidents %}
 {% url 'mapApp:getHazards' as getHazards %}
 {% url 'mapApp:getThefts' as getThefts %}
-{% url 'mapApp:stats' as stats %}
-{% url 'spirit:index' as forum %}
-{% url 'admin:index' as mapAdmin %}
-
-{% url 'admin:index' as admin %}
 
 {% url 'spirit:user-logout' as logout %}
 {% url 'spirit:user-login' as login %}
@@ -36,18 +34,8 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav" role="navigation">
 
-        <li {% ifequal request.path index %} class="active" {% endifequal %}><a href="{{ index }}">Home <span class="glyphicon glyphicon-map-marker"></span></a></li
-        >
-        <li {% ifequal request.path vis %} class="active" {% endifequal %}><a href="{{ vis }}">Visualization <span class="glyphicon glyphicon-stats"></span></a></li
-        >
-
-		{# Hide the Forum link from the navbar #}
-		{% comment %}
-        {% with request.path|slice:":7" as forumPath %}
-        <li {% ifequal forumPath forum %} class="active" {% endifequal %}><a href="{{ forum }}">Forum <span class="glyphicon glyphicon-comment"></span></a></li>
-        {% endwith %}
-		{% endcomment %}
-
+        <li {% ifequal request.path index %} class="active" {% endifequal %}><a href="{{ index }}">Home <span class="glyphicon glyphicon-map-marker"></span></a></li>
+        <li {% ifequal request.path vis %} class="active" {% endifequal %}><a href="{{ vis }}">Visualization <span class="glyphicon glyphicon-stats"></span></a></li>
         <li {% ifequal request.path about %} class="active" {% endifequal %}><a href="{{ about }}">About <span class="glyphicon glyphicon-leaf"></span></a></li>
 
         <li class="dropdown">
@@ -71,37 +59,36 @@
 
       <ul class="nav navbar-nav navbar-right">
         {% if request.user.is_authenticated %}
-          {% has_alerts user as has_notifications %}
-          <li><a href="{% url "spirit:topic-notification-list" %}"><span class="glyphicon glyphicon-bell {% if has_notifications %} is-highlighted{% endif %}"></span></a></li>
+          {% reports_this_week user as has_notifications %}
+          <li><a href="{{ alerts }}"><span class="glyphicon glyphicon-bell {% if has_notifications %} is-highlighted{% endif %}"></span></a></li>
           <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{ request.user }}<span class="caret"></span></a>
 
               <ul class="user-menu dropdown-menu" role="menu">
                 <li><a href="{{ profile }}">Profile</a></li>
                 <li><a href="{{ logout }}">Log out</a></li>
-                <!-- <li><a href="{{ stats }}">Stats</a></li> -->
+
                 {% if request.user.is_administrator %}
-                <li role="presentation" class="divider"></li>
-                <li role="presentation" class="dropdown-header">Admin options</li>
-                <li><a href="{{ admin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
-                <li><a href="{{ getPoints }}"><small>Export Points <span class="glyphicon glyphicon-download"></span></small></a></li>
-                <li><a href="{{ getIncidents }}"><small>Export Incidents <span class="glyphicon glyphicon-download"></span></small></a></li>
-                <li><a href="{{ getHazards }}"><small>Export Hazards <span class="glyphicon glyphicon-download"></span></small></a></li>
-                <li><a href="{{ getThefts }}"><small>Export Thefts <span class="glyphicon glyphicon-download"></span></small></a></li>
+                  <li role="presentation" class="divider"></li>
+                  <li role="presentation" class="dropdown-header">Admin options</li>
+                  <li><a href="{{ admin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
+                  <li><a href="{{ getPoints }}"><small>Export Points <span class="glyphicon glyphicon-download"></span></small></a></li>
+                  <li><a href="{{ getIncidents }}"><small>Export Incidents <span class="glyphicon glyphicon-download"></span></small></a></li>
+                  <li><a href="{{ getHazards }}"><small>Export Hazards <span class="glyphicon glyphicon-download"></span></small></a></li>
+                  <li><a href="{{ getThefts }}"><small>Export Thefts <span class="glyphicon glyphicon-download"></span></small></a></li>
                 {% endif %}
-
+              </ul>
+          </li>
         {% else %}
-
           <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Guest<span class="caret"></span></a>
 
               <ul class="dropdown-menu" role="menu">
-              <li><a href="{{ login }}">Log in</a></li>
-              <li><a href="{{ register }}">Register</a></li>
-
-        {% endif %}
-            </ul>
+                <li><a href="{{ login }}">Log in</a></li>
+                <li><a href="{{ register }}">Register</a></li>
+              </ul>
           </li>
+        {% endif %}
 
       </ul>
     </div>

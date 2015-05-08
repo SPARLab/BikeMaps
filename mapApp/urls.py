@@ -40,4 +40,5 @@ urlpatterns = patterns('',
 	url(r'recent/$', views.recentReports, name='recent'),
 
 	url(r'vis/$', views.vis, name='vis'),
+	url(r'alerts/$', views.recentReports, name='alerts'),
 )
