@@ -30,16 +30,13 @@ def recentReports(request):
         theftsInPoly = theftsInPoly | thefts.filter(geom__intersects=g.geom)
 
     now = datetime.datetime.now()
-    yesterday = now - datetime.timedelta(days=7)
+    lastweek = now - datetime.timedelta(days=7)
 
     context = {
-        "now": now.isoformat(),
-        'yesterday': yesterday.isoformat(),
-
-        'collisions': collisionsInPoly.filter(date__range=[yesterday, now]),
-        'nearmisses': nearmissesInPoly.filter(date__range=[yesterday, now]),
-        'hazards': hazardsInPoly.filter(date__range=[yesterday, now]),
-        'thefts': theftsInPoly.filter(date__range=[yesterday, now]),
+        'collisions': collisionsInPoly.filter(date__range=[lastweek, now]),
+        'nearmisses': nearmissesInPoly.filter(date__range=[lastweek, now]),
+        'hazards': hazardsInPoly.filter(date__range=[lastweek, now]),
+        'thefts': theftsInPoly.filter(date__range=[lastweek, now]),
 
         'geofences': rois
     }

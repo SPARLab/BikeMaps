@@ -13,18 +13,20 @@
 {% endblock %}
 
 {% block body %}
+
+
   <div class="container-fluid" style="height: 100%;">
-    <div class="row" style="height: 100%;">
-      <div class="col-xs-8 map-col">
-        <!-- Map of one month of reports -->
+    <div class="row" id="height-control">
+      <div class="col-xs-12 col-sm-8 map-col">
         <div id="map"></div>
       </div>
-      <div class="col-xs-4" style="height: 100%; overflow: scroll;">
-        <!-- Map of one month of reports -->
+      <div class="col-xs-12 col-sm-4" style="height: 100%; overflow: scroll;">
         <div id="data"></div>
       </div>
     </div>
   </div>
+
+
 {% endblock %}
 
 {% block footerJS %}
@@ -41,6 +43,20 @@
       "thefts": {{ thefts|geojsonfeature:"i_type,date,time,details,pk"|safe }},
       "rois": {{ geofences|geojsonfeature|safe}}
     }
+  </script>
+  <script>
+    $(function(){
+      onResize();
+      $(window).resize(onResize);
+
+      function onResize(){ //screen is xs
+        if ($(window).width() < 768)
+          $('#height-control').height("50%")
+        else //screen is at least sm
+          $('#height-control').height("100%")
+      }
+
+    })
   </script>
   <script src="{% static 'mapApp/js/recentReports.js' %}" charset="utf-8"></script>
 
