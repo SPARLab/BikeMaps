@@ -1,0 +1,64 @@
+{% extends "mapApp/base.html" %}
+{% block title %}BikeMaps Blog{% endblock %}
+
+{% load staticfiles crispy_forms_tags markdown_deux_tags %}
+
+
+{% block headerCSS %}
+  <style>
+    .row{
+      margin-top: 25px;
+    }
+  </style>
+{% endblock %}
+
+
+{% block body %}
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <h2>Create a new blog post</h2>
+        {% crispy blog_post_form %}
+      </div>
+    </div>
+
+    <div class="row" id="md-cheatsheet">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            {% markdown_cheatsheet %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block footerJS %}
+
+<script>
+  $(function(){
+    $('#italics-btn').click(function(e){
+      appendToContent(' *italic text*');
+    })
+    $('#bold-btn').click(function(e){
+      appendToContent(' **bold text**');
+    })
+    $('#list-btn').click(function(e){
+      appendToContent('\n\n- list item');
+    })
+    $('#link-btn').click(function(e){
+      appendToContent(' [link title](url)');
+    })
+    $('#picture-btn').click(function(e){
+      appendToContent(' ![alt text](url)');
+    })
+  })
+
+  function appendToContent(text){
+    $('#id_content').val($('#id_content').val() + text)
+  }
+</script>
+
+{% endblock %}

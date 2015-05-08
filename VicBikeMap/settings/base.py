@@ -70,6 +70,10 @@ INSTALLED_APPS = (
     'crispy_forms',
     'mapApp',
     'debug_toolbar',
+
+    #blogApp and requirements
+    'blogApp',
+    'markdown_deux',
 )
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
