@@ -11,7 +11,7 @@
 {% url 'spirit:index' as forum %}
 {% url 'admin:index' as mapAdmin %}
 
-{% url 'spirit:admin' as spiritAdmin %}
+{% url 'admin:index' as admin %}
 
 {% url 'spirit:user-logout' as logout %}
 {% url 'spirit:user-login' as login %}
@@ -83,7 +83,7 @@
                 {% if request.user.is_administrator %}
                 <li role="presentation" class="divider"></li>
                 <li role="presentation" class="dropdown-header">Admin options</li>
-                <li><a href="{{ spiritAdmin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
+                <li><a href="{{ admin }}"><small>Admin <span class="glyphicon glyphicon-wrench"></span></small></a></li>
                 <li><a href="{{ getPoints }}"><small>Export Points <span class="glyphicon glyphicon-download"></span></small></a></li>
                 <li><a href="{{ getIncidents }}"><small>Export Incidents <span class="glyphicon glyphicon-download"></span></small></a></li>
                 <li><a href="{{ getHazards }}"><small>Export Hazards <span class="glyphicon glyphicon-download"></span></small></a></li>
