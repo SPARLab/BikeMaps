@@ -13,4 +13,7 @@ urlpatterns = patterns('',
 
 	# Edit a post
 	url(r'^edit/(?P<slug>[\w\-]+)$', views.edit_post, name='edit_post'),
+
+	# Upload image url
+	url(r'^upload_image/$', views.upload_image, name='upload_image'),
 )

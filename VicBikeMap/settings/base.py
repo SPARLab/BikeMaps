@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Import all forum settings
 from spirit.settings import *
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
@@ -113,3 +114,16 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 INTERNAL_IPS = ('127.0.0.1')
+
+# Markdown styles
+MARKDOWN_DEUX_STYLES = {
+    "trusted": {
+        "extras": {
+            "code-friendly": None,
+            "cuddled-lists": True,
+        },
+        # Allow raw HTML (WARNING: don't use this for user-generated
+        # Markdown for your site!).
+        "safe_mode": False,
+    }
+}

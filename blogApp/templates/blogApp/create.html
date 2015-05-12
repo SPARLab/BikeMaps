@@ -9,6 +9,12 @@
     .row{
       margin-top: 25px;
     }
+    #upload-image-form .form-group {
+      height: 50px;
+    }
+    #upload-image-form .modal-body {
+      padding-bottom: 0px;
+    }
   </style>
 {% endblock %}
 
@@ -22,43 +28,58 @@
       </div>
     </div>
 
+    <!-- <div class="row">
+      <div id="content-preview" class="col-xs-12">
+
+      </div>
+    </div> -->
+
     <div class="row" id="md-cheatsheet">
       <div class="col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            {% markdown_cheatsheet %}
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="markdownCheatsheet">
+              <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  Markdown Cheatsheet <span class="caret"></span>
+                </a>
+              </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="markdownCheatsheet">
+              <div class="panel-body">
+                {% markdown_cheatsheet %}
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
+
+
+  <!-- Upload Img Modal -->
+  <div class="modal fade" id="upload-img-modal" tabindex="-1" role="dialog" aria-labelledby="ImageUploadModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Upload an image to the server</h4>
+        </div>
+        <form id="upload-image-form" action="{% url 'blogApp:upload_image' %}" method="POST" role="form" enctype="multipart/form-data">
+          <div class="modal-body">
+              {% csrf_token %}
+              <span id="img-form-crispy">{% crispy image_form %}</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
 {% endblock %}
 
 
 {% block footerJS %}
-
-<script>
-  $(function(){
-    $('#italics-btn').click(function(e){
-      appendToContent(' *italic text*');
-    })
-    $('#bold-btn').click(function(e){
-      appendToContent(' **bold text**');
-    })
-    $('#list-btn').click(function(e){
-      appendToContent('\n\n- list item');
-    })
-    $('#link-btn').click(function(e){
-      appendToContent(' [link title](url)');
-    })
-    $('#picture-btn').click(function(e){
-      appendToContent(' ![alt text](url)');
-    })
-  })
-
-  function appendToContent(text){
-    $('#id_content').val($('#id_content').val() + text)
-  }
-</script>
+  <script src="{% static 'blogApp/js/create.js' %}"></script>
 
 {% endblock %}

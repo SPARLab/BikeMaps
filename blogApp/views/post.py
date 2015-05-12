@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
 
 from blogApp.models import Post
-from blogApp.forms import BlogPostForm
+from blogApp.forms import BlogPostForm, UploadImageForm
 
 # import logging
 # logger = logging.getLogger(__name__)
@@ -20,7 +20,10 @@ def view_post(request, slug):
 @user_passes_test(lambda u: u.is_superuser)
 def create_post(request):
 	if request.method == "GET":
-		return render(request, 'blogApp/create.html', {'blog_post_form': BlogPostForm()} )
+		return render(request, 'blogApp/create.html', {
+			'blog_post_form': BlogPostForm(),
+			'image_form': UploadImageForm(),
+		})
 
 	else:
 		form = BlogPostForm(request.POST)
@@ -32,14 +35,20 @@ def create_post(request):
 			return redirect(new_post)
 
 		else: # not valid, return errors
-			return render(request, 'blogApp/create.html', {'blog_post_form': form})
+			return render(request, 'blogApp/create.html', {
+				'blog_post_form': form,
+				'image_form': UploadImageForm()
+			})
 
 
 @user_passes_test(lambda u: u.is_superuser)
 def edit_post(request, slug):
 	instance = get_object_or_404(Post.objects.filter(slug=slug))
 
-	if request.method == "GET": return render( request, 'blogApp/create.html', {'blog_post_form': BlogPostForm(instance=instance)} )
+	if request.method == "GET": return render( request, 'blogApp/create.html', {
+		'blog_post_form': BlogPostForm(instance=instance),
+		'image_form': UploadImageForm()
+	})
 
 	else:
 		form = BlogPostForm(request.POST or None, instance=instance)
@@ -51,4 +60,7 @@ def edit_post(request, slug):
 			return redirect(new_post)
 
 		else: # not valid, return errors
-			return render(request, 'blogApp/create.html', {'blog_post_form': form})
+			return render(request, 'blogApp/create.html', {
+				'blog_post_form': form,
+				'image_form': UploadImageForm()
+			})

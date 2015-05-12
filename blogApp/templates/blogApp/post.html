@@ -60,7 +60,7 @@
 
       <div class="col-xs-12 col-sm-12 col-sm-offset-2">
         <div class="post-content">
-          {{ post.content|markdown }}
+          {{ post.content|markdown:"trusted" }}
         </div>
       </div>
     {% endif %}
@@ -69,5 +69,6 @@
 
 
 {% block footerJS %}
-
+  <script src="{% static 'blogApp/js/post.js' %}"></script>
+  
 {% endblock %}
