@@ -8,6 +8,8 @@ urlpatterns = patterns('',
 	# View a post
 	url(r'^post/(?P<slug>[\w\-]+)$', views.view_post, name='view_post'),
 
+	url(r'^p/(?P<s62>[\w]+)$', views.short_url_redirect, name='short_url_redirect'),
+
 	# Create a post
 	url(r'^create/$', views.create_post, name='create_post'),
 

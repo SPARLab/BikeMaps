@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
 
 from blogApp.models import Post
+from blogApp.utils import hash62
 from blogApp.forms import BlogPostForm, UploadImageForm
 
 # import logging
@@ -15,6 +16,10 @@ def view_post(request, slug):
     }
 
 	return render(request, 'blogApp/post.html', context)
+
+def short_url_redirect(request, s62):
+	post_id = hash62.dehash(s62)
+	return redirect(get_object_or_404(Post, id=post_id))
 
 
 @user_passes_test(lambda u: u.is_superuser)

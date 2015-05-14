@@ -2,6 +2,7 @@ from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 
 from django.db import models
+from blogApp.utils import hash62
 
 # Create your models here.
 
@@ -20,6 +21,9 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('blogApp:view_post', kwargs={'slug': self.slug})
+
+    def get_short_url(self):
+        return reverse('blogApp:short_url_redirect', kwargs={'s62': hash62.hash(self.id)})
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

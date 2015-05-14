@@ -6,74 +6,101 @@
 
 {% block headerCSS %}
   <link href="{% static 'blogApp/css/post.css' %}" rel="stylesheet">
-  <style media="screen">
-
-
-  </style>
 {% endblock %}
 
 
 {% block body %}
-    <div class="container">
-      <div class="row">
-        <div class="page-header col-xs-12 col-sm-10 col-sm-offset-2">
-          <h1><a href="{% url 'blogApp:index' %}">BikeMaps Blog</a>
-            {% if request.user.is_superuser %}
-              <a href="{% url 'blogApp:create_post' %}">
-                <small title="Add new post">+ new post +</small>
-              </a>
-            {% endif %}
-          </h1>
-        </div>
+  <!-- FB SDK code -->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=843464829081740";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <!-- Page content -->
+  <div class="container">
+    <!-- Page Header Title -->
+    <div class="row">
+      <div class="page-header col-xs-12 col-sm-10 col-sm-offset-2">
+        <h1><a href="{% url 'blogApp:index' %}">BikeMaps Blog</a>
+          {% if request.user.is_superuser %}
+            <a href="{% url 'blogApp:create_post' %}">
+              <small title="Add new post">+ new post +</small>
+            </a>
+          {% endif %}
+        </h1>
       </div>
+    </div>
+
+    <!-- Posts -->
+    <ul class="list-group">
+      {% for post in posts %}
+
+        <!-- Post -->
+        {% if post.published or request.user.is_superuser %}
+          <li class="list-group-item row">
+            <div class="hidden-xs col-sm-2">
+              <h3><span class="label label-default">{{ post.date|date:"M j" }}</span></h3>
+            </div>
+
+            <div class="col-sm-10 col-xs-12" id="post-title">
+              <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
 
 
-      <!-- Render posts -->
-      <ul class="list-group">
-        {% for post in posts %}
-          {% if post.published or request.user.is_superuser %}
-            <li class="list-group-item row">
-              <div class="hidden-xs col-sm-2">
-                <h3><span class="label label-default">{{ post.date|date:"M j" }}</span></h3>
-
-                {% if request.user.is_superuser %}
-                  {% if post.published %}
-                    <span class="label label-success">Published</span>
-                  {% else %}
-                    <span class="label label-danger">Not Published</span>
-                  {% endif %}
-
-                  <a href="{% url 'blogApp:edit_post' slug=post.slug %}"><span class="text-warning">edit</span></a>
-                {% endif %}
-              </div>
-
-              <div class="col-sm-10 col-xs-12" id="post-title">
-                <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                  <small class="visible-xs">{{ post.date|date:"M j" }}</small>
-                </h2>
-
-                {% if request.user.is_superuser %}
+              <div class="col-xs-12 share-btns">
+                <div class="pull-left">
                   <div class="visible-xs">
-                    {% if post.published %}
-                      <span class="label label-success">Published</span>
-                    {% elif not post.published%}
-                      <span class="label label-danger">Not Published</span>
+                    {% if request.user.is_superuser %}
+                      <a href="{% url 'blogApp:edit_post' slug=post.slug %}">
+                        <span class="label {% if post.published %}label-success{% else %}label-danger{% endif %}">
+                          {{ post.date|date:"M j" }}
+                        </span>
+                      </a>
+                    {% else %}
+                      <span class="label label-default">
+                        {{ post.date|date:"M j" }}
+                      </span>
                     {% endif %}
-                    <a href="{% url 'blogApp:edit_post' slug=post.slug %}"><span class="text-warning">edit</span></a>
+                  </div>
+                  <div class="hidden-xs">
+                    {% if request.user.is_superuser %}
+                      {% if post.published %}
+                        <span class="label label-success">Published</span>
+                      {% else %}
+                        <span class="label label-danger">Not Published</span>
+                      {% endif %}
+
+                      <a href="{% url 'blogApp:edit_post' slug=post.slug %}"><span class="text-warning">edit</span></a>
+                    {% endif %}
                   </div>
 
-                {% endif %}
+                </div>
+
+                <!-- FB share -->
+                <div class="fb-like pull-right" data-href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_short_url }}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+
+                <!-- Tweet -->
+                <a href="https://twitter.com/share" class="twitter-share-button pull-right" data-url="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_short_url }}" data-text="{{ post.title }}" data-via="BikeMapsTeam">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
               </div>
 
-              <div class="col-xs-12 col-sm-12 col-sm-offset-2">
-                <div class="post-content">
-                  {{ post.content|markdown }}
-                </div>
+            </div>
+
+            <!-- Content of post -->
+            <div class="col-xs-12 col-sm-10 col-sm-offset-2">
+              <div class="post-content">
+                {{ post.content|markdown:"trusted" }}
               </div>
-            </li> <!-- /li -->
-          {% endif %}
-        {% endfor %}
-      </ul> <!-- /ul -->
+            </div>
+          </li> <!-- /li -->
+        {% endif %}
+
+      {% endfor %}
+    </ul> <!-- /ul -->
 
     <!-- Pagination control -->
     <div id="footer" class="row">

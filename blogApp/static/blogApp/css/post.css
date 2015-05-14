@@ -21,3 +21,18 @@ h1 a:focus,
 h1 a:hover{
 	color: #2c3e50;
 }
+
+.fb-like span {
+	/*top: -5px;*/
+	margin-left: 15px;
+}
+
+.share-btns{
+	padding-top: 8px;
+	padding-bottom: 5px;
+
+	border-top: thin solid #b4bcc2;
+	border-bottom: thin solid #b4bcc2;
+
+	margin-bottom: 15px;
+}
