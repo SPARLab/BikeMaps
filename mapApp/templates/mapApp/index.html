@@ -3,56 +3,43 @@
 <!-- Separate JS out of tips.html, incident_form.html, and draw.html so that only javascript is rendered at the bottom of body -->
 
 {% block title %}BikeMaps{% endblock %}
-{% load staticfiles crispy_forms_tags geojson_tags compress %}
+{% load staticfiles crispy_forms_tags geojson_tags %}
 
 {% block headerCSS %}
-  {% compress css %}
-    <link rel="stylesheet" href="{% static 'bootstrap-slider/css/bootstrap-slider.min.css' %}">
-    <link href="{% static 'datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css">
-    <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}">
-    <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
-    <link rel="stylesheet" href="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.css' %}">
-    <link rel="stylesheet" href="{% static 'mapApp/css/index.css' %}">
-  {% endcompress %}
-
-  <!-- Open Graph data -->
-  <meta property="og:title" content="BikeMaps" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://bikemaps.org/" />
-  <meta property="og:image:secure_url" content="https://bikemaps.org:8080/static/mapApp/images/BikeMapsSocialMediaLogo.jpg" />
-  <meta property="og:description" content="Map your cycling incidents, hazard, and theft locations so they can be analyzed to identify hot spots of cycling safety, risk, and crime." />
-  <meta property="og:site_name" content="BikeMaps" />
-  <meta property="fb:admins" content="569635572" />
+  <link rel="stylesheet" href="{% static 'bootstrap-slider/css/bootstrap-slider.min.css' %}">
+  <link href="{% static 'datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css">
+  <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}">
+  <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
+  <link rel="stylesheet" href="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.css' %}">
+  <link rel="stylesheet" href="{% static 'mapApp/css/index.css' %}">
 {% endblock %}
 
 {% block body %}
-    <div class="page-body">
-        <div id="map">
-          {% include 'mapApp/map_legend.html' %}
-        </div>
-    </div>
+  <div class="page-body">
+      <div id="map">
+        {% include 'mapApp/map_legend.html' %}
+      </div>
+  </div>
 {% endblock %}
 
 {% block footerJS %}
-  {% compress js %}
-    <script src="{% static 'bootstrap-slider/bootstrap-slider.js' %}"></script>
-    <script src="{% static 'datetimepicker/js/bootstrap-datetimepicker.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js"></script>
-    <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-    <script src="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.js' %}"></script>
-    <script src="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script>
-    <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
-    <script src="{% static 'mapApp/js/icons.js' %}"></script>
-    <script src="{% static 'mapApp/js/map.js' %}"></script>
-  {% endcompress %}
+  <script src="{% static 'bootstrap-slider/bootstrap-slider.js' %}"></script>
+  <script src="{% static 'datetimepicker/js/bootstrap-datetimepicker.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js"></script>
+  <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
+  <script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+  <script src="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.js' %}"></script>
+  <script src="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script>
+  <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
+  <script src="{% static 'mapApp/js/icons.js' %}"></script>
+  <script src="{% static 'mapApp/js/map.js' %}"></script>
   <script>
     // Fire modal if any form errors
     $(document).ready(function(){
