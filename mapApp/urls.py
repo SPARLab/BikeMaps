@@ -1,7 +1,5 @@
 from django.conf.urls import patterns, url
-
 from mapApp import views
-
 
 urlpatterns = patterns('',
 	# Index page

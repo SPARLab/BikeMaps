@@ -66,7 +66,7 @@
 
               <ul class="user-menu dropdown-menu" role="menu">
                 <li><a href="{{ profile }}">Profile</a></li>
-                <li><a href="{{ logout }}">Log out</a></li>
+                <li><a href="{{ logout }}?next={{ request.path }}">Log out</a></li>
 
                 {% if request.user.is_administrator %}
                   <li role="presentation" class="divider"></li>
@@ -84,7 +84,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Guest<span class="caret"></span></a>
 
               <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ login }}">Log in</a></li>
+                <li><a href="{{ login }}?next={{ request.path }}">Log in</a></li>
                 <li><a href="{{ register }}">Register</a></li>
               </ul>
           </li>

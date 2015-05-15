@@ -81,6 +81,10 @@ LOGGING = {
         'mapApp': {
             'handlers': ['console'],
             'level': 'DEBUG'
+        },
+        'blogApp': {
+            'handlers': ['console'],
+            'level': 'DEBUG'
         }
     },
 }
