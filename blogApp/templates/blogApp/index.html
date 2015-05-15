@@ -92,7 +92,7 @@
 
             <!-- Content of post -->
             <div class="col-xs-12 col-sm-10 col-sm-offset-2">
-              <div class="post-content">
+              <div class="post-content hidden"> <!-- Hidden class removed on page load. Prevents unstyled content flash -->
                 {{ post.content|markdown:"trusted" }}
               </div>
             </div>
