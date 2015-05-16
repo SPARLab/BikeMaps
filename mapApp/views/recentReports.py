@@ -33,10 +33,10 @@ def recentReports(request):
     lastweek = now - datetime.timedelta(days=7)
 
     context = {
-        'collisions': collisionsInPoly.filter(date__range=[lastweek, now]),
-        'nearmisses': nearmissesInPoly.filter(date__range=[lastweek, now]),
-        'hazards': hazardsInPoly.filter(date__range=[lastweek, now]),
-        'thefts': theftsInPoly.filter(date__range=[lastweek, now]),
+        'collisions': collisionsInPoly.filter(date__range=[lastweek, now]).order_by('-date'),
+        'nearmisses': nearmissesInPoly.filter(date__range=[lastweek, now]).order_by('-date'),
+        'hazards': hazardsInPoly.filter(date__range=[lastweek, now]).order_by('-date'),
+        'thefts': theftsInPoly.filter(date__range=[lastweek, now]).order_by('-date'),
 
         'geofences': rois
     }
