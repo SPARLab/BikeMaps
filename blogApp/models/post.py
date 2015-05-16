@@ -14,6 +14,7 @@ class Post(models.Model):
     date = models.DateTimeField('Date created', auto_now_add=True)
 
     title = models.CharField('Title', max_length=100)
+    description = models.CharField('Description', max_length=300)
     slug = models.SlugField('Slug', unique=True, blank=True, max_length=100)
     published = models.BooleanField('Published', default=False)
 
