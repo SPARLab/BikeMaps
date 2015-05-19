@@ -4,8 +4,8 @@ from django.contrib.gis import admin
 from mapApp.models import Point, Incident, Hazard, Theft, Official
 # from mapApp.models import AlertArea, IncidentNotification, HazardNotification, TheftNotification
 
-from spirit.models import User
-admin.site.register(User)
+# from spirit.models import User
+# admin.site.register(User)
 admin.site.register(Official)
 
 
