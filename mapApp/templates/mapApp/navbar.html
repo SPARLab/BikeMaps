@@ -41,11 +41,11 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://www.facebook.com/BikeMaps.org" target="_blank"><i class="fa fa-facebook"></i></a></li>
+        <li><a href="https://twitter.com/BikeMapsTeam" target="_blank"><i class="fa fa-twitter" target="_blank"></i></a></li>
+
         {% if request.user.is_authenticated %}
           {% reports_this_week user as has_notifications %}
-          <li><a href="https://www.facebook.com/BikeMaps.org" target="_blank"><i class="fa fa-facebook"></i></a></li>
-          <li><a href="https://twitter.com/BikeMapsTeam" target="_blank"><i class="fa fa-twitter" target="_blank"></i></a></li>
-
           <li><a href="{{ alerts }}"><span class="fa fa-bell {% if has_notifications %} is-highlighted{% endif %}"></span><span class="text text-warning">*</span></a></li>
           <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user"></span> {{ request.user }}<span class="caret"></span></a>
