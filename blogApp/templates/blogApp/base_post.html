@@ -37,7 +37,7 @@
     </div>
 
     <!-- FB share -->
-    <div class="fb-like pull-right" data-href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_short_url }}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+    <div class="fb-like pull-right" data-href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
 
     <!-- Tweet -->
     <a href="https://twitter.com/share" class="twitter-share-button pull-right" data-url="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_short_url }}" data-text="{{ post.title }}" data-via="BikeMapsTeam">Tweet</a>
