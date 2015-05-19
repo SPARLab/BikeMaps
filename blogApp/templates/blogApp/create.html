@@ -1,38 +1,22 @@
 {% extends "mapApp/base.html" %}
-{% block title %}BikeMaps Blog{% endblock %}
+{% block title %}Create a new post{% endblock %}
 
 {% load staticfiles crispy_forms_tags markdown_deux_tags %}
 
 
 {% block headerCSS %}
-  <style>
-    .row{
-      margin-top: 25px;
-    }
-    #upload-image-form .form-group {
-      height: 50px;
-    }
-    #upload-image-form .modal-body {
-      padding-bottom: 0px;
-    }
-  </style>
+  <link href="{% static 'blogApp/css/create.css' %}" rel="stylesheet">
 {% endblock %}
-
 
 {% block body %}
   <div class="container">
+
     <div class="row">
       <div class="col-xs-12">
         <h2>Create a new blog post</h2>
         {% crispy blog_post_form %}
       </div>
     </div>
-
-    <!-- <div class="row">
-      <div id="content-preview" class="col-xs-12">
-
-      </div>
-    </div> -->
 
     <div class="row" id="md-cheatsheet">
       <div class="col-xs-12">
@@ -57,7 +41,6 @@
 
   </div>
 
-
   <!-- Upload Img Modal -->
   <div class="modal fade" id="upload-img-modal" tabindex="-1" role="dialog" aria-labelledby="ImageUploadModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -75,11 +58,9 @@
       </div>
     </div>
   </div>
-
 {% endblock %}
 
 
 {% block footerJS %}
   <script src="{% static 'blogApp/js/create.js' %}"></script>
-
 {% endblock %}

@@ -1,0 +1,9 @@
+.row{
+  margin-top: 25px;
+}
+#upload-image-form .form-group {
+  height: 50px;
+}
+#upload-image-form .modal-body {
+  padding-bottom: 0px;
+}

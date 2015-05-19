@@ -1,0 +1,55 @@
+{% extends "mapApp/base.html" %}
+{% block title %}BikeMaps Blog{% endblock %}
+
+{% load staticfiles markdown_deux_tags %}
+
+
+{% block headerCSS %}
+  <link href="{% static 'blogApp/css/post.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block body %}
+  <!-- FB SDK code -->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=843464829081740";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <!-- Page content -->
+  <div class="container">
+    <!-- Page Header Title -->
+    <div class="row">
+      <div class="page-header col-xs-12 col-sm-10 col-sm-offset-2">
+        <h1><a href="{% url 'blogApp:index' %}">BikeMaps Blog</a>
+          {% if request.user.is_superuser %}
+            <a href="{% url 'blogApp:create_post' %}">
+              <small title="Add new post">new post</small>
+            </a>
+          {% endif %}
+        </h1>
+      </div>
+
+      {% block base_post_header %}{% endblock %}
+    </div>
+
+
+    {% block base_post_body %}{% endblock %}
+
+
+    <div id="footer" class="row">
+    {% block base_post_footer %}{% endblock %}
+    </div> <!-- /#footer -->
+
+  </div> <!-- /.container -->
+{% endblock %}
+
+
+{% block footerJS %}
+  <script src="{% static 'blogApp/js/post.js' %}"></script>
+
+{% endblock %}
