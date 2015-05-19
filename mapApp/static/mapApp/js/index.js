@@ -68,8 +68,8 @@ L.control.scale({
 var collisions = geojsonMarker(collisions, "collision").addTo(incidentData).getLayers(),
     nearmisses = geojsonMarker(nearmisses, "nearmiss").addTo(incidentData).getLayers(),
     hazards = geojsonMarker(hazards, "hazard").addTo(incidentData).getLayers(),
-    thefts = geojsonMarker(thefts, "theft").addTo(incidentData).getLayers(),
-    officials = geojsonMarker(officials, "official").addTo(incidentData).getLayers();
+    thefts = geojsonMarker(thefts, "theft").addTo(incidentData).getLayers();
+    // officials = geojsonMarker(officials, "official").addTo(incidentData).getLayers();
 
 // Add geofence alert areas to map
 var geofences = L.geoJson(geofences, {
@@ -91,7 +91,7 @@ $("#collisionCheckbox").change(function(){ this.checked ? incidentData.addLayers
 $("#nearmissCheckbox").change(function(){ this.checked ? incidentData.addLayers(nearmisses) : incidentData.removeLayers(nearmisses); });
 $("#hazardCheckbox").change(function(){ this.checked ? incidentData.addLayers(hazards) : incidentData.removeLayers(hazards); });
 $("#theftCheckbox").change(function(){ this.checked ? incidentData.addLayers(thefts) : incidentData.removeLayers(thefts); });
-$("#officialCheckbox").change(function(){ this.checked ? incidentData.addLayers(officials) : incidentData.removeLayers(officials); });
+// $("#officialCheckbox").change(function(){ this.checked ? incidentData.addLayers(officials) : incidentData.removeLayers(officials); });
 
 
 // Initialize the slider
@@ -124,8 +124,8 @@ function sliderDate(m){
 var collisionsUnfiltered = collisions,
     nearmissesUnfiltered = nearmisses,
     hazardsUnfiltered = hazards,
-    theftsUnfiltered = thefts,
-    officialUnfiltered = officials;
+    theftsUnfiltered = thefts;
+    // officialUnfiltered = officials;
 $("input.slider").on("slideStop", function(e){ filterPoints(e.value[0], e.value[1]) });
 
 // function to filter points and redraw map
@@ -152,17 +152,17 @@ function filterPoints(start_date, end_date) {
     d = moment(feature.feature.properties.date);
     return d >= start_date && d <= end_date;
   });
-  officials = officialUnfiltered.filter(function(feature, layer){
-    d = moment(feature.feature.properties.date);
-    return d >= start_date && d <= end_date;
-  });
+  // officials = officialUnfiltered.filter(function(feature, layer){
+  //   d = moment(feature.feature.properties.date);
+  //   return d >= start_date && d <= end_date;
+  // });
 
   // Add filtered layer back if checkbox is checked
   $("#collisionCheckbox").is(":checked") && incidentData.addLayers(collisions);
   $("#nearmissCheckbox").is(":checked") && incidentData.addLayers(nearmisses);
   $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
   $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
-  $("#officialCheckbox").is(":checked") && incidentData.addLayers(officials);
+  // $("#officialCheckbox").is(":checked") && incidentData.addLayers(officials);
 };
 
 // Add unfiltered data back
@@ -171,13 +171,13 @@ function resetPoints(){
   collisions = collisionsUnfiltered,
   nearmisses = nearmissesUnfiltered,
   hazards = hazardsUnfiltered,
-  thefts = theftsUnfiltered,
-  officials = officialUnfiltered;
+  thefts = theftsUnfiltered;
+  // officials = officialUnfiltered;
   $("#collisionCheckbox").is(":checked") && incidentData.addLayers(collisions);
   $("#nearmissCheckbox").is(":checked") && incidentData.addLayers(nearmisses);
   $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
   $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
-  $("#officialCheckbox").is(":checked") && incidentData.addLayers(officials);
+  // $("#officialCheckbox").is(":checked") && incidentData.addLayers(officials);
 };
 
 $("input.slider").on("slide", function(e) {
