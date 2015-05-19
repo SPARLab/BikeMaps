@@ -10,10 +10,6 @@ var incidentData = new L.MarkerClusterGroup({
         return pieChart(data);
       },
     }),
-    heatMap = L.heatLayer([], {
-      radius: 40,
-      blur: 20,
-    }),
     alertAreas = new L.FeatureGroup([]);
 
 // Define popup getter function
@@ -381,7 +377,6 @@ function getPopup(layer) {
 function geojsonMarker(data, type) {
   return L.geoJson(data, {
     pointToLayer: function(feature, latlng) {
-      heatMap.addLatLng(latlng);
       return L.marker(latlng, {
         icon: getIcon(type),
         ftype: type,
