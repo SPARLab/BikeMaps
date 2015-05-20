@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  {% load staticfiles bikemaps_tags compress %}
+  {% load staticfiles bikemaps_tags %}
   <title>{% block title %}{% endblock %}</title>
   <meta name="description" content="Map your cycling incidents, hazard, and theft locations so they can be analyzed to identify hot spots of cycling safety, risk, and crime."/>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -17,11 +17,9 @@
   <meta name="google-site-verification" content="sHpQWUFpj7aSwFlam5B_xWmrBr_nEa49gu7IrFYe8aE" />
 
   <!-- EXTERNAL CSS -->
-  {% compress css %}
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet" media="screen">
   <link href="{% static 'mapApp/css/common.css' %}" rel="stylesheet">
-  {% endcompress %}
   {% block headerCSS %}{% endblock %}
 
   <!-- Google analytics tracker -->
@@ -56,10 +54,8 @@
   {% block body %}{% endblock %}
 
   <!-- EXTERNAL JS -->
-  {% compress js %}
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-  {% endcompress %}
   {% block footerJS %}{% endblock %}
   <script>
     // Fade out message
