@@ -15,6 +15,7 @@ class BlogPostForm(forms.ModelForm):
         Field('published'),
         Field('title'),
         Field('description'),
+        Field('post_date'),
         Field('content'),
         Div(
             HTML("""

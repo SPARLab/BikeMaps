@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 
 from django.db import models
 from blogApp.utils import hash62
+from datetime import datetime
 
 # Create your models here.
 
@@ -15,6 +16,7 @@ class Post(models.Model):
 
     title = models.CharField('Title', max_length=100)
     description = models.CharField('Description', max_length=300)
+    post_date = models.DateTimeField('Date posted', default=datetime.now)
     slug = models.SlugField('Slug', unique=True, blank=True, max_length=100)
     published = models.BooleanField('Published', default=False)
 

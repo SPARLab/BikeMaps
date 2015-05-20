@@ -1,7 +1,7 @@
 {% load markdown_deux_tags %}
 
 <div class="hidden-xs col-sm-2">
-  <h3><span class="label label-default">{{ post.date|date:"M j" }}</span></h3>
+  <h3><span class="label label-default">{{ post.post_date|date:"M j" }}</span></h3>
 </div>
 
 <div class="col-sm-10 col-xs-12" id="post-title">
@@ -14,12 +14,12 @@
         {% if request.user.is_superuser %}
           <a href="{% url 'blogApp:edit_post' slug=post.slug %}">
             <span class="label {% if post.published %}label-success{% else %}label-danger{% endif %}">
-              {{ post.date|date:"M j" }}
+              {{ post.post_date|date:"M j" }}
             </span>
           </a>
         {% else %}
           <span class="label label-default">
-            {{ post.date|date:"M j" }}
+            {{ post.post_date|date:"M j" }}
           </span>
         {% endif %}
       </div>

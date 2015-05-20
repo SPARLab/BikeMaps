@@ -10,9 +10,9 @@ def index(request):
 	POSTS_PER_PAGE = 5
 
 	if request.user.is_superuser:
-		post_list = Post.objects.all().order_by('-date')
+		post_list = Post.objects.all().order_by('-post_date')
 	else:
-		post_list = Post.objects.filter(published=True).order_by('-date')
+		post_list = Post.objects.filter(published=True).order_by('-post_date')
 
 	paginator = Paginator(post_list, POSTS_PER_PAGE)
 
