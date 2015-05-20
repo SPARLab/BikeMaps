@@ -156,3 +156,21 @@ REST_SESSION_LOGIN = False
 
 SITE_ID = 1
 
+# Cross Origin Access Control
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_METHODS = (
+        'GET',
+        'POST',
+        'DELETE',
+    )
+
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'X-CSRFToken'
+)
+
