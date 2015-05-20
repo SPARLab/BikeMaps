@@ -7,7 +7,7 @@ from django.views.decorators.cache import cache_page
 
 from mapApp.forms import EmailForm
 
-@cache_page(60 * 60)
+# @cache_page(60 * 60)
 def about(request):
 	return render(request, 'mapApp/about.html', {"emailForm": EmailForm()})
 
