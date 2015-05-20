@@ -17,6 +17,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -75,6 +76,22 @@ INSTALLED_APPS = (
     #blogApp and requirements
     'blogApp',
     'markdown_deux',
+
+    # api requirements
+    'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_gis',
+    'rest_auth',
+    'rest_auth.registration',
+
+    # push notification requirement
+    "push_notifications",
+
+    #django-allauth requirements
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account'
 )
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
@@ -90,6 +107,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     "django.core.context_processors.request",
+
+    # `allauth` specific context processors
+    'allauth.account.context_processors.account'
 )
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -126,3 +146,13 @@ MARKDOWN_DEUX_STYLES = {
         "safe_mode": False,
     }
 }
+
+PUSH_NOTIFICATIONS_SETTINGS = {
+        "GCM_API_KEY": "AIzaSyAAIoOHr1BA28ulBsWQ7FNWfCmPeZp-aaw",
+        "APNS_CERTIFICATE": "/path/to/your/certificate.pem",
+}
+
+REST_SESSION_LOGIN = False
+
+SITE_ID = 1
+
