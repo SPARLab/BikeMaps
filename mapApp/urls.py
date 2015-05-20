@@ -40,15 +40,6 @@ urlpatterns = patterns('',
 	url(r'recent/$', views.recentReports, name='recent'),
 
         url(r'vis/$', views.vis, name='vis'),
-
-        # Called by app to retrieve points wihtin a given bounding box
-        url(r'^points_api.json$', views.getPointsApi, name='getPoints'),
-        url(r'^collisions_api.json$', views.getCollisionsApi, name='getCollisions'),
-        url(r'^nearmiss_api.json$', views.getNearmissApi, name='getNearmiss'),
-        url(r'^incidents_api.json$', views.getIncidentsApi, name='getIncidents'),
-        url(r'^hazards_api.json$', views.getHazardsApi, name='getHazards'),
-        url(r'^thefts_api.json$', views.getTheftsApi, name='getThefts'),
-        url(r'^official_api.json$', views.getOfficialApi, name='getOfficial'),
 )
 
 urlpatterns += format_suffix_patterns([
@@ -62,5 +53,5 @@ urlpatterns += format_suffix_patterns([
     url(r'^users/$', views.UserList.as_view()),
     url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
     url(r'^gcmdevices/$', views.GCMDeviceList.as_view(), name='gcmdevice-list'),
-    url(r'^gcmdevices/(?P<pk>[0-9]+)/$', views.GCMDeviceDetail.as_view(), name='gcmdevice-detail')
+    url(r'^gcmdevices/(?P<registration_id>.+)/$', views.GCMDeviceDetail.as_view(), name='gcmdevice-detail')
 ])

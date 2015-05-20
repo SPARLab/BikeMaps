@@ -23,7 +23,10 @@ class IncidentSerializer(GeoFeatureModelSerializer):
         model = Incident
         geo_field = 'geom'
         fields = ('i_type', 'incident_with', 'date', 'p_type',
-                  'details')
+                  'details', 'injury', 'trip_purpose',
+                  'regular_cyclist', 'helmet', 'intoxicated', 'road_conditions',
+                  'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain',
+                  'direction', 'turning', 'age', 'birthmonth', 'sex')
 
 
 class HazardSerializer(GeoFeatureModelSerializer):
@@ -31,7 +34,7 @@ class HazardSerializer(GeoFeatureModelSerializer):
         model = Hazard
         geo_field = 'geom'
         fields = ('i_type', 'date', 'p_type',
-                  'details')
+                  'details', 'age', 'birthmonth', 'sex', 'regular_cyclist')
 
 
 class TheftSerializer(GeoFeatureModelSerializer):
@@ -39,7 +42,9 @@ class TheftSerializer(GeoFeatureModelSerializer):
         model = Theft
         geo_field = 'geom'
         fields = ('i_type', 'date', 'p_type',
-                  'details')
+                  'details', 'how_locked', 'lock', 'locked_to',
+                  'lighting', 'traffic', 'police_report', 'police_report_num',
+                  'insurance_claim', 'insurance_claim_num', 'regular_cyclist')
 
 
 class OfficialSerializer(GeoFeatureModelSerializer):
@@ -52,10 +57,11 @@ class OfficialSerializer(GeoFeatureModelSerializer):
 
 class AlertAreaSerializer(GeoFeatureModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
+    email = serializers.ReadOnlyField(source='user.email')
     class Meta:
         model = AlertArea
         geo_field = 'geom'
-        fields = ('user', 'email', 'user', 'pk')
+        fields = ('user', 'email', 'pk')
 
 
 class UserSerializer(serializers.ModelSerializer):
