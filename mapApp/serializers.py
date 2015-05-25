@@ -26,7 +26,7 @@ class IncidentSerializer(GeoFeatureModelSerializer):
                   'details', 'injury', 'trip_purpose',
                   'regular_cyclist', 'helmet', 'intoxicated', 'road_conditions',
                   'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain',
-                  'direction', 'turning', 'age', 'birthmonth', 'sex')
+                  'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk')
 
 
 class HazardSerializer(GeoFeatureModelSerializer):
@@ -34,7 +34,7 @@ class HazardSerializer(GeoFeatureModelSerializer):
         model = Hazard
         geo_field = 'geom'
         fields = ('i_type', 'date', 'p_type',
-                  'details', 'age', 'birthmonth', 'sex', 'regular_cyclist')
+                  'details', 'age', 'birthmonth', 'sex', 'regular_cyclist', 'pk')
 
 
 class TheftSerializer(GeoFeatureModelSerializer):
@@ -44,7 +44,7 @@ class TheftSerializer(GeoFeatureModelSerializer):
         fields = ('i_type', 'date', 'p_type',
                   'details', 'how_locked', 'lock', 'locked_to',
                   'lighting', 'traffic', 'police_report', 'police_report_num',
-                  'insurance_claim', 'insurance_claim_num', 'regular_cyclist')
+                  'insurance_claim', 'insurance_claim_num', 'regular_cyclist', 'pk')
 
 
 class OfficialSerializer(GeoFeatureModelSerializer):
@@ -74,7 +74,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class GCMDeviceSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
-    class Meta:
+    class Meta: 
         model = GCMDevice
         fields = ('pk', 'name', 'active', 'user', 'date_created', 'registration_id')
 

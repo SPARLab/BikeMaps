@@ -9,7 +9,7 @@ from spirit.models import User
 from django.views.decorators.csrf import csrf_exempt
 from mapApp.permissions import IsOwnerOrReadOnly
 from push_notifications.models import GCMDevice, APNSDevice
-from mapApp.views import alertUsers
+from mapApp.views import alertUsers, pushNotification
 
 class CollisionList(APIView):
     """
@@ -30,6 +30,11 @@ class CollisionList(APIView):
         serializer = IncidentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            if serializer.data['properties'] is not None:
+               if serializer.data['properties']['pk'] is not None:
+                  collision = Incident.objects.get(pk=(serializer.data['properties']['pk']))
+                  alertUsers(request, collision)
+                  pushNotification.pushNotification(collision)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -52,6 +57,11 @@ class NearmissList(APIView):
         serializer = IncidentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            if serializer.data['properties'] is not None:
+               if serializer.data['properties']['pk'] is not None:
+                  nearmiss = Incident.objects.get(pk=(serializer.data['properties']['pk']))
+                  alertUsers(request, nearmiss)
+                  pushNotification.pushNotification(nearmiss)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -74,6 +84,11 @@ class HazardList(APIView):
         serializer = HazardSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            if serializer.data['properties'] is not None:
+               if serializer.data['properties']['pk'] is not None:
+                  hazard = Hazard.objects.get(pk=(serializer.data['properties']['pk']))
+                  alertUsers(request, hazard)
+                  pushNotification.pushNotification(hazard)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -96,6 +111,11 @@ class TheftList(APIView):
         serializer = TheftSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            if serializer.data['properties'] is not None:
+               if serializer.data['properties']['pk'] is not None:
+                  theft = Theft.objects.get(pk=(serializer.data['properties']['pk']))
+                  alertUsers(request, theft)
+                  pushNotification.pushNotification(theft)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
