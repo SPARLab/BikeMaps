@@ -4,10 +4,15 @@
 
 {% block title %}About{% endblock %}
 
+{% block headerCSS %}
+  <link rel="stylesheet" href="{% static 'mapApp/css/about.css' %}">
+{% endblock %}
+
 <!-- BODY STUFF -->
 {% block body %}
     {% load crispy_forms_tags %}
     {% crispy emailForm %}
+
 
     <div class="container">
 
@@ -74,89 +79,121 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row" id ="sponsors">
             <div class="col-xs-12">
                 <h1>Sponsors</h1>
             </div>
-            <div class="col-xs-6 col-md-3">
-                <p><a href="http://www.geog.uvic.ca/spar/" target="_blank">
+            <div class="vcenter col-xs-6 col-md-4">
+                <div class="frame">
+                  <a href="http://www.geog.uvic.ca/spar/" target="_blank">
                     <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/SPAR_logo_transparent.png' %}" alt="SPAR Lab">
-                </a></p>
-            </div>
+                  </a>
+                </div>
+            </div><!-- These are required to prevent an annoying extra space cause by display: inline-block css tag produced when vertically centering images
 
-            <div class="col-xs-6 col-md-3">
-                <p><a href="http://www.nserc-crsng.gc.ca/index_eng.asp" target="_blank">
+            --><div class="vcenter col-xs-6 col-md-4">
+                <div class="frame">
+                  <a href="http://www.nserc-crsng.gc.ca/index_eng.asp" target="_blank">
                     <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/NSERC.png' %}" alt="Natural Sciences and Engineering Research Council of Canada">
-                </a></p>
-            </div>
+                  </a>
+                </div>
+            </div><!--
 
-            <div class="col-xs-6 col-md-3">
-                <p><a href="https://www.crd.bc.ca/" target="_blank">
+            --><div class="vcenter col-xs-6 col-md-4">
+                <div class="frame">
+                  <a href="https://www.crd.bc.ca/" target="_blank">
                     <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/CRDlogo.jpg' %}" alt="CRD">
-                </a></p>
-            </div>
+                  </a>
+                </div>
+            </div><!--
 
-            <div class="col-xs-6 col-md-3">
-                <p><a href="https://www.caa.ca" target="_blank">
+            --><div class="vcenter col-xs-6 col-md-4">
+                <div class="frame">
+                  <a href="https://www.caa.ca" target="_blank">
                     <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/CAA.svg' %}" alt="BCAA">
-                </a></p>
+                  </a>
+                </div>
+            </div><!--
+
+            --><div class="vcenter col-xs-6 col-md-4">
+                <div class="frame">
+                  <a href="https://www.mitacs.ca" target="_blank">
+                    <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/Mitacs.jpg' %}" alt="BCAA">
+                  </a>
+                </div>
+            </div><!--
+
+            --><div class="vcenter col-xs-6 col-md-4">
+                <div class="frame">
+                  <a href="http://affinitybridge.com/" target="_blank">
+                    <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/affinity_bridge.png' %}" alt="BCAA">
+                  </a>
+                </div>
             </div>
         </div>
 
 
-        <div class="row">
+        <div class="row" id="supporters">
             <div class="col-xs-12">
                 <h1>Supporters</h1>
             </div>
 
-            <div class="col-xs-4 col-md-3">
-                <p><a href="http://www.uvic.ca/" target="_blank">
-                    <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/uvic-logo.jpg' %}" alt="University of Victoria">
-                </a></p>
-            </div>
+            <div class="vcenter col-xs-4 col-md-3">
+                <div class="frame">
+                  <a href="http://www.uvic.ca/" target="_blank">
+                      <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/uvic-logo.jpg' %}" alt="University of Victoria">
+                  </a>
+                </div>
+            </div><!--
 
-            <div class="col-xs-4 col-md-3">
-                <p><a href="http://www.victoria.ca/" target="_blank">
-                    <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/victoria.gif' %}" alt="City of Victoria">
-                </a></p>
-            </div>
+          --><div class="vcenter col-xs-4 col-md-3">
+                <div class="frame">
+                  <a href="http://www.victoria.ca/" target="_blank">
+                      <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/victoria.gif' %}" alt="City of Victoria">
+                  </a>
+                </div>
+            </div><!--
 
-            <div class="col-xs-4 col-md-3">
-                <p><a href="http://www.acart.com/" target="_blank">
-                    <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/Acart.png' %}" alt="Acart">
-                </a></p>
-            </div>
+          --><div class="vcenter col-xs-4 col-md-3">
+                <div class="frame">
+                  <a href="http://www.acart.com/" target="_blank">
+                      <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/Acart.png' %}" alt="Acart">
+                  </a>
+                </div>
+            </div><!--
 
-            <div class="col-xs-4 col-md-3">
-                <p><a href="http://kidicalmassyyj.blogspot.ca/" target="_blank">
-                    <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/kidical_mass1.gif' %}" alt="Kidical Mass">
-                </a></p>
-            </div>
+          --><div class="vcenter col-xs-4 col-md-3">
+                <div class="frame">
+                  <a href="http://www.tirf.ca/index.php" target="_blank">
+                      <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/TIRF.jpg' %}" alt="Traffic Injury and Research Foundation">
+                  </a>
+                </div>
+            </div><!--
 
-            <div class="clearfix hidden-xs hidden-sm visible-md visible-lg"></div>
+          --><div class="clearfix hidden-xs hidden-sm visible-md visible-lg"></div><!--
 
-            <div class="col-xs-4 col-md-3">
-                <p><a href="http://www.tirf.ca/index.php" target="_blank">
-                    <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/TIRF.jpg' %}" alt="Traffic Injury and Research Foundation">
-                </a></p>
-            </div>
+        --><div class="vcenter col-xs-4 col-md-3 col-md-offset-1p5">
+                <div class="frame">
+                  <a href="http://gvcc.bc.ca/" target="_blank">
+                      <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/GVCC.png' %}" alt="Greater Victoria Cycling Coalition">
+                  </a>
+                </div>
+            </div><!--
 
-            <div class="col-xs-4 col-md-3">
-                <p><a href="http://gvcc.bc.ca/" target="_blank">
-                    <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/GVCC.png' %}" alt="Greater Victoria Cycling Coalition">
-                </a></p>
-            </div>
+          --><div class="vcenter col-xs-4 col-md-3">
+                <div class="frame">
+                  <a href="http://bccc.bc.ca/" target="_blank">
+                      <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/BCCC.png' %}" alt="British Columbia Cycling Coalition">
+                  </a>
+                </div>
+            </div><!--
 
-            <div class="col-xs-4 col-md-3">
-                <p><a href="http://bccc.bc.ca/" target="_blank">
-                    <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/BCCC.png' %}" alt="British Columbia Cycling Coalition">
-                </a></p>
-            </div>
-
-            <div class="col-xs-4 col-xs-offset-4 col-md-3 col-md-offset-0">
-                <p><a href="http://www.pedalheads.com/" target="_blank">
-                    <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/Pedalheads-logo.jpg' %}" alt="Pedalheads">
-                </a></p>
+          --><div class="vcenter col-xs-4 col-md-3 col-xs-offset-4 col-md-offset-0">
+                <div class="frame">
+                  <a href="http://www.pedalheads.com/" target="_blank">
+                      <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/Pedalheads-logo.jpg' %}" alt="Pedalheads">
+                  </a>
+                </div>
             </div>
         </div>
 
