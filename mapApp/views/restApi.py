@@ -220,6 +220,9 @@ class GCMDeviceList(APIView):
     def post(self, request, format=None):
         serializer = GCMDeviceSerializer(data=request.data)
         if serializer.is_valid():
+            # Ensure the registration_id is only in the GCMDevice table once
+            if GCMDevice.objects.filter(registration_id = request.data['registration_id']) is not None:
+                GCMDevice.objects.filter(registration_id = request.data['registration_id']).delete()
             serializer.save(user=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
