@@ -22,3 +22,13 @@
     margin-left: 12.5%;
   }
 }
+
+#alert-area-button{
+  background-image: url('https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/images/spritesheet.png');
+  background-repeat: no-repeat;
+  position: relative;
+  background-position: -36px -7px;
+  display: inline-block;
+  width: 16px;
+  height: 15px;
+}
