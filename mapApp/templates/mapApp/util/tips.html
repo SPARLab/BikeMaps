@@ -67,6 +67,7 @@
 
 
 <!-- 'Get help' message -->
+{% comment %}
 {% if not request.mobile %}
 <!-- Mobile tooltip to explain the double tapping -->
 <div class="tip-msg alert-info alert-dismissable">
@@ -118,3 +119,4 @@ $(document).ready(function(){
   });
   </script>
 {% endif %}
+{% endcomment %}

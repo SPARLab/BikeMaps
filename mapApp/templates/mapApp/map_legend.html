@@ -1,9 +1,31 @@
+<style>
+  .blurb{
+    width: 15em;
+    padding: 5px 5px 10px 10px;
+  }
+  #marker-btn{
+  	background-image: url('https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/images/spritesheet.png');
+  	background-repeat: no-repeat;
+  	position: relative;
+  	background-position: -127px -8px;
+  	display: inline-block;
+  	width: 16px;
+  	height: 15px;
+  }
+</style>
+
+
 <div id="legend" class="leaflet-container leaflet-control-container">
   <div class="leaflet-top leaflet-right">
     <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
       <a class="leaflet-control-layers-toggle" href="#" title="Layers"></a>
       <form class="leaflet-control-layers-list">
         <div class="leaflet-control-layers-overlays">
+
+          <div class="blurb">
+            <strong>About</strong><br>
+            BikeMaps.org is a crowdsource tool for global mapping of cycling safety. Using the <span id="marker-btn"></span> button, add your own data on cycling crashes, near-misses, hazards, and thefts. <a href="{% url 'mapApp:about' %}">More info</a>
+          </div>
 
           <div class="legend-group">
             <input class="layer-toggle" type="checkbox" value="incidentData" checked>
