@@ -7,7 +7,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api-token-auth/', 'rest_framework.authtoken.views.obtain_auth_token'),                       
+    url(r'^api-token-auth/', 'rest_framework.authtoken.views.obtain_auth_token'),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^accounts/', include('allauth.urls')),
@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^', include('mapApp.urls', namespace="mapApp")),
     url(r'^blog/', include('blogApp.urls', namespace="blogApp")),
     url(r'^forum/', include('spirit.urls', namespace="spirit", app_name="spirit")),
+    url('^', include('django.contrib.auth.urls')),
     (r'^robots.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'))
 )
 
