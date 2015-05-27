@@ -1,0 +1,26 @@
+{% extends 'mapApp/base.html' %}
+
+{% load staticfiles crispy_forms_tags %}
+
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-offset-2">
+      <div class="page-header">
+        <h1>Admin Login</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-md-8 col-md-offset-2">
+      <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-primary pull-right" type="submit" name="login">Login</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
