@@ -16,11 +16,9 @@ urlpatterns = patterns('',
 
     url(r'^', include('mapApp.urls', namespace="mapApp")),
     url(r'^blog/', include('blogApp.urls', namespace="blogApp")),
-    url(r'^forum/', include('spirit.urls', namespace="spirit", app_name="spirit")),
+    url(r'^user/', include('userApp.urls', namespace="userApp")),
 
-    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/', }), #Override next page to go to home
-    url('^', include('django.contrib.auth.urls')),
-    url(r'^register/$', 'userApp.views.register'),
+    url(r'^forum/', include('spirit.urls', namespace="spirit", app_name="spirit")),
 
     (r'^robots.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'))
 )
