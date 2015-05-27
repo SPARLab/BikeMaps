@@ -20,6 +20,7 @@ urlpatterns = patterns('',
 
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/', }), #Override next page to go to home
     url('^', include('django.contrib.auth.urls')),
+    url(r'^register/$', 'userApp.views.register'),
 
     (r'^robots.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'))
 )
