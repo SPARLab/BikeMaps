@@ -91,7 +91,10 @@ INSTALLED_APPS = (
     #django-allauth requirements
     'django.contrib.sites',
     'allauth',
-    'allauth.account'
+    'allauth.account',
+    
+    # userApp requirements
+    'userApp'
 )
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
@@ -173,4 +176,3 @@ CORS_ALLOW_HEADERS = (
     'authorization',
     'X-CSRFToken'
 )
-
