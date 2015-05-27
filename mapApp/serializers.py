@@ -52,7 +52,7 @@ class OfficialSerializer(GeoFeatureModelSerializer):
         model = Official
         geo_field = 'geom'
         fields = ('official_type', 'date', 'data_source',
-                  'details')
+                  'details', 'metadata')
 
 
 class AlertAreaSerializer(GeoFeatureModelSerializer):
