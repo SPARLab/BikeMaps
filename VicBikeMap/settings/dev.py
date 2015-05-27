@@ -83,6 +83,10 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'DEBUG'
         },
+        'userApp': {
+            'handlers': ['console'],
+            'level': 'DEBUG'
+        },
         'blogApp': {
             'handlers': ['console'],
             'level': 'DEBUG'
