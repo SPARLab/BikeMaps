@@ -190,3 +190,18 @@ span.date{
 .whyPersonalCollapse + .form-group{
   padding-top: 15px;
 }
+
+#legend-about{
+  width: 190px;
+  padding: 5px 5px 10px 10px;
+}
+
+#marker-btn{
+  background-image: url('https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/images/spritesheet.png');
+  background-repeat: no-repeat;
+  position: relative;
+  background-position: -127px -8px;
+  display: inline-block;
+  width: 16px;
+  height: 15px;
+}

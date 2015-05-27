@@ -52,6 +52,8 @@ function desktopDrawing(){
             false
             {% endif %}
     }));
+
+    map.fire('drawControlReady');
     {% endif %}
 
     // Add a point editing control for admins
@@ -68,6 +70,7 @@ function desktopDrawing(){
         }
     }));
 
+    map.fire('drawControlReady');
     {% endif %}
 
     $(document).ready(function(){

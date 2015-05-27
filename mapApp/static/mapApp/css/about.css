@@ -1,0 +1,34 @@
+.vcenter {
+  /*border: 1px solid red;*/
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
+
+#sponsors img, #supporters img{
+  max-height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.frame{
+  max-width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+}
+
+@media (min-width: 992px){
+  .col-md-offset-1p5 {
+    margin-left: 12.5%;
+  }
+}
+
+#alert-area-button{
+  background-image: url('https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/images/spritesheet.png');
+  background-repeat: no-repeat;
+  position: relative;
+  background-position: -36px -7px;
+  display: inline-block;
+  width: 16px;
+  height: 15px;
+}
