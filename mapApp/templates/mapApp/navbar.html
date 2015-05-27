@@ -1,4 +1,4 @@
-{% load staticfiles spirit_tags bikemaps_tags%}
+{% load staticfiles bikemaps_tags%}
 
 {% url 'mapApp:index' as index %}
 {% url 'mapApp:vis' as vis %}
@@ -12,10 +12,10 @@
 {% url 'mapApp:getHazards' as getHazards %}
 {% url 'mapApp:getThefts' as getThefts %}
 
-{% url 'spirit:user-logout' as logout %}
-{% url 'spirit:user-login' as login %}
-{% url 'spirit:user-register' as register %}
-{% url 'spirit:profile-update' as profile %}
+{% url 'userApp:logout' as logout %}
+{% url 'userApp:login' as login %}
+{% url 'userApp:register' as register %}
+{% url 'userApp:profile' as profile %}
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container-fluid">
