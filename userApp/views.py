@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login
-from django.conf import settings
 from django.contrib import messages
 from .forms import MyUserCreationForm
-import requests
 
-import logging
-logger = logging.getLogger(__name__)
+from utils import ReCaptcha
+
+# import logging
+# logger = logging.getLogger(__name__)
 
 def register(request):
     if request.method == 'POST':
@@ -32,16 +32,3 @@ def register(request):
     return render(request, "registration/register.html", {
         'form': form,
     })
-
-
-class ReCaptcha:
-    def __init__(self, request):
-        params = {
-            'secret': settings.RECAPTCHA_SECRET,
-            'response': request.POST.get('g-recaptcha-response'),
-            'remoteip': request.META['REMOTE_ADDR']
-        }
-        self.response = requests.get('https://www.google.com/recaptcha/api/siteverify', params=params).json()
-
-    def is_valid(self):
-        return self.response['success']
