@@ -19,8 +19,8 @@
         {{ form|crispy }}
         <button class="btn btn-primary pull-right" type="submit" name="login">Login</button>
       </form>
-      <p><a href="{% url 'userApp:register' %}">Create an account</a></p>
-      <p><a href="{% url 'userApp:password_reset' %}">I don't know my password</a></p>
+      <p><a href="{% url 'register' %}">Create an account</a></p>
+      <p><a href="{% url 'password_reset' %}">I don't know my password</a></p>
     </div>
   </div>
 
