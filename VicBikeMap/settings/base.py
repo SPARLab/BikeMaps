@@ -33,6 +33,7 @@ ROOT_URLCONF = 'VicBikeMap.urls'
 
 WSGI_APPLICATION = 'VicBikeMap.wsgi.application'
 
+LOGIN_URL = 'userApp:login'
 LOGIN_REDIRECT_URL = 'mapApp:index'
 
 POSTGIS_VERSION = (2,1,3)
@@ -92,7 +93,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    
+
     # userApp requirements
     'userApp'
 )
