@@ -1,12 +1,10 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.admin import UserAdmin
+# from django.contrib.auth.admin import UserAdmin
 from django import forms
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class MyUserCreationForm(UserCreationForm):
-    # email = forms.EmailField(required=True)
-
     def clean_username(self):
         # Since User.username is unique, this check is redundant,
         # but it sets a nicer error message than the ORM. See #13147.
@@ -20,3 +18,9 @@ class MyUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ['username', 'email',]
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email', 'first_name', 'last_name']
