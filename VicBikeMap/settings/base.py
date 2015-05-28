@@ -65,9 +65,7 @@ INSTALLED_APPS = (
     'djconfig',
 
     # mapApp requirements
-    'compressor',
     'minidetector', # Mobile detector
-    'django_cron', # Cron tasks
     'django.contrib.gis',
     'djgeojson',
     'crispy_forms',
@@ -122,16 +120,11 @@ SERIALIZATION_MODULES = {
     'geojson' : 'djgeojson.serializers'
 }
 
-CRON_CLASSES = [
-    "mapApp.cron.UserAlertEmails",
-]
-
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder'
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder'
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
