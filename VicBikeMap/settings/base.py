@@ -33,6 +33,7 @@ ROOT_URLCONF = 'VicBikeMap.urls'
 
 WSGI_APPLICATION = 'VicBikeMap.wsgi.application'
 
+AUTH_USER_MODEL = 'spirit.User'
 LOGIN_URL = 'userApp:login'
 LOGIN_REDIRECT_URL = 'mapApp:index'
 
