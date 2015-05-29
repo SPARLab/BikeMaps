@@ -1,9 +1,12 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import login as login_view
 from django.contrib.auth.decorators import login_required
+from ratelimit.decorators import ratelimit
 
 from .forms import MyUserCreationForm, UserProfileForm
 from utils import ReCaptcha
@@ -13,6 +16,21 @@ User = get_user_model()
 
 import logging
 logger = logging.getLogger(__name__)
+
+@ratelimit(key='ip', rate='10/5m')
+@ratelimit(key='post:username', rate='5/5m')
+@ratelimit(key='post:password', rate='5/5m')
+def rate_limit_login(request):
+    if request.user.is_authenticated():
+        return redirect(request.GET.get('next', reverse('mapApp:index')))
+
+    if request.limited:
+        return redirect(reverse('rate_limited'))
+
+    return login_view(request, template_name='userApp/login.html')
+
+def rate_limited(request):
+    return render(request, 'userApp/rate_limited.html')
 
 def register(request):
     if request.method == 'POST':
@@ -30,13 +48,14 @@ def register(request):
                 return redirect(reverse("mapApp:index"))
             else:
                 # Google reCAPTCHA failure
-                messages.danger(request, "Captcha failure. It looks like you're a robot.")
+                messages.error(request, "Captcha failure. It looks like you're a robot.")
     else:
         form = MyUserCreationForm()
 
     return render(request, "registration/register.html", {
         'form': form,
     })
+
 
 @login_required
 def profile(request):

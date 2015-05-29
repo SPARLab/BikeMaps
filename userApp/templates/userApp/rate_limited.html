@@ -1,0 +1,21 @@
+{% extends 'mapApp/base.html' %}
+
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-offset-2">
+      <div class="page-header">
+        <h1>Error: Too many requests</h1>
+        <p><strong class="text text-info">You may try logging in again in 5 minutes.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-md-offset-2">
+      <a href="{% url 'password_reset' %}">I forgot my password</a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

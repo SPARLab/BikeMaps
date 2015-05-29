@@ -4,8 +4,9 @@ from userApp import views
 urlpatterns = patterns('',
     url(r'^register/$', views.register, name='register'),
     url(r'^profile/$', views.profile, name='profile'),
+    url(r'^login/$', views.rate_limit_login, name='login'),
+    url(r'^rate_limited/$', views.rate_limited, name='rate_limited'),
 
-    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'userApp/login.html'}, name='login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'userApp/logged_out.html', 'next_page': '/'}, name='logout'),
     url(r'^password_change/$', 'django.contrib.auth.views.password_change', {'template_name': 'userApp/password_change_form.html'}, name='password_change'),
     url(r'^password_change/done/$', 'django.contrib.auth.views.password_change_done', {'template_name': 'userApp/password_change_done.html'}, name='password_change_done'),
