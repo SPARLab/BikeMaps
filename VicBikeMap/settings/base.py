@@ -92,6 +92,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
 
     # userApp requirements
     'userApp'
@@ -112,7 +113,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
 
     # `allauth` specific context processors
-    'allauth.account.context_processors.account'
+    'allauth.account.context_processors.account',
+    'allauth.socialaccount.context_processors.socialaccount'
 )
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
