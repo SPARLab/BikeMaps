@@ -33,6 +33,7 @@ ROOT_URLCONF = 'VicBikeMap.urls'
 
 WSGI_APPLICATION = 'VicBikeMap.wsgi.application'
 
+LOGIN_URL = 'userApp:login'
 LOGIN_REDIRECT_URL = 'mapApp:index'
 
 POSTGIS_VERSION = (2,1,3)
@@ -64,9 +65,7 @@ INSTALLED_APPS = (
     'djconfig',
 
     # mapApp requirements
-    'compressor',
     'minidetector', # Mobile detector
-    'django_cron', # Cron tasks
     'django.contrib.gis',
     'djgeojson',
     'crispy_forms',
@@ -91,7 +90,10 @@ INSTALLED_APPS = (
     #django-allauth requirements
     'django.contrib.sites',
     'allauth',
-    'allauth.account'
+    'allauth.account',
+
+    # userApp requirements
+    'userApp'
 )
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
@@ -118,16 +120,11 @@ SERIALIZATION_MODULES = {
     'geojson' : 'djgeojson.serializers'
 }
 
-CRON_CLASSES = [
-    "mapApp.cron.UserAlertEmails",
-]
-
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder'
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder'
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
@@ -173,4 +170,3 @@ CORS_ALLOW_HEADERS = (
     'authorization',
     'X-CSRFToken'
 )
-

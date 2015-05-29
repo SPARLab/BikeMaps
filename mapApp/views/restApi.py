@@ -5,22 +5,24 @@ from django.contrib.gis.geos import Polygon
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, generics, permissions, status
-from spirit.models import User
 from django.views.decorators.csrf import csrf_exempt
 from mapApp.permissions import IsOwnerOrReadOnly
 from push_notifications.models import GCMDevice, APNSDevice
 from mapApp.views import alertUsers, pushNotification
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class CollisionList(APIView):
     """
     List all collisions, or create a new collision.
     """
     def get(self, request, format=None):
-      
+
         # Extract bounding box Url parameter
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
-        
+
         collisions = list(Incident.objects.filter(p_type__exact="collision").filter(geom__within=bbox) | Incident.objects.filter(p_type__exact="fall").filter(geom__within=bbox))
 
         serializer = IncidentSerializer(collisions, many=True)
@@ -48,7 +50,7 @@ class NearmissList(APIView):
         # Extract bounding box Url parameter
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
-        
+
         nearmiss = list(Incident.objects.filter(p_type__exact="nearmiss").filter(geom__within=bbox))
         serializer = IncidentSerializer(nearmiss, many=True)
         return Response(serializer.data)
@@ -75,7 +77,7 @@ class HazardList(APIView):
         # Extract bounding box Url parameter
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
-        
+
         hazards = list(Hazard.objects.filter(geom__within=bbox))
         serializer = HazardSerializer(hazards, many=True)
         return Response(serializer.data)
@@ -102,7 +104,7 @@ class TheftList(APIView):
         # Extract bounding box Url parameter
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
-        
+
         thefts = list(Theft.objects.filter(geom__within=bbox))
         serializer = TheftSerializer(thefts, many=True)
         return Response(serializer.data)
@@ -129,7 +131,7 @@ class OfficialList(APIView):
         # Extract bounding box Url parameter
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
-        
+
         official = list(Official.objects.filter(geom__within=bbox))
         serializer = OfficialSerializer(official, many=True)
         return Response(serializer.data)
@@ -150,7 +152,7 @@ class AlertAreaList(APIView):
     """
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
-    
+
     def get(self, request, format=None):
         alertareas = list(AlertArea.objects.filter(user=request.user))
         serializer = AlertAreaSerializer(alertareas, many=True)
@@ -170,7 +172,7 @@ class AlertAreaDetail(APIView):
     """
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
-    
+
     def get_object(self, pk):
         try:
             return AlertArea.objects.get(pk=pk)
@@ -212,7 +214,7 @@ class GCMDeviceList(APIView):
     """
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
-    
+
     def get(self, request, format=None):
         #gcmDevices = list(GCMDevice.objects.filter(user=request.user))
         gcmDevices = list(GCMDevice.objects.all())
@@ -228,7 +230,7 @@ class GCMDeviceList(APIView):
             serializer.save(user=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 class GCMDeviceDetail(APIView):
     """
@@ -260,8 +262,8 @@ class GCMDeviceDetail(APIView):
         gcmDevice = self.get_object(registration_id)
         gcmDevice.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
-   
+
+
 
 
 # Helper - Create bounding box as a polygon

@@ -1,7 +1,7 @@
 from django import forms
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.bootstrap import FormActions, Div
+from crispy_forms.bootstrap import FormActions, Div, AppendedText
 from crispy_forms.layout import Layout, Field, HTML, Button, Submit, Reset
 
 class UploadImageForm(forms.Form):
@@ -31,7 +31,7 @@ class UploadImageForm(forms.Form):
     helper.layout = Layout(
         Field('title'),
         Field('image'),
-        Field('resize'),
+        AppendedText('resize', 'px'),
 
         Div(
             FormActions(

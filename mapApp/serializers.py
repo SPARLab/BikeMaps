@@ -5,8 +5,9 @@ from push_notifications.models import GCMDevice, APNSDevice
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from mapApp.models import Point, Incident, Hazard, Theft, Official, AlertArea
-from spirit.models import User
 
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 # Serializers for use by restAPI view
 
@@ -74,7 +75,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class GCMDeviceSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
-    class Meta: 
+    class Meta:
         model = GCMDevice
         fields = ('pk', 'name', 'active', 'user', 'date_created', 'registration_id')
 
@@ -84,6 +85,3 @@ class APNSDeviceSerializer(serializers.ModelSerializer):
     class Meta:
         model = GCMDevice
         fields = ('name', 'active', 'user', 'date_created', 'registration_id')
-
-
-

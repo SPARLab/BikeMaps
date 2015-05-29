@@ -1,0 +1,38 @@
+{% extends 'mapApp/base.html' %}
+
+{% load staticfiles crispy_forms_tags %}
+
+{% block headerCSS %}
+  <link rel="stylesheet" href="{% static 'userApp/css/profile.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-offset-2">
+      <div class="page-header">
+        <h1>Preferences</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-md-8 col-md-offset-2">
+      <div class="form-group">
+        <label class='control-label'>Password:</label>
+        <a class="edit-link" href="{% url 'userApp:password_change' %}">
+          <span class="fa fa-edit"></span> Change password
+        </a>
+      </div>
+
+      <form method="post">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <button class="btn btn-primary pull-right" type="submit" name="save">Save</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

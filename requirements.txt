@@ -5,9 +5,7 @@ Pillow==2.5.3
 Whoosh==2.6.0
 django-appconf==0.6
 django-common-helpers==0.6.2
-django-compressor==1.4
 django-crispy-forms==1.4.0
-django-cron==0.3.4
 django-debug-toolbar==1.2.1
 django-djconfig==0.1.5
 django-geojson==2.6.0

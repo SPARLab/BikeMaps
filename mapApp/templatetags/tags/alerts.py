@@ -2,7 +2,6 @@
 
 from . import register
 
-from spirit.models.topic_notification import TopicNotification
 from mapApp.models import IncidentNotification, HazardNotification, TheftNotification, Point, AlertArea
 import datetime
 
@@ -16,11 +15,8 @@ def has_alerts(user):
 		or \
 		HazardNotification.objects.filter(user=user).filter(is_read=False).exists()\
 		or \
-		TheftNotification.objects.filter(user=user).filter(is_read=False).exists()\
-		or \
-		TopicNotification.objects.for_access(user=user)\
-			.filter(is_read=False)\
-			.exists())
+		TheftNotification.objects.filter(user=user).filter(is_read=False).exists()
+	)
 
 @register.assignment_tag()
 def reports_this_week(user):

@@ -48,6 +48,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #Dummy backend 
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 
+RECAPTCHA_SECRET = '6LcFewcTAAAAADHaBcrGZ7jN16fXxPIEtB24s-gQ'
+
 # Enable logging to console with Django Logging
 LOGGING = {
     'version': 1,
@@ -80,6 +82,10 @@ LOGGING = {
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
         },
         'mapApp': {
+            'handlers': ['console'],
+            'level': 'DEBUG'
+        },
+        'userApp': {
             'handlers': ['console'],
             'level': 'DEBUG'
         },
