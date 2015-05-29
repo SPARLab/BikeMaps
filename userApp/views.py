@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.views import login as login_view
+from django.contrib.auth.views import login as auth_login
 from django.contrib.auth.decorators import login_required
 from ratelimit.decorators import ratelimit
 
@@ -27,7 +27,7 @@ def rate_limit_login(request):
     if request.limited:
         return redirect(reverse('rate_limited'))
 
-    return login_view(request, template_name='userApp/login.html')
+    return auth_login(request, template_name='userApp/login.html')
 
 def rate_limited(request):
     return render(request, 'userApp/rate_limited.html')
@@ -52,7 +52,7 @@ def register(request):
     else:
         form = MyUserCreationForm()
 
-    return render(request, "registration/register.html", {
+    return render(request, "userApp/register.html", {
         'form': form,
     })
 
