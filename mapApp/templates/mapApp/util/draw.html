@@ -57,7 +57,7 @@ function desktopDrawing(){
     {% endif %}
 
     // Add a point editing control for admins
-    {% if request.user.is_administrator %}
+    {% if request.user.is_superuser %}
     L.drawLocal.edit.handlers.remove.tooltip.text = 'Click the object to remove';
     L.drawLocal.edit.toolbar.buttons.removeDisabled = 'No objects to delete.';
 

@@ -54,7 +54,7 @@
                 <li><a href="{{ profile }}">Profile</a></li>
                 <li><a href="{{ logout }}?next={{ request.path }}">Log out</a></li>
 
-                {% if request.user.is_administrator %}
+                {% if request.user.is_staff %}
                   <li role="presentation" class="divider"></li>
                   <li role="presentation" class="dropdown-header">Admin options</li>
                   <li><a href="{{ admin }}"><small><span class="fa fa-wrench"></span> Admin</small></a></li>

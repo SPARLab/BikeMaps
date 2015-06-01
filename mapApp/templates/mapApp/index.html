@@ -82,7 +82,7 @@
     {% endif %}
 
     // Display number of points in user dropdown if admin is logged in
-    {% if request.user.is_administrator %}
+    {% if request.user.is_staff %}
       $(".user-menu").append('<li role="presentation" class="divider"></li>');
       $(".user-menu").append('<li role="presentation" class="dropdown-header">Points submitted</li>');
       $(".user-menu").append('<li><a href="#"><small>Collisions: {{collisions|length}}</small></a></li>');
