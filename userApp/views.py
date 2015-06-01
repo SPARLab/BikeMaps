@@ -26,7 +26,7 @@ def rate_limit_login(request):
         return redirect(request.GET.get('next', reverse('mapApp:index')))
 
     if request.limited:
-        return redirect(reverse('rate_limited'))
+        return redirect(reverse('userApp:rate_limited'))
 
     return auth_login(request, template_name='userApp/login.html')
 
