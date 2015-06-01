@@ -10,37 +10,7 @@ from django.core import validators
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 
-from spirit.utils.timezone import TIMEZONE_CHOICES
-from spirit.utils.models import AutoSlugField
-
-
-class AbstractForumUser(models.Model):
-
-    slug = AutoSlugField(populate_from="username", db_index=False, blank=True)
-    location = models.CharField(_("location"), max_length=75, blank=True)
-    last_seen = models.DateTimeField(_("last seen"), auto_now=True)
-    last_ip = models.GenericIPAddressField(_("last ip"), blank=True, null=True)
-    timezone = models.CharField(_("time zone"), max_length=32, choices=TIMEZONE_CHOICES, default='UTC')
-    is_administrator = models.BooleanField(_('administrator status'), default=False)
-    is_moderator = models.BooleanField(_('moderator status'), default=False)
-
-    topic_count = models.PositiveIntegerField(_("topic count"), default=0)
-    comment_count = models.PositiveIntegerField(_("comment count"), default=0)
-
-    class Meta:
-        abstract = True
-
-    def save(self, *args, **kwargs):
-        if self.is_superuser:
-            self.is_administrator = True
-
-        if self.is_administrator:
-            self.is_moderator = True
-
-        super(AbstractForumUser, self).save(*args, **kwargs)
-
-
-class AbstractUser(AbstractBaseUser, PermissionsMixin, AbstractForumUser):
+class AbstractUser(AbstractBaseUser, PermissionsMixin):
     # almost verbatim copy from the auth user model
     # adds username(db_index=True), email(unique=True, blank=False, max_length=254)
     username = models.CharField(_("username"), max_length=30, unique=True, db_index=True,
