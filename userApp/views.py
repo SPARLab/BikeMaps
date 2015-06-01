@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib import messages
+from django.conf import settings
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import login as auth_login
@@ -37,7 +38,7 @@ def register(request):
         form = MyUserCreationForm(request.POST)
 
         if form.is_valid():
-            if ReCaptcha(request).is_valid():
+            if ReCaptcha(request).is_valid() or settings.DEBUG:
                 # Create user
                 new_user = form.save()
                 messages.info(request, "Thanks for registering. You are now logged in.")
