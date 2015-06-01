@@ -77,12 +77,7 @@ Bikemaps Data Visualization
     var alertAreas = L.geoJson({{ alertAreas|geojsonfeature|safe }});
 
     {% cache 500 data %}
-      var collisions = {{ collisions|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'],
-          nearmisses = {{ nearmisses|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'],
-          hazards = {{ hazards|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'],
-          thefts = {{ thefts|geojsonfeature:"report_date,date,p_type,i_type"|safe}}['features'];
-
-      var data = collisions.concat(nearmisses).concat(hazards).concat(thefts);
+      var data = {{ points|geojsonfeature:"report_date,date,p_type"|safe}}['features'];
     {% endcache %}
   </script>
   <script src="{% static 'mapApp/js/vis.js' %}"></script>
