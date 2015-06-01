@@ -58,8 +58,6 @@ INSTALLED_APPS = (
 
     # forum
     'spirit',
-    # 'haystack',
-    # 'djconfig',
 
     # mapApp requirements
     'minidetector', # Mobile detector
