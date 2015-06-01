@@ -50,11 +50,18 @@ def stats(request):
 
 	return render(request, 'mapApp/stats.html', context)
 
-# @cache_page(60 * 15)
 def vis(request):
-	context = {
-		'points': Point.objects.all(),
-		'alertAreas': AlertArea.objects.filter(user=request.user.id)
-	}
+	if request.user.is_authenticated():
+		alertAreas = AlertArea.objects.filter(user=request.user.id)
 
-	return render(request, 'mapApp/vis.html', context)
+		# Find intersecting points
+		points_all = Point.objects.all()
+		points = Point.objects.none()
+		for g in alertAreas:
+			points = points | points_all.filter(geom__intersects=g.geom)
+
+	else:
+		points = Point.objects.all()
+		alertAreas = AlertArea.objects.none()
+
+	return render(request, 'mapApp/vis.html', {'points': points, 'alertAreas': alertAreas})
