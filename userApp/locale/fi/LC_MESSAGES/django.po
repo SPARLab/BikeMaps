@@ -1,0 +1,181 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-06-10 12:09-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\userApp\templates\userApp\logged_out.html:10
+msgid "Logged out"
+msgstr ""
+
+#: .\userApp\templates\userApp\logged_out.html:11
+msgid "Thanks for spending some quality time with BikeMaps today."
+msgstr ""
+
+#. Translators: This is a link to the login page
+#: .\userApp\templates\userApp\logged_out.html:13
+msgid "Log in again"
+msgstr ""
+
+#: .\userApp\templates\userApp\login.html:10
+msgid "Login"
+msgstr ""
+
+#: .\userApp\templates\userApp\login.html:22
+msgid "Create an account"
+msgstr ""
+
+#: .\userApp\templates\userApp\login.html:23
+msgid "I don't know my password"
+msgstr ""
+
+#: .\userApp\templates\userApp\password_change_done.html:10
+msgid "Password change successful"
+msgstr ""
+
+#: .\userApp\templates\userApp\password_change_done.html:11
+msgid "Your password was changed."
+msgstr ""
+
+#. Translators: This is a page title for the page where you change your password
+#: .\userApp\templates\userApp\password_change_form.html:11
+msgid "Password change"
+msgstr ""
+
+#: .\userApp\templates\userApp\password_change_form.html:12
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+
+#. Translators: This is a button to submit the password change form
+#: .\userApp\templates\userApp\password_change_form.html:23
+#: .\userApp\templates\userApp\password_reset_confirm.html:21
+msgid "Change my password"
+msgstr ""
+
+#: .\userApp\templates\userApp\password_reset_complete.html:10
+msgid "Password reset complete"
+msgstr ""
+
+#: .\userApp\templates\userApp\password_reset_complete.html:11
+msgid "Your password has been set."
+msgstr ""
+
+#: .\userApp\templates\userApp\password_reset_confirm.html:10
+msgid "Enter new password"
+msgstr ""
+
+#: .\userApp\templates\userApp\password_reset_confirm.html:11
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+
+#: .\userApp\templates\userApp\password_reset_done.html:10
+msgid "Password reset successful"
+msgstr ""
+
+#: .\userApp\templates\userApp\password_reset_done.html:11
+msgid ""
+"We've emailed you instructions for setting your password. You should be "
+"receiving them shortly."
+msgstr ""
+
+#: .\userApp\templates\userApp\password_reset_done.html:12
+msgid ""
+"If you don't receive an email, please make sure you've entered the address "
+"you registered with, and check your spam folder."
+msgstr ""
+
+#: .\userApp\templates\userApp\password_reset_email.html:2
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+
+#: .\userApp\templates\userApp\password_reset_email.html:4
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+#: .\userApp\templates\userApp\password_reset_email.html:8
+msgid "Your username, in case you've forgotten:"
+msgstr ""
+
+#: .\userApp\templates\userApp\password_reset_email.html:10
+msgid "Thanks for using our site!"
+msgstr ""
+
+#: .\userApp\templates\userApp\password_reset_email.html:12
+#, python-format
+msgid "The %(site_name)s team"
+msgstr ""
+
+#: .\userApp\templates\userApp\password_reset_form.html:10
+msgid "Password reset"
+msgstr ""
+
+#: .\userApp\templates\userApp\password_reset_form.html:11
+msgid ""
+"Forgotten your password? Enter your email address below, and we'll email "
+"instructions for setting a new one."
+msgstr ""
+
+#: .\userApp\templates\userApp\password_reset_form.html:21
+msgid "Reset my password"
+msgstr ""
+
+#: .\userApp\templates\userApp\profile.html:14
+msgid "Preferences"
+msgstr ""
+
+#: .\userApp\templates\userApp\profile.html:24
+msgid "Change password"
+msgstr ""
+
+#: .\userApp\templates\userApp\profile.html:31
+msgid "Save"
+msgstr ""
+
+#: .\userApp\templates\userApp\rate_limited.html:9
+msgid "Error: Too many requests"
+msgstr ""
+
+#: .\userApp\templates\userApp\rate_limited.html:10
+msgid "You may try logging in again in 5 minutes."
+msgstr ""
+
+#: .\userApp\templates\userApp\rate_limited.html:17
+msgid "I forgot my password"
+msgstr ""
+
+#: .\userApp\templates\userApp\register.html:13
+#: .\userApp\templates\userApp\register.html:24
+msgid "Register"
+msgstr ""
+
+#: .\userApp\views.py:45
+msgid "Thanks for registering. You are now logged in."
+msgstr ""
+
+#: .\userApp\views.py:53
+msgid "Captcha failure. It looks like you're a robot."
+msgstr ""
+
+#: .\userApp\views.py:72
+msgid "Information updated."
+msgstr ""
