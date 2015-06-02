@@ -171,14 +171,6 @@ li a {
 	color: #2c3e50;
 }
 
-#polygon-sprite{
-	width: 25px;
-    height: 25px;
-    display: inline-block;
-    background: url(https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/images/spritesheet.png) -32px 3px;
-    margin-top: -9px;
-}
-
 .metadata small{
 	display: block;
 	margin-left:5px;
