@@ -139,6 +139,9 @@ MARKDOWN_DEUX_STYLES = {
     }
 }
 
+# Persistent login session config
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+
 PUSH_NOTIFICATIONS_SETTINGS = {
         "GCM_API_KEY": "AIzaSyAAIoOHr1BA28ulBsWQ7FNWfCmPeZp-aaw",
         "APNS_CERTIFICATE": "/path/to/your/certificate.pem",
