@@ -21,7 +21,8 @@ var xf = crossfilter(data);
 var p_typeDimension = xf.dimension(function(d) {return d.properties.p_type;}),
     weekdayDimension = xf.dimension(function(d) {return (moment(d.properties.date).weekday()+6)%7 }),
     dateDimension = xf.dimension(function(d){ return moment(d.properties.date).diff(moment(), "days"); }),
-    geomDimension = xf.dimension(function(d){ return {'lat': d.geometry.coordinates[1], 'lng': d.geometry.coordinates[0]} });
+    geomDimension = xf.dimension(function(d){ return {'lat': d.geometry.coordinates[1], 'lng': d.geometry.coordinates[0]} }),
+    hourDimension = xf.dimension(function(d){ return moment(d.properties.date).hour(); });
 
 // Define groups
 // Reusable reduce function for counting different types of reports
@@ -55,9 +56,15 @@ function reduceInitTypeCount() {
     };
   };
 }
-var countTypes = p_typeDimension.group().reduceCount(),
+var all = xf.groupAll(),
+    countTypes = p_typeDimension.group().reduceCount(),
     weekdayCount = weekdayDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount()),
+    countPerHour = hourDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount()),
     countPerDay = dateDimension.group().reduceCount();
+
+dc.dataCount('#dc-data-count')
+  .dimension(xf)
+  .group(all);
 
 // Bar chart for counts by type
 var barTypes = dc.barChart('#barTypes');
@@ -103,11 +110,36 @@ barWeek.xAxis()
   .tickFormat(function(v){ return weekdayScale((v+1)%7); });
 barWeek.render();
 
+// Bar chart for reports by hour of day
+var barHour = dc.barChart("#barHour");
+barHour
+  .width(400)
+  .height(200)
+  .x(d3.scale.linear().domain([0,24]))
+  .yAxisLabel("Count")
+  // .centerBar(true)
+  .elasticY(true)
+  .dimension(hourDimension)
+  .group(countPerHour, "Collisions").valueAccessor(function(d){return d.value.collision; })
+  .stack(countPerHour, "Nearmisses", function(d){ return d.value.nearmiss; })
+  .stack(countPerHour, "Hazards", function(d){ return d.value.hazard; })
+  .stack(countPerHour, "Thefts", function(d){ return d.value.theft; })
+  .brushOn(true)
+  .colors(colorScale.range())
+  .colorAccessor(function(d){return d.layer;})
+  .on('filtered', changeMap);
+barHour.yAxis()
+  .tickFormat(d3.format("d"));
+// barHour.xAxis()
+//   .tickValues([0,1,2,3,4,5,6])
+//   .tickFormat(function(v){ return weekdayScale((v+1)%7); });
+barHour.render();
+
 // bar chart of total reports per day
 var barDate = dc.barChart("#barDate");
 barDate
-  .width(800)
-  .height(175)
+  .width(575)
+  .height(200)
   .x(d3.scale.linear().domain([-360, 0]))
   .yAxisLabel("Count")
   .centerBar(true)

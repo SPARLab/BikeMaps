@@ -16,6 +16,7 @@
   <div class="container" style="margin-top: 15px;">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12">
+        <div id="dc-data-count"></div>
         <a class='reset btn btn-danger btn-sm pull-right' href='javascript:dc.filterAll();dc.renderAll();'>reset all</a>
       </div>
 
@@ -43,10 +44,18 @@
     </div>
 
     <div class="row">
-      <div class="hidden-xs col-sm-12 col-md-12">
+      <div class="hidden-xs col-sm-12 col-md-7">
         <div id="barDate" class="text-center center-chart">
             <strong>{% trans "Incidents per day for the past year" %}</strong>
             <a class='reset btn btn-danger btn-xs' href='javascript:barDate.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+            <br>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-5 col-md-offset-0">
+        <div id="barHour" class="text-center center-chart">
+            <strong>Number of incident by hour of day</strong>
+            <a class='reset btn btn-danger btn-xs' href='javascript:barHou.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
             <br>
         </div>
       </div>
