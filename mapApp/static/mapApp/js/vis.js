@@ -139,7 +139,6 @@ var map = L.map('map', {
   worldCopyJump: true,
   layers: [Mapnik_BW, heatLayer]
 }).on('load', changeMap())
-  .on('zoomend', mapFilter)
   .on('moveend', mapFilter);
 
 function changeMap(){
