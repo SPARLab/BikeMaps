@@ -21,7 +21,7 @@ var xf = crossfilter(data);
 var p_typeDimension = xf.dimension(function(d) {return d.properties.p_type;}),
     weekdayDimension = xf.dimension(function(d) {return (moment(d.properties.date).weekday()+6)%7 }),
     dateDimension = xf.dimension(function(d){ return moment(d.properties.date).diff(moment(), "days"); }),
-    i_typeDimension = xf.dimension(function(d){ return d.properties.i_type });
+    geomDimension = xf.dimension(function(d){ return {'lat': d.geometry.coordinates[1], 'lng': d.geometry.coordinates[0]} });
 
 // Define groups
 // Reusable reduce function for counting different types of reports
@@ -57,25 +57,7 @@ function reduceInitTypeCount() {
 }
 var countTypes = p_typeDimension.group().reduceCount(),
     weekdayCount = weekdayDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount()),
-    countPerDay = dateDimension.group().reduceCount(),
-    aveDelayGroup = i_typeDimension.group().reduce(
-      function(p,v) {
-        ++p.count
-        p.sum += moment(v.properties.report_date).diff(moment(v.properties.date), "days");
-        p.avg = (p.count !== 0 ? p.sum/p.count : 0);
-        p.p_type = v.properties.p_type;
-        return p;
-      },
-      function(p,v) {
-        --p.count
-        p.sum -= moment(v.properties.report_date).diff(moment(v.properties.date), "days");
-        p.avg = (p.count !== 0 ? p.sum/p.count : 0);
-        return p;
-      },
-      function(){
-        return {count:0, sum:0, avg:0, p_type:""};
-      }
-    );
+    countPerDay = dateDimension.group().reduceCount();
 
 // Bar chart for counts by type
 var barTypes = dc.barChart('#barTypes');
@@ -146,21 +128,6 @@ barDate.xAxis()
   });
 barDate.render();
 
-// row chart of delay in reporting
-var delayRows = dc.rowChart("#delayRows");
-delayRows
-  .width(500)
-  .height(400)
-  .dimension(i_typeDimension).keyAccessor(function(d){ return d.key; })
-  .group(aveDelayGroup).valueAccessor(function(d){ return d.value.avg; })
-  .ordering(function(d){ return -d.value.avg })
-  .elasticX(true)
-  .renderLabel(false)
-  .colors(colorScale.range())
-  .colorAccessor(function(d){ return colorScale.domain().indexOf(d.value.p_type); })
-  .on('filtered', changeMap);
-delayRows.render();
-
 // Leaflet heatmap
 var heatLayer = new HeatmapOverlay({ "radius": 40, "maxOpacity": 0.3 });
 var heat_data;
@@ -171,19 +138,31 @@ var map = L.map('map', {
   scrollWheelZoom: true,
   worldCopyJump: true,
   layers: [Mapnik_BW, heatLayer]
-}).on('load', changeMap());
+}).on('load', changeMap())
+  .on('zoomend', mapFilter)
+  .on('moveend', mapFilter);
 
 function changeMap(){
-  heat_data = { data: [] };
+  heat_data = [];
   p_typeDimension.top(Infinity).forEach(function(feature){
-    heat_data.data.push({
+    heat_data.push({
       'lat': feature.geometry.coordinates[1],
       'lng': feature.geometry.coordinates[0],
       'value': 1
     });
   });
-  heatLayer.setData(heat_data);
+  heatLayer.setData({ data: heat_data });
 };
+
+function mapFilter(){
+  var bounds = map.getBounds();
+
+  geomDimension.filterFunction(function(d){
+    return bounds.contains([d.lat, d.lng]);
+  })
+
+  dc.redrawAll();
+}
 
 // Fit map extent to alert areas boundary
 if (alertAreas.getLayers().length > 0) {
