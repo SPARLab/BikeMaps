@@ -76,7 +76,7 @@ Bikemaps Data Visualization
   <script>
     var alertAreas = L.geoJson({{ alertAreas|geojsonfeature|safe }});
 
-    {% cache 500 data request.user.id %}
+    {% cache 500 data %}
       var data = {{ points|geojsonfeature:"report_date,date,p_type"|safe}}['features'];
     {% endcache %}
   </script>

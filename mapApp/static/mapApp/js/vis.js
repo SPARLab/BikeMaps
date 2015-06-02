@@ -139,12 +139,12 @@ var map = L.map('map', {
   worldCopyJump: true,
   layers: [Mapnik_BW, heatLayer]
 }).on('load', changeMap())
-  .on('zoomend', mapFilter)
   .on('moveend', mapFilter);
 
 function changeMap(){
   heat_data = [];
-  p_typeDimension.top(Infinity).forEach(function(feature){
+
+  geomDimension.top(Infinity).forEach(function(feature){
     heat_data.push({
       'lat': feature.geometry.coordinates[1],
       'lng': feature.geometry.coordinates[0],
@@ -156,11 +156,10 @@ function changeMap(){
 
 function mapFilter(){
   var bounds = map.getBounds();
-
   geomDimension.filterFunction(function(d){
     return bounds.contains([d.lat, d.lng]);
   })
-
+  changeMap();
   dc.redrawAll();
 }
 
