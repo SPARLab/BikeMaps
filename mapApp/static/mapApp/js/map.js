@@ -7,7 +7,8 @@ var MapQuestOpen_OSM = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z
       attribution: '<a href="https://openstreetmap.org/">&copy OpenStreetMap contributors, CC-BY-SA</a>',
       subdomains: '1234'
     }),
-    stravaHM = L.tileLayer('https://d2z9m7k9h4f0yp.cloudfront.net/tiles/cycling/color5/{z}/{x}/{y}.png', {
+    // stravaHM = L.tileLayer('https://d2z9m7k9h4f0yp.cloudfront.net/tiles/cycling/color5/{z}/{x}/{y}.png', {
+    stravaHM = L.tileLayer('http://globalheat.strava.com/tiles/cycling/color5/{z}/{x}/{y}.png', {
       minZoom: 3,
       maxZoom: 17,
       opacity: 0.8,
