@@ -5,8 +5,7 @@ from postPoint import postIncident, postHazard, postTheft
 from editShape import editShape
 from exportData import getPoints, getIncidents, getHazards, getThefts
 from termsAndConditions import termsAndConditions
-from statistics import stats, vis
+from vis import vis
 from recentReports import recentReports
 from restApi import CollisionList, NearmissList, HazardList, TheftList, OfficialList, UserList, UserDetail, AlertAreaList, AlertAreaDetail, GCMDeviceList, GCMDeviceDetail
 from pushNotification import pushNotification
-
