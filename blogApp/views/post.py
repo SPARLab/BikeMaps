@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext as _
 from django.shortcuts import render, get_object_or_404, redirect
 
 from django.contrib.auth.decorators import user_passes_test
@@ -36,7 +37,7 @@ def create_post(request):
 		if form.is_valid():
 			new_post = form.save()
 
-			messages.success(request, 'Blog post was added.')
+			messages.success(request, _('Blog post was added.'))
 			return redirect(new_post)
 
 		else: # not valid, return errors
@@ -61,7 +62,7 @@ def edit_post(request, slug):
 		if form.is_valid():
 			new_post = form.save()
 
-			messages.success(request, 'Blog post was added.')
+			messages.success(request, _('Blog post saved.'))
 			return redirect(new_post)
 
 		else: # not valid, return errors

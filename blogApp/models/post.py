@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 
@@ -12,15 +13,15 @@ from datetime import datetime
 # Blog Post class.
 # Main class for blog posts.
 class Post(models.Model):
-    date = models.DateTimeField('Date created', auto_now_add=True)
+    date = models.DateTimeField(_('Date created'), auto_now_add=True)
 
-    title = models.CharField('Title', max_length=100)
-    description = models.CharField('Description', max_length=300)
-    post_date = models.DateTimeField('Date posted', default=datetime.now)
-    slug = models.SlugField('Slug', unique=True, blank=True, max_length=100)
-    published = models.BooleanField('Published', default=False)
+    title = models.CharField(_('Title'), max_length=100)
+    description = models.CharField(_('Description'), max_length=300)
+    post_date = models.DateTimeField(_('Date posted'), default=datetime.now)
+    slug = models.SlugField(_('Slug'), unique=True, blank=True, max_length=100)
+    published = models.BooleanField(_('Published'), default=False)
 
-    content = models.TextField('Content', blank=True)
+    content = models.TextField(_('Content'), blank=True)
 
     def get_absolute_url(self):
         return reverse('blogApp:view_post', kwargs={'slug': self.slug})

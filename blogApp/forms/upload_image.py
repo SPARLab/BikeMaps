@@ -1,3 +1,5 @@
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as trans
 from django import forms
 
 from crispy_forms.helper import FormHelper
@@ -12,7 +14,7 @@ class UploadImageForm(forms.Form):
     helper.field_class = 'col-xs-9'
 
     title = forms.CharField(
-        label = "Alt. Title",
+        label = _("Alt. Title"),
         required = True,
         max_length=50,
     )
@@ -23,7 +25,7 @@ class UploadImageForm(forms.Form):
     )
 
     resize = forms.IntegerField(
-        label = "Resize to this width or height",
+        label = _("Resize to this width or height"),
         initial = 1000,
         required = True,
     )
@@ -31,12 +33,13 @@ class UploadImageForm(forms.Form):
     helper.layout = Layout(
         Field('title'),
         Field('image'),
-        AppendedText('resize', 'px'),
+        # Translators: This is the shortform for pixels
+        AppendedText('resize', _('px')),
 
         Div(
             FormActions(
-                HTML('<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'),
-                Submit('save', 'Upload'),
+                HTML('<button type="button" class="btn btn-default" data-dismiss="modal">{}</button>'.format(trans('Close'))),
+                Submit('save', _('Upload')),
             ),
             css_class="modal-footer"
         ),

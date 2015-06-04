@@ -1,3 +1,5 @@
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as trans
 from django import forms
 
 from crispy_forms.helper import FormHelper
@@ -11,7 +13,7 @@ class BlogPostForm(forms.ModelForm):
     # helper.form_tag = False
 
     helper.layout = Layout(
-        'Create a blog post',
+        _('Create a blog post'),
         Field('published'),
         Field('title'),
         Field('description'),
@@ -20,18 +22,18 @@ class BlogPostForm(forms.ModelForm):
         Div(
             HTML("""
                 <div class="btn-group" role="group" aria-label="...">
-                  <button type="button" id="italics-btn" title="Insert italics code" class="btn btn-inverse"> <span class="glyphicon glyphicon-italic"></span> </button>
-                  <button type="button" id="bold-btn" title="Insert bold text code" class="btn btn-inverse"> <span class="glyphicon glyphicon-bold"></span> </button>
-                  <button type="button" id="list-btn" title="Insert a list item" class="btn btn-inverse"> <span class="glyphicon glyphicon-list"></span> </button>
-                  <button type="button" id="link-btn" title="Insert a link" class="btn btn-inverse"> <span class="glyphicon glyphicon-link"></span> </button>
-                  <button type="button" id="picture-btn" title="Upload picture" class="btn btn-inverse" data-toggle="modal" data-target="#upload-img-modal"> <span class="glyphicon glyphicon-picture"></span> </button>
+                  <button type="button" id="italics-btn" title="{0}" class="btn btn-inverse"> <span class="glyphicon glyphicon-italic"></span> </button>
+                  <button type="button" id="bold-btn" title="{1}" class="btn btn-inverse"> <span class="glyphicon glyphicon-bold"></span> </button>
+                  <button type="button" id="list-btn" title="{2}" class="btn btn-inverse"> <span class="glyphicon glyphicon-list"></span> </button>
+                  <button type="button" id="link-btn" title="{3}" class="btn btn-inverse"> <span class="glyphicon glyphicon-link"></span> </button>
+                  <button type="button" id="picture-btn" title="{4}" class="btn btn-inverse" data-toggle="modal" data-target="#upload-img-modal"> <span class="glyphicon glyphicon-picture"></span> </button>
                 </div>
-            """),
+            """.format(trans("Insert italics code"), trans("Insert bold text code"), trans("Insert a list item"), trans("Insert a link"), trans("Upload picture"))),
             css_class="pull-left"
         ),
         Div(
             FormActions(
-                Submit('save', 'Save'),
+                Submit('save', _('Save')),
             ),
             css_class="pull-right"
         ),

@@ -1,4 +1,4 @@
-{% load markdown_deux_tags %}
+{% load markdown_deux_tags i18n %}
 
 <div class="hidden-xs col-sm-2">
   <h3><span class="label label-default">{{ post.post_date|date:"M j" }}</span></h3>
@@ -26,12 +26,12 @@
       <div class="hidden-xs">
         {% if request.user.is_superuser %}
           {% if post.published %}
-            <span class="label label-success">Published</span>
+            <span class="label label-success">{% trans "Published" %}</span>
           {% else %}
-            <span class="label label-danger">Not Published</span>
+            <span class="label label-danger">{% trans "Not Published" %}</span>
           {% endif %}
 
-          <a href="{% url 'blogApp:edit_post' slug=post.slug %}"><span class="text-warning">edit</span></a>
+          <a href="{% url 'blogApp:edit_post' slug=post.slug %}"><span class="text-warning">{% trans "edit" %}</span></a>
         {% endif %}
       </div>
     </div>
