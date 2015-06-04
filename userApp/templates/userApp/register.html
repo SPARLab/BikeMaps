@@ -1,6 +1,5 @@
 {% extends 'mapApp/base.html' %}
-
-{% load staticfiles crispy_forms_tags %}
+{% load staticfiles crispy_forms_tags i18n %}
 
 {% block headerCSS %}
 <script src='https://www.google.com/recaptcha/api.js'></script>
@@ -11,7 +10,7 @@
   <div class="row">
     <div class="col-xs-12 col-md-offset-2">
       <div class="page-header">
-        <h1>Register</h1>
+        <h1>{% trans "Register" %}</h1>
       </div>
     </div>
   </div>
@@ -22,7 +21,7 @@
         {% csrf_token %}
         {{ form|crispy }}
         <div class="g-recaptcha" data-sitekey="6LeOmQcTAAAAAMT24Fc8CQv2szgi2dBJ_WSh0WBX"></div>
-        <button class="btn btn-primary pull-right" type="submit" name="login">Register</button>
+        <button class="btn btn-primary pull-right" type="submit" name="login">{% trans "Register" %}</button>
       </form>
     </div>
   </div>

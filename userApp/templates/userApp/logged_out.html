@@ -1,15 +1,16 @@
 {% extends 'mapApp/base.html' %}
 
-{% load staticfiles crispy_forms_tags %}
+{% load staticfiles crispy_forms_tags i18n %}
 
 {% block body %}
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-md-offset-2">
       <div class="page-header">
-        <h1>Logged out</h1>
-        <p><strong>Thanks for spending some quality time with BikeMaps today.</strong></p>
-        <p><a href="{% url 'userApp:login' %}">Log in again</a></p>
+        <h1>{% trans "Logged out" %}</h1>
+        <p><strong>{% trans "Thanks for spending some quality time with BikeMaps today." %}</strong></p>
+        {# Translators: This is a link to the login page #}
+        <p><a href="{% url 'userApp:login' %}">{% trans "Log in again" %}</a></p>
       </div>
     </div>
   </div>

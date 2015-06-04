@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext as _
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
@@ -41,7 +42,7 @@ def register(request):
             if ReCaptcha(request).is_valid() or settings.DEBUG:
                 # Create user
                 new_user = form.save()
-                messages.info(request, "Thanks for registering. You are now logged in.")
+                messages.info(request, _("Thanks for registering. You are now logged in."))
 
                 # Log user in
                 new_user = authenticate(username=request.POST['username'], password=request.POST['password1'])
@@ -49,7 +50,7 @@ def register(request):
                 return redirect(reverse("mapApp:index"))
             else:
                 # Google reCAPTCHA failure
-                messages.error(request, "Captcha failure. It looks like you're a robot.")
+                messages.error(request, _("Captcha failure. It looks like you're a robot."))
     else:
         form = MyUserCreationForm()
 
@@ -68,7 +69,7 @@ def profile(request):
         if form.is_valid():
             form.save(commit=False)
             user.save()
-            messages.info(request, "Information updated.")
+            messages.info(request, _("Information updated."))
             form = UserProfileForm(instance=user)
 
     else:
