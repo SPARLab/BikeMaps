@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div id="legend" class="leaflet-container leaflet-control-container">
   <div class="leaflet-top leaflet-right">
     <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
@@ -6,25 +8,29 @@
         <div class="leaflet-control-layers-overlays">
 
           <div id="legend-about" class="hidden-xs hidden-sm">
-            <strong>About</strong><br>
-            BikeMaps.org is a crowdsource tool for global mapping of cycling safety. Using the <span class="marker-icon"></span> button, add your own data on cycling crashes, near-misses, hazards, and thefts. <a href="{% url 'mapApp:about' %}">More info</a>
+            <strong>{% trans "About" %}</strong><br>
+            {# Translators: This string contains a marker icon and a link to the about page from the text "more info". Please preserve these #}
+            {% url 'mapApp:about' as about-link %}
+            {% blocktrans %}
+            BikeMaps.org is a crowdsource tool for global mapping of cycling safety. Using the <span class="marker-icon"></span> button, add your own data on cycling crashes, near-misses, hazards, and thefts. <a href="{{ about-link }}">More info</a>
+            {% endblocktrans %}
           </div>
 
           <div class="legend-group">
             <input class="layer-toggle" type="checkbox" value="incidentData" checked>
-            Incidents
+            {% trans "Incidents" %}
             <div class="marker-group legend-subtext collapse in">
-              <input type="checkbox" id="collisionCheckbox" checked> <i class="collision fa fa-bicycle icon-black"></i><small> Citizen collision report</small><br>
-              <input type="checkbox" id="nearmissCheckbox" checked> <i class="nearmiss fa fa-bicycle icon-black"></i><small> Citizen near miss report</small><br>
-              <input type="checkbox" id="hazardCheckbox" checked> <i class="hazard fa fa-warning icon-black"></i><small> Cyclist hazard</small><br>
-              <input type="checkbox" id="theftCheckbox" checked> <i class="theft fa fa-bicycle icon-black"></i><small> Bike Theft</small><br>
-              <!-- <input type="checkbox" id="officialCheckbox" checked> <i class="official fa fa-certificate"></i><small> Official collision report</small><br> -->
+              <input type="checkbox" id="collisionCheckbox" checked> <i class="collision fa fa-bicycle icon-black"></i><small> {% trans "Citizen collision report" %}</small><br>
+              <input type="checkbox" id="nearmissCheckbox" checked> <i class="nearmiss fa fa-bicycle icon-black"></i><small> {% trans "Citizen near miss report" %}</small><br>
+              <input type="checkbox"id="hazardCheckbox"checked> <i class="hazard fa fa-warning icon-black"></i><small> {% trans "Cyclist hazard" %}</small><br>
+              <input type="checkbox"id="theftCheckbox"checked> <i class="theft fa fa-bicycle icon-black"></i><small> {% trans "Bike Theft" %}</small><br>
+              <!-- <input type="checkbox" id="officialCheckbox" checked> <i class="official fa fa-certificate"></i><small> {% trans "Official collision report" %}</small><br> -->
 
               <input id="filterCheckbox" type="checkbox">
                 <span class="fa-stack">
                   <i class="fa fa-filter fa-stack-1x"></i>
                   <i class="fa fa-circle-thin fa-stack-2x"></i>
-                </span></i><small> Filter</small>
+                </span></i><small> {% trans "Filter" %}</small>
               <div class="filter">
                 <div class="date-container">
                   <small><span class="start-date"></span></small>
@@ -38,16 +44,16 @@
 
           <div class="legend-group">
             <input class="layer-toggle" type="checkbox" value="stravaHM" checked>
-            Strava ridership data
+            {% trans "Strava ridership data" %}
             <a data-target="#about-strava" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>
             <div class="legend-subtext collapse in">
-              <small class="strava-gradient gradient-bar">less <div class="pull-right">more</div></small>
+              <small class="strava-gradient gradient-bar">{% trans "less" %} <div class="pull-right">{% trans "more" %}</div></small>
             </div>
           </div>
 
           <div class="legend-group">
             <input class="layer-toggle" type="checkbox" value="alertAreas" checked>
-            Alert Areas
+            {% trans "Alert Areas" %}
             <a data-target="#about-alert-areas" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>
             <div class="legend-subtext collapse in">
               <small class="alert-area-box"></small>
@@ -56,12 +62,12 @@
 
           <div class="legend-group">
             <input class="layer-toggle" type="checkbox" value="infrastructure">
-            Infrastructure
+            {% trans "Infrastructure" %}
             <div class="legend-subtext collapse">
-              <div class="bikerack"></div><small> Bike rack</small><br>
-              <div class="bikelane solidlane thicklane"></div><small> Protected Bike Lane</small><br>
-              <div class="bikelane solidlane"></div><small> Bike Lane</small><br>
-              <div class="bikelane dotlane"></div><small> Other Cycling Route</small>
+              <div class="bikerack"></div><small> {% trans "Bike rack" %}</small><br>
+              <div class="bikelane solidlane thicklane"></div><small> {% trans "Protected Bike Lane" %}</small><br>
+              <div class="bikelane solidlane"></div><small> {% trans "Bike Lane" %}</small><br>
+              <div class="bikelane dotlane"></div><small> {% trans "Other Cycling Route" %}</small>
             </div>
           </div>
 

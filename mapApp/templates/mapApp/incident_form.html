@@ -1,23 +1,23 @@
 <!-- Load Crispy-froms form template renderer -->
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags i18n %}
 
 <!-- Modal form -->
 <div class="modal fade" id="incidentForm" tabindex="-1" role="dialog" aria-labelledby="incidentForm" aria-hidden="false">
     <div class="modal-dialog">
-        <div class="modal-content">         
+        <div class="modal-content">
 
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="incidentForm">Submit a new report</h4>
+                <h4 class="modal-title" id="incidentForm">{% trans "Submit a new report" %}</h4>
             </div>
 
             <div class="modal-body">
-                <label class="control-label">What kind of report is this?</label>
+                <label class="control-label">{% trans "What kind of report is this?" %}</label>
                 <!-- Nav Tabs -->
                 <ul class="nav nav-tabs" role="tablist">
-                  <li class="active"><a href="#incidentReport" role="tab" data-toggle="tab">Incident</a></li>
-                  <li><a href="#hazardReport" role="tab" data-toggle="tab">Hazard</a></li>
-                  <li><a href="#theftReport" role="tab" data-toggle="tab">Theft</a></li>
+                  <li class="active"><a href="#incidentReport" role="tab" data-toggle="tab">{% trans "Incident" %}</a></li>
+                  <li><a href="#hazardReport" role="tab" data-toggle="tab">{% trans "Hazard" %}</a></li>
+                  <li><a href="#theftReport" role="tab" data-toggle="tab">{% trans "Theft" %}</a></li>
                 </ul>
 
                 <!-- Tab panes -->
@@ -36,10 +36,10 @@
                 </div>
 
             </div>
-            
-            <!-- 
+
+            <!--
             <div class="modal-footer">
-            </div> 
+            </div>
             -->
         </div>
     </div>

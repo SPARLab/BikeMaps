@@ -1,15 +1,16 @@
 {% extends "mapApp/base.html" %}
+{% load i18n %}
 
-{% block title %}Terms and Conditions{% endblock %}
+{% block title %}{% trans "Terms and Conditions" %}{% endblock %}
 {% block body %}
 <div class="container">
 	<div class="jumbotron terms-conditions" style="margin-top: 40px;">
-		<h1>Terms and Conditions</h1>
+		<h1>{% trans "Terms and Conditions" %}</h1>
 		<br>
-		<p><strong>Letter of information for implied consent:</strong></p>
+		<p><strong>{% trans "Letter of information for implied consent:" %}"</strong></p>
 
 		<!-- <h4 class="text-center"><strong>Citizen Based Web-Mapping of Bike Accidents and Near Misses (BikeMaps)</strong></h4> -->
-
+		{% blocktrans %}
 		<p>You are invited to participate in a study entitled <strong>Citizen Based Web-Mapping of Bike Accidents and Near Misses (BikeMaps).</strong></p>
 
 		<p>As part of a UVic research project, we are interested in obtaining information regarding your cycling experiences. In particular we would like to know about any incidents that you have had. The data collected is completely anonymous and answers are multiple choice containing no identifiable information. The survey should take approximately 5 minutes.</p>
@@ -21,9 +22,9 @@
 		<p>Funding for this research project has been provided by an NSERC Engage grant to Dr. Trisalyn Nelson. Other project partners providing in kind support include: the Captial Regional District (CRD), Pedalheads, KidicalMassyyj; the Canadian Automobile Association; Strava.com, and the Traffic Injury Research Foundation (TIRF). If you have any questions regarding this research, please contact Dr. Trisalyn Nelson, <a href="mailto:trisalyn@uvic.ca">trisalyn@uvic.ca</a>.</p>
 
 		<p>In addition, you may verify the ethical approval of this study, or raise any concerns you might have, by contacting the Human Research Ethics Office at the University of Victoria (<a href="tel:+12504724545">250-472-4545</a> or <a href="mailto:ethics@uvic.ca">ethics@uvic.ca</a>).
+		{% endblocktrans %}
 
-
-		<div class="text-right"><a class="btn btn-primary" onclick=window.close()>Close</a></div>
+		<div class="text-right"><a class="btn btn-primary" onclick=window.close()>{% trans "Close" context "close window button"%}</a></div>
 
 
 	</div>

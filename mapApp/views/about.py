@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext as _
 from django.shortcuts import render
 
 from django.views.decorators.http import require_POST
@@ -28,9 +29,9 @@ def contact(request):
 
 		try:
 			email.send()
-			messages.success(request, '<strong>Thank you!</strong><br>We\'ll do our best to get back to you soon.')
+			messages.success(request, '<strong>' + _('Thank you!') + '</strong><br>' + _('We\'ll do our best to get back to you soon.'))
 			emailForm = EmailForm() # Clear the form
 		except BadHeaderError:
-			messages.error(request, '<strong>Invalid Header.</strong> Illegal characters found.')
+			messages.error(request, '<strong>'+ _('Invalid Header.') + '</strong>' + _('Illegal characters found.'))
 
 	return render(request, 'mapApp/about.html', {"emailForm": emailForm})

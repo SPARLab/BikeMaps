@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 
@@ -24,13 +25,13 @@ def postAlertPolygon(request):
 		geofenceForm.data['user'] = request.user.id
 		geofenceForm.data['geom'] = GEOSGeometry(geofenceForm.data['geom'])
 	except(ValueError):
-		messages.error(request, '<strong>Error</strong><br>Invalid geometry data.')
+		messages.error(request, '<strong>' + _('Error') + '</strong><br>' + _('Invalid geometry data.'))
 		return HttpResponseRedirect(reverse('mapApp:index'))
 
 	if geofenceForm.is_valid():
 		# Save new model object, send success message to the user
 		geofenceForm.save()
-		messages.success(request, 'You will now receive alerts for the area traced.')
+		messages.success(request, _('You will now receive alerts for the area traced.'))
 
 	return HttpResponseRedirect(reverse('mapApp:index'))
 

@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <!-- Javascript saved as html to allow for use of Django template tags within the code -->
 <script>
 $(document).ready(function(){
@@ -10,23 +12,23 @@ $(document).ready(function(){
 
 function desktopDrawing(){
     /* DRAWING CONTROL TOOLTIPS */
-    L.drawLocal.draw.toolbar.buttons.marker = 'Add a new marker.';
-    L.drawLocal.draw.handlers.marker.tooltip.start = 'Place me where the incident, hazard, or theft occurred.';
+    L.drawLocal.draw.toolbar.buttons.marker = "{% trans 'Add a new marker.' %}";
+    L.drawLocal.draw.handlers.marker.tooltip.start = "{% trans 'Place me where the incident, hazard, or theft occurred.' %}";
 
-    L.drawLocal.draw.toolbar.buttons.polygon = 'Trace an area to receive incident alerts.';
-    L.drawLocal.draw.handlers.polygon.tooltip.start = 'Trace the area you would like to receive alerts for.';
-    // L.drawLocal.draw.handlers.polygon.tooltip.cont = 'Click to continue drawing shape.';
-    // L.drawLocal.draw.handlers.polygon.tooltip.end = 'Click the first point to close this shape.';
+    L.drawLocal.draw.toolbar.buttons.polygon = "{% trans 'Trace an area to receive incident alerts.' %}";
+    L.drawLocal.draw.handlers.polygon.tooltip.start = "{% trans 'Trace the area you would like to receive alerts for.' %}";
+    // L.drawLocal.draw.handlers.polygon.tooltip.cont = "{% trans 'Click to continue drawing shape.' %}";
+    // L.drawLocal.draw.handlers.polygon.tooltip.end = "{% trans 'Click the first point to close this shape.' %}";
 
-    L.drawLocal.edit.toolbar.buttons.edit = 'Edit alert area.';
-    L.drawLocal.edit.handlers.edit.tooltip.text = 'Drag handles to edit alert areas. Be sure to save your changes.';
-    L.drawLocal.edit.handlers.edit.tooltip.subtext = 'Click cancel to undo changes.';
+    L.drawLocal.edit.toolbar.buttons.edit = "{% trans 'Edit alert area.' %}";
+    L.drawLocal.edit.handlers.edit.tooltip.text = "{% trans 'Drag handles to edit alert areas. Be sure to save your changes.' %}";
+    L.drawLocal.edit.handlers.edit.tooltip.subtext = "{% trans 'Click cancel to undo changes.' %}";
 
-    L.drawLocal.edit.toolbar.buttons.remove = 'Delete alert areas.';
-    L.drawLocal.edit.handlers.remove.tooltip.text = 'Click the alert areas to remove';
+    L.drawLocal.edit.toolbar.buttons.remove = "{% trans 'Delete alert areas.' %}";
+    L.drawLocal.edit.handlers.remove.tooltip.text = "{% trans 'Click the alert areas to remove' %}";
 
-    L.drawLocal.edit.toolbar.buttons.editDisabled = 'No alert areas to edit.';
-    L.drawLocal.edit.toolbar.buttons.removeDisabled = 'No alert areas to delete.';
+    L.drawLocal.edit.toolbar.buttons.editDisabled = "{% trans 'No alert areas to edit.' %}";
+    L.drawLocal.edit.toolbar.buttons.removeDisabled = "{% trans 'No alert areas to delete.' %}";
 
     /* ADD THE CONTROL TO LEAFLET MAP */
     {% if not request.mobile %}
@@ -58,8 +60,8 @@ function desktopDrawing(){
 
     // Add a point editing control for admins
     {% if request.user.is_superuser %}
-    L.drawLocal.edit.handlers.remove.tooltip.text = 'Click the object to remove';
-    L.drawLocal.edit.toolbar.buttons.removeDisabled = 'No objects to delete.';
+    L.drawLocal.edit.handlers.remove.tooltip.text = "{% trans 'Click the object to remove' %}";
+    L.drawLocal.edit.toolbar.buttons.removeDisabled = "{% trans 'No objects to delete.' %}";
 
     map.addControl(new L.Control.Draw({
         position: 'bottomright',
@@ -159,6 +161,6 @@ function mobileDrawing(){
 {% if request.mobile %}
 <div class="tip-msg alert-info alert-dismissable">
     <div class="close">&times;</div>
-    <center>Double tap a location to submit a report</center>
+    <center>{% trans "Double tap a location to submit a report" %}</center>
 </div>
 {% endif %}

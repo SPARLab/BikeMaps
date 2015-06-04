@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.contrib.gis.db import models
 
@@ -10,11 +11,11 @@ from django.utils import timezone
 # Serves as abstract model inheritance class for all user generated map data points
 class Point(models.Model):
     TYPE_CHOICES = (
-        ('collision', 'collision'),
-        ('nearmiss', 'nearmiss'),
-        ('theft', 'theft'),
-        ('hazard', 'hazard'),
-        ('official', 'official')
+        ('collision', _('collision')),
+        ('nearmiss', _('nearmiss')),
+        ('theft', _('theft')),
+        ('hazard', _('hazard')),
+        ('official', _('official'))
     )
 
     YOUNGEST_AGE = 13
@@ -27,49 +28,49 @@ class Point(models.Model):
     MONTH_CHOICES = [(str(i+1), str(month[i+1])) for i in xrange(12)]
 
     SEX_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('Other', 'Other')
+        ('M', _('Male')),
+        ('F', _('Female')),
+        ('Other', _('Other'))
     )
 
     ########### POINT FIELDS
     report_date = models.DateTimeField(
-        'Date reported',
+        _('Date reported'),
         auto_now_add=True   # Date is set automatically when object created
     )
     # Spatial fields
     # Default CRS -> WGS84
-    geom = models.PointField('Location')
+    geom = models.PointField(_('Location'))
     objects = models.GeoManager() # Required to conduct geographic queries
 
     # Personal details about the participant (all optional)
     date = models.DateTimeField(
-        'When was the incident?',
+        _('When was the incident?'),
         default=None
     )
 
     p_type = models.CharField(
-        'Type of report',
+        _('Type of report'),
         max_length=150,
         choices=TYPE_CHOICES,
     )
 
     age = models.CharField(
-        'What is your birth year?',
+        _('What is your birth year?'),
         max_length=15,
         choices=AGE_CHOICES,
         blank=True,
         null=True
     )
     birthmonth = models.CharField(
-        'What is your birth month?',
+        _('What is your birth month?'),
         max_length=15,
         choices=MONTH_CHOICES,
         blank=True,
         null=True
     )
     sex = models.CharField(
-        'Please select your sex',
+        _('Please select your sex'),
         max_length=10,
         choices=SEX_CHOICES,
         blank=True,
@@ -77,7 +78,7 @@ class Point(models.Model):
     )
 
     details = models.TextField(
-        'Please give a brief description of the incident',
+        _('Please give a brief description of the incident'),
         max_length=300,
         blank=True,
         null=True

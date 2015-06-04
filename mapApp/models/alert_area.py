@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
 from django.contrib.gis.db import models
@@ -12,7 +12,7 @@ from django.utils import timezone
 # Main class for submitted routes.
 class AlertArea(models.Model):
     date = models.DateTimeField(
-        'Date created', 
+        'Date created',
         auto_now_add=True   # Date is set automatically when object created
     )
 
@@ -25,7 +25,7 @@ class AlertArea(models.Model):
     email = models.EmailField(verbose_name="Current email")
 
     def latlngList(self):
-        return list(list(latlng)[::-1] for latlng in self.geom[0]) 
+        return list(list(latlng)[::-1] for latlng in self.geom[0])
 
     # toString()
     def __unicode__(self):

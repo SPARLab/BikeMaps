@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.contrib.gis.db import models
 from point import Point
@@ -10,7 +11,7 @@ from django.utils import timezone
 # Official class.
 # Class for storing official data. Contains fields that official data should be modified to fit as best as possible.
 class Official(models.Model):
-    geom = models.PointField('Location')
+    geom = models.PointField(_('Location'))
     objects = models.GeoManager() # Required to conduct geographic queries
 
     report_date = models.DateTimeField(
