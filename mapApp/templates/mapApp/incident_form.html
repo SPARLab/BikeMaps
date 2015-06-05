@@ -15,32 +15,75 @@
                 <label class="control-label">{% trans "What kind of report is this?" %}</label>
                 <!-- Nav Tabs -->
                 <ul class="nav nav-tabs" role="tablist">
-                  <li class="active"><a href="#incidentReport" role="tab" data-toggle="tab">{% trans "Incident" %}</a></li>
-                  <li><a href="#hazardReport" role="tab" data-toggle="tab">{% trans "Hazard" %}</a></li>
-                  <li><a href="#theftReport" role="tab" data-toggle="tab">{% trans "Theft" %}</a></li>
+                  <li role="presentation" class="active"><a href="#incidentReport" role="tab" data-toggle="tab">{% trans "Incident" %}</a></li>
+                  <li role="presentation"><a href="#hazardReport" role="tab" data-toggle="tab">{% trans "Hazard" %}</a></li>
+                  <li role="presentation"><a href="#theftReport" role="tab" data-toggle="tab">{% trans "Theft" %}</a></li>
                 </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                  <form action="{% url 'mapApp:postIncident' %}" method="post" class="form tab-pane active" id="incidentReport">
-                    {% crispy incidentForm %}
-                  </form>
-
-                  <form action="{% url 'mapApp:postHazard' %}" method="post" class="form tab-pane" id="hazardReport">
-                    {% crispy hazardForm %}
-                  </form>
-
-                  <form action="{% url 'mapApp:postTheft' %}" method="post" class="form tab-pane" id="theftReport">
-                    {% crispy theftForm %}
-                  </form>
+                  <div role="tabpanel" class="tab-pane active" id="incidentReport">
+                    <form action="{% url 'mapApp:postIncident' %}" method="post" class="form">
+                      {% crispy incidentForm %}
+                    </form>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="hazardReport">
+                    <form action="{% url 'mapApp:postHazard' %}" method="post" class="form">
+                      {% crispy hazardForm %}
+                    </form>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="theftReport">
+                    <form action="{% url 'mapApp:postTheft' %}" method="post" class="form">
+                      {% crispy theftForm %}
+                    </form>
+                  </div>
                 </div>
-
             </div>
 
-            <!--
             <div class="modal-footer">
+              <div class="col-xs-7">
+                <div class="text-left" style="text-indent: -16px; padding-left: 15px;">
+                  {% url "mapApp:termsAndConditions" as terms_url %}
+                  <input type='checkbox' id='terms_checkbox'><strong> {% trans "I have read and understand the <a href='{{ terms_url }}' target=_blank> terms and conditions" %}</a></strong>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <button type="button" name="Cancel" class="btn btn-default" onclick="javascript:close_modal()">{% trans "Cancel" %}</button>
+                <button type="button" name="Submit" class="btn btn-primary submit-btn disabled" onclick="javascript:submit_form()">{% trans "Submit" %}</button>
+              </div>
             </div>
-            -->
         </div>
     </div>
 </div>
+
+<script>
+  $("#terms_checkbox").change(function() {
+    if(this.checked) $(".submit-btn").removeClass("disabled");
+    else $(".submit-btn").addClass("disabled");
+  });
+
+  function close_modal(){
+    $('#incidentForm').modal('hide');$('.modal-backdrop').hide();
+  }
+
+  function submit_form(){
+    $('.tab-pane.active form').submit();
+  }
+
+  // Dynamically change lock to "NA" if bike not locked
+  $("#div_id_lock select option[value='NA']").hide();
+  $("#div_id_how_locked select").change( function(){
+      if($(this).val() == 'Not locked'){
+          $("#div_id_lock select option").hide();
+          $("#div_id_lock select option[value='NA']").show();
+          $("#div_id_lock select").val('NA');
+      }
+      else{
+          if($("#div_id_lock select").val() == 'NA'){
+              $("#div_id_lock select").val('');
+          }
+          $("#div_id_lock select option").show();
+          $("#div_id_lock select option[value='NA']").hide();
+      }
+  });
+</script>
