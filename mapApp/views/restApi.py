@@ -36,7 +36,11 @@ class CollisionList(APIView):
                if serializer.data['properties']['pk'] is not None:
                   collision = Incident.objects.get(pk=(serializer.data['properties']['pk']))
                   alertUsers(request, collision)
-                  pushNotification.pushNotification(collision)
+                  # Errors with push notifications should not affect reporting
+                  try:
+                      pushNotification.pushNotification(collision)
+                  except:
+                      pass
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -63,7 +67,11 @@ class NearmissList(APIView):
                if serializer.data['properties']['pk'] is not None:
                   nearmiss = Incident.objects.get(pk=(serializer.data['properties']['pk']))
                   alertUsers(request, nearmiss)
-                  pushNotification.pushNotification(nearmiss)
+                  # Errors with push notifications should not affect reporting
+                  try:
+                      pushNotification.pushNotification(nearmiss)
+                  except:
+                      pass
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -90,7 +98,11 @@ class HazardList(APIView):
                if serializer.data['properties']['pk'] is not None:
                   hazard = Hazard.objects.get(pk=(serializer.data['properties']['pk']))
                   alertUsers(request, hazard)
-                  pushNotification.pushNotification(hazard)
+                  # Errors with push notifications should not affect reporting
+                  try:
+                      pushNotification.pushNotification(hazard)
+                  except:
+                      pass
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -117,7 +129,11 @@ class TheftList(APIView):
                if serializer.data['properties']['pk'] is not None:
                   theft = Theft.objects.get(pk=(serializer.data['properties']['pk']))
                   alertUsers(request, theft)
-                  pushNotification.pushNotification(theft)
+                  # Errors with push notifications should not affect reporting
+                  try:
+                      pushNotification.pushNotification(theft)
+                  except:
+                      pass
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

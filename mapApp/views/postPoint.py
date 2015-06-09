@@ -33,7 +33,11 @@ def postIncident(request):
 	if incidentForm.is_valid():
 		incident = incidentForm.save()
 		alertUsers(request, incident)
-		pushNotification.pushNotification(incident)
+		# Errors with push notifications should not affect reporting
+                try:
+                        pushNotification.pushNotification(incident)
+                except:
+                        pass
 
 		messages.success(request, '<strong>Thank you!</strong><br>Your incident marker was successfully added.')
 		return HttpResponseRedirect(reverse('mapApp:index', \
@@ -71,8 +75,11 @@ def postHazard(request):
 	if hazardForm.is_valid():
 		hazard = hazardForm.save()
 		alertUsers(request, hazard)
-		pushNotification.pushNotification(hazard)
-
+		# Errors with push notifications should not affect reporting
+                try:
+                        pushNotification.pushNotification(hazard)
+                except:
+                        pass
 
 		#messages.success(request, resp.results.message_id)
 
@@ -106,7 +113,11 @@ def postTheft(request):
 	if theftForm.is_valid():
 		theft = theftForm.save()
 		alertUsers(request, theft)
-		pushNotification.pushNotification(theft)
+		# Errors with push notifications should not affect reporting
+                try:
+                        pushNotification.pushNotification(theft)
+                except:
+                        pass
 
 		messages.success(request, '<strong>Thank you!</strong><br>Your theft marker was successfully added.')
 		return HttpResponseRedirect(reverse('mapApp:index', \
