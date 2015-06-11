@@ -36,7 +36,7 @@
       <ul class="nav navbar-nav" role="navigation">
         <li {% ifequal request.path index %} class="active" {% endifequal %}><a href="{{ index }}">Home <span class="fa fa-map-marker"></span></a></li>
         <li {% ifequal request.path vis %} class="active" {% endifequal %}><a href="{{ vis }}">Visualization <span class="fa fa-bar-chart"></span></a></li>
-        <li {% ifequal request.path blog %} class="active" {% endifequal %}><a href="{{ blog }}">Blog<span class="text text-warning">*</span> <span class="fa fa-newspaper-o"></span></a></li>
+        <li {% ifequal request.path blog %} class="active" {% endifequal %}><a href="{{ blog }}">Blog <span class="fa fa-newspaper-o"></span></a></li>
         <li {% ifequal request.path about %} class="active" {% endifequal %}><a href="{{ about }}">About <span class="fa fa-leaf"></span></a></li>
       </ul>
 
@@ -46,7 +46,7 @@
 
         {% if request.user.is_authenticated %}
           {% reports_this_week user as has_notifications %}
-          <li><a href="{{ alerts }}"><span class="fa fa-bell {% if has_notifications %} is-highlighted{% endif %}"></span><span class="text text-warning">*</span></a></li>
+          <li><a href="{{ alerts }}"><span class="fa fa-bell {% if has_notifications %} is-highlighted{% endif %}"></span></a></li>
           <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user"></span> {{ request.user }}<span class="caret"></span></a>
 
