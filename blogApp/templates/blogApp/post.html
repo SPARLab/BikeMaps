@@ -32,6 +32,11 @@
         {% if post.published or request.user.is_superuser %}
           <li class="list-group-item row">
             {% include "blogApp/base_post.html" %}
+
+            <!-- Facebook comments -->
+            <div class="col-xs-12 col-sm-10 col-sm-offset-2">
+              <div class="fb-comments" data-href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ post.get_absolute_url }}" data-numposts="5"></div>
+            </div>
           </li>
         {% endif %}
 
