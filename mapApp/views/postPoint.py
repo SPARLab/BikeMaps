@@ -14,9 +14,6 @@ from mapApp.models import Incident, Hazard, Theft
 from mapApp.forms import IncidentForm, HazardForm, TheftForm
 from mapApp.views import alertUsers, indexContext, pushNotification
 
-import logging
-logger = logging.getLogger(__name__)
-
 @require_POST
 def postIncident(request):
 	incidentForm = IncidentForm(request.POST)
