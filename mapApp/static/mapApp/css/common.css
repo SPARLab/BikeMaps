@@ -166,11 +166,6 @@ body h1{
 	width: 100%;
 }
 
-/* General text alteration from bootstrap defaults*/
-li a {
-	color: #2c3e50;
-}
-
 .metadata small{
 	display: block;
 	margin-left:5px;
