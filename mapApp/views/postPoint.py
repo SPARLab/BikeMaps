@@ -14,6 +14,9 @@ from mapApp.models import Incident, Hazard, Theft
 from mapApp.forms import IncidentForm, HazardForm, TheftForm
 from mapApp.views import alertUsers, indexContext, pushNotification
 
+import logging
+logger = logging.getLogger(__name__)
+
 @require_POST
 def postIncident(request):
 	incidentForm = IncidentForm(request.POST)
@@ -48,6 +51,7 @@ def postIncident(request):
 			})												\
 		))
 	else: # Show form errors
+		incidentForm.data['geom'] = incidentForm.data['geom'].json
 		return render(request, 'mapApp/index.html', indexContext(request, incidentForm=incidentForm))
 
 def getIncidentType(usr_choice):
@@ -93,6 +97,7 @@ def postHazard(request):
 		))
 
 	else: # Show form errors
+		hazardForm.data['geom'] = hazardForm.data['geom'].json
 		return render(request, 'mapApp/index.html', indexContext(request, hazardForm=hazardForm))
 
 @require_POST
@@ -122,13 +127,14 @@ def postTheft(request):
 		messages.success(request, '<strong>Thank you!</strong><br>Your theft marker was successfully added.')
 		return HttpResponseRedirect(reverse('mapApp:index', \
 			kwargs=({										\
-				"lat":str(theft.latlngList()[0]),		\
-				"lng":str(theft.latlngList()[1]),		\
+				"lat":str(theft.latlngList()[0]),			\
+				"lng":str(theft.latlngList()[1]),			\
 				"zoom":str(18)								\
 			})												\
 		))
 
 	else: # Show form errors
+		theftForm.data['geom'] = theftForm.data['geom'].json
 		return render(request, 'mapApp/index.html', indexContext(request, theftForm=theftForm))
 
 # Convert text string to GEOS Geometry object and correct x y coordinates if out range (-180, 180]
