@@ -31,7 +31,7 @@
         <!-- Post -->
         {% if post.published or request.user.is_superuser %}
           <li class="list-group-item row">
-            {% include "blogApp/base_post.html" %}
+            {% include "blogApp/post_template.html" %}
 
             <!-- Facebook comments -->
             <div class="col-xs-12 col-sm-10 col-sm-offset-2">

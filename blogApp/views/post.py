@@ -15,7 +15,7 @@ def view_post(request, slug):
         'post': get_object_or_404(Post, slug=slug),
     }
 
-	return render(request, 'blogApp/post.html', context)
+	return render(request, 'blogApp/view_post.html', context)
 
 def short_url_redirect(request, s62):
 	post_id = hash62.dehash(s62)
@@ -25,7 +25,7 @@ def short_url_redirect(request, s62):
 @user_passes_test(lambda u: u.is_superuser)
 def create_post(request):
 	if request.method == "GET":
-		return render(request, 'blogApp/create.html', {
+		return render(request, 'blogApp/create_post.html', {
 			'blog_post_form': BlogPostForm(),
 			'image_form': UploadImageForm(),
 		})
@@ -40,7 +40,7 @@ def create_post(request):
 			return redirect(new_post)
 
 		else: # not valid, return errors
-			return render(request, 'blogApp/create.html', {
+			return render(request, 'blogApp/create_post.html', {
 				'blog_post_form': form,
 				'image_form': UploadImageForm()
 			})
@@ -50,7 +50,7 @@ def create_post(request):
 def edit_post(request, slug):
 	instance = get_object_or_404(Post.objects.filter(slug=slug))
 
-	if request.method == "GET": return render( request, 'blogApp/create.html', {
+	if request.method == "GET": return render( request, 'blogApp/create_post.html', {
 		'blog_post_form': BlogPostForm(instance=instance),
 		'image_form': UploadImageForm()
 	})
@@ -65,7 +65,7 @@ def edit_post(request, slug):
 			return redirect(new_post)
 
 		else: # not valid, return errors
-			return render(request, 'blogApp/create.html', {
+			return render(request, 'blogApp/create_post.html', {
 				'blog_post_form': form,
 				'image_form': UploadImageForm()
 			})
