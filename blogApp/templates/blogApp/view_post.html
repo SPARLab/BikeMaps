@@ -1,7 +1,7 @@
 {% extends "blogApp/base_blog.html" %}
-{% block title %}{{ post.title }}{% endblock %}
-
 {% load staticfiles %}
+
+{% block title %}{{ post.title }}{% endblock %}
 
 {% block headerCSS %}
   <link href="{% static 'blogApp/css/post.css' %}" rel="stylesheet">

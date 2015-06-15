@@ -1,3 +1,5 @@
+
+from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
@@ -44,7 +46,7 @@ def editShape(request):
 				try:
 					shapeEdited.geom = GEOSGeometry(newGeom)	# edit the object geometry
 				except(ValueError):
-					messages.error(request, '<strong>Error</strong><br>Invalid geometry error.')
+					messages.error(request, '<strong>' + _('Error') + '</strong><br>' + _('Invalid geometry.'))
 					return HttpResponseRedirect(reverse('mapApp:index'))
 				shapeEdited.save()
 
@@ -64,6 +66,6 @@ def editShape(request):
 				shapeEdited.delete() 	# delete the object
 
 		message = str(len(pks)) + ' ' + editType + ('s' if len(pks)>1 else '') + ' successful'
-		messages.success(request, message)
+		messages.success(request, _(message))
 
 	return HttpResponseRedirect(reverse('mapApp:index'))

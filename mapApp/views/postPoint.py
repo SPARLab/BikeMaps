@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
@@ -23,7 +24,7 @@ def postIncident(request):
 	try:
 		incidentForm.data['geom'] = normalizeGeometry(incidentForm.data['geom'])
 	except(ValueError):
-		messages.error(request, '<strong>Error</strong><br>No point was selected for this type of report.')
+		messages.error(request, '<strong>' + _('Error') + '</strong><br>' + _('No point was selected for this type of report.'))
 		return HttpResponseRedirect(reverse('mapApp:index'))
 
 	# Set p_type field to collision, nearmiss, or fall
@@ -39,7 +40,7 @@ def postIncident(request):
                 except:
                         pass
 
-		messages.success(request, '<strong>Thank you!</strong><br>Your incident marker was successfully added.')
+		messages.success(request, '<strong>' + _('Thank you!') + '</strong><br>' + _('Your incident marker was successfully added.'))
 		return HttpResponseRedirect(reverse('mapApp:index', \
 			kwargs=({										\
 				"lat":str(incident.latlngList()[0]),		\
@@ -67,7 +68,7 @@ def postHazard(request):
 	try :
 		hazardForm.data['geom'] = normalizeGeometry(hazardForm.data['geom'])
 	except(ValueError):
-		messages.error(request, '<strong>Error</strong><br>No point was selected for this type of report.')
+		messages.error(request, '<strong>' + _('Error') + '</strong><br>' + _('No point was selected for this type of report.'))
 		return HttpResponseRedirect(reverse('mapApp:index'))
 
 	# Set p_type
@@ -84,7 +85,7 @@ def postHazard(request):
 
 		#messages.success(request, resp.results.message_id)
 
-		messages.success(request, '<strong>Thank you!</strong><br>Your hazard marker was successfully added.')
+		messages.success(request, '<strong>' + _('Thank you!') + '</strong><br>' + _('Your hazard marker was successfully added.'))
 		return HttpResponseRedirect(reverse('mapApp:index', \
 			kwargs=({										\
 				"lat":str(hazard.latlngList()[0]),		\
@@ -106,7 +107,7 @@ def postTheft(request):
 	try:
 		theftForm.data['geom'] = normalizeGeometry(theftForm.data['geom'])
 	except(ValueError):
-		messages.error(request, '<strong>Error</strong><br>No point was selected for this type of report.')
+		messages.error(request, '<strong>' + _('Error') + '</strong><br>' + _('No point was selected for this type of report.'))
 		return HttpResponseRedirect(reverse('mapApp:index'))
 
 	# Set p_type
@@ -121,7 +122,7 @@ def postTheft(request):
                 except:
                         pass
 
-		messages.success(request, '<strong>Thank you!</strong><br>Your theft marker was successfully added.')
+		messages.success(request, '<strong>' + _('Thank you!') + '</strong><br>' + _('Your theft marker was successfully added.'))
 		return HttpResponseRedirect(reverse('mapApp:index', \
 			kwargs=({										\
 				"lat":str(theft.latlngList()[0]),			\

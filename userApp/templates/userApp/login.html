@@ -1,13 +1,13 @@
 {% extends 'mapApp/base.html' %}
 
-{% load staticfiles crispy_forms_tags %}
+{% load staticfiles crispy_forms_tags i18n %}
 
 {% block body %}
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-md-offset-2">
       <div class="page-header">
-        <h1>Login</h1>
+        <h1>{% trans "Login" %}</h1>
       </div>
     </div>
   </div>
@@ -19,8 +19,8 @@
         {{ form|crispy }}
         <button class="btn btn-primary pull-right" type="submit" name="login">Login</button>
       </form>
-      <p><a href="{% url 'userApp:register' %}">Create an account</a></p>
-      <p><a href="{% url 'userApp:password_reset' %}">I don't know my password</a></p>
+      <p><a href="{% url 'userApp:register' %}">{% trans "Create an account" %}</a></p>
+      <p><a href="{% url 'userApp:password_reset' %}">{% trans "I don't know my password" %}</a></p>
     </div>
   </div>
 

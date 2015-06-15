@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.contrib.gis.db import models
 from point import Point
@@ -7,41 +8,41 @@ from point import Point
 # Class for Hazard Reports. Contains all required, non-required, and spatial fields. Setup to allow easy export to a singular shapefile.
 class Hazard(Point):
     HAZARD_CHOICES = (
-        ('Infrastructure', (
-                ('Curb', 'Curb'),
-                ('Island', 'Island'),
-                ('Train track', 'Train track'),
-                ('Pothole', 'Pothole'),
-                ('Road surface', 'Road surface'),
-                ('Poor signage', 'Poor signage'),
-                ('Speed limits', 'Speed limits'),
-                ('Other infrastructure', 'Other infrastructure'),
+        (_('Infrastructure'), (
+                ('Curb', _('Curb')),
+                ('Island', _('Island')),
+                ('Train track', _('Train track')),
+                ('Pothole', _('Pothole')),
+                ('Road surface', _('Road surface')),
+                ('Poor signage', _('Poor signage')),
+                ('Speed limits', _('Speed limits')),
+                ('Other infrastructure', _('Other infrastructure')),
             )
         ),
-        ('Other', (
-                ('Poor visibility', 'Poor visibility'),
-                ('Parked car', 'Parked car'),
-                ('Traffic flow', 'Traffic flow'),
-                ('Driver behaviour', 'Driver behaviour'),
-                ('Cyclist behaviour', 'Cyclist behaviour'),
-                ('Pedestrian behaviour', 'Pedestrian behaviour'),
-                ('Congestion', 'Congestion'),
-                ('Broken glass', 'Broken glass on road'),
-                ('Other', 'Other (Please describe)')
+        (_('Other'), (
+                ('Poor visibility', _('Poor visibility')),
+                ('Parked car', _('Parked car')),
+                ('Traffic flow', _('Traffic flow')),
+                ('Driver behaviour', _('Driver behaviour')),
+                ('Cyclist behaviour', _('Cyclist behaviour')),
+                ('Pedestrian behaviour', _('Pedestrian behaviour')),
+                ('Congestion', _('Congestion')),
+                ('Broken glass', _('Broken glass on road')),
+                ('Other', _('Other (Please describe)'))
             )
         )
     )
 
     BOOLEAN_CHOICES = (
-        ('Y', 'Yes'),
-        ('N', 'No'),
-        ('I don\'t know', 'I don\'t know')
+        ('Y', _('Yes')),
+        ('N', _('No')),
+        ('I don\'t know', _('I don\'t know'))
     )
 
     point = models.OneToOneField(Point, parent_link=True)
 
     i_type = models.CharField(
-        'What type of hazard was it?',
+        _('What type of hazard was it?'),
         max_length=150,
         choices=HAZARD_CHOICES
     )
@@ -50,7 +51,7 @@ class Hazard(Point):
     ############## PERSONAL DETAILS FIELDS
     # Personal details about the participant (all optional)
     regular_cyclist = models.CharField(
-        'Do you bike at least once a week?',
+        _('Do you bike at least once a week?'),
         max_length=30,
         choices=BOOLEAN_CHOICES,
         blank=True,

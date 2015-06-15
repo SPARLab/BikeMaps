@@ -1,8 +1,8 @@
 {% extends "mapApp/base.html" %}
 
-{% load staticfiles %}
+{% load staticfiles i18n %}
 
-{% block title %}About{% endblock %}
+{% block title %}{% trans "About" %}{% endblock %}
 
 {% block headerCSS %}
   <link rel="stylesheet" href="{% static 'mapApp/css/about.css' %}">
@@ -18,50 +18,53 @@
 
         <div class="row">
             <div class="jumbotron about">
-              <h1>About</h1>
-                <p>At BikeMaps we love biking as much as we love maps! Our goal is to map your cycling experience to make biking safer. You know your local cycling trouble spots and we want you to map them. Your knowledge of cycling safety, hazards, and even bike thefts will be analyzed using GIS and statistics to identify hot spots of cycling safety, risk, and crime.  We are constantly updating our maps and technology, so send us feedback.  And stay tuned for updated safety maps generated from YOUR biking experience.</p>
+              <h1>{% trans "About" %}</h1>
+                <p>{% trans "At BikeMaps we love biking as much as we love maps! Our goal is to map your cycling experience to make biking safer. You know your local cycling trouble spots and we want you to map them. Your knowledge of cycling safety, hazards, and even bike thefts will be analyzed using GIS and statistics to identify hot spots of cycling safety, risk, and crime.  We are constantly updating our maps and technology, so send us feedback.  And stay tuned for updated safety maps generated from YOUR biking experience." %}"</p>
             </div>
 
         </div>
 
         <div class="row">
             <div class="col-xs-12">
-                <h1>Contact</h1>
-                <p>Do you have questions, comments, or feedback about bikemaps.org? We would love to hear from you!</p>
+                <h1>{% trans "Contact" %}</h1>
+                <p>{% trans "Do you have questions, comments, or feedback about bikemaps.org? We would love to hear from you!" %}</p>
                 <p><a class="btn btn-primary btn-md" data-toggle="modal" data-target="#emailForm">Contact us!</a></p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-xs-12">
-                <h1>FAQ</h1>
-                <p><strong>Why are you collecting this information?</strong>
-                    <br>Only ~30% of bike collision data are collected and there is no centralized reporting system. BikeMaps.org is a unique tool that let's citizens build a database by mapping their riding experience.</p>
+                <h1>{% trans "FAQ" %}</h1>
+                <p><strong>{% trans "Why are you collecting this information?" %}</strong>
+                    <br>{% trans "Only ~30% of bike collision data are collected and there is no centralized reporting system. BikeMaps.org is a unique tool that let's citizens build a database by mapping their riding experience." %}"</p>
 
-                <p><strong>What will you do with the data?</strong>
-                    <br>The BikeMaps.org team will analyze data to determine factors that influence cycling safety. We also have plans to build tools to help people plan safer routes and to transfer these to planners in your area.</p>
+                <p><strong>{% trans "What will you do with the data?" %}</strong>
+                    <br>{% trans "The BikeMaps.org team will analyze data to determine factors that influence cycling safety. We also have plans to build tools to help people plan safer routes and to transfer these to planners in your area." %}"</p>
 
-                <p><strong>How can citizens and municipalities monitor areas of interest to them?</strong>
-                    <br>By <a href="{% url 'userApp:register' %}">registering</a> and <a href="{% url 'userApp:login' %}">logging in</a> you will be able to trace a riding or management region of interest using the <span class="poly-icon"></span> tool. Each time you login you will be alerted to recent mapping in your region by the <span class="fa fa-bell"></span> tool.</p>
+                <p><strong>{% trans "How can citizens and municipalities monitor areas of interest to them?" %}</strong>
+                    <br>
+                    {% url 'userApp:register' as register_anchor and url 'userApp:login' as login_anchor %}
+                    {% blocktrans %}By <a href="{{ register_anchor|safe }}">registering</a> and <a href="{{ login_anchor|safe }}">logging in</a> you will be able to trace a riding or management region of interest using the <span class="poly-icon"></span> tool. Each time you login you will be alerted to recent mapping in your region by the <span class="fa fa-bell"></span> tool.{% endblocktrans %}
+                    </p>
 
-                <p><strong>Where do you get the rider volume data?</strong>
-                    <br>The data on where cyclists are riding has been provided by Strava.</p>
+                <p><strong>{% trans "Where do you get the rider volume data?" %}</strong>
+                    <br>{% trans "The data on where cyclists are riding has been provided by Strava." %}</p>
 
-                <p><strong>Isn’t Strava data is only where recreational cyclists are riding?</strong>
-                    <br>Strava labs estimates that 40% of its rider data are commuter traffic, though this likely varies by region.</p>
+                <p><strong>{% trans "Isn’t Strava data is only where recreational cyclists are riding?" %}"</strong>
+                    <br>{% trans "Strava labs estimates that 40% of its rider data are commuter traffic, though this likely varies by region." %}</p>
 
-                <p><strong>Do you have an App?</strong>
-                    <br>We are in the process of developing an App and look forward to releasing the Android version and June 2015 and the IOS version in July 2015.</p>
+                <p><strong>{% trans "Do you have an App?" %}</strong>
+                    <br>{% trans "We are in the process of developing an App and look forward to releasing the Android version and June 2015 and the IOS version in July 2015." %}</p>
 
-                <p><strong>How can I get involved?</strong>
-                    <br>You can share the website on social media, host a mapping demo night, or volunteer to do GIS or development. If you own a bike store or small business, you can advertise BikeMaps.org. We are also on the lookout for more research funding to further develop the technology and expand the study. Or, perhaps your group has GIS data that may improve BikeMaps.org.</p>
+                <p><strong>{% trans "How can I get involved?" %}</strong>
+                    <br>{% trans "You can share the website on social media, host a mapping demo night, or volunteer to do GIS or development. If you own a bike store or small business, you can advertise BikeMaps.org. We are also on the lookout for more research funding to further develop the technology and expand the study. Or, perhaps your group has GIS data that may improve BikeMaps.org." %}</p>
             </div>
         </div>
 
         <div class="row">
           <div class="col-xs-12">
-              <h1>Publications</h1>
-              <h4>Check out our published work for a more in depth description of our project</h4>
+              <h1>{% trans "Publications" %}</h1>
+              <h4>{% trans "Check out our published work for a more in depth description of our project" %}</h4>
           </div>
           <div class="col-xs-12">
             <ul class="list-group apa-list">
@@ -78,7 +81,7 @@
 
         <div class="row" id ="sponsors">
             <div class="col-xs-12">
-                <h1>Sponsors</h1>
+                <h1>{% trans "Sponsors" %}</h1>
             </div>
             <div class="vcenter col-xs-6 col-md-4">
                 <div class="frame">
@@ -132,7 +135,7 @@
 
         <div class="row" id="supporters">
             <div class="col-xs-12">
-                <h1>Supporters</h1>
+                <h1>{% trans "Supporters" %}</h1>
             </div>
 
             <div class="vcenter col-xs-4 col-md-3">
@@ -196,57 +199,57 @@
 
         <div class="row">
             <div class="col-xs-12">
-                <h1>Team</h1>
+                <h1>{% trans "Team" %}</h1>
             </div>
 
             <div class="col-xs-12 col-sm-6 text-center">
                 <h3>Dr. Trisalyn Nelson</h3>
-                <h4><em>Program Director</em></h4>
+                <h4><em>{% trans "Program Director" %}</em></h4>
                 <img src="{% static 'mapApp/images/team_photos/trisalyn.jpg' %}" alt="Trisalyn Nelson" class="img-responsive img-circle center-block" height="200" width="200">
                 <div class="col-xs-12">
-                  <p>Trisalyn is the head of the Spatial Pattern Analysis and Research (SPAR) Lab, a Lansdowne Chair in Spatial Sciences, and an associate professor in the Department of Geography at the University of Victoria. From mountain pine beetle to grizzly bears, Trisalyn and SPAR Lab have studied the spatial patterns of an increasingly large variety of data. As a mom and an avid cyclist, Trisalyn is hoping that BikeMaps will contribute to safer cycling conditions. </p>
+                  <p>{% trans "Trisalyn is the head of the Spatial Pattern Analysis and Research (SPAR) Lab, a Lansdowne Chair in Spatial Sciences, and an associate professor in the Department of Geography at the University of Victoria. From mountain pine beetle to grizzly bears, Trisalyn and SPAR Lab have studied the spatial patterns of an increasingly large variety of data. As a mom and an avid cyclist, Trisalyn is hoping that BikeMaps will contribute to safer cycling conditions." %} </p>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 text-center">
                 <h3>Dr. Meghan Winters</h3>
-                <h4><em>Metro Vancouver Research Lead</em></h4>
+                <h4><em>{% trans "Metro Vancouver Research Lead" %}</em></h4>
                 <img src="{% static 'mapApp/images/team_photos/meghan.jpg'%}" alt="Meghan Winters" class="img-responsive img-circle center-block" height="200" width="200">
                 <div class="col-xs-12">
-                  <p>Health and cycling expert, Dr. Meghan Winters, is an assistant professor in the Faculty of Health Sciences at Simon Fraser University. She works with the <a href="http://cyclingincities.spph.ubc.ca" target="_blank">Cycling in Cities</a> team and has research projects on public bikeshare, cycling safety, and how changes in the built environment affect the health and mobility of older adults and youth. Meghan will be heading BikeMaps.org’s efforts in Metro Vancouver.</p>
+                  <p>{% trans "Health and cycling expert, Dr. Meghan Winters, is an assistant professor in the Faculty of Health Sciences at Simon Fraser University. She works with the <a href='http://cyclingincities.spph.ubc.ca' target='_blank'>Cycling in Cities</a> team and has research projects on public bikeshare, cycling safety, and how changes in the built environment affect the health and mobility of older adults and youth. Meghan will be heading BikeMaps.org’s efforts in Metro Vancouver." %}</p>
                 </div>
             </div>
             <div class="clearfix hidden-xs"></div>
             <div class="col-xs-12 col-sm-6 text-center">
                 <h3>Karen Laberee, MSc.</h3>
-                <h4><em>Project Manager, Communication and Outreach</em></h4>
+                <h4><em>{% trans "Project Manager, Communication and Outreach" %}</em></h4>
                 <img src="{% static 'mapApp/images/team_photos/karen.jpg' %}" alt="Karen Laberee" class="img-responsive img-circle center-block" height="200" width="200">
                 <div class="col-xs-12">
-                  <p>Karen has been at SPAR Lab since 2007, working on a wide variety of projects. She enjoys writing and editing for SPAR. In her personal life, Karen has gained considerable experience volunteering on numerous boards that support amateur sports or community initiatives. In addition to being mom to a bike-crazy family, Karen can be found running the trails around Victoria.</p>
+                  <p>{% trans "Karen has been at SPAR Lab since 2007, working on a wide variety of projects. She enjoys writing and editing for SPAR. In her personal life, Karen has gained considerable experience volunteering on numerous boards that support amateur sports or community initiatives. In addition to being mom to a bike-crazy family, Karen can be found running the trails around Victoria." %}</p>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 text-center">
                 <h3>Taylor Denouden, BSc.</h3>
-                <h4><em>Developer</em></h4>
+                <h4><em>{% trans "Developer" %}</em></h4>
                 <img src="{% static 'mapApp/images/team_photos/taylor.jpg' %}" alt="Taylor Denouden" class="img-responsive img-circle center-block" height="200" width="200">
                 <div class="col-xs-12">
-                  <p>Taylor is a recent graduate of the Geomatics program at the University of Victoria. Taylor has been the developer extraordinaire behind the BikeMaps website since May 2014. Having traded the Rocky Mountains for the Pacific Coast, Taylor enjoys biking year round without snow tires.</p>
+                  <p>{% trans "Taylor is a recent graduate of the Geomatics program at the University of Victoria. Taylor has been the developer extraordinaire behind the BikeMaps website since May 2014. Having traded the Rocky Mountains for the Pacific Coast, Taylor enjoys biking year round without snow tires." %}</p>
                 </div>
             </div>
             <div class="clearfix hidden-xs"></div>
             <div class="col-xs-12 col-sm-6 text-center">
                 <h3>Ben Jestico, BSc.</h3>
-                <h4><em>MSc. Student</em></h4>
+                <h4><em>{% trans "MSc. Student" %}</em></h4>
                 <img src="{% static 'mapApp/images/team_photos/ben.jpg' %}" alt="Ben Jestico" class="img-responsive img-circle center-block" height="200" width="200">
                 <div class="col-xs-12">
-                  <p>Ben is a UVic Geography graduate who began his MSc in SPAR Lab in September 2014. Ben will be using the data collected on BikeMaps.org to analyze hotspots of risk and other cycling safety patterns in the Capital Regional District. Ben has been instrumental in promoting the BikeMaps.org project at public events. When not cycling or at SPAR, Ben can often be found on a soccer field.</p>
+                  <p>{% trans "Ben is a UVic Geography graduate who began his MSc in SPAR Lab in September 2014. Ben will be using the data collected on BikeMaps.org to analyze hotspots of risk and other cycling safety patterns in the Capital Regional District. Ben has been instrumental in promoting the BikeMaps.org project at public events. When not cycling or at SPAR, Ben can often be found on a soccer field." %}</p>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 text-center">
                 <h3>Darren Boss, BSc.</h3>
-                <h4><em>Developer</em></h4>
+                <h4><em>{% trans "Developer" %}</em></h4>
                 <img src="{% static 'mapApp/images/team_photos/darren.jpg' %}" alt="Karen Laberee" class="img-responsive img-circle center-block" height="200" width="200">
                 <div class="col-xs-12">
-                  <p>Darren is a UVic Geomatics graduate who will be beginning his MSc at SPAR Lab in 2015. Darren has been hard at work designing and programming BikeMaps mobile applications for both iOS and Android, and is looking forward to analyzing some of the data produced by BikeMaps users. When not coding away, Darren enjoys mountain biking all over Vancouver Island.</p>
+                  <p>{% trans "Darren is a UVic Geomatics graduate who will be beginning his MSc at SPAR Lab in 2015. Darren has been hard at work designing and programming BikeMaps mobile applications for both iOS and Android, and is looking forward to analyzing some of the data produced by BikeMaps users. When not coding away, Darren enjoys mountain biking all over Vancouver Island." %}</p>
                 </div>
             </div>
         </div>

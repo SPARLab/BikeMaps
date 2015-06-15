@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext as trans
 from django import forms
 
 from crispy_forms.helper import FormHelper
@@ -18,23 +19,24 @@ class GeofenceForm(forms.ModelForm):
 
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="geofenceForm">Receive alerts for the selected area?</h4>
+                                <h4 class="modal-title" id="geofenceForm">{0}</h4>
                             </div>
 
-                            <form action="{% url 'mapApp:postAlertPolygon' %}" method="post" class="form">
-                                {% csrf_token %}
+                            <form action="{{% url 'mapApp:postAlertPolygon' %}}" method="post" class="form">
+                                {{% csrf_token %}}
                                 <div class="modal-body">
-        """),
+            """.format(trans("Receive alerts for the selected area?"))
+        ),
 
 
 
         HTML("""<div class="form-group">
-                    <label class="col-xs-6 control-label">Reports will be emailed to you at:</label>
+                    <label class="col-xs-6 control-label">{0}"</label>
                     <div class="col-xs-6">
                         <p class="form-control-static">{{ request.user.email }}</p>
                     </div>
-                </div>"""),
-        HTML("""<br><div class="col-xs-12"><em>Address can be changed in user preferences.</em></div>"""),
+                </div>""".format(trans("Reports will be emailed to you at:"))),
+        HTML("""<br><div class="col-xs-12"><em>{0}"</em></div>""".format(trans("Address can be changed in user preferences."))),
 
 
         Field('user', type="hidden", id="user"), # Coords passed after clicks on map
@@ -47,15 +49,15 @@ class GeofenceForm(forms.ModelForm):
         HTML("""                </div>
 
                                 <div class="modal-footer">
-                                    <button type="reset" class="btn btn-default" onclick="$('#geofenceForm').modal('hide');$('.modal-backdrop').hide();">No thanks</button>
-                                    <button type="submit" class="btn btn-primary">Yes please!</button>
+                                    <button type="reset" class="btn btn-default" onclick="$('#geofenceForm').modal('hide');$('.modal-backdrop').hide();">{0}</button>
+                                    <button type="submit" class="btn btn-primary">{1}</button>
                                 </div>
 
                             </form>
                         </div>
                     </div>
                 </div>
-        """)
+        """.format(trans("No thanks"), trans("Yes please!")))
     )
 
     class Meta:

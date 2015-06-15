@@ -1,8 +1,7 @@
 {% extends "mapApp/base.html" %}
-{% block title %}Create a new post{% endblock %}
+{% load staticfiles crispy_forms_tags markdown_deux_tags i18n %}
 
-{% load staticfiles crispy_forms_tags markdown_deux_tags %}
-
+{% block title %}{% trans "Create a new post" %}{% endblock %}
 
 {% block headerCSS %}
   <link href="{% static 'blogApp/css/create.css' %}" rel="stylesheet">
@@ -13,7 +12,7 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <h2>Create a new blog post</h2>
+        <h2>{% trans "Create a new blog post" %}</h2>
         {% crispy blog_post_form %}
       </div>
     </div>
@@ -25,7 +24,7 @@
             <div class="panel-heading" role="tab" id="markdownCheatsheet">
               <h4 class="panel-title">
                 <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                  Markdown Cheatsheet <span class="caret"></span>
+                  {% trans "Markdown Cheatsheet" %} <span class="caret"></span>
                 </a>
               </h4>
             </div>
@@ -47,7 +46,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Upload an image to the server</h4>
+          <h4 class="modal-title" id="myModalLabel">{% trans "Upload an image to the server" %}</h4>
         </div>
         <form id="upload-image-form" action="{% url 'blogApp:upload_image' %}" method="POST" role="form" enctype="multipart/form-data">
           <div class="modal-body">

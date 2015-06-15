@@ -1,9 +1,8 @@
 {% extends "mapApp/base.html" %}
-{% load staticfiles %}
-{% load geojson_tags %}
+{% load staticfiles geojson_tags i18n %}
 
 {% block title %}
-  BikeMaps Recent Reports
+{% trans "BikeMaps Recent Reports" %}
 {% endblock %}
 
 {% block headerCSS %}

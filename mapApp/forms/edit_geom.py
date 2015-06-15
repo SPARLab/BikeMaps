@@ -13,14 +13,14 @@ class EditForm(forms.Form):
         required = True,
         widget = forms.HiddenInput(attrs={'id': 'editPk'})
     )
-    
+
     editType = forms.CharField(
         label = "editType",
         max_length=10,
         required = True,
         widget = forms.HiddenInput(attrs={'id': 'editType'})
     )
-    
+
     editGeom = forms.CharField(
         label = "Geom",
         required = False,

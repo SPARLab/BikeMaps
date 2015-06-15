@@ -1,11 +1,14 @@
 from django.conf.urls import patterns, include, url
+from django.conf.urls.i18n import i18n_patterns
 from django.conf import settings
 from django.contrib import admin
 from django.views.generic.base import TemplateView
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include('mapApp.urls', namespace="mapApp")),
+    url(r'^user/', include('userApp.urls', namespace="userApp")),
+    url(r'^blog/', include('blogApp.urls', namespace="blogApp")),
 
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', 'rest_framework.authtoken.views.obtain_auth_token'),
@@ -14,11 +17,16 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('allauth.urls')),
     url(r'^accounts/', include('django.contrib.auth.urls')),
 
+    url(r'^admin/', include(admin.site.urls)),
+
+    (r'^robots.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+)
+
+# Add internationalization url patters to these pages
+urlpatterns += i18n_patterns('',
     url(r'^', include('mapApp.urls', namespace="mapApp")),
     url(r'^user/', include('userApp.urls', namespace="userApp")),
     url(r'^blog/', include('blogApp.urls', namespace="blogApp")),
-
-    (r'^robots.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'))
 )
 
 if settings.DEBUG:

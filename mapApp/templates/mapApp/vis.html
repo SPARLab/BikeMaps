@@ -1,8 +1,8 @@
 {% extends "mapApp/base.html" %}
-{% load staticfiles geojson_tags cache %}
+{% load staticfiles geojson_tags cache i18n %}
 
 {% block title %}
-Bikemaps Data Visualization
+{% trans "Bikemaps Data Visualization" %}
 {% endblock %}
 
 {% block headerCSS %}
@@ -26,7 +26,7 @@ Bikemaps Data Visualization
       <div class="col-xs-12 col-sm-12 col-md-5">
         <div class="col-xs-12 col-sm-6 col-md-12">
           <div id="barTypes" class="text-center center-chart">
-            <strong>Total reports by type</strong>
+            <strong>{% trans "Total reports by type" %}</strong>
             <a class='reset btn btn-danger btn-xs' href='javascript:barTypes.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
             <br>
           </div>
@@ -34,7 +34,7 @@ Bikemaps Data Visualization
 
         <div class="col-xs-12 col-sm-6 col-md-12">
           <div id="barWeek" class="text-center center-chart">
-            <strong>Reports summary by weekday</strong>
+            <strong>{% trans "Reports summary by weekday" %}</strong>
             <a class='reset btn btn-danger btn-xs' href='javascript:barWeek.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
             <br>
           </div>
@@ -45,7 +45,7 @@ Bikemaps Data Visualization
     <div class="row">
       <div class="hidden-xs col-sm-12 col-md-12">
         <div id="barDate" class="text-center center-chart">
-            <strong>Incidents per day for the past year</strong>
+            <strong>{% trans "Incidents per day for the past year" %}</strong>
             <a class='reset btn btn-danger btn-xs' href='javascript:barDate.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
             <br>
         </div>
@@ -53,7 +53,7 @@ Bikemaps Data Visualization
 
       <div class="hidden col-xs-12 col-sm-12 col-md-6">
         <div id="delayRows" class="text-center center-chart">
-            <strong>Average days of delay before incident reported by report type</strong>
+            <strong>{% trans "Average days of delay before incident reported by report type" %}</strong>
             <a class='reset btn btn-danger btn-xs' href='javascript:delayRows.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
             <br>
         </div>

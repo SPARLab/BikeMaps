@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
 from django.contrib.gis.db import models
@@ -18,7 +18,7 @@ class AlertNotification(models.Model):
         (THEFT, _("Theft")),
         (UNDEFINED, _("Undefined"))
     )
-    
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("user"))
 
     date = models.DateTimeField(auto_now_add=True)
@@ -47,7 +47,7 @@ class AlertNotification(models.Model):
     @property
     def is_hazard(self):
         return self.action == self.HAZARD
-    
+
     @property
     def is_theft(self):
         return self.action == self.THEFT
