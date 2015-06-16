@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 
 	# Called from user notifications list
 	url(r'^read_alert/(?P<type>\w+)/(?P<alertID>\d+)/$', views.readAlertPoint, name='readAlertPoint'),
+	url(r'^crd/$', views.editHazards, name='editHazards'),
 
 	# Called upon geometry object creation on map
 	url(r'^incident_submit/$', views.postIncident, name='postIncident'),

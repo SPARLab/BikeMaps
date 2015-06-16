@@ -1,0 +1,96 @@
+{% extends "mapApp/base.html" %}
+
+{% load staticfiles geojson_tags i18n %}
+
+{% block title %}
+{% trans "BikeMaps Hazard Tool" %}
+{% endblock %}
+
+{% block headerCSS %}
+  <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.css">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+  <style media="screen">
+    .map-col{
+      height: 100%;
+      padding: 0 !important;
+    }
+
+    #map {
+      height: 100%;
+      margin-top: 0px;
+    }
+
+    #data li{
+      padding-top: 5px;
+    }
+
+    .highlight{
+      background: #ddd;
+    }
+
+    .center-chart{
+      width: 100%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 8px;
+    }
+
+    #i-type-bar g.axis.x text{
+      text-anchor: start !important;
+      transform: rotate(45deg) translate(7px, -8px);
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  <div class="container-fluid" style="height: 100%;">
+    <div class="row" style="height: 100%;">
+      <div class="col-xs-6 map-col">
+        <div id="map"></div>
+      </div>
+      <div class="col-xs-6" style="height: 100%; overflow: scroll;">
+        <div class="col-xs-6">
+          <div id="status-pie"class="text-center center-chart">
+            <strong>{% trans "Status" %}</strong>
+            <a class='reset btn btn-danger btn-xs' href='javascript:statusPie.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+            <br>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <div id="year-pie"class="text-center center-chart">
+            <strong>{% trans "Year reported" %}</strong>
+            <a class='reset btn btn-danger btn-xs' href='javascript:yearPie.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+            <br>
+          </div>
+        </div>
+        <div class="col-xs-12">
+          <div id="i-type-bar"class="text-center center-chart">
+            <strong>{% trans "Type of Incident" %}</strong>
+            <a class='reset btn btn-danger btn-xs' href='javascript:iTypeBar.filterAll();dc.redrawAll();' style='display: none;'>reset</a>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block footerJS %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.11/crossfilter.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+  <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+  <script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}" charset="UTF-8"></script>
+  <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
+  <script src="{% static 'mapApp/js/map.js' %}" charset="utf-8"></script>
+  <script>
+    var hazards = {{ hazards|geojsonfeature:"i_type,report_date,time,details,pk,hazard_fixed"|safe }};
+    var geofences = {{ geofences|geojsonfeature|safe}}
+  </script>
+  <script src="{% static 'mapApp/js/edit_hazards.js' %}" charset="utf-8"></script>
+{% endblock %}

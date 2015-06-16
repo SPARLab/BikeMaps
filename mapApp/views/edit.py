@@ -1,15 +1,14 @@
-
 from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect, JsonResponse
 from django.core.urlresolvers import reverse
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.contrib import messages
 from django.contrib.gis.geos import GEOSGeometry
 
 # Decorators
 from django.views.decorators.http import require_POST
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 from mapApp.models import Incident, Hazard, Theft, AlertArea, IncidentNotification, HazardNotification, TheftNotification
 
@@ -45,3 +44,18 @@ def editShape(request):
 		return JsonResponse({'success':True})
 	else:
 		return JsonResponse({'success':False})
+
+@user_passes_test(lambda u: u.is_superuser)
+def editHazards(request):
+	rois = AlertArea.objects.filter(user=request.user.id)
+	hazards = Hazard.objects.all()
+	hazardsInPoly = Hazard.objects.none()
+	# Find intersecting points
+	for g in rois:
+		hazardsInPoly = hazardsInPoly | hazards.filter(geom__intersects=g.geom)
+
+	context = {
+		'hazards': hazardsInPoly,
+		'geofences': rois
+	}
+	return render(request, 'mapApp/edit_hazards.html', context)
