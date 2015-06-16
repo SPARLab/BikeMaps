@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-11 15:54-0700\n"
+"POT-Creation-Date: 2015-06-16 11:17-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -787,6 +787,7 @@ msgstr ""
 #: .\mapApp\templates\mapApp\about.html:5
 #: .\mapApp\templates\mapApp\about.html:21
 #: .\mapApp\templates\mapApp\map_legend.html:11
+#: .\mapApp\templates\mapApp\navbar.html:40
 msgid "About"
 msgstr ""
 
@@ -995,6 +996,10 @@ msgid ""
 "Darren enjoys mountain biking all over Vancouver Island."
 msgstr ""
 
+#: .\mapApp\templates\mapApp\edit_hazards.html:6
+msgid "BikeMaps Hazard Tool"
+msgstr ""
+
 #: .\mapApp\templates\mapApp\ethics.html:4
 #: .\mapApp\templates\mapApp\ethics.html:8
 msgid "Terms and Conditions"
@@ -1065,17 +1070,17 @@ msgstr ""
 msgid "What kind of report is this?"
 msgstr ""
 
-#: .\mapApp\templates\mapApp\incident_form.html:46
+#: .\mapApp\templates\mapApp\incident_form.html:47
 msgid ""
 "I have read and understand the <a href='{{ terms_url }}' target=_blank> "
 "terms and conditions"
 msgstr ""
 
-#: .\mapApp\templates\mapApp\incident_form.html:49
+#: .\mapApp\templates\mapApp\incident_form.html:51
 msgid "Cancel"
 msgstr ""
 
-#: .\mapApp\templates\mapApp\incident_form.html:50
+#: .\mapApp\templates\mapApp\incident_form.html:52
 msgid "Submit"
 msgstr ""
 
@@ -1148,6 +1153,67 @@ msgstr ""
 
 #: .\mapApp\templates\mapApp\map_legend.html:70
 msgid "Other Cycling Route"
+msgstr ""
+
+#: .\mapApp\templates\mapApp\navbar.html:25
+msgid "Toggle navigation"
+msgstr ""
+
+#: .\mapApp\templates\mapApp\navbar.html:37
+msgid "Home"
+msgstr ""
+
+#: .\mapApp\templates\mapApp\navbar.html:38
+msgid "Visualization"
+msgstr ""
+
+#: .\mapApp\templates\mapApp\navbar.html:39
+msgid "Blog"
+msgstr ""
+
+#: .\mapApp\templates\mapApp\navbar.html:54
+msgid "Profile"
+msgstr ""
+
+#: .\mapApp\templates\mapApp\navbar.html:55
+msgid "Log out"
+msgstr ""
+
+#: .\mapApp\templates\mapApp\navbar.html:59
+msgid "Admin options"
+msgstr ""
+
+#: .\mapApp\templates\mapApp\navbar.html:60
+msgid "Admin"
+msgstr ""
+
+#: .\mapApp\templates\mapApp\navbar.html:61
+msgid "Export Points"
+msgstr ""
+
+#: .\mapApp\templates\mapApp\navbar.html:62
+msgid "Export Incidents"
+msgstr ""
+
+#: .\mapApp\templates\mapApp\navbar.html:63
+msgid "Export Hazards"
+msgstr ""
+
+#: .\mapApp\templates\mapApp\navbar.html:64
+msgid "Export Thefts"
+msgstr ""
+
+#: .\mapApp\templates\mapApp\navbar.html:70
+msgid "Guest"
+msgstr ""
+
+#: .\mapApp\templates\mapApp\navbar.html:73
+msgid "Log in"
+msgstr ""
+
+#: .\mapApp\templates\mapApp\navbar.html:74
+#: .\mapApp\templates\mapApp\util\tips.html:22
+msgid "Register"
 msgstr ""
 
 #: .\mapApp\templates\mapApp\recent_reports.html:5
@@ -1233,10 +1299,6 @@ msgstr ""
 msgid "Login to your account"
 msgstr ""
 
-#: .\mapApp\templates\mapApp\util\tips.html:22
-msgid "Register"
-msgstr ""
-
 #: .\mapApp\templates\mapApp\util\tips.html:23
 msgid "Login"
 msgstr ""
@@ -1275,7 +1337,7 @@ msgid "Average days of delay before incident reported by report type"
 msgstr ""
 
 #: .\mapApp\views\about.py:32 .\mapApp\views\postPoint.py:43
-#: .\mapApp\views\postPoint.py:87 .\mapApp\views\postPoint.py:123
+#: .\mapApp\views\postPoint.py:88 .\mapApp\views\postPoint.py:125
 msgid "Thank you!"
 msgstr ""
 
@@ -1291,9 +1353,9 @@ msgstr ""
 msgid "Illegal characters found."
 msgstr ""
 
-#: .\mapApp\views\alerts.py:28 .\mapApp\views\editShape.py:49
-#: .\mapApp\views\postPoint.py:27 .\mapApp\views\postPoint.py:70
-#: .\mapApp\views\postPoint.py:108
+#: .\mapApp\views\alerts.py:28 .\mapApp\views\edit.py:48
+#: .\mapApp\views\editShape.py:49 .\mapApp\views\postPoint.py:27
+#: .\mapApp\views\postPoint.py:71 .\mapApp\views\postPoint.py:110
 msgid "Error"
 msgstr ""
 
@@ -1305,12 +1367,12 @@ msgstr ""
 msgid "You will now receive alerts for the area traced."
 msgstr ""
 
-#: .\mapApp\views\editShape.py:49
+#: .\mapApp\views\edit.py:48 .\mapApp\views\editShape.py:49
 msgid "Invalid geometry."
 msgstr ""
 
-#: .\mapApp\views\postPoint.py:27 .\mapApp\views\postPoint.py:70
-#: .\mapApp\views\postPoint.py:108
+#: .\mapApp\views\postPoint.py:27 .\mapApp\views\postPoint.py:71
+#: .\mapApp\views\postPoint.py:110
 msgid "No point was selected for this type of report."
 msgstr ""
 
@@ -1318,10 +1380,10 @@ msgstr ""
 msgid "Your incident marker was successfully added."
 msgstr ""
 
-#: .\mapApp\views\postPoint.py:87
+#: .\mapApp\views\postPoint.py:88
 msgid "Your hazard marker was successfully added."
 msgstr ""
 
-#: .\mapApp\views\postPoint.py:123
+#: .\mapApp\views\postPoint.py:125
 msgid "Your theft marker was successfully added."
 msgstr ""
