@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-11 15:54-0700\n"
+"POT-Creation-Date: 2015-06-16 11:17-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,7 +72,6 @@ msgstr ""
 
 #: .\spirit\utils\ratelimit\decorators.py:22
 #, python-format
-#| msgid "Too many submissions, wait %(time)s."
 msgid "Too many submissions, wait %(time)s."
 msgstr ""
 
@@ -186,6 +185,5 @@ msgstr ""
 
 #: .\spirit\utils\user\email.py:57
 #, python-format
-#| msgid "New notification: %(topic_name)s"
 msgid "New notification: %(topic_name)s"
 msgstr ""
