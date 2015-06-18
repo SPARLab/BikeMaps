@@ -62,7 +62,7 @@ var all = xf.groupAll(),
     countPerHour = hourDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount()),
     countPerDay = dateDimension.group().reduceCount();
 
-dc.dataCount('#dc-data-count')
+dc.dataCount('.dc-data-count')
   .dimension(xf)
   .group(all);
 
