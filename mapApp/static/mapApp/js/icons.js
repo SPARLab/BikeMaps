@@ -3,9 +3,9 @@ var iconColors = {
     "collision": "#d63e2a",
     "nearmiss": "#f3952f",
     "hazard": "#72b026",
-    "theft": "#a3a3a3",
+    "theft": "#575757",
     "official": "#436978",
-    "undefined": "#999999",
+    "undefined": "#a3a3a3",
     "geocode": "#a23336",
     "location": "#a23336"
 };
@@ -31,7 +31,7 @@ var icons = {
     color: getColor("nearmiss")
   }),
   "bikeGreyIcon": L.AwesomeMarkers.icon({
-    icon: "fa-bicycle",
+    icon: "fa-crosshairs",
     markerColor: 'lightblue',
     iconColor: 'black',
     color: getColor("undefined")
@@ -44,8 +44,8 @@ var icons = {
   }),
   "theftIcon": L.AwesomeMarkers.icon({
     icon: "fa-bicycle",
-    markerColor: 'lightgray',
-    iconColor: 'black',
+    markerColor: 'gray',
+    iconColor: '#cbcbcb',
     color: getColor("theft")
   }),
   "officialIcon": L.AwesomeMarkers.icon({
