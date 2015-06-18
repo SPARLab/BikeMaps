@@ -8,8 +8,8 @@ var labels = {
 // Define scales
 // map p_type to appropriate colors
 var colorScale = d3.scale.ordinal()
-  .domain(["collision", "nearmiss", "hazard", "theft"])
-  .range([iconColors.collision, iconColors.nearmiss, iconColors.hazard, iconColors.theft]);
+    .domain(["collision", "nearmiss", "hazard", "theft"])
+    .range([iconColors.collision, iconColors.nearmiss, iconColors.hazard, iconColors.theft]);
 var weekdayScale = d3.scale.quantize()
     .domain([0,1,2,3,4,5,6])
     .range(moment.weekdaysShort());
@@ -169,7 +169,7 @@ var map = L.map('map', {
   minZoom: 1,
   scrollWheelZoom: true,
   worldCopyJump: true,
-  layers: [Mapnik_BW, heatLayer]
+  layers: [MapQuestOpen_OSM, heatLayer]
 }).on('load', changeMap())
   .on('moveend', mapFilter);
 
@@ -199,7 +199,6 @@ function mapFilter(){
 if (alertAreas.getLayers().length > 0) {
   map.fitBounds(alertAreas.getBounds());
 }
-
 
 dc.renderAll();
 dc.redrawAll();
