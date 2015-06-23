@@ -7,5 +7,5 @@ from exportData import getPoints, getIncidents, getHazards, getThefts
 from termsAndConditions import termsAndConditions
 from vis import vis
 from recentReports import recentReports
-from restApi import CollisionList, NearmissList, HazardList, TheftList, OfficialList, UserList, UserDetail, AlertAreaList, AlertAreaDetail, GCMDeviceList, GCMDeviceDetail
+from restApi import CollisionList, NearmissList, HazardList, TheftList, OfficialList, UserList, UserDetail, AlertAreaList, AlertAreaDetail, GCMDeviceList, GCMDeviceDetail, APNSDeviceList, APNSDeviceDetail
 from pushNotification import pushNotification

@@ -1,5 +1,5 @@
 from mapApp.models import Incident, Hazard, Theft, Official, AlertArea
-from mapApp.serializers import IncidentSerializer, HazardSerializer, TheftSerializer, OfficialSerializer, AlertAreaSerializer, UserSerializer, GCMDeviceSerializer
+from mapApp.serializers import IncidentSerializer, HazardSerializer, TheftSerializer, OfficialSerializer, AlertAreaSerializer, UserSerializer, GCMDeviceSerializer, APNSDeviceSerializer
 from django.http import Http404
 from django.contrib.gis.geos import Polygon
 from rest_framework.views import APIView
@@ -279,8 +279,61 @@ class GCMDeviceDetail(APIView):
         gcmDevice.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    
+class APNSDeviceList(APIView):
+    """
+    List all APNSDevices, or create a new APNSDevice.
+    """
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
+
+    def get(self, request, format=None):
+        #gcmDevices = list(GCMDevice.objects.filter(user=request.user))
+        apnsDevices = list(APNSDevice.objects.all())
+        serializer = APNSDeviceSerializer(apnsDevices, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = APNSDeviceSerializer(data=request.data)
+        if serializer.is_valid():
+            # Ensure the registration_id is only in the APNSDevice table once
+            if APNSDevice.objects.filter(registration_id = request.data['registration_id']) is not None:
+                APNSDevice.objects.filter(registration_id = request.data['registration_id']).delete()
+            serializer.save(user=self.request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
 
 
+class APNSDeviceDetail(APIView):
+    """
+    List all APNSDevices, or create a new APNSDevice.
+    """
+    #authentication_classes = (authentication.TokenAuthentication,)
+    #permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
+
+    def get_object(self, registration_id):
+        try:
+            return APNSDevice.objects.get(registration_id=registration_id)
+        except APNSDevice.DoesNotExist:
+            raise Http404
+
+    def get(self, request, registration_id, format=None):
+        apnsDevice = self.get_object(registration_id)
+        serializer = APNSDeviceSerializer(apnsDevice)
+        return Response(serializer.data)
+
+    def put(self, request, registration_id, format=None):
+        apnsDevice = self.get_object(registration_id)
+        serializer = APNSDeviceSerializer(apnsDevice, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, registration_id, format=None):
+        apnsDevice = self.get_object(registration_id)
+        apnsDevice.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)    
 
 # Helper - Create bounding box as a polygon
 def stringToPolygon(bbstr):

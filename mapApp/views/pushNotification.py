@@ -19,38 +19,43 @@ def getAPNSDevicesToNotify(users):
 def pushNotification(point):
     intersectingPolys = AlertArea.objects.filter(geom__intersects=point.geom) #list of AlertArea objects
     usersToNotify = list(set([poly.user for poly in intersectingPolys])) # get list of distinct users to alert
-    GCMDevices = getGCMDevicesToNotify(usersToNotify)
-    # APNSDevices = getAPNSDevicesToNotify(userToNotify) # Disabled for now
+    GCMDevices = getGCMDevicesToNotify(usersToNotify) # Android devices
+    APNSDevices = getAPNSDevicesToNotify(usersToNotify) # iOS devices
 
     payload = payloadHelper(point)
 
     if payload:
         if point.p_type == "collision":
             GCMDevices.send_message("Collision reported.", extra=payload)
+            APNSDevices.send_message("Collision reported.", extra=payload)
         elif point.p_type == "nearmiss":
             GCMDevices.send_message("Near miss reported.", extra=payload)
+            APNSDevices.send_message("Near miss reported.", extra=payload)
         elif point.p_type == "hazard":
             GCMDevices.send_message("Hazard reported.", extra=payload)
+            APNSDevices.send_message("Hazard reported.", extra=payload)
         elif point.p_type == "theft":
             GCMDevices.send_message("Theft reported.", extra=payload)
+            APNSDevices.send_message("Theft reported.", extra=payload)
         else:
             GCMDevices.send_message("New incident reported.", extra=payload)
+            APNSDevices.send_message("New incident reported.", extra=payload)
 
 # Payload includes data for push notifications
 def payloadHelper(point):
     if point.p_type == "collision" or point.p_type == "nearmiss":
         if point.date:
             serialdt = dateSerializerHelper(point.date)
-            payload = {"pk": point.pk, "type": point.p_type, "i_type": point.i_type, "incident_with": point.incident_with, "date": serialdt, "details": point.details, "lng": point.geom.coords[0], "lat": point.geom.coords[1]}
+            payload = {"pk": point.pk, "type": point.p_type, "i_type": point.i_type, "incident_with": point.incident_with, "date": serialdt, "details": point.details, "lng": point.geom.coords[0], "lat": point.geom.coords[1], "sound":"default"}
         else:
-            payload = {"pk": point.pk, "type": point.p_type, "i_type": point.i_type, "incident_with": point.incident_with, "details": point.details, "lng": point.geom.coords[0], "lat": point.geom.coords[1]}
+            payload = {"pk": point.pk, "type": point.p_type, "i_type": point.i_type, "incident_with": point.incident_with, "details": point.details, "lng": point.geom.coords[0], "lat": point.geom.coords[1], "sound":"default"}
 
     elif point.p_type == "hazard" or point.p_type == "theft":
         if point.date:
             serialdt = dateSerializerHelper(point.date)
-            payload ={"pk": point.pk, "type": point.p_type, "i_type": point.i_type, "date": serialdt, "details": point.details, "lng": point.geom.coords[0], "lat": point.geom.coords[1]}
+            payload ={"pk": point.pk, "type": point.p_type, "i_type": point.i_type, "date": serialdt, "details": point.details, "lng": point.geom.coords[0], "lat": point.geom.coords[1], "sound":"default"}
         else:
-            payload ={"pk": point.pk, "type": point.p_type, "i_type": point.i_type, "details": point.details, "lng": point.geom.coords[0], "lat": point.geom.coords[1]}
+            payload ={"pk": point.pk, "type": point.p_type, "i_type": point.i_type, "details": point.details, "lng": point.geom.coords[0], "lat": point.geom.coords[1], "sound":"default"}
 
     else:
         payload = {}

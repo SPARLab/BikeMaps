@@ -51,5 +51,8 @@ urlpatterns += format_suffix_patterns([
     url(r'^users/$', views.UserList.as_view()),
     url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
     url(r'^gcmdevices/$', views.GCMDeviceList.as_view(), name='gcmdevice-list'),
-    url(r'^gcmdevices/(?P<registration_id>.+)/$', views.GCMDeviceDetail.as_view(), name='gcmdevice-detail')
+    url(r'^gcmdevices/(?P<registration_id>.+)/$', views.GCMDeviceDetail.as_view(), name='gcmdevice-detail'),
+    url(r'^apnsdevices/$', views.APNSDeviceList.as_view(), name='apnsdevice-list'),
+    url(r'^apnsdevices/(?P<registration_id>.+)/$', views.APNSDeviceDetail.as_view(), name='apnsdevice-detail'),
+
 ])
