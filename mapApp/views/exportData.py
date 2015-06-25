@@ -9,7 +9,7 @@ from mapApp.models import Point, Incident, Hazard, Theft
 # Decorators
 from django.contrib.auth.decorators import user_passes_test
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_staff)
 def getPoints(request):
 	data = GeoJSONSerializer().serialize(Point.objects.all(), indent=2, use_natural_keys=True)
 
@@ -17,7 +17,7 @@ def getPoints(request):
 	response['Content-Disposition'] = 'attachment; filename="bikemaps_points_%s.json' % time.strftime("%x_%H-%M")
 	return response
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_staff)
 def getIncidents(request):
 	data = GeoJSONSerializer().serialize(Incident.objects.all(), indent=2, use_natural_keys=True)
 	data = _joinPoints(data)
@@ -26,7 +26,7 @@ def getIncidents(request):
 	response['Content-Disposition'] = 'attachment; filename="bikemaps_incidents_%s.json' % time.strftime("%x_%H-%M")
 	return response
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_staff)
 def getHazards(request):
 	data = GeoJSONSerializer().serialize(Hazard.objects.all(), indent=2, use_natural_keys=True)
 	data = _joinPoints(data)
@@ -35,7 +35,7 @@ def getHazards(request):
 	response['Content-Disposition'] = 'attachment; filename="bikemaps_hazards_%s.json' % time.strftime("%x_%H-%M")
 	return response
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_staff)
 def getThefts(request):
 	data = GeoJSONSerializer().serialize(Theft.objects.all(), indent=2, use_natural_keys=True)
 	data = _joinPoints(data)
