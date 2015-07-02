@@ -135,11 +135,9 @@ function listenForHover(){
   $('#data li').hover(function(){
     // Highlight list item
     $(this).toggleClass('highlight');
-    // highlight corresponding point (call to cfax.js)
     highlightPoint($(this).attr('layer'), $(this).attr('pk'));
   });
   $('#data li').mouseleave(function(){
-    // unhighlight all points (call to cfax.js)
     unhighlightPoint($(this).attr('layer'));
   });
 }
