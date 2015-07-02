@@ -7,6 +7,7 @@ from django.contrib.gis.geos import GEOSGeometry
 import json
 import math
 from django.contrib import messages
+from django.conf import settings
 
 # Decorators
 from django.views.decorators.http import require_POST
@@ -33,12 +34,10 @@ def postIncident(request):
 	# Validate and submit to db
 	if incidentForm.is_valid():
 		incident = incidentForm.save()
-		alertUsers(request, incident)
 		# Errors with push notifications should not affect reporting
-                try:
-                        pushNotification.pushNotification(incident)
-                except:
-                        pass
+		if not settings.DEBUG:
+			try: pushNotification.pushNotification(incident)
+			except: pass
 
 		messages.success(request, '<strong>' + _('Thank you!') + '</strong><br>' + _('Your incident marker was successfully added.'))
 		return HttpResponseRedirect(reverse('mapApp:index', \
@@ -78,10 +77,9 @@ def postHazard(request):
 		hazard = hazardForm.save()
 		alertUsers(request, hazard)
 		# Errors with push notifications should not affect reporting
-                try:
-                        pushNotification.pushNotification(hazard)
-                except:
-                        pass
+		if not settings.DEBUG:
+			try: pushNotification.pushNotification(hazard)
+			except: pass
 
 		#messages.success(request, resp.results.message_id)
 
@@ -117,10 +115,9 @@ def postTheft(request):
 		theft = theftForm.save()
 		alertUsers(request, theft)
 		# Errors with push notifications should not affect reporting
-                try:
-                        pushNotification.pushNotification(theft)
-                except:
-                        pass
+		if not settings.DEBUG:
+			try: pushNotification.pushNotification(theft)
+			except: pass
 
 		messages.success(request, '<strong>' + _('Thank you!') + '</strong><br>' + _('Your theft marker was successfully added.'))
 		return HttpResponseRedirect(reverse('mapApp:index', \
