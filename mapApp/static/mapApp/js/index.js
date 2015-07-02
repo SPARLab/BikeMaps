@@ -21,6 +21,7 @@ incidentData.on('click', function(e){
 // Initialize the map
 var map = L.map('map', {
   center: [48, -100],
+  minZoom: 2,
   zoom: 4,
   layers: [MapQuestOpen_OSM, stravaHM, incidentData, alertAreas],
   worldCopyJump: true,
