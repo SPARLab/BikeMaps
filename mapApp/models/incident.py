@@ -258,3 +258,16 @@ class Incident(Point):
         null=True
     )
     ##############
+
+    def save(self, *args, **kwargs):
+        self.p_type = self._getIncidentType()
+        super(Incident, self).save(*args, **kwargs)
+
+    def _getIncidentType(self):
+    	"""Return "collision" or "nearmiss" pending on the type of incident a user selected."""
+        usr_choice = self.i_type
+    	for t,choice in Incident.INCIDENT_CHOICES:
+    		for p,q in choice:
+    			if p == usr_choice:
+    				if t == "Fall": return "collision"
+    				else: return t.replace(" ", "").lower()

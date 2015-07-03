@@ -62,4 +62,4 @@ class IncidentForm(forms.ModelForm):
 
     class Meta:
         model = Incident
-        fields = '__all__'
+        exclude = ['p_type']

@@ -51,4 +51,4 @@ class TheftForm(forms.ModelForm):
 
     class Meta:
         model = Theft
-        fields = '__all__'
+        exclude = ['p_type']

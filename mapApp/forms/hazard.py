@@ -45,4 +45,4 @@ class HazardForm(forms.ModelForm):
 
     class Meta:
         model = Hazard
-        fields = '__all__'
+        exclude = ['p_type']

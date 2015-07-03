@@ -53,7 +53,7 @@ class Point(models.Model):
     p_type = models.CharField(
         _('Type of report'),
         max_length=150,
-        choices=TYPE_CHOICES,
+        choices=TYPE_CHOICES
     )
 
     age = models.CharField(
