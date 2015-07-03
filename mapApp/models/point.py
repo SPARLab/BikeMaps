@@ -1,6 +1,7 @@
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.contrib.gis.db import models
+from django.core.urlresolvers import reverse
 
 import datetime
 from time import strftime, gmtime
@@ -83,6 +84,9 @@ class Point(models.Model):
         blank=True,
         null=True
     )
+
+    def get_absolute_url(self):
+        return reverse('mapApp:index', kwargs={'lat':str(self.latlngList()[0]), 'lng':str(self.latlngList()[1]), 'zoom':str(18)})
 
     # reverses latlngs and turns tuple of tuples into list of lists
     def latlngList(self):
