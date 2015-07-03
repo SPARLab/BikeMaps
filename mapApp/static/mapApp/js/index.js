@@ -385,3 +385,9 @@ function geojsonMarker(data, type) {
     },
   });
 };
+
+map.on('moveend', function(e){
+  var zoom = map.getZoom(),
+      center = map.getCenter();
+  window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
+})

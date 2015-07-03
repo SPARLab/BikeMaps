@@ -1,7 +1,7 @@
 from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.contrib.gis.geos import GEOSGeometry
 import json
@@ -40,13 +40,8 @@ def postIncident(request):
 			except: pass
 
 		messages.success(request, '<strong>' + _('Thank you!') + '</strong><br>' + _('Your incident marker was successfully added.'))
-		return HttpResponseRedirect(reverse('mapApp:index', \
-			kwargs=({										\
-				"lat":str(incident.latlngList()[0]),		\
-				"lng":str(incident.latlngList()[1]),		\
-				"zoom":str(18)								\
-			})												\
-		))
+		return redirect(incident)
+
 	else: # Show form errors
 		incidentForm.data['geom'] = incidentForm.data['geom'].json
 		return render(request, 'mapApp/index.html', indexContext(request, incidentForm=incidentForm))
@@ -84,13 +79,7 @@ def postHazard(request):
 		#messages.success(request, resp.results.message_id)
 
 		messages.success(request, '<strong>' + _('Thank you!') + '</strong><br>' + _('Your hazard marker was successfully added.'))
-		return HttpResponseRedirect(reverse('mapApp:index', \
-			kwargs=({										\
-				"lat":str(hazard.latlngList()[0]),		\
-				"lng":str(hazard.latlngList()[1]),		\
-				"zoom":str(18)								\
-			})												\
-		))
+		return redirect(hazard)
 
 	else: # Show form errors
 		hazardForm.data['geom'] = hazardForm.data['geom'].json
@@ -120,13 +109,7 @@ def postTheft(request):
 			except: pass
 
 		messages.success(request, '<strong>' + _('Thank you!') + '</strong><br>' + _('Your theft marker was successfully added.'))
-		return HttpResponseRedirect(reverse('mapApp:index', \
-			kwargs=({										\
-				"lat":str(theft.latlngList()[0]),			\
-				"lng":str(theft.latlngList()[1]),			\
-				"zoom":str(18)								\
-			})												\
-		))
+		return redirect(theft)
 
 	else: # Show form errors
 		theftForm.data['geom'] = theftForm.data['geom'].json
