@@ -84,8 +84,7 @@ function addAlertAreas(geofences){
         weight: 2,
         opacity: 0.6,
         fillOpacity: 0.1,
-        pk: (feature.id ? feature.id : feature.properties.id),
-        objType: 'polygon'
+        pk: (feature.id ? feature.id : feature.properties.id)
       }
     }
   }).eachLayer(function(l){alertAreas.addLayer(l);});

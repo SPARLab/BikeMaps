@@ -54,23 +54,6 @@ function desktopDrawing(){
 
     map.fire('drawControlReady');
 
-    // Add a point editing control for admins
-    {% if request.user.is_superuser %}
-    L.drawLocal.edit.handlers.remove.tooltip.text = "{% trans 'Click the object to remove' %}";
-    L.drawLocal.edit.toolbar.buttons.removeDisabled = "{% trans 'No objects to delete.' %}";
-
-    map.addControl(new L.Control.Draw({
-        position: 'bottomright',
-        draw: false,
-        edit: {
-            edit: false,
-            featureGroup: incidentData
-        }
-    }));
-
-    map.fire('drawControlReady');
-    {% endif %}
-
     $(document).ready(function(){
         /* DEFINE ACTIONS TRIGGERED BY NEW DRAWINGS */
         map.on('draw:created', function (e) {
@@ -118,14 +101,12 @@ function desktopDrawing(){
 
         function editRidingArea(e, type){
           var editPk = "",
-              editGeom = "",
-              objType = "";
+              editGeom = "";
 
           e.layers.eachLayer(function (layer) {
               if(layer.options.pk){
                   editPk += (layer.options.pk + ';');
                   editGeom += (JSON.stringify(layer.toGeoJSON().geometry) + ";");
-                  objType += (layer.options.objType + ';');
               }
           });
 
@@ -134,7 +115,6 @@ function desktopDrawing(){
           fd.append('editType', type)
           fd.append('editPk', editPk)
           fd.append('editGeom', editGeom)
-          fd.append('objType', objType)
 
           // Ajax post request to server
           $.ajax({

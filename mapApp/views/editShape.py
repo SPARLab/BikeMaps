@@ -24,22 +24,10 @@ def editShape(request):
 		pks = editForm.cleaned_data['editPk'].split(';')[:-1]
 		newGeoms = editForm.cleaned_data['editGeom'].split(';')[:-1]
 		editType = editForm.cleaned_data['editType']
-		objTypes = editForm.cleaned_data['objType'].split(';')[:-1]
 
+		objectSet = AlertArea.objects.filter(user=request.user)
 		# Edit/Delete each object
-		for pk, newGeom, objType in zip(pks, newGeoms, objTypes):
-			# Get the correct model dataset
-			if objType == 'mapApp.incident':
-				objectSet = Incident.objects.all()
-			elif objType == 'mapApp.theft':
-				objectSet = Theft.objects.all()
-			elif objType == 'mapApp.hazard':
-				objectSet = Hazard.objects.all()
-			elif objType == 'polygon':
-				objectSet = AlertArea.objects.filter(user=request.user)
-			else:
-				return JsonResponse({'success':False})
-
+		for pk, newGeom in zip(pks, newGeoms):
 			# Edit
 			if(editType == 'edit'):
 				shapeEdited = get_object_or_404(objectSet, pk=pk)
@@ -52,17 +40,7 @@ def editShape(request):
 			# Delete
 			elif (editType == 'delete'):
 				shapeEdited = get_object_or_404(objectSet, pk=pk)
-
-				# Delete associated notifications
-				if objType == 'mapApp.incident':
-					IncidentNotification.objects.filter(point=shapeEdited).delete()
-				elif objType == 'mapApp.theft':
-					TheftNotification.objects.filter(point=shapeEdited).delete()
-				elif objType == 'mapApp.hazard':
-					HazardNotification.objects.filter(point=shapeEdited).delete()
-
-
-				shapeEdited.delete() 	# delete the object
+				shapeEdited.delete()
 
 		return JsonResponse({'success':True})
 	else:

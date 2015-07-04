@@ -83,6 +83,18 @@
   <script src="{% static 'mapApp/js/index.js' %}"></script>
   <script src="{% static 'mapApp/js/legend_collapse.js' %}"></script>
 
+  {% if request.user.is_superuser %}
+  <script>
+      incidentData.on('click', function(e){
+        var layer = e.layer,
+            feature = layer.feature;
+        var url = "/admin/" + feature.properties.model.replace(".", "/") + "/" + feature.id;
+        layer.bindPopup("<a href="+url+"><span class='fa fa-edit'></span>edit</a><br>" + getPopup(layer)).openPopup();
+        e.originalEvent.stopPropagation();
+      });
+  </script>
+  {% endif %}
+
   {% include 'mapApp/incident_form.html' %}
   <!-- Add modal help html -->
   {% include 'mapApp/util/tips.html' %}
