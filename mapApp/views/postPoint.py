@@ -10,7 +10,7 @@ from  crispy_forms.utils import render_crispy_form
 
 from mapApp.models import Incident, Hazard, Theft
 from mapApp.forms import IncidentForm, HazardForm, TheftForm
-from mapApp.views import alertUsers, indexContext, pushNotification
+from mapApp.views import alertUsers, pushNotification
 
 import json, math
 
