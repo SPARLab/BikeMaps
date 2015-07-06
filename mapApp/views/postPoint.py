@@ -1,20 +1,18 @@
 from django.utils.translation import ugettext as _
-from django.http import HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
-from django.shortcuts import render, redirect
+from django.conf import settings
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 from django.contrib.gis.geos import GEOSGeometry
-import json
-import math
-from django.contrib import messages
-from django.conf import settings
+from djgeojson.serializers import Serializer as GeoJSONSerializer
 
-# Decorators
-from django.views.decorators.http import require_POST
+from  crispy_forms.utils import render_crispy_form
 
 from mapApp.models import Incident, Hazard, Theft
 from mapApp.forms import IncidentForm, HazardForm, TheftForm
 from mapApp.views import alertUsers, indexContext, pushNotification
+
+import json, math
 
 @require_POST
 def postIncident(request):
@@ -26,7 +24,6 @@ def postIncident(request):
 		incidentForm.data['geom'] = normalizeGeometry(incidentForm.data['geom'])
 	except(ValueError):
 		messages.error(request, '<strong>' + _('Error') + '</strong><br>' + _('No point was selected for this type of report.'))
-		return HttpResponseRedirect(reverse('mapApp:index'))
 
 	# Set p_type field to collision, nearmiss, or fall
 	incidentForm.data['p_type'] = getIncidentType(incidentForm.data['i_type'])
@@ -39,12 +36,17 @@ def postIncident(request):
 			try: pushNotification.pushNotification(incident)
 			except: pass
 
-		messages.success(request, '<strong>' + _('Thank you!') + '</strong><br>' + _('Your incident marker was successfully added.'))
-		return redirect(incident)
+		return JsonResponse({
+	        'success': True,
+			'point': GeoJSONSerializer().serialize([incident,]),
+			'point_type': incident.p_type,
+			'form_html': render_crispy_form(IncidentForm()),
+        })
 
-	else: # Show form errors
-		incidentForm.data['geom'] = incidentForm.data['geom'].json
-		return render(request, 'mapApp/index.html', indexContext(request, incidentForm=incidentForm))
+	# Else: error occurred
+	incidentForm.data['geom'] = incidentForm.data['geom'].json
+	form_html = render_crispy_form(incidentForm)
+	return JsonResponse({'success': False, 'form_html': form_html})
 
 def getIncidentType(usr_choice):
 	for t,choice in Incident.INCIDENT_CHOICES:
@@ -63,27 +65,29 @@ def postHazard(request):
 		hazardForm.data['geom'] = normalizeGeometry(hazardForm.data['geom'])
 	except(ValueError):
 		messages.error(request, '<strong>' + _('Error') + '</strong><br>' + _('No point was selected for this type of report.'))
-		return HttpResponseRedirect(reverse('mapApp:index'))
 
 	# Set p_type
 	hazardForm.data['p_type'] = 'hazard'
 
+	# Validate and submit to db
 	if hazardForm.is_valid():
 		hazard = hazardForm.save()
-		alertUsers(request, hazard)
 		# Errors with push notifications should not affect reporting
 		if not settings.DEBUG:
 			try: pushNotification.pushNotification(hazard)
 			except: pass
 
-		#messages.success(request, resp.results.message_id)
+		return JsonResponse({
+			'success': True,
+			'point': GeoJSONSerializer().serialize([hazard,]),
+			'point_type': hazard.p_type,
+			'form_html': render_crispy_form(HazardForm())
+		})
 
-		messages.success(request, '<strong>' + _('Thank you!') + '</strong><br>' + _('Your hazard marker was successfully added.'))
-		return redirect(hazard)
-
-	else: # Show form errors
-		hazardForm.data['geom'] = hazardForm.data['geom'].json
-		return render(request, 'mapApp/index.html', indexContext(request, hazardForm=hazardForm))
+	# Else: error occurred
+	hazardForm.data['geom'] = hazardForm.data['geom'].json
+	form_html = render_crispy_form(hazardForm)
+	return JsonResponse({'success': False, 'form_html': form_html})
 
 @require_POST
 def postTheft(request):
@@ -95,25 +99,30 @@ def postTheft(request):
 		theftForm.data['geom'] = normalizeGeometry(theftForm.data['geom'])
 	except(ValueError):
 		messages.error(request, '<strong>' + _('Error') + '</strong><br>' + _('No point was selected for this type of report.'))
-		return HttpResponseRedirect(reverse('mapApp:index'))
 
 	# Set p_type
 	theftForm.data['p_type'] = 'theft'
 
+	# Validate and submit to db
 	if theftForm.is_valid():
 		theft = theftForm.save()
-		alertUsers(request, theft)
 		# Errors with push notifications should not affect reporting
 		if not settings.DEBUG:
 			try: pushNotification.pushNotification(theft)
 			except: pass
 
-		messages.success(request, '<strong>' + _('Thank you!') + '</strong><br>' + _('Your theft marker was successfully added.'))
-		return redirect(theft)
+		return JsonResponse({
+			'success': True,
+			'point': GeoJSONSerializer().serialize([theft,]),
+			'point_type': theft.p_type,
+			'form_html': render_crispy_form(TheftForm())
+		})
 
-	else: # Show form errors
-		theftForm.data['geom'] = theftForm.data['geom'].json
-		return render(request, 'mapApp/index.html', indexContext(request, theftForm=theftForm))
+	# Else: error occurred
+	theftForm.data['geom'] = theftForm.data['geom'].json
+	form_html = render_crispy_form(theftForm)
+	return JsonResponse({'success': False, 'form_html': form_html})
+
 
 # Convert text string to GEOS Geometry object and correct x y coordinates if out range (-180, 180]
 def normalizeGeometry(geom):

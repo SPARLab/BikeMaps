@@ -1,6 +1,6 @@
 
 from django.utils.translation import ugettext as _
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.core.urlresolvers import reverse
 
 from django.shortcuts import get_object_or_404
@@ -38,7 +38,7 @@ def editShape(request):
 			elif objType == 'polygon':
 				objectSet = AlertArea.objects.filter(user=request.user)
 			else:
-				return HttpResponseRedirect(reverse('mapApp:index'))
+				return JsonResponse({'success':False})
 
 			# Edit
 			if(editType == 'edit'):
@@ -46,8 +46,7 @@ def editShape(request):
 				try:
 					shapeEdited.geom = GEOSGeometry(newGeom)	# edit the object geometry
 				except(ValueError):
-					messages.error(request, '<strong>' + _('Error') + '</strong><br>' + _('Invalid geometry.'))
-					return HttpResponseRedirect(reverse('mapApp:index'))
+					return JsonResponse({'success':False})
 				shapeEdited.save()
 
 			# Delete
@@ -65,7 +64,6 @@ def editShape(request):
 
 				shapeEdited.delete() 	# delete the object
 
-		message = str(len(pks)) + ' ' + editType + ('s' if len(pks)>1 else '') + ' successful'
-		messages.success(request, _(message))
-
-	return HttpResponseRedirect(reverse('mapApp:index'))
+		return JsonResponse({'success':True})
+	else:
+		return JsonResponse({'success':False})

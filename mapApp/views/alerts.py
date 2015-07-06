@@ -1,10 +1,11 @@
 from django.utils.translation import ugettext as _
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core.urlresolvers import reverse
 
 from django.shortcuts import get_object_or_404
 
 from django.contrib.gis.geos import GEOSGeometry
+from djgeojson.serializers import Serializer as GeoJSONSerializer
 from django.contrib import messages
 
 # Decorators
@@ -26,14 +27,14 @@ def postAlertPolygon(request):
 		geofenceForm.data['geom'] = GEOSGeometry(geofenceForm.data['geom'])
 	except(ValueError):
 		messages.error(request, '<strong>' + _('Error') + '</strong><br>' + _('Invalid geometry data.'))
-		return HttpResponseRedirect(reverse('mapApp:index'))
 
 	if geofenceForm.is_valid():
 		# Save new model object, send success message to the user
-		geofenceForm.save()
-		messages.success(request, _('You will now receive alerts for the area traced.'))
-
-	return HttpResponseRedirect(reverse('mapApp:index'))
+		polygon = geofenceForm.save()
+		# messages.success(request, _('You will now receive alerts for the area traced.'))
+		return JsonResponse({ 'success': True, 'polygon': GeoJSONSerializer().serialize([polygon,]) })
+	else:
+		return JsonResponse({'success': False})
 
 def alertUsers(request, incident):
 	intersectingPolys = AlertArea.objects.filter(geom__intersects=incident.geom) #list of AlertArea objects

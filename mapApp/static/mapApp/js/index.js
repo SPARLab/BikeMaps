@@ -5,6 +5,7 @@ var incidentData = new L.MarkerClusterGroup({
         color: '#2c3e50',
         weight: 3
       },
+      animateAddingMarkers: true,
       iconCreateFunction: function(cluster){
         var data = serializeClusterData(cluster);
         return pieChart(data);
@@ -73,19 +74,22 @@ var collisions = geojsonMarker(collisions, "collision").addTo(incidentData).getL
     // officials = geojsonMarker(officials, "official").addTo(incidentData).getLayers();
 
 // Add geofence alert areas to map
-var geofences = L.geoJson(geofences, {
-  style: function(feature) {
-    return {
-      color: '#3b9972',
-      weight: 2,
-      opacity: 0.6,
-      fillOpacity: 0.1,
-      pk: feature.id,
-      /*Mark the polygon with it's database id*/
-      objType: 'polygon'
+addAlertAreas(geofences);
+
+function addAlertAreas(geofences){
+  L.geoJson(geofences, {
+    style: function(feature) {
+      return {
+        color: '#3b9972',
+        weight: 2,
+        opacity: 0.6,
+        fillOpacity: 0.1,
+        pk: (feature.id ? feature.id : feature.properties.id),
+        objType: 'polygon'
+      }
     }
-  }
-}).eachLayer(function(l){alertAreas.addLayer(l);});
+  }).eachLayer(function(l){alertAreas.addLayer(l);});
+}
 
 // Add and remove layers individually from the clusters on checkbox change
 $("#collisionCheckbox").change(function(){ this.checked ? incidentData.addLayers(collisions) : incidentData.removeLayers(collisions); });

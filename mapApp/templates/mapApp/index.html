@@ -50,22 +50,8 @@
   <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
   <script src="{% static 'mapApp/js/icons.js' %}"></script>
   <script src="{% static 'mapApp/js/map.js' %}"></script>
+  <script src="{% static 'mapApp/js/csrfheader.js' %}"></script>
   <script>
-    // Fire modal if any form errors
-    $(document).ready(function(){
-      {% if incidentForm.errors %}
-        $('#incidentForm').modal('show');
-      {% elif hazardForm.errors %}
-        $('.nav-tabs a[href="#hazardReport"]').tab('show')
-        $('#incidentForm').modal('show');
-      {% elif theftForm.errors %}
-        $('.nav-tabs a[href="#theftReport"]').tab('show')
-        $('#incidentForm').modal('show');
-      {% elif geofenceForm.errors %}
-        $('#geofenceForm').modal('show');
-      {% endif %}
-    });
-
     // Convert database querysets to geojsons
     var collisions = {{ collisions|geojsonfeature:"i_type,incident_with,date,details"|safe }},
         nearmisses = {{ nearmisses|geojsonfeature:"i_type,incident_with,date,details"|safe }},
@@ -97,12 +83,9 @@
   <script src="{% static 'mapApp/js/index.js' %}"></script>
   <script src="{% static 'mapApp/js/legend_collapse.js' %}"></script>
 
-  {% crispy geofenceForm %}
   {% include 'mapApp/incident_form.html' %}
-
   <!-- Add modal help html -->
   {% include 'mapApp/util/tips.html' %}
-
   <!-- Add draw controls and actions -->
   {% include 'mapApp/util/draw.html' %}
 
