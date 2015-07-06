@@ -135,3 +135,7 @@ class Theft(Point):
         null=True
     )
     #######################
+
+    def save(self, *args, **kwargs):
+        self.p_type = "theft"
+        super(Theft, self).save(*args, **kwargs)

@@ -58,3 +58,7 @@ class Hazard(Point):
         null=True
     )
     #######################
+
+    def save(self, *args, **kwargs):
+        self.p_type = "hazard"
+        super(Hazard, self).save(*args, **kwargs)

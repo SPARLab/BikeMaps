@@ -15,6 +15,7 @@ why_personal_well = _(u"Personal details such as age and gender are routinely co
 class IncidentForm(forms.ModelForm):
     helper = FormHelper()
     helper.form_tag = False # removes auto-inclusion of form tag in template
+    helper.disable_csrf = True
 
     helper.layout = Layout(
         Accordion(
@@ -61,4 +62,4 @@ class IncidentForm(forms.ModelForm):
 
     class Meta:
         model = Incident
-        fields = '__all__'
+        exclude = ['p_type']

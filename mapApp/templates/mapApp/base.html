@@ -35,21 +35,11 @@
   </script>
 </head>
 
-
 <body>
   {% include 'mapApp/navbar.html' %}
 
-  <!-- message -->
-  <div id="message">
-      {% if messages %}
-          {% for message in messages %}
-          <div id="data-post-alert" class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissable">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              <center>{{ message | safe }}</center>
-          </div>
-          {% endfor %}
-      {% endif %}
-  </div>
+  <!-- container for alert popups -->
+  <div id="message"></div>
 
   {% block body %}{% endblock %}
 
@@ -57,19 +47,6 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
   {% block footerJS %}{% endblock %}
-  <script>
-    // Fade out message
-    $(window).load(function(){
-      setTimeout(function(){ $('#data-post-alert').fadeOut() }, 7000);
-    });
-    // Prevent multiple submits of forms by disabling the button on single click
-    $(document).ready(function() {
-      $('input[type=submit]').click(function(){
-        $(this).prop("disabled", true);
-        $(this).closest("form").trigger('submit');
-      });
-    });
-  </script>
 </body>
 
 </html>

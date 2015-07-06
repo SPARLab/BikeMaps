@@ -193,6 +193,18 @@ function mapFilter(){
   })
   changeMap();
   dc.redrawAll();
+
+  urlUpdate();
+}
+
+function urlUpdate(){
+  var zoom = map.getZoom(),
+      center = map.getCenter();
+  window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
+}
+
+if (typeof zoom !== 'undefined') {
+  map.setView(L.latLng(lat, lng), zoom);
 }
 
 // Fit map extent to alert areas boundary

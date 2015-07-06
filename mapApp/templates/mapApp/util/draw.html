@@ -17,8 +17,6 @@ function desktopDrawing(){
 
     L.drawLocal.draw.toolbar.buttons.polygon = "{% trans 'Trace an area to receive incident alerts.' %}";
     L.drawLocal.draw.handlers.polygon.tooltip.start = "{% trans 'Trace the area you would like to receive alerts for.' %}";
-    // L.drawLocal.draw.handlers.polygon.tooltip.cont = "{% trans 'Click to continue drawing shape.' %}";
-    // L.drawLocal.draw.handlers.polygon.tooltip.end = "{% trans 'Click the first point to close this shape.' %}";
 
     L.drawLocal.edit.toolbar.buttons.edit = "{% trans 'Edit alert area.' %}";
     L.drawLocal.edit.handlers.edit.tooltip.text = "{% trans 'Drag handles to edit alert areas. Be sure to save your changes.' %}";
@@ -31,7 +29,6 @@ function desktopDrawing(){
     L.drawLocal.edit.toolbar.buttons.removeDisabled = "{% trans 'No alert areas to delete.' %}";
 
     /* ADD THE CONTROL TO LEAFLET MAP */
-    {% if not request.mobile %}
     map.addControl(new L.Control.Draw({
         draw: {
             polyline: false,
@@ -56,24 +53,6 @@ function desktopDrawing(){
     }));
 
     map.fire('drawControlReady');
-    {% endif %}
-
-    // Add a point editing control for admins
-    {% if request.user.is_superuser %}
-    L.drawLocal.edit.handlers.remove.tooltip.text = "{% trans 'Click the object to remove' %}";
-    L.drawLocal.edit.toolbar.buttons.removeDisabled = "{% trans 'No objects to delete.' %}";
-
-    map.addControl(new L.Control.Draw({
-        position: 'bottomright',
-        draw: false,
-        edit: {
-            edit: false,
-            featureGroup: incidentData
-        }
-    }));
-
-    map.fire('drawControlReady');
-    {% endif %}
 
     $(document).ready(function(){
         /* DEFINE ACTIONS TRIGGERED BY NEW DRAWINGS */
@@ -91,37 +70,68 @@ function desktopDrawing(){
                 document.getElementById("theftPoint").value = geom;
             }
             if (type === 'polygon') {
-                // Set form geometry field to click location
-                document.getElementById("geofence").value = JSON.stringify(layer.toGeoJSON().geometry);
-                document.getElementById("userEmail").value = "{{ request.user.email }}";
-                $('#geofenceForm').modal('show');
+                var fd = new FormData();
+                fd.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+                fd.append( 'geom', JSON.stringify(layer.toGeoJSON().geometry))
+                fd.append( 'email', "{{ request.user.email }}")
+
+                // Ajax post request to server
+                $.ajax({
+                  url: "{% url 'mapApp:postAlertPolygon' %}",
+                  type: 'POST',
+                  data: fd,
+                  dataType: "json",
+                  processData: false,
+                  contentType: false,
+                  success: function(data) {
+                    if (data['success']) {
+                      // Add geom to map
+                      addAlertAreas(JSON.parse(data['polygon']));
+                      // Print success message
+                      var message = "<strong>" + '{% trans "Success!" %}' + "</strong><br>" + '{% trans "Your riding area was added." %}';
+                      showMessage(message);
+                    }
+                  }
+                });
             }
         });
 
-        /* DEFINE ACTIONS TRIGGERED BY EDITING A POLYGON */
-        map.on('draw:edited', function(e) {
-            addEditsToForm(e);
-            document.getElementById("editType").value = 'edit';
-            $( "#editForm" ).submit();
-        });
+        map.on('draw:edited', function(e) { editRidingArea(e, 'edit'); });
+        map.on('draw:deleted', function(e) { editRidingArea(e, 'delete'); });
 
-        /* DEFINE ACTIONS TRIGGERED BY DELETING A POLYGON */
-        map.on('draw:deleted', function(e) {
-            addEditsToForm(e);
-            document.getElementById("editType").value = 'delete';
-            $( "#editForm" ).submit();
-        });
+        function editRidingArea(e, type){
+          var editPk = "",
+              editGeom = "";
 
-        function addEditsToForm(e){
-            var layers = e.layers;
-            // Fill out form
-            layers.eachLayer(function (layer) {
-                if(layer.options.pk){
-                    document.getElementById("editPk").value += (layer.options.pk + ';');
-                    document.getElementById("editGeom").value += (JSON.stringify(layer.toGeoJSON().geometry) + ";");
-                    document.getElementById("objType").value += (layer.options.objType+ ';');
-                }
-            });
+          e.layers.eachLayer(function (layer) {
+              if(layer.options.pk){
+                  editPk += (layer.options.pk + ';');
+                  editGeom += (JSON.stringify(layer.toGeoJSON().geometry) + ";");
+              }
+          });
+
+          var fd = new FormData();
+          fd.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+          fd.append('editType', type)
+          fd.append('editPk', editPk)
+          fd.append('editGeom', editGeom)
+
+          // Ajax post request to server
+          $.ajax({
+            url: "{% url 'mapApp:editShape' %}",
+            type: 'POST',
+            data: fd,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function(data) {
+              if (data['success']) {
+                // Print success message
+                var message = "<strong>" + '{% trans "Success!" %}' + "</strong><br>" + '{% trans "Your riding area has been modified." %}';
+                showMessage(message);
+              }
+            }
+          });
         }
     });
 };
@@ -148,14 +158,6 @@ function mobileDrawing(){
     });
 }
 </script>
-
-
-
-<!-- Form for passing data to view to edit polygon data -->
-<form id="editForm" action="{% url 'mapApp:editShape' %}" method="post">
-    {% csrf_token %}
-    {{ editForm.as_p}}
-</form>
 
 <!-- Mobile tooltip to explain the double tapping -->
 {% if request.mobile %}

@@ -23,17 +23,17 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                   <div role="tabpanel" class="tab-pane active" id="incidentReport">
-                    <form action="{% url 'mapApp:postIncident' %}" method="post" class="form">
+                    <form action="{% url 'mapApp:postIncident' %}" method="POST" role="form" enctype="multipart/form-data">
                       {% crispy incidentForm %}
                     </form>
                   </div>
                   <div role="tabpanel" class="tab-pane" id="hazardReport">
-                    <form action="{% url 'mapApp:postHazard' %}" method="post" class="form">
+                    <form action="{% url 'mapApp:postHazard' %}" method="POST" role="form" enctype="multipart/form-data">
                       {% crispy hazardForm %}
                     </form>
                   </div>
                   <div role="tabpanel" class="tab-pane" id="theftReport">
-                    <form action="{% url 'mapApp:postTheft' %}" method="post" class="form">
+                    <form action="{% url 'mapApp:postTheft' %}" method="POST" role="form" enctype="multipart/form-data">
                       {% crispy theftForm %}
                     </form>
                   </div>
@@ -48,7 +48,7 @@
                 </div>
               </div>
               <div class="col-xs-5">
-                <button type="button" name="Cancel" class="btn btn-default" onclick="javascript:close_modal()">{% trans "Cancel" %}</button>
+                <button type="button" name="Cancel" class="btn btn-default cancel-btn" onclick="javascript:close_modal()">{% trans "Cancel" %}</button>
                 <button type="button" name="Submit" class="btn btn-primary submit-btn disabled" onclick="javascript:submit_form()">{% trans "Submit" %}</button>
               </div>
             </div>
@@ -63,12 +63,68 @@
   });
 
   function close_modal(){
-    $('#incidentForm').modal('hide');$('.modal-backdrop').hide();
+    $('#incidentForm').modal('hide');
+    $('.modal-backdrop').hide();
   }
-
   function submit_form(){
+    $(".submit-btn").addClass("disabled");
+    $(".cancel-btn").addClass("disabled");
     $('.tab-pane.active form').submit();
   }
+
+  function showMessage(message){
+    $('#message').append('<div class="alert alert-success" role="alert">' +
+      '<button type="button" class="close" data-dismiss="alert">&times;</button>' + message +
+      '</div>'
+    );
+    setTimeout(function(){
+      $('#message .alert').alert('close');
+    }, 7000);
+  }
+
+  $(function(){
+    // Define ajax submit function
+    $('.tab-pane form').submit(function (event){
+      $.ajax({
+        url: $(this).attr('action'),
+        type: $(this).attr('method'),
+        data: new FormData($('.tab-pane.active form').get(0)),
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        success: function(data) {
+          // Re-enable submit button
+          $(".submit-btn").removeClass("disabled");
+          $(".cancel-btn").removeClass("disabled");
+
+          // Show errors or clean and reset form
+          $('.tab-pane.active form div:first').replaceWith(data['form_html']);
+
+          if (data['success']) {
+            // Close modal
+            $('#incidentForm').modal('hide');
+
+            // Add point to map
+            var point = geojsonMarker(JSON.parse(data['point']), data['point_type'])
+            point.bindPopup(getPopup(point.getLayers()[0]));
+            incidentData.addLayer(point);
+
+            // Pan to point
+            map.setView(point.getBounds().getCenter(), 18, {'animate': true});
+            setTimeout(function(){
+              point.openPopup();
+            }, 300);
+
+            // Print success or failure message
+            var message = "<strong>" + '{% trans "Thank you!" %}' + "</strong><br>" + '{% trans "Your incident marker was successfully added." %}';
+            showMessage(message);
+          }
+        }
+      });
+      event.preventDefault();
+    });
+  })
+
 
   // Dynamically change lock to "NA" if bike not locked
   $("#div_id_lock select option[value='NA']").hide();

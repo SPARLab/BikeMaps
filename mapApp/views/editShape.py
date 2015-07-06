@@ -1,6 +1,6 @@
 
 from django.utils.translation import ugettext as _
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.core.urlresolvers import reverse
 
 from django.shortcuts import get_object_or_404
@@ -24,48 +24,24 @@ def editShape(request):
 		pks = editForm.cleaned_data['editPk'].split(';')[:-1]
 		newGeoms = editForm.cleaned_data['editGeom'].split(';')[:-1]
 		editType = editForm.cleaned_data['editType']
-		objTypes = editForm.cleaned_data['objType'].split(';')[:-1]
 
+		objectSet = AlertArea.objects.filter(user=request.user)
 		# Edit/Delete each object
-		for pk, newGeom, objType in zip(pks, newGeoms, objTypes):
-			# Get the correct model dataset
-			if objType == 'mapApp.incident':
-				objectSet = Incident.objects.all()
-			elif objType == 'mapApp.theft':
-				objectSet = Theft.objects.all()
-			elif objType == 'mapApp.hazard':
-				objectSet = Hazard.objects.all()
-			elif objType == 'polygon':
-				objectSet = AlertArea.objects.filter(user=request.user)
-			else:
-				return HttpResponseRedirect(reverse('mapApp:index'))
-
+		for pk, newGeom in zip(pks, newGeoms):
 			# Edit
 			if(editType == 'edit'):
 				shapeEdited = get_object_or_404(objectSet, pk=pk)
 				try:
 					shapeEdited.geom = GEOSGeometry(newGeom)	# edit the object geometry
 				except(ValueError):
-					messages.error(request, '<strong>' + _('Error') + '</strong><br>' + _('Invalid geometry.'))
-					return HttpResponseRedirect(reverse('mapApp:index'))
+					return JsonResponse({'success':False})
 				shapeEdited.save()
 
 			# Delete
 			elif (editType == 'delete'):
 				shapeEdited = get_object_or_404(objectSet, pk=pk)
+				shapeEdited.delete()
 
-				# Delete associated notifications
-				if objType == 'mapApp.incident':
-					IncidentNotification.objects.filter(point=shapeEdited).delete()
-				elif objType == 'mapApp.theft':
-					TheftNotification.objects.filter(point=shapeEdited).delete()
-				elif objType == 'mapApp.hazard':
-					HazardNotification.objects.filter(point=shapeEdited).delete()
-
-
-				shapeEdited.delete() 	# delete the object
-
-		message = str(len(pks)) + ' ' + editType + ('s' if len(pks)>1 else '') + ' successful'
-		messages.success(request, _(message))
-
-	return HttpResponseRedirect(reverse('mapApp:index'))
+		return JsonResponse({'success':True})
+	else:
+		return JsonResponse({'success':False})

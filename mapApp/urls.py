@@ -5,7 +5,7 @@ from mapApp import views
 urlpatterns = patterns('',
 	# Index page
 	url(r'^$', views.index, name='index'),
-	url(r'^(?P<lat>-?\d{1,3}\.?\d*)_(?P<lng>-?\d{1,3}\.?\d*)/(?P<zoom>\d+)/?$', views.index, name='index'),
+	url(r'^@(?P<lat>-?\d{1,3}\.?\d*),(?P<lng>-?\d{1,3}\.?\d*),(?P<zoom>\d+)z/?$', views.index, name='index'),
 
 	# About page
 	url(r'^about/$', views.about, name='about'),
@@ -29,15 +29,17 @@ urlpatterns = patterns('',
 	url(r'^thefts.json$', views.getThefts, name='getThefts'),
 
 	# Called when user edits or deletes an alert area
-	url(r'edit/$', views.editShape, name='editShape'),
+	url(r'^edit/$', views.editShape, name='editShape'),
 
 	# Terms and conditions page
-	url(r'terms_and_conditions/$', views.termsAndConditions, name='termsAndConditions'),
+	url(r'^terms_and_conditions/$', views.termsAndConditions, name='termsAndConditions'),
 
-	url(r'recent/$', views.recentReports, name='recent'),
+	url(r'^recent/$', views.recentReports, name='recent'),
 
-	url(r'vis/$', views.vis, name='vis'),
-	url(r'alerts/$', views.recentReports, name='alerts'),
+	url(r'^vis/$', views.vis, name='vis'),
+	url(r'^vis/@(?P<lat>-?\d{1,3}\.?\d*),(?P<lng>-?\d{1,3}\.?\d*),(?P<zoom>\d+)z/?$', views.vis, name='vis'),
+
+	url(r'^alerts/$', views.recentReports, name='alerts'),
 )
 
 urlpatterns += format_suffix_patterns([

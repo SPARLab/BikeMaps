@@ -82,6 +82,12 @@
     {% cache 500 data %}
       var data = {{ points|geojsonfeature:"report_date,date,p_type"|safe}}['features'];
     {% endcache %}
+
+    {% if zoom %}
+      var zoom = {{ zoom }},
+          lat = {{ lat }},
+          lng = {{ lng }};
+    {% endif %}
   </script>
   <script src="{% static 'mapApp/js/vis.js' %}"></script>
 
