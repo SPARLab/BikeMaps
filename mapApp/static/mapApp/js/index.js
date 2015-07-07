@@ -11,7 +11,7 @@ var incidentData = new L.MarkerClusterGroup({
         return pieChart(data);
       },
     }),
-    alertAreas = new L.FeatureGroup([]);
+    alertAreas = L.featureGroup();
 
 // Define popup getter function
 incidentData.on('click', function(e){
@@ -29,12 +29,11 @@ var map = L.map('map', {
 });
 
 // Set map view
-var userMark;
 map.on("locationfound", function(location) {
-  if (!userMark) {
-    userMark = L.userMarker(location.latlng, {smallIcon:true, circleOpts:{weight: 1, opacity: 0.3, fillOpacity: 0.05}}).addTo(map);
-    userMark.setAccuracy(location.accuracy);
-  }
+    var userMark = L.userMarker(location.latlng, {smallIcon:true, circleOpts:{weight: 1, opacity: 0.3, fillOpacity: 0.05}}).addTo(map);
+    if (location.accuracy < 500){
+      userMark.setAccuracy(location.accuracy);
+    }
 });
 
 if (typeof zoom !== 'undefined') {
@@ -75,7 +74,6 @@ var collisions = geojsonMarker(collisions, "collision").addTo(incidentData).getL
 
 // Add geofence alert areas to map
 addAlertAreas(geofences);
-
 function addAlertAreas(geofences){
   L.geoJson(geofences, {
     style: function(feature) {
