@@ -23,6 +23,7 @@ class HazardForm(forms.ModelForm):
                 _('Hazard Details'),
                 Field('geom', type='hidden', id='hazPoint'),
                 Field('date', id='hazard_date', template='mapApp/util/datepicker.html', autocomplete='off'),
+                Field('hazard_category', id='hazard-category'),
                 Field('i_type', id='hazard-type'),
             ),
             AccordionGroup(
@@ -45,4 +46,4 @@ class HazardForm(forms.ModelForm):
 
     class Meta:
         model = Hazard
-        exclude = ['p_type']
+        exclude = ['p_type', 'hazard_fixed', 'expires_date']

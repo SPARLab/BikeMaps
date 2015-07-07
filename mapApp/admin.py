@@ -34,6 +34,7 @@ class IncidentAdmin(PointAdmin):
 admin.site.register(Incident, IncidentAdmin)
 
 class HazardAdmin(PointAdmin):
+	list_display = ('pk','p_type','report_date','date','was_published_recently', 'is_expired', 'expires_date')
 	fieldsets = [
 	    ('Location', {'fields': ['geom']}),
 	    ('Hazard', {'fields': ['date', 'i_type']}),
