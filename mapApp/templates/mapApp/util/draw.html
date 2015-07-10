@@ -111,7 +111,6 @@ function desktopDrawing(){
           });
 
           var fd = new FormData();
-          fd.append('csrfmiddlewaretoken', '{{ csrf_token }}');
           fd.append('editType', type)
           fd.append('editPk', editPk)
           fd.append('editGeom', editGeom)
