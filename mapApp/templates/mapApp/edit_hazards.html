@@ -11,38 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.css">
   <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
-  <style media="screen">
-    .map-col{
-      height: 100%;
-      padding: 0 !important;
-    }
-
-    #map {
-      height: 100%;
-      margin-top: 0px;
-    }
-
-    #data li{
-      padding-top: 5px;
-    }
-
-    .highlight{
-      background: #ddd;
-    }
-
-    .center-chart{
-      width: 100%;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 8px;
-    }
-
-    #i-type-bar g.axis.x text{
-      text-anchor: start !important;
-      transform: rotate(45deg) translate(7px, -8px);
-    }
-  </style>
+  <link rel="stylesheet" href="{% static 'mapApp/css/edit_hazards.css' %}">
 {% endblock %}
 
 {% block body %}
@@ -89,8 +58,9 @@
   <script src="{% static 'mapApp/js/icons.js' %}" charset="utf-8"></script>
   <script src="{% static 'mapApp/js/map.js' %}" charset="utf-8"></script>
   <script>
-    var hazards = {{ hazards|geojsonfeature:"i_type,report_date,time,details,pk,hazard_fixed"|safe }};
+    var hazards = {{ hazards|geojsonfeature:"i_type,report_date,details,pk,hazard_fixed"|safe }};
     var geofences = {{ geofences|geojsonfeature|safe}}
   </script>
+  <script src="{% static 'mapApp/js/csrfheader.js' %}"></script>
   <script src="{% static 'mapApp/js/edit_hazards.js' %}" charset="utf-8"></script>
 {% endblock %}

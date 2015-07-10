@@ -70,7 +70,7 @@ $(function(){
       zoom: 4,
       layers: [MapQuestOpen_OSM, hazardsNotFixed, hazardsFixed],
       worldCopyJump: true,
-  }).on('load', changeMap())
+  }).on('load', changeMap)
     .on('moveend', mapFilter);
 
   function changeMap(){
@@ -99,7 +99,7 @@ $(function(){
     var bounds = map.getBounds();
     geomDimension.filterFunction(function(d){
       return bounds.contains([d.lat, d.lng]);
-    })
+    });
     changeMap();
     dc.redrawAll();
   }
@@ -137,22 +137,34 @@ $(function(){
     changeMap();
 
     // AJAX change to server
-    
+    var fd = new FormData();
+    fd.append('pk', pID);
+    fd.append('fixed', checked);
+
+    // Ajax changes to server
+    $.ajax({
+      url: "/update_hazard/",
+      type: 'POST',
+      data: fd,
+      dataType: "json",
+      processData: false,
+      contentType: false,
+      success: function(data) {
+        if (!data['success']) {
+          $('#message').append('<div class="alert alert-danger" role="alert">' +
+            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+            'There was a database failure saving the point.<br>' +
+            'Please contact tech-support@bikemaps.org' +
+            '</div>'
+          );
+          setTimeout(function(){
+            $('#message .alert').alert('close');
+          }, 7000);
+        }
+      }
+    });
   }
 });
 
 dc.renderAll();
 dc.redrawAll();
-
-// function pprint(jsonData){
-//   var str = "<ol>";
-//   jsonData.features.forEach(function(obj) {
-//     str += "<li layer='hazard' pk=" + obj.properties.pk + ">"
-//         + "<strong>Date: </strong>" + moment(obj.properties.date).calendar() + "<br>"
-//         + "<strong>Type: </strong>" + obj.properties.i_type + "<br>";
-//     if(obj.properties.details != ''){
-//       str += "<strong>Description: </strong>" + obj.properties.details + "</li>";
-//     };
-//   });
-//   $('#data').append(str + "</ol>");
-// };

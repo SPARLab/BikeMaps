@@ -31,6 +31,7 @@ urlpatterns = patterns('',
 
 	# Called when user edits or deletes an alert area
 	url(r'^edit/$', views.editShape, name='editShape'),
+	url(r'^update_hazard/$', views.updateHazard, name='updateHazard'),
 
 	# Terms and conditions page
 	url(r'^terms_and_conditions/$', views.termsAndConditions, name='termsAndConditions'),

@@ -12,7 +12,11 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 from mapApp.models import Incident, Hazard, Theft, AlertArea, IncidentNotification, HazardNotification, TheftNotification
 
-from mapApp.forms import EditForm
+from mapApp.forms import EditForm, UpdateHazardForm
+
+import datetime
+import logging
+logger = logging.getLogger(__name__)
 
 @require_POST
 @login_required
@@ -59,3 +63,22 @@ def editHazards(request):
 		'geofences': rois
 	}
 	return render(request, 'mapApp/edit_hazards.html', context)
+
+@require_POST
+@user_passes_test(lambda u: u.is_superuser)
+def updateHazard(request):
+	form = UpdateHazardForm(request.POST)
+	if form.is_valid():
+		# update hazard_fixed for Hazards[h_id]
+		pk = form.cleaned_data['pk']
+		fixed = form.cleaned_data['fixed']
+
+		hazard = get_object_or_404(Hazard, pk=pk)
+		hazard.hazard_fixed=fixed
+		hazard.hazard_fixed_date = datetime.datetime.now()
+		logger.debug(datetime.datetime.now())
+		logger.debug(hazard.hazard_fixed_date)
+		hazard.save()
+
+		return JsonResponse({'success': True})
+	return JsonResponse({'success': False})
