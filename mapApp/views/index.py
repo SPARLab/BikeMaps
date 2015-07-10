@@ -12,7 +12,7 @@ def index(request, lat=None, lng=None, zoom=None):
 		# Model data used by map
 		'collisions': incidents.filter(p_type__exact="collision"),
 		'nearmisses': incidents.filter(p_type__exact="nearmiss"),
-		'hazards': Hazard.objects.select_related('point').exclude(expires_date__lt=now),
+		'hazards': Hazard.objects.select_related('point').exclude(expires_date__lt=now).exclude(hazard_fixed=True),
 		'thefts': Theft.objects.select_related('point').all(),
 		# 'officials': officialResult,
 		"geofences": AlertArea.objects.filter(user=request.user.id),
