@@ -11,8 +11,10 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 from mapApp.models import Incident, Hazard, Theft, AlertArea, IncidentNotification, HazardNotification, TheftNotification
-
 from mapApp.forms import EditForm, UpdateHazardForm
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 import datetime
 import logging
@@ -49,9 +51,10 @@ def editShape(request):
 	else:
 		return JsonResponse({'success':False})
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: hasattr(u, 'administrativearea_set'))
 def editHazards(request):
-	rois = AlertArea.objects.filter(user=request.user.id)
+	user = get_object_or_404(User, id=request.user.id)
+	rois = user.administrativearea_set.all()
 	hazards = Hazard.objects.all()
 	hazardsInPoly = Hazard.objects.none()
 	# Find intersecting points
@@ -65,8 +68,9 @@ def editHazards(request):
 	return render(request, 'mapApp/edit_hazards.html', context)
 
 @require_POST
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: hasattr(u, 'administrativearea_set'))
 def updateHazard(request):
+	user = get_object_or_404(User, id=request.user.id)
 	form = UpdateHazardForm(request.POST)
 	if form.is_valid():
 		# update hazard_fixed for Hazards[h_id]
@@ -74,11 +78,14 @@ def updateHazard(request):
 		fixed = form.cleaned_data['fixed']
 
 		hazard = get_object_or_404(Hazard, pk=pk)
-		hazard.hazard_fixed=fixed
-		hazard.hazard_fixed_date = datetime.datetime.now()
-		logger.debug(datetime.datetime.now())
-		logger.debug(hazard.hazard_fixed_date)
-		hazard.save()
 
-		return JsonResponse({'success': True})
+		# Check admin areas geom intersect the point being updated
+		if user.administrativearea_set.filter(geom__intersects=hazard.geom).exists():
+			hazard.hazard_fixed=fixed
+			hazard.hazard_fixed_date = datetime.datetime.now()
+			logger.debug(datetime.datetime.now())
+			logger.debug(hazard.hazard_fixed_date)
+			hazard.save()
+
+			return JsonResponse({'success': True})
 	return JsonResponse({'success': False})

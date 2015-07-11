@@ -1,7 +1,7 @@
 from django.contrib.gis import admin
 
 # Register models
-from mapApp.models import Point, Incident, Hazard, Theft, Official
+from mapApp.models import Point, Incident, Hazard, Theft, Official, AdministrativeArea
 
 # admin.site.register(Official)
 class PointAdmin(admin.OSMGeoAdmin):
@@ -12,7 +12,6 @@ class PointAdmin(admin.OSMGeoAdmin):
 
 	# Allow for filtering of report date
 	list_filter = ['report_date', 'date', 'p_type']
-
 	list_display = ('pk','p_type','report_date','date','was_published_recently')
 
 	fieldsets = [
@@ -51,6 +50,27 @@ class TheftAdmin(PointAdmin):
 	    ('Personal', {'fields': ['regular_cyclist'], 'classes':['collapse']})
 	]
 admin.site.register(Theft, TheftAdmin)
+
+class HazardAdminsInline(admin.TabularInline):
+    model = AdministrativeArea.users.through
+
+class AdminAreaAdmin(admin.OSMGeoAdmin):
+	# Map options
+	default_lon = -13745000
+	default_lat = 6196000
+	default_zoom = 10
+
+	list_display = ('description','date')
+	search_fields = ['description', 'users', 'users__related_email']
+
+	fields = ['geom', 'description']
+
+	inlines = [
+		HazardAdminsInline
+	]
+	exclude = ('users',)
+
+admin.site.register(AdministrativeArea, AdminAreaAdmin)
 
 
 # class AlertAreaAdmin(admin.OSMGeoAdmin):
