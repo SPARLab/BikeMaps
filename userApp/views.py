@@ -20,8 +20,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 @ratelimit(key='ip', rate='10/5m')
-@ratelimit(key='post:username', rate='5/5m')
-@ratelimit(key='post:password', rate='5/5m')
+@ratelimit(key='post:username', rate='10/5m')
+@ratelimit(key='post:password', rate='10/5m')
 def rate_limit_login(request):
     if request.user.is_authenticated():
         return redirect(request.GET.get('next', reverse('mapApp:index')))
