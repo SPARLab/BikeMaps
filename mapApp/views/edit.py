@@ -51,7 +51,7 @@ def editShape(request):
 	else:
 		return JsonResponse({'success':False})
 
-@user_passes_test(lambda u: hasattr(u, 'administrativearea_set'))
+@user_passes_test(lambda u: u.is_superuser)
 def editHazards(request):
 	user = get_object_or_404(User, id=request.user.id)
 	rois = user.administrativearea_set.all()
@@ -68,7 +68,7 @@ def editHazards(request):
 	return render(request, 'mapApp/edit_hazards.html', context)
 
 @require_POST
-@user_passes_test(lambda u: hasattr(u, 'administrativearea_set'))
+@user_passes_test(lambda u: u.is_superuser)
 def updateHazard(request):
 	user = get_object_or_404(User, id=request.user.id)
 	form = UpdateHazardForm(request.POST)
