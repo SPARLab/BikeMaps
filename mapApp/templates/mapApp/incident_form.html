@@ -123,23 +123,28 @@
       });
       event.preventDefault();
     });
+
+    // Dynamically change lock to "NA" if bike not locked
+    $("#div_id_lock select option[value='NA']").hide();
+    $(document).on("change", "#div_id_how_locked select", function(){
+        if($(this).val() == 'Not locked'){
+            $("#div_id_lock select option").hide();
+            $("#div_id_lock select option[value='NA']").show();
+            $("#div_id_lock select").val('NA');
+        }
+        else{
+            if($("#div_id_lock select").val() == 'NA'){
+                $("#div_id_lock select").val('');
+            }
+            $("#div_id_lock select option").show();
+            $("#div_id_lock select option[value='NA']").hide();
+        }
+    });
+
+    // Change hazard options dynamically
+    $(document).on("change", "#hazardReport #div_id_i_type select", function(){
+      var optgroup = $(":selected", this).parent();
+      $("#hazard-category").val(optgroup.attr("label").toLowerCase());
+    })
   })
-
-
-  // Dynamically change lock to "NA" if bike not locked
-  $("#div_id_lock select option[value='NA']").hide();
-  $("#div_id_how_locked select").change( function(){
-      if($(this).val() == 'Not locked'){
-          $("#div_id_lock select option").hide();
-          $("#div_id_lock select option[value='NA']").show();
-          $("#div_id_lock select").val('NA');
-      }
-      else{
-          if($("#div_id_lock select").val() == 'NA'){
-              $("#div_id_lock select").val('');
-          }
-          $("#div_id_lock select option").show();
-          $("#div_id_lock select option[value='NA']").hide();
-      }
-  });
 </script>
