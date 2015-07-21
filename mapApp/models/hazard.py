@@ -57,7 +57,9 @@ class Hazard(Point):
     hazard_category = models.CharField(
         _('Please select the category of hazard you are reporting:'),
         max_length=100,
-        choices=HAZARD_CATEGORIES
+        choices=HAZARD_CATEGORIES,
+        null=True,
+        blank=True
     )
 
     i_type = models.CharField(
