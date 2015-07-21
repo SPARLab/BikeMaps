@@ -55,7 +55,7 @@ def editShape(request):
 def editHazards(request):
 	user = get_object_or_404(User, id=request.user.id)
 	rois = user.administrativearea_set.all()
-	hazards = Hazard.objects.all()
+	hazards = Hazard.objects.filter(hazard_category="infrastructure")
 	hazardsInPoly = Hazard.objects.none()
 	# Find intersecting points
 	for g in rois:
