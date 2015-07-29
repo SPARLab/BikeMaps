@@ -22,12 +22,6 @@ urlpatterns = [
 	# Called from email form
 	url(r'^contact/$', views.contact, name='contact'),
 
-	# Called by admin data export button
-	url(r'^points.json$', views.getPoints, name='getPoints'),
-	url(r'^incidents.json$', views.getIncidents, name='getIncidents'),
-	url(r'^hazards.json$', views.getHazards, name='getHazards'),
-	url(r'^thefts.json$', views.getThefts, name='getThefts'),
-
 	# Called when user edits or deletes an alert area
 	url(r'^edit/$', views.editShape, name='editShape'),
 

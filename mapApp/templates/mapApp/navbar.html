@@ -7,10 +7,10 @@
 {% url 'blogApp:index' as blog %}
 
 {% url 'admin:index' as admin %}
-{% url 'mapApp:getPoints' as getPoints %}
-{% url 'mapApp:getIncidents' as getIncidents %}
-{% url 'mapApp:getHazards' as getHazards %}
-{% url 'mapApp:getThefts' as getThefts %}
+{% url 'mapApp:collision-list' as collisionList %}
+{% url 'mapApp:nearmiss-list' as nearmissList %}
+{% url 'mapApp:hazard-list' as hazardList %}
+{% url 'mapApp:theft-list' as theftList %}
 
 {% url 'userApp:logout' as logout %}
 {% url 'userApp:login' as login %}
@@ -58,10 +58,10 @@
                   <li role="presentation" class="divider"></li>
                   <li role="presentation" class="dropdown-header">{% trans "Admin options" %}</li>
                   <li><a href="{{ admin }}"><small><span class="fa fa-wrench"></span> {% trans "Admin" %}</small></a></li>
-                  <li><a href="{{ getPoints }}"><small><span class="fa fa-download"></span> {% trans "Export Points" %}</small></a></li>
-                  <li><a href="{{ getIncidents }}"><small><span class="fa fa-download"></span> {% trans "Export Incidents" %}</small></a></li>
-                  <li><a href="{{ getHazards }}"><small><span class="fa fa-download"></span> {% trans "Export Hazards" %}</small></a></li>
-                  <li><a href="{{ getThefts }}"><small><span class="fa fa-download"></span> {% trans "Export Thefts" %}</small></a></li>
+                  <li><a href="{{ collisionList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Collisions" %}</small></a></li>
+                  <li><a href="{{ nearmissList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Nearmisses" %}</small></a></li>
+                  <li><a href="{{ hazardList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Hazards" %}</small></a></li>
+                  <li><a href="{{ theftList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Thefts" %}</small></a></li>
                 {% endif %}
               </ul>
           </li>
