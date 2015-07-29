@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from mapApp import views
 
-urlpatterns = patterns('',
+urlpatterns = [
 	# Index page
 	url(r'^$', views.index, name='index'),
 	url(r'^@(?P<lat>-?\d{1,3}\.?\d*),(?P<lng>-?\d{1,3}\.?\d*),(?P<zoom>\d+)z/?$', views.index, name='index'),
@@ -44,14 +44,14 @@ urlpatterns = patterns('',
 	url(r'^vis/@(?P<lat>-?\d{1,3}\.?\d*),(?P<lng>-?\d{1,3}\.?\d*),(?P<zoom>\d+)z/?$', views.vis, name='vis'),
 
 	url(r'^alerts/$', views.recentReports, name='alerts'),
-)
+]
 
 urlpatterns += format_suffix_patterns([
-    url(r'^collisions/$', views.CollisionList.as_view(), name='hazard-list'),
-    url(r'^nearmiss/$', views.NearmissList.as_view(), name='near-miss-list'),
+    url(r'^collisions/$', views.CollisionList.as_view(), name='collision-list'),
+    url(r'^nearmiss/$', views.NearmissList.as_view(), name='nearmiss-list'),
     url(r'^hazards/$', views.HazardList.as_view(), name='hazard-list'),
     url(r'^thefts/$', views.TheftList.as_view(), name='theft-list'),
-    url(r'^official/$', views.OfficialList.as_view(), name='hazard-list'),
+    url(r'^official/$', views.OfficialList.as_view(), name='official-list'),
     url(r'^alertareas/$', views.AlertAreaList.as_view(), name='alertarea-list'),
     url(r'^alertareas/(?P<pk>[0-9]+)/$', views.AlertAreaDetail.as_view()),
     # url(r'^users/$', views.UserList.as_view()),
@@ -60,5 +60,4 @@ urlpatterns += format_suffix_patterns([
     url(r'^gcmdevices/(?P<registration_id>.+)/$', views.GCMDeviceDetail.as_view(), name='gcmdevice-detail'),
     url(r'^apnsdevices/$', views.APNSDeviceList.as_view(), name='apnsdevice-list'),
     url(r'^apnsdevices/(?P<registration_id>.+)/$', views.APNSDeviceDetail.as_view(), name='apnsdevice-detail'),
-
-])
+], allowed=['json'])
