@@ -22,7 +22,7 @@ class TheftForm(forms.ModelForm):
             AccordionGroup(
                 _('Theft Details'),
                 Field('geom', type='hidden', id='theftPoint'),
-                Field('date', id='theft_date', template='mapApp/util/datepicker.html', autocomplete='off'),
+                Field('date', id='theft_date', template='mapApp/util/%s_datepicker.html', autocomplete='off'),
                 Field('i_type'),
                 Field('how_locked'),
                 Field('lock'),

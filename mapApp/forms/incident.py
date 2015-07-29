@@ -7,7 +7,7 @@ from crispy_forms.bootstrap import Accordion, AccordionGroup
 
 from mapApp.models import Incident
 
-why_personal_link = u'<a class="text-info" data-toggle="collapse" aria-expanded="false" aria-controls="why-personal" href=".tab-pane.active .why-personal"><span class="glyphicon glyphicon-question-sign"></span> <strong>%(question)s</strong></a>' % {'question': _(u"Why are we asking for personal details?")}
+why_personal_link = u'<a class="text-info" data-toggle="collapse" aria-expanded="false" aria-controls="why-personal" href=".tab-pane.active .why-personal"><span class="glyphicon glyphicon-question-sign"></span> <strong>{0}</strong></a>'.format(_(u"Why are we asking for personal details?"))
 
 why_personal_well = _(u"Personal details such as age and gender are routinely collected in health research including studies examining cycling injuries (e.g., Cripton et al. 2015). In addition, details such as rider experience and gender have been shown to be important predictors of cycling safety and risk (Beck et al. 2007). The goal of BikeMaps.org is to gather more comprehensive data to better assess cycling safety and risk. Providing personal details will allow us to more accurately fill in these data gaps.")
 
@@ -22,7 +22,7 @@ class IncidentForm(forms.ModelForm):
             AccordionGroup(
                 _('Incident Details'),
                 Field('geom', type='hidden', id='point'),
-                Field('date', id='incident_date', template='mapApp/util/datepicker.html', autocomplete='off'),
+                Field('date', id='incident_date', template='mapApp/util/%s_datepicker.html', autocomplete='off'),
                 Field('i_type'),
                 Field('incident_with'),
                 Field('injury'),

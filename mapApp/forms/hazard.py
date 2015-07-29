@@ -22,7 +22,7 @@ class HazardForm(forms.ModelForm):
             AccordionGroup(
                 _('Hazard Details'),
                 Field('geom', type='hidden', id='hazPoint'),
-                Field('date', id='hazard_date', template='mapApp/util/datepicker.html', autocomplete='off'),
+                Field('date', id='hazard_date', template='mapApp/util/%s_datepicker.html', autocomplete='off'),
                 Field('hazard_category', id='hazard-category', type="hidden"),
                 Field('i_type', id='hazard-type'),
             ),
