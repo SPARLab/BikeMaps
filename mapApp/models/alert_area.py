@@ -48,7 +48,7 @@ class AdministrativeArea(models.Model):
     objects = models.GeoManager() # Required to conduct geographic queries
 
 
-    users = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name=_("users"), blank=True, null=True)
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name=_("users"), blank=True)
     description = models.CharField(max_length=200)
 
     def latlngList(self):
