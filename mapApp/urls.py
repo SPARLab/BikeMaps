@@ -41,10 +41,10 @@ urlpatterns = [
 ]
 
 urlpatterns += format_suffix_patterns([
-    url(r'^collisions/$', views.CollisionList.as_view(), name='collision-list'),
-    url(r'^nearmiss/$', views.NearmissList.as_view(), name='nearmiss-list'),
-    url(r'^hazards/$', views.HazardList.as_view(), name='hazard-list'),
-    url(r'^thefts/$', views.TheftList.as_view(), name='theft-list'),
+    url(r'^collisions/?$', views.CollisionList.as_view(), name='collision-list'),
+    url(r'^nearmiss/?$', views.NearmissList.as_view(), name='nearmiss-list'),
+    url(r'^hazards/?$', views.HazardList.as_view(), name='hazard-list'),
+    url(r'^thefts/?$', views.TheftList.as_view(), name='theft-list'),
     url(r'^official/$', views.OfficialList.as_view(), name='official-list'),
     url(r'^alertareas/$', views.AlertAreaList.as_view(), name='alertarea-list'),
     url(r'^alertareas/(?P<pk>[0-9]+)/$', views.AlertAreaDetail.as_view()),
