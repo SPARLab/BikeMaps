@@ -23,7 +23,7 @@ class CollisionList(APIView):
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
 
-        collisions = list(Incident.objects.filter(p_type__exact="collision").filter(geom__within=bbox) | Incident.objects.filter(p_type__exact="fall").filter(geom__within=bbox))
+        collisions = list(Incident.objects.filter(p_type__exact="collision").filter(geom__within=bbox))
 
         serializer = IncidentSerializer(collisions, many=True)
         return Response(serializer.data)
@@ -279,7 +279,7 @@ class GCMDeviceDetail(APIView):
         gcmDevice.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    
+
 class APNSDeviceList(APIView):
     """
     List all APNSDevices, or create a new APNSDevice.
@@ -301,7 +301,7 @@ class APNSDeviceList(APIView):
                 APNSDevice.objects.filter(registration_id = request.data['registration_id']).delete()
             serializer.save(user=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class APNSDeviceDetail(APIView):
@@ -333,7 +333,7 @@ class APNSDeviceDetail(APIView):
     def delete(self, request, registration_id, format=None):
         apnsDevice = self.get_object(registration_id)
         apnsDevice.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)    
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 # Helper - Create bounding box as a polygon
 def stringToPolygon(bbstr):
