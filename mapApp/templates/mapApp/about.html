@@ -44,7 +44,7 @@
                 <p><strong>{% trans "How can citizens and municipalities monitor areas of interest to them?" %}</strong>
                     <br>
                     {% url 'userApp:register' as register_anchor and url 'userApp:login' as login_anchor %}
-                    {% blocktrans %}By <a href="{{ register_anchor|safe }}">registering</a> and <a href="{{ login_anchor|safe }}">logging in</a> you will be able to trace a riding or management region of interest using the <span class="poly-icon"></span> tool. Each time you login you will be alerted to recent mapping in your region by the <span class="fa fa-bell"></span> tool.{% endblocktrans %}
+                    {% blocktrans with '<span class="poly-icon"></span>' as polygon_icon and '<span class="fa fa-bell"></span>' as bell_icon %}By <a href="{{ register_anchor|safe }}">registering</a> and <a href="{{ login_anchor|safe }}">logging in</a> you will be able to trace a riding or management region of interest using the {{polygon_icon}} tool. Each time you login you will be alerted to recent mapping in your region by the {{bell_icon}} tool.{% endblocktrans %}
                     </p>
 
                 <p><strong>{% trans "Where do you get the rider volume data?" %}</strong>
