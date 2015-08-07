@@ -5,7 +5,6 @@ from django.core.urlresolvers import reverse
 
 import datetime
 from time import strftime, gmtime
-from django.utils import timezone
 
 ##########
 # Point class.
@@ -93,8 +92,8 @@ class Point(models.Model):
         return list(self.geom)[::-1]
 
     def was_published_recently(self):
-        now = timezone.now()
-        return now - datetime.timedelta(weeks=1) <= self.report_date < now
+        now = datetime.datetime.now()
+        return now - datetime.timedelta(weeks=1) <= self.report_date <= now
 
     # For admin site
     was_published_recently.admin_order_field = 'report_date'
