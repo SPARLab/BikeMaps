@@ -38,7 +38,9 @@ def postPoint(request, Form):
 	try:
 		form.data['geom'] = normalizeGeometry(form.data['geom'])
 	except(ValueError):
-		messages.error(request, '<strong>' + _('Error') + '</strong><br>' + _('No point was selected for this type of report.'))
+		# TODO provide error message to user here
+		JsonResponse({'success': False})
+		# messages.error(request, '<strong>' + _('Error') + '</strong><br>' + _('No point was selected for this type of report.'))
 
 	# Validate and submit to db
 	if form.is_valid():
