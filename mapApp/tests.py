@@ -2,11 +2,11 @@ from django.test import TestCase
 
 from django.contrib.gis.geos import GEOSGeometry
 from datetime import datetime, timedelta
+import json
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from mapApp.models import *
-
 
 # Create your tests here.
 class GetURLTests(TestCase):
@@ -49,6 +49,17 @@ class GetURLTests(TestCase):
         # Test for redirect for non logged in user
         self.assertEqual(self.client.get('/alerts/').status_code, 302)
         # Test for logged in User
+        self.client.login(username="test_user", password="password")
+        self.assertEqual(self.client.get('/alerts/').status_code, 200)
+        self.client.logout()
+
+    def test_getting_alerts(self):
+        self.client.login(username="test_user", password="wrong_password")
+        self.assertEqual(self.client.get('/alerts/').status_code, 302)
+
+        self.client.login(username="nonexistant_user", password="password")
+        self.assertEqual(self.client.get('/alerts/').status_code, 302)
+
         self.client.login(username="test_user", password="password")
         self.assertEqual(self.client.get('/alerts/').status_code, 200)
         self.client.logout()
@@ -220,6 +231,49 @@ class AlertAreaTests(TestCase):
         self._pnt_in_poly.delete()
         self._pnt_out_poly.delete()
 
+class PostDataTests(TestCase):
+    def setUp(self):
+        self.test_user = create_user()
+        self.pnt_geom = '{"type": "Point", "coordinates": [-123, 48]}'
+        self.poly_geom = '{"type": "Polygon", "coordinates": [[[-124,48],[-124,49],[-123,49],[-123,48],[-124,48]]]}'
+        self.now_time = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M")
+
+    def tearDown(self):
+        Incident.objects.all().delete()
+        Hazard.objects.all().delete()
+        Theft.objects.all().delete()
+
+    def test_incident_post(self):
+        response = self.client.post("/incident_submit/", {"geom": self.pnt_geom, "date": self.now_time, "i_type": "Collision with moving object or vehicle", "incident_with": "Vehicle, side", "injury": "Injury, no treatment"})
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertTrue(data['success'])
+        self.assertEqual(data['point_type'], "collision")
+
+    def test_hazard_post(self):
+        response = self.client.post("/hazard_submit/", {"geom": self.pnt_geom, "date": self.now_time, "i_type": "Pothole", "hazard_category": "infrastructure"})
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertTrue(data['success'])
+        self.assertEqual(data['point_type'], "hazard")
+
+    def test_theft_post(self):
+        response = self.client.post("/theft_submit/", {"geom": self.pnt_geom, "date": self.now_time, "i_type": "Bike (value < $1000)", "how_locked": "Frame locked", "lock": "U-Lock", "locked_to": "Outdoor bike rack", "lighting ": "Good", "traffic": "Very High"})
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertTrue(data['success'])
+        self.assertEqual(data['point_type'], "theft")
+
+    def test_alert_area_post(self):
+        self.client.login(username="test_user", password="password")
+        response = self.client.post("/poly_submit/", {"geom": self.poly_geom, "user": self.test_user.id, "email": self.test_user.email})
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertTrue(data['success'])
 
 def create_user():
     return User.objects.create_user("test_user", email="user@bikemaps.org", password="password")
