@@ -4,6 +4,9 @@ from mapApp.models import Incident, Theft, Hazard, Official, AlertArea
 from mapApp.forms import IncidentForm, HazardForm, TheftForm, GeofenceForm, EditForm
 import datetime
 
+import logging
+logger = logging.getLogger(__name__)
+
 def index(request, lat=None, lng=None, zoom=None):
 	incidents = Incident.objects.select_related('point').all()
 	now = datetime.datetime.now()

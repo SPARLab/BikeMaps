@@ -1,9 +1,9 @@
 // map p_types of points to nice labels
 var labels = {
-  "collision": "Collisions",
-  "nearmiss": "Nearmisses",
-  "hazard": "Hazards",
-  "theft": "Thefts",
+  "collision": gettext("Collisions"),
+  "nearmiss": gettext("Nearmisses"),
+  "hazard": gettext("Hazards"),
+  "theft": gettext("Thefts"),
 }
 // Define scales
 // map p_type to appropriate colors
@@ -12,7 +12,7 @@ var colorScale = d3.scale.ordinal()
     .range([iconColors.collision, iconColors.nearmiss, iconColors.hazard, iconColors.theft]);
 var weekdayScale = d3.scale.quantize()
     .domain([0,1,2,3,4,5,6])
-    .range(moment.weekdaysShort());
+    .range([gettext("Sun"), gettext("Mon"), gettext("Tue"), gettext("Wed"), gettext("Thu"), gettext("Fri"), gettext("Sat")]);
 
 // Define crossfilter dataset
 var xf = crossfilter(data);
@@ -73,7 +73,7 @@ barTypes
   .height(200)
   .x(d3.scale.ordinal().domain(["collision", "nearmiss", "hazard", "theft"]))
   .xUnits(dc.units.ordinal)
-  .yAxisLabel("Count")
+  .yAxisLabel(gettext("Count"))
   .centerBar(true)
   .elasticY(true)
   .dimension(p_typeDimension)
@@ -91,14 +91,14 @@ barWeek
   .width(400)
   .height(200)
   .x(d3.scale.linear().domain([-0.5,6.5]))
-  .yAxisLabel("Count")
+  .yAxisLabel(gettext("Count"))
   .centerBar(true)
   .elasticY(true)
   .dimension(weekdayDimension)
-  .group(weekdayCount, "Collisions").valueAccessor(function(d){return d.value.collision; })
-  .stack(weekdayCount, "Nearmisses", function(d){ return d.value.nearmiss; })
-  .stack(weekdayCount, "Hazards", function(d){ return d.value.hazard; })
-  .stack(weekdayCount, "Thefts", function(d){ return d.value.theft; })
+  .group(weekdayCount, gettext("Collisions")).valueAccessor(function(d){return d.value.collision; })
+  .stack(weekdayCount, gettext("Nearmisses"), function(d){ return d.value.nearmiss; })
+  .stack(weekdayCount, gettext("Hazards"), function(d){ return d.value.hazard; })
+  .stack(weekdayCount, gettext("Thefts"), function(d){ return d.value.theft; })
   .brushOn(true)
   .colors(colorScale.range())
   .colorAccessor(function(d){return d.layer;})
@@ -116,7 +116,7 @@ barHour
   .width(400)
   .height(200)
   .x(d3.scale.linear().domain([0,24]))
-  .yAxisLabel("Count")
+  .yAxisLabel(gettext("Count"))
   // .centerBar(true)
   .elasticY(true)
   .dimension(hourDimension)
@@ -141,7 +141,7 @@ barDate
   .width(575)
   .height(200)
   .x(d3.scale.linear().domain([-360, 0]))
-  .yAxisLabel("Count")
+  .yAxisLabel(gettext("Count"))
   .centerBar(true)
   .elasticY(true)
   .dimension(dateDimension)
@@ -151,7 +151,7 @@ barDate
 barDate.yAxis()
   .tickFormat(d3.format("d"));
 barDate.xAxis()
-  .tickFormat(function(v){ return moment().add(v, "days").format("MMM. D"); })
+  .tickFormat(function(v){ return gettext(moment().add(v, "days").format("MMM. D")); })
   .tickValues(function(){
     var firsts = [];
     // Calculate the day difference between now and the first of every month

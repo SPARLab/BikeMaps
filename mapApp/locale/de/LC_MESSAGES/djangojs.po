@@ -1,0 +1,96 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-08-10 11:59-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Mon"
+msgstr "Mo"
+
+msgid "Tue"
+msgstr "Di"
+
+msgid "Wed"
+msgstr "Mi"
+
+msgid "Thu"
+msgstr "Do"
+
+msgid "Fri"
+msgstr "Fr"
+
+msgid "Sat"
+msgstr "Sa"
+
+msgid "Sun"
+msgstr "So"
+
+msgid "Jan. 1"
+msgstr "1. Jän."
+
+msgid "Feb. 1"
+msgstr "1. Feb."
+
+msgid "Mar. 1"
+msgstr "1. März"
+
+msgid "Apr. 1"
+msgstr "1. Apr."
+
+msgid "May. 1"
+msgstr "1. Mai"
+
+msgid "Jun. 1"
+msgstr "1. Juni"
+
+msgid "Jul. 1"
+msgstr "1. Juli"
+
+msgid "Aug. 1"
+msgstr "1. Aug."
+
+msgid "Sep. 1"
+msgstr "1. Sept."
+
+msgid "Oct. 1"
+msgstr "1. Okt."
+
+msgid "Nov. 1"
+msgstr "1. Nov."
+
+msgid "Dec. 1"
+msgstr "1. Dez."
+
+#: .\mapApp\static\mapApp\js\vis.js:3 .\mapApp\static\mapApp\js\vis.js.c:98
+msgid "Collisions"
+msgstr "Kollisionen"
+
+#: .\mapApp\static\mapApp\js\vis.js:4 .\mapApp\static\mapApp\js\vis.js.c:99
+msgid "Nearmisses"
+msgstr "Beinahe-Unfälle"
+
+#: .\mapApp\static\mapApp\js\vis.js:5 .\mapApp\static\mapApp\js\vis.js.c:100
+msgid "Hazards"
+msgstr "Gefährdungen"
+
+#: .\mapApp\static\mapApp\js\vis.js:6 .\mapApp\static\mapApp\js\vis.js.c:101
+msgid "Thefts"
+msgstr "Diebstähle"
+
+#: .\mapApp\static\mapApp\js\vis.js:76 .\mapApp\static\mapApp\js\vis.js.c:94
+#: .\mapApp\static\mapApp\js\vis.js:119 .\mapApp\static\mapApp\js\vis.js:144
+msgid "Count"
+msgstr "zählen"

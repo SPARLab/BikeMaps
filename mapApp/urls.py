@@ -5,7 +5,7 @@ from mapApp import views
 urlpatterns = [
 	# Index page
 	url(r'^$', views.index, name='index'),
-	url(r'^@(?P<lat>-?\d{1,3}\.?\d*),(?P<lng>-?\d{1,3}\.?\d*),(?P<zoom>\d+)z/?$', views.index, name='index'),
+	url(r'^@(?P<lat>-?\d{1,3}\.\d*),(?P<lng>-?\d{1,3}\.\d*),(?P<zoom>\d+)z/?$', views.index, name='index'),
 
 	# About page
 	url(r'^about/$', views.about, name='about'),
@@ -35,7 +35,7 @@ urlpatterns = [
 	url(r'^recent/$', views.recentReports, name='recent'),
 
 	url(r'^vis/$', views.vis, name='vis'),
-	url(r'^vis/@(?P<lat>-?\d{1,3}\.?\d*),(?P<lng>-?\d{1,3}\.?\d*),(?P<zoom>\d+)z/?$', views.vis, name='vis'),
+	url(r'^vis/@(?P<lat>-?\d{1,3}\.\d*),(?P<lng>-?\d{1,3}\.\d*),(?P<zoom>\d+)z/?$', views.vis, name='vis'),
 
 	url(r'^alerts/$', views.recentReports, name='alerts'),
 ]

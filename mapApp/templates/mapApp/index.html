@@ -62,9 +62,9 @@
 
     // if zoom parameter in url, set variables
     {% if zoom %}
-      var zoom = {{ zoom }},
-          lat = {{ lat }},
-          lng = {{ lng }};
+      var zoom = {{ zoom|safe }},
+          lat = {{ lat|safe }},
+          lng = {{ lng|safe }};
     {% endif %}
 
     // Display number of points in user dropdown if admin is logged in
