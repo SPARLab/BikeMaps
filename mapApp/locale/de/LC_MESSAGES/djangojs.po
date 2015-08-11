@@ -1,21 +1,11 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-11 14:38-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: mapApp js\n"
+"Language: de\n"
 
 #: .\mapApp\static\mapApp\js\index.js:352
 msgid "Type"
@@ -45,204 +35,52 @@ msgstr "Datum"
 msgid "Details"
 msgstr "Details"
 
-#: .\mapApp\static\mapApp\js\vis.js:3 .\mapApp\static\mapApp\js\vis.js.c:98
+#: .\mapApp\static\mapApp\js\vis.js:3 .\mapApp\static\mapApp\js\vis.js.c:99
 msgid "Collisions"
 msgstr "Kollisionen"
 
-#: .\mapApp\static\mapApp\js\vis.js:4 .\mapApp\static\mapApp\js\vis.js.c:99
+#: .\mapApp\static\mapApp\js\vis.js:4 .\mapApp\static\mapApp\js\vis.js.c:100
 msgid "Nearmisses"
 msgstr "Beinahe-Unfälle"
 
-#: .\mapApp\static\mapApp\js\vis.js:5 .\mapApp\static\mapApp\js\vis.js.c:100
+#: .\mapApp\static\mapApp\js\vis.js:5 .\mapApp\static\mapApp\js\vis.js.c:101
 msgid "Hazards"
 msgstr "Gefährdungen"
 
-#: .\mapApp\static\mapApp\js\vis.js:6 .\mapApp\static\mapApp\js\vis.js.c:101
+#: .\mapApp\static\mapApp\js\vis.js:6 .\mapApp\static\mapApp\js\vis.js.c:102
 msgid "Thefts"
 msgstr "Diebstähle"
 
 #: .\mapApp\static\mapApp\js\vis.js:15
 msgid "Sun"
-msgstr "So"
+msgstr "Son"
 
 #: .\mapApp\static\mapApp\js\vis.js:15
 msgid "Mon"
-msgstr "Mo"
+msgstr "Mon"
 
 #: .\mapApp\static\mapApp\js\vis.js:15
 msgid "Tue"
-msgstr "Di"
+msgstr "Die"
 
 #: .\mapApp\static\mapApp\js\vis.js:15
 msgid "Wed"
-msgstr "Mi"
+msgstr "Mit"
 
 #: .\mapApp\static\mapApp\js\vis.js:15
 msgid "Thu"
-msgstr "Do"
+msgstr "Don"
 
 #: .\mapApp\static\mapApp\js\vis.js:15
 msgid "Fri"
-msgstr "Fr"
+msgstr "Fre"
 
 #: .\mapApp\static\mapApp\js\vis.js:15
 msgid "Sat"
-msgstr "Sa"
+msgstr "Sam"
 
-#: .\mapApp\static\mapApp\js\vis.js:76 .\mapApp\static\mapApp\js\vis.js.c:94
-#: .\mapApp\static\mapApp\js\vis.js:119 .\mapApp\static\mapApp\js\vis.js:144
+#: .\mapApp\static\mapApp\js\vis.js:76 .\mapApp\static\mapApp\js\vis.js.c:95
+#: .\mapApp\static\mapApp\js\vis.js:120 .\mapApp\static\mapApp\js\vis.js:145
 msgid "Count"
 msgstr "zählen"
 
-msgid "Collision with stationary object or vehicle"
-msgstr "Kollision mit einem stationärem Objekt oder Fahrzeug"
-
-msgid "Collision with moving object or vehicle"
-msgstr "Kollision mit einem sich bewegendem Objekt oder Fahrzeug"
-
-msgid "Near collision with stationary object or vehicle"
-msgstr "Beinahzusammenstoß mit einem stationärem Objekt oder Fahrzeug"
-
-msgid "Near collision with moving object or vehicle"
-msgstr "Beinahzusammenstoß mit einem sich bewegendem Objekt oder Fahrzeug"
-
-msgid "Fall"
-msgstr "Kontrolleverlust mit Sturz"
-
-msgid "Vehicle, head on"
-msgstr "Fahrzeug, Frontal"
-
-msgid "Vehicle, angle"
-msgstr "Aufprall auf Fahrzeugkante"
-
-msgid "Vehicle, side"
-msgstr "Fahrzeug, Seitenaufprall"
-
-msgid "Vehicle, rear end"
-msgstr "Fahrzeug, Heckaufprall"
-
-msgid "Vehicle, open door"
-msgstr "Offene Fahrzeugtür"
-
-msgid "Another cyclist"
-msgstr "Ein anderer Radfahrer"
-
-msgid "Pedestrian"
-msgstr "Fußgänger"
-
-msgid "Animal"
-msgstr "Tier"
-
-msgid "Curb"
-msgstr "Bordstein"
-
-msgid "Train Tracks"
-msgstr "Schienen"
-
-msgid "Pothole"
-msgstr "Schlagloch"
-
-msgid "Lane divider"
-msgstr "Fahrbahnbegrenzung"
-
-msgid "Sign/Post"
-msgstr "Schild/Pfosten"
-
-msgid "Roadway"
-msgstr "Fahrbahn"
-
-msgid "Other"
-msgstr "Anderes"
-
-msgid "Bike (value < $1000)"
-msgstr "Fahrrad im Wert von < 900 €"
-
-msgid "Bike (value >= $1000)"
-msgstr "Fahrrad im Wert von >= 900 €"
-
-msgid "Major bike component"
-msgstr "Wichtige Fahrrad Komponente"
-
-msgid "Minor bike componen'"
-msgstr "Kleinere Fahrrad Komponenten"
-
-msgid "Island"
-msgstr "Insel"
-
-msgid "Train track"
-msgstr "Schienen"
-
-msgid "Road surface"
-msgstr "Straßenbelag"
-
-msgid "Poor signage"
-msgstr "schlechte Beschilderung"
-
-msgid "Speed limits"
-msgstr "Geschwindigkeitsbegrenzungen"
-
-msgid "Other infrastructure"
-msgstr "Andere Infrastruktur"
-
-msgid "Poor visibility"
-msgstr "Schlechte Sicht"
-
-msgid "Broken glass"
-msgstr "Glasscherben auf der Straße"
-
-msgid "Wet leaves"
-msgstr "Nasses Laub auf der Strasse"
-
-msgid "Parked car"
-msgstr "geparktes Auto"
-
-msgid "Traffic flow"
-msgstr "Verkehrsfluss"
-
-msgid "Driver behaviour"
-msgstr "Fahrerverhalten"
-
-msgid "Cyclist behaviour"
-msgstr "Fahrradfahrerverhalten"
-
-msgid "Pedestrian behaviour"
-msgstr "Fußgängerverhalten"
-
-msgid "Congestion"
-msgstr "Stau"
-
-msgid "Jan. 1"
-msgstr "1. Jän."
-
-msgid "Feb. 1"
-msgstr "1. Feb."
-
-msgid "Mar. 1"
-msgstr "1. März"
-
-msgid "Apr. 1"
-msgstr "1. Apr."
-
-msgid "May. 1"
-msgstr "1. Mai"
-
-msgid "Jun. 1"
-msgstr "1. Juni"
-
-msgid "Jul. 1"
-msgstr "1. Juli"
-
-msgid "Aug. 1"
-msgstr "1. Aug."
-
-msgid "Sep. 1"
-msgstr "1. Sept."
-
-msgid "Oct. 1"
-msgstr "1. Okt."
-
-msgid "Nov. 1"
-msgstr "1. Nov."
-
-msgid "Dec. 1"
-msgstr "1. Dez."
