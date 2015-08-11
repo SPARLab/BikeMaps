@@ -12,3 +12,7 @@
 #barTypes .x.axis path {
   display: none;
 }
+
+#barTypes .x.axis text:lang(de) {
+  font-size: 8.5px;
+}

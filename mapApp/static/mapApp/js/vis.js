@@ -76,6 +76,7 @@ barTypes
   .yAxisLabel(gettext("Count"))
   .centerBar(true)
   .elasticY(true)
+  .title(function(d){ return d.value; })
   .dimension(p_typeDimension)
   .group(countTypes)
   .colors(colorScale.range())
