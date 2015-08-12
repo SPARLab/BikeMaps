@@ -1,3 +1,6 @@
+// Set date formats to local language
+moment.locale(LANGUAGE_CODE)
+
 // map p_types of points to nice labels
 var labels = {
   "collision": gettext("Collisions"),
@@ -12,7 +15,7 @@ var colorScale = d3.scale.ordinal()
     .range([iconColors.collision, iconColors.nearmiss, iconColors.hazard, iconColors.theft]);
 var weekdayScale = d3.scale.quantize()
     .domain([0,1,2,3,4,5,6])
-    .range([gettext("Sun"), gettext("Mon"), gettext("Tue"), gettext("Wed"), gettext("Thu"), gettext("Fri"), gettext("Sat")]);
+    .range(moment.weekdaysShort());
 
 // Define crossfilter dataset
 var xf = crossfilter(data);
@@ -152,7 +155,7 @@ barDate
 barDate.yAxis()
   .tickFormat(d3.format("d"));
 barDate.xAxis()
-  .tickFormat(function(v){ return gettext(moment().add(v, "days").format("MMM. D")); })
+  .tickFormat(function(v){ return moment().add(v, "days").format("ll").slice(0, -5); })
   .tickValues(function(){
     var firsts = [];
     // Calculate the day difference between now and the first of every month

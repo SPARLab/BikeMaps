@@ -51,34 +51,6 @@ msgstr "Gefährdungen"
 msgid "Thefts"
 msgstr "Diebstähle"
 
-#: .\mapApp\static\mapApp\js\vis.js:15
-msgid "Sun"
-msgstr "Son"
-
-#: .\mapApp\static\mapApp\js\vis.js:15
-msgid "Mon"
-msgstr "Mon"
-
-#: .\mapApp\static\mapApp\js\vis.js:15
-msgid "Tue"
-msgstr "Die"
-
-#: .\mapApp\static\mapApp\js\vis.js:15
-msgid "Wed"
-msgstr "Mit"
-
-#: .\mapApp\static\mapApp\js\vis.js:15
-msgid "Thu"
-msgstr "Don"
-
-#: .\mapApp\static\mapApp\js\vis.js:15
-msgid "Fri"
-msgstr "Fre"
-
-#: .\mapApp\static\mapApp\js\vis.js:15
-msgid "Sat"
-msgstr "Sam"
-
 #: .\mapApp\static\mapApp\js\vis.js:76 .\mapApp\static\mapApp\js\vis.js.c:95
 #: .\mapApp\static\mapApp\js\vis.js:120 .\mapApp\static\mapApp\js\vis.js:145
 msgid "Count"

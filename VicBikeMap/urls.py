@@ -34,6 +34,7 @@ urlpatterns += i18n_patterns('',
     url(r'^', include('mapApp.urls', namespace="mapApp")),
     url(r'^user/', include('userApp.urls', namespace="userApp")),
     url(r'^blog/', include('blogApp.urls', namespace="blogApp")),
+	url(r'^jsi18n/$', javascript_catalog, js_info_dict),
 )
 
 if settings.DEBUG:
