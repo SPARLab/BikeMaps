@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-16 11:17-0700\n"
+"POT-Creation-Date: 2015-08-12 14:19-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -167,14 +167,14 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
-#: .\userApp\views.py:45
+#: .\userApp\views.py:44
 msgid "Thanks for registering. You are now logged in."
 msgstr ""
 
-#: .\userApp\views.py:53
+#: .\userApp\views.py:52
 msgid "Captcha failure. It looks like you're a robot."
 msgstr ""
 
-#: .\userApp\views.py:72
+#: .\userApp\views.py:71
 msgid "Information updated."
 msgstr ""

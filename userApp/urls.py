@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url, include
 from django.core.urlresolvers import reverse_lazy
 from userApp import views
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^register/$', views.register, name='register'),
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^login/$', views.rate_limit_login, name='login'),
@@ -16,4 +16,4 @@ urlpatterns = patterns('',
     url(r'^password_reset/done/$', 'django.contrib.auth.views.password_reset_done', {'template_name': 'userApp/password_reset_done.html'}, name='password_reset_done'),
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', 'django.contrib.auth.views.password_reset_confirm',{'template_name': 'userApp/password_reset_confirm.html', 'post_reset_redirect': reverse_lazy('userApp:password_reset_complete')}, name='password_reset_confirm'),
     url(r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete', {'template_name': 'userApp/password_reset_complete.html'}, name='password_reset_complete'),
-)
+]

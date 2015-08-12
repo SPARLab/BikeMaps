@@ -334,29 +334,7 @@ function getPopup(layer) {
   type = layer.options.ftype,
   popup;
 
-  if (type === "collision" || type === "nearmiss") {
-    popup = '<strong>Type:</strong> ' + feature.properties.i_type + '<br><strong>';
-    if (feature.properties.i_type != "Fall") popup += 'Incident with';
-    else popup += 'Due to';
-    popup += ':</strong> ' + feature.properties.incident_with + '<br><strong>Date:</strong> ' + moment(feature.properties.date).format("MMM. D, YYYY, h:mma");
-
-    if(feature.properties.details){
-      popup += '<br><div class="popup-details"><strong>Details:</strong> ' + feature.properties.details + '</div>';
-    }
-
-  } else if (type === "hazard") {
-    popup = '<strong>Hazard type:</strong> ' + feature.properties.i_type + '<br><strong>Date:</strong> ' + moment(feature.properties.date).format("MMM. D, YYYY, h:mma");
-    if(feature.properties.details){
-      popup += '<br><div class="popup-details"><strong>Details:</strong> ' + feature.properties.details + '</div>';
-    }
-
-  } else if (type === "theft") {
-    popup = '<strong>Theft type:</strong> ' + feature.properties.i_type + '<br><strong>Date:</strong> ' + moment(feature.properties.date).format("MMM. D, YYYY, h:mma");
-    if(feature.properties.details){
-      popup += '<br><div class="popup-details"><strong>Details:</strong> ' + feature.properties.details + '</div>';
-    }
-
-  } else if (type === "official") {
+  if (type === "official") {
     popup = "<strong>Type:</strong> " + feature.properties.official_type;
     if(feature.properties.details){
       popup += " (" + feature.properties.details + ")";
@@ -368,8 +346,33 @@ function getPopup(layer) {
     }
     popup += '<br><strong>Date:</strong> ' + date;
     popup += '<br><strong>Data source: </strong> ' + feature.properties.data_source + '<a href="#" data-toggle="collapse" data-target="#official-metadata"><small> (metadata)</small></a><br>' + '<div id="official-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>' + feature.properties.metadata + '</small></div>';
+  }
+  else{
+    if (type === "collision" || type === "nearmiss") {
+      popup = '<strong>'+gettext('Type')+':</strong> ' + gettext(feature.properties.i_type) + '<br><strong>';
+      if (feature.properties.i_type != "Fall") popup += gettext('Incident with');
+      else popup += gettext('Due to');
+      popup += ':</strong> ' + gettext(feature.properties.incident_with)
 
-  } else return "error";
+    } else if (type === "hazard") {
+      popup = '<strong>'+gettext('Hazard type')+':</strong> ' + gettext(feature.properties.i_type);
+
+    } else if (type === "theft") {
+      popup = '<strong>'+gettext('Theft type')+':</strong> ' + gettext(feature.properties.i_type);
+    }
+    else return "error"; //Return error if type not found
+
+    // Append date
+    popup += '<br><strong>'+gettext('Date')+': </strong> ' + moment(feature.properties.date).locale(LANGUAGE_CODE).format("lll");
+
+    // Append details if present
+    if(feature.properties.details){
+      popup += '<br><div class="popup-details"><strong>'+ gettext('Details')+':</strong> ' + feature.properties.details + '</div>';
+    }
+
+    return popup;
+  }
+
 
   return popup;
 };

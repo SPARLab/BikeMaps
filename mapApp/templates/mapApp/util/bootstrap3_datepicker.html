@@ -7,7 +7,7 @@
 		Calendar view 3 displays wrong month selection and end date (displays 2 months previous)
 -->
 
-{% load crispy_forms_field %}
+{% load crispy_forms_field i18n %}
 <div id="div_{{ field.auto_id }}" class="form-group {% if form_show_errors and field.errors %}has-error{% endif %}">
     {% if field.label %}
 	    <label for="id_{{ field.id_for_label }}" class="control-label {% if field.field.required %}requiredField{% endif %}">
@@ -28,20 +28,22 @@
     {% include 'bootstrap3/layout/help_text_and_errors.html' %}
 </div>
 
-
+{% get_current_language as LANGUAGE_CODE %}
 <script type="text/javascript">
     $('#{{ field.id_for_label }}').datetimepicker({
 		autoclose: 1,
-        todayBtn:  0,
+    todayBtn:  0,
 		autoclose: 1,
 		todayHighlight: 1,
 		maxView: 2,
 		startView: 2,
 		forceParse: 0,
-        showMeridian: 1,
-        initialDate: "{% now 'Y-m-d\TH:i:s\Z' %}",
+    showMeridian: 1,
+    initialDate: "{% now 'Y-m-d\TH:i:s\Z' %}",
 		startDate: "-10y",
 		endDate: new Date(),
+    minuteStep: 5,
 		pickerPosition: 'bottom-left',
+    language: "{{ LANGUAGE_CODE }}",
     });
 </script>

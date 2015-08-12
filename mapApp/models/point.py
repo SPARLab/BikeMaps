@@ -5,7 +5,6 @@ from django.core.urlresolvers import reverse
 
 import datetime
 from time import strftime, gmtime
-from django.utils import timezone
 
 ##########
 # Point class.
@@ -26,7 +25,20 @@ class Point(models.Model):
         AGE_CHOICES.append((str(youngestYear-y), str(youngestYear-y)))
 
     from calendar import month_name as month
-    MONTH_CHOICES = [(str(i+1), str(month[i+1])) for i in xrange(12)]
+    MONTH_CHOICES = (
+        ('1', _('January')),
+        ('2', _('February')),
+        ('3', _('March')),
+        ('4', _('April')),
+        ('5', _('May')),
+        ('6', _('June')),
+        ('7', _('July')),
+        ('8', _('August')),
+        ('9', _('September')),
+        ('10', _('October')),
+        ('11', _('November')),
+        ('12', _('December'))
+    )
 
     SEX_CHOICES = (
         ('M', _('Male')),
@@ -93,8 +105,8 @@ class Point(models.Model):
         return list(self.geom)[::-1]
 
     def was_published_recently(self):
-        now = timezone.now()
-        return now - datetime.timedelta(weeks=1) <= self.report_date < now
+        now = datetime.datetime.now()
+        return now - datetime.timedelta(weeks=1) <= self.report_date <= now
 
     # For admin site
     was_published_recently.admin_order_field = 'report_date'

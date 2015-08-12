@@ -1,118 +1,109 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-16 11:17-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: blogApp\n"
+"Language: de\n"
 
 #: .\blogApp\forms\post.py:16
 msgid "Create a blog post"
-msgstr ""
+msgstr "Einen Blog Eintrag machen."
 
 #: .\blogApp\forms\post.py:36
 msgid "Save"
-msgstr ""
+msgstr "Speichern"
 
 #: .\blogApp\forms\upload_image.py:17
 msgid "Alt. Title"
-msgstr ""
+msgstr "Alt. Titel"
 
 #: .\blogApp\forms\upload_image.py:28
 msgid "Resize to this width or height"
-msgstr ""
+msgstr "Ändern Sie Breite und Höhe."
 
 #. Translators: This is the shortform for pixels
 #: .\blogApp\forms\upload_image.py:37
 msgid "px"
-msgstr ""
+msgstr "px"
 
 #: .\blogApp\forms\upload_image.py:42
 msgid "Upload"
-msgstr ""
+msgstr "Hochladen"
 
 #: .\blogApp\models\post.py:16
 msgid "Date created"
-msgstr ""
+msgstr "Datum erstellt"
 
 #: .\blogApp\models\post.py:18
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: .\blogApp\models\post.py:19
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #: .\blogApp\models\post.py:20
 msgid "Date posted"
-msgstr ""
+msgstr "Datum der Veröffentlichung"
 
 #: .\blogApp\models\post.py:21
 msgid "Slug"
-msgstr ""
+msgstr "Austragen"
 
 #: .\blogApp\models\post.py:22
 #: .\blogApp\templates\blogApp\post_template.html:29
 msgid "Published"
-msgstr ""
+msgstr "Veröffentlicht"
 
 #: .\blogApp\models\post.py:24
 msgid "Content"
-msgstr ""
+msgstr "Inhalt"
 
 #: .\blogApp\templates\blogApp\create_post.html:4
 msgid "Create a new post"
-msgstr ""
+msgstr "Einen neuen Eintrag erstellen"
 
 #: .\blogApp\templates\blogApp\create_post.html:15
 msgid "Create a new blog post"
-msgstr ""
+msgstr "Einen neuen Blog EIntrag erstellen."
 
 #: .\blogApp\templates\blogApp\create_post.html:27
 msgid "Markdown Cheatsheet"
-msgstr ""
+msgstr "Spickzettel"
 
 #: .\blogApp\templates\blogApp\create_post.html:49
 msgid "Upload an image to the server"
-msgstr ""
+msgstr "Ein Bild hochladen"
 
 #: .\blogApp\templates\blogApp\index.html:4
 msgid "BikeMaps Blog"
-msgstr ""
+msgstr "BikeMaps Blog"
 
 #: .\blogApp\templates\blogApp\index.html:28
 msgctxt "Next page link"
 msgid "Newer posts"
-msgstr ""
+msgstr "Neuste Einträge"
 
 #: .\blogApp\templates\blogApp\index.html:34
 msgctxt "Previous page link"
 msgid "Older posts"
-msgstr ""
+msgstr "Ältere Einträge"
 
 #: .\blogApp\templates\blogApp\post_template.html:31
 msgid "Not Published"
-msgstr ""
+msgstr "Nicht veröffentlicht"
 
 #: .\blogApp\templates\blogApp\post_template.html:34
 msgid "edit"
-msgstr ""
+msgstr "Bearbeiten"
 
 #: .\blogApp\views\post.py:40
 msgid "Blog post was added."
-msgstr ""
+msgstr "Blog Eintrag wurde hinzugefügt."
 
 #: .\blogApp\views\post.py:65
 msgid "Blog post saved."
-msgstr ""
+msgstr "Blog Eintrag wurde gespeichert."
+

@@ -6,14 +6,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans "Close" context "Close window button" %}</span></button>
-        <h4 class="modal-title text-center">Receive monthly alerts for your riding area</h4>
+        <h4 class="modal-title text-center">{% trans "Receive monthly alerts for your riding area" %}</h4>
       </div>
       <div class="modal-body">
         {% trans "To setup monitoring areas:" %}
             <ol>
                 <li>{% trans "Login to your account" %}
-                <li>{% trans "Trace areas on the map you would like to track using the <span class="poly-icon"></span> button.
-                    <br><small><em>note: tracing is currently not supported on mobile devices.</em></small>" %}
+                <li>{% trans "Trace areas on the map you would like to track using the <span class='poly-icon'></span> button." %}
+                    <br><small><em>{% trans "note: tracing is currently not supported on mobile devices." %}</em></small>
             </ol>
       </div>
       <div class="modal-footer">
@@ -39,9 +39,7 @@
           <div class="row">
             <div class="col-xs-12">
               <p style="text-indent: 2em">
-                {% blocktrans %}
-                Our rider density data comes directly from the Strava cycling and running mobile tracker application. Using Strava, you can track your cycling commutes and recreational rides using your Android or iPhone.
-                {% endblocktrans %}
+                {% blocktrans %}Our rider density data comes directly from the Strava cycling and running mobile tracker application. Using Strava, you can track your cycling commutes and recreational rides using your Android or iPhone.{% endblocktrans %}
               </p>
             </div>
           </div>

@@ -1,0 +1,58 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: mapApp js\n"
+"Language: de\n"
+
+#: .\mapApp\static\mapApp\js\index.js:352
+msgid "Type"
+msgstr "Art"
+
+#: .\mapApp\static\mapApp\js\index.js:353
+msgid "Incident with"
+msgstr "Zwischenfall mit"
+
+#: .\mapApp\static\mapApp\js\index.js:354
+msgid "Due to"
+msgstr "Wegen"
+
+#: .\mapApp\static\mapApp\js\index.js:358
+msgid "Hazard type"
+msgstr "Art der Gefahr"
+
+#: .\mapApp\static\mapApp\js\index.js:361
+msgid "Theft type"
+msgstr "Diebstahl Art"
+
+#: .\mapApp\static\mapApp\js\index.js:366
+msgid "Date"
+msgstr "Datum"
+
+#: .\mapApp\static\mapApp\js\index.js:370
+msgid "Details"
+msgstr "Details"
+
+#: .\mapApp\static\mapApp\js\vis.js:3 .\mapApp\static\mapApp\js\vis.js.c:99
+msgid "Collisions"
+msgstr "Kollisionen"
+
+#: .\mapApp\static\mapApp\js\vis.js:4 .\mapApp\static\mapApp\js\vis.js.c:100
+msgid "Nearmisses"
+msgstr "Beinahe-Unfälle"
+
+#: .\mapApp\static\mapApp\js\vis.js:5 .\mapApp\static\mapApp\js\vis.js.c:101
+msgid "Hazards"
+msgstr "Gefährdungen"
+
+#: .\mapApp\static\mapApp\js\vis.js:6 .\mapApp\static\mapApp\js\vis.js.c:102
+msgid "Thefts"
+msgstr "Diebstähle"
+
+#: .\mapApp\static\mapApp\js\vis.js:76 .\mapApp\static\mapApp\js\vis.js.c:95
+#: .\mapApp\static\mapApp\js\vis.js:120 .\mapApp\static\mapApp\js\vis.js:145
+msgid "Count"
+msgstr "zählen"
+

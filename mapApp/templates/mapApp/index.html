@@ -3,7 +3,7 @@
 <!-- Separate JS out of tips.html, incident_form.html, and draw.html so that only javascript is rendered at the bottom of body -->
 
 {% block title %}BikeMaps{% endblock %}
-{% load staticfiles crispy_forms_tags geojson_tags %}
+{% load staticfiles crispy_forms_tags geojson_tags i18n %}
 
 {% block headerCSS %}
   <link rel="stylesheet" href="{% static 'bootstrap-slider/css/bootstrap-slider.min.css' %}">
@@ -38,15 +38,21 @@
 {% block footerJS %}
   <script src="{% static 'bootstrap-slider/bootstrap-slider.js' %}"></script>
   <script src="{% static 'datetimepicker/js/bootstrap-datetimepicker.js' %}"></script>
+  <script src="{% static 'datetimepicker/js/locales/bootstrap-datetimepicker.de.js' %}" charset="UTF-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js"></script>
   <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
   <script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
   <script src="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.js' %}"></script>
   <script src="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script>
+  <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
+  <script type="text/javascript">
+    {% get_current_language as LANGUAGE_CODE %}
+      var LANGUAGE_CODE = "{{LANGUAGE_CODE}}";
+  </script>
   <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
   <script src="{% static 'mapApp/js/icons.js' %}"></script>
   <script src="{% static 'mapApp/js/map.js' %}"></script>
@@ -62,9 +68,9 @@
 
     // if zoom parameter in url, set variables
     {% if zoom %}
-      var zoom = {{ zoom }},
-          lat = {{ lat }},
-          lng = {{ lng }};
+      var zoom = {{ zoom|safe }},
+          lat = {{ lat|safe }},
+          lng = {{ lng|safe }};
     {% endif %}
 
     // Display number of points in user dropdown if admin is logged in

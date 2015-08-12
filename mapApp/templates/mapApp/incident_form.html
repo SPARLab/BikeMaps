@@ -41,13 +41,13 @@
             </div>
 
             <div class="modal-footer">
-              <div class="col-xs-7">
+              <div class="col-xs-6">
                 <div class="text-left" style="text-indent: -16px; padding-left: 15px;">
                   {% url "mapApp:termsAndConditions" as terms_url %}
                   <input type='checkbox' id='terms_checkbox'><strong> {% blocktrans %}I have read and understand the <a href='{{ terms_url }}' target=_blank> terms and conditions{% endblocktrans %}</a></strong>
                 </div>
               </div>
-              <div class="col-xs-5">
+              <div class="col-xs-6">
                 <button type="button" name="Cancel" class="btn btn-default cancel-btn" onclick="javascript:close_modal()">{% trans "Cancel" %}</button>
                 <button type="button" name="Submit" class="btn btn-primary submit-btn disabled" onclick="javascript:submit_form()">{% trans "Submit" %}</button>
               </div>
