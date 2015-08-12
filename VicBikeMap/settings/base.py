@@ -19,6 +19,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.gzip.GZipMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'middlewares.ForceDefaultLanguageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -75,6 +76,7 @@ INSTALLED_APPS = (
     'django.contrib.gis',
     'djgeojson',
     'crispy_forms',
+    'middlewares',
     'mapApp',
     'debug_toolbar',
 
