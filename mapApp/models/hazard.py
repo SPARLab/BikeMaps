@@ -138,7 +138,7 @@ class Hazard(Point):
     def save(self, *args, **kwargs):
         # Set expires time
         if self._expires_delta[self.i_type]:
-            self.expires_date = datetime.datetime.strptime(self.date, "%Y-%m-%d %H:%M") + self._expires_delta[self.i_type]
+            self.expires_date = self.date + self._expires_delta[self.i_type]
 
         # Set p_type
         self.p_type = "hazard"
