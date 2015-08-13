@@ -88,7 +88,7 @@ class PointTests(TestCase):
     """Tests of Incident class points instantiation and methods"""
     def setUp(self):
         pnt_geom = GEOSGeometry('POINT(-123 48)')
-        now_time = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M")
+        now_time = datetime.now()
 
         self._pnt = Incident.objects.create(geom=pnt_geom, date=now_time, i_type="Collision with moving object or vehicle", incident_with="Vehicle, side", injury="Injury, no treatment")
 
@@ -108,7 +108,7 @@ class IncidentTests(TestCase):
     """Tests of Incident class points instantiation and methods"""
     def setUp(self):
         pnt_geom = GEOSGeometry('POINT(-123.5 48.5)')
-        now_time = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M")
+        now_time = datetime.now()
 
         # Collision
         self._collision = Incident.objects.create(geom=pnt_geom, date=now_time, i_type="Collision with moving object or vehicle", incident_with="Vehicle, side", injury="Injury, no treatment")
@@ -139,7 +139,7 @@ class HazardTests(TestCase):
     """Test Hazard instantiation and methods"""
     def setUp(self):
         pnt_geom = GEOSGeometry('POINT(-123.5 48.5)')
-        now_time = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M")
+        now_time = datetime.now()
 
         # Create hazards that fall into different categories
         # TODO: Auto implement hazard_category or make a required field
@@ -185,7 +185,7 @@ class TheftTests(TestCase):
     """Tests of Incident class points instantiation and methods"""
     def setUp(self):
         pnt_geom = GEOSGeometry('POINT(-123.5 48.5)')
-        now_time = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M")
+        now_time = datetime.now()
 
         # Theft
         self._theft = Theft.objects.create(geom=pnt_geom, date=now_time, i_type="Bike (value < $1000)", how_locked="Frame locked", lock="U-Lock", locked_to="Outdoor bike rack", lighting ="Good", traffic="Very High")
