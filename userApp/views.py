@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import login as auth_login
 from django.contrib.auth.decorators import login_required
 from ratelimit.decorators import ratelimit
+from django.forms.util import ErrorList
 
 from .forms import MyUserCreationForm, UserProfileForm
 from utils import ReCaptcha
@@ -37,19 +38,24 @@ def register(request):
     if request.method == 'POST':
         form = MyUserCreationForm(request.POST)
 
-        if form.is_valid():
-            if ReCaptcha(request).is_valid() or settings.DEBUG:
-                # Create user
-                new_user = form.save()
-                messages.info(request, _("Thanks for registering. You are now logged in."))
+        try:
+            if form.is_valid():
+                if ReCaptcha(request).is_valid() or settings.DEBUG:
+                    # Create user
+                    new_user = form.save()
+                    messages.info(request, _("Thanks for registering. You are now logged in."))
 
-                # Log user in
-                new_user = authenticate(username=request.POST['username'], password=request.POST['password1'])
-                login(request, new_user)
-                return redirect(reverse("mapApp:index"))
-            else:
-                # Google reCAPTCHA failure
-                messages.error(request, _("Captcha failure. It looks like you're a robot."))
+                    # Log user in
+                    new_user = authenticate(username=request.POST['username'], password=request.POST['password1'])
+                    login(request, new_user)
+                    return redirect(reverse("mapApp:index"))
+                else:
+                    # Google reCAPTCHA failure
+                    messages.error(request, _("Captcha failure. It looks like you're a robot."))
+        except KeyError as e:
+            errors = form._errors.setdefault("username", ErrorList())
+            errors.append(_("Username already exists."))
+
     else:
         form = MyUserCreationForm()
 

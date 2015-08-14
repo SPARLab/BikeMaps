@@ -39,7 +39,29 @@
   {% include 'mapApp/navbar.html' %}
 
   <!-- container for alert popups -->
-  <div id="message"></div>
+  <div id="message">
+    {% if messages %}
+        {% for message in messages %}
+          {% if message.tags == "error" %}
+          <div class="alert alert-danger alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message|safe }}
+          </div>
+          {% elif message.tags %}
+          <div class="alert alert-{{ message.tags }} alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message|safe }}
+          </div>
+          {% else %}
+          <div class="alert alert-default alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message|safe }}
+          </div>
+          {% endif %}
+        {% endfor %}
+    {% endif %}
+  </div>
+
 
   {% block body %}{% endblock %}
 
