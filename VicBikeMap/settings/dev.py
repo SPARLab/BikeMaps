@@ -46,6 +46,8 @@ CSRF_COOKIE_SECURE = False
 
 RECAPTCHA_SECRET = '6LcFewcTAAAAADHaBcrGZ7jN16fXxPIEtB24s-gQ'
 
+FORECAST_IO_API_KEY = 'eea45d602658f9065cb2a64fa75588bf'
+
 # Enable logging to console with Django Logging
 LOGGING = {
     'version': 1,
