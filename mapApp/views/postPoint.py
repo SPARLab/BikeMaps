@@ -69,9 +69,13 @@ def normalizeGeometry(geom):
 	# Convert string GEOSGeometry object to python dict
 	geom = json.loads(geom)
 
-	# Normalize to range [-180, 180) using saw tooth function
-	for i, c in enumerate(geom['coordinates']):
-		geom['coordinates'][i] = (c+180 - ( math.floor( (c+180)/360 ) )*360) - 180
+	# Normalize longitude to range [-180, 180) using saw tooth function
+	c = geom['coordinates'][0]
+	geom['coordinates'][0] = (c+180 - ( math.floor( (c+180)/360 ) )*360) - 180
+
+	# Normalize latitude to range [-90, 90) using saw tooth function
+	c = geom['coordinates'][1]
+	geom['coordinates'][1] = (c+90 - ( math.floor( (c+90)/180 ) )*180) - 90
 
 	# Encode and return GEOSGeometry object
 	return GEOSGeometry(json.dumps(geom))
