@@ -3,7 +3,7 @@ from mapApp.utils.weather import get_weather
 import threading
 import time
 
-maxconnections = 5
+maxconnections = 1
 semaphore = threading.Semaphore(maxconnections)
 
 def run():
