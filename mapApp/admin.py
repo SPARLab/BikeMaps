@@ -1,7 +1,7 @@
 from django.contrib.gis import admin
 
 # Register models
-from mapApp.models import Point, Incident, Hazard, Theft, Official, AdministrativeArea
+from mapApp.models import Point, Incident, Hazard, Theft, Official, AdministrativeArea, Weather
 
 # admin.site.register(Official)
 class PointAdmin(admin.OSMGeoAdmin):
@@ -22,6 +22,9 @@ class PointAdmin(admin.OSMGeoAdmin):
 	]
 admin.site.register(Point, PointAdmin)
 
+class WeatherInline(admin.StackedInline):
+	model = Weather
+
 class IncidentAdmin(PointAdmin):
 	fieldsets = [
 	    ('Location', {'fields': ['geom']}),
@@ -29,6 +32,9 @@ class IncidentAdmin(PointAdmin):
 	    ('Detail', {'fields': ['details'], 'classes':['collapse']}),
 	    ('Personal', {'fields': ['age', 'birthmonth', 'sex', 'regular_cyclist', 'helmet', 'intoxicated'], 'classes':['collapse']}),
 	    ('Conditions', {'fields': ['road_conditions', 'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain', 'direction', 'turning'], 'classes':['collapse']}),
+	]
+	inlines = [
+		WeatherInline,
 	]
 admin.site.register(Incident, IncidentAdmin)
 
