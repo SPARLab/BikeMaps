@@ -6,19 +6,20 @@ class Weather(models.Model):
 
     incident = models.OneToOneField(Incident, primary_key=True)
 
-    temperature_c = models.FloatField("Temperature (C)")
-    visibility_km = models.FloatField("Visibility (km)")
-    windspeed_kmh = models.FloatField("Wind speed (km/h)")
-    precip_mmh = models.FloatField("Precipitation intensity (mm/h)")
-    precip_prob = models.FloatField("Precipitation probability")
+    summary = models.CharField("Summary", max_length=250)
     sunrise_time = models.DateTimeField("Sunrise time")
     sunset_time = models.DateTimeField("Sunset time")
     dawn = models.BooleanField("The accident occurred at dawn")
     dusk = models.BooleanField("The accident occurred at dusk")
-    wind_dir_deg = models.FloatField("Wind origin (deg)")
-    wind_dir_str = models.CharField("Wind origin", max_length=5)
+    precip_intensity = models.FloatField("Precipitation intensity (mm/h)")
+    precip_probability = models.FloatField("Precipitation probability")
+    precip_type = models.CharField("Type of precipitation", max_length=50)
+    temperature = models.FloatField("Temperature (C)")
     black_ice_risk = models.BooleanField("Black ice risk present")
-    summary = models.CharField("Summary", max_length=250)
+    wind_speed = models.FloatField("Wind speed (km/h)")
+    wind_bearing = models.FloatField("Wind bearing (deg)")
+    wind_bearing_str = models.CharField("Wind bearing", max_length=5)
+    visibility_km = models.FloatField("Visibility (km)")
 
     # toString()
     def __unicode__(self):

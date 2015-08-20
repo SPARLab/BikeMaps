@@ -38,16 +38,17 @@ def get_weather(coords, date):
 
     return {
         'summary': c.get('summary', ''),
-        'temperatureC': c.get('temperature', -1),
-        'windSpeedKMH': c.get('windSpeed', -1),
-        'visibilityKM': c.get('visibility', -1), # if visibilityKM == 16.09 it is unlimited
-        'precipMMH': c.get('precipIntensity', -1),
-        'precipProb': c.get('precipProbability', -1),
-        'sunriseTime': datetime.fromtimestamp(sunrise) if sunrise else None,
-        'sunsetTime': datetime.fromtimestamp(sunset) if sunset else None,
+        'sunrise_time': datetime.fromtimestamp(sunrise) if sunrise else None,
+        'sunset_time': datetime.fromtimestamp(sunset) if sunset else None,
         'dawn': (sunrise-30*60 <= time.mktime(date.timetuple()) <= sunrise) if sunrise else False,
         'dusk': (sunset <= time.mktime(date.timetuple()) <= sunrise+30*60) if sunrise else False,
-        'windDirDeg': c.get('windBearing', -1),
-        'windDirStr': DIRECTIONS[int((c.get('windBearing') + 22.5) // 45 % 8)] if c.get('windBearing') else "",
-        'blackIceRisk': c.get('temperature', 100) <= -18 or (c.get('precipIntensity', -1) > 0 and c.get('temperature', 100) <= 0)
+        'precip_intensity': c.get('precipIntensity', -1),
+        'precip_probability': c.get('precipProbability', -1),
+        'precip_type': c.get('precipType', ""),
+        'temperature': c.get('temperature', -1),
+        'black_ice_risk': c.get('temperature', 100) <= -18 or (c.get('precipIntensity', -1) > 0 and c.get('temperature', 100) <= 0),
+        'wind_speed': c.get('windSpeed', -1),
+        'wind_bearing': c.get('windBearing', -1),
+        'wind_bearing_str': DIRECTIONS[int((c.get('windBearing') + 22.5) // 45 % 8)] if c.get('windBearing') else "",
+        'visibility_km': c.get('visibility', -1), # if visibilityKM == 16.09 it is unlimited
     }

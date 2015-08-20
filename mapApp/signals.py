@@ -24,18 +24,19 @@ class WeatherThread(threading.Thread):
     def run(self):
         data = get_weather(self.incident.geom, self.incident.date)
         Weather(
-            incident        = self.incident,
-            temperature_c   = data['temperatureC'],
-            visibility_km   = data['visibilityKM'],
-            windspeed_kmh   = data['windSpeedKMH'],
-            precip_mmh      = data['precipMMH'],
-            precip_prob     = data['precipProb'],
-            sunrise_time    = data['sunriseTime'],
-            sunset_time     = data['sunsetTime'],
-            dawn            = data['dawn'],
-            dusk            = data['dusk'],
-            wind_dir_deg    = data['windDirDeg'],
-            wind_dir_str    = data['windDirStr'],
-            black_ice_risk  = data['blackIceRisk'],
-            summary         = data['summary']
+            incident           = self.incident,
+            summary            = data['summary'],
+            sunrise_time       = data['sunrise_time'],
+            sunset_time        = data['sunset_time'],
+            dawn               = data['dawn'],
+            dusk               = data['dusk'],
+            precip_intensity   = data['precip_intensity'],
+            precip_probability = data['precip_probability'],
+            precip_type        = data['precip_type'],
+            temperature        = data['temperature'],
+            black_ice_risk     = data['black_ice_risk'],
+            wind_speed         = data['wind_speed'],
+            wind_bearing       = data['wind_bearing'],
+            wind_bearing_str   = data['wind_bearing_str'],
+            visibility_km      = data['visibility_km'],
         ).save()
