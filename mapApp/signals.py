@@ -1,17 +1,15 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.conf import settings
 
 from mapApp.models import Incident, Weather
 from mapApp.utils.weather import get_weather
 
 import threading
 
-import logging
-logger = logging.getLogger(__name__)
-
 @receiver(post_save, sender=Incident)
 def get_weather_data(sender, **kwargs):
-    if(kwargs.get("created")):
+    if(kwargs.get("created") and not settings.DEBUG):
         incident = kwargs.get("instance")
 
         # Create a new Weather instance using a non-blocking thread
