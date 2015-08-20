@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import login as auth_login
 from django.contrib.auth.decorators import login_required
 from ratelimit.decorators import ratelimit
-from django.forms.util import ErrorList
+from django.forms.utils import ErrorList
 
 from .forms import MyUserCreationForm, UserProfileForm
 from utils import ReCaptcha
