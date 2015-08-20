@@ -250,13 +250,6 @@ class Incident(Point):
         blank=True,
         null=True
     )
-    # Placeholder for automatically added weather using an HTTP_GET from rss?
-    weather = models.CharField(
-        _('What was the weather like?'),
-        max_length=100,
-        blank=True,
-        null=True
-    )
     ##############
 
     def save(self, *args, **kwargs):
