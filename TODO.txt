@@ -2,39 +2,23 @@
 
 ### GENERAL SITE UPDATES
   # HIGHER PRIORITY
-    * Migrate database to use model inheritance (almost complete)
     * Track down memory/DOM issues causing site load problems
     * Fix ICBC loading problems
     * Serve some pages over http to get around unsafe site resources warnings (do during new server setup since this will have to be configured then anyway)
-    * Setup new server
-    * Add "Contact Us" navbar link - dependent on use of AJAX to avoid redirects
     * Colour report buttons / make them more obvious
-    * /stats page navbar link
-    * /recent page navbar link (maybe instead of alerts bell?)
-    * "Why we need personal details" button/popup on report form
-    * Blog app with built in content management system for easy updating (ie like wordpress WYSIWYG system)
-    * Terms and Conditions update regarding new display of details information
-    * Add Karen safety information
     * Cleanup index.html code
-    * Cleanup stats.html code a lot ****
 
   # LOWER PRIORITY
     * Open311 data sharing
     * Display open street map (OSM) bike lanes and bike racks on main map
     * Automate monthly emails of stats page
     * Option to report for different person
-    * Vertical center sponsors and supporters images
-    * Allow admin point moving on main map page
     * OAuth2 (Facebook Google+) login options
-    * Prevent user from having to sign in everytime (via cookies?)
     * opt in for emails (double opt in if possible)
     * Search engine optimization ie keywords as meta tags?
     * Documentation for future devs
     * Make use of AJAX to prevent unnecessary page redirects (eg when submitting a point, eliminate redirect to index page)
-    * improve incidents heatmap
-    * Clear all button in alerts "mark all as read"
     *	Intersection search
-    *	Linking the occurrence of a near-miss, crash, and theft to weather (Automatically added using http get request from RSS?)
     *	Alert emails to include graphics
     * Improve search (text hard to read, Android problems?)
 
@@ -46,21 +30,13 @@
   * Remove injury field
 
 
-
 ### MOBILE WISH LIST
-  * Figure out framework to use for cross platform app
-  * Fullscreen on mobile (figure out how to get rid of address bar in browser, probably via scrolling page automatically on some button click)
   * Hazard photos (mobile app)
   * Route tracking (mobile app)
-  * Real time updates of hazards in riding area (mobile app)
-  * Mobile hazard area creation (this currently can only be done on non-touchscreen devices)
   * Safest route finding algorithm and visualization
-
 
 
 ### BUGS
   * Broken modal popups on some browsers
-  * Moderate comments > delete button not working
   * Date picker does not scroll with modal (bind to something?)
-  * Leaflet draw does not work for mobile (currently using double tap work-around for mobile)
   * Some users reporting blank screen on browsing to site (Probably a non-webkit browser issue that can't be fixed without updating browser/OS older than Windows XP, display error message)
