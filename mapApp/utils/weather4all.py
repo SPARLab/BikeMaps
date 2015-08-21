@@ -4,27 +4,25 @@ import threading
 import time
 
 maxconnections = 1
-semaphore = threading.Semaphore(maxconnections)
+maxthreads = 100
+db_semaphore = threading.Semaphore(maxconnections)
+thread_create = threading.Semaphore(maxthreads)
 
 def run():
     """ Create Weather instances for all Incidents in the application database if they do not already exist
     """
     start_t = time.time()
-    threads = []
     processed = 0
 
     for incident in Incident.objects.all():
-        if hasattr(incident, 'weather'):
-            continue
-        else:
-            # Create a new Weather instance using a non-blocking thread
-            processed += 1
-            thread = WeatherThread(incident)
-            threads.append(thread)
-            thread.start()
+        # Create a new Weather instance using a non-blocking thread
+        processed += 1
 
-    for thread in threads:
+        thread_create.acquire()
+        thread = WeatherThread(incident)
+        thread.start()
         thread.join()
+        thread_create.release()
 
     end_t = time.time()
     print processed, "Incidents processed in", end_t - start_t, "s"
@@ -36,6 +34,7 @@ class WeatherThread(threading.Thread):
 
     def run(self):
         data = get_weather(self.incident.geom, self.incident.date)
+        db_semaphore.acquire()
         Weather(
             incident           = self.incident,
             summary            = data['summary'],
@@ -53,4 +52,4 @@ class WeatherThread(threading.Thread):
             wind_bearing_str   = data['wind_bearing_str'],
             visibility_km      = data['visibility_km'],
         ).save()
-        semaphore.release()
+        db_semaphore.release()
