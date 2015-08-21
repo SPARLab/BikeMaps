@@ -30,6 +30,37 @@ class IncidentSerializer(GeoFeatureModelSerializer):
                   'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk')
 
 
+class IncidentWeatherSerializer(GeoFeatureModelSerializer):
+    # HACK There's no elegant way to serialize a one-to-one field that I could find :(
+    # Nested relationships makes it hard to analyze the exported data
+    weather_summary = serializers.CharField(source='weather.summary')
+    weather_sunrise_time = serializers.DateTimeField(source='weather.sunrise_time')
+    weather_sunset_time = serializers.DateTimeField(source='weather.sunset_time')
+    weather_dawn = serializers.BooleanField(source='weather.dawn')
+    weather_dusk = serializers.BooleanField(source='weather.dusk')
+    weather_precip_intensity = serializers.FloatField(source='weather.precip_intensity')
+    weather_precip_probability = serializers.FloatField(source='weather.precip_probability')
+    weather_precip_type = serializers.CharField(source='weather.precip_type')
+    weather_temperature = serializers.FloatField(source='weather.temperature')
+    weather_black_ice_risk = serializers.BooleanField(source='weather.black_ice_risk')
+    weather_wind_speed = serializers.FloatField(source='weather.wind_speed')
+    weather_wind_bearing = serializers.FloatField(source='weather.wind_bearing')
+    weather_wind_bearing_str = serializers.CharField(source='weather.wind_bearing_str')
+    weather_visibility_km = serializers.FloatField(source='weather.visibility_km')
+
+    class Meta:
+        model = Incident
+        geo_field = 'geom'
+        fields = ('i_type', 'incident_with', 'date', 'p_type',
+                  'details', 'injury', 'trip_purpose',
+                  'regular_cyclist', 'helmet', 'intoxicated', 'road_conditions',
+                  'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain',
+                  'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'weather_summary',
+                  'weather_sunrise_time', 'weather_sunset_time', 'weather_dawn', 'weather_dusk',
+                  'weather_precip_intensity', 'weather_precip_probability', 'weather_precip_type',
+                  'weather_temperature', 'weather_black_ice_risk', 'weather_wind_speed',
+                  'weather_wind_bearing', 'weather_wind_bearing_str', 'weather_visibility_km')
+
 class HazardSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Hazard

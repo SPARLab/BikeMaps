@@ -1,5 +1,5 @@
 from mapApp.models import Incident, Hazard, Theft, Official, AlertArea
-from mapApp.serializers import IncidentSerializer, HazardSerializer, TheftSerializer, OfficialSerializer, AlertAreaSerializer, UserSerializer, GCMDeviceSerializer, APNSDeviceSerializer
+from mapApp.serializers import IncidentSerializer, HazardSerializer, TheftSerializer, OfficialSerializer, AlertAreaSerializer, UserSerializer, GCMDeviceSerializer, APNSDeviceSerializer, IncidentWeatherSerializer
 from django.http import Http404
 from django.contrib.gis.geos import Polygon
 from rest_framework.views import APIView
@@ -334,6 +334,23 @@ class APNSDeviceDetail(APIView):
         apnsDevice = self.get_object(registration_id)
         apnsDevice.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class IncidentList(APIView):
+    """
+    List all incidents with all weather and point data.
+    """
+    def get(self, request, format=None):
+
+        # Extract bounding box Url parameter
+        bbstr = request.GET.get('bbox', '-180,-90,180,90')
+        bbox = stringToPolygon(bbstr)
+
+        incidents = list(Incident.objects.filter(geom__within=bbox))
+
+        serializer = IncidentWeatherSerializer(incidents, many=True)
+        return Response(serializer.data)
+
 
 # Helper - Create bounding box as a polygon
 def stringToPolygon(bbstr):
