@@ -31,15 +31,15 @@ def get_weather(coords, date):
     response = json.loads( urllib2.urlopen(physicalURL).read() )
 
     c = response['currently']
-    d = response['daily']['data']
+    d = response['daily']['data'][0]
 
-    sunrise = d[0].get('sunriseTime', None)
-    sunset = d[0].get('sunsetTime', None)
+    sunrise = d.get('sunriseTime', None)
+    sunset = d.get('sunsetTime', None)
 
     return {
         'summary': c.get('summary', ''),
-        'sunrise_time': datetime.fromtimestamp(sunrise) if sunrise else None,
-        'sunset_time': datetime.fromtimestamp(sunset) if sunset else None,
+        'sunrise_time': datetime.utcfromtimestamp(sunrise + response['offset']*60*60) if sunrise else None,
+        'sunset_time': datetime.utcfromtimestamp(sunset + response['offset']*60*60) if sunset else None,
         'dawn': (sunrise-30*60 <= time.mktime(date.timetuple()) <= sunrise) if sunrise else False,
         'dusk': (sunset <= time.mktime(date.timetuple()) <= sunrise+30*60) if sunrise else False,
         'precip_intensity': c.get('precipIntensity', -1),
