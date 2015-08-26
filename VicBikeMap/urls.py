@@ -12,7 +12,7 @@ js_info_dict = {
 
 urlpatterns = patterns('',
     url(r'^', include('mapApp.urls', namespace="mapApp")),
-    url(r'^user/', include('userApp.urls', namespace="userApp")),
+    url(r'^user/', include('userApp.urls', namespace="userApp"), {'SSL':True}),
     url(r'^blog/', include('blogApp.urls', namespace="blogApp")),
 
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),

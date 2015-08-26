@@ -16,6 +16,7 @@ SECRET_KEY = '$e05l@n&nv*zh@m=4dgx8j-rj^$w2ugj%$&*99=p$vwd5%ya53'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+SSL_ON = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
