@@ -4,7 +4,6 @@ from django.shortcuts import render
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.core.mail import BadHeaderError, EmailMessage
-from django.views.decorators.cache import cache_page
 
 from mapApp.forms import EmailForm
 

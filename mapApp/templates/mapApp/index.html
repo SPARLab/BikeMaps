@@ -1,31 +1,32 @@
 {% extends "mapApp/base.html" %}
-<!-- TODO -->
-<!-- Separate JS out of tips.html, incident_form.html, and draw.html so that only javascript is rendered at the bottom of body -->
+{% load staticfiles crispy_forms_tags geojson_tags i18n cache %}
+{% get_current_language as LANGUAGE_CODE %}
 
-{% block title %}BikeMaps{% endblock %}
-{% load staticfiles crispy_forms_tags geojson_tags i18n %}
+{% cache 300 index_css_links %}
+  {% block title %}BikeMaps{% endblock %}
 
-{% block headerCSS %}
-  <link rel="stylesheet" href="{% static 'bootstrap-slider/css/bootstrap-slider.min.css' %}">
-  <link href="{% static 'datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css">
-  <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}">
-  <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
-  <link rel="stylesheet" href="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.css' %}">
-  <link rel="stylesheet" href="{% static 'mapApp/css/index.css' %}">
+  {% block headerCSS %}
+    <link rel="stylesheet" href="{% static 'bootstrap-slider/css/bootstrap-slider.min.css' %}">
+    <link href="{% static 'datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css">
+    <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}">
+    <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
+    <link rel="stylesheet" href="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.css' %}">
+    <link rel="stylesheet" href="{% static 'mapApp/css/index.css' %}">
 
-  <!-- Open Graph data -->
-  <meta property="og:title" content="BikeMaps" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://bikemaps.org/" />
-  <meta property="og:image" content="https://bikemaps.org/static/mapApp/images/BikeMapsSocialMediaLogo.jpg" />
-  <meta property="og:image:secure_url" content="https://bikemaps.org/static/mapApp/images/BikeMapsSocialMediaLogo.jpg" />
-  <meta property="og:description" content="Map your cycling incidents, hazard, and theft locations so they can be analyzed to identify hot spots of cycling safety, risk, and crime." />
-  <meta property="og:site_name" content="BikeMaps" />
-  <meta property="fb:admins" content="569635572" />
-{% endblock %}
+    <!-- Open Graph data -->
+    <meta property="og:title" content="BikeMaps" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://bikemaps.org/" />
+    <meta property="og:image" content="https://bikemaps.org/static/mapApp/images/BikeMapsSocialMediaLogo.jpg" />
+    <meta property="og:image:secure_url" content="https://bikemaps.org/static/mapApp/images/BikeMapsSocialMediaLogo.jpg" />
+    <meta property="og:description" content="Map your cycling incidents, hazard, and theft locations so they can be analyzed to identify hot spots of cycling safety, risk, and crime." />
+    <meta property="og:site_name" content="BikeMaps" />
+    <meta property="fb:admins" content="569635572" />
+  {% endblock %}
+{% endcache %}
 
 {% block body %}
   <div class="page-body">
@@ -36,6 +37,7 @@
 {% endblock %}
 
 {% block footerJS %}
+{% cache 300 index_js_scripts LANGUAGE_CODE %}
   <script src="{% static 'bootstrap-slider/bootstrap-slider.js' %}"></script>
   <script src="{% static 'datetimepicker/js/bootstrap-datetimepicker.js' %}"></script>
   <script src="{% static 'datetimepicker/js/locales/bootstrap-datetimepicker.de.js' %}" charset="UTF-8"></script>
@@ -50,14 +52,15 @@
   <script src="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script>
   <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
   <script type="text/javascript">
-    {% get_current_language as LANGUAGE_CODE %}
       var LANGUAGE_CODE = "{{LANGUAGE_CODE}}";
   </script>
   <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
   <script src="{% static 'mapApp/js/icons.js' %}"></script>
   <script src="{% static 'mapApp/js/map.js' %}"></script>
+{% endcache %}
   <script src="{% static 'mapApp/js/csrfheader.js' %}"></script>
   <script>
+    {% cache 10 index_data LANGUAGE_CODE %}
     // Convert database querysets to geojsons
     var collisions = {{ collisions|geojsonfeature:"i_type,incident_with,date,details"|safe }},
         nearmisses = {{ nearmisses|geojsonfeature:"i_type,incident_with,date,details"|safe }},
@@ -65,7 +68,7 @@
         thefts = {{ thefts|geojsonfeature:"i_type,date,details"|safe }},
         // officials = {{ officials|geojsonfeature:"official_type,date,time,details,metadata,data_source"|safe }},
         geofences = {{ geofences|geojsonfeature|safe }};
-
+    {% endcache %}
     // if zoom parameter in url, set variables
     {% if zoom %}
       var zoom = {{ zoom|safe }},
@@ -74,6 +77,7 @@
     {% endif %}
 
     // Display number of points in user dropdown if admin is logged in
+    {% cache 10 index_data_counts request.user.is_staff %}
     {% if request.user.is_staff %}
       $(".user-menu").append('<li role="presentation" class="divider"></li>');
       $(".user-menu").append('<li role="presentation" class="dropdown-header">Points submitted</li>');
@@ -85,12 +89,13 @@
       var total = {{thefts|length}}+{{hazards|length}}+{{collisions|length}}+{{nearmisses|length}}
       $(".user-menu").append('<li><a href="#"><small>Total: '+total+'</small></a></li>');
     {% endif %}
+    {% endcache %}
   </script>
   <script src="{% static 'mapApp/js/index.js' %}"></script>
   <script src="{% static 'mapApp/js/legend_collapse.js' %}"></script>
 
   {% if request.user.is_superuser %}
-  <script>
+    <script>
       incidentData.on('click', function(e){
         var layer = e.layer,
             feature = layer.feature;
@@ -98,7 +103,7 @@
         layer.bindPopup("<a href="+url+"><span class='fa fa-edit'></span>edit</a><br>" + getPopup(layer)).openPopup();
         e.originalEvent.stopPropagation();
       });
-  </script>
+    </script>
   {% endif %}
 
   {% include 'mapApp/incident_form.html' %}

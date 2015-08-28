@@ -1,4 +1,6 @@
-{% load i18n %}
+{% load i18n cache %}
+{% get_current_language as LANGUAGE_CODE %}
+{% cache 500 map_legend LANGUAGE_CODE %}
 
 <div id="legend" class="leaflet-container leaflet-control-container">
   <div class="leaflet-top leaflet-right">
@@ -74,3 +76,4 @@
     </div>
   </div>
 </div>
+{% endcache %}

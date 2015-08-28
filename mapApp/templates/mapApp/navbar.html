@@ -1,4 +1,5 @@
-{% load staticfiles bikemaps_tags i18n %}
+{% load staticfiles bikemaps_tags i18n cache %}
+{% get_current_language as LANGUAGE_CODE %}
 
 {% url 'mapApp:index' as index %}
 {% url 'mapApp:vis' as vis %}
@@ -46,7 +47,9 @@
         <li><a href="https://twitter.com/BikeMapsTeam" target="_blank"><i class="fa fa-twitter" target="_blank"></i></a></li>
 
         {% if request.user.is_authenticated %}
-          {% reports_this_week user as has_notifications %}
+          {% cache 10 user_alerts_count LANGUAGE_CODE request.user.username %}
+            {% reports_this_week user as has_notifications %}
+          {% endcache %}
           <li><a href="{{ alerts }}"><span class="fa fa-bell {% if has_notifications %} is-highlighted{% endif %}"></span></a></li>
           <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user"></span> {{ request.user }}<span class="caret"></span></a>
