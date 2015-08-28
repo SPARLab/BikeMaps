@@ -1,6 +1,9 @@
 {% extends "mapApp/base.html" %}
 {% load staticfiles geojson_tags cache i18n %}
 
+{% get_current_language as LANGUAGE_CODE %}
+{% cache 120 vis_template LANGUAGE_CODE %}
+
 {% block title %}
 {% trans "Bikemaps Data Visualization" %}
 {% endblock %}
@@ -97,3 +100,4 @@
   <script src="{% static 'mapApp/js/vis.js' %}"></script>
 
 {% endblock %}
+{% endcache %}

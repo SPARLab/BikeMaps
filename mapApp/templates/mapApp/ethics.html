@@ -1,5 +1,8 @@
 {% extends "mapApp/base.html" %}
-{% load i18n %}
+{% load i18n cache %}
+
+{% get_current_language as LANGUAGE_CODE %}
+{% cache 3600 terms_and_conditions LANGUAGE_CODE %}
 
 {% block title %}{% trans "Terms and Conditions" %}{% endblock %}
 {% block body %}
@@ -22,3 +25,5 @@
 	</div>
 </div>
 {% endblock %}
+
+{% endcache %}

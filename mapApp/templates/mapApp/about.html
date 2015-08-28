@@ -1,6 +1,7 @@
 {% extends "mapApp/base.html" %}
+{% load staticfiles i18n cache crispy_forms_tags %}
 
-{% load staticfiles i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 
 {% block title %}{% trans "About" %}{% endblock %}
 
@@ -10,10 +11,9 @@
 
 <!-- BODY STUFF -->
 {% block body %}
-    {% load crispy_forms_tags %}
     {% crispy emailForm %}
 
-
+  {% cache 500 about_template LANGUAGE_CODE %}
     <div class="container">
 
         <div class="row">
@@ -270,12 +270,17 @@
         </div>
     </div>
 
-    <script>
-        {% if emailForm.errors %}
+  {% endcache %}
+{% endblock %}
+
+{% block footerJS %}
+  <script>
+      {% if emailForm.errors %}
+      $(function(){
         $(window).load(function(){
             $('#emailForm').modal('show');
         });
-        {% endif %}
-    </script>
-
+      });
+      {% endif %}
+  </script>
 {% endblock %}

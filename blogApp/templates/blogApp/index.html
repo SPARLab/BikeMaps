@@ -1,38 +1,41 @@
 {% extends "blogApp/base_blog.html" %}
-{% load i18n %}
+{% load i18n cache %}
+{% get_current_language as LANGUAGE_CODE %}
 
-{% block title %}{% trans "BikeMaps Blog" %}{% endblock %}
+{% cache 30 blog_index_template LANGUAGE_CODE request.user.is_superuser %}
+  {% block title %}{% trans "BikeMaps Blog" %}{% endblock %}
 
-{% block base_post_body %}
-  <!-- Posts -->
-  <ul class="list-group">
-    {% for post in posts %}
+  {% block base_post_body %}
+    <!-- Posts -->
+    <ul class="list-group">
+      {% for post in posts %}
 
-      <!-- Post -->
-      {% if post.published or request.user.is_superuser %}
-        <li class="list-group-item row">
-          {% include "blogApp/post_template.html" %}
-        </li>
+        <!-- Post -->
+        {% if post.published or request.user.is_superuser %}
+          <li class="list-group-item row">
+            {% include "blogApp/post_template.html" %}
+          </li>
+        {% endif %}
+
+      {% endfor %}
+    </ul>
+  {% endblock %}
+
+
+  {% block base_post_footer %}
+    <!-- Pagination control -->
+    <div class="col-xs-12">
+      {% if posts.has_previous %}
+        <a class="pull-left btn btn-warning" href="?page={{ posts.previous_page_number }}" aria-label="Newer">
+          <span aria-hidden="true">&laquo;</span> {% trans "Newer posts" context "Next page link" %}
+        </a>
       {% endif %}
 
-    {% endfor %}
-  </ul>
-{% endblock %}
-
-
-{% block base_post_footer %}
-  <!-- Pagination control -->
-  <div class="col-xs-12">
-    {% if posts.has_previous %}
-      <a class="pull-left btn btn-warning" href="?page={{ posts.previous_page_number }}" aria-label="Newer">
-        <span aria-hidden="true">&laquo;</span> {% trans "Newer posts" context "Next page link" %}
-      </a>
-    {% endif %}
-
-    {% if posts.has_next %}
-      <a class="pull-right btn btn-warning" href="?page={{ posts.next_page_number }}" aria-label="Previous">
-        {% trans "Older posts" context "Previous page link" %} <span aria-hidden="true">&raquo;</span>
-      </a>
-    {% endif %}
-  </div>
-{% endblock %}
+      {% if posts.has_next %}
+        <a class="pull-right btn btn-warning" href="?page={{ posts.next_page_number }}" aria-label="Previous">
+          {% trans "Older posts" context "Previous page link" %} <span aria-hidden="true">&raquo;</span>
+        </a>
+      {% endif %}
+    </div>
+  {% endblock %}
+{% endcache %}
