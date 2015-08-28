@@ -15,14 +15,14 @@ urlpatterns = patterns('',
     url(r'^user/', include('userApp.urls', namespace="userApp"), {'SSL':True}),
     url(r'^blog/', include('blogApp.urls', namespace="blogApp")),
 
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api-token-auth/', 'rest_framework.authtoken.views.obtain_auth_token'),
-    url(r'^rest-auth/', include('rest_auth.urls')),
-    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
-    url(r'^accounts/', include('allauth.urls')),
-    url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'), {'SSL':True}),
+    url(r'^api-token-auth/', 'rest_framework.authtoken.views.obtain_auth_token', {'SSL':True}),
+    url(r'^rest-auth/', include('rest_auth.urls'), {'SSL':True}),
+    url(r'^rest-auth/registration/', include('rest_auth.registration.urls'), {'SSL':True}),
+    url(r'^accounts/', include('allauth.urls'), {'SSL':True}),
+    url(r'^accounts/', include('django.contrib.auth.urls'), {'SSL':True}),
 
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls), {'SSL':True}),
 
     (r'^robots.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
 
