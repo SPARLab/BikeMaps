@@ -102,7 +102,10 @@ INSTALLED_APPS = (
     'allauth.socialaccount',
 
     # userApp requirements
-    'userApp'
+    'userApp',
+
+    # management commands, etc
+    'utils'
 )
 
 TEMPLATES = [
