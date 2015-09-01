@@ -9,7 +9,7 @@ import threading
 
 @receiver(post_save, sender=Incident)
 def get_weather_data(sender, **kwargs):
-    if(kwargs.get("created") and not settings.DEBUG):
+    if(kwargs.get("created") and settings.FORECAST_IO_API_KEY != 'debug'):
         incident = kwargs.get("instance")
 
         # Create a new Weather instance using a non-blocking thread
