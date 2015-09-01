@@ -6,10 +6,7 @@ var incidentData = new L.MarkerClusterGroup({
         weight: 3
       },
       animateAddingMarkers: true,
-      iconCreateFunction: function(cluster){
-        var data = serializeClusterData(cluster);
-        return pieChart(data);
-      },
+      iconCreateFunction: pieChart
     }),
     alertAreas = L.featureGroup();
 
@@ -218,45 +215,21 @@ function locateUser(setView, watch) {
   });
 };
 
-// Purpose: Initializes the Pie chart cluster icons by getting the needed attributes from each cluster
-//		and passing them to the pieChart function
-function serializeClusterData(cluster) {
-  var children = cluster.getAllChildMarkers(),
-  n = 0,
-  colorRef = {};
-
-  for (var icon in icons) {
-    // Add a counting field to the icons objects
-    icons[icon]["count"] = 0;
-    // construct colorRef object for efficiency of bin sort
-    colorRef[icons[icon].options.color] = icon;
-  };
-
-  //Count the number of markers in each cluster
-  children.forEach(function(child) {
-    // Match childColor to icon in icons
-    var icon = colorRef[child.options.icon.options.color];
-    icons[icon].count++;
-    n++;
-  });
-
-  // Make array of icons data
-  var data = $.map(icons, function(v) {
-    return v;
-  });
-  // Push total points in cluster
-  data.push(n);
-
-  return data;
-};
-
 // pieChart
-// 	Purpose: Builds the svg DivIcons
-// 	inputs: data as list of objects containing "type", "count", "color", outer chart radius, inner chart radius, and total points for cluster
-// 	output: L.DivIcon donut chart where each "type" is mapped to the corresponding "color" with a proportional section corresponding to "count"
-function pieChart(data) {
-  // Pop total points in cluster
-  var total = data.pop();
+// 	Purpose: Builds svg cluster DivIcons
+// 	inputs: clusters passed from Leaflet.markercluster
+// 	output: L.DivIcon donut chart where the number of points in a cluster are represented by a proportional donut chart arc of the same color as the underlying marker
+function pieChart(cluster) {
+  var children = cluster.getAllChildMarkers();
+
+  // Count the number of points of each kind in the cluster using underscore.js
+  var data = _.chain(children)
+    .countBy(function(i){ return i.options.icon.options.color })
+    .map(function(count, color){ return {"color": color, "count": count} })
+    .sortBy(function(i){ return -i.count })
+    .value();
+
+  var total = children.length;
 
   outerR = (total >= 10 ? (total < 50 ? 20 : 25) : 15),
   innerR = (total >= 10 ? (total < 50 ? 10 : 13) : 7);
@@ -291,7 +264,7 @@ function pieChart(data) {
   g.append('path')
   .attr("d", arc)
   .style("fill", function(d) {
-    return d.data.options.color;
+    return d.data.color;
   });
 
   // Add center fill
@@ -309,23 +282,11 @@ function pieChart(data) {
   .attr('dy', '.3em')
   .text(total)
 
-  var html = serializeXmlNode(svg);
-
   return new L.DivIcon({
-    html: html,
+    html: (new window.XMLSerializer()).serializeToString(svg),
     className: 'marker-cluster',
     iconSize: new L.Point(40, 40)
   });
-
-  // Purpose: Helper function to convert xmlNode to a string
-  function serializeXmlNode(xmlNode) {
-    if (typeof window.XMLSerializer != "undefined") {
-      return (new window.XMLSerializer()).serializeToString(xmlNode);
-    } else if (typeof xmlNode.xml != "undefined") {
-      return xmlNode.xml;
-    }
-    return "";
-  };
 };
 
 // HELPER FUNCTIONS
