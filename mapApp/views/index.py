@@ -13,10 +13,12 @@ def index(request, lat=None, lng=None, zoom=None):
 
 	context = {
 		# Model data used by map
-		'collisions': incidents.filter(p_type__exact="collision"),
-		'nearmisses': incidents.filter(p_type__exact="nearmiss"),
-		'hazards': Hazard.objects.select_related('point').exclude(expires_date__lt=now).exclude(hazard_fixed=True),
-		'thefts': Theft.objects.select_related('point').all(),
+
+		# NOTE: all points are limited to cumulative 10000 points. This should be considered a temporary fix until there are some limitations on the requested data.
+		'collisions': incidents.filter(p_type__exact="collision").order_by('-date')[:2500],
+		'nearmisses': incidents.filter(p_type__exact="nearmiss").order_by('-date')[:4000],
+		'hazards': Hazard.objects.select_related('point').exclude(expires_date__lt=now).exclude(hazard_fixed=True).order_by('-date')[:2500],
+		'thefts': Theft.objects.select_related('point').all().order_by('-date')[:1000],
 		# 'officials': officialResult,
 		"geofences": AlertArea.objects.filter(user=request.user.id),
 
