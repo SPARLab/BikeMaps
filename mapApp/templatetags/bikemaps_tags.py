@@ -1,5 +1,37 @@
-#-*- coding: utf-8 -*-
+from django import template
+register = template.Library()
 
-from .tags import alerts
+from mapApp.models import IncidentNotification, HazardNotification, TheftNotification, Point, AlertArea
+import datetime
 
-from .tags import register
+import logging
+logger = logging.getLogger(__name__)
+
+@register.assignment_tag()
+def has_alerts(user):
+    return (
+        IncidentNotification.objects.filter(user=user).filter(is_read=False).exists()\
+        or \
+        HazardNotification.objects.filter(user=user).filter(is_read=False).exists()\
+        or \
+        TheftNotification.objects.filter(user=user).filter(is_read=False).exists()
+    )
+
+@register.assignment_tag()
+def reports_this_week(user):
+    now = datetime.datetime.now()
+    lastweek = now - datetime.timedelta(days=7)
+
+    polys = AlertArea.objects.filter(user=user)
+    points = Point.objects.filter(date__range=[lastweek, now])
+
+    logger.debug(polys)
+    logger.debug(points)
+
+    if not points.exists():
+        return False
+
+    for poly in polys:
+        if points.filter(geom__intersects=poly.geom).exists():
+            return True
+    return False
