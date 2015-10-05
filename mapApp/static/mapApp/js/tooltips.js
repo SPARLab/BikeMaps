@@ -1,6 +1,6 @@
 $(function(){
 	// search control
-	$('.leaflet-control-geocoder').tooltip({placement:'right', delay:400, title: function(){ return "Search for an address"}});
+	$('.leaflet-control-geocoder').tooltip({placement:'right', delay:400, title: function(){ return gettext("Search for an address")}});
 
 	map.on('drawControlReady', function(){
 		// All left side controls

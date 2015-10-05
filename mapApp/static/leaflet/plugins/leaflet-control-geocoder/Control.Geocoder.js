@@ -22,8 +22,8 @@
 			collapsed: true,
 			expand: 'click',
 			position: 'topright',
-			placeholder: 'Search...',
-			errorMessage: 'Nothing found.'
+			placeholder: gettext('Search...'),
+			errorMessage: gettext('Nothing found.')
 		},
 
 		_callbackId: 0,

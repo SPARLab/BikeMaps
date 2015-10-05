@@ -21,9 +21,16 @@ var map = L.map('map', {
   center: [48, -100],
   minZoom: 2,
   zoom: 4,
+  zoomControl: false,
   layers: [MapQuestOpen_OSM, stravaHM, incidentData, alertAreas],
   worldCopyJump: true,
 });
+
+// Add i18n zoom control
+L.control.zoom({
+  zoomInTitle: gettext('Zoom in'),
+  zoomOutTitle: gettext('Zoom out'),
+}).addTo(map);
 
 // Set map view
 map.on("locationfound", function(location) {

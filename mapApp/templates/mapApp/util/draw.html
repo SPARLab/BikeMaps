@@ -12,21 +12,34 @@ $(document).ready(function(){
 
 function desktopDrawing(){
     /* DRAWING CONTROL TOOLTIPS */
-    L.drawLocal.draw.toolbar.buttons.marker = "{% trans 'Add a new marker.' %}";
-    L.drawLocal.draw.handlers.marker.tooltip.start = "{% trans 'Place me where the incident, hazard, or theft occurred.' %}";
+    L.drawLocal.draw.toolbar.actions.title = "{% trans 'Cancel drawing' %}";
+    L.drawLocal.draw.toolbar.actions.text = "{% trans 'Cancel' %}";
 
+    L.drawLocal.draw.toolbar.undo.title = "{% trans 'Delete last point drawn' %}";
+    L.drawLocal.draw.toolbar.undo.text = "{% trans 'Delete last point' %}";
+
+    L.drawLocal.draw.toolbar.buttons.marker = "{% trans 'Add a new marker.' %}";
     L.drawLocal.draw.toolbar.buttons.polygon = "{% trans 'Trace an area to receive incident alerts.' %}";
+
+    L.drawLocal.draw.handlers.marker.tooltip.start = "{% trans 'Place me where the incident, hazard, or theft occurred.' %}";
     L.drawLocal.draw.handlers.polygon.tooltip.start = "{% trans 'Trace the area you would like to receive alerts for.' %}";
+    L.drawLocal.draw.handlers.polygon.tooltip.cont = "{% trans 'Click to continue drawing shape.' %}";
+    L.drawLocal.draw.handlers.polygon.tooltip.end = "{% trans 'Click first point to close this shape.' %}";
+
+    L.drawLocal.edit.toolbar.actions.save.title = "{% trans 'Save changes.' %}";
+    L.drawLocal.edit.toolbar.actions.save.text = "{% trans 'Save.' %}";
+    L.drawLocal.edit.toolbar.actions.cancel.title = "{% trans 'Cancel editing, discards all changes.' %}";
+    L.drawLocal.edit.toolbar.actions.cancel.text = "{% trans 'Cancel.' %}";
 
     L.drawLocal.edit.toolbar.buttons.edit = "{% trans 'Edit alert area.' %}";
+    L.drawLocal.edit.toolbar.buttons.editDisabled = "{% trans 'No alert areas to edit.' %}";
+    L.drawLocal.edit.toolbar.buttons.remove = "{% trans 'Delete alert areas.' %}";
+    L.drawLocal.edit.toolbar.buttons.removeDisabled = "{% trans 'No alert areas to delete.' %}";
+
     L.drawLocal.edit.handlers.edit.tooltip.text = "{% trans 'Drag handles to edit alert areas. Be sure to save your changes.' %}";
     L.drawLocal.edit.handlers.edit.tooltip.subtext = "{% trans 'Click cancel to undo changes.' %}";
-
-    L.drawLocal.edit.toolbar.buttons.remove = "{% trans 'Delete alert areas.' %}";
     L.drawLocal.edit.handlers.remove.tooltip.text = "{% trans 'Click the alert areas to remove' %}";
 
-    L.drawLocal.edit.toolbar.buttons.editDisabled = "{% trans 'No alert areas to edit.' %}";
-    L.drawLocal.edit.toolbar.buttons.removeDisabled = "{% trans 'No alert areas to delete.' %}";
 
     /* ADD THE CONTROL TO LEAFLET MAP */
     map.addControl(new L.Control.Draw({
