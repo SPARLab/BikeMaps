@@ -49,7 +49,9 @@ if (typeof zoom !== 'undefined') {
 
 // Add geocoder control
 var geocoder = L.Control.geocoder({
-  position: "topleft"
+  position: "topleft",
+  placeholder: gettext('Search...'),
+  errorMessage: gettext('Nothing found.')
 }).addTo(map);
 var geocodeMarker;
 geocoder.markGeocode = function(result) {
