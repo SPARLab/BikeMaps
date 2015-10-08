@@ -25,9 +25,6 @@ def reports_this_week(user):
     polys = AlertArea.objects.filter(user=user)
     points = Point.objects.filter(date__range=[lastweek, now])
 
-    logger.debug(polys)
-    logger.debug(points)
-
     if not points.exists():
         return False
 
