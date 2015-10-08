@@ -28,7 +28,7 @@
             <div class="col-xs-12">
                 <h1>{% trans "Contact" %}</h1>
                 <p>{% trans "Do you have questions, comments, or feedback about bikemaps.org? We would love to hear from you!" %}</p>
-                <p><a class="btn btn-primary btn-md" data-toggle="modal" data-target="#emailForm">Contact us!</a></p>
+                <p><a class="btn btn-primary btn-md" data-toggle="modal" data-target="#emailForm">{% trans "Contact us!" %}</a></p>
             </div>
         </div>
 
@@ -36,22 +36,23 @@
             <div class="col-xs-12">
                 <h1>{% trans "FAQ" %}</h1>
                 <p><strong>{% trans "Why are you collecting this information?" %}</strong>
-                    <br>{% trans "Only ~30% of bike collision data are collected and there is no centralized reporting system. BikeMaps.org is a unique tool that let's citizens build a database by mapping their riding experience." %}</p>
+                    <br>{% blocktrans with percent="%" %}Only ~30{{percent}} of bike collision data are collected and there is no centralized reporting system. BikeMaps.org is a unique tool that let's citizens build a database by mapping their riding experience.{% endblocktrans %}</p>
 
                 <p><strong>{% trans "What will you do with the data?" %}</strong>
                     <br>{% trans "The BikeMaps.org team will analyze data to determine factors that influence cycling safety. We also have plans to build tools to help people plan safer routes and to transfer these to planners in your area." %}</p>
 
                 <p><strong>{% trans "How can citizens and municipalities monitor areas of interest to them?" %}</strong>
                     <br>
-                    {% url 'userApp:register' as register_anchor and url 'userApp:login' as login_anchor %}
-                    {% blocktrans with '<span class="poly-icon"></span>' as polygon_icon and '<span class="fa fa-bell"></span>' as bell_icon %}By <a href="{{ register_anchor|safe }}">registering</a> and <a href="{{ login_anchor|safe }}">logging in</a> you will be able to trace a riding or management region of interest using the {{polygon_icon}} tool. Each time you login you will be alerted to recent mapping in your region by the {{bell_icon}} tool.{% endblocktrans %}
+                    {% url 'userApp:register' as register_anchor %}
+                    {% url 'userApp:login' as login_anchor %}
+                    {% blocktrans with '<span class="poly-icon"></span>' as polygon_icon and '<span class="fa fa-bell"></span>' as bell_icon %}By <a href="{{ register_anchor }}">registering</a> and <a href="{{ login_anchor }}">logging in</a> you will be able to trace a riding or management region of interest using the {{polygon_icon}} tool. Each time you login you will be alerted to recent mapping in your region by the {{bell_icon}} tool.{% endblocktrans %}
                     </p>
 
                 <p><strong>{% trans "Where do you get the rider volume data?" %}</strong>
                     <br>{% trans "The data on where cyclists are riding has been provided by Strava." %}</p>
 
                 <p><strong>{% trans "Isn’t Strava data is only where recreational cyclists are riding?" %}</strong>
-                    <br>{% trans "Strava labs estimates that 40% of its rider data are commuter traffic, though this likely varies by region." %}</p>
+                    <br>{% blocktrans with percent="%" %}Strava labs estimates that 40{{percent}} of its rider data are commuter traffic, though this likely varies by region.{% endblocktrans %}</p>
 
                 <p><strong>{% trans "Do you have an App?" %}</strong>
                     <br>
