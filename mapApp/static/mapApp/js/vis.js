@@ -171,11 +171,18 @@ var map = L.map('map', {
   center: [15,6],
   zoom: 1,
   minZoom: 1,
+  zoomControl: false,
   scrollWheelZoom: true,
   worldCopyJump: true,
   layers: [MapQuestOpen_OSM, heatLayer]
 }).on('load', changeMap())
   .on('moveend', mapFilter);
+
+  // Add i18n zoom control
+  L.control.zoom({
+    zoomInTitle: gettext('Zoom in'),
+    zoomOutTitle: gettext('Zoom out'),
+  }).addTo(map);
 
 function changeMap(){
   heat_data = [];
