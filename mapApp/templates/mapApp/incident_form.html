@@ -142,9 +142,22 @@
     });
 
     // Change hazard options dynamically
+    // Hacky bug fix for translated site - Previously the hazard-category was assigned based directly on the label of the optgroup.
+    // This doesn't work when a translation is in use because the label is translated and we end up with invalid hazard categories.
+    // Doing hardcoded comparison for now.
     $(document).on("change", "#hazardReport #div_id_i_type select", function(){
-      var optgroup = $(":selected", this).parent();
-      $("#hazard-category").val(optgroup.attr("label").toLowerCase());
+        var optgroup = $(":selected", this).parent();
+        var optgroup_label = optgroup.attr("label");
+
+        if(optgroup_label === "Infrastructure" || optgroup_label === "Infrastruktur") {
+            $("#hazard-category").val("infrastructure");
+        }
+        else if(optgroup_label === "Environmental" || optgroup_label === "Umwelt") {
+            $("#hazard-category").val("environmental");
+        }
+        else {
+            $("#hazard-category").val("human behaviour");
+        }
     })
   })
 </script>
