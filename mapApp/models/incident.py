@@ -3,6 +3,8 @@ from django.conf import settings
 from django.contrib.gis.db import models
 from point import Point
 
+import logging
+logger = logging.getLogger(__name__)
 
 ##########
 # Incident class.
@@ -257,10 +259,11 @@ class Incident(Point):
         super(Incident, self).save(*args, **kwargs)
 
     def _getIncidentType(self):
-    	"""Return "collision" or "nearmiss" pending on the type of incident a user selected."""
+        """Return "collision" or "nearmiss" pending on the type of incident a user selected."""
         usr_choice = self.i_type
-    	for t,choice in Incident.INCIDENT_CHOICES:
-    		for p,q in choice:
-    			if p == usr_choice:
-    				if t == "Fall": return "collision"
-    				else: return t.replace(" ", "").lower()
+        for t,choice in Incident.INCIDENT_CHOICES:
+            for p,q in choice:
+                if p == usr_choice:
+                    if t == _("Near miss"):
+                        return "nearmiss"
+                    return "collision"
