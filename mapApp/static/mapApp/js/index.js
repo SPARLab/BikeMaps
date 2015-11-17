@@ -372,4 +372,10 @@ map.on('moveend', function(e){
   var zoom = map.getZoom(),
       center = map.getCenter();
   window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
-})
+});
+
+map.on('zoomend', function(e) {
+  if(map.getZoom() >= 18 && map.hasLayer(stravaHM)) {
+    stravaHM._clearBgBuffer();
+  }
+});
