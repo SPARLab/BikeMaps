@@ -27,6 +27,7 @@ class Hazard(Point):
             )
         ),
         (_('Environmental'), (
+                ('Icy/Snowy', _('Icy/Snowy')),
                 ('Poor visibility', _('Poor visibility')),
                 ('Broken glass', _('Broken glass on road')),
                 ('Wet leaves', _('Wet leaves on road')),
@@ -114,6 +115,7 @@ class Hazard(Point):
         'Congestion': False,
         'Broken glass': td(weeks=2),
         'Wet leaves': td(weeks=1),
+        'Icy/Snowy': td(weeks=1),
         'Other': False,
     }
 
