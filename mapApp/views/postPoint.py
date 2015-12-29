@@ -9,7 +9,7 @@ from djgeojson.serializers import Serializer as GeoJSONSerializer
 from  crispy_forms.utils import render_crispy_form
 
 from mapApp.models import Incident, Hazard, Theft
-from mapApp.forms import IncidentForm, HazardForm, TheftForm
+from mapApp.forms import IncidentForm, NearmissForm, HazardForm, TheftForm
 from mapApp.views import alertUsers, pushNotification
 
 import json, math
@@ -20,6 +20,11 @@ logger = logging.getLogger(__name__)
 @require_POST
 def postIncident(request):
 	return postPoint(request, IncidentForm)
+
+@require_POST
+def postNearmiss(request):
+	return postPoint(request, NearmissForm)
+
 
 @require_POST
 def postHazard(request):

@@ -2,7 +2,7 @@ from django.contrib.gis.geos import Polygon
 from django.shortcuts import render
 
 from mapApp.models import Incident, Theft, Hazard, Official, AlertArea
-from mapApp.forms import IncidentForm, HazardForm, TheftForm, GeofenceForm, EditForm
+from mapApp.forms import IncidentForm, NearmissForm, HazardForm, TheftForm, GeofenceForm, EditForm
 import datetime
 
 import logging
@@ -26,8 +26,10 @@ def index(request, lat=None, lng=None, zoom=None):
 
 		# Form data used by map
 		"incidentForm": IncidentForm(),
+                "nearmissForm": NearmissForm(),
 		"hazardForm": HazardForm(),
 		"theftForm": TheftForm(),
+
 
 		"geofenceForm": GeofenceForm(),
 		"editForm": EditForm()

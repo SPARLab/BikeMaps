@@ -79,6 +79,7 @@ function desktopDrawing(){
                 var geom = JSON.stringify(layer.toGeoJSON().geometry);
 
                 document.getElementById("point").value = geom;
+                document.getElementById("nearmisspoint").value = geom;
                 document.getElementById("hazPoint").value = geom;
                 document.getElementById("theftPoint").value = geom;
             }
@@ -165,6 +166,7 @@ function mobileDrawing(){
         var geom = '{"type":"Point","coordinates":['+e.latlng.lng+','+e.latlng.lat+']}';
         $('#incidentForm').modal('show');
         document.getElementById("point").value = geom;
+        document.getElementById("nearmisspoint").value = geom;
         document.getElementById("hazPoint").value = geom;
         document.getElementById("theftPoint").value = geom;
     });

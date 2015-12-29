@@ -15,7 +15,8 @@
                 <label class="control-label">{% trans "What kind of report is this?" %}</label>
                 <!-- Nav Tabs -->
                 <ul class="nav nav-tabs" role="tablist">
-                  <li role="presentation" class="active"><a href="#incidentReport" role="tab" data-toggle="tab">{% trans "Incident" %}</a></li>
+                  <li role="presentation" class="active"><a href="#incidentReport" role="tab" data-toggle="tab">{% trans "Collision" %}</a></li>
+                  <li role="presentation"><a href="#nearmissReport" role="tab" data-toggle="tab">{% trans "Near miss" %}</a></li>
                   <li role="presentation"><a href="#hazardReport" role="tab" data-toggle="tab">{% trans "Hazard" %}</a></li>
                   <li role="presentation"><a href="#theftReport" role="tab" data-toggle="tab">{% trans "Theft" %}</a></li>
                 </ul>
@@ -27,6 +28,11 @@
                       {% crispy incidentForm %}
                     </form>
                   </div>
+                    <div role="tabpanel" class="tab-pane" id="nearmissReport">
+                        <form action="{% url 'mapApp:postIncident' %}" method="POST" role="form" enctype="multipart/form-data">
+                            {% crispy nearmissForm %}
+                        </form>
+                    </div>
                   <div role="tabpanel" class="tab-pane" id="hazardReport">
                     <form action="{% url 'mapApp:postHazard' %}" method="POST" role="form" enctype="multipart/form-data">
                       {% crispy hazardForm %}
@@ -123,6 +129,22 @@
       });
       event.preventDefault();
     });
+
+    // Only show collision options on Collision form and near miss options on Near Miss form
+    $('select optgroup[label="Near miss"]').hide();
+
+    $('a[href="#incidentReport"]').click(function(){
+        $('select optgroup[label="Collision"]').show();
+        $('select optgroup[label="Fall"]').show();
+        $('select optgroup[label="Near miss"]').hide();
+    });
+
+    $('a[href="#nearmissReport"]').click(function(){
+        $('select optgroup[label="Near miss"]').show();
+        $('select optgroup[label="Collision"]').hide();
+        $('select optgroup[label="Fall"]').hide();
+    });
+
 
     // Dynamically change lock to "NA" if bike not locked
     $("#div_id_lock select option[value='NA']").hide();
