@@ -21,7 +21,7 @@ class NearmissForm(forms.ModelForm):
     helper.layout = Layout(
         Accordion(
             AccordionGroup(
-                _('Incident Details'),
+                _('Near Miss Details'),
                 Field('geom', type='hidden', id='nearmisspoint'),
                 Field('date', id='nearmiss_date', template='mapApp/util/%s_datepicker.html', autocomplete='off'),
                 Field('i_type'),

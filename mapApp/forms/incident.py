@@ -21,7 +21,7 @@ class IncidentForm(forms.ModelForm):
     helper.layout = Layout(
         Accordion(
             AccordionGroup(
-                _('Incident Details'),
+                _('Collision Details'),
                 Field('geom', type='hidden', id='point'),
                 Field('date', id='incident_date', template='mapApp/util/%s_datepicker.html', autocomplete='off'),
                 Field('i_type'),
