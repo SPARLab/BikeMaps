@@ -39,12 +39,12 @@ class NearmissForm(forms.ModelForm):
                 Field('terrain'),
                 Field('direction'),
                 Field('turning'),
-                css_id='incident-conditions',
+                css_id='nearmiss-conditions',
             ),
             AccordionGroup(
                 _('Description'),
                 Field('details', placeholder=_('optional')),
-                css_id='incident-description',
+                css_id='nearmiss-description',
             ),
             AccordionGroup(
                 _('Personal Details'),
@@ -56,7 +56,7 @@ class NearmissForm(forms.ModelForm):
                 Field('regular_cyclist'),
                 Field('helmet'),
                 Field('intoxicated'),
-                css_id='incident-personal-details',
+                css_id='nearmiss-personal-details',
             ),
         )
     )
