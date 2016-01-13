@@ -105,6 +105,7 @@
 
           // Show errors or clean and reset form
           $('.tab-pane.active form div:first').replaceWith(data['form_html']);
+          updateIncidentForm();
 
           if (data['success']) {
             // Close modal
@@ -129,22 +130,6 @@
       });
       event.preventDefault();
     });
-
-    // Only show collision options on Collision form and near miss options on Near Miss form
-    $('select optgroup[label="Near miss"]').hide();
-
-    $('a[href="#incidentReport"]').click(function(){
-        $('select optgroup[label="Collision"]').show();
-        $('select optgroup[label="Fall"]').show();
-        $('select optgroup[label="Near miss"]').hide();
-    });
-
-    $('a[href="#nearmissReport"]').click(function(){
-        $('select optgroup[label="Near miss"]').show();
-        $('select optgroup[label="Collision"]').hide();
-        $('select optgroup[label="Fall"]').hide();
-    });
-
 
     // Dynamically change lock to "NA" if bike not locked
     $("#div_id_lock select option[value='NA']").hide();
@@ -181,5 +166,79 @@
             $("#hazard-category").val("human behaviour");
         }
     })
+
+    // Only show collision options on Collision form and near miss options on Near Miss form
+    // $('select optgroup[label="Near miss"]').hide();
+    // $('select optgroup[label^="Beinahzusammensto"]').hide();
+
+      // When the incident form is displayed, update the fields we want displayed
+      $('#incidentForm').on('shown.bs.modal', function(e) {
+          updateIncidentForm();
+      });
+
+      function updateIncidentForm() {
+          var tabPane = $('.tab-pane.active');
+          var tabId = tabPane[0].id;
+          if(tabId === 'hazardReport') {
+              updateHazardChoices();
+          }
+          else if(tabId === 'incidentReport') {
+              updateIncidentChoices();
+          }
+          else if(tabId === 'nearmissReport') {
+              updateNearmissChoices();
+          }
+          else{
+              updateIncidentChoices();
+          }
+      }
+
+      // Hide/show appropriate options when selecting a report type
+      $('a[href="#incidentReport"]').click( function() {
+          updateIncidentChoices();
+      });
+
+      $('a[href="#nearmissReport"]').click( function() {
+          updateNearmissChoices();
+      });
+
+      $('a[href="#hazardReport"]').click( function() {
+          updateHazardChoices();
+      });
+
+      // Hide hazards we don't want to display on the form
+      function updateHazardChoices() {
+          $('select optgroup[label="Human Behaviour"]').hide();
+          $('select optgroup[label="Menschliches Verhalten"]').hide();
+          $('select option[value="Island"]').hide();
+          $('select option[value="Insel"]').hide();
+      }
+
+      // Only display collision options on Collision form
+      function updateIncidentChoices() {
+          // toggle visibility for English labels
+          $('select optgroup[label="Collision"]').show();
+          $('select optgroup[label="Fall"]').show();
+          $('select optgroup[label="Near miss"]').hide();
+
+          //toggle visibility for German labels
+          $('select optgroup[label="Kollision"]').show();
+          $('select optgroup[label="Sturz"]').show();
+          $('select optgroup[label^="Beinahzusammensto"]').hide();
+      }
+
+      // Only display near miss options on near miss form
+      function updateNearmissChoices() {
+          // toggle visibility of English labels
+          $('select optgroup[label="Near miss"]').show();
+          $('select optgroup[label="Collision"]').hide();
+          $('select optgroup[label="Fall"]').hide();
+
+          // toggle visibility of German labels
+          $('select optgroup[label^="Beinahzusammensto"]').show();
+          $('select optgroup[label="Kollision"]').hide();
+          $('select optgroup[label="Sturz"]').hide();
+      }
+
   })
 </script>
