@@ -208,10 +208,10 @@
 
       // Hide hazards we don't want to display on the form
       function updateHazardChoices() {
-          $('select optgroup[label="Human Behaviour"]').hide();
-          $('select optgroup[label="Menschliches Verhalten"]').hide();
-          $('select option[value="Island"]').hide();
-          $('select option[value="Insel"]').hide();
+          $('select optgroup[label="Human Behaviour"]').remove();
+          $('select optgroup[label="Menschliches Verhalten"]').remove();
+          $('select option[value="Island"]').remove();
+          $('select option[value="Insel"]').remove();
       }
 
       // Only display collision options on Collision form
