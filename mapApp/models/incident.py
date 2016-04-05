@@ -148,6 +148,14 @@ class Incident(Point):
         ('Turning right', _('Turning right')),
         ('I don\'t remember', _('I don\'t remember'))
     )
+    INCIDENT_IMPACT_CHOICES = (
+        ('None', _('No impact')),
+        ('More careful', _('I\'m now more careful about where/when I ride')),
+        ('Bike less', _('I bike less')),
+        ('More careful and bike less', _('I\'m now more careful about where/when I ride AND I bike less')),
+        ('Stopped biking', _('I haven\'t biked since')),
+        ('Too soon', _('Too soon to say'))
+    )
 
     ############
     # FIELDS
@@ -250,6 +258,12 @@ class Incident(Point):
         max_length=50,
         choices=TURNING_CHOICES,
         blank=True,
+        null=True
+    )
+    impact = models.CharField(
+        _('How did this incident impact your bicycling?'),
+        max_length=50,
+        choices=INCIDENT_IMPACT_CHOICES,
         null=True
     )
     ##############

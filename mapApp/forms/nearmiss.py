@@ -27,6 +27,7 @@ class NearmissForm(forms.ModelForm):
                 Field('i_type'),
                 Field('incident_with'),
                 Field('injury'),
+                Field('impact'),
                 Field('trip_purpose'),
             ),
             AccordionGroup(
