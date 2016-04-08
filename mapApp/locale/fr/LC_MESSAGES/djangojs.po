@@ -1,0 +1,95 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-08 11:26-0700\n"
+"PO-Revision-Date: 2016-04-08 11:32-0700\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.7\n"
+
+#: .\mapApp\static\mapApp\js\index.js:31 .\mapApp\static\mapApp\js\vis.js:183
+msgid "Zoom in"
+msgstr "Zoom avant"
+
+#: .\mapApp\static\mapApp\js\index.js:32 .\mapApp\static\mapApp\js\vis.js:184
+msgid "Zoom out"
+msgstr "Zoom arrière"
+
+#: .\mapApp\static\mapApp\js\index.js:53
+msgid "Search..."
+msgstr "Recherche…"
+
+#: .\mapApp\static\mapApp\js\index.js:54
+msgid "Nothing found."
+msgstr "Aucun résultat"
+
+#: .\mapApp\static\mapApp\js\index.js:308
+#: .\mapApp\static\mapApp\js\index.js:329
+msgid "Type"
+msgstr "Type"
+
+#: .\mapApp\static\mapApp\js\index.js:318
+#: .\mapApp\static\mapApp\js\index.js:343
+msgid "Date"
+msgstr "Date"
+
+#: .\mapApp\static\mapApp\js\index.js:323
+#: .\mapApp\static\mapApp\js\index.js:347
+msgid "Details"
+msgstr "Détails"
+
+#: .\mapApp\static\mapApp\js\index.js:330
+msgid "Incident with"
+msgstr "Incident avec"
+
+#: .\mapApp\static\mapApp\js\index.js:331
+msgid "Due to"
+msgstr "Causé par"
+
+#: .\mapApp\static\mapApp\js\index.js:335
+msgid "Hazard type"
+msgstr "Type de danger"
+
+#: .\mapApp\static\mapApp\js\index.js:338
+msgid "Theft type"
+msgstr "Type de vol"
+
+#: .\mapApp\static\mapApp\js\tooltips.js:3
+msgid "Search for an address"
+msgstr "Chercher une adresse."
+
+#: .\mapApp\static\mapApp\js\vis.js:6 .\mapApp\static\mapApp\js\vis.js:102
+msgid "Collisions"
+msgstr "Collisions"
+
+#: .\mapApp\static\mapApp\js\vis.js:7 .\mapApp\static\mapApp\js\vis.js:103
+msgid "Nearmisses"
+msgstr "Quasi-collisions"
+
+#: .\mapApp\static\mapApp\js\vis.js:8 .\mapApp\static\mapApp\js\vis.js:104
+msgid "Hazards"
+msgstr "Dangers"
+
+#: .\mapApp\static\mapApp\js\vis.js:9 .\mapApp\static\mapApp\js\vis.js:105
+msgid "Thefts"
+msgstr "Vols"
+
+#: .\mapApp\static\mapApp\js\vis.js:79 .\mapApp\static\mapApp\js\vis.js:98
+#: .\mapApp\static\mapApp\js\vis.js:123 .\mapApp\static\mapApp\js\vis.js:148
+msgid "Count"
+msgstr "Nombre"
+
+#: .\mapApp\static\moment\moment-with-locales.min.js:1
+msgid "\n"
+msgstr ""
