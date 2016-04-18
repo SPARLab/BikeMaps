@@ -4,16 +4,17 @@ from django.conf import settings
 from django.views.generic.base import TemplateView
 from django.views.i18n import javascript_catalog
 from django.contrib import admin
+from solid_i18n.urls import solid_i18n_patterns
 admin.autodiscover()
 js_info_dict = {
     'domain': "djangojs",
     'packages': ('BikeMaps','mapApp',),
 }
 
+
+
 urlpatterns = patterns('',
-    url(r'^', include('mapApp.urls', namespace="mapApp")),
-    url(r'^user/', include('userApp.urls', namespace="userApp")),
-    url(r'^blog/', include('blogApp.urls', namespace="blogApp")),
+
 
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', 'rest_framework.authtoken.views.obtain_auth_token'),
@@ -30,7 +31,7 @@ urlpatterns = patterns('',
 )
 
 # Add internationalization url patters to these pages
-urlpatterns += i18n_patterns('',
+urlpatterns += solid_i18n_patterns('',
     url(r'^', include('mapApp.urls', namespace="mapApp")),
     url(r'^user/', include('userApp.urls', namespace="userApp")),
     url(r'^blog/', include('blogApp.urls', namespace="blogApp")),
