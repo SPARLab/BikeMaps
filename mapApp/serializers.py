@@ -27,7 +27,7 @@ class IncidentSerializer(GeoFeatureModelSerializer):
                   'details', 'injury', 'trip_purpose',
                   'regular_cyclist', 'helmet', 'intoxicated', 'road_conditions',
                   'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain',
-                  'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk')
+                  'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact')
 
 
 class IncidentWeatherSerializer(GeoFeatureModelSerializer):
@@ -55,7 +55,7 @@ class IncidentWeatherSerializer(GeoFeatureModelSerializer):
                   'details', 'injury', 'trip_purpose',
                   'regular_cyclist', 'helmet', 'intoxicated', 'road_conditions',
                   'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain',
-                  'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'weather_summary',
+                  'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact', 'weather_summary',
                   'weather_sunrise_time', 'weather_sunset_time', 'weather_dawn', 'weather_dusk',
                   'weather_precip_intensity', 'weather_precip_probability', 'weather_precip_type',
                   'weather_temperature', 'weather_black_ice_risk', 'weather_wind_speed',
