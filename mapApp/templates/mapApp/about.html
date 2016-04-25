@@ -48,6 +48,11 @@
                     {% blocktrans with '<span class="poly-icon"></span>' as polygon_icon and '<span class="fa fa-bell"></span>' as bell_icon %}By <a href="{{ register_anchor }}">registering</a> and <a href="{{ login_anchor }}">logging in</a> you will be able to trace a riding or management region of interest using the {{polygon_icon}} tool. Each time you login you will be alerted to recent mapping in your region by the {{bell_icon}} tool.{% endblocktrans %}
                     </p>
 
+                <p><strong>{% blocktrans %}I clicked submit, but noticed that my pin isn't in the right location. How
+                    can I fix it?{% endblocktrans %}</strong>
+                    <br>{% blocktrans %}Email us at <a href="mailto:info@bikemaps.org">info@bikemaps.org</a> with details about the time and location of
+                    your report and we will move it.{% endblocktrans %}</p>
+
                 <p><strong>{% trans "Where do you get the rider volume data?" %}</strong>
                     <br>{% trans "The data on where cyclists are riding has been provided by Strava." %}</p>
 
