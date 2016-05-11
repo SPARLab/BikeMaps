@@ -2,7 +2,7 @@
 {% load staticfiles geojson_tags cache i18n %}
 
 {% get_current_language as LANGUAGE_CODE %}
-{% cache 120 vis_template LANGUAGE_CODE %}
+{% cache 3600 vis_template LANGUAGE_CODE %}
 
 {% block title %}
 {% trans "Bikemaps Data Visualization" %}
