@@ -70,8 +70,11 @@
               <div class="bikelane solidlane"></div><small> {% trans "Bike Lane" %}</small><br>
               <div class="bikelane dotlane"></div><small> {% trans "Other Cycling Route" %}</small>
             </div>
+            {% url 'mapApp:disclaimer' as disclaimer_link %}
+            <div align="right">
+            <a href="{{ disclaimer_link }}" target="_blank ">{% trans "Disclaimer" %}</a>
+            </div>
           </div>
-
         </div>
       </form>
     </div>

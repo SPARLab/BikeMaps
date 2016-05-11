@@ -32,6 +32,9 @@ urlpatterns = [
 	# Terms and conditions page
 	url(r'^terms_and_conditions/$', views.termsAndConditions, name='termsAndConditions'),
 
+        # Disclaimer page
+        url(r'^disclaimer/$', views.disclaimer, name='disclaimer'),
+
 	url(r'^recent/$', views.recentReports, name='recent'),
 
 	url(r'^vis/$', views.vis, name='vis'),

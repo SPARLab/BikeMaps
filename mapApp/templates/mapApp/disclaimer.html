@@ -1,0 +1,20 @@
+{% extends "mapApp/base.html" %}
+{% load i18n cache %}
+
+{% get_current_language as LANGUAGE_CODE %}
+{% cache 3600 terms_and_conditions LANGUAGE_CODE %}
+
+{% block title %}{% trans "Disclaimer" %}{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="jumbotron terms-conditions" style="margin-top: 40px;">
+        <h1 class="text-center">{% trans "Disclaimer" %}</h1>
+
+        {% blocktrans %}<p>BikeMaps.org makes no representations, express or implied, as to the accuracy, completeness and timeliness of the information, maps, and data contained herein. Conclusions drawn or decisions made from the information provided on BikeMaps.org are the responsibility of the user. BikeMaps.org assumes no responsibility for its use.</p>{% endblocktrans %}
+        <div class="text-right"><a class="btn btn-primary" onclick=window.close()>{% trans "Close" context "close window button"%}</a></div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% endcache %}
