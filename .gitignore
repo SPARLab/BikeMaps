@@ -13,4 +13,7 @@
 */settings/prod.py
 /static/
 /media/
+/.idea
 .DS_store
+*.po
+*.po
