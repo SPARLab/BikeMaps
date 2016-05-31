@@ -17,7 +17,7 @@
       <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        <button class="btn btn-primary pull-right" type="submit" name="login">Login</button>
+        <button class="btn btn-primary pull-right" type="submit" name="login">{% trans "Login" %}</button>
       </form>
       <p><a href="{% url 'userApp:register' %}">{% trans "Create an account" %}</a></p>
       <p><a href="{% url 'userApp:password_reset' %}">{% trans "I don't know my password" %}</a></p>
