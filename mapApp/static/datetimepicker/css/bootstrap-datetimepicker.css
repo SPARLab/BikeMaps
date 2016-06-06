@@ -290,11 +290,11 @@
 
 .datetimepicker table tr td span {
 	display: block;
-	width: 23%;
+	width: 23.5%;
 	height: 54px;
 	line-height: 54px;
 	float: left;
-	margin: 1%;
+	margin: 0.5%;
 	cursor: pointer;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
