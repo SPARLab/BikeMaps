@@ -29,7 +29,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="{{ index }}" class="navbar-brand"><img src="{% static 'mapApp/images/BikeMapsORG_Logo_notxt_sm.png' %}"> BikeMaps.org</a>
+      {% if LANGUAGE_CODE != 'fr' %}
+        <a href="{{ index }}" class="navbar-brand"><img src="{% static 'mapApp/images/BikeMapsORG_Logo_notxt_sm.png' %}"> BikeMaps.org</a>
+      {% else %}
+        <a href="{{ index }}" class="navbar-brand"><img src="{% static 'mapApp/images/BikeMaps_French_crop_sm.png' %}"></a>
+      {% endif %}
     </div>
 
     <!-- {% endifequal % -->
