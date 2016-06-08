@@ -2,6 +2,7 @@
 {% block title %}BikeMaps Blog{% endblock %}
 
 {% load staticfiles markdown_deux_tags %}
+{% load i18n %}
 
 
 {% block headerCSS %}
@@ -26,7 +27,7 @@
     <!-- Page Header Title -->
     <div class="row">
       <div class="page-header col-xs-12 col-sm-10 col-sm-offset-2">
-        <h1><a href="{% url 'blogApp:index' %}">BikeMaps Blog</a>
+        <h1><a href="{% url 'blogApp:index' %}">{% trans "BikeMaps Blog" %}</a>
           {% if request.user.is_superuser %}
             <a href="{% url 'blogApp:create_post' %}">
               <small title="Add new post">new post</small>
