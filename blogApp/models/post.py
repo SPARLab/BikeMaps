@@ -13,6 +13,11 @@ from datetime import datetime
 # Blog Post class.
 # Main class for blog posts.
 class Post(models.Model):
+    LANGUAGE_CHOICES = (
+        ('en', _('English')),
+        ('fr', _('French'))
+    )
+    
     date = models.DateTimeField(_('Date created'), auto_now_add=True)
 
     title = models.CharField(_('Title'), max_length=100)
@@ -20,8 +25,14 @@ class Post(models.Model):
     post_date = models.DateTimeField(_('Date posted'), default=datetime.now)
     slug = models.SlugField(_('Slug'), unique=True, blank=True, max_length=100)
     published = models.BooleanField(_('Published'), default=False)
-
     content = models.TextField(_('Content'), blank=True)
+    language = models.CharField(
+        _('Language'),
+        max_length=50,
+        choices=LANGUAGE_CHOICES,
+        default='en'
+    )
+    
 
     def get_absolute_url(self):
         return reverse('blogApp:view_post', kwargs={'slug': self.slug})
