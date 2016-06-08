@@ -18,6 +18,7 @@ class BlogPostForm(forms.ModelForm):
         Field('title'),
         Field('description'),
         Field('post_date'),
+        Field('language'),
         Field('content'),
         Div(
             HTML("""

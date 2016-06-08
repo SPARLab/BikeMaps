@@ -8,11 +8,12 @@ from blogApp.models import Post
 
 def index(request):
 	POSTS_PER_PAGE = 5
-
+	
 	if request.user.is_superuser:
 		post_list = Post.objects.all().order_by('-post_date')
 	else:
-		post_list = Post.objects.filter(published=True).order_by('-post_date')
+		#post_list = Post.objects.filter(published=True).order_by('-post_date')
+		post_list = get_Posts_By_Language_Code(request.LANGUAGE_CODE)
 
 	paginator = Paginator(post_list, POSTS_PER_PAGE)
 
@@ -27,3 +28,10 @@ def index(request):
 		posts = paginator.page(paginator.num_pages)
 
 	return render(request, 'blogApp/index.html', {'posts': posts})
+
+def get_Posts_By_Language_Code(language_code):
+        if language_code == 'fr':
+                return Post.objects.filter(language='fr', published=True).order_by('-post_date')
+        else:
+                return Post.objects.filter(published=True).exclude(language='fr').order_by('-post_date')
+        
