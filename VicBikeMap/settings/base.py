@@ -80,6 +80,7 @@ INSTALLED_APPS = (
     'middlewares',
     'mapApp',
     'debug_toolbar',
+    'solid_i18n', # Internationalization
 
     #blogApp and requirements
     'blogApp',
