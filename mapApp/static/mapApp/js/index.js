@@ -22,7 +22,7 @@ var map = L.map('map', {
   minZoom: 2,
   zoom: 4,
   zoomControl: false,
-  layers: [MapQuestOpen_OSM, stravaHM, incidentData, alertAreas],
+  layers: [OpenStreetMap, stravaHM, incidentData, alertAreas],
   worldCopyJump: true,
 });
 
