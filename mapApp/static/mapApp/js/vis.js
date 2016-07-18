@@ -167,6 +167,7 @@ barDate.render();
 // Leaflet heatmap
 var heatLayer = new HeatmapOverlay({ "radius": 40, "maxOpacity": 0.3 });
 var heat_data;
+var Mapquest_OSM_API_Vis = MQ.mapLayer();
 var map = L.map('map', {
   center: [15,6],
   zoom: 1,
@@ -174,7 +175,7 @@ var map = L.map('map', {
   zoomControl: false,
   scrollWheelZoom: true,
   worldCopyJump: true,
-  layers: [MapQuestOpen_OSM, heatLayer]
+  layers: [Mapquest_OSM_API_Vis, heatLayer]
 }).on('load', changeMap())
   .on('moveend', mapFilter);
 
