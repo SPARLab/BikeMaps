@@ -9,3 +9,4 @@ from vis import vis
 from recentReports import recentReports
 from restApi import CollisionList, NearmissList, HazardList, TheftList, OfficialList, UserList, UserDetail, AlertAreaList, AlertAreaDetail, GCMDeviceList, GCMDeviceDetail, APNSDeviceList, APNSDeviceDetail, IncidentList
 from pushNotification import pushNotification
+from cert import cert

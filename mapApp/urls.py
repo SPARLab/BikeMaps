@@ -41,6 +41,8 @@ urlpatterns = [
 	url(r'^vis/@(?P<lat>-?\d{1,3}\.\d*),(?P<lng>-?\d{1,3}\.\d*),(?P<zoom>\d+)z/?$', views.vis, name='vis'),
 
 	url(r'^alerts/$', views.recentReports, name='alerts'),
+
+        url(r'^bikemaps.org.html', views.cert, name='cert'),
 ]
 
 urlpatterns += format_suffix_patterns([
