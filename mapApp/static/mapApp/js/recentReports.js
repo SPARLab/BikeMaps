@@ -3,7 +3,7 @@ var collisionsLayer, nearmissesLayer, hazardsLayer, theftsLayer;
 
 // Initialize the leaflet map
   map = L.map('map', {
-      layers: [MapQuestOpen_OSM],
+      layers: [MapQuest_OSM_API],
       worldCopyJump: true,
   });
 
