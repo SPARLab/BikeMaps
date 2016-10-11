@@ -1,5 +1,5 @@
 from mapApp.models import Incident, Hazard, Theft, Official, AlertArea
-from mapApp.serializers import IncidentSerializer, HazardSerializer, TheftSerializer, OfficialSerializer, AlertAreaSerializer, UserSerializer, GCMDeviceSerializer, APNSDeviceSerializer, IncidentWeatherSerializer
+from mapApp.serializers import IncidentSerializer, HazardSerializer, TheftSerializer, FilteredHazardSerializer, FilteredTheftSerializer, OfficialSerializer, AlertAreaSerializer, UserSerializer, GCMDeviceSerializer, APNSDeviceSerializer, IncidentWeatherSerializer
 from django.http import Http404
 from django.contrib.gis.geos import Polygon
 from rest_framework.views import APIView
@@ -78,7 +78,7 @@ class NearmissList(APIView):
 
 class HazardList(APIView):
     """
-    List all thefts, or create a new theft.
+    List all hazards, or create a new hazard.
     """
     def get(self, request, format=None):
 
@@ -137,6 +137,35 @@ class TheftList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class FilteredHazardList(APIView):
+    """
+    List hazards, but filter attributes to hazard type, date, description and location.
+    Demographic details are not included.
+    Initial use case is for the provision of data to Biko.
+    """
+    def get(self, request, format=None):
+        # Extract bounding box Url parameter
+        bbstr = request.GET.get('bbox', '0,0,0,0')
+        bbox = stringToPolygon(bbstr)
+        hazards = list(Hazard.objects.filter(geom__within=bbox))
+        serializer = FilteredHazardSerializer(hazards, many=True)
+        return Response(serializer.data)
+
+class FilteredTheftList(APIView):
+    """
+    List thefts, but filter attributes to theft type, date, description and location.
+    Demographic details are not included.
+    Initial use case is for the provision of data to Biko.
+    """
+    def get(self, request, format=None):
+
+        # Extract bounding box Url parameter
+        bbstr = request.GET.get('bbox', '0,0,0,0')
+        bbox = stringToPolygon(bbstr)
+
+        thefts = list(Theft.objects.filter(geom__within=bbox))
+        serializer = FilteredTheftSerializer(thefts, many=True)
+        return Response(serializer.data)
 
 class OfficialList(APIView):
     """
@@ -354,7 +383,6 @@ class IncidentList(APIView):
 
 # Helper - Create bounding box as a polygon
 def stringToPolygon(bbstr):
-
     bbsplt = bbstr.split(',')
     xmin, ymin, xmax, ymax = [float(x) for x in bbsplt]
 

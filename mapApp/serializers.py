@@ -78,6 +78,28 @@ class TheftSerializer(GeoFeatureModelSerializer):
                   'lighting', 'traffic', 'police_report', 'police_report_num',
                   'insurance_claim', 'insurance_claim_num', 'regular_cyclist', 'pk')
 
+class FilteredHazardSerializer(GeoFeatureModelSerializer):
+    """
+    Only serial hazard type, date, description and location, not demographic information.
+    Initial use case is for Biko.
+    """
+    class Meta:
+        model = Hazard
+        geo_field = 'geom'
+        fields = ('i_type', 'date', 'p_type',
+                  'details', 'pk')
+
+
+class FilteredTheftSerializer(GeoFeatureModelSerializer):
+    """
+    Only serial theft type, date, description and location, not demographic information.
+    Initial use case is for Biko.
+    """
+    class Meta:
+        model = Theft
+        geo_field = 'geom'
+        fields = ('i_type', 'date', 'p_type',
+                  'details', 'pk')
 
 class OfficialSerializer(GeoFeatureModelSerializer):
     class Meta:
