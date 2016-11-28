@@ -7,6 +7,7 @@ from crispy_forms.layout import Layout, Field, HTML, Div
 from crispy_forms.bootstrap import Accordion, AccordionGroup
 
 from mapApp.models import Hazard
+import datetime
 
 why_personal_link = string_concat('<a class="text-info" data-toggle="collapse" aria-expanded="false" aria-controls="why-personal" href=".tab-pane.active .why-personal"><span class="glyphicon glyphicon-question-sign"></span> <strong>', _(u"Why are we asking for personal details?"), '</strong></a>')
 
@@ -44,6 +45,22 @@ class HazardForm(forms.ModelForm):
             ),
         )
     )
+
+    def is_valid(self):
+
+        # run default, parent validation first
+        valid = super(HazardForm, self).is_valid()
+
+        # check date to ensure incident occurred within the past 2 years
+        limit = datetime.timedelta(weeks=-104)
+        min_date = datetime.datetime.today() + limit
+        if 'date' in self.cleaned_data:
+            submitted_date = self.cleaned_data['date']
+            if submitted_date < min_date:
+                self._errors['date'] = [_(u'Incidents must have occurred within the past two years.')]
+                return False
+        return valid
+        
 
     class Meta:
         model = Hazard
