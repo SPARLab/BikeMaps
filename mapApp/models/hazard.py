@@ -40,7 +40,7 @@ class Hazard(Point):
         ),
         (_('Environmental'), (
                 ('Icy/Snowy', _('Icy/Snowy')),
-                ('Poor visibility', _('Poor visibility')),
+                ('Poor visibility', _('Poor visibility (fog, snow, smoke etc.)')),
                 ('Broken glass', _('Broken glass on road')),
                 ('Wet leaves', _('Wet leaves on road')),
                 ('Gravel rocks or debris', _('Gravel, rocks or debris on road/path')),

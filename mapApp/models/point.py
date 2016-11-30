@@ -46,6 +46,17 @@ class Point(models.Model):
         ('Other', _('Other'))
     )
 
+    SOURCE_CHOICES = (
+        ('BikeMaps team', _('Directly from the BikeMaps.org team')),
+        ('BikeMaps swag', _('BikeMaps.org swag (e.g., seat cover, water bottle, etc.) without meeting the team')),
+        ('Traditional media', _('Traditional media (newspaper, TV, radio)')),
+        ('Another website', _('Link from another website')),
+        ('Word of mouth', _('Word of mouth')),
+        ('Social media', _('Social media (e.g., Twitter, Instagram, Facebook)')),
+        ('Other', _('Other')),
+        ('Don\'t remember', _('I don\'t remember'))
+    )
+
     ########### POINT FIELDS
     report_date = models.DateTimeField(
         _('Date reported'),
@@ -93,6 +104,14 @@ class Point(models.Model):
     details = models.TextField(
         _('Please give a brief description of the incident'),
         max_length=300,
+        blank=True,
+        null=True
+    )
+
+    source = models.CharField(
+        _('Where did you first find out about BikeMaps.org?'),
+        max_length=20,
+        choices=SOURCE_CHOICES,
         blank=True,
         null=True
     )

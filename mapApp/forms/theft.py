@@ -41,6 +41,7 @@ class TheftForm(forms.ModelForm):
                 _('Personal Details'),
                 HTML(why_personal_link),
                 Div( Div(HTML(why_personal_well), css_class="well"), css_class='why-personal collapse' ),
+                Field('source'),
                 Field('regular_cyclist'),
                 Field('police_report'),
                 Field('police_report_num'),

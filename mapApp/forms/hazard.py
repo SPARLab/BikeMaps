@@ -37,6 +37,7 @@ class HazardForm(forms.ModelForm):
                 _('Personal Details'),
                 HTML(why_personal_link),
                 Div( Div(HTML(why_personal_well), css_class="well"), css_class='why-personal collapse' ),
+                Field('source'),
                 Field('age'),
                 Field('birthmonth'),
                 Field('sex'),

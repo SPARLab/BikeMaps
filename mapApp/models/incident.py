@@ -95,19 +95,20 @@ class Incident(Point):
     )
     RIDING_ON_CHOICES = (
         (_('Busy street'), (
+                ('Busy street cycle track', _('On a cycle track (separated bike lane)')),
                 ('Busy street bike lane', _('On a painted bike lane')),
-                ('Busy street, no bike facilities', _('On road with no bike facilities'))
+                ('Busy street, no bike facilities', _('On a street with no bicycle facility'))
             )
         ),
         (_('Quiet street'), (
-                ('Quiet street bike lane', _('On a painted bike lane')),
-                ('Quiet street, no bike facilities', _('On road with no bike facilities'))
+                ('Quiet street bike lane', _('On a local street bikeway (bike route)')),
+                ('Quiet street, no bike facilities', _('On a street with no bicycle facility'))
             )
         ),
-        (_('Not on the street'), (
+        (_('Off-Street'), (
                 ('Cycle track', _('On a physically separated bike lane (cycle track)')),
-                ('Mixed use trail', _('On a mixed use trail')),
-                ('Sidewalk', _('On the sidewalk')),
+                ('Mixed use trail', _('On a multi-use path')),
+                ('Sidewalk', _('On a sidewalk')),
             )
         ),
         ('Don\'t remember', _('I don\'t remember'))
@@ -155,6 +156,20 @@ class Incident(Point):
         ('More careful and bike less', _('I\'m now more careful about where/when I ride AND I bike less')),
         ('Stopped biking', _('I haven\'t biked since')),
         ('Too soon', _('Too soon to say'))
+    )
+    BICYCLE_TYPE_CHOICES = (
+        ('Personal', _('Personal (my own bicycle or a friend\'s)')),
+        ('Bike share', _('Bike share')),
+        ('Bike rental', _('Bike rental'))
+    )
+    EBIKE_CHOICES = (
+        ('Yes', _('Yes')),
+        ('No', _('No')),
+        ('I don\'t know', _('I don\'t know'))
+    )
+    PERSONAL_INVOLVEMENT_CHOICES = (
+        ('Yes', _('Yes, this happened to me')),
+        ('No', _('No, I witnessed this happen to someone else'))
     )
 
     ############
@@ -266,6 +281,31 @@ class Incident(Point):
         choices=INCIDENT_IMPACT_CHOICES,
         null=True
     )
+
+    bicycle_type = models.CharField(
+        _('What type of bicycle were you riding?'),
+        max_length=20,
+        choices=BICYCLE_TYPE_CHOICES,
+        blank=True,
+        null=True
+    )
+
+    ebike = models.CharField(
+        _('Did the incident involve a pedal-assist electric bike (eBike)?'),
+        max_length=20,
+        choices=EBIKE_CHOICES,
+        blank=True,
+        null=True
+    )
+
+    personal_involvement = models.CharField(
+        _('Were you directly involved in the incident?'),
+        max_length=20,
+        choices=PERSONAL_INVOLVEMENT_CHOICES,
+        blank=True,
+        null=True
+    )
+
     ##############
 
     def save(self, *args, **kwargs):
