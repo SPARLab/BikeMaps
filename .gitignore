@@ -18,3 +18,5 @@
 *.po
 *.po
 *.po
+*.po
+blogApp/locale/de/LC_MESSAGES/django.po
