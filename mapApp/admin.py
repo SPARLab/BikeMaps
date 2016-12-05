@@ -3,8 +3,13 @@ from django.contrib.gis import admin
 # Register models
 from mapApp.models import Point, Incident, Hazard, Theft, Official, AdministrativeArea, Weather
 
+# We need to get the OpenLayers API over HTTPS. By default GeoDjango uses HTTP, so we need to
+# subclass OSMGeoAdmin and override the URL source for the API
+class SecureOSMGeoAdmin(admin.OSMGeoAdmin):
+	openlayers_url='https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/OpenLayers.js'
+
 # admin.site.register(Official)
-class PointAdmin(admin.OSMGeoAdmin):
+class PointAdmin(SecureOSMGeoAdmin):
 	# Map options
 	default_lon = -13745000
 	default_lat = 6196000
