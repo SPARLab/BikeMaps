@@ -33,7 +33,7 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12">
+            <p class="col-xs-12">
                 <h1>{% trans "FAQ" %}</h1>
                 <p><strong>{% trans "Why are you collecting this information?" %}</strong>
                     <br>{% blocktrans with percent="%" %}Only ~30{{percent}} of bike collision data are collected and there is no centralized reporting system. BikeMaps.org is a unique tool that let's citizens build a database by mapping their riding experience.{% endblocktrans %}</p>
@@ -60,6 +60,10 @@
                 <p><strong>{% trans "Do you have an App?" %}</strong>
                     <br>
                     {% blocktrans with '<a href="https://itunes.apple.com/us/app/bikemaps.org/id1011546537?mt=8&ign-mpt=uo%3D4">' as app_store_link and '<a href="https://play.google.com/store/apps/details?id=com.bikemaps.sparlab">' as play_store_link and '</a>' as link_end %}Yes! We have both an {{app_store_link}}iOS app{{link_end}} and an {{play_store_link}}Android app{{link_end}}.{% endblocktrans %}</p>
+
+                <p><strong>{% trans "Do you have a video tutorial?" %}</strong>
+                    <br>
+                    {% blocktrans %}Yes! Here’s a <a href="https://www.youtube.com/watch?v=a_gn3k4uoAo">link to a video</a> that one of our followers made.{% endblocktrans %}</p>
 
                 <p><strong>{% trans "How can I get involved?" %}</strong>
                     <br>{% trans "You can share the website on social media, host a mapping demo night, or volunteer to do GIS or development. If you own a bike store or small business, you can advertise BikeMaps.org. We are also on the lookout for more research funding to further develop the technology and expand the study. Or, perhaps your group has GIS data that may improve BikeMaps.org." %}</p>
