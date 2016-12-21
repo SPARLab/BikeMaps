@@ -11,6 +11,7 @@ from push_notifications.models import GCMDevice, APNSDevice
 from mapApp.views import alertUsers, pushNotification
 
 from django.contrib.auth import get_user_model
+import datetime
 User = get_user_model()
 
 class CollisionList(APIView):
@@ -86,7 +87,7 @@ class HazardList(APIView):
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
 
-        hazards = list(Hazard.objects.filter(geom__within=bbox))
+        hazards = list(Hazard.objects.exclude(expires_date__lt=datetime.datetime.now()).exclude(hazard_fixed=True).filter(geom__within=bbox))
         serializer = HazardSerializer(hazards, many=True)
         return Response(serializer.data)
 
