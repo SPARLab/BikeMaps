@@ -43,6 +43,19 @@ textarea {
 	resize: none; /* removes resize handle from text area inputs */
 }
 
+#popUpMessage{
+	padding:15px;
+    position: fixed;
+	top: 10%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index:2;
+    width:auto;
+	text-align:left;
+	border-radius: 15px;
+	background-color:#18BC9C;
+}
+
 #message {
 	position: fixed;
 	right: 1em;
