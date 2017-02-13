@@ -229,3 +229,7 @@ body h1{
   width: 16px;
   height: 15px;
 }
+
+.navbar-default .navbar-nav>li>a .navbar-bespoke {
+	color: white;
+}
