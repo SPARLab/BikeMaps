@@ -25,8 +25,8 @@ DATABASES = {
         # PostgreSQL database connection on Taylor's Windows computer
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'bikeDB',
-        'USER': 'postgres'
-        #'PASSWORD': 'SUPER_SECRET'
+        'USER': 'postgres',
+        'PASSWORD': 'spatial'
     }
 }
 
