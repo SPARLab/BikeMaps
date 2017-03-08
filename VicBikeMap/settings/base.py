@@ -50,6 +50,7 @@ LANGUAGES = (
     ('de', _('German')),
     ('nl', _('Dutch')),
     ('fi', _('Finnish')),
+	('is', _('Icelandic')),
 )
 
 TIME_ZONE = 'America/Vancouver'
