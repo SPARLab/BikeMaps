@@ -1,7 +1,10 @@
 from django.contrib.gis import admin
+import sys
+
+
 
 # Register models
-from mapApp.models import Point, Incident, Hazard, Theft, Official, AdministrativeArea, Weather
+from mapApp.models import Point, Incident, Hazard, Theft, Official, AdministrativeArea, Weather, ShapefilesForHazardMessage
 
 # We need to get the OpenLayers API over HTTPS. By default GeoDjango uses HTTP, so we need to
 # subclass OSMGeoAdmin and override the URL source for the API
@@ -63,7 +66,8 @@ class TheftAdmin(PointAdmin):
 admin.site.register(Theft, TheftAdmin)
 
 class HazardAdminsInline(admin.TabularInline):
-    model = AdministrativeArea.users.through
+	model = AdministrativeArea.users.through
+	
 
 class AdminAreaAdmin(admin.OSMGeoAdmin):
 	# Map options
@@ -81,7 +85,16 @@ class AdminAreaAdmin(admin.OSMGeoAdmin):
 	]
 	exclude = ('users',)
 
+
 admin.site.register(AdministrativeArea, AdminAreaAdmin)
+
+class ShapefilesForHazardMessagesAdmin(admin.OSMGeoAdmin):
+	#display all fields
+	None
+
+admin.site.register(ShapefilesForHazardMessage, ShapefilesForHazardMessagesAdmin)
+
+
 
 
 # class AlertAreaAdmin(admin.OSMGeoAdmin):

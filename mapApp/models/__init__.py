@@ -6,3 +6,5 @@ from alert_area import AlertArea, AdministrativeArea
 from official import Official
 from alert_notification import IncidentNotification, HazardNotification, TheftNotification
 from weather import Weather
+from hazard_message_districts import HazardMessageDistricts
+from shapefile_for_hazard_message_districts import ShapefilesForHazardMessage

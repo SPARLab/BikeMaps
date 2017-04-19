@@ -1,6 +1,5 @@
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
-
 from django.contrib.gis.db import models
 
 import datetime

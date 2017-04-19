@@ -4,6 +4,7 @@ from django.contrib.gis.db import models
 from point import Point
 import datetime
 
+
 ##########
 # Hazard class.
 # Class for Hazard Reports. Contains all required, non-required, and spatial fields. Setup to allow easy export to a singular shapefile.
@@ -173,3 +174,5 @@ class Hazard(Point):
         # Set p_type
         self.p_type = "hazard"
         super(Hazard, self).save(*args, **kwargs) # Call the "real" save() method.
+
+	
