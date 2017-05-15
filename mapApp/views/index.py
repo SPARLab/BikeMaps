@@ -19,7 +19,7 @@ def index(request, lat=None, lng=None, zoom=None):
 		# Only displaying official data for Germany based on a bounding box
 		'collisions': incidents.filter(p_type__exact="collision").order_by('-date')[:2500],
 		'nearmisses': incidents.filter(p_type__exact="nearmiss").order_by('-date')[:4000],
-		'hazards': Hazard.objects.select_related('point').exclude(expires_date__lt=now).exclude(hazard_fixed=True).order_by('-date')[:2500],
+		'hazards': Hazard.objects.select_related('point').exclude(expires_date__lt=now).exclude(hazard_fixed=True).exclude(date__lt=(now + datetime.timedelta(weeks=-52))).order_by('-date')[:2500],
 		'thefts': Theft.objects.select_related('point').all().order_by('-date')[:1000],
 		'officials': Official.objects.filter(geom__within=(Polygon.from_bbox((5,47,15,55)))),
 		"geofences": AlertArea.objects.filter(user=request.user.id),
