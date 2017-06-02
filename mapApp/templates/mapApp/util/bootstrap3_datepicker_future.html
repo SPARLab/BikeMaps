@@ -1,0 +1,22 @@
+{% extends "mapApp/util/bootstrap3_datepicker.html" %}
+
+{% block calscript %}
+<script type="text/javascript">
+    $('#{{ field.id_for_label }}').datetimepicker({
+        pickTime: false,
+		autoclose: 1,
+    todayBtn:  0,
+		autoclose: 1,
+		todayHighlight: 1,
+		maxView: 2,
+		startView: 2,
+		forceParse: 0,
+    showMeridian: 1,
+    initialDate: "{% now 'Y-m-d\TH:i:s\Z' %}",
+		startDate: "-10y",
+		endDate: "+10y",
+		pickerPosition: 'bottom-left',
+    language: "{{ LANGUAGE_CODE }}",
+    });
+</script>
+{% endblock %}

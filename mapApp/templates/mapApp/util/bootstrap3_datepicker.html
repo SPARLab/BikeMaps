@@ -29,6 +29,7 @@
 </div>
 
 {% get_current_language as LANGUAGE_CODE %}
+{% block calscript %}
 <script type="text/javascript">
     $('#{{ field.id_for_label }}').datetimepicker({
 		autoclose: 1,
@@ -47,3 +48,4 @@
     language: "{{ LANGUAGE_CODE }}",
     });
 </script>
+{% endblock %}
