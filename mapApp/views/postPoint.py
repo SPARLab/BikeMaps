@@ -87,7 +87,6 @@ def postPoint(request, Form):
 				'form_html': render_crispy_form(Form())
 			})
 	else:
-		print form.errors
 		logger.debug("Form not valid")
 
 
