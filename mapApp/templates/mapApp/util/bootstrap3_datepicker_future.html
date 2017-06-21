@@ -1,6 +1,34 @@
-{% extends "mapApp/util/bootstrap3_datepicker.html" %}
 
-{% block calscript %}
+<!-- Util from http://www.malot.fr/bootstrap-datetimepicker/demo.php -->
+<!-- Help from https://gist.github.com/eguevara2012/2821026 -->
+
+
+<!-- KNOWN ISSUES WHICH HAVE BEEN REPORTED:
+		Calendar view 3 displays wrong month selection and end date (displays 2 months previous)
+-->
+
+{% load crispy_forms_field i18n %}
+<div id="div_{{ field.auto_id }}" class="form-group {% if form_show_errors and field.errors %}has-error{% endif %}">
+    {% if field.label %}
+	    <label for="id_{{ field.id_for_label }}" class="control-label {% if field.field.required %}requiredField{% endif %}">
+	        {{ field.label|safe }}{% if field.field.required %}<span class="asteriskField">*</span>{% endif %}
+	    </label>
+	{% endif %}
+
+
+	<div class="controls">
+	    <div class="input-group date form_datetime" id="{{ field.id_for_label }}" data-date-format='yyyy-mm-dd hh:ii' data-link-field="{{ field.auto_id }}" >
+	        {% crispy_field field %}
+	        <!-- <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> -->
+			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            <span class="add-on {% if active %}active{% endif %}">{{ crispy_appended_text|safe }}</span>
+
+	    </div>
+    </div>
+    {% include 'bootstrap3/layout/help_text_and_errors.html' %}
+</div>
+
+{% get_current_language as LANGUAGE_CODE %}
 <script type="text/javascript">
     $('#{{ field.id_for_label }}').datetimepicker({
         pickTime: false,
@@ -19,4 +47,3 @@
     language: "{{ LANGUAGE_CODE }}",
     });
 </script>
-{% endblock %}
