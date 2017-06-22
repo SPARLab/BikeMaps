@@ -4,6 +4,7 @@ Disallow: /forum/
 
 Disallow: /incident_submit/
 Disallow: /hazard_submit/
+Disallow: /newInfrastructure_submit/
 Disallow: /theft_submit/
 Disallow: /poly_submit/
 

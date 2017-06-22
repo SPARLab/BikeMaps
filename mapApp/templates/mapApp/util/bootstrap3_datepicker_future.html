@@ -31,6 +31,7 @@
 {% get_current_language as LANGUAGE_CODE %}
 <script type="text/javascript">
     $('#{{ field.id_for_label }}').datetimepicker({
+        pickTime: false,
 		autoclose: 1,
     todayBtn:  0,
 		autoclose: 1,
@@ -40,9 +41,8 @@
 		forceParse: 0,
     showMeridian: 1,
     initialDate: "{% now 'Y-m-d\TH:i:s\Z' %}",
-		startDate: "-2y",
-		endDate: new Date(),
-    minuteStep: 5,
+		startDate: "-10y",
+		endDate: "+10y",
 		pickerPosition: 'bottom-left',
     language: "{{ LANGUAGE_CODE }}",
     });
