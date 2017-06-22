@@ -78,10 +78,16 @@ span.date{
 .marker-group>i.fa-bicycle{
   padding-left: 2.5px;
 }
+.marker-group>i.fa-star{
+  padding-left: 4px;
+}
 .marker-group>i.fa-warning{
   padding-left: 4px;
 }
-.marker-group>i.fa-certificate, .marker-group>i.fa-user, .marker-group>i.fa-filter{
+.marker-group>i.fa-certificate{
+  padding-left: 5px;
+}
+.marker-group>i.fa-user, .marker-group>i.fa-filter{
   padding-left: 5px;
 }
 .marker-group span.fa-stack{

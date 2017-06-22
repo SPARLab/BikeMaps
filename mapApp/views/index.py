@@ -1,8 +1,8 @@
 from django.contrib.gis.geos import Polygon
 from django.shortcuts import render
 
-from mapApp.models import Incident, Theft, Hazard, Official, AlertArea
-from mapApp.forms import IncidentForm, NearmissForm, HazardForm, TheftForm, GeofenceForm, EditForm
+from mapApp.models import Incident, Theft, Hazard, Official, AlertArea, NewInfrastructure
+from mapApp.forms import IncidentForm, NearmissForm, HazardForm, TheftForm, NewInfrastructureForm, GeofenceForm, EditForm
 import datetime
 
 import logging
@@ -17,20 +17,20 @@ def index(request, lat=None, lng=None, zoom=None):
 
 		# NOTE: all points are limited to cumulative 10000 points. This should be considered a temporary fix until there are some limitations on the requested data.
 		# Only displaying official data for Germany based on a bounding box
-		'collisions': incidents.filter(p_type__exact="collision").order_by('-date')[:2500],
-		'nearmisses': incidents.filter(p_type__exact="nearmiss").order_by('-date')[:4000],
-		'hazards': Hazard.objects.select_related('point').exclude(expires_date__lt=now).exclude(hazard_fixed=True).exclude(date__lt=datetime.date(2016, 1, 1)).order_by('-date')[:2500],
-		'thefts': Theft.objects.select_related('point').all().order_by('-date')[:1000],
+		'collisions': incidents.filter(p_type__exact="collision").exclude(infrastructure_changed=True).order_by('-date')[:2500],
+		'nearmisses': incidents.filter(p_type__exact="nearmiss").exclude(infrastructure_changed=True).order_by('-date')[:4000],
+		'hazards': Hazard.objects.select_related('point').exclude(expires_date__lt=now).exclude(hazard_fixed=True).order_by('-date')[:2500],
+		'thefts': Theft.objects.select_related('point').all().exclude(infrastructure_changed=True).order_by('-date')[:1000],
+		'newInfrastructures': NewInfrastructure.objects.select_related('point').exclude(expires_date__lt=now).order_by('-date')[:2500],
 		'officials': Official.objects.filter(geom__within=(Polygon.from_bbox((5,47,15,55)))),
 		"geofences": AlertArea.objects.filter(user=request.user.id),
 
 		# Form data used by map
 		"incidentForm": IncidentForm(),
-                "nearmissForm": NearmissForm(),
+		"nearmissForm": NearmissForm(),
 		"hazardForm": HazardForm(),
 		"theftForm": TheftForm(),
-
-
+		"newInfrastructureForm": NewInfrastructureForm(),
 		"geofenceForm": GeofenceForm(),
 		"editForm": EditForm()
 	}

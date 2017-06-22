@@ -22,10 +22,10 @@
             <div class="marker-group legend-subtext collapse in">
               <input type="checkbox" id="collisionCheckbox" checked> <i class="collision fa fa-bicycle"></i><small> {% trans "Citizen collision report" %}</small><br>
               <input type="checkbox" id="nearmissCheckbox" checked> <i class="nearmiss fa fa-bicycle"></i><small> {% trans "Citizen near miss report" %}</small><br>
-              <input type="checkbox"id="hazardCheckbox"checked> <i class="hazard fa fa-warning"></i><small> {% trans "Cyclist hazard" %}</small><br>
-              <input type="checkbox"id="theftCheckbox"checked> <i class="theft fa fa-bicycle"></i><small> {% trans "Bike Theft" %}</small><br>
-
-              <input type="checkbox" id="officialCheckbox" checked ><i class="official fa fa-certificate"></i><small> {% trans "Official report" %}</small><br>
+              <input type="checkbox" id="hazardCheckbox"checked> <i class="hazard fa fa-warning"></i><small> {% trans "Cyclist hazard" %}</small><br>
+              <input type="checkbox" id="theftCheckbox"checked> <i class="theft fa fa-bicycle"></i><small> {% trans "Bike theft" %}</small><br>
+              <input type="checkbox" id="newInfrastructureCheckbox"checked> <i class="newInfrastructure fa fa-star"></i><small> {% trans "New infrastructure" %}</small><br>
+              <input type="checkbox" id="officialCheckbox" checked> <i class="official fa fa-certificate"></i><small> {% trans "Official report" %}</small><br>
 
               <input id="filterCheckbox" type="checkbox">
                 <span class="fa-stack">
@@ -70,6 +70,9 @@
               <div class="bikelane solidlane"></div><small> {% trans "Bike Lane" %}</small><br>
               <div class="bikelane dotlane"></div><small> {% trans "Other Cycling Route" %}</small>
             </div>
+
+
+
             {% url 'mapApp:disclaimer' as disclaimer_link %}
             <div align="right">
             <a href="{{ disclaimer_link }}" target="_blank ">{% trans "Disclaimer" %}</a>

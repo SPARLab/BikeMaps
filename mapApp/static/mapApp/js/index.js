@@ -78,6 +78,8 @@ var collisions = geojsonMarker(collisions, "collision").addTo(incidentData).getL
     thefts = geojsonMarker(thefts, "theft").addTo(incidentData).getLayers();
     officials = geojsonMarker(officials, "official").addTo(incidentData).getLayers();
 
+    newInfrastructures = geojsonMarker(newInfrastructures, "newInfrastructure").addTo(incidentData).getLayers();
+
 // Add geofence alert areas to map
 addAlertAreas(geofences);
 function addAlertAreas(geofences){
@@ -100,6 +102,7 @@ $("#nearmissCheckbox").change(function(){ this.checked ? incidentData.addLayers(
 $("#hazardCheckbox").change(function(){ this.checked ? incidentData.addLayers(hazards) : incidentData.removeLayers(hazards); });
 $("#theftCheckbox").change(function(){ this.checked ? incidentData.addLayers(thefts) : incidentData.removeLayers(thefts); });
 $("#officialCheckbox").change(function(){ this.checked ? incidentData.addLayers(officials) : incidentData.removeLayers(officials); });
+$("#newInfrastructureCheckbox").change(function(){ this.checked ? incidentData.addLayers(newInfrastructures) : incidentData.removeLayers(newInfrastructures); });
 
 
 // Initialize the slider
@@ -134,6 +137,7 @@ var collisionsUnfiltered = collisions,
     hazardsUnfiltered = hazards,
     theftsUnfiltered = thefts;
     officialUnfiltered = officials;
+    newInfrastructuresUnfiltered = newInfrastructures;
 $("input.slider").on("slideStop", function(e){ filterPoints(e.value[0], e.value[1]) });
 
 // function to filter points and redraw map
@@ -164,13 +168,18 @@ function filterPoints(start_date, end_date) {
     d = moment(feature.feature.properties.date);
     return d >= start_date && d <= end_date;
   });
-
+  newInfrastructures = newInfrastructuresUnfiltered.filter(function(feature, layer){
+    d = moment(feature.feature.properties.dateAdded);
+    return d >= start_date && d <= end_date;
+  });
   // Add filtered layer back if checkbox is checked
   $("#collisionCheckbox").is(":checked") && incidentData.addLayers(collisions);
   $("#nearmissCheckbox").is(":checked") && incidentData.addLayers(nearmisses);
   $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
   $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
   $("#officialCheckbox").is(":checked") && incidentData.addLayers(officials);
+  $("#newInfrastructureCheckbox").is(":checked") && incidentData.addLayers(newInfrastructures);
+
 };
 
 // Add unfiltered data back
@@ -180,12 +189,15 @@ function resetPoints(){
   nearmisses = nearmissesUnfiltered,
   hazards = hazardsUnfiltered,
   thefts = theftsUnfiltered;
+  newInfrastructures = newInfrastructuresUnfiltered;
+
   // officials = officialUnfiltered;
   $("#collisionCheckbox").is(":checked") && incidentData.addLayers(collisions);
   $("#nearmissCheckbox").is(":checked") && incidentData.addLayers(nearmisses);
   $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
   $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
   $("#officialCheckbox").is(":checked") && incidentData.addLayers(officials);
+  $("#newInfrastructureCheckbox").is(":checked") && incidentData.addLayers(newInfrastructures);
 };
 
 $("input.slider").on("slide", function(e) {
@@ -323,8 +335,11 @@ function getPopup(layer) {
       popup += '<br><div class="popup-details"><strong>'+ gettext('Details')+':</strong> ' + feature.properties.details + '</div>';
     }
     // popup += '<br><strong>Data source: </strong> ' + feature.properties.data_source + '<a href="#" data-toggle="collapse" data-target="#official-metadata"><small> (metadata)</small></a><br>' + '<div id="official-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>' + feature.properties.metadata + '</small></div>';
-  }
-  else{
+  } else if (type === "newInfrastructure") {
+      popup = '<strong>'+gettext('New infrastructure')+':</strong> ' + gettext(feature.properties.infra_type);
+      popup += '<br><strong>'+gettext('Date changed')+': </strong> ' + moment(feature.properties.dateAdded).locale(LANGUAGE_CODE).format('MMMM YYYY');
+      popup += '<br><div class="popup-details"><strong>'+ gettext('Details')+':</strong> ' + feature.properties.details + '</div>';
+  } else{
     if (type === "collision" || type === "nearmiss") {
       popup = '<strong>'+gettext('Type')+':</strong> ' + gettext(feature.properties.i_type) + '<br><strong>';
       if (feature.properties.i_type != "Fall") popup += gettext('Incident with');
@@ -336,6 +351,7 @@ function getPopup(layer) {
 
     } else if (type === "theft") {
       popup = '<strong>'+gettext('Theft type')+':</strong> ' + gettext(feature.properties.i_type);
+
     }
     else return "error"; //Return error if type not found
 
@@ -372,6 +388,7 @@ map.on('moveend', function(e){
   var zoom = map.getZoom(),
       center = map.getCenter();
   window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
+
 });
 
 map.on('zoomend', function(e) {

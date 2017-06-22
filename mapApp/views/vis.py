@@ -5,7 +5,7 @@ from mapApp.models import AlertArea, Point
 def vis(request, lat=None, lng=None, zoom=None):
 	context = {
 		'alertAreas': AlertArea.objects.filter(user=request.user.id),
-		'points': Point.objects.all()
+		'points': Point.objects.all().exclude(infrastructure_changed=True).exclude(p_type = "newInfrastructure")
 	}
 	
 	# Add zoom and center data if present

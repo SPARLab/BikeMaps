@@ -10,7 +10,7 @@ from django.contrib.gis.geos import GEOSGeometry
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required, user_passes_test
 
-from mapApp.models import Incident, Hazard, Theft, AlertArea, IncidentNotification, HazardNotification, TheftNotification
+from mapApp.models import Incident, Hazard, Theft, NewInfrastructure, AlertArea, IncidentNotification, HazardNotification, TheftNotification
 from mapApp.forms import EditForm, UpdateHazardForm
 
 from django.contrib.auth import get_user_model
