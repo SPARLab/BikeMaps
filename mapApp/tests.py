@@ -90,10 +90,7 @@ class PointTests(TestCase):
         pnt_geom = GEOSGeometry('POINT(-123 48)')
         now_time = datetime.now()
 
-        self._pnt = Incident.objects.create(geom=pnt_geom, date=now_time,
-                                            i_type="Collision with moving object or vehicle",
-                                            incident_with="Vehicle, side",
-                                            injury="Injury, no treatment")
+        self._pnt = Incident.objects.create(geom=pnt_geom, date=now_time, i_type="Collision with moving object or vehicle", incident_with="Vehicle, side", injury="Injury, no treatment")
 
     def tearDown(self):
         self._pnt.delete()
@@ -114,20 +111,11 @@ class IncidentTests(TestCase):
         now_time = datetime.now()
 
         # Collision
-        self._collision = Incident.objects.create(geom=pnt_geom, date=now_time,
-                                                  i_type="Collision with moving object or vehicle",
-                                                  incident_with="Vehicle, side",
-                                                  injury="Injury, no treatment")
+        self._collision = Incident.objects.create(geom=pnt_geom, date=now_time, i_type="Collision with moving object or vehicle", incident_with="Vehicle, side", injury="Injury, no treatment")
         # Nearmiss
-        self._nearmiss = Incident.objects.create(geom=pnt_geom, date=now_time,
-                                                 i_type="Near collision with stationary object or vehicle",
-                                                 incident_with="Vehicle, side",
-                                                 injury="Injury, no treatment")
+        self._nearmiss = Incident.objects.create(geom=pnt_geom, date=now_time, i_type="Near collision with stationary object or vehicle", incident_with="Vehicle, side", injury="Injury, no treatment")
         # Fall
-        self._fall = Incident.objects.create(geom=pnt_geom, date=now_time,
-                                             i_type="Fall",
-                                             incident_with="Vehicle, side",
-                                             injury="Injury, no treatment")
+        self._fall = Incident.objects.create(geom=pnt_geom, date=now_time, i_type="Fall", incident_with="Vehicle, side", injury="Injury, no treatment")
 
     def tearDown(self):
         self._collision.delete()
@@ -155,15 +143,9 @@ class HazardTests(TestCase):
 
         # Create hazards that fall into different categories
         # TODO: Auto implement hazard_category or make a required field
-        self._infrastructure = Hazard.objects.create(geom=pnt_geom, date=now_time,
-                                                     i_type="Pothole",
-                                                     hazard_category="infrastructure")
-        self._environmental = Hazard.objects.create(geom=pnt_geom, date=now_time,
-                                                    i_type="Wet leaves",
-                                                    hazard_category="environmental")
-        self._human_behaviour = Hazard.objects.create(geom=pnt_geom, date=now_time,
-                                                      i_type="Driver behaviour",
-                                                      hazard_category="human behaviour")
+        self._infrastructure = Hazard.objects.create(geom=pnt_geom, date=now_time, i_type="Pothole", hazard_category="infrastructure")
+        self._environmental = Hazard.objects.create(geom=pnt_geom, date=now_time, i_type="Wet leaves", hazard_category="environmental")
+        self._human_behaviour = Hazard.objects.create(geom=pnt_geom, date=now_time, i_type="Driver behaviour", hazard_category="human behaviour")
 
         self._environmental.save()
 
@@ -206,13 +188,7 @@ class TheftTests(TestCase):
         now_time = datetime.now()
 
         # Theft
-        self._theft = Theft.objects.create(geom=pnt_geom, date=now_time,
-                                           i_type="Bike (value < $1000)",
-                                           how_locked="Frame locked",
-                                           lock="U-Lock",
-                                           locked_to="Outdoor bike rack",
-                                           lighting ="Good",
-                                           traffic="Very High")
+        self._theft = Theft.objects.create(geom=pnt_geom, date=now_time, i_type="Bike (value < $1000)", how_locked="Frame locked", lock="U-Lock", locked_to="Outdoor bike rack", lighting ="Good", traffic="Very High")
 
     def tearDown(self):
         self._theft.delete()
@@ -223,28 +199,6 @@ class TheftTests(TestCase):
 
     def test_p_type(self):
         self.assertEqual("theft", self._theft.p_type)
-
-class NewInfrastructureTests(TestCase):
-    """Tests of Incident class points instantiation and methods"""
-    def setUp(self):
-        pnt_geom = GEOSGeometry('POINT(-123.5 48.5)')
-        now_time = datetime.now()
-
-        # Collision
-        self._newInfrastructure = NewInfrastructure.objects.create(geom = pnt_geom,
-                                                                   date = now_time,
-                                                                   dateAdded = now_time,
-                                                                   infra_type = "Sepperated bike lane",
-                                                                   infraDetails = "New bike lane")
-
-    def tearDown(self):
-        self._newInfrastructure.delete()
-
-    def test_instances(self):
-        self.assertIsInstance(self._newInfrastructure, NewInfrastructure)
-
-    def test_p_type(self):
-        self.assertEqual("newInfrastructure", self._newInfrastructure.p_type)
 
 class AlertAreaTests(TestCase):
     """Tests for asserting point intersection works correctly with incident points"""
@@ -262,15 +216,9 @@ class AlertAreaTests(TestCase):
         self._poly = AlertArea.objects.create(geom=poly_geom, user=test_user)
 
         # Create points inside the alert area
-        self._pnt_in_poly = Incident.objects.create(geom=pnt_in_poly_geom, date=now_time,
-                                                    i_type="Collision with moving object or vehicle",
-                                                    incident_with="Vehicle, side",
-                                                    injury="Injury, no treatment")
+        self._pnt_in_poly = Incident.objects.create(geom=pnt_in_poly_geom, date=now_time, i_type="Collision with moving object or vehicle", incident_with="Vehicle, side", injury="Injury, no treatment")
         # Create points outside of alert area
-        self._pnt_out_poly = Incident.objects.create(geom=pnt_out_poly_geom, date=week_ago_time,
-                                                     i_type="Near collision with stationary object or vehicle",
-                                                     incident_with="Vehicle, side",
-                                                     injury="Injury, no treatment")
+        self._pnt_out_poly = Incident.objects.create(geom=pnt_out_poly_geom, date=week_ago_time, i_type="Near collision with stationary object or vehicle", incident_with="Vehicle, side", injury="Injury, no treatment")
 
     def test_point_intersection(self):
         poly = AlertArea.objects.filter(user__username="test_user")
@@ -296,11 +244,7 @@ class PostDataTests(TestCase):
         Theft.objects.all().delete()
 
     def test_incident_post(self):
-        response = self.client.post("/incident_submit/", {"geom": self.pnt_geom, "date": self.now_time,
-                                                          "i_type": "Collision with moving object or vehicle",
-                                                          "incident_with": "Vehicle, side",
-                                                          "injury": "Injury, no treatment",
-                                                          "impact": "None"})
+        response = self.client.post("/incident_submit/", {"geom": self.pnt_geom, "date": self.now_time, "i_type": "Collision with moving object or vehicle", "incident_with": "Vehicle, side", "injury": "Injury, no treatment"})
         json_string = response.content
         data = json.loads(json_string)
 
@@ -308,9 +252,7 @@ class PostDataTests(TestCase):
         self.assertEqual(data['point_type'], "collision")
 
     def test_hazard_post(self):
-        response = self.client.post("/hazard_submit/", {"geom": self.pnt_geom, "date": self.now_time,
-                                                        "i_type": "Pothole",
-                                                        "hazard_category": "infrastructure"})
+        response = self.client.post("/hazard_submit/", {"geom": self.pnt_geom, "date": self.now_time, "i_type": "Pothole", "hazard_category": "infrastructure"})
         json_string = response.content
         data = json.loads(json_string)
 
@@ -318,13 +260,7 @@ class PostDataTests(TestCase):
         self.assertEqual(data['point_type'], "hazard")
 
     def test_theft_post(self):
-        response = self.client.post("/theft_submit/", {"geom": self.pnt_geom, "date": self.now_time,
-                                                       "i_type": "Bike (value < $1000)",
-                                                       "how_locked": "Frame locked",
-                                                       "lock": "U-Lock",
-                                                       "locked_to": "Outdoor bike rack",
-                                                       "lighting ": "Good",
-                                                       "traffic": "Very High"})
+        response = self.client.post("/theft_submit/", {"geom": self.pnt_geom, "date": self.now_time, "i_type": "Bike (value < $1000)", "how_locked": "Frame locked", "lock": "U-Lock", "locked_to": "Outdoor bike rack", "lighting ": "Good", "traffic": "Very High"})
         json_string = response.content
         data = json.loads(json_string)
 
@@ -333,9 +269,7 @@ class PostDataTests(TestCase):
 
     def test_alert_area_post(self):
         self.client.login(username="test_user", password="password")
-        response = self.client.post("/poly_submit/", {"geom": self.poly_geom,
-                                                      "user": self.test_user.id,
-                                                      "email": self.test_user.email})
+        response = self.client.post("/poly_submit/", {"geom": self.poly_geom, "user": self.test_user.id, "email": self.test_user.email})
         json_string = response.content
         data = json.loads(json_string)
 

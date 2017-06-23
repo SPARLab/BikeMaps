@@ -18,7 +18,6 @@ urlpatterns = [
 	url(r'^hazard_submit/$', views.postHazard, name='postHazard'),
 	url(r'^theft_submit/$', views.postTheft, name='postTheft'),
 	url(r'^poly_submit/$', views.postAlertPolygon, name='postAlertPolygon'),
-	url(r'^newInfrastructure_submit/$', views.postNewInfrastructure, name='postNewInfrastructure'),
 
 	# Called from email form
 	url(r'^contact/$', views.contact, name='contact'),

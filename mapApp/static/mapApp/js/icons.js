@@ -7,8 +7,7 @@ var iconColors = {
     "official": "#436978",
     "undefined": "#a3a3a3",
     "geocode": "#a23336",
-    "location": "#a23336",
-    "newInfrastructure": "#ffff00"
+    "location": "#a23336"
 };
 
 // Given type, return the icon color as defined in iconColors
@@ -66,12 +65,6 @@ var icons = {
     markerColor: 'darkred',
     iconColor: 'black',
     color: getColor("location")
-  }),
-    "newInfrastructureIcon": L.AwesomeMarkers.icon({
-    icon: "fa-star",
-    markerColor: 'gray',
-    iconColor: 'yellow',
-    color: getColor("newInfrastructure")
   })
 };
 
@@ -115,7 +108,5 @@ function getIcon(t) {
     return icons["theftIcon"];
   else if (t === "official")
     return icons["officialIcon"];
-  else if (t === "newInfrastructure")
-    return icons["newInfrastructureIcon"];
   else return;
 };
