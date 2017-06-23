@@ -19,54 +19,44 @@
                   <li role="presentation"><a href="#nearmissReport" role="tab" data-toggle="tab">{% trans "Near miss" %}</a></li>
                   <li role="presentation"><a href="#hazardReport" role="tab" data-toggle="tab">{% trans "Hazard" %}</a></li>
                   <li role="presentation"><a href="#theftReport" role="tab" data-toggle="tab">{% trans "Theft" %}</a></li>
-                  {% if request.user.is_staff %}
-                  <li role="presentation"><a href="#newInfrastructureReport" role="tab" data-toggle="tab">{% trans "New Infrastructure" %}</a></li>
-                  {% endif %}
                 </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="incidentReport">
-                        <form action="{% url 'mapApp:postIncident' %}" method="POST" role="form" enctype="multipart/form-data">
-                            {% crispy incidentForm %}
-                        </form>
-                    </div>
+                  <div role="tabpanel" class="tab-pane active" id="incidentReport">
+                    <form action="{% url 'mapApp:postIncident' %}" method="POST" role="form" enctype="multipart/form-data">
+                      {% crispy incidentForm %}
+                    </form>
+                  </div>
                     <div role="tabpanel" class="tab-pane" id="nearmissReport">
                         <form action="{% url 'mapApp:postIncident' %}" method="POST" role="form" enctype="multipart/form-data">
                             {% crispy nearmissForm %}
                         </form>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="hazardReport">
-                        <form action="{% url 'mapApp:postHazard' %}" method="POST" role="form" enctype="multipart/form-data">
-                            {% crispy hazardForm %}
-                        </form>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="theftReport">
-                        <form action="{% url 'mapApp:postTheft' %}" method="POST" role="form" enctype="multipart/form-data">
-                            {% crispy theftForm %}
-                        </form>
-                    </div>
-                   {% if request.user.is_staff %}
-                    <div role="tabpanel" class="tab-pane" id="newInfrastructureReport">
-                        <form action="{% url 'mapApp:postNewInfrastructure' %}" method="POST" role="form" enctype="multipart/form-data">
-                            {% crispy newInfrastructureForm %}
-                        </form>
-                    </div>
-                    {% endif %}
+                  <div role="tabpanel" class="tab-pane" id="hazardReport">
+                    <form action="{% url 'mapApp:postHazard' %}" method="POST" role="form" enctype="multipart/form-data">
+                      {% crispy hazardForm %}
+                    </form>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="theftReport">
+                    <form action="{% url 'mapApp:postTheft' %}" method="POST" role="form" enctype="multipart/form-data">
+                      {% crispy theftForm %}
+                    </form>
+                  </div>
                 </div>
             </div>
 
             <div class="modal-footer">
-                <div class="col-xs-6">
-                    <div class="text-left" style="text-indent: -16px; padding-left: 15px;">
-                        {% url "mapApp:termsAndConditions" as terms_url %}
-                        <input type='checkbox' id='terms_checkbox'><strong> {% blocktrans %}I have read and understand the <a href='{{ terms_url }}' target=_blank> terms and conditions{% endblocktrans %}</a></strong>
-                    </div>
+              <div class="col-xs-6">
+                <div class="text-left" style="text-indent: -16px; padding-left: 15px;">
+                  {% url "mapApp:termsAndConditions" as terms_url %}
+                  <input type='checkbox' id='terms_checkbox'><strong> {% blocktrans %}I have read and understand the <a href='{{ terms_url }}' target=_blank> terms and conditions{% endblocktrans %}</a></strong>
                 </div>
-                <div class="col-xs-6">
-                    <button type="button" name="Cancel" class="btn btn-default cancel-btn" onclick="javascript:close_modal()">{% trans "Cancel" %}</button>
-                    <button type="button" name="Submit" class="btn btn-primary submit-btn disabled" onclick="javascript:submit_form()">{% trans "Submit" %}</button>
-                </div>
+              </div>
+              <div class="col-xs-6">
+                <button type="button" name="Cancel" class="btn btn-default cancel-btn" onclick="javascript:close_modal()">{% trans "Cancel" %}</button>
+                <button type="button" name="Submit" class="btn btn-primary submit-btn disabled" onclick="javascript:submit_form()">{% trans "Submit" %}</button>
+              </div>
             </div>
         </div>
     </div>

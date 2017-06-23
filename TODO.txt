@@ -7,8 +7,6 @@
     * Serve some pages over http to get around unsafe site resources warnings (do during new server setup since this will have to be configured then anyway)
     * Colour report buttons / make them more obvious
     * Cleanup index.html code
-    * Hide expired hazards on the visualization page
-    * Include and flag expired/fixed hazards in the api
 
   # LOWER PRIORITY
     * Open311 data sharing

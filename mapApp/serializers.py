@@ -27,7 +27,7 @@ class IncidentSerializer(GeoFeatureModelSerializer):
                   'details', 'injury', 'trip_purpose',
                   'regular_cyclist', 'helmet', 'intoxicated', 'road_conditions',
                   'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain',
-                  'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact','infrastructure_changed','infrastructure_changed_date')
+                  'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact')
 
 
 class IncidentWeatherSerializer(GeoFeatureModelSerializer):

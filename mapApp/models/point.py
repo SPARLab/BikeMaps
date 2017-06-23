@@ -15,7 +15,6 @@ class Point(models.Model):
         ('nearmiss', _('nearmiss')),
         ('theft', _('theft')),
         ('hazard', _('hazard')),
-        ('newInfrastructure', _('newInfrastructure')),
         ('official', _('official'))
     )
 
@@ -68,6 +67,7 @@ class Point(models.Model):
     geom = models.PointField(_('Location'))
     objects = models.GeoManager() # Required to conduct geographic queries
 
+    # Personal details about the participant (all optional)
     date = models.DateTimeField(
         _('When was the incident?'),
         default=None
@@ -79,7 +79,6 @@ class Point(models.Model):
         choices=TYPE_CHOICES
     )
 
-    # Personal details about the participant (all optional)
     age = models.CharField(
         _('What is your birth year?'),
         max_length=15,
@@ -113,15 +112,6 @@ class Point(models.Model):
         _('Where did you first find out about BikeMaps.org?'),
         max_length=20,
         choices=SOURCE_CHOICES,
-        blank=True,
-        null=True
-    )
-
-    infrastructure_changed = models.BooleanField(
-        _('Has the infrastructure been changed?'),
-        default=False
-    )
-    infrastructure_changed_date = models.DateTimeField(
         blank=True,
         null=True
     )
