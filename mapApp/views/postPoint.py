@@ -8,8 +8,8 @@ from djgeojson.serializers import Serializer as GeoJSONSerializer
 
 from  crispy_forms.utils import render_crispy_form
 
-from mapApp.models import Incident, Hazard, Theft
-from mapApp.forms import IncidentForm, NearmissForm, HazardForm, TheftForm
+from mapApp.models import Incident, Hazard, Theft, NewInfrastructure
+from mapApp.forms import IncidentForm, NearmissForm, HazardForm, TheftForm, NewInfrastructureForm
 from mapApp.views import alertUsers, pushNotification
 
 import json, math
@@ -32,6 +32,10 @@ def postHazard(request):
 @require_POST
 def postTheft(request):
 	return postPoint(request, TheftForm)
+
+@require_POST
+def postNewInfrastructure(request):
+	return postPoint(request, NewInfrastructureForm)
 
 def postPoint(request, Form):
 	"""Submit a user point submission to the database. Normalize geometry and activate push notifications."""
@@ -84,6 +88,7 @@ def postPoint(request, Form):
 			})
 	else:
 		logger.debug("Form not valid")
+
 
 	# Else: error occurred
 	form.data['geom'] = form.data['geom'].json

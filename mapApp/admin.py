@@ -1,7 +1,7 @@
 from django.contrib.gis import admin
 
 # Register models
-from mapApp.models import Point, Incident, Hazard, Theft, Official, AdministrativeArea, Weather
+from mapApp.models import Point, Incident, Hazard, Theft, Official, AdministrativeArea, Weather, NewInfrastructure
 
 # We need to get the OpenLayers API over HTTPS. By default GeoDjango uses HTTP, so we need to
 # subclass OSMGeoAdmin and override the URL source for the API
@@ -33,7 +33,7 @@ class WeatherInline(admin.StackedInline):
 class IncidentAdmin(PointAdmin):
 	fieldsets = [
 	    ('Location', {'fields': ['geom']}),
-	    ('Incident', {'fields': ['date', 'i_type', 'incident_with', 'injury', 'impact', 'trip_purpose']}),
+	    ('Incident', {'fields': ['date', 'i_type', 'incident_with', 'injury', 'impact', 'trip_purpose','infrastructure_changed','infrastructure_changed_date']}),
 	    ('Detail', {'fields': ['details'], 'classes':['collapse']}),
 	    ('Personal', {'fields': ['age', 'birthmonth', 'sex', 'regular_cyclist', 'helmet', 'intoxicated'], 'classes':['collapse']}),
 	    ('Conditions', {'fields': ['road_conditions', 'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain', 'direction', 'turning'], 'classes':['collapse']}),
@@ -56,11 +56,19 @@ admin.site.register(Hazard, HazardAdmin)
 class TheftAdmin(PointAdmin):
 	fieldsets = [
 	    ('Location', {'fields': ['geom']}),
-	    ('Theft', {'fields': ['date', 'i_type', 'how_locked', 'lock', 'locked_to', 'lighting', 'traffic', 'police_report', 'insurance_claim']}),
+	    ('Theft', {'fields': ['date', 'i_type', 'how_locked', 'lock', 'locked_to', 'lighting', 'traffic', 'police_report', 'insurance_claim','infrastructure_changed','infrastructure_changed_date']}),
 	    ('Detail', {'fields': ['details'], 'classes':['collapse']}),
 	    ('Personal', {'fields': ['regular_cyclist'], 'classes':['collapse']})
 	]
 admin.site.register(Theft, TheftAdmin)
+
+class NewInfrastructureAdmin(PointAdmin):
+	fieldsets = [
+	    ('Location', {'fields': ['geom']}),
+	    ('NewInfrastructure', {'fields': ['dateAdded','infra_type','expires_date']}),
+		('Detail', {'fields': ['infraDetails']})
+	]
+admin.site.register(NewInfrastructure, NewInfrastructureAdmin)
 
 class HazardAdminsInline(admin.TabularInline):
     model = AdministrativeArea.users.through
