@@ -167,7 +167,6 @@ barDate.render();
 // Leaflet heatmap
 var heatLayer = new HeatmapOverlay({ "radius": 40, "maxOpacity": 0.3 });
 var heat_data;
-// var Mapquest_OSM_API_Vis = MQ.mapLayer();
 var Esri_Streets_Basemap_Vis = L.esri.basemapLayer("Streets");
 var map = L.map('map', {
   center: [15,6],

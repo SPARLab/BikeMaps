@@ -45,7 +45,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js"></script>
   <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
-  <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=RLZNvGVCMj1uIJBVBQ3MgVrXyFUWJggw"></script>
   <!--Referencing the 1.0 version of the Esri-Leaflet plugin for compatibility with Leaflet 0.7.3 -->
   <script src="https://unpkg.com/esri-leaflet@1.0.0"></script>
   <script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}"></script>
@@ -54,7 +53,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
   <script src="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.js' %}"></script>
   <script src="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script>
-  <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
+  <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
   <script type="text/javascript">
       var LANGUAGE_CODE = "{{LANGUAGE_CODE}}";
   </script>

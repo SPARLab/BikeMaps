@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from push_notifications.models import APNSDevice, GCMDevice
-from push_notifications.gcm import gcm_send_bulk_message
+# from push_notifications.gcm import gcm_send_bulk_message
 
 from mapApp.models import Incident, Hazard, Theft, AlertArea
 
