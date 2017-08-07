@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from mapApp import views
 
@@ -35,12 +35,9 @@ urlpatterns = [
 
         # Disclaimer page
         url(r'^disclaimer/$', views.disclaimer, name='disclaimer'),
-
 	url(r'^recent/$', views.recentReports, name='recent'),
-
 	url(r'^vis/$', views.vis, name='vis'),
 	url(r'^vis/@(?P<lat>-?\d{1,3}\.\d*),(?P<lng>-?\d{1,3}\.\d*),(?P<zoom>\d+)z/?$', views.vis, name='vis'),
-
 	url(r'^alerts/$', views.recentReports, name='alerts'),
 ]
 

@@ -68,7 +68,7 @@ $(function(){
   var map = L.map('map', {
       center: [48, -100],
       zoom: 4,
-      layers: [MapQuestOpen_OSM, hazardsNotFixed, hazardsFixed],
+      layers: [Esri_Streets_Basemap, hazardsNotFixed, hazardsFixed],
       worldCopyJump: true,
   }).on('load', changeMap)
     .on('moveend', mapFilter);
