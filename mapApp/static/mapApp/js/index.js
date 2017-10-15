@@ -76,7 +76,6 @@ var collisions = geojsonMarker(collisions, "collision").addTo(incidentData).getL
     nearmisses = geojsonMarker(nearmisses, "nearmiss").addTo(incidentData).getLayers(),
     hazards = geojsonMarker(hazards, "hazard").addTo(incidentData).getLayers(),
     thefts = geojsonMarker(thefts, "theft").addTo(incidentData).getLayers();
-    officials = geojsonMarker(officials, "official").addTo(incidentData).getLayers();
 
     newInfrastructures = geojsonMarker(newInfrastructures, "newInfrastructure").addTo(incidentData).getLayers();
 
@@ -101,7 +100,6 @@ $("#collisionCheckbox").change(function(){ this.checked ? incidentData.addLayers
 $("#nearmissCheckbox").change(function(){ this.checked ? incidentData.addLayers(nearmisses) : incidentData.removeLayers(nearmisses); });
 $("#hazardCheckbox").change(function(){ this.checked ? incidentData.addLayers(hazards) : incidentData.removeLayers(hazards); });
 $("#theftCheckbox").change(function(){ this.checked ? incidentData.addLayers(thefts) : incidentData.removeLayers(thefts); });
-$("#officialCheckbox").change(function(){ this.checked ? incidentData.addLayers(officials) : incidentData.removeLayers(officials); });
 $("#newInfrastructureCheckbox").change(function(){ this.checked ? incidentData.addLayers(newInfrastructures) : incidentData.removeLayers(newInfrastructures); });
 
 
@@ -136,7 +134,6 @@ var collisionsUnfiltered = collisions,
     nearmissesUnfiltered = nearmisses,
     hazardsUnfiltered = hazards,
     theftsUnfiltered = thefts;
-    officialUnfiltered = officials;
     newInfrastructuresUnfiltered = newInfrastructures;
 $("input.slider").on("slideStop", function(e){ filterPoints(e.value[0], e.value[1]) });
 
@@ -164,10 +161,6 @@ function filterPoints(start_date, end_date) {
     d = moment(feature.feature.properties.date);
     return d >= start_date && d <= end_date;
   });
-  officials = officialUnfiltered.filter(function(feature, layer){
-    d = moment(feature.feature.properties.date);
-    return d >= start_date && d <= end_date;
-  });
   newInfrastructures = newInfrastructuresUnfiltered.filter(function(feature, layer){
     d = moment(feature.feature.properties.dateAdded);
     return d >= start_date && d <= end_date;
@@ -177,7 +170,6 @@ function filterPoints(start_date, end_date) {
   $("#nearmissCheckbox").is(":checked") && incidentData.addLayers(nearmisses);
   $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
   $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
-  $("#officialCheckbox").is(":checked") && incidentData.addLayers(officials);
   $("#newInfrastructureCheckbox").is(":checked") && incidentData.addLayers(newInfrastructures);
 
 };
@@ -191,12 +183,10 @@ function resetPoints(){
   thefts = theftsUnfiltered;
   newInfrastructures = newInfrastructuresUnfiltered;
 
-  // officials = officialUnfiltered;
   $("#collisionCheckbox").is(":checked") && incidentData.addLayers(collisions);
   $("#nearmissCheckbox").is(":checked") && incidentData.addLayers(nearmisses);
   $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
   $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
-  $("#officialCheckbox").is(":checked") && incidentData.addLayers(officials);
   $("#newInfrastructureCheckbox").is(":checked") && incidentData.addLayers(newInfrastructures);
 };
 
@@ -316,26 +306,7 @@ function getPopup(layer) {
   type = layer.options.ftype,
   popup;
 
-  if (type === "official") {
-    popup = '<strong>'+gettext('Type')+':</strong> ' + feature.properties.official_type;
-   // popup = "<strong>Type:</strong> " + feature.properties.official_type;
-    //if(feature.properties.details){
-    //  popup += " (" + feature.properties.details + ")";
-    //}
-    if(feature.properties.time){
-      var date = moment(feature.properties.date + "T" + feature.properties.time);//.format("MMM. D, YYYY, h:mma");
-    }else{
-      var date = moment(feature.properties.date).format("MMM. D, YYYY");
-    }
-    popup += '<br><strong>'+ gettext('Date')+': </strong> ' + moment(date).locale(LANGUAGE_CODE).format("lll");
-   // popup += '<br><strong>' + gettext('Date') + ':</strong> ' + date;
-
-    // Append details if present
-    if(feature.properties.details){
-      popup += '<br><div class="popup-details"><strong>'+ gettext('Details')+':</strong> ' + feature.properties.details + '</div>';
-    }
-    // popup += '<br><strong>Data source: </strong> ' + feature.properties.data_source + '<a href="#" data-toggle="collapse" data-target="#official-metadata"><small> (metadata)</small></a><br>' + '<div id="official-metadata" class="metadata collapse">' + '<strong>Metadata: </strong><small>' + feature.properties.metadata + '</small></div>';
-  } else if (type === "newInfrastructure") {
+  if (type === "newInfrastructure") {
       popup = '<strong>'+gettext('New infrastructure')+':</strong> ' + gettext(feature.properties.infra_type);
       popup += '<br><strong>'+gettext('Date changed')+': </strong> ' + moment(feature.properties.dateAdded).locale(LANGUAGE_CODE).format('MMMM YYYY');
       popup += '<br><div class="popup-details"><strong>'+ gettext('Details')+':</strong> ' + feature.properties.details + '</div>';
