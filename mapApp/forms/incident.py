@@ -77,6 +77,9 @@ class IncidentForm(forms.ModelForm):
         min_date = datetime.datetime.today() + limit
         if 'date' in self.cleaned_data:
             submitted_date = self.cleaned_data['date']
+            if submitted_date > datetime.datetime.today():
+                self._errors['date'] = [_(u'The date can\'t be in the future.')]
+                return False
             if submitted_date < min_date:
                 self._errors['date'] = [_(u'Incidents must have occurred within the past two years.')]
                 return False

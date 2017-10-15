@@ -52,11 +52,16 @@ class HazardForm(forms.ModelForm):
         # run default, parent validation first
         valid = super(HazardForm, self).is_valid()
 
-        # check date to ensure incident occurred within the past 2 years
+        
+
+        # check date to ensure incident occurred within the past 2 years and not in the future
         limit = datetime.timedelta(weeks=-52)
         min_date = datetime.datetime.today() + limit
         if 'date' in self.cleaned_data:
             submitted_date = self.cleaned_data['date']
+            if submitted_date > datetime.datetime.today():
+                self._errors['date'] = [_(u'The date can\'t be in the future.')]
+                return False
             if submitted_date < min_date:
                 self._errors['date'] = [_(u'Incidents must have occurred within the past year.')]
                 return False
