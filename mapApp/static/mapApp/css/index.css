@@ -98,13 +98,13 @@ span.date{
 /* Legend gradients*/
 .strava-gradient{
   background: rgba(255,102,17,0);
-  background: -moz-linear-gradient(left, rgba(255,102,17,0) 0%, rgba(255,102,17,1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,102,17,0)), color-stop(100%, rgba(255,102,17,1)));
-  background: -webkit-linear-gradient(left, rgba(255,102,17,0) 0%, rgba(255,102,17,1) 100%);
-  background: -o-linear-gradient(left, rgba(255,102,17,0) 0%, rgba(255,102,17,1) 100%);
-  background: -ms-linear-gradient(left, rgba(255,102,17,0) 0%, rgba(255,102,17,1) 100%);
-  background: linear-gradient(to right, rgba(255,102,17,0) 0%, rgba(255,102,17,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff6611', endColorstr='#ff6611', GradientType=1 );
+  background: -moz-linear-gradient(left, rgba(134,132,177,0) 0%, rgba(134,132,177,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(134,132,177,0)), color-stop(100%, rgba(134,132,177,1)));
+  background: -webkit-linear-gradient(left, rgba(134,132,177,0) 0%, rgba(134,132,177,1) 100%);
+  background: -o-linear-gradient(left, rgba(134,132,177,0) 0%, rgba(134,132,177,1) 100%);
+  background: -ms-linear-gradient(left, rgba(134,132,177,0) 0%, rgba(134,132,177,1) 100%);
+  background: linear-gradient(to right, rgba(134,132,177,0) 0%, rgba(134,132,177,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8684b1', endColorstr='#8684b1', GradientType=1 );
 }
 
 .rainbow-gradient{
