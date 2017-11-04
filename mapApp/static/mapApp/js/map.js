@@ -11,7 +11,7 @@ var MapQuestOpen_OSM = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z
       attribution: '<a href="https://openstreetmap.org/">&copy OpenStreetMap contributors, CC-BY-SA</a>',
       subdomains: '1234'
     }),
-    stravaHM = L.tileLayer('https://heatmap-external-a.strava.com/tiles/ride/gray/{z}/{x}/{y}.png', {
+    stravaHM = L.tileLayer('https://heatmap-external-{s}.strava.com/tiles/ride/gray/{z}/{x}/{y}.png', {
       minZoom: 3,
       maxZoom: 17,
       opacity: 0.8,
