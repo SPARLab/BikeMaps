@@ -113,6 +113,7 @@ INSTALLED_APPS = (
 
     # for certbot
     'asymmetric_jwt_auth',
+    'certbot_django.server',
 )
 
 TEMPLATES = [

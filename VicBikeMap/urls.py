@@ -7,6 +7,7 @@ from django.contrib import admin
 from solid_i18n.urls import solid_i18n_patterns
 from rest_framework.authtoken import views as auth_views
 from django.views import static
+import certbot_django.server.urls
 
 admin.autodiscover()
 js_info_dict = {
