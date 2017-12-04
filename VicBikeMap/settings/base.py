@@ -27,7 +27,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'minidetector.Middleware'
+    'minidetector.Middleware',
+    'asymmetric_jwt_auth.middleware.JWTAuthMiddleware',
 )
 
 ROOT_URLCONF = 'VicBikeMap.urls'
@@ -108,7 +109,10 @@ INSTALLED_APPS = (
     'userApp',
 
     # management commands, etc
-    'utils'
+    'utils',
+
+    # for certbot
+    'asymmetric_jwt_auth',
 )
 
 TEMPLATES = [
