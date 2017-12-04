@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^robots.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
     url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    url(r'^\.well-known/', include(certbot_django.server.urls)),
 ]
 
 # Add internationalization url patters to these pages
