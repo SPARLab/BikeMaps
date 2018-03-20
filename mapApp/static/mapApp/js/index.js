@@ -363,7 +363,13 @@ map.on('moveend', function(e){
 });
 
 map.on('zoomend', function(e) {
-  if(map.getZoom() >= 18 && map.hasLayer(stravaHM)) {
+  if(map.getZoom() >= 12 && map.hasLayer(stravaHM)) {
     stravaHM._clearBgBuffer();
+  }
+  if(map.getZoom() >= 12) {
+       stravaCheckbox.disabled = true;
+  }
+    if(map.getZoom() < 12) {
+       stravaCheckbox.disabled = false;
   }
 });
