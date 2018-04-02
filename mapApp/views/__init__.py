@@ -7,5 +7,5 @@ from termsAndConditions import termsAndConditions
 from disclaimer import disclaimer
 from vis import vis
 from recentReports import recentReports
-from restApi import CollisionList, NearmissList, HazardList, TheftList, FilteredHazardList, FilteredTheftList, OfficialList, UserList, UserDetail, AlertAreaList, AlertAreaDetail, GCMDeviceList, GCMDeviceDetail, APNSDeviceList, APNSDeviceDetail, IncidentList
+from restApi import CollisionList, NearmissList, HazardList, TheftList, FilteredHazardList, FilteredTheftList, OfficialList, UserList, UserDetail, AlertAreaList, AlertAreaDetail, GCMDeviceList, GCMDeviceDetail, APNSDeviceList, APNSDeviceDetail, IncidentList,TinyCollisionList,XHRCollisionInfo,TinyNearMissList,XHRNearMissInfo,TinyHazardList,XHRHazardInfo,TinyTheftList,XHRTheftInfo,TinyNewInfrastructureList,XHRNewInfrastructureInfo
 from pushNotification import pushNotification

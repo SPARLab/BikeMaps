@@ -58,4 +58,16 @@ urlpatterns += format_suffix_patterns([
     url(r'^gcmdevices/(?P<registration_id>.+)/$', views.GCMDeviceDetail.as_view(), name='gcmdevice-detail'),
     url(r'^apnsdevices/$', views.APNSDeviceList.as_view(), name='apnsdevice-list'),
     url(r'^apnsdevices/(?P<registration_id>.+)/$', views.APNSDeviceDetail.as_view(), name='apnsdevice-detail'),
+	#Changes made by Ayan 02/20/18
+	#added 2 URL Routes for REST API endpoints
+	url(r'^collisions_tiny/?$', views.TinyCollisionList.as_view(), name='tiny-collisions-list'),
+	url(r'^collision_xhr/?$', views.XHRCollisionInfo.as_view(), name='xhr-collision-detail'),
+	url(r'^nearmisses_tiny/?$', views.TinyNearMissList.as_view(), name='tiny-nearmiss-list'),
+	url(r'^nearmiss_xhr/?$', views.XHRNearMissInfo.as_view(), name='xhr-nearmiss-detail'),
+	url(r'^hazards_tiny/?$', views.TinyHazardList.as_view(), name='tiny-hazards-list'),
+	url(r'^hazard_xhr/?$', views.XHRHazardInfo.as_view(), name='xhr-hazards-detail'),
+	url(r'^thefts_tiny/?$', views.TinyTheftList.as_view(), name='tiny-thefts-list'),
+	url(r'^theft_xhr/?$', views.XHRTheftInfo.as_view(), name='xhr-thefts-detail'),
+	url(r'^newInfrastructures_tiny/?$', views.TinyNewInfrastructureList.as_view(), name='tiny-newInfrastructures-list'),
+	url(r'^newInfrastructures_xhr/?$', views.XHRNewInfrastructureInfo.as_view(), name='xhr-newInfrastructures-detail'),
 ], allowed=['json'])
