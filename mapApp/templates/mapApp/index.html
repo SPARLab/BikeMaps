@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static 'bootstrap-slider/css/bootstrap-slider.min.css' %}">
     <link href="{% static 'datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.5.0/MarkerCluster.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css">
     <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}">
     <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
@@ -42,7 +42,7 @@
   <script src="{% static 'datetimepicker/js/bootstrap-datetimepicker.js' %}"></script>
   <script src="{% static 'datetimepicker/js/locales/bootstrap-datetimepicker.de.js' %}" charset="UTF-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.5.0/leaflet.markercluster.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js"></script>
   <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
   <!--Referencing the 1.0 version of the Esri-Leaflet plugin for compatibility with Leaflet 0.7.3 -->
@@ -65,11 +65,11 @@
   <script>
     {% cache 10 index_data LANGUAGE_CODE %}
     // Convert database querysets to geojsons
-    var collisions = {{ collisions|geojsonfeature:"i_type,incident_with,date,details"|safe }},
-        nearmisses = {{ nearmisses|geojsonfeature:"i_type,incident_with,date,details"|safe }},
-        hazards = {{ hazards|geojsonfeature:"i_type,date,details"|safe }},
-        thefts = {{ thefts|geojsonfeature:"i_type,date,details"|safe }},
-        newInfrastructures = {{ newInfrastructures|geojsonfeature:"infra_type,dateAdded,details"|safe }},
+    //collisions = {{ collisions|geojsonfeature:"i_type,incident_with,date,details"|safe }},
+    //nearmisses = {{ nearmisses|geojsonfeature:"i_type,incident_with,date,details"|safe }},
+    //hazards = {{ hazards|geojsonfeature:"i_type,date,details"|safe }},
+    //thefts = {{ thefts|geojsonfeature:"i_type,date,details"|safe }},
+    //var newInfrastructures = {{ newInfrastructures|geojsonfeature:"infra_type,dateAdded,details"|safe }},
         geofences = {{ geofences|geojsonfeature|safe }};
     {% endcache %}
     // if zoom parameter in url, set variables
