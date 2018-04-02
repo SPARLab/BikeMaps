@@ -4,7 +4,7 @@ from django.forms import widgets
 from push_notifications.models import GCMDevice, APNSDevice
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
-from mapApp.models import Point, Incident, Hazard, Theft, Official, AlertArea
+from mapApp.models import Point, Incident, Hazard, Theft, Official, AlertArea,NewInfrastructure
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -138,3 +138,56 @@ class APNSDeviceSerializer(serializers.ModelSerializer):
     class Meta:
         model = APNSDevice
         fields = ('pk', 'name', 'active', 'user', 'date_created', 'registration_id')
+
+
+
+#Changes made by Ayan 02/20/18
+#added 2 serializer classes
+
+class TinyIncidentSerializer(GeoFeatureModelSerializer):
+    class Meta:
+        model = Incident
+        geo_field = 'geom'
+        fields = ('pk','date')
+
+class TinyXHRIncidentSerializer(GeoFeatureModelSerializer):
+    class Meta:
+        model = Incident
+        geo_field = 'geom'
+        fields = ('pk','i_type', 'incident_with','date','details')
+
+class TinyHazSerializer(GeoFeatureModelSerializer):
+    class Meta:
+        model = Hazard
+        geo_field = 'geom'
+        fields = ('pk','date')
+
+class TinyXHRHazSerializer(GeoFeatureModelSerializer):
+    class Meta:
+        model = Hazard
+        geo_field = 'geom'
+        fields = ('pk','i_type','date','details')
+
+class TinyTheftSerializer(GeoFeatureModelSerializer):
+    class Meta:
+        model = Theft
+        geo_field = 'geom'
+        fields = ('pk','date')
+
+class TinyXHRTheftSerializer(GeoFeatureModelSerializer):
+    class Meta:
+        model = Theft
+        geo_field = 'geom'
+        fields = ('pk','i_type','date','details')
+
+class TinyNewInfrastructureSerializer(GeoFeatureModelSerializer):
+    class Meta:
+        model = NewInfrastructure
+        geo_field = 'geom'
+        fields = ('pk','dateAdded')
+
+class TinyXHRNewInfrastructureSerializer(GeoFeatureModelSerializer):
+    class Meta:
+        model = NewInfrastructure
+        geo_field = 'geom'
+        fields = ('pk','infra_type','dateAdded','details')
