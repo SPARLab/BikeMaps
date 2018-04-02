@@ -1,6 +1,8 @@
 // Create data feature groups
 var collisions, nearmisses, hazards, thefts, newInfrastructures;
-var srv = '159.203.2.12';
+
+//'159.203.2.12' for dev
+var srv = window.location.hostname; 
 
 loadIncidenLayerXHR("/nearmisses_tiny?format=json", "nearmiss", nearmisses);
 loadIncidenLayerXHR("/hazards_tiny?format=json", "hazard", hazards);
@@ -486,6 +488,7 @@ function getPopupText(in_type, in_data) {
         tempContent += "Type not found.";
     }
     tempContent += '<br><strong>' + gettext('Date') + ': </strong> ' + moment(in_data.properties.date).locale(LANGUAGE_CODE).format("lll");
+    tempContent += '<br><strong>' + gettext('Incident ID') + ':</strong> ' + feature.id;
 
     // Append details if present
     if (in_data.properties.details) {
