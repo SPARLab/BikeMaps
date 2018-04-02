@@ -363,7 +363,8 @@ function getPopup(layer) {
         else return "error"; //Return error if type not found
 
         // Append date
-        popup += '<br><strong>' + gettext('Date') + ': </strong> ' + moment(feature.properties.date).locale(LANGUAGE_CODE).format("lll");
+        popup += '<br><strong>'+gettext('Date')+': </strong> ' + moment(feature.properties.date).locale(LANGUAGE_CODE).format("lll")+'<br>';
+        popup += '<strong>'+gettext('Incident ID')+':</strong> '+ feature.id;
 
         // Append details if present
         if (feature.properties.details) {
@@ -372,7 +373,6 @@ function getPopup(layer) {
 
         return popup;
     }
-
 
     return popup;
 };
@@ -398,10 +398,10 @@ map.on('moveend', function (e) {
 
 });
 
-map.on('zoomend', function (e) {
-    if (map.getZoom() >= 18 && map.hasLayer(stravaHM)) {
-        stravaHM._clearBgBuffer();
-    }
+map.on('zoomend', function(e) {
+  if(map.getZoom() >= 13 && map.hasLayer(stravaHM)) {
+    stravaHM._clearBgBuffer();
+  }
 });
 
 
