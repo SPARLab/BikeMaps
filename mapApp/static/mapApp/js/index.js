@@ -488,7 +488,7 @@ function getPopupText(in_type, in_data) {
         tempContent += "Type not found.";
     }
     tempContent += '<br><strong>' + gettext('Date') + ': </strong> ' + moment(in_data.properties.date).locale(LANGUAGE_CODE).format("lll");
-    tempContent += '<br><strong>' + gettext('Incident ID') + ':</strong> ' + feature.id;
+    tempContent += '<br><strong>' + gettext('Incident ID') + ':</strong> ' + in_data.properties.pk;
 
     // Append details if present
     if (in_data.properties.details) {
