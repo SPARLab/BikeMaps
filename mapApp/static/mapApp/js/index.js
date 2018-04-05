@@ -176,7 +176,7 @@ function filterPoints(start_date, end_date) {
     end_date = sliderDate(end_date).add(1, 'M').subtract(1, 'd'); //Get the last day of the month
 
     incidentData.clearLayers();
-    console.log('layer cleared');
+    console.log('layer cleared. now try filtering');
 
     collisionsUnfiltered = getRefLyr("collision", refLayers);
     nearmissesUnfiltered = getRefLyr("nearmiss", refLayers);
