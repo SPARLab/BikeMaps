@@ -122,7 +122,7 @@ function addAlertAreas(geofences) {
 //$("#nearmissCheckbox").change(function(){ this.checked ? incidentData.addLayers(nearmisses) : incidentData.removeLayers(nearmisses); });
 //$("#hazardCheckbox").change(function(){ this.checked ? incidentData.addLayers(hazards) : incidentData.removeLayers(hazards); });
 //$("#theftCheckbox").change(function(){ this.checked ? incidentData.addLayers(thefts) : incidentData.removeLayers(thefts); });
-$("#newInfrastructureCheckbox").change(function () { this.checked ? incidentData.addLayers(newInfrastructures) : incidentData.removeLayers(newInfrastructures); });
+//$("#newInfrastructureCheckbox").change(function () { this.checked ? incidentData.addLayers(newInfrastructures) : incidentData.removeLayers(newInfrastructures); });
 
 
 // Initialize the slider
@@ -182,6 +182,7 @@ function filterPoints(start_date, end_date) {
     nearmissesUnfiltered = getRefLyr("nearmiss", refLayers);
     hazardsUnfiltered = getRefLyr("hazard", refLayers);
     theftsUnfiltered = getRefLyr("theft", refLayers);
+    newInfrastructuresUnfiltered = getRefLyr("newInfrastructure", refLayers);
 
     collisions = collisionsUnfiltered.filter(function (feature, layer) {
         d = moment(feature.feature.properties.date);
