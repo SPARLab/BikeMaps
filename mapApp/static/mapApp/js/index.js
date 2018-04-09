@@ -176,7 +176,6 @@ function filterPoints(start_date, end_date) {
     end_date = sliderDate(end_date).add(1, 'M').subtract(1, 'd'); //Get the last day of the month
 
     incidentData.clearLayers();
-    console.log('layer cleared. now try filtering');
 
     collisionsUnfiltered = getRefLyr("collision", refLayers);
     nearmissesUnfiltered = getRefLyr("nearmiss", refLayers);
@@ -415,7 +414,7 @@ function loadIncidenLayerXHR(in_relink, in_lyr_type, in_ref_lyr) {
         url: in_relink,
         dataType: 'json',
         success: function (response) {
-            console.log('trying to add the xhr layer');
+            //console.log('trying to add the xhr layer');
             in_ref_lyr = geojsonMarker(response, in_lyr_type).addTo(incidentData).getLayers();
             $("#" + in_lyr_type + "Checkbox").change(function () { this.checked ? incidentData.addLayers(in_ref_lyr) : incidentData.removeLayers(in_ref_lyr); });
             refLayers.push({ id: in_lyr_type, lyr: in_ref_lyr });
@@ -436,7 +435,7 @@ function loadInfoDetails(in_pk, ref_popup, in_type, in_url) {
         url: in_url + in_pk,
         dataType: 'json',
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             ref_popup.setContent(getPopupText(in_type, response));
         },
         error: function (err) {
