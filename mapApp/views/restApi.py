@@ -1,5 +1,5 @@
-from mapApp.models import Incident, Hazard, Theft, Official, AlertArea
-from mapApp.serializers import IncidentSerializer, HazardSerializer, TheftSerializer, FilteredHazardSerializer, FilteredTheftSerializer, OfficialSerializer, AlertAreaSerializer, UserSerializer, GCMDeviceSerializer, APNSDeviceSerializer, IncidentWeatherSerializer
+from mapApp.models import Incident, Hazard, Theft, Official, AlertArea, NewInfrastructure
+from mapApp.serializers import IncidentSerializer, HazardSerializer, TheftSerializer, FilteredHazardSerializer, FilteredTheftSerializer, OfficialSerializer, AlertAreaSerializer, UserSerializer, GCMDeviceSerializer, APNSDeviceSerializer, IncidentWeatherSerializer,TinyIncidentSerializer,TinyXHRIncidentSerializer,TinyHazSerializer,TinyXHRHazSerializer,TinyTheftSerializer,TinyXHRTheftSerializer,TinyNewInfrastructureSerializer,TinyXHRNewInfrastructureSerializer
 from django.http import Http404
 from django.contrib.gis.geos import Polygon
 from rest_framework.views import APIView
@@ -388,3 +388,138 @@ def stringToPolygon(bbstr):
     xmin, ymin, xmax, ymax = [float(x) for x in bbsplt]
 
     return Polygon.from_bbox((xmin, ymin, xmax, ymax))
+
+#Changes made by Ayan 02/20/18
+#added 2 REST API endpoints
+
+class TinyCollisionList(APIView):
+    """
+    List all collisions
+    """
+    def get(self, request, format=None):
+
+        # Extract bounding box Url parameter
+        bbstr = request.GET.get('bbox', '-180,-90,180,90')
+        bbox = stringToPolygon(bbstr)
+
+        collisionsQuerySet = Incident.objects.filter(p_type__exact="collision").exclude(infrastructure_changed=True).order_by('-date')[:2500]		
+        serializer = TinyIncidentSerializer(collisionsQuerySet, many=True)
+        return Response(serializer.data)
+
+class XHRCollisionInfo(APIView):
+    """
+    List detailed info for a collision
+    """
+    def get(self, request, format=None):
+
+        # grab the pk and filter and find only the one record that matched
+        in_pk = request.GET.get('pk')
+        collisionsQuerySet = Incident.objects.get(pk=in_pk)			
+        serializer = TinyXHRIncidentSerializer(collisionsQuerySet, many=False)
+        return Response(serializer.data)
+
+class TinyNearMissList(APIView):
+    """
+    List all Near Misses
+    """
+    def get(self, request, format=None):
+
+        # Extract bounding box Url parameter
+        bbstr = request.GET.get('bbox', '-180,-90,180,90')
+        bbox = stringToPolygon(bbstr)
+
+        nearmissQuerySet = Incident.objects.filter(p_type__exact="nearmiss").exclude(infrastructure_changed=True).order_by('-date')[:2500]		
+        serializer = TinyIncidentSerializer(nearmissQuerySet, many=True)
+        return Response(serializer.data)
+
+class XHRNearMissInfo(APIView):
+    """
+    List detailed info for a collision
+    """
+    def get(self, request, format=None):
+
+        # grab the pk and filter and find only the one record that matched
+        in_pk = request.GET.get('pk')
+        collisionsQuerySet = Incident.objects.get(pk=in_pk)			
+        serializer = TinyXHRIncidentSerializer(collisionsQuerySet, many=False)
+        return Response(serializer.data)
+
+class TinyHazardList(APIView):
+    """
+    List all collisions
+    """
+    def get(self, request, format=None):
+
+        # Extract bounding box Url parameter
+        bbstr = request.GET.get('bbox', '-180,-90,180,90')
+        bbox = stringToPolygon(bbstr)
+		#select_related('point').
+		#Hazard.objects.select_related('point').exclude(expires_date__lt=now).exclude(hazard_fixed=True).order_by('-date')[:1],
+        hazardQuerySet = Hazard.objects.select_related('point').exclude(expires_date__lt=datetime.datetime.now()).exclude(hazard_fixed=True).order_by('-date')[:2500]
+        serializer = TinyHazSerializer(hazardQuerySet, many=True)
+        return Response(serializer.data)
+
+class XHRHazardInfo(APIView):
+    """
+    List detailed info for a collision
+    """
+    def get(self, request, format=None):
+
+        # grab the pk and filter and find only the one record that matched
+        in_pk = request.GET.get('pk')
+        hazardQuerySet = Hazard.objects.get(pk=in_pk)			
+        serializer = TinyXHRHazSerializer(hazardQuerySet,many=False)
+        return Response(serializer.data)
+
+
+class TinyTheftList(APIView):
+    """
+    List all collisions
+    """
+    def get(self, request, format=None):
+
+        # Extract bounding box Url parameter
+        bbstr = request.GET.get('bbox', '-180,-90,180,90')
+        bbox = stringToPolygon(bbstr)
+		#select_related('point').
+        theftQuerySet = Theft.objects.select_related('point').all().exclude(infrastructure_changed=True).order_by('-date')[:2500]
+        serializer = TinyTheftSerializer(theftQuerySet, many=True)
+        return Response(serializer.data)
+
+class XHRTheftInfo(APIView):
+    """
+    List detailed info for a collision
+    """
+    def get(self, request, format=None):
+
+        # grab the pk and filter and find only the one record that matched
+        in_pk = request.GET.get('pk')
+        theftQuerySet = Theft.objects.get(pk=in_pk)			
+        serializer = TinyXHRTheftSerializer(theftQuerySet, many=False)
+        return Response(serializer.data)
+
+class TinyNewInfrastructureList(APIView):
+    """
+    List all new infrastructures
+    """
+    def get(self, request, format=None):
+
+        # Extract bounding box Url parameter
+        bbstr = request.GET.get('bbox', '-180,-90,180,90')
+        bbox = stringToPolygon(bbstr)
+		#select_related('point').
+        niQuerySet = NewInfrastructure.objects.select_related('point').exclude(expires_date__lt=datetime.datetime.now()).order_by('-date')[:2500]
+        serializer = TinyNewInfrastructureSerializer(niQuerySet, many=True)
+        return Response(serializer.data)
+
+class XHRNewInfrastructureInfo(APIView):
+    """
+    List detailed info for a new infrastructure
+    """
+    def get(self, request, format=None):
+
+        # grab the pk and filter and find only the one record that matched
+        in_pk = request.GET.get('pk')
+        niQuerySet = NewInfrastructure.objects.get(pk=in_pk)			
+        serializer = TinyXHRNewInfrastructureSerializer(niQuerySet, many=False)
+        return Response(serializer.data)
