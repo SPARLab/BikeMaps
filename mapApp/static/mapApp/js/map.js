@@ -18,9 +18,16 @@ var MapQuestOpen_OSM = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z
       opacity: 0.8,
       attribution: '<a href=http://labs.strava.com/heatmap/>http://labs.strava.com/heatmap/</a>'
     }),
+    /*
     infrastructure = L.tileLayer.wms("https://bikemaps.org/WMS", {
       layers: 'bikemaps_infrastructure',
       format: 'image/png',
       transparent: true,
       version: '1.3.0'
-    });
+    })
+    */
+    infrastructure = L.esri.dynamicMapLayer({
+        url: 'https://grs.asurite.ad.asu.edu/server/rest/services/Bikemaps/InfrastructureARC/MapServer',
+        opacity: 0.7
+    })
+    ;
