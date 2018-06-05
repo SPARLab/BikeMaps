@@ -504,8 +504,6 @@ function getPopupText(in_type, in_data) {
     if (typeof checkEdit === "function") {
         tempContent += checkEdit(in_data, tempPath);
     }
-    else {
-        console.log(" Nope not going to let you edit ! ");
-    }
+
     return tempContent;
 }
