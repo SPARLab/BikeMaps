@@ -466,23 +466,28 @@ function getXHRPopup(layer) {
 
 function getPopupText(in_type, in_data) {
     var tempContent = "";
+    var tempPath = "";
+
     if (in_type === "hazard") {
         tempContent = '<strong>' + gettext('Hazard type') + ':</strong> ' + gettext(in_data.properties.i_type);
+        tempPath = "/mapApp/hazard/";
     }
     else if (in_type === "theft") {
         tempContent = '<strong>' + gettext('Theft type') + ':</strong> ' + gettext(in_data.properties.i_type);
+        tempPath = "/mapApp/theft/"
     }
     else if (in_type === "collision" || in_type === "nearmiss") {
         tempContent = '<strong>' + gettext('Type') + ':</strong> ' + gettext(in_data.properties.i_type) + '<br><strong>';
         if (in_data.properties.i_type != "Fall") tempContent += gettext('Incident with');
         else tempContent += gettext('Due to');
         tempContent += ':</strong> ' + gettext(in_data.properties.incident_with)
-
+        tempPath = "/mapApp/incident/";
     }
     else if (in_type === "newInfrastructure") {
         tempContent = '<strong>' + gettext('New infrastructure') + ':</strong> ' + gettext(in_data.properties.infra_type);
         tempContent += '<br><strong>' + gettext('Date changed') + ': </strong> ' + moment(in_data.properties.dateAdded).locale(LANGUAGE_CODE).format('MMMM YYYY');
         tempContent += '<br><div class="popup-details"><strong>' + gettext('Details') + ':</strong> ' + in_data.properties.details + '</div>';
+        tempPath = "/mapApp/newinfrastructure/";
     }
     else {
         tempContent += "Type not found.";
@@ -493,6 +498,11 @@ function getPopupText(in_type, in_data) {
     // Append details if present
     if (in_data.properties.details) {
         tempContent += '<br><div class="popup-details"><strong>' + gettext('Details') + ':</strong> ' + in_data.properties.details + '</div>';
+    }
+
+    //Append the data for editing if in role
+    if (typeof checkEdit === "function") {
+        tempContent += checkEdit(in_data, tempPath);
     }
 
     return tempContent;
