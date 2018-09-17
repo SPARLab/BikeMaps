@@ -190,4 +190,4 @@ class TinyXHRNewInfrastructureSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = NewInfrastructure
         geo_field = 'geom'
-        fields = ('pk','infra_type','dateAdded','infraDetails')
+        fields = ('pk','infra_type','dateAdded','details')

@@ -456,6 +456,7 @@ function getXHRPopup(layer) {
         .openOn(map);
 
     if (type === "newInfrastructure") {
+        //there is an extra s in the path
         loadInfoDetails(feature.properties.pk, popup, type, "//" + srv + "/" + type + "s_xhr?format=json&pk=");
     }
     else {
