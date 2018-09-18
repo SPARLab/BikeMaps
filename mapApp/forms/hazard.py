@@ -57,9 +57,11 @@ class HazardForm(forms.ModelForm):
         # check date to ensure incident occurred within the past 2 years and not in the future
         limit = datetime.timedelta(weeks=-52)
         min_date = datetime.datetime.today() + limit
+        # hack fix because app is not time zone aware and we are trying to test dates in different time zones
+        max_date = datetime.datetime.today() + datetime.timedelta(days=1)
         if 'date' in self.cleaned_data:
             submitted_date = self.cleaned_data['date']
-            if submitted_date > datetime.datetime.today():
+            if submitted_date > max_date:
                 self._errors['date'] = [_(u'The date can\'t be in the future.')]
                 return False
             if submitted_date < min_date:
