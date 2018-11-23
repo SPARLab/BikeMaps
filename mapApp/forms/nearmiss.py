@@ -24,13 +24,14 @@ class NearmissForm(forms.ModelForm):
             AccordionGroup(
                 _('Near Miss Details'),
                 Field('geom', type='hidden', id='nearmisspoint'),
+                Field('personal_involvement', id='nearmiss_personal_involvment'),
+                Field('witness_vehicle'),
                 Field('date', id='nearmiss_date', template='mapApp/util/%s_datepicker.html', autocomplete='off'),
                 Field('i_type'),
                 Field('incident_with'),
                 Field('injury'),
                 Field('impact'),
                 Field('trip_purpose'),
-                Field('personal_involvement'),
             ),
             AccordionGroup(
                 _('Conditions'),
@@ -42,11 +43,13 @@ class NearmissForm(forms.ModelForm):
                 Field('terrain'),
                 Field('direction'),
                 Field('turning'),
+                Field('intersection'),
+                Field('aggressive'),
                 css_id='nearmiss-conditions',
             ),
             AccordionGroup(
                 _('Description'),
-                Field('details', placeholder=_('optional')),
+                Field('details', placeholder=_('mandatory')),
                 css_id='nearmiss-description',
             ),
             AccordionGroup(
@@ -61,7 +64,6 @@ class NearmissForm(forms.ModelForm):
                 Field('bicycle_type'),
                 Field('ebike'),
                 Field('helmet'),
-                Field('intoxicated'),
                 css_id='nearmiss-personal-details',
             ),
         )

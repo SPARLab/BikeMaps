@@ -33,9 +33,10 @@ class Incident(Point):
     INCIDENT_WITH_CHOICES = (
         (_('Vehicle'), (
                 ('Vehicle, head on', _('Head on')),
-                ('Vehicle, side', _('Side impact')),
-                ('Vehicle, angle', _('Angle impact')),
                 ('Vehicle, rear end', _('Rear end')),
+                ('Vehicle, turning right', _('Turning right')),
+                ('Vehicle, turning left', _('Turning left')),
+                ('Vehicle, passing', _('Passing')),
                 ('Vehicle, open door', _('Open vehicle door')),
             )
         ),
@@ -43,6 +44,7 @@ class Incident(Point):
                 ('Another cyclist', _('Another cyclist')),
                 ('Pedestrian', _('Pedestrian')),
                 ('Animal', _('Animal')),
+                ('E-scooter', _('E-scooter')),
             )
         ),
         (_('Infrastructure'), (
@@ -68,7 +70,11 @@ class Incident(Point):
         (_('No'), (
                 ('No injury', _('No injury')),
             )
+        ),
+        (_('Unknown'), (
+            ('Unknown', _('I don\'t know')),
         )
+         )
     )
 
     PURPOSE_CHOICES = (
@@ -92,26 +98,6 @@ class Incident(Point):
         ('Glare or reflection', _('Glare or reflection')),
         ('Obstruction on road', _('Obstruction on road')),
         ('Don\'t Remember', _('Don\'t Remember'))
-    )
-    RIDING_ON_CHOICES = (
-        (_('Busy street'), (
-                ('Busy street cycle track', _('On a cycle track (separated bike lane)')),
-                ('Busy street bike lane', _('On a painted bike lane')),
-                ('Busy street, no bike facilities', _('On a street with no bicycle facility'))
-            )
-        ),
-        (_('Quiet street'), (
-                ('Quiet street bike lane', _('On a local street bikeway (bike route)')),
-                ('Quiet street, no bike facilities', _('On a street with no bicycle facility'))
-            )
-        ),
-        (_('Off-Street'), (
-                ('Cycle track', _('On a physically separated bike lane (cycle track)')),
-                ('Mixed use trail', _('On a multi-use path')),
-                ('Sidewalk', _('On a sidewalk')),
-            )
-        ),
-        ('Don\'t remember', _('I don\'t remember'))
     )
     LIGHTS_CHOICES = (
         ('NL', _('No Lights')),
@@ -151,16 +137,17 @@ class Incident(Point):
     )
     INCIDENT_IMPACT_CHOICES = (
         ('None', _('No impact')),
-        ('More careful', _('I\'m now more careful about where/when I ride')),
+        ('More careful', _('I\'m now more careful about where/when/how I ride')),
         ('Bike less', _('I bike less')),
-        ('More careful and bike less', _('I\'m now more careful about where/when I ride AND I bike less')),
+        ('More careful and bike less', _('I\'m now more careful about where/when/how I ride AND I bike less')),
         ('Stopped biking', _('I haven\'t biked since')),
         ('Too soon', _('Too soon to say'))
     )
     BICYCLE_TYPE_CHOICES = (
         ('Personal', _('Personal (my own bicycle or a friend\'s)')),
         ('Bike share', _('Bike share')),
-        ('Bike rental', _('Bike rental'))
+        ('Bike rental', _('Bike rental')),
+        ('E-scooter', _('E-scooter'))
     )
     EBIKE_CHOICES = (
         ('Yes', _('Yes')),
@@ -170,6 +157,12 @@ class Incident(Point):
     PERSONAL_INVOLVEMENT_CHOICES = (
         ('Yes', _('Yes, this happened to me')),
         ('No', _('No, I witnessed this happen to someone else'))
+    )
+    WITNESS_VEHICLE_CHOICES = (
+        ('Bicycle', _('Bicycle')),
+        ('E-scooter', _('E-scooter')),
+        ('Pedestrian', _('I was a pedestrian')),
+        ('Driving', _('I was driving')),
     )
 
     ############
@@ -240,13 +233,6 @@ class Incident(Point):
         blank=True,
         null=True
     )
-    riding_on = models.CharField(
-        _('Where were you riding your bike?'),
-        max_length=50,
-        choices=RIDING_ON_CHOICES,
-        blank=True,
-        null=True
-    )
     bike_lights = models.CharField(
         _('Were you using bike lights?'),
         max_length=200,
@@ -275,6 +261,20 @@ class Incident(Point):
         blank=True,
         null=True
     )
+    intersection = models.CharField(
+        _('Did the incident occur at an intersection?'),
+        max_length=50,
+        choices=BOOLEAN_CHOICES,
+        blank=True,
+        null=True
+    )
+    aggressive = models.CharField(
+        _('Was the driver aggressive?'),
+        max_length=50,
+        choices=BOOLEAN_CHOICES,
+        blank=True,
+        null=True
+    )
     impact = models.CharField(
         _('How did this incident impact your bicycling?'),
         max_length=50,
@@ -298,13 +298,21 @@ class Incident(Point):
         null=True
     )
 
-    personal_involvement = models.CharField(
-        _('Were you directly involved in the incident?'),
+    witness_vehicle = models.CharField(
+        _('What were you riding?'),
         max_length=20,
-        choices=PERSONAL_INVOLVEMENT_CHOICES,
+        choices=WITNESS_VEHICLE_CHOICES,
         blank=True,
         null=True
     )
+
+    personal_involvement = models.CharField(
+        _('Were you directly involved in the incident?'),
+        max_length=20,
+        choices=PERSONAL_INVOLVEMENT_CHOICES
+    )
+
+
 
     ##############
 

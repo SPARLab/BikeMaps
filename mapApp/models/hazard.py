@@ -172,4 +172,5 @@ class Hazard(Point):
 
         # Set p_type
         self.p_type = "hazard"
+        self.date = self.noticed_date
         super(Hazard, self).save(*args, **kwargs) # Call the "real" save() method.

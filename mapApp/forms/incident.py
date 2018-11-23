@@ -24,13 +24,14 @@ class IncidentForm(forms.ModelForm):
             AccordionGroup(
                 _('Collision Details'),
                 Field('geom', type='hidden', id='point'),
+                Field('personal_involvement'),
+                Field('witness_vehicle'),
                 Field('date', id='incident_date', template='mapApp/util/%s_datepicker.html', autocomplete='off'),
                 Field('i_type'),
                 Field('incident_with'),
                 Field('injury'),
                 Field('impact'),
                 Field('trip_purpose'),
-                Field('personal_involvement'),
             ),
             AccordionGroup(
                 _('Conditions'),
@@ -42,11 +43,13 @@ class IncidentForm(forms.ModelForm):
                 Field('terrain'),
                 Field('direction'),
                 Field('turning'),
+                Field('intersection'),
+                Field('aggressive'),
                 css_id='incident-conditions',
             ),
             AccordionGroup(
                 _('Description'),
-                Field('details', placeholder=_('optional')),
+                Field('details', placeholder=_('mandatory')),
                 css_id='incident-description',
             ),
             AccordionGroup(
@@ -61,7 +64,6 @@ class IncidentForm(forms.ModelForm):
                 Field('bicycle_type'),
                 Field('ebike'),
                 Field('helmet'),
-                Field('intoxicated'),
                 css_id='incident-personal-details',
             ),
         )

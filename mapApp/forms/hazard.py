@@ -30,7 +30,7 @@ class HazardForm(forms.ModelForm):
             ),
             AccordionGroup(
                 _('Description'),
-                Field('details', placeholder=_('optional')),
+                Field('details', placeholder=_('mandatory')),
                 css_id='hazard-description',
             ),
             AccordionGroup(
