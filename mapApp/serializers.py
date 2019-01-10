@@ -26,7 +26,7 @@ class IncidentSerializer(GeoFeatureModelSerializer):
         fields = ('i_type', 'incident_with', 'date', 'p_type',
                   'details', 'injury', 'trip_purpose',
                   'regular_cyclist', 'helmet', 'intoxicated', 'road_conditions',
-                  'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain',
+                  'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain',
                   'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact','infrastructure_changed','infrastructure_changed_date')
 
 
@@ -54,7 +54,7 @@ class IncidentWeatherSerializer(GeoFeatureModelSerializer):
         fields = ('i_type', 'incident_with', 'date', 'p_type',
                   'details', 'injury', 'trip_purpose',
                   'regular_cyclist', 'helmet', 'intoxicated', 'road_conditions',
-                  'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain',
+                  'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain',
                   'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact', 'weather_summary',
                   'weather_sunrise_time', 'weather_sunset_time', 'weather_dawn', 'weather_dusk',
                   'weather_precip_intensity', 'weather_precip_probability', 'weather_precip_type',

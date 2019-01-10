@@ -38,7 +38,6 @@ class IncidentForm(forms.ModelForm):
                 Field('road_conditions'),
                 Field('sightlines'),
                 Field('cars_on_roadside'),
-                Field('riding_on'),
                 Field('bike_lights'),
                 Field('terrain'),
                 Field('direction'),

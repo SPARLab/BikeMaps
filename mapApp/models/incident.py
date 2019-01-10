@@ -141,7 +141,8 @@ class Incident(Point):
         ('Bike less', _('I bike less')),
         ('More careful and bike less', _('I\'m now more careful about where/when/how I ride AND I bike less')),
         ('Stopped biking', _('I haven\'t biked since')),
-        ('Too soon', _('Too soon to say'))
+        ('Too soon', _('Too soon to say')),
+        ('Witness', _('I was not directly involved'))
     )
     BICYCLE_TYPE_CHOICES = (
         ('Personal', _('Personal (my own bicycle or a friend\'s)')),
