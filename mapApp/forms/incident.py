@@ -32,6 +32,7 @@ class IncidentForm(forms.ModelForm):
                 Field('injury'),
                 Field('impact'),
                 Field('trip_purpose'),
+                Field('details', placeholder=_('mandatory'))
             ),
             AccordionGroup(
                 _('Conditions'),
@@ -45,11 +46,6 @@ class IncidentForm(forms.ModelForm):
                 Field('intersection'),
                 Field('aggressive'),
                 css_id='incident-conditions',
-            ),
-            AccordionGroup(
-                _('Description'),
-                Field('details', placeholder=_('mandatory')),
-                css_id='incident-description',
             ),
             AccordionGroup(
                 _('Personal Details'),

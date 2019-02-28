@@ -27,11 +27,7 @@ class HazardForm(forms.ModelForm):
                 Field('date', id='hazard_date', template='mapApp/util/%s_datepicker.html', autocomplete='off'),
                 Field('hazard_category', id='hazard-category', type="hidden"),
                 Field('i_type', id='hazard-type'),
-            ),
-            AccordionGroup(
-                _('Description'),
                 Field('details', placeholder=_('mandatory')),
-                css_id='hazard-description',
             ),
             AccordionGroup(
                 _('Personal Details'),
