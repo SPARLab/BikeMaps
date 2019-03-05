@@ -165,6 +165,26 @@ class Incident(Point):
         ('Pedestrian', _('I was a pedestrian')),
         ('Driving', _('I was driving')),
     )
+    RIDING_ON_CHOICES = (
+        (_('Busy street'), (
+                ('Busy street cycle track', _('On a cycle track (separated bike lane)')),
+                ('Busy street bike lane', _('On a painted bike lane')),
+                ('Busy street, no bike facilities', _('On a street with no bicycle facility'))
+            )
+        ),
+        (_('Quiet street'), (
+                ('Quiet street bike lane', _('On a local street bikeway (bike route)')),
+                ('Quiet street, no bike facilities', _('On a street with no bicycle facility'))
+            )
+        ),
+        (_('Off-Street'), (
+                ('Cycle track', _('On a physically separated bike lane (cycle track)')),
+                ('Mixed use trail', _('On a multi-use path')),
+                ('Sidewalk', _('On a sidewalk')),
+            )
+        ),
+        ('Don\'t remember', _('I don\'t remember'))
+    )
 
     ############
     # FIELDS
@@ -311,6 +331,14 @@ class Incident(Point):
         _('Were you directly involved in the incident?'),
         max_length=20,
         choices=PERSONAL_INVOLVEMENT_CHOICES
+    )
+
+    riding_on = models.CharField(
+        _('Where were you riding your bike?'),
+        max_length=50,
+        choices=RIDING_ON_CHOICES,
+        blank=True,
+        null=True
     )
 
 
