@@ -260,9 +260,11 @@
                 $("#div_id_trip_purpose select").val('NA');
                 $('#near-miss-details').find('#div_id_impact').hide();
                 $('#collision-details').find('#div_id_impact').hide();
-                //$('#near-miss-details').find('#div_id_impact' select).val('Witness');
-                //$('#collision-details').find('#div_id_impact' select).val('Witness');
-                $("#div_id_impact select").val('Witness');
+                // add in the option for witnesses for impact
+                var witness = new Option("I was not directly involved", "Witness");
+                $(witness).html("I was not directly involved");
+                $("#div_id_impact select").append(witness);
+                $("#div_id_impact select").val('Witness').change();
                 $('#div_id_bike_lights > label').text("Was the rider using bike lights?");
                 $('#div_id_direction > label').text("What direction was the rider heading?");
                 $('#div_id_turning > label').text("How was the rider moving?");
@@ -292,12 +294,17 @@
 
        //hide or show questions, depending if the incident involved another vehicle
        function updateVehicleChoices(incident_with) {
-        	var vehicle = incident_with.search("Vehicle");
+            if (typeof incident_with === 'undefined') {
+                   vehicle = 0; // if no answer for incident_with, no car involved yet
+            } else {
+        	    var vehicle = incident_with.search("Vehicle"); // if there is an answer, search for vehicle involvement
+        	}
         	if(vehicle >= 0){
         	    // vehicle involved
         	    $('#nearmiss-conditions').find('#div_id_aggressive').show();
                 $('#incident-conditions').find('#div_id_aggressive').show();
         	} else {
+        	    // no vehicle involved
         	    $('#nearmiss-conditions').find('#div_id_aggressive').hide();
                 $('#incident-conditions').find('#div_id_aggressive').hide();
                 $("#div_id_aggressive select").val('NA');
