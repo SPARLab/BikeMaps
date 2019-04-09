@@ -407,10 +407,16 @@
           $('#div_id_date > label').text("When was the incident?*");
           updateWitnessChoices($('#nearmiss_personal_involvment').val());
           updateVehicleChoices($('#nearmiss_incident_with').val());
+
+          // hide old collision lables (to maintain compatibility with old version of the app)
+          $('select option[value="Vehicle, side"]').remove();
+          $('select option[value="Vehicle, angle"]').remove();
       }
       function updateTheftChoices() {
           $('#div_id_date > label').text("When was the theft?*");
       }
+
+
 
   })
 </script>
