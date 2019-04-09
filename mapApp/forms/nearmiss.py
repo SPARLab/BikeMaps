@@ -34,7 +34,7 @@ class NearmissForm(forms.ModelForm):
                 Field('injury'),
                 Field('impact'),
                 Field('trip_purpose'),
-                Field('details', placeholder=_('mandatory')),
+                Field('details', id='nearmiss_details',placeholder=_('required')),
             ),
             AccordionGroup(
                 _('Conditions'),

@@ -82,10 +82,44 @@
     $('#incidentForm').modal('hide');
     $('.modal-backdrop').hide();
   }
+  function validate_details() {
+  // this is a client side validation of the form details
+  // to maintain funtionality for the old version of the app
+    var tabPane = $('.tab-pane.active');
+    var tabId = tabPane[0].id;
+
+    if(tabId === 'incidentReport') {
+           var details = $('#collision_details').val();
+    } else if(tabId === 'nearmissReport') {
+           var details = $('#nearmiss_details').val();
+    } else if(tabId === 'hazardReport') {
+           var details = $('#hazard_details').val();
+    } else if(tabId === 'theftReport') {
+           var details = $('#theft_details').val();
+    }
+    if(details != ""){
+        return true;
+    } else {
+        // styling to indicate required field
+        if(tabId === 'incidentReport') {
+            $("#collision-details").find("#div_id_details").addClass("form-group has-error");
+        } else if(tabId === 'nearmissReport') {
+            $("#near-miss-details").find("#div_id_details").addClass("form-group has-error");
+        } else if(tabId === 'hazardReport') {
+            $("#hazard-details").find("#div_id_details").addClass("form-group has-error");
+        } else if(tabId === 'theftReport') {
+            $("#theft-details").find("#div_id_details").addClass("form-group has-error");
+        }
+        return false;
+    }
+  }
+
   function submit_form(){
-    $(".submit-btn").addClass("disabled");
-    $(".cancel-btn").addClass("disabled");
-    $('.tab-pane.active form').submit();
+    if(validate_details()){
+        $(".submit-btn").addClass("disabled");
+        $(".cancel-btn").addClass("disabled");
+        $('.tab-pane.active form').submit();
+    }
   }
 
   function showMessage(message){
@@ -353,6 +387,9 @@
           updateWitnessChoices($("#div_id_personal_involvement select").val());
           updateVehicleChoices($("#div_id_incident_with select").val());
 
+          // hide old collision lables (to maintain compatibility with old version of the app)
+          $('select option[value="Vehicle, side"]').remove();
+          $('select option[value="Vehicle, angle"]').remove();
       }
 
       // Only display near miss options on near miss form

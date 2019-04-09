@@ -31,7 +31,7 @@ class TheftForm(forms.ModelForm):
                 Field('locked_to'),
                 Field('lighting'),
                 Field('traffic'),
-                Field('details', placeholder=_('mandatory')),
+                Field('details', id='theft_details', placeholder=_('required')),
             ),
             AccordionGroup(
                 _('Personal Details'),

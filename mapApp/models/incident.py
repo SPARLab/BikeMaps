@@ -33,6 +33,8 @@ class Incident(Point):
     INCIDENT_WITH_CHOICES = (
         (_('Vehicle'), (
                 ('Vehicle, head on', _('Head on')),
+                ('Vehicle, side', _('Side impact')), # maintained for compativility with the old version of the app
+                ('Vehicle, angle', _('Angle impact')), # maintained for compatibility with the old version of the app
                 ('Vehicle, rear end', _('Rear end')),
                 ('Vehicle, turning right', _('Turning right')),
                 ('Vehicle, turning left', _('Turning left')),
