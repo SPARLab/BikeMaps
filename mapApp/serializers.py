@@ -23,11 +23,13 @@ class IncidentSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Incident
         geo_field = 'geom'
-        fields = ('i_type', 'incident_with', 'date', 'p_type',
+        fields = ('i_type', 'incident_with', 'date', 'p_type', 'personal_involvement',
                   'details', 'injury', 'trip_purpose',
-                  'regular_cyclist', 'helmet', 'intoxicated', 'road_conditions',
-                  'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain',
-                  'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact','infrastructure_changed','infrastructure_changed_date')
+                  'regular_cyclist', 'helmet', 'road_conditions',
+                  'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain', 'aggressive', 'intersection',
+                  'witness_vehicle','bicycle_type',
+                  'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact','infrastructure_changed',
+                  'infrastructure_changed_date')
 
 
 class IncidentWeatherSerializer(GeoFeatureModelSerializer):
@@ -51,10 +53,11 @@ class IncidentWeatherSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Incident
         geo_field = 'geom'
-        fields = ('i_type', 'incident_with', 'date', 'p_type',
+        fields = ('i_type', 'incident_with', 'date', 'p_type','personal_involvement',
                   'details', 'injury', 'trip_purpose',
-                  'regular_cyclist', 'helmet', 'intoxicated', 'road_conditions',
-                  'sightlines', 'cars_on_roadside', 'riding_on', 'bike_lights', 'terrain',
+                  'regular_cyclist', 'helmet', 'road_conditions',
+                  'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain', 'aggressive', 'intersection',
+                  'witness_vehicle','bicycle_type',
                   'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact', 'weather_summary',
                   'weather_sunrise_time', 'weather_sunset_time', 'weather_dawn', 'weather_dusk',
                   'weather_precip_intensity', 'weather_precip_probability', 'weather_precip_type',

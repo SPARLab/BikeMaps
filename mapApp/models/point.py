@@ -104,7 +104,8 @@ class Point(models.Model):
 
     details = models.TextField(
         _('Please give a brief description of the incident'),
-        max_length=300,
+        max_length=500,
+        default=None,
         blank=True,
         null=True
     )

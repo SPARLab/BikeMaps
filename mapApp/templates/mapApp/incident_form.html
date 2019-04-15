@@ -15,7 +15,7 @@
                 <label class="control-label">{% trans "What kind of report is this?" %}</label>
                 <!-- Nav Tabs -->
                 <ul class="nav nav-tabs" role="tablist">
-                  <li role="presentation" class="active"><a href="#incidentReport" role="tab" data-toggle="tab">{% trans "Collision" %}</a></li>
+                  <li role="presentation" class="active"><a href="#incidentReport" role="tab" data-toggle="tab">{% trans "Collision or Fall" %}</a></li>
                   <li role="presentation"><a href="#nearmissReport" role="tab" data-toggle="tab">{% trans "Near miss" %}</a></li>
                   <li role="presentation"><a href="#hazardReport" role="tab" data-toggle="tab">{% trans "Hazard" %}</a></li>
                   <li role="presentation"><a href="#theftReport" role="tab" data-toggle="tab">{% trans "Theft" %}</a></li>
@@ -82,10 +82,44 @@
     $('#incidentForm').modal('hide');
     $('.modal-backdrop').hide();
   }
+  function validate_details() {
+  // this is a client side validation of the form details
+  // to maintain funtionality for the old version of the app
+    var tabPane = $('.tab-pane.active');
+    var tabId = tabPane[0].id;
+
+    if(tabId === 'incidentReport') {
+           var details = $('#collision_details').val();
+    } else if(tabId === 'nearmissReport') {
+           var details = $('#nearmiss_details').val();
+    } else if(tabId === 'hazardReport') {
+           var details = $('#hazard_details').val();
+    } else if(tabId === 'theftReport') {
+           var details = $('#theft_details').val();
+    }
+    if(details != ""){
+        return true;
+    } else {
+        // styling to indicate required field
+        if(tabId === 'incidentReport') {
+            $("#collision-details").find("#div_id_details").addClass("form-group has-error");
+        } else if(tabId === 'nearmissReport') {
+            $("#near-miss-details").find("#div_id_details").addClass("form-group has-error");
+        } else if(tabId === 'hazardReport') {
+            $("#hazard-details").find("#div_id_details").addClass("form-group has-error");
+        } else if(tabId === 'theftReport') {
+            $("#theft-details").find("#div_id_details").addClass("form-group has-error");
+        }
+        return false;
+    }
+  }
+
   function submit_form(){
-    $(".submit-btn").addClass("disabled");
-    $(".cancel-btn").addClass("disabled");
-    $('.tab-pane.active form').submit();
+    if(validate_details()){
+        $(".submit-btn").addClass("disabled");
+        $(".cancel-btn").addClass("disabled");
+        $('.tab-pane.active form').submit();
+    }
   }
 
   function showMessage(message){
@@ -170,6 +204,35 @@
         }
     });
 
+    // Dynamically update questions for witnesses
+    $(document).on("change", "#div_id_personal_involvement select", function(){
+        var tabPane = $('.tab-pane.active');
+        var tabId = tabPane[0].id;
+
+        if(tabId === 'incidentReport') {
+           var personalInvolvement = ($("#div_id_personal_involvement select").val());
+        }
+        else if(tabId === 'nearmissReport') {
+           var personalInvolvement = $('#nearmiss_personal_involvment').val();
+        }
+        updateWitnessChoices(personalInvolvement);
+    });
+
+    // Dynamically update questions for vehicles
+    $(document).on("change", "#div_id_incident_with select", function(){
+        var tabPane = $('.tab-pane.active');
+        var tabId = tabPane[0].id;
+
+        if(tabId === 'incidentReport') {
+           var incident_with = ($("#div_id_incident_with select").val());
+        }
+        else if(tabId === 'nearmissReport') {
+           var incident_with = $('#nearmiss_incident_with').val();
+        }
+        updateVehicleChoices(incident_with);
+    });
+
+
     // Change hazard options dynamically
     // Hacky bug fix for translated site - Previously the hazard-category was assigned based directly on the label of the optgroup.
     // This doesn't work when a translation is in use because the label is translated and we end up with invalid hazard categories.
@@ -210,10 +273,77 @@
           else if(tabId === 'nearmissReport') {
               updateNearmissChoices();
           }
+          else if(tabId === 'theftReport') {
+              updateTheftChoices();
+          }
           else{
               updateIncidentChoices();
           }
       }
+       // updated choices and wording for witnesses (not directly invloved in the incident)
+       function updateWitnessChoices(personalInvolvement) {
+            if(personalInvolvement == 'No'){
+                $('#near-miss-details').find('#div_id_witness_vehicle').show();
+                $('#collision-details').find('#div_id_witness_vehicle').show();
+                $('#div_id_incident_with > label').text("What sort of object did the rider collide or nearly collide with?*");
+                $('#div_id_injury > label').text("Was the rider injured?*");
+                $('select optgroup[label="Unknown"]').show();
+                $('select option[label="Unknown"]').show();
+                $('#near-miss-details').find('#div_id_trip_purpose').hide();
+                $('#collision-details').find('#div_id_trip_purpose').hide();
+                $("#div_id_trip_purpose select").val('NA');
+                $('#near-miss-details').find('#div_id_impact').hide();
+                $('#collision-details').find('#div_id_impact').hide();
+                // add in the option for witnesses for impact
+                var witness = new Option("I was not directly involved", "Witness");
+                $(witness).html("I was not directly involved");
+                $("#div_id_impact select").append(witness);
+                $("#div_id_impact select").val('Witness').change();
+                $('#div_id_bike_lights > label').text("Was the rider using bike lights?");
+                $('#div_id_direction > label').text("What direction was the rider heading?");
+                $('#div_id_turning > label').text("How was the rider moving?");
+                $('#div_id_bicycle_type > label').text("What type of bicycle was involved in the incident?");
+                $('#div_id_helmet > label').text("Was the rider wearing a helmet?");
+            } else {
+                $('#near-miss-details').find('#div_id_witness_vehicle').hide();
+                $('#collision-details').find('#div_id_witness_vehicle').hide();
+                $("#div_id_witness_vehicle select").val('NA');
+                $('#div_id_incident_with > label').text("What sort of object did you collide or nearly collide with?*");
+                $('#div_id_injury > label').text("Were you injured?*");
+                $('select optgroup[label="Unknown"]').hide();
+                $("#div_id_injury select").val('NA');
+                $('#near-miss-details').find('#div_id_trip_purpose').show();
+                $('#collision-details').find('#div_id_trip_purpose').show();
+                $('#near-miss-details').find('#div_id_impact').show();
+                $('#collision-details').find('#div_id_impact').show();
+                $("#div_id_impact select").val('NA');
+                $('select option[value="Witness"]').remove();
+                $('#div_id_bike_lights > label').text("Were you using bike lights?");
+                $('#div_id_direction > label').text("What direction were you heading?");
+                $('#div_id_turning > label').text("How were you moving? ");
+                $('#div_id_bicycle_type > label').text("What type of bicycle were you riding?");
+                $('#div_id_helmet > label').text("Were you wearing a helmet?");
+            }
+       }
+
+       //hide or show questions, depending if the incident involved another vehicle
+       function updateVehicleChoices(incident_with) {
+            if (typeof incident_with === 'undefined') {
+                   vehicle = 0; // if no answer for incident_with, no car involved yet
+            } else {
+        	    var vehicle = incident_with.search("Vehicle"); // if there is an answer, search for vehicle involvement
+        	}
+        	if(vehicle >= 0){
+        	    // vehicle involved
+        	    $('#nearmiss-conditions').find('#div_id_aggressive').show();
+                $('#incident-conditions').find('#div_id_aggressive').show();
+        	} else {
+        	    // no vehicle involved
+        	    $('#nearmiss-conditions').find('#div_id_aggressive').hide();
+                $('#incident-conditions').find('#div_id_aggressive').hide();
+                $("#div_id_aggressive select").val('NA');
+        	}
+       }
 
       // Hide/show appropriate options when selecting a report type
       $('a[href="#incidentReport"]').click( function() {
@@ -227,6 +357,9 @@
       $('a[href="#hazardReport"]').click( function() {
           updateHazardChoices();
       });
+      $('a[href="#theftReport"]').click( function() {
+          updateTheftChoices();
+      });
 
       // Hide hazards we don't want to display on the form
       function updateHazardChoices() {
@@ -235,6 +368,7 @@
           $('select optgroup[label="Menschliches Verhalten"]').remove();
           $('select option[value="Island"]').remove();
           $('select option[value="Insel"]').remove();
+          $('#div_id_date > label').text("When did you notice the hazard?*");
       }
 
       // Only display collision options on Collision form
@@ -248,6 +382,14 @@
           $('select optgroup[label="Kollision"]').show();
           $('select optgroup[label="Sturz"]').show();
           $('select optgroup[label^="Beinahzusammensto"]').hide();
+
+          $('#div_id_date > label').text("When was the incident?*");
+          updateWitnessChoices($("#div_id_personal_involvement select").val());
+          updateVehicleChoices($("#div_id_incident_with select").val());
+
+          // hide old collision lables (to maintain compatibility with old version of the app)
+          $('select option[value="Vehicle, side"]').remove();
+          $('select option[value="Vehicle, angle"]').remove();
       }
 
       // Only display near miss options on near miss form
@@ -261,7 +403,20 @@
           $('select optgroup[label^="Beinahzusammensto"]').show();
           $('select optgroup[label="Kollision"]').hide();
           $('select optgroup[label="Sturz"]').hide();
+
+          $('#div_id_date > label').text("When was the incident?*");
+          updateWitnessChoices($('#nearmiss_personal_involvment').val());
+          updateVehicleChoices($('#nearmiss_incident_with').val());
+
+          // hide old collision lables (to maintain compatibility with old version of the app)
+          $('select option[value="Vehicle, side"]').remove();
+          $('select option[value="Vehicle, angle"]').remove();
       }
+      function updateTheftChoices() {
+          $('#div_id_date > label').text("When was the theft?*");
+      }
+
+
 
   })
 </script>

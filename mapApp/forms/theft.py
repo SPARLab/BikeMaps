@@ -31,11 +31,7 @@ class TheftForm(forms.ModelForm):
                 Field('locked_to'),
                 Field('lighting'),
                 Field('traffic'),
-            ),
-            AccordionGroup(
-                _('Description'),
-                Field('details', placeholder=_('optional')),
-                css_id='theft-description',
+                Field('details', id='theft_details', placeholder=_('required')),
             ),
             AccordionGroup(
                 _('Personal Details'),
