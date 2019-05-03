@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-08 11:26-0700\n"
-"PO-Revision-Date: 2019-05-02 18:00-0700\n"
+"PO-Revision-Date: 2019-05-03 12:21-0700\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,11 +67,11 @@ msgstr "Type de vol"
 
 #: .\mapApp\templates\mapApp\incident_form.html
 msgid "When was the incident?*"
-msgstr "When was the incident?*"
+msgstr "Quand était l’incident?*"
 
 #: .\mapApp\templates\mapApp\incident_form.html
 msgid "What sort of object did you collide or nearly collide with?*"
-msgstr "What sort of object did you collide or nearly collide with?*"
+msgstr "Quelle sorte d'objet avez-vous heurté ou failli heurter?*"
 
 #: .\mapApp\templates\mapApp\incident_form.html
 msgid "What type of bicycle were you riding?"
@@ -87,7 +87,7 @@ msgstr "Dans quelle direction vous dirigiez-vous?"
 
 #: .\mapApp\templates\mapApp\incident_form.html
 msgid "How were you moving?"
-msgstr "How were you moving?"
+msgstr "Comment vous déplacez?"
 
 # ###############
 #: .\mapApp\templates\mapApp\incident_form.html

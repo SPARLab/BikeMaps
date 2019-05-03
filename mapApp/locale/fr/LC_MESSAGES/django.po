@@ -1914,3 +1914,15 @@ msgstr "Allemand"
 msgid "Spanish"
 msgstr "Espanol"
 
+#: 
+msgid "New infrastructure"
+msgstr "Nouvelle infrastructure"
+
+#: 
+msgid "Bike theft"
+msgstr "Vol de vélo"
+
+#: 
+msgid "When was the theft?"
+msgstr "Quand le vol a-t-il eu lieu?"
+
