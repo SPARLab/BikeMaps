@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-08 11:26-0700\n"
-"PO-Revision-Date: 2019-05-03 12:21-0700\n"
+"PO-Revision-Date: 2019-05-03 12:31-0700\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -128,7 +128,7 @@ msgstr "Quand avez-vous remarqué le danger?*"
 
 #: .\mapApp\templates\mapApp\incident_form.html
 msgid "When was the theft?*"
-msgstr "When was the theft?*"
+msgstr "Quand le vol a-t-il eu lieu?*"
 
 #: .\mapApp\templates\mapApp\incident_form.html
 msgid "Were you injured?*"
