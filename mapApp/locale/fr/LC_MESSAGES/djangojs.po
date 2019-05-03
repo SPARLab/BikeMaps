@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-08 11:26-0700\n"
-"PO-Revision-Date: 2016-04-08 11:32-0700\n"
+"PO-Revision-Date: 2019-05-02 18:00-0700\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: .\mapApp\static\mapApp\js\index.js:31 .\mapApp\static\mapApp\js\vis.js:183
 msgid "Zoom in"
@@ -32,7 +32,7 @@ msgstr "Recherche…"
 
 #: .\mapApp\static\mapApp\js\index.js:54
 msgid "Nothing found."
-msgstr "Aucun résultat"
+msgstr "Aucun résultat."
 
 #: .\mapApp\static\mapApp\js\index.js:308
 #: .\mapApp\static\mapApp\js\index.js:329
@@ -65,9 +65,78 @@ msgstr "Type de danger"
 msgid "Theft type"
 msgstr "Type de vol"
 
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "When was the incident?*"
+msgstr "When was the incident?*"
+
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "What sort of object did you collide or nearly collide with?*"
+msgstr "What sort of object did you collide or nearly collide with?*"
+
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "What type of bicycle were you riding?"
+msgstr "Quel type de vélo conduisiez-vous?"
+
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "Were you using bike lights?"
+msgstr "Utilisiez-vous des lumières de vélo?"
+
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "What direction were you heading?"
+msgstr "Dans quelle direction vous dirigiez-vous?"
+
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "How were you moving?"
+msgstr "How were you moving?"
+
+# ###############
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "Were you wearing a helmet?"
+msgstr "Portiez-vous un casque?"
+
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "What sort of object did the rider collide or nearly collide with?*"
+msgstr "Quelle sorte d'objet le cycliste a-t-il heurté ou failli heurter?*"
+
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "What type of bicycle was involved in the incident?"
+msgstr "Quel type de vélo était en cause dans l'incident?"
+
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "Was the rider injured?*"
+msgstr "Le cycliste a-t-il été blessé?*"
+
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "Was the rider using bike lights?"
+msgstr "Le cycliste utilisait-il des feux de vélo?"
+
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "What direction was the rider heading?"
+msgstr "Dans quelle direction se dirigeait le cycliste?"
+
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "How was the rider moving?"
+msgstr "Comment se déplaçait le cycliste?"
+
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "Was the rider wearing a helmet?"
+msgstr "Le cycliste portait-il un casque?"
+
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "When did you notice the hazard?*"
+msgstr "Quand avez-vous remarqué le danger?*"
+
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "When was the theft?*"
+msgstr "When was the theft?*"
+
+#: .\mapApp\templates\mapApp\incident_form.html
+msgid "Were you injured?*"
+msgstr "Vous êtes-vous blessé(e)?*"
+
 #: .\mapApp\static\mapApp\js\tooltips.js:3
 msgid "Search for an address"
-msgstr "Chercher une adresse."
+msgstr "Chercher une adresse"
 
 #: .\mapApp\static\mapApp\js\vis.js:6 .\mapApp\static\mapApp\js\vis.js:102
 msgid "Collisions"
