@@ -15,6 +15,7 @@ urlpatterns = [
 
 	# Called upon geometry object creation on map
 	url(r'^incident_submit/$', views.postIncident, name='postIncident'),
+	url(r'^nearmiss_submit/$', views.postNearmiss, name='postNearmiss'),
 	url(r'^hazard_submit/$', views.postHazard, name='postHazard'),
 	url(r'^theft_submit/$', views.postTheft, name='postTheft'),
 	url(r'^poly_submit/$', views.postAlertPolygon, name='postAlertPolygon'),
