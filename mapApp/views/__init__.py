@@ -1,7 +1,7 @@
 from index import index
 from about import about, contact
 from alerts import alertUsers, postAlertPolygon, readAlertPoint
-from postPoint import postIncident, postHazard, postTheft, postNewInfrastructure
+from postPoint import postIncident, postNearmiss, postHazard, postTheft, postNewInfrastructure
 from edit import editShape, editHazards, updateHazard
 from termsAndConditions import termsAndConditions
 from disclaimer import disclaimer

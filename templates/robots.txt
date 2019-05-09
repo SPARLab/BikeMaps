@@ -3,6 +3,7 @@ Disallow: /admin/
 Disallow: /forum/
 
 Disallow: /incident_submit/
+Disallow: /nearmiss_submit/
 Disallow: /hazard_submit/
 Disallow: /newInfrastructure_submit/
 Disallow: /theft_submit/

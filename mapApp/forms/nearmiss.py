@@ -67,7 +67,7 @@ class NearmissForm(forms.ModelForm):
     def is_valid(self):
 
         # run default, parent validation first
-        valid = super(HazardForm, self).is_valid()
+        valid = super(NearmissForm, self).is_valid()
 
         # check date to ensure incident occurred within the past 2 years
         limit = datetime.timedelta(weeks=-104)
