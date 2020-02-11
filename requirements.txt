@@ -1,4 +1,4 @@
-Django==1.8.4
+Django==1.11.28
 django-allauth==0.22.0
 django-common-helpers==0.7.0
 django-cors-headers==1.1.0
