@@ -16,12 +16,14 @@ from utils import ReCaptcha
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
+from django.views.decorators.clickjacking import xframe_options_exempt
 
 import logging
 logger = logging.getLogger(__name__)
 
 @ratelimit(key='post:username', rate='10/5m')
 @ratelimit(key='post:password', rate='10/5m')
+@xframe_options_exempt
 def rate_limit_login(request):
     if request.user.is_authenticated():
         return redirect(request.GET.get('next', reverse('mapApp:index')))
@@ -34,6 +36,7 @@ def rate_limit_login(request):
 def rate_limited(request):
     return render(request, 'userApp/rate_limited.html')
 
+@xframe_options_exempt
 def register(request):
     if request.method == 'POST':
         form = MyUserCreationForm(request.POST)

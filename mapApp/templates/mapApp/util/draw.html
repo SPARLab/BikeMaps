@@ -82,7 +82,10 @@ function desktopDrawing(){
                 document.getElementById("nearmisspoint").value = geom;
                 document.getElementById("hazPoint").value = geom;
                 document.getElementById("theftPoint").value = geom;
+
+
                 document.getElementById("newInfraPoint").value = geom;
+
             }
             if (type === 'polygon') {
                 var fd = new FormData();
@@ -147,6 +150,10 @@ function desktopDrawing(){
             }
           });
         }
+
+
+        //run the geo ip lookup
+        runConsentGeoLookup({ type: 'geoip' });
     });
 };
 
@@ -172,6 +179,32 @@ function mobileDrawing(){
         document.getElementById("theftPoint").value = geom;
     });
 }
+
+    function runConsentGeoLookup(args) {
+        if (args.type === 'geoip') {
+
+            $.ajax({
+                url: "https://get.geojs.io/v1/ip/country",
+                dataType: "text"
+            }).done(function (data) {
+                var cc = data.toString().replace(/\W/g, '');
+                if (cc === 'IE') {
+                    //alert(cc);
+                    $("#terms_checkbox").next().html(" I am 18 years of age or older and have read and understood the <a href='/static/files/Letter%20of%20Informed%20Consent_Ireland.pdf' target='_blank'> terms and conditions</a>");
+                }
+                else {
+
+                }
+            });
+
+
+        }
+        else if (args.type === 'latlon') {
+            
+        }
+
+    }
+
 </script>
 
 <!-- Mobile tooltip to explain the double tapping -->

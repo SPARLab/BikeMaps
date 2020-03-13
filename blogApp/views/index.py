@@ -3,9 +3,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from blogApp.models import Post
 
+from django.http import HttpResponse
+from django.views.decorators.clickjacking import xframe_options_exempt
+
 # import logging
 # logger = logging.getLogger(__name__)
-
+@xframe_options_exempt
 def index(request):
 	POSTS_PER_PAGE = 5
 	

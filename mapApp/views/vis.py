@@ -1,7 +1,10 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.views.decorators.clickjacking import xframe_options_exempt
 
 from mapApp.models import AlertArea, Point
 
+@xframe_options_exempt
 def vis(request, lat=None, lng=None, zoom=None):
 	context = {
 		'alertAreas': AlertArea.objects.filter(user=request.user.id),
