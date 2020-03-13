@@ -5,9 +5,13 @@ from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.core.mail import BadHeaderError, EmailMessage
 
+from django.http import HttpResponse
+from django.views.decorators.clickjacking import xframe_options_exempt
+
 from mapApp.forms import EmailForm
 
 # @cache_page(60 * 60)
+@xframe_options_exempt
 def about(request):
 	return render(request, 'mapApp/about.html', {"emailForm": EmailForm()})
 

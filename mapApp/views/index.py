@@ -1,6 +1,10 @@
 from django.contrib.gis.geos import Polygon
 from django.shortcuts import render
 
+
+from django.http import HttpResponse
+from django.views.decorators.clickjacking import xframe_options_exempt
+
 from mapApp.models import Incident, Theft, Hazard, Official, AlertArea, NewInfrastructure
 from mapApp.forms import IncidentForm, NearmissForm, HazardForm, TheftForm, NewInfrastructureForm, GeofenceForm, EditForm
 import datetime
@@ -8,6 +12,7 @@ import datetime
 import logging
 logger = logging.getLogger(__name__)
 
+@xframe_options_exempt
 def index(request, lat=None, lng=None, zoom=None):
 	incidents = Incident.objects.select_related('point').all()
 	now = datetime.datetime.now()
