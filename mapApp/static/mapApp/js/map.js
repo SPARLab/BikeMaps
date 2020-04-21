@@ -22,3 +22,7 @@ var MapQuestOpen_OSM = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z
         url: 'https://grs.asurite.ad.asu.edu/server/rest/services/Bikemaps/InfrastructureARCFGDB_Cache/MapServer',
         opacity: 0.7
     });
+
+var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+var osmAttrib = 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a>';
+var osm = new L.TileLayer(osmUrl);
