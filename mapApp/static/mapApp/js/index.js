@@ -13,6 +13,12 @@ loadIncidenLayerXHR("/newInfrastructures_tiny?format=json", "newInfrastructure",
 var xhrLayersLoaded = 0;
 var refLayers = [];
 
+var bboxes = [
+    { geoid: 'winnipeg_ca', bbox: { xmin: -97.35, ymin: 49.71, xmax: -96.995716, ymax: 49.991 }, action: function () { runWinnipegRaffle(); } , wasActionRun:false }
+];
+
+var bboxBound = L.latLngBounds([L.latLng([bboxes[0].bbox.ymax, bboxes[0].bbox.xmax]), L.latLng([bboxes[0].bbox.ymin, bboxes[0].bbox.xmin])]);
+
 var incidentData = new L.MarkerClusterGroup({
     maxClusterRadius: 70,
     polygonOptions: {
@@ -39,7 +45,7 @@ var map = L.map('map', {
     minZoom: 2,
     zoom: 4,
     zoomControl: false,
-    layers: [Esri_Streets_Basemap, stravaHM, incidentData, alertAreas],
+    layers: [osm, stravaHM, incidentData, alertAreas],
     worldCopyJump: true,
 });
 
@@ -55,6 +61,8 @@ map.on("locationfound", function (location) {
     if (location.accuracy < 500) {
         userMark.setAccuracy(location.accuracy);
     }
+    //check to see if they fall in a special zone
+    checkSpecialZone(location.latlng, bboxes[0]);
 });
 
 if (typeof zoom !== 'undefined') {
@@ -77,10 +85,10 @@ geocoder.markGeocode = function (result) {
 
     geocodeMarker = new L.Marker(result.center, {
         icon: icons["geocodeIcon"]
-    })
-        .bindPopup(result.name)
-        .addTo(map)
-        .openPopup();
+    }).bindPopup(result.name).addTo(map).openPopup();
+
+    //check to see if they fall in a special zone
+    checkSpecialZone(result.center, bboxes[0]);
 };
 
 // Add scalebar
@@ -397,6 +405,12 @@ map.on('moveend', function (e) {
     var zoom = map.getZoom(),
         center = map.getCenter();
     window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
+    //check winnipeg raffle area
+
+    if (map.getZoom() >= 11) {
+        checkSpecialZonePolyDebounce(map.getBounds(), bboxes[0], bboxBound);
+    }
+
 
 });
 
@@ -404,6 +418,12 @@ map.on('zoomend', function(e) {
   if(map.getZoom() >= 13 && map.hasLayer(stravaHM)) {
     stravaHM._clearBgBuffer();
   }
+  //check winnipeg raffle area
+  /*
+  if (map.getZoom() >= 13) {
+      checkSpecialZonePoly(map.getBounds(), bboxBound);
+  }
+  */
 });
 
 
@@ -508,3 +528,76 @@ function getPopupText(in_type, in_data) {
 
     return tempContent;
 }
+
+function checkSpecialZone(in_location ,bbox ) {
+    var neCorner = L.latLng([bbox.bbox.ymin, bbox.bbox.xmin]);
+    var swCorner = L.latLng([bbox.bbox.ymax, bbox.bbox.xmax]);
+     
+    if (L.latLngBounds([swCorner, neCorner]).contains(in_location)) {
+        if (!bbox.wasActionRun) {
+            console.log('Running action for ' + bbox.geoid);
+            bbox.action();
+            bbox.wasActionRun = true;
+        }
+        else {
+            console.log('already ran action ' + bbox.geoid);
+        }
+
+    }
+
+}
+
+
+function checkSpecialZonePoly(in_extent, bbox ,bboxBound) {
+
+    if (bboxBound.intersects(in_extent)) {
+        if (!bbox.wasActionRun) {
+            console.log('Running action for ' + bbox.geoid);
+            bbox.action();
+            bbox.wasActionRun = true;
+        }
+        else {
+            console.log('already ran action ' + bbox.geoid);
+        }
+
+    }
+
+}
+
+function runWinnipegRaffle() {
+    /*
+    var wpgRaffle = confirm("Hi, we noticed you are in Winnipeg. Would you like to participate in the Bikemaps Winnipeg Raffle ?");
+    if (wpgRaffle){
+        var wpgWin = window.open('https://bikemaps.org/static/wpgraffle', '_blank');
+        wpgWin.focus();
+    */
+    setTimeout(function () {
+        //attach an event handler to hide the window if they click the btn
+        $(".btn-wpgRaffle").on("click", function () {
+            $("#wpg-raffle").modal('hide');
+        });
+        //show the raffle dialog
+        $("#wpg-raffle").modal('show');
+        $(".wpgRaffleNav").show();
+    }, 1500);
+    
+}
+
+function debounce(func, wait, immediate) {
+    var timeout;
+    return function () {
+        var context = this, args = arguments;
+        var later = function () {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
+};
+
+var checkSpecialZonePolyDebounce = debounce(function () {
+    checkSpecialZonePoly(map.getBounds(), bboxes[0], bboxBound);
+}, 500);
