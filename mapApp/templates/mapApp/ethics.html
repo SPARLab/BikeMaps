@@ -11,53 +11,56 @@
 		<h1 class="text-center">{% trans "Letter of Informed Consent" %}</h1>
 		<p class="text-center"><strong>{% trans "Citizen Based Web-Mapping of Bike Collisions and Near Misses (BikeMaps.org)" %}</strong></p>
 
-		{% blocktrans %}<p>As part of a UVic research project, we are interested in obtaining information regarding your cycling experiences. In particular we would like to know about any incidents that you have had. The data collected is completely anonymous. The survey should take approximately 5 minutes.</p>
+		<p>{% blocktrans %}As part of a UVic research project, we are interested in obtaining information regarding your cycling experiences. In particular we would like to know about any incidents that you have had. The data collected is completely anonymous. The survey should take approximately 5 minutes.{% endblocktrans %}</p>
 
-		<p>By adding a geographic marker onto this website and answering questions, you are consenting to participate in a study conducted by researchers from the Spatial Pattern Analysis and Research (SPAR) Lab in the Department of Geography at the University of Victoria. All information gathered will be completely anonymous. Volunteers must be 13 years of age or older to participate. Parents or guardians may log the details for participants under the age of 13. Please be advised that once a volunteer participant has submitted their survey, it is impossible to withdraw this data at a later date given that it is fully anonymous. Also, the data may be used in additional future studies. Please be aware that data provided in this study could be linked to data collected in other studies (for e.g., hospital ER intake surveys).</p>
+		<p>{% blocktrans %}By adding a geographic marker onto this website and answering questions, you are consenting to participate in a study conducted by researchers from the Spatial Pattern Analysis and Research (SPAR) Lab in the Department of Geography at the University of Victoria. All information gathered will be completely anonymous. Volunteers must be 13 years of age or older to participate. Parents or guardians may log the details for participants under the age of 13. Please be advised that once a volunteer participant has submitted their survey, it is impossible to withdraw this data at a later date given that it is fully anonymous. Also, the data may be used in additional future studies. Please be aware that data provided in this study could be linked to data collected in other studies (for e.g., hospital ER intake surveys).{% endblocktrans %}</p>
 
-		<p>The data collected from this research will enable SPAR Lab researchers and graduate students to study the patterns of bike collisions and near misses in various municipalities including the Capital Regional District and Vancouver (BC, Canada). Understanding the geographical patterns to risk for cyclists will enable better decisions to be made regarding future transportation plans for each region.</p>
+		<p>{% blocktrans %}The data collected from this research will enable SPAR Lab researchers and graduate students to study the patterns of bike collisions and near misses in various municipalities including the Capital Regional District and Vancouver (BC, Canada). Understanding the geographical patterns to risk for cyclists will enable better decisions to be made regarding future transportation plans for each region.{% endblocktrans %}</p>
 
-		<p>Funding for this research project has been provided by NSERC Engage and Mitacs grants to Dr. Trisalyn Nelson. Other project partners providing in kind support include: the Captial Regional District (CRD); Pedalheads; KidicalMassyyj; the Canadian Automobile Association; Bunt and Associates; Strava.com; and the Traffic Injury Research Foundation (TIRF). If you have any questions regarding this research, please contact Dr. Trisalyn Nelson, <a href="mailto:trisalyn@uvic.ca">trisalyn@uvic.ca</a>.</p>
+		<p>{% blocktrans %}Funding for this research project has been provided by NSERC Engage and Mitacs grants to Dr. Trisalyn Nelson. Other project partners providing in kind support include: the Captial Regional District (CRD); Pedalheads; KidicalMassyyj; the Canadian Automobile Association; Bunt and Associates; Strava.com; and the Traffic Injury Research Foundation (TIRF). If you have any questions regarding this research, please contact Dr. Trisalyn Nelson, {% endblocktrans %}<a href="mailto:trisalyn@uvic.ca">trisalyn@uvic.ca</a>.</p>
 
-        <p>In addition, you may verify the ethical approval of this study, or raise any concerns you might have, by contacting the Human Research Ethics Office at the University of Victoria (<a href="tel:+12504724545">250-472-4545</a> or <a href="mailto:ethics@uvic.ca">ethics@uvic.ca</a>).</p>{% endblocktrans %}
+        {% blocktrans %}<p>In addition, you may verify the ethical approval of this study, or raise any concerns you might have, by contacting the Human Research Ethics Office at the University of Victoria {% endblocktrans %}(<a href="tel:+12504724545">250-472-4545</a> or <a href="mailto:ethics@uvic.ca">ethics@uvic.ca</a>).</p>
 
-        <p class="text-center"><strong>Privacy Policy</strong></p>
-        
-        <p>BikeMaps built the BikeMaps app as a free app. This SERVICE is provided by BikeMaps at no cost and is intended
+        <p class="text-center"><strong>{% trans "Privacy Policy" %}</strong></p>
+
+        <p>{% blocktrans %}BikeMaps built the BikeMaps app as a free app. This SERVICE is provided by BikeMaps at no cost and is intended
             for use as is.</p>
+
         <p>This page is used to inform website visitors regarding BikeMaps's policies with the collection, use, and
             disclosure of Personal Information if anyone decided to use our Service.</p>
+
         <p>If you choose to use our Service, then you agree to the collection and use of information in
             relation with this policy. The Personal Information that we collect are used for providing and
             improving the Service. We will not use or share your information with anyone except as described
             in this Privacy Policy.</p>
+
         <p>The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions,
-            which is accessible at BikeMaps, unless otherwise defined in this Privacy Policy.</p>
-        
-        <p><strong>Information Collection and Use</strong></p>
-        <p>For a better experience while using our Service, we may require you to provide us with certain
-            personally identifiable information, including but not limited to your email address. 
-            The information that we request is will be retained by us and used as described in this privacy policy.</p>
+            which is accessible at BikeMaps, unless otherwise defined in this Privacy Policy.</p>{% endblocktrans %}
+
+        <p><strong>{% trans "Information Collection and Use" %}</strong></p>
+        <p>{% blocktrans %}For a better experience while using our Service, we may require you to provide us with certain
+            personally identifiable information, including but not limited to your email address.
+            The information that we request is will be retained by us and used as described in this privacy policy.{% endblocktrans %}</p>
         <p>The app does use third party services that may collect information used to identify you.
-        
-        <p><strong>Log Data</strong></p>
-        <p>We want to inform you that whenever you use our Service, in case of an error in the app we collect
+
+        <p><strong>{% trans "Log Data" %}</strong></p>
+        <p>{% blocktrans %}We want to inform you that whenever you use our Service, in case of an error in the app we collect
             data and information (through third party products) on your phone called Log Data. This Log Data
             may include information such as your devices’s Internet Protocol (“IP”) address, device name,
             operating system version, configuration of the app when utilising our Service, the time and date
-            of your use of the Service, and other statistics.</p>
-        
-        <p><strong>Cookies</strong></p>
-        <p>Cookies are files with small amount of data that is commonly used an anonymous unique identifier.
+            of your use of the Service, and other statistics.{% endblocktrans %}</p>
+
+        <p><strong>{% trans "Cookies" %}</strong></p>
+        <p>{% blocktrans %}Cookies are files with small amount of data that is commonly used an anonymous unique identifier.
             These are sent to your browser from the website that you visit and are stored on your devices’s
-            internal memory.</p>
-        <p>This Services does not uses these “cookies” explicitly. However, the app may use third party code
+            internal memory.{% endblocktrans %}</p>
+        <p>{% blocktrans %}This Services does not uses these “cookies” explicitly. However, the app may use third party code
             and libraries that use “cookies” to collection information and to improve their services. You
             have the option to either accept or refuse these cookies, and know when a cookie is being sent
             to your device. If you choose to refuse our cookies, you may not be able to use some portions of
-            this Service.</p>
-        
-        <p><strong>Service Providers</strong></p>
+            this Service.{% endblocktrans %}</p>
+
+        <p><strong>{% trans "Service Providers" %}</strong></p>
         <p>We may employ third-party companies and individuals due to the following reasons:</p>
         <ul>
             <li>To facilitate our Service;</li>
@@ -65,39 +68,39 @@
             <li>To perform Service-related services; or</li>
             <li>To assist us in analyzing how our Service is used.</li>
         </ul>
-        <p>We want to inform users of this Service that these third parties have access to your Personal
+        <p>{% blocktrans %}We want to inform users of this Service that these third parties have access to your Personal
             Information. The reason is to perform the tasks assigned to them on our behalf. However, they
-            are obligated not to disclose or use the information for any other purpose.</p>
-        
-        <p><strong>Security</strong></p>
-        <p>We value your trust in providing us your Personal Information, thus we are striving to use
+            are obligated not to disclose or use the information for any other purpose.{% endblocktrans %}</p>
+
+        <p><strong>{% trans "Security" %}</strong></p>
+        <p>{% blocktrans %}We value your trust in providing us your Personal Information, thus we are striving to use
             commercially acceptable means of protecting it. But remember that no method of transmission over
             the internet, or method of electronic storage is 100% secure and reliable, and we cannot
-            guarantee its absolute security.</p>
-        
-        <p><strong>Links to Other Sites</strong></p>
-        <p>This Service may contain links to other sites. If you click on a third-party link, you will be
+            guarantee its absolute security.{% endblocktrans %}</p>
+
+        <p><strong>{% trans "Links to Other Sites" %}</strong></p>
+        <p>{% blocktrans %}This Service may contain links to other sites. If you click on a third-party link, you will be
             directed to that site. Note that these external sites are not operated by us. Therefore, I
             strongly advise you to review the Privacy Policy of these websites. We have no control over, and
             assume no responsibility for the content, privacy policies, or practices of any third-party
-            sites or services.</p>
-        
-        <p><strong>Children’s Privacy</strong></p>
-        <p>This Services does not address anyone under the age of 13. We do not knowingly collect personal
+            sites or services.{% endblocktrans %}</p>
+
+        <p><strong>{% trans "Children’s Privacy" %}</strong></p>
+        <p>{% blocktrans %}This Services does not address anyone under the age of 13. We do not knowingly collect personal
             identifiable information from children under 13. In the case we discover that a child under 13
             has provided us with personal information, We immediately delete this from our servers. If you
             are a parent or guardian and you are aware that your child has provided us with personal
-            information, please contact us so that we will be able to take necessary actions.</p>
-        
-        <p><strong>Changes to This Privacy Policy</strong></p>
-        <p>We may update our Privacy Policy from time to time. Thus, you are advised to review this page
+            information, please contact us so that we will be able to take necessary actions.{% endblocktrans %}</p>
+
+        <p><strong>{% trans "Changes to This Privacy Policy" %}</strong></p>
+        <p>{% blocktrans %}We may update our Privacy Policy from time to time. Thus, you are advised to review this page
             periodically for any changes. We will notify you of any changes by posting the new Privacy Policy
-            on this page. These changes are effective immediately, after they are posted on this page.</p>
-        
-        <p><strong>Contact Us</strong></p>
-        <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact
-            us.</p>
-        <p>This Privacy Policy page was created at <a href="https://privacypolicytemplate.net"
+            on this page. These changes are effective immediately, after they are posted on this page.{% endblocktrans %}</p>
+
+        <p><strong>{% trans "Contact Us" %}</strong></p>
+        <p>{% blocktrans %}If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact
+            us.{% endblocktrans %}</p>
+        <p>{% blocktrans %}This Privacy Policy page was created at {% endblocktrans %}<a href="https://privacypolicytemplate.net"
                                                       target="_blank">privacypolicytemplate.net</a>.</p>
 
 		<div class="text-right"><a class="btn btn-primary" onclick=window.close()>{% trans "Close" context "close window button"%}</a></div>
