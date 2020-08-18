@@ -60,17 +60,9 @@
             </div>
           </div>
 
-          <div class="legend-group">
-            <input class="layer-toggle" type="checkbox" value="infrastructure">
-            {% trans "Infrastructure" %}
-            <div class="legend-subtext collapse">
-              <div class="bikerack"></div><small> {% trans "Bike rack" %}</small><br>
-              <div class="bikelane solidlane thicklane"></div><small> {% trans "Protected Bike Lane" %}</small><br>
-              <div class="bikelane solidlane"></div><small> {% trans "Bike Lane" %}</small><br>
-              <div class="bikelane dotlane"></div><small> {% trans "Other Cycling Route" %}</small>
-            </div>
-
-
+          <div id="basemap-about">
+              {% blocktrans %}Basemap by <a href="https://www.cyclosm.org/">CyclOSM.</a> Report and fix infrastructure data issues on <a href="https://www.openstreetmap.org/fixthemap">OpenStreetMap.</a> {% endblocktrans %}
+          </div>
 
             {% url 'mapApp:disclaimer' as disclaimer_link %}
             <div align="right">

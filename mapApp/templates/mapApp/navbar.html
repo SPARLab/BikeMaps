@@ -49,6 +49,11 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
+        {% if LANGUAGE_CODE == 'es' %}
+          <li>{% blocktrans %}<a href="https://bikemaps.org">English</a>{% endblocktrans %}</li>
+       {% else %}
+          <li>{% blocktrans %}<a href="https://bikemaps.org/es">Español</a>{% endblocktrans %}</li>
+       {% endif %}
         <li>{% blocktrans %}<a href="https://bikemaps.org/fr">Français</a>{% endblocktrans %}</li>
         <li>{% blocktrans %}<a href="https://bikemaps.org/is">Íslenska</a>{% endblocktrans %}</li>
         <li><a href="https://www.facebook.com/BikeMaps.org" target="_blank"><i class="fa fa-facebook"></i></a></li>

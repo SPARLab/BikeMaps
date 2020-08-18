@@ -45,7 +45,7 @@ var map = L.map('map', {
     minZoom: 2,
     zoom: 4,
     zoomControl: false,
-    layers: [osm, stravaHM, incidentData, alertAreas],
+    layers: [OpenStreetMap, CyclOSM, stravaHM, incidentData, alertAreas],
     worldCopyJump: true,
 });
 
