@@ -2,7 +2,7 @@
 var collisions, nearmisses, hazards, thefts, newInfrastructures;
 
 //'159.203.2.12' for dev
-var srv = window.location.hostname; 
+var srv = window.location.hostname;
 
 loadIncidenLayerXHR("/nearmisses_tiny?format=json", "nearmiss", nearmisses);
 loadIncidenLayerXHR("/hazards_tiny?format=json", "hazard", hazards);
@@ -532,7 +532,7 @@ function getPopupText(in_type, in_data) {
 function checkSpecialZone(in_location ,bbox ) {
     var neCorner = L.latLng([bbox.bbox.ymin, bbox.bbox.xmin]);
     var swCorner = L.latLng([bbox.bbox.ymax, bbox.bbox.xmax]);
-     
+
     if (L.latLngBounds([swCorner, neCorner]).contains(in_location)) {
         if (!bbox.wasActionRun) {
             console.log('Running action for ' + bbox.geoid);
@@ -570,7 +570,7 @@ function runWinnipegRaffle() {
     if (wpgRaffle){
         var wpgWin = window.open('https://bikemaps.org/static/wpgraffle', '_blank');
         wpgWin.focus();
-    */
+
     setTimeout(function () {
         //attach an event handler to hide the window if they click the btn
         $(".btn-wpgRaffle").on("click", function () {
@@ -580,7 +580,8 @@ function runWinnipegRaffle() {
         $("#wpg-raffle").modal('show');
         $(".wpgRaffleNav").show();
     }, 1500);
-    
+    */
+
 }
 
 function debounce(func, wait, immediate) {
