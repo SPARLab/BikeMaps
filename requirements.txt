@@ -32,7 +32,7 @@ markdown2==2.3.0
 Minidetector==0.1
 oauthlib==2.0.2
 olefile==0.46
-Pillow==4.2.1
+Pillow==7.1.0
 psycopg2==2.7.3
 pycparser==2.20
 PyJWT==1.7.1
