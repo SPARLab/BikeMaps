@@ -1,11 +1,11 @@
-apns2==0.7.1
+apns2==0.3.0
 asymmetric-jwt-auth==0.3.1
 certbot-django==0.1.0
 certifi==2020.12.5
 cffi==1.14.4
 chardet==3.0.4
 cryptography==3.2.1
-Django==1.10.7
+Django==1.11.17
 django-allauth==0.32.0
 django-common-helpers==0.9.1
 django-cors-headers==2.1.0
