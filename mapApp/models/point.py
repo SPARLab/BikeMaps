@@ -22,7 +22,7 @@ class Point(models.Model):
     YOUNGEST_AGE = 13
     youngestYear = int(strftime("%Y", gmtime())) - YOUNGEST_AGE
     AGE_CHOICES = []
-    for y in xrange(100):
+    for y in range(100):
         AGE_CHOICES.append((str(youngestYear-y), str(youngestYear-y)))
 
     from calendar import month_name as month
@@ -145,4 +145,4 @@ class Point(models.Model):
 
     # toString()
     def __unicode__(self):
-        return unicode(self.report_date)
+        return str(self.report_date)

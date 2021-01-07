@@ -16,7 +16,7 @@ class RateLimit:
 
     def __init__(self, request, func_name, method=None, field=None, rate='5/5m'):
         self.request = request
-        self.func_name = func_name
+        self.__name__ = func_name
         self.method = method or ['POST', ]
         self.limit = None
         self.time = None
@@ -45,18 +45,18 @@ class RateLimit:
         keys = []
 
         if self.request.user.is_authenticated():
-            keys.append(u'user:%d' % self.request.user.pk)
+            keys.append('user:%d' % self.request.user.pk)
         else:
-            keys.append(u'ip:%s' % self.request.META['REMOTE_ADDR'])
+            keys.append('ip:%s' % self.request.META['REMOTE_ADDR'])
 
         if field is not None:
             field_value = getattr(self.request, self.request.method).get(field, '').encode('utf-8')
 
             if field_value:
                 field_value = hashlib.sha1(field_value).hexdigest()
-                keys.append(u'field:%s:%s' % (field, field_value))
+                keys.append('field:%s:%s' % (field, field_value))
 
-        return [u'%s:%s:%s' % (settings.ST_RATELIMIT_CACHE_PREFIX, self.func_name, k) for k in keys]
+        return ['%s:%s:%s' % (settings.ST_RATELIMIT_CACHE_PREFIX, self.__name__, k) for k in keys]
 
     def _incr_cache(self):
         if not self.cache_keys:
@@ -75,7 +75,7 @@ class RateLimit:
         return cache_values
 
     def is_limited(self):
-        for count in self.cache_values.values():
+        for count in list(self.cache_values.values()):
             if count > self.limit:
                 return True
 

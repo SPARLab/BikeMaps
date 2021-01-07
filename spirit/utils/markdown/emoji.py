@@ -142,14 +142,14 @@ class EmojifyPreprocessor(Preprocessor):
             if not emoji in emojis_set:
                 return match.group(0)
 
-            image = emoji + u'.png'
-            url = os.path.join(settings.STATIC_URL, u'spirit', u'emojis', image).replace(u'\\', u'/')
+            image = emoji + '.png'
+            url = os.path.join(settings.STATIC_URL, 'spirit', 'emojis', image).replace('\\', '/')
 
-            return u'![%(emoji)s](%(url)s)' % {'emoji': emoji, 'url': url}
+            return '![%(emoji)s](%(url)s)' % {'emoji': emoji, 'url': url}
 
         for line in lines:
             if line.strip():
-                line = re.sub(ur':(?P<emoji>[a-z0-9\+\-_]+):', emojify, line, flags=re.UNICODE)
+                line = re.sub(r':(?P<emoji>[a-z0-9\+\-_]+):', emojify, line, flags=re.UNICODE)
 
             new_lines.append(line)
 

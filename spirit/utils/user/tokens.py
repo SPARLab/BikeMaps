@@ -42,7 +42,7 @@ class UserActivationTokenGenerator(TokenGenerator):
 class UserEmailChangeTokenGenerator(TokenGenerator):
 
     def _uid(self, user):
-        return u";".join((smart_text(user.pk), smart_text(user.email)))
+        return ";".join((smart_text(user.pk), smart_text(user.email)))
 
     def generate(self, user, new_email):
         return super(UserEmailChangeTokenGenerator, self).generate(user, {'new_email': new_email, })

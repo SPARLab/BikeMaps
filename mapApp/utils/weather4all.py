@@ -25,7 +25,7 @@ def run():
         thread_create.release()
 
     end_t = time.time()
-    print processed, "Incidents processed in", end_t - start_t, "s"
+    print(processed, "Incidents processed in", end_t - start_t, "s")
 
 class WeatherThread(threading.Thread):
     def __init__(self, incident):

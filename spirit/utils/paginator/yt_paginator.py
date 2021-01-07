@@ -105,7 +105,7 @@ class YTPage(object):
         if first_page < 1:
             first_page = 1
 
-        return xrange(first_page, last_page + 1)
+        return range(first_page, last_page + 1)
 
     def next_page_number(self):
         return self.paginator.validate_number(self.number + 1)

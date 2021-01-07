@@ -1,9 +1,10 @@
 {% load i18n %}
+{% load user_agents %}
 
 <!-- Javascript saved as html to allow for use of Django template tags within the code -->
 <script>
 $(document).ready(function(){
-  {% if not request.mobile %}
+  {% if not request|mobile %}
       desktopDrawing();
   {% else %}
       mobileDrawing();
@@ -208,7 +209,7 @@ function mobileDrawing(){
 </script>
 
 <!-- Mobile tooltip to explain the double tapping -->
-{% if request.mobile %}
+{% if request|mobile %}
 <div class="tip-msg alert-info alert-dismissable">
     <div class="close">&times;</div>
     <center>{% trans "Double tap a location to submit a report" %}</center>

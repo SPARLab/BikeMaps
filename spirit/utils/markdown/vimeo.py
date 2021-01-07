@@ -14,8 +14,8 @@ from markdown.preprocessors import Preprocessor
 # * https://vimeo.com/groups/name/videos/11111111
 # * https://vimeo.com/album/2222222/video/11111111
 # * https://vimeo.com/11111111?param=value
-PATTERN_RE = ur'^https?://(www\.|player\.)?vimeo\.com/(channels/|groups/[^/]+/videos/|album/(\d+)/video/|video/)?' \
-             ur'(?P<id>\d+)(\?[^\s]+)?$'
+PATTERN_RE = r'^https?://(www\.|player\.)?vimeo\.com/(channels/|groups/[^/]+/videos/|album/(\d+)/video/|video/)?' \
+             r'(?P<id>\d+)(\?[^\s]+)?$'
 
 
 class VimeofyExtension(Extension):
@@ -34,8 +34,8 @@ class VimeofyPreprocessor(Preprocessor):
 
         def vimeofy(match):
             video_id = match.group("id")
-            html = u'<span class="video"><iframe src="https://player.vimeo.com/video/{video_id}" ' \
-                   u'allowfullscreen></iframe></span>'.format(video_id=video_id)
+            html = '<span class="video"><iframe src="https://player.vimeo.com/video/{video_id}" ' \
+                   'allowfullscreen></iframe></span>'.format(video_id=video_id)
             return self.markdown.htmlStash.store(html, safe=True)
 
         for line in lines:

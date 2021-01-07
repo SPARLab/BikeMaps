@@ -8,7 +8,7 @@ from markdown.preprocessors import Preprocessor
 from django.utils.html import escape as html_escape
 
 
-PATTERN_RE = ur'^https?://[^\s]+\.(mov|mp4|webm|ogv)(\?[^\s]+)?$'
+PATTERN_RE = r'^https?://[^\s]+\.(mov|mp4|webm|ogv)(\?[^\s]+)?$'
 
 
 class VideofyExtension(Extension):
@@ -28,7 +28,7 @@ class VideofyPreprocessor(Preprocessor):
         def videofy(match):
             url = match.group(0)
             url = html_escape(url)
-            html = u'<video controls><source src="{url}"><a href="{url}">{url}</a></video>'.format(url=url)
+            html = '<video controls><source src="{url}"><a href="{url}">{url}</a></video>'.format(url=url)
             return self.markdown.htmlStash.store(html, safe=True)
 
         for line in lines:

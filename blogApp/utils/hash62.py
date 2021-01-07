@@ -6,7 +6,7 @@ def hash(i10):
     while i10 > 0:
         digits.append(i10%62)
         i10 /= 62
-    return "".join(map(lambda x: ALPHA62[x], digits))
+    return "".join([ALPHA62[x] for x in digits])
 
 def dehash(s62):
     """ Convert a base-62 integer (as type:string) into a base-10 integer and return the integer """

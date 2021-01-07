@@ -9,7 +9,7 @@ from django.utils import timezone
 
 
 class AlertNotification(models.Model):
-    INCIDENT, NEARMISS, HAZARD, THEFT, UNDEFINED = xrange(5)
+    INCIDENT, NEARMISS, HAZARD, THEFT, UNDEFINED = range(5)
 
     ACTION_CHOICES = (
         (INCIDENT, _("Incident")),

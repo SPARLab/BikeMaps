@@ -23,7 +23,7 @@ class Weather(models.Model):
 
     # toString()
     def __unicode__(self):
-        return unicode(self.summary)
+        return str(self.summary)
 
     class Meta:
         verbose_name = "Weather"
