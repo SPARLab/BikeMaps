@@ -3,7 +3,7 @@
 from functools import wraps
 
 from django.core.exceptions import PermissionDenied
-from django.contrib.auth.views import redirect_to_login
+from django.contrib.auth import redirect_to_login
 from django.conf import settings
 
 

@@ -7,7 +7,8 @@ import datetime
 import logging
 logger = logging.getLogger(__name__)
 
-@register.assignment_tag()
+
+@register.simple_tag()
 def has_alerts(user):
     return (
         IncidentNotification.objects.filter(user=user).filter(is_read=False).exists()\
@@ -17,7 +18,8 @@ def has_alerts(user):
         TheftNotification.objects.filter(user=user).filter(is_read=False).exists()
     )
 
-@register.assignment_tag()
+
+@register.simple_tag()
 def reports_this_week(user):
     now = datetime.datetime.now()
     lastweek = now - datetime.timedelta(days=7)

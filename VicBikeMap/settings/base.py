@@ -14,13 +14,13 @@ from django.utils.translation import ugettext_lazy as _
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     # 'middlewares.ForceDefaultLanguageMiddleware',
-    'solid_i18n.middleware.SolidLocaleMiddleware',
+    # 'solid_i18n.middleware.SolidLocaleMiddleware',
     # 'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -75,7 +75,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'reset_migrations',
     # forum
     'spirit',
 

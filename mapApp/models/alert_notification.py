@@ -18,8 +18,7 @@ class AlertNotification(models.Model):
         (THEFT, _("Theft")),
         (UNDEFINED, _("Undefined"))
     )
-
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("user"))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("user"))
 
     date = models.DateTimeField(auto_now_add=True)
     action = models.IntegerField(choices=ACTION_CHOICES, default=UNDEFINED)
@@ -67,10 +66,10 @@ class AlertNotification(models.Model):
 
 
 class IncidentNotification(AlertNotification):
-    point = models.ForeignKey('mapApp.Incident', related_name='incidentNotification')
+    point = models.ForeignKey('mapApp.Incident', on_delete=models.CASCADE, related_name='incidentNotification')
 
 class HazardNotification(AlertNotification):
-    point = models.ForeignKey('mapApp.Hazard', related_name='hazardNotification')
+    point = models.ForeignKey('mapApp.Hazard', on_delete=models.CASCADE, related_name='hazardNotification')
 
 class TheftNotification(AlertNotification):
-    point = models.ForeignKey('mapApp.Theft', related_name='theftNotification')
+    point = models.ForeignKey('mapApp.Theft', on_delete=models.CASCADE, related_name='theftNotification')

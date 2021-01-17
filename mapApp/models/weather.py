@@ -4,7 +4,7 @@ from mapApp.models import Incident
 class Weather(models.Model):
     """ Container for all weather associated with an Incident via one-to-one field """
 
-    incident = models.OneToOneField(Incident, primary_key=True)
+    incident = models.OneToOneField(Incident, on_delete=models.CASCADE, primary_key=True)
 
     summary = models.CharField("Summary", max_length=250)
     sunrise_time = models.DateTimeField("Sunrise time")

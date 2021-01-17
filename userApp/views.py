@@ -1,12 +1,12 @@
 from django.utils.translation import ugettext as _
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib import messages
 from django.conf import settings
 
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.views import login as auth_login
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from ratelimit.decorators import ratelimit
 from django.forms.utils import ErrorList

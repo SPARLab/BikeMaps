@@ -1,5 +1,5 @@
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import string_concat
+from django.utils.text import format_lazy
 from django import forms
 
 from crispy_forms.helper import FormHelper
@@ -9,7 +9,8 @@ from crispy_forms.bootstrap import Accordion, AccordionGroup
 from mapApp.models import Incident
 import datetime
 
-why_personal_link = string_concat('<a class="text-info" data-toggle="collapse" aria-expanded="false" aria-controls="why-personal" href=".tab-pane.active .why-personal"><span class="glyphicon glyphicon-question-sign"></span> <strong>', _("Why are we asking for personal details?"), '</strong></a>')
+why_personal_link = format_lazy('<a class="text-info" data-toggle="collapse" aria-expanded="false" aria-controls="why-personal" href=".tab-pane.active .why-personal"><span class="glyphicon glyphicon-question-sign"></span> <strong>',
+                                _("Why are we asking for personal details?"), '</strong></a>')
 
 why_personal_well = _("Personal details such as age and gender are routinely collected in health research including studies examining cycling injuries (e.g., Cripton et al. 2015). In addition, details such as rider experience and gender have been shown to be important predictors of cycling safety and risk (Beck et al. 2007). The goal of BikeMaps.org is to gather more comprehensive data to better assess cycling safety and risk. Providing personal details will allow us to more accurately fill in these data gaps.")
 

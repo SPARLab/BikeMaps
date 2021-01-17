@@ -1,6 +1,6 @@
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.template.defaultfilters import slugify
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from django.db import models
 from blogApp.utils import hash62
@@ -23,7 +23,8 @@ class Post(models.Model):
     title = models.CharField(_('Title'), max_length=100)
     description = models.CharField(_('Description'), max_length=300)
     post_date = models.DateTimeField(_('Date posted'), default=datetime.now)
-    slug = models.SlugField(_('Slug'), unique=True, blank=True, max_length=100)
+    slug = models.SlugField(
+        _('Slug'), unique=True, blank=True, max_length=100, unique_for_date='created')
     published = models.BooleanField(_('Published'), default=False)
     content = models.TextField(_('Content'), blank=True)
     language = models.CharField(

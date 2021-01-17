@@ -1,7 +1,9 @@
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.contrib.gis.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
+from django.db.models import Manager as GeoManager
+
 
 import datetime
 from time import strftime, gmtime
@@ -9,6 +11,8 @@ from time import strftime, gmtime
 ##########
 # Point class.
 # Serves as abstract model inheritance class for all user generated map data points
+
+
 class Point(models.Model):
     TYPE_CHOICES = (
         ('collision', _('collision')),
@@ -49,7 +53,8 @@ class Point(models.Model):
 
     SOURCE_CHOICES = (
         ('BikeMaps team', _('Directly from the BikeMaps.org team')),
-        ('BikeMaps swag', _('BikeMaps.org swag (e.g., seat cover, water bottle, etc.) without meeting the team')),
+        ('BikeMaps swag', _(
+            'BikeMaps.org swag (e.g., seat cover, water bottle, etc.) without meeting the team')),
         ('Traditional media', _('Traditional media (newspaper, TV, radio)')),
         ('Another website', _('Link from another website')),
         ('Word of mouth', _('Word of mouth')),
@@ -58,7 +63,7 @@ class Point(models.Model):
         ('Don\'t remember', _('I don\'t remember'))
     )
 
-    ########### POINT FIELDS
+    # POINT FIELDS
     report_date = models.DateTimeField(
         _('Date reported'),
         auto_now_add=True   # Date is set automatically when object created
@@ -66,7 +71,7 @@ class Point(models.Model):
     # Spatial fields
     # Default CRS -> WGS84
     geom = models.PointField(_('Location'))
-    objects = models.GeoManager() # Required to conduct geographic queries
+    objects = GeoManager()  # Required to conduct geographic queries
 
     date = models.DateTimeField(
         _('When was the incident?'),
@@ -128,7 +133,7 @@ class Point(models.Model):
     )
 
     def get_absolute_url(self):
-        return reverse('mapApp:index', kwargs={'lat':str(self.latlngList()[0]), 'lng':str(self.latlngList()[1]), 'zoom':str(18)})
+        return reverse('mapApp:index', kwargs={'lat': str(self.latlngList()[0]), 'lng': str(self.latlngList()[1]), 'zoom': str(18)})
 
     # reverses latlngs and turns tuple of tuples into list of lists
     def latlngList(self):

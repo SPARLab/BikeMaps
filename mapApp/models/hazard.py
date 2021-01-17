@@ -67,7 +67,7 @@ class Hazard(Point):
         ('I don\'t know', _('I don\'t know'))
     )
 
-    point = models.OneToOneField(Point, parent_link=True)
+    point = models.OneToOneField(Point,on_delete=models.CASCADE, parent_link=True)
 
     hazard_category = models.CharField(
         _('Please select the category of hazard you are reporting:'),
