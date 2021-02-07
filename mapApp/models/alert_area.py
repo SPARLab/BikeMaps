@@ -30,7 +30,7 @@ class AlertArea(AbstractPolygon):
 
     # toString()
     def __unicode__(self):
-        return unicode(self.user)
+        return str(self.user)
 
     class Meta:
         app_label = 'mapApp'
@@ -56,7 +56,7 @@ class AdministrativeArea(models.Model):
 
     # toString()
     def __unicode__(self):
-        return unicode(self.description)
+        return str(self.description)
 
     class Meta:
         app_label = 'mapApp'

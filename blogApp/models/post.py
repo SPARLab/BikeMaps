@@ -46,7 +46,7 @@ class Post(models.Model):
 
     # toString()
     def __unicode__(self):
-        return unicode(self.title)
+        return str(self.title)
 
     class Meta:
         app_label = 'blogApp'

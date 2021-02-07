@@ -1,4 +1,4 @@
-apns2==0.3.0
+apns2==0.7.2
 asymmetric-jwt-auth==0.3.1
 certbot-django==0.1.0
 certifi==2020.12.5
@@ -29,11 +29,12 @@ idna==2.5
 ipaddress==1.0.23
 Markdown==2.6.2
 markdown2==2.3.0
-Minidetector==0.1
+user-agents==2.2.0
+django-user-agents==0.4.0
 oauthlib==2.0.2
 olefile==0.46
-Pillow==4.2.1
-psycopg2==2.7.3
+Pillow==8.1.0
+psycopg2==2.8.6
 pycparser==2.20
 PyJWT==1.7.1
 python-openid==2.2.5

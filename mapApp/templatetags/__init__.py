@@ -1,1 +1,1 @@
-from bikemaps_tags import *
+from .bikemaps_tags import *

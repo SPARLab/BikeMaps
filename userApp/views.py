@@ -12,7 +12,7 @@ from ratelimit.decorators import ratelimit
 from django.forms.utils import ErrorList
 
 from .forms import MyUserCreationForm, UserProfileForm
-from utils import ReCaptcha
+from .utils import ReCaptcha
 
 from django.contrib.auth import get_user_model
 User = get_user_model()

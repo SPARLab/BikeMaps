@@ -10,7 +10,7 @@ from markdown.preprocessors import Preprocessor
 # * https://www.youtube.com/watch?v=Z0UISCEe52Y
 # * http://youtu.be/afyK1HSFfgw
 # * https://www.youtube.com/embed/vsF0K3Ou1v0
-PATTERN_RE = ur'^https?://(www\.)?(youtube\.com/watch\?v=|youtu\.be/|youtube\.com/embed/)(?P<id>[a-zA-Z0-9_\-]{11})$'
+PATTERN_RE = r'^https?://(www\.)?(youtube\.com/watch\?v=|youtu\.be/|youtube\.com/embed/)(?P<id>[a-zA-Z0-9_\-]{11})$'
 
 
 class YouTubefyExtension(Extension):
@@ -29,8 +29,8 @@ class YouTubefyPreprocessor(Preprocessor):
 
         def youtubefy(match):
             video_id = match.group("id")
-            html = u'<span class="video"><iframe src="https://www.youtube.com/embed/{video_id}?feature=oembed" ' \
-                   u'allowfullscreen></iframe></span>'.format(video_id=video_id)
+            html = '<span class="video"><iframe src="https://www.youtube.com/embed/{video_id}?feature=oembed" ' \
+                   'allowfullscreen></iframe></span>'.format(video_id=video_id)
             return self.markdown.htmlStash.store(html, safe=True)
 
         for line in lines:

@@ -9,7 +9,7 @@
 # Removed test to see if rider was travelling in the same direction in favor of storing the cardinal wind direction only
 # Updated docstring
 
-import urllib2
+import urllib.request
 import json
 from datetime import datetime
 import time
@@ -28,7 +28,7 @@ def get_weather(coords, date):
     # A call is made to the API using the provided key
     APIkey = settings.FORECAST_IO_API_KEY
     physicalURL = "https://api.forecast.io/forecast/"+APIkey+"/"+str(lat)+","+str(lng)+","+datetime.isoformat(date)+"?units=ca"
-    response = json.loads( urllib2.urlopen(physicalURL).read() )
+    response = json.loads( urllib.request.urlopen(physicalURL).read() )
 
     c = response['currently']
     d = response['daily']['data'][0]

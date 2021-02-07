@@ -1,1 +1,1 @@
-from hash62 import *
+from .hash62 import *

@@ -34,7 +34,7 @@ def upload_image(request):
 def _handle_uploaded_file(f, size):
     im = Image.open(f)
     reduction = float(max(im.size)) / float(size)
-    im = im.resize(map(lambda x: int(x/reduction), im.size))
+    im = im.resize([int(x/reduction) for x in im.size])
 
     # Include date in filename to prevent clobbering of older images
     name, ext = f.name.split(".")

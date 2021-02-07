@@ -27,7 +27,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'minidetector.Middleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
     'asymmetric_jwt_auth.middleware.JWTAuthMiddleware',
 )
 
@@ -39,7 +39,7 @@ AUTH_USER_MODEL = 'spirit.User'
 LOGIN_URL = 'userApp:login'
 LOGIN_REDIRECT_URL = 'mapApp:index'
 
-POSTGIS_VERSION = (2,1,3)
+POSTGIS_VERSION = (2, 1, 3)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -51,7 +51,7 @@ LANGUAGES = (
     ('de', _('German')),
     ('nl', _('Dutch')),
     ('fi', _('Finnish')),
-	('is', _('Icelandic')),
+    ('is', _('Icelandic')),
     ('es', _('Spanish')),
 )
 
@@ -80,14 +80,14 @@ INSTALLED_APPS = (
     'spirit',
 
     # mapApp requirements
-    'minidetector', # Mobile detector
+    'django_user_agents',
     'django.contrib.gis',
     'djgeojson',
     'crispy_forms',
     'middlewares',
     'mapApp',
     'debug_toolbar',
-    'solid_i18n', # Internationalization
+    'solid_i18n',  # Internationalization
 
     #blogApp and requirements
     'blogApp',
@@ -104,7 +104,7 @@ INSTALLED_APPS = (
     # push notification requirement
     "push_notifications",
 
-    #django-allauth requirements
+    # django-allauth requirements
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -121,6 +121,19 @@ INSTALLED_APPS = (
     'certbot_django.server',
 )
 
+# Cache backend is optional, but recommended to speed up user agent parsing
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
+# Name of cache backend to cache user agents. If it not specified default
+# cache alias will be used. Set to `None` to disable caching.
+USER_AGENTS_CACHE = 'default'
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -130,14 +143,14 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                    "django.contrib.auth.context_processors.auth",
-                    "django.template.context_processors.debug",
-                    "django.template.context_processors.i18n",
-                    "django.template.context_processors.media",
-                    "django.template.context_processors.static",
-                    "django.template.context_processors.tz",
-                    "django.contrib.messages.context_processors.messages",
-                    "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.debug",
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",
+                "django.template.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.request",
             ]
         }
     }
@@ -146,17 +159,17 @@ TEMPLATES = [
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
 SERIALIZATION_MODULES = {
-    'geojson' : 'djgeojson.serializers'
+    'geojson': 'djgeojson.serializers'
 }
 
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder'
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 INTERNAL_IPS = ('127.0.0.1')
 
@@ -177,8 +190,8 @@ MARKDOWN_DEUX_STYLES = {
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 PUSH_NOTIFICATIONS_SETTINGS = {
-        "GCM_API_KEY": "AIzaSyAAIoOHr1BA28ulBsWQ7FNWfCmPeZp-aaw",
-        "APNS_CERTIFICATE": "/path/to/your/certificate.pem",
+    "GCM_API_KEY": "AIzaSyAAIoOHr1BA28ulBsWQ7FNWfCmPeZp-aaw",
+    "APNS_CERTIFICATE": "/path/to/your/certificate.pem",
 }
 
 REST_SESSION_LOGIN = False
@@ -189,10 +202,10 @@ SITE_ID = 1
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_METHODS = (
-        'GET',
-        'POST',
-        'DELETE',
-    )
+    'GET',
+    'POST',
+    'DELETE',
+)
 
 CORS_ALLOW_HEADERS = (
     'x-requested-with',
