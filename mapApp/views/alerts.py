@@ -24,7 +24,7 @@ def postAlertPolygon(request):
 	# Create valid attributes for user and geom fields
 	try:
 		geofenceForm.data['user'] = request.user.id
-		geofenceForm.data['geom'] = GEOSGeometry(geofenceForm.data['geom'])
+		geofenceForm.data['geom'] = GEOSGeometry(geofenceForm.data['geom'], srid=4326)
 	except(ValueError):
 		messages.error(request, '<strong>' + _('Error') + '</strong><br>' + _('Invalid geometry data.'))
 

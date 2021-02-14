@@ -37,7 +37,7 @@ def editShape(request):
 			if(editType == 'edit'):
 				shapeEdited = get_object_or_404(objectSet, pk=pk)
 				try:
-					shapeEdited.geom = GEOSGeometry(newGeom)	# edit the object geometry
+					shapeEdited.geom = GEOSGeometry(newGeom, srid=4326)	# edit the object geometry
 				except(ValueError):
 					return JsonResponse({'success':False})
 				shapeEdited.save()
