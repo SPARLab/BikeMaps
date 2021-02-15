@@ -28,16 +28,15 @@ urlpatterns = [
     url(r'^robots.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
     url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     url(r'^\.well-known/', include(certbot_django.server.urls)),
-    url(r'^', include(('mapApp.urls', '/'), namespace="mapApp")),
-    url(r'^user/', include(('userApp.urls', 'user'), namespace="userApp")),
-    url(r'^blog/', include(('blogApp.urls', 'blog'), namespace="blogApp")),
-    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
 
 # # Add internationalization url patters to these pages
-# urlpatterns += i18n_patterns(
-
-# )
+urlpatterns += i18n_patterns(
+    url(r'^', include(('mapApp.urls', '/'), namespace="mapApp")),
+    url(r'^user/', include(('userApp.urls', 'user'), namespace="userApp")),
+    url(r'^blog/', include(('blogApp.urls', 'blog'), namespace="blogApp")),
+    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog')
+)
 
 if settings.DEBUG:
     import debug_toolbar

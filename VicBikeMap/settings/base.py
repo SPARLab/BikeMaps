@@ -21,7 +21,7 @@ MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     # 'middlewares.ForceDefaultLanguageMiddleware',
     # 'solid_i18n.middleware.SolidLocaleMiddleware',
-    # 'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -62,6 +62,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = False
+
+prefix_default_language=False
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
