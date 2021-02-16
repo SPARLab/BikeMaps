@@ -16,7 +16,6 @@ js_info_dict = {
 }
 
 
-# TODO: find a way to add internationalization url patters
 urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', auth_views.obtain_auth_token),

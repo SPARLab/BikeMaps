@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.conf import settings
 
 from django.contrib.auth import authenticate, login
-from django.contrib.auth import login as auth_login
+from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from ratelimit.decorators import ratelimit
 from django.forms.utils import ErrorList
@@ -25,13 +25,12 @@ logger = logging.getLogger(__name__)
 @ratelimit(key='post:password', rate='10/5m')
 @xframe_options_exempt
 def rate_limit_login(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect(request.GET.get('next', reverse('mapApp:index')))
 
     if request.limited:
         return redirect(reverse('userApp:rate_limited'))
-
-    return auth_login(request, template_name='userApp/login.html')
+    return LoginView.as_view(template_name='userApp/login.html')(request)
 
 def rate_limited(request):
     return render(request, 'userApp/rate_limited.html')
