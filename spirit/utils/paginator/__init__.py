@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-import urllib.request, urllib.parse, urllib.error
+import urllib.parse
 
 
 def get_page_number(obj_number, per_page):

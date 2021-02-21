@@ -9,7 +9,7 @@
 # Removed test to see if rider was travelling in the same direction in favor of storing the cardinal wind direction only
 # Updated docstring
 
-import urllib.request, urllib.error, urllib.parse
+import urllib.request
 import json
 from datetime import datetime
 import time
