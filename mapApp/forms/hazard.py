@@ -9,10 +9,7 @@ from crispy_forms.bootstrap import Accordion, AccordionGroup
 from mapApp.models import Hazard
 import datetime
 
-why_personal_link = format_lazy(
-    '<a class="text-info" data-toggle="collapse" aria-expanded="false" aria-controls="why-personal" href=".tab-pane.active .why-personal"><span class="glyphicon glyphicon-question-sign"></span> <strong>',
-    _("Why are we asking for personal details?"),
-      '</strong></a>')
+why_personal_link = format_lazy('<a class="text-info" data-toggle="collapse" aria-expanded="false" aria-controls="why-personal" href=".tab-pane.active .why-personal"><span class="glyphicon glyphicon-question-sign"></span> <strong>{why}</strong></a>', why=_("Why are we asking for personal details?"))
 
 why_personal_well = _("Personal details such as age and gender are routinely collected in health research including studies examining cycling injuries (e.g., Cripton et al. 2015). In addition, details such as rider experience and gender have been shown to be important predictors of cycling safety and risk (Beck et al. 2007). The goal of BikeMaps.org is to gather more comprehensive data to better assess cycling safety and risk. Providing personal details will allow us to more accurately fill in these data gaps.")
 
