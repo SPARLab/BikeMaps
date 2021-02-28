@@ -1,13 +1,12 @@
+import certbot_django.server.urls
+from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
-from django.conf import settings
+from django.contrib import admin
+from django.views import static
 from django.views.generic.base import TemplateView
 from django.views.i18n import JavaScriptCatalog
-from django.contrib import admin
-# from solid_i18n.urls.i18n import solid_i18n_patterns
 from rest_framework.authtoken import views as auth_views
-from django.views import static
-import certbot_django.server.urls
 
 admin.autodiscover()
 js_info_dict = {

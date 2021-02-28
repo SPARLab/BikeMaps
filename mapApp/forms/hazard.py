@@ -1,13 +1,12 @@
-from django.utils.translation import ugettext_lazy as _
-from django.utils.text import format_lazy
-from django import forms
-
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field, HTML, Div
-from crispy_forms.bootstrap import Accordion, AccordionGroup
-
-from mapApp.models import Hazard
 import datetime
+
+from crispy_forms.bootstrap import Accordion, AccordionGroup
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import HTML, Div, Field, Layout
+from django import forms
+from django.utils.text import format_lazy
+from django.utils.translation import ugettext_lazy as _
+from mapApp.models import Hazard
 
 why_personal_link = format_lazy('<a class="text-info" data-toggle="collapse" aria-expanded="false" aria-controls="why-personal" href=".tab-pane.active .why-personal"><span class="glyphicon glyphicon-question-sign"></span> <strong>{why}</strong></a>', why=_("Why are we asking for personal details?"))
 

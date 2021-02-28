@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 
 from django.core import signing
-from django.utils.encoding import smart_text
+from six import smart_text
 
 
 class TokenGenerator(object):

@@ -2,7 +2,7 @@
 
 from django import forms
 from django.utils.html import conditional_escape, mark_safe
-from django.utils.encoding import smart_text
+from six import smart_text
 
 
 class NestedModelChoiceField(forms.ModelChoiceField):

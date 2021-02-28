@@ -1,7 +1,8 @@
-from django.conf.urls import url, include
-from django.urls import reverse_lazy
-from userApp import views
+from django.conf.urls import include, url
 from django.contrib.auth import views as django_contrib_auth_views
+from django.urls import path, reverse_lazy
+
+from userApp import views
 
 urlpatterns = [
     url(r'^register/$', views.register, name='register'),
@@ -15,4 +16,5 @@ urlpatterns = [
     url(r'^password_reset/done/$', django_contrib_auth_views.PasswordResetDoneView.as_view(template_name='userApp/password_reset_done.html'), name='password_reset_done'),
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', django_contrib_auth_views.PasswordResetConfirmView.as_view(template_name='userApp/password_reset_confirm.html', success_url= reverse_lazy('userApp:password_reset_complete')), name='password_reset_confirm'),
     url(r'^reset/done/$', django_contrib_auth_views.PasswordResetCompleteView.as_view(template_name= 'userApp/password_reset_complete.html'), name='password_reset_complete'),
+    path('accounts/', include('allauth.urls')), 
 ]

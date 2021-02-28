@@ -1,5 +1,5 @@
 {% extends "mapApp/base.html" %}
-{% load staticfiles geojson_tags cache i18n %}
+{% load static geojson_tags cache i18n %}
 
 {% get_current_language as LANGUAGE_CODE %}
 {% cache 3600 vis_template LANGUAGE_CODE %}

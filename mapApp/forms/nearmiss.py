@@ -1,13 +1,12 @@
-from django.utils.translation import ugettext_lazy as _
-from django.utils.text import format_lazy
-from django import forms
-
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field, HTML, Div
-from crispy_forms.bootstrap import Accordion, AccordionGroup
-
-from mapApp.models import Incident
 import datetime
+
+from crispy_forms.bootstrap import Accordion, AccordionGroup
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import HTML, Div, Field, Layout
+from django import forms
+from django.utils.text import format_lazy
+from django.utils.translation import ugettext_lazy as _
+from mapApp.models import Incident
 
 why_personal_link = format_lazy('<a class="text-info" data-toggle="collapse" aria-expanded="false" aria-controls="why-personal" href=".tab-pane.active .why-personal"><span class="glyphicon glyphicon-question-sign"></span> <strong>{why}</strong></a>', why=_("Why are we asking for personal details?"))
 
@@ -15,54 +14,57 @@ why_personal_well = _("Personal details such as age and gender are routinely col
 
 
 class NearmissForm(forms.ModelForm):
-    helper = FormHelper()
-    helper.form_tag = False # removes auto-inclusion of form tag in template
-    helper.disable_csrf = True
+    [...]
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False # removes auto-inclusion of form tag in template
+        self.helper.disable_csrf = True
 
-    helper.layout = Layout(
-        Accordion(
-            AccordionGroup(
-                _('Near Miss Details'),
-                Field('geom', type='hidden', id='nearmisspoint'),
-                Field('personal_involvement', id='nearmiss_personal_involvment'),
-                Field('witness_vehicle', id='nearmiss_witness_vehicle'),
-                Field('date', id='nearmiss_date', template='mapApp/util/%s_datepicker.html', autocomplete='off'),
-                Field('i_type'),
-                Field('incident_with', id='nearmiss_incident_with'),
-                Field('bicycle_type'),
-                Field('ebike'),
-                Field('injury'),
-                Field('impact'),
-                Field('trip_purpose'),
-                Field('details', id='nearmiss_details',placeholder=_('required')),
-            ),
-            AccordionGroup(
-                _('Conditions'),
-                Field('road_conditions'),
-                Field('sightlines'),
-                Field('cars_on_roadside'),
-                Field('bike_lights'),
-                Field('terrain'),
-                Field('direction'),
-                Field('turning'),
-                Field('intersection'),
-                Field('aggressive'),
-                css_id='nearmiss-conditions',
-            ),
-            AccordionGroup(
-                _('Personal Details'),
-                HTML(why_personal_link),
-                Div( Div(HTML(why_personal_well), css_class="well"), css_class='why-personal collapse' ),
-                Field('source'),
-                Field('age'),
-                Field('birthmonth'),
-                Field('sex'),
-                Field('regular_cyclist'),
-                Field('helmet'),
-                css_id='nearmiss-personal-details',
-            ),
+        self.helper.layout = Layout(
+            Accordion(
+                AccordionGroup(
+                    _('Near Miss Details'),
+                    Field('geom', type='hidden', id='nearmisspoint'),
+                    Field('personal_involvement', id='nearmiss_personal_involvment'),
+                    Field('witness_vehicle', id='nearmiss_witness_vehicle'),
+                    Field('date', id='nearmiss_date', template='mapApp/util/%s_datepicker.html', autocomplete='off'),
+                    Field('i_type'),
+                    Field('incident_with', id='nearmiss_incident_with'),
+                    Field('bicycle_type'),
+                    Field('ebike'),
+                    Field('injury'),
+                    Field('impact'),
+                    Field('trip_purpose'),
+                    Field('details', id='nearmiss_details',placeholder=_('required')),
+                ),
+                AccordionGroup(
+                    _('Conditions'),
+                    Field('road_conditions'),
+                    Field('sightlines'),
+                    Field('cars_on_roadside'),
+                    Field('bike_lights'),
+                    Field('terrain'),
+                    Field('direction'),
+                    Field('turning'),
+                    Field('intersection'),
+                    Field('aggressive'),
+                    css_id='nearmiss-conditions',
+                ),
+                AccordionGroup(
+                    _('Personal Details'),
+                    HTML(why_personal_link),
+                    Div( Div(HTML(why_personal_well), css_class="well"), css_class='why-personal collapse' ),
+                    Field('source'),
+                    Field('age'),
+                    Field('birthmonth'),
+                    Field('sex'),
+                    Field('regular_cyclist'),
+                    Field('helmet'),
+                    css_id='nearmiss-personal-details',
+                ),
+            )
         )
-    )
 
     def is_valid(self):
 

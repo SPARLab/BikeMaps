@@ -1,11 +1,20 @@
-from .index import index
 from .about import about, contact
 from .alerts import alertUsers, postAlertPolygon, readAlertPoint
-from .postPoint import postIncident, postNearmiss, postHazard, postTheft, postNewInfrastructure
-from .edit import editShape, editHazards, updateHazard
-from .termsAndConditions import termsAndConditions
 from .disclaimer import disclaimer
-from .vis import vis
-from .recentReports import recentReports
-from .restApi import CollisionList, NearmissList, HazardList, TheftList, FilteredHazardList, FilteredTheftList, OfficialList, UserList, UserDetail, AlertAreaList, AlertAreaDetail, GCMDeviceList, GCMDeviceDetail, APNSDeviceList, APNSDeviceDetail, IncidentList, TinyCollisionList, XHRCollisionInfo, TinyNearMissList, XHRNearMissInfo, TinyHazardList, XHRHazardInfo, TinyTheftList, XHRTheftInfo, TinyNewInfrastructureList, XHRNewInfrastructureInfo
+from .edit import editHazards, editShape, updateHazard
+from .index import index
+from .postPoint import (postHazard, postIncident, postNearmiss,
+                        postNewInfrastructure, postTheft)
 from .pushNotification import pushNotification
+from .recentReports import recentReports
+from .restApi import (AlertAreaDetail, AlertAreaList, APNSDeviceDetail,
+                      APNSDeviceList, CollisionList, FilteredHazardList,
+                      FilteredTheftList, GCMDeviceDetail, GCMDeviceList,
+                      HazardList, IncidentList, NearmissList, OfficialList,
+                      TheftList, TinyCollisionList, TinyHazardList,
+                      TinyNearMissList, TinyNewInfrastructureList,
+                      TinyTheftList, UserDetail, UserList, XHRCollisionInfo,
+                      XHRHazardInfo, XHRNearMissInfo, XHRNewInfrastructureInfo,
+                      XHRTheftInfo)
+from .termsAndConditions import termsAndConditions
+from .vis import vis

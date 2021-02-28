@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 
 from django import forms
-from django.utils.encoding import force_text
+from six import force_text
 
 
 class MultipleInput(forms.TextInput):
