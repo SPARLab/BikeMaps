@@ -2,11 +2,16 @@ ALPHA62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 def hash(i10):
     """ Convert a base-10 integer into a base-62 integer and return the string """
+    if i10 == 0:
+        return ALPHA62[0]
     digits = []
-    while i10 > 0:
-        digits.append(i10%62)
-        i10 /= 62
-    return "".join([ALPHA62[x] for x in digits])
+    base = len(ALPHA62)
+    while i10:
+        i10, rem = divmod(i10, base)
+        digits.append(ALPHA62[rem])
+    digits.reverse()
+    return ''.join(digits)
+    
 
 def dehash(s62):
     """ Convert a base-62 integer (as type:string) into a base-10 integer and return the integer """
