@@ -33,7 +33,8 @@ urlpatterns += i18n_patterns(
     url(r'^', include(('mapApp.urls', '/'), namespace="mapApp")),
     url(r'^user/', include(('userApp.urls', 'user'), namespace="userApp")),
     url(r'^blog/', include(('blogApp.urls', 'blog'), namespace="blogApp")),
-    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog')
+    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    prefix_default_language=False
 )
 
 if settings.DEBUG:
