@@ -1,6 +1,6 @@
 {% extends 'mapApp/base.html' %}
 
-{% load static crispy_forms_tags i18n socialaccount %}
+{% load static crispy_forms_tags i18n %}
 
 {% block body %}
 <div class="container">
@@ -18,7 +18,6 @@
         {% csrf_token %}
         {{ form|crispy }}
         <button class="btn btn-primary pull-right" type="submit" name="login">{% trans "Login" %}</button>
-        <a href="{% provider_login_url 'google' %}">Login with Google</a>
       </form>
       <p><a href="{% url 'userApp:register' %}">{% trans "Create an account" %}</a></p>
       <p><a href="{% url 'userApp:password_reset' %}">{% trans "I don't know my password" %}</a></p>
