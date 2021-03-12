@@ -44,5 +44,5 @@ requests-oauthlib==0.8.0
 six==1.15.0
 solid-i18n==1.4.2
 sqlparse==0.2.3
-urllib3==1.22
+urllib3==1.24.2
 django-reset-migrations===0.4.0
