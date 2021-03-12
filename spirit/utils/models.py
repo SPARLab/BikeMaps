@@ -2,7 +2,7 @@
 
 from django.db.models.fields import SlugField
 from django.utils.text import slugify
-from django.utils.encoding import smart_text
+from six import smart_text
 
 
 class AutoSlugField(SlugField):

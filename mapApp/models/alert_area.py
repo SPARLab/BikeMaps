@@ -2,6 +2,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
 from django.contrib.gis.db import models
+from django.db.models import Manager as GeoManager
+
 
 import datetime
 from django.utils import timezone
@@ -15,7 +17,7 @@ class AbstractPolygon(models.Model):
     # Spatial fields
     # Default CRS -> WGS84
     geom = models.PolygonField()
-    objects = models.GeoManager() # Required to conduct geographic queries
+    objects = GeoManager() # Required to conduct geographic queries
 
     def latlngList(self):
         return list(list(latlng)[::-1] for latlng in self.geom[0])
@@ -26,7 +28,7 @@ class AbstractPolygon(models.Model):
 class AlertArea(AbstractPolygon):
     """ Class that defines a polygon area of interest where the associated user receives push notifications, and alerts """
     email = models.EmailField(verbose_name="Current email")
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("user"))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("user"))
 
     # toString()
     def __unicode__(self):
@@ -45,7 +47,7 @@ class AdministrativeArea(models.Model):
     # Spatial fields
     # Default CRS -> WGS84
     geom = models.MultiPolygonField()
-    objects = models.GeoManager() # Required to conduct geographic queries
+    objects = GeoManager() # Required to conduct geographic queries
 
 
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name=_("users"), blank=True)

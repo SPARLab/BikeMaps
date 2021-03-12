@@ -35,7 +35,7 @@ urlpatterns = [
 	url(r'^terms_and_conditions/$', views.termsAndConditions, name='termsAndConditions'),
 
         # Disclaimer page
-        url(r'^disclaimer/$', views.disclaimer, name='disclaimer'),
+    url(r'^disclaimer/$', views.disclaimer, name='disclaimer'),
 	url(r'^recent/$', views.recentReports, name='recent'),
 	url(r'^vis/$', views.vis, name='vis'),
 	url(r'^vis/@(?P<lat>-?\d{1,3}\.\d*),(?P<lng>-?\d{1,3}\.\d*),(?P<zoom>\d+)z/?$', views.vis, name='vis'),

@@ -190,7 +190,7 @@ class Incident(Point):
 
     ############
     # FIELDS
-    point = models.OneToOneField(Point, parent_link=True)
+    point = models.OneToOneField(Point, on_delete=models.CASCADE, parent_link=True)
 
     i_type = models.CharField(
         _('What type of incident was it?'),

@@ -6,13 +6,15 @@ from .point import Point
 import datetime
 from time import strftime, gmtime
 from django.utils import timezone
+from django.db.models import Manager as GeoManager
+
 
 ##########
 # Official class.
 # Class for storing official data. Contains fields that official data should be modified to fit as best as possible.
 class Official(models.Model):
     geom = models.PointField(_('Location'))
-    objects = models.GeoManager() # Required to conduct geographic queries
+    objects = GeoManager() # Required to conduct geographic queries
 
     report_date = models.DateTimeField(
         auto_now_add=True   # Date is set automatically when object created

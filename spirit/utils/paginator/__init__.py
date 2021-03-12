@@ -1,7 +1,6 @@
 #-*- coding: utf-8 -*-
 
-import urllib.request, urllib.parse
-
+import urllib.parse
 
 def get_page_number(obj_number, per_page):
     if obj_number < per_page:
