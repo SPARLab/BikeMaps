@@ -1,24 +1,23 @@
-from django.utils.translation import ugettext as _
-from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
-from django.contrib import messages
 from django.conf import settings
-
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.views import LoginView
+from django.contrib import messages
+from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.decorators import login_required
-from ratelimit.decorators import ratelimit
+from django.contrib.auth.views import LoginView
 from django.forms.utils import ErrorList
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+from django.utils.translation import ugettext as _
+from ratelimit.decorators import ratelimit
 
 from .forms import MyUserCreationForm, UserProfileForm
 from .utils import ReCaptcha
 
-from django.contrib.auth import get_user_model
 User = get_user_model()
+import logging
+
 from django.views.decorators.clickjacking import xframe_options_exempt
 
-import logging
 logger = logging.getLogger(__name__)
 
 @ratelimit(key='post:username', rate='10/5m')
@@ -82,4 +81,9 @@ def profile(request):
     else:
         form = UserProfileForm(instance=user)
 
-    return render(request, "userApp/profile.html", {'user': user, 'form': form})
+    # check if social account
+    accounts = {}
+    for account in user.socialaccount_set.all().iterator():
+        providers = accounts.setdefault(account.provider, [])
+        providers.append(account)
+    return render(request, "userApp/profile.html", {'user': user, 'form': form, 'accounts': accounts})

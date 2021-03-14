@@ -8,10 +8,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
-from django.utils.translation import ugettext_lazy as _
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
+from django.utils.translation import ugettext_lazy as _
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 MIDDLEWARE = (
@@ -110,6 +111,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
     # userApp requirements
     'userApp',
@@ -197,7 +200,7 @@ PUSH_NOTIFICATIONS_SETTINGS = {
 
 REST_SESSION_LOGIN = False
 
-SITE_ID = 1
+SITE_ID = 2
 
 # Cross Origin Access Control
 CORS_ORIGIN_ALLOW_ALL = True
@@ -216,3 +219,20 @@ CORS_ALLOW_HEADERS = (
     'authorization',
     'X-CSRFToken'
 )
+
+AUTHENTICATION_BACKENDS = (
+ 'django.contrib.auth.backends.ModelBackend',
+ 'allauth.account.auth_backends.AuthenticationBackend',
+ )
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}

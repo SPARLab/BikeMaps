@@ -1,6 +1,6 @@
 {% extends 'mapApp/base.html' %}
 
-{% load static crispy_forms_tags i18n %}
+{% load static crispy_forms_tags i18n socialaccount  %}
 
 {% block headerCSS %}
   <link rel="stylesheet" href="{% static 'userApp/css/profile.css' %}">
@@ -18,13 +18,14 @@
 
   <div class="row">
     <div class="col-xs-12 col-md-8 col-md-offset-2">
-      <div class="form-group">
-        <label class='control-label'>{% trans "Password:" %}</label>
-        <a class="edit-link" href="{% url 'userApp:password_change' %}">
+      {% if not accounts.google %}
+        <div class="form-group">
+          <label class='control-label'>{% trans "Password:" %}</label>
+          <a class="edit-link" href="{% url 'userApp:password_change' %}">
           <span class="fa fa-edit"></span> {% trans "Change password" %}
-        </a>
-      </div>
-
+          </a>
+        </div>
+      {% endif %}
       <form method="post">
           {% csrf_token %}
           {{ form|crispy }}
