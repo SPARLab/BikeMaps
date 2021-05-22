@@ -19,7 +19,7 @@ class TheftForm(forms.ModelForm):
     helper.form_tag = False # removes auto-inclusion of form tag in template
     helper.disable_csrf = True
 
-        helper.layout = Layout(
+    helper.layout = Layout(
         Accordion(
             AccordionGroup(
                 _('Theft Details'),
