@@ -19,18 +19,18 @@ class TheftForm(forms.ModelForm):
     helper.form_tag = False # removes auto-inclusion of form tag in template
     helper.disable_csrf = True
 
-    helper.layout = Layout(
+        helper.layout = Layout(
         Accordion(
             AccordionGroup(
                 _('Theft Details'),
                 Field('geom', type='hidden', id='theftPoint'),
                 Field('date', id='theft_date', template='mapApp/util/%s_datepicker.html', autocomplete='off'),
                 Field('i_type', id='theft_i_type'),
-                Field('how_locked'),
-                Field('lock'),
-                Field('locked_to'),
-                Field('lighting'),
-                Field('traffic'),
+                Field('how_locked', id='theft_how_locked'),
+                Field('lock', id='theft_lock'),
+                Field('locked_to', id='theft_locked_to'),
+                Field('lighting', id='theft_lighting'),
+                Field('traffic', id='theft_traffic'),
                 Field('details', id='theft_details', placeholder=_('required')),
             ),
             AccordionGroup(
@@ -39,10 +39,10 @@ class TheftForm(forms.ModelForm):
                 Div( Div(HTML(why_personal_well), css_class="well"), css_class='why-personal collapse' ),
                 Field('source', id='theft_source'),
                 Field('regular_cyclist', id='theft_regular_cyclist'),
-                Field('police_report'),
-                Field('police_report_num'),
-                Field('insurance_claim'),
-                Field('insurance_claim_num'),
+                Field('police_report', id='theft_police_report'),
+                Field('police_report_num', id='theft_police_report_num'),
+                Field('insurance_claim', id='theft_insurance_claim'),
+                Field('insurance_claim_num', id='theft_insurance_claim_num'),
                 css_id='theft-personal-details',
             ),
         )
