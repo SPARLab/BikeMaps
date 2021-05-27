@@ -32,11 +32,11 @@ class HazardForm(forms.ModelForm):
                 _('Personal Details'),
                 HTML(why_personal_link),
                 Div( Div(HTML(why_personal_well), css_class="well"), css_class='why-personal collapse' ),
-                Field('source'),
-                Field('age'),
-                Field('birthmonth'),
-                Field('sex'),
-                Field('regular_cyclist'),
+                Field('source', id='hazard_source'),
+                Field('age', id='hazard_age'),
+                Field('birthmonth', id='hazard_birthmonth'),
+                Field('sex', id='hazard_sex'),
+                Field('regular_cyclist', id='hazard_regular_cyclist'),
                 css_id='hazard-personal-details',
             ),
         )
@@ -47,7 +47,7 @@ class HazardForm(forms.ModelForm):
         # run default, parent validation first
         valid = super(HazardForm, self).is_valid()
 
-        
+
 
         # check date to ensure incident occurred within the past 2 years and not in the future
         limit = datetime.timedelta(weeks=-52)
@@ -63,7 +63,7 @@ class HazardForm(forms.ModelForm):
                 self._errors['date'] = [_('Incidents must have occurred within the past year.')]
                 return False
         return valid
-        
+
 
     class Meta:
         model = Hazard
