@@ -28,7 +28,7 @@ hyperframe==3.2.0
 idna==2.5
 ipaddress==1.0.23
 Markdown==2.6.2
-markdown2==2.3.0
+markdown2==2.4.0
 user-agents==2.2.0
 django-user-agents==0.4.0
 oauthlib==2.0.2
