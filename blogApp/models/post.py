@@ -49,5 +49,8 @@ class Post(models.Model):
     def __unicode__(self):
         return str(self.title)
 
+    def __str__(self):
+        return str(self.title)
+
     class Meta:
         app_label = 'blogApp'
