@@ -2,8 +2,10 @@
 var collisions, nearmisses, hazards, thefts, newInfrastructures;
 
 //'159.203.2.12' for dev
+var localHostnames = ['127.0.0.1', 'localhost'];
 var srv = window.location.hostname;
-
+if (localHostnames.includes(srv))
+  srv = srv + ':' + window.location.port;
 loadIncidenLayerXHR("/nearmisses_tiny?format=json", "nearmiss", nearmisses);
 loadIncidenLayerXHR("/hazards_tiny?format=json", "hazard", hazards);
 loadIncidenLayerXHR("/thefts_tiny?format=json", "theft", thefts);
