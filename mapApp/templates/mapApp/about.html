@@ -30,11 +30,13 @@
                 <p>{% trans "Do you have questions, comments, or feedback about bikemaps.org? We would love to hear from you!" %}</p>
                 <p><a class="btn btn-primary btn-md" data-toggle="modal" data-target="#emailForm">{% trans "Contact us!" %}</a></p>
             </div>
-            <div class="col-xs-6">
-                <h1>{% trans "Download the Bikemaps Toolkit!" %}</h1>
-                <p>{% trans "Get the new Bikemaps toolkit with a variety of Bikemaps Factsheets" %}</p>
-                <p><a class="btn btn-primary btn-md" href="https://bikemaps.org/static/mapApp/data/toolkit.zip">{% trans "Download Toolkit Now" %}</a></p>
-            </div>
+            {% if currLangEnglish %}
+              <div class="col-xs-6">
+                  <h1>Download the Bikemaps Toolkit!</h1>
+                  <p>Get the new Bikemaps toolkit with a variety of Bikemaps Factsheets</p>
+                  <p><a class="btn btn-primary btn-md" href="https://bikemaps.org/static/mapApp/data/toolkit.zip">Download Toolkit Now</a></p>
+              </div>
+            {% endif %}
         </div>
         <div class="row">
 
