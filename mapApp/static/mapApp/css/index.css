@@ -212,3 +212,13 @@ span.date{
     font: 14px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
     color: #575757;
 }
+
+/* Make the leaflet popup close button larger and reset location */
+.leaflet-container a.leaflet-popup-close-button{
+	font: 28px/28px Tahoma, Verdana, sans-serif;
+  padding: 8px 28px 0px 0px;
+}
+
+.leaflet-popup-content{
+	margin: 28px 28px 15px 18px;
+}
