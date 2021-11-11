@@ -5,7 +5,7 @@ BikeMaps
 ### A [SPARLab](http://www.geog.uvic.ca/spar/) project.
 A database driven webapp that allows users to submit bike accidents and near-misses. Data is analyzed to detect areas/routes with high traffic and rates of incidents.
 
-##### Dependancies
+##### Dependencies
   + Python 2.7
   + Postgres 9.3 + PostGIS
   + psycopg2
@@ -15,7 +15,7 @@ A database driven webapp that allows users to submit bike accidents and near-mis
 The development settings require a Postgres database called "bikeDB" accessible by user "postgres" that is not password protected. Be sure to add the postGIS extension. From the terminal, run:
 ```
 createdb -U postgres bikeDB
-psql -U postgres -d bikeDB -c "CREATE EXTENSON postgis;"
+psql -U postgres -d bikeDB -c "CREATE EXTENSION postgis;"
 ```
 
 Syncing the tables from the Django app requires running
@@ -27,7 +27,7 @@ Syncing the tables from the Django app requires running
 A full list of required python packages can be found in requirements.txt and can be installed via pip
     `pip install -r requirements.txt`
 
-If all dependancies have been met, running `./manage.py runserver` should start the development server at 127.0.0.1:8000
+If all dependencies have been met, running `./manage.py runserver` should start the development server at 127.0.0.1:8000
 
 _Note: There are additional requirements for serving this application in a production setting, and the relevant Django documentation should be consulted in this scenario. This repo does not provide production settings for security reasons._
 
