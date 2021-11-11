@@ -206,3 +206,9 @@ span.date{
   width: 190px;
   padding: 5px 5px 10px 10px;
 }
+
+/* Increase font size on leaflet text */
+.leaflet-container{
+    font: 14px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+    color: #575757;
+}
