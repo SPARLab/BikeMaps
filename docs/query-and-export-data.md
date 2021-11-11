@@ -14,7 +14,7 @@ The query searches for any one of the following conditions:
 4. details contains a case-insensitive search for 'e-scooter', 'escooter', 'e-bike', or 'ebike'
 
 ### Querying for North American data
-I used bboxfinder.com to create a very rough rectangular bounding box around North America. This is an initial option and might need to be refined (for ex, box includes northern tip of South America). I used ST_Intersects to check if the point geom was within my bounding box as defined by ST_MakeEnvelope.
+I used <a href='https://geojson.io/'>geojson.io</a> to create a very rough rectangular bounding box around North America. This is an initial option and might need to be refined (for ex, box includes northern tip of South America). I used ST_Intersects to check if the point geom was within my bounding box as defined by ST_MakeEnvelope.
 
 ``` sql
 with incident_view as (SELECT * FROM "mapApp_incident" LEFT JOIN "mapApp_point" ON ("mapApp_incident".point_id = "mapApp_point".id))
