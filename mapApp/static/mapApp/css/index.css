@@ -209,7 +209,11 @@ span.date{
 }
 
 #legend-about{
-  padding: 5px 5px 0px 0px;
+  padding: 5px 0px 0px 0px;
+}
+
+.legend-group{
+  padding-bottom: 10px;
 }
 
 .legend-group-title{
