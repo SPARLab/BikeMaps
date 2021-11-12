@@ -197,13 +197,19 @@ span.date{
   padding-top: 15px;
 }
 
+/* Set max height for legend and enable scrolling */
+.leaflet-control-layers{
+  max-height: 80vh;
+  overflow: auto;
+}
+
 #legend-about{
-  width: 190px;
+  width: 300px;
   padding: 5px 5px 10px 10px;
 }
 
 #basemap-about{
-  width: 190px;
+  width: 300px;
   padding: 5px 5px 10px 10px;
 }
 

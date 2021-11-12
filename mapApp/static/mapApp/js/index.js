@@ -87,6 +87,10 @@ L.control.scale({
     position: 'bottomright'
 }).addTo(map);
 
+/* Turn off default mousewheel event (map zoom in / zoom out) when mouse is over the legend. This allows scrolling when contents overflow legend div */
+var elem = L.DomUtil.get('legend');
+L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
+
 // Add all points to map
 //collisions = geojsonMarker(collisions, "collision").addTo(incidentData).getLayers(),
 //nearmisses = geojsonMarker(nearmisses, "nearmiss").addTo(incidentData).getLayers(),
