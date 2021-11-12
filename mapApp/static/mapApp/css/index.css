@@ -199,17 +199,26 @@ span.date{
 
 /* Set max height for legend and enable scrolling */
 .leaflet-control-layers{
+  width: 290px;
   max-height: 80vh;
   overflow: auto;
 }
 
+.leaflet-control-layers-list{
+  padding-left: 10px;
+}
+
 #legend-about{
-  width: 300px;
-  padding: 5px 5px 10px 10px;
+  padding: 5px 5px 0px 0px;
+}
+
+.legend-group-title{
+  font-weight: bold;
+  font-size: 18px;
+  color: #575757;
 }
 
 #basemap-about{
-  width: 300px;
   padding: 5px 5px 10px 10px;
 }
 
