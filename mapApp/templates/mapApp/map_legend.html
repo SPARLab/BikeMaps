@@ -10,21 +10,21 @@
         <div class="leaflet-control-layers-overlays">
 
           <span class="hidden-xs hidden-sm">
-            <div id="legend-about" data-toggle="collapse" data-target="#collapseAbout" class="legend-group-title">
+            <div id="legend-about" data-toggle="collapse" data-target="#collapseAbout" class="legend-group-title" aria-expanded="true">
             {% trans "About" %}
             {# Translators: This string contains a marker icon and a link to the about page from the text "more info". Please preserve these #}
             {% url 'mapApp:about' as about-link %}
             </div>
-            <div class="collapse" id="collapseAbout">
+            <div class="collapse in" id="collapseAbout">
             {% blocktrans %}BikeMaps.org is a crowdsource tool for global mapping of cycling safety. Using the <span class="marker-icon"></span> button, add your own data on cycling crashes, near-misses, hazards, and thefts. <a href="{{ about-link }}">More info</a>{% endblocktrans %}
             </div>
           </span>
 
           <div data-toggle="collapse" data-target="#collapseLayers" class="legend-group-title">Layers</div>
-            <div class="legend-group" class="collapse" id="collapseLayers" >
+            <div class="legend-group" class="collapse in" id="collapseLayers" aria-expanded="true">
             <input class="layer-toggle" type="checkbox" value="incidentData" checked>
             {% trans "Incidents" %}
-            <div class="marker-group legend-subtext collapse in">
+            <div class="marker-group legend-subtext">
               <input type="checkbox" id="collisionCheckbox" checked> <i class="collision fa fa-bicycle"></i><small> {% trans "Citizen collision report" %}</small><br>
               <input type="checkbox" id="nearmissCheckbox" checked> <i class="nearmiss fa fa-bicycle"></i><small> {% trans "Citizen near miss report" %}</small><br>
               <input type="checkbox" id="hazardCheckbox"checked> <i class="hazard fa fa-warning"></i><small> {% trans "Cyclist hazard" %}</small><br>
@@ -65,8 +65,8 @@
 
       </div>
 
-        <div data-toggle="collapse" data-target="#collapseAttrib" class="legend-group-title">Attribution</div>
-        <div class="collapse" id="collapseAttrib">
+        <div data-toggle="collapse" data-target="#collapseAttrib" aria-expanded="true" class="legend-group-title">Attribution</div>
+        <div class="collapse in" id="collapseAttrib">
           <div id="basemap-about">
               {% blocktrans %}Basemap by <a href="https://www.cyclosm.org/">CyclOSM.</a> Report and fix infrastructure data issues on <a href="https://www.openstreetmap.org/fixthemap">OpenStreetMap.</a> {% endblocktrans %}
           </div>
