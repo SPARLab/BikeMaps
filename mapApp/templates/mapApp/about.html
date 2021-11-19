@@ -61,19 +61,13 @@
                 <p><strong>{% blocktrans %}I clicked submit, but noticed that my pin isn't in the right location. How can I fix it?{% endblocktrans %}</strong>
                     <br>{% blocktrans %}Email us at <a href="mailto:info@bikemaps.org">info@bikemaps.org</a> with details about the time and location of your report and we will move it.{% endblocktrans %}</p>
 
-                <p><strong>{% trans "Where do you get the rider volume data?" %}</strong>
-                    <br>{% trans "The data on where cyclists are riding has been provided by Strava." %}</p>
-
-                <p><strong>{% trans "Isn’t Strava data only where recreational cyclists are riding?" %}</strong>
-                    <br>{% blocktrans with percent="%" %}Strava labs estimates that 40{{percent}} of its rider data are commuter traffic, though this likely varies by region.{% endblocktrans %}</p>
-
-                <p><strong>{% trans "Do you have an App?" %}</strong>
-                    <br>
-                    {% blocktrans with '<a href="https://itunes.apple.com/us/app/bikemaps.org/id1011546537?mt=8&ign-mpt=uo%3D4">' as app_store_link and '<a href="https://play.google.com/store/apps/details?id=com.bikemaps.sparlab">' as play_store_link and '</a>' as link_end %}Yes! We have both an {{app_store_link}}iOS app{{link_end}} and an {{play_store_link}}Android app{{link_end}}.{% endblocktrans %}</p>
-
                 <p><strong>{% trans "Do you have a video tutorial?" %}</strong>
                     <br>
                     {% blocktrans %}Yes! Here’s a <a href="https://www.youtube.com/watch?v=a_gn3k4uoAo">link to a video</a> that one of our followers made.{% endblocktrans %}</p>
+
+                <p><strong>{% trans "Why does the Strava heat map disappear when I zoom in?" %}</strong>
+                    <br>{% blocktrans %}Strava restricts street-level heat maps due to privacy and security concerns. If you are a registered Strava user, you can explore the heat maps here:
+                    strava.com/heatmap.{% endblocktrans %}</p>
 
                 <p><strong>{% trans "How can I get involved?" %}</strong>
                     <br>{% trans "You can share the website on social media, host a mapping demo night, or volunteer to do GIS or development. If you own a bike store or small business, you can advertise BikeMaps.org. We are also on the lookout for more research funding to further develop the technology and expand the study. Or, perhaps your group has GIS data that may improve BikeMaps.org." %}</p>
