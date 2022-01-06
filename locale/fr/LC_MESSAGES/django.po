@@ -3,13 +3,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0\n"
+"X-Generator: POEditor.com\n"
 "Project-Id-Version: BikeMaps.org\n"
 "Language: fr\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
 
 #: .\VicBikeMap\settings\base.py:46
 msgid "English"
@@ -1144,8 +1140,7 @@ msgid "Citizen Based Web-Mapping of Bike Collisions and Near Misses (BikeMaps.or
 msgstr "Cartographie en ligne des collisions et des quasi-collisions fondée sur la rétroaction du public (BikeMaps.org)"
 
 #: .\mapApp\templates\mapApp\ethics.html:14
-msgid ""
-"<p>As part of a UVic research project, we are interested in obtaining information regarding your cycling experiences. In particular we would like to know about any incidents that you have had. The data collected is completely anonymous. The survey should take approximately 5 minutes.</p>\n"
+msgid "<p>As part of a UVic research project, we are interested in obtaining information regarding your cycling experiences. In particular we would like to know about any incidents that you have had. The data collected is completely anonymous. The survey should take approximately 5 minutes.</p>\n"
 "\n"
 "\t\t<p>By adding a geographic marker onto this website and answering questions, you are consenting to participate in a study conducted by researchers from the Spatial Pattern Analysis and Research (SPAR) Lab in the Department of Geography at the University of Victoria. All information gathered will be completely anonymous. Volunteers must be 13 years of age or older to participate. Parents or guardians may log the details for participants under the age of 13. Please be advised that once a volunteer participant has submitted their survey, it is impossible to withdraw this data at a later date given that it is fully anonymous. Also, the data may be used in additional future studies. Please be aware that data provided in this study could be linked to data collected in other studies (for e.g., hospital ER intake surveys).</p>\n"
 "\n"
@@ -1154,8 +1149,7 @@ msgid ""
 "\t\t<p>Funding for this research project has been provided by NSERC Engage and Mitacs grants to Dr. Trisalyn Nelson. Other project partners providing in kind support include: the Captial Regional District (CRD); Pedalheads; KidicalMassyyj; the Canadian Automobile Association; Bunt and Associates; Strava.com; and the Traffic Injury Research Foundation (TIRF). If you have any questions regarding this research, please contact Dr. Trisalyn Nelson, <a href=\"mailto:trisalyn@uvic.ca\">trisalyn@uvic.ca</a>.</p>\n"
 "\n"
 "\t\t<p>In addition, you may verify the ethical approval of this study, or raise any concerns you might have, by contacting the Human Research Ethics Office at the University of Victoria (<a href=\"tel:+12504724545\">250-472-4545</a> or <a href=\"mailto:ethics@uvic.ca\">ethics@uvic.ca</a>).</p>"
-msgstr ""
-"<p>Dans le cadre d’un projet de recherche de l’Université de Victoria, nous souhaitons obtenir des renseignements sur votre expérience cycliste, particulièrement sur les incidents que vous avez vécus. Les données recueillies sont totalement anonymes. Il vous faudra environ cinq minutes pour répondre au questionnaire.</p>\n"
+msgstr "<p>Dans le cadre d’un projet de recherche de l’Université de Victoria, nous souhaitons obtenir des renseignements sur votre expérience cycliste, particulièrement sur les incidents que vous avez vécus. Les données recueillies sont totalement anonymes. Il vous faudra environ cinq minutes pour répondre au questionnaire.</p>\n"
 "\n"
 "<p>En ajoutant un marqueur géographique au site Web et en répondant aux questions, vous consentez à participer à une étude réalisée par des chercheurs du Spatial Pattern Analysis and Research (SPAR) Lab du département de géographie de l’Université de Victoria. Tous les renseignements recueillis resteront totalement anonymes. Les volontaires doivent avoir 13 ans ou plus pour participer. Un parent ou un tuteur peut entrer les renseignements pour un participant âgé de moins de 13 ans. Veuillez noter qu’une fois qu’un participant a soumis ses réponses, il est impossible de les retirer, puisque le questionnaire est entièrement anonyme. Il est aussi possible que les données soient utilisées dans de futures études ou jointes aux données d’une autre étude (p. ex., sondage sur les visites à l’urgence d’un hôpital).</p>\n"
 "\n"
@@ -1874,45 +1868,59 @@ msgstr "Aucun signalement cette semaine"
 msgid "Contact us!"
 msgstr "Communiquez avec nous!"
 
+#:
 msgid "Collision with stationary object or vehicle"
 msgstr "Collision avec un objet fixe ou un véhicule immobilisé"
 
+#:
 msgid "Collision with moving object or vehicle"
 msgstr "Collision avec un objet mobile ou un véhicule en mouvement"
 
+#:
 msgid "Near collision with stationary object or vehicle"
 msgstr "Quasi-collision avec un objet fixe ou un véhicule immobilisé"
 
+#:
 msgid "Near collision with moving object or vehicle"
 msgstr "Quasi-collision avec un objet mobile ou un véhicule en mouvement"
 
+#:
 msgid "Vehicle, head on"
 msgstr "Véhicule, collision frontale"
 
+#:
 msgid "Vehicle, angle"
 msgstr "Véhicule, collision latérale avec angle d’impact"
 
+#:
 msgid "Vehicle, side"
 msgstr "Véhicule, collision latérale"
 
+#:
 msgid "Vehicle, rear end"
 msgstr "Véhicule, collision arrière"
 
+#:
 msgid "Vehicle, open door"
 msgstr "Véhicule, portière ouverte"
 
+#:
 msgid "Major bike component"
 msgstr "Pièce importante du vélo"
 
+#:
 msgid "Minor bike componen'"
 msgstr "Pièce accessoire du vélo"
 
+#:
 msgid "Other infrastructure"
 msgstr "Autre infrastructure"
 
+#:
 msgid "Broken glass"
 msgstr "Verre brisé"
 
+#:
 msgid "Wet leaves"
 msgstr "Feuilles mouillées"
 
@@ -2028,6 +2036,7 @@ msgstr "Dangereux virage à gauche de véhicules"
 msgid "Sensor does not pick up bikes"
 msgstr "Le capteur ne détecte pas les vélos"
 
+#:
 msgid "Steep hill – bike speed affected"
 msgstr "Pente abrupte qui affecte la vitesse du vélo"
 
@@ -2043,6 +2052,7 @@ msgstr "Zone de conflit avec les pétons"
 msgid "Icy/Snowy"
 msgstr "Glacées ou enneigées"
 
+#:
 msgid "Gravel , rocks or debris on road/path"
 msgstr "Gravier, roches ou débris sur la route ou le sentier"
 
@@ -2050,9 +2060,11 @@ msgstr "Gravier, roches ou débris sur la route ou le sentier"
 msgid "Construction"
 msgstr "Construction"
 
+#:
 msgid "What sort of object did you collide with?"
 msgstr "Avec quelle sorte d’objet êtes-vous entré(e) en collision?"
 
+#:
 msgid "What sort of object did you nearly collide with?"
 msgstr "Avec quelle sorte d’objet êtes-vous entré(e) en quasi-collision?"
 
@@ -2173,163 +2185,260 @@ msgstr "À titre de vice-président, Finance et administration, de la Traffic In
 msgid "Alumni, Developer"
 msgstr "Ancien étudiant, développeur"
 
+#:
 #, fuzzy
 msgid "<a href=\"(disclaimer-link)s\" target=\"_blank \">Disclaimer</a>"
 msgstr "<a href=\"(disclaimer-link)s\" target=\"_blank \">Avertissement</a>"
 
+#:
 msgid "Disclaimer"
 msgstr "Clause de non-responsabilité"
 
+#:
 msgid "<p>BikeMaps.org makes no representations, express or implied, as to the accuracy, completeness and timeliness of the information, maps, and data contained herein. Conclusions drawn or decisions made from the information provided on BikeMaps.org are the responsibility of the user. BikeMaps.org assumes no responsibility for its use.</p>"
 msgstr ""
 
+#:
 msgid "<a href=\"http://127.0.0.1:8000/fr\">Francais</a>"
 msgstr "<a href=\"http://127.0.0.1:8000\">English</a>"
 
+#:
 msgid "<a href=\"https://bikemaps.org/fr\">Francais</a>"
 msgstr "<a href=\"https://bikemaps.org/\">English</a>"
 
+#:
 msgid "BikeMaps.org"
 msgstr "Les cartes"
 
+#:
 msgid "Only ~30%% of bike collision data are collected and there is no centralized reporting system. BikeMaps.org is a unique tool that let's citizens build a database by mapping their riding experience."
 msgstr "Seulement environ 30% des données sur les collisions de vélo sont recueillies, et il n’existe aucun système de signalement centralisé. BikeMaps.org est un outil unique qui permet aux membres du public de bâtir une base de données en cartographiant leur expérience."
 
+#:
 msgid "I clicked submit, but noticed that my pin isn't in the right location. How can I fix it?"
 msgstr "J’ai cliqué sur Soumettre, mais mon épingle n’est pas au bon endroit. Comment puis-je corriger cela?"
 
+#:
 msgid "Email us at <a href=\"mailto:info@bikemaps.org\">info@bikemaps.org</a> with details about the time and location of your report and we will move it."
 msgstr "Écrivez-nous à l’adresse <a href=\"mailto:info@bikemaps.org\">info@bikemaps.org</a> en précisant l’heure et l’emplacement de votre signalement. Nous déplacerons l’épingle pour vous."
 
+#:
 msgid "Password"
 msgstr "Mot de passe"
 
+#:
 msgid "Français"
 msgstr "English"
 
+#:
 msgid "<a href=\"https://bikemaps.org/fr\">Français</a>"
 msgstr "<a href=\"https://bikemaps.org/\">English</a>"
 
+#:
 msgid "TIRF - Research Associate and Research Coordinator"
 msgstr "Associée de recherche et Coordonnatrice de la recherche - TIRF"
 
+#:
 msgid "Shawna Meister is a Research Associate and the Research Coordinator at the Traffic Injury Research Foundation. She has been a project manager for different projects and conducts both qualitative and quantitative research on various road safety issues in Canada and the United States. Shawna is also an avid cyclist and all-around active enthusiast, enjoying running, skiing, swimming, and various other sports. She sees BikeMaps.org as a fantastic way to encourage more cycling and healthy living."
 msgstr "Shawna Meister est une associée de recherche et la coordonnatrice de la recherche à la Fondation de recherches sur les blessures de la route (Traffic Injury Research Foundation). Elle était chef de projet pour les projets différents et mène à la fois la recherche qualitative et quantitative sur diverses questions de sécurité routière au Canada et aux États-Unis. Shawna est une cycliste passionnée aussi bien qu’elle aime faire divers autres sports comme la course à pied, la natation, et le ski. Elle voit BikeMaps.org comme un moyen fantastique pour encourager le cyclisme et la vie saine."
 
+#:
 msgid "Alumni"
 msgstr "Ancien étudiant"
 
+#:
 msgid "Ben was BikeMaps.org’s first graduate student and was instrumental in the successful outreach in the early days of BikeMaps.org. For his MSc research, Ben compared ridership data collected manually to those using crowdsourced apps such as Strava <a href='http://bit.ly/2af2Cpc' target='_blank'>(http://bit.ly/2af2Cpc)</a>. Ben’s research also used data collected on BikeMaps.org to study incidents at multiuse trail and road intersections."
 msgstr "Ben a été le premier étudiant diplômé de BikeMaps.org et a joué un rôle dans la sensibilisation réussie dans les premiers jours de BikeMaps.org. Pour ses recherches de sa maîtrise en sciences, Ben a comparé les données de compter manuelle les cyclistes à ceux qui sont produits par des applications mobiles qui emploient un système de localisation GPS tels que Strava <a href='http://bit.ly/2af2Cpc' target='_blank'>(http://bit.ly/2af2Cpc)</a>. La recherche de Ben a également utilisé les données recueillies sur BikeMaps.org pour étudier les incidents aux intersections des sentiers à usages multiples."
 
+#:
 msgid "Founder of BikeMaps.org"
 msgstr "Fondatrice – BikeMaps.org"
 
+#:
 msgid "Trisalyn founded BikeMaps.org while heading the Spatial Pattern Analysis and Research (SPAR) Lab in the Department of Geography at the University of Victoria. Now, at Arizona State University, she is the Director of the School of Geographical Sciences and Urban Planning. As a mom and an avid cyclist, Trisalyn sees BikeMaps.org contributing to even safer cycling conditions, which will ultimately lead to more people biking."
 msgstr "Trisalyn a créé BikeMaps.org tandis qu'elle était la Directrice du Laboratoire SPAR (un laboratoire de recherche et d'analyse des tendances spatiales) dans le département de géographie de l'Université de Victoria. Maintenant, à l'Université Arizona State, elle est la Directrice de l'École des Sciences Géographiques et de la Planification Urbaine. En tant que mère et une cycliste passionnée, Trisalyn voit BikeMaps.org contribuer à des conditions de vélo encore plus sûres, ce qui finira d'encourager plus de gens à faire du vélo."
 
+#:
 msgid "Executive Director"
 msgstr "Directrice exécutive"
 
+#:
 msgid "Karen has been part of the BikeMaps.org team since the project began in 2014. She has managed many aspects of the project and has been heavily involved in community outreach and engagement. Prior to the creation of BikeMaps.org, Karen worked at SPAR Lab on a wide variety of research projects. In her personal life, Karen has gained considerable experience volunteering on numerous boards that support amateur sports or community initiatives. In addition to being mom to a bike-crazy family, Karen can be found running the trails around Victoria."
 msgstr "Karen a fait partie de l'équipe BikeMaps.org depuis le début du projet en 2014. Elle a géré de nombreux aspects du projet et a été impliquée dans la sensibilisation et l'engagement communautaire . Avant la création de BikeMaps.org, Karen travaillait à SPAR Lab sur un large éventail de projets de recherche . Dans sa vie personnelle , Karen a acquis beaucoup d'expérience comme bénévole au sein de nombreux conseils qui soutiennent le sport amateur ou des initiatives communautaires . Mère d'une famille fanatique du vélo, Karen court souvent dans les sentiers de Victoria."
 
+#:
 msgid "A graduate of the Geomatics program at the University of Victoria, Taylor is the developer behind the BikeMaps website. Taylor now works at the Hakai Institute in Victoria."
 msgstr "Diplômé en géomatique de l’Université de Victoria, Taylor est le développeur qui a créé le site Web de BikeMaps.org. Taylor travail maintenant pour l’Institut Hakai (Victoria)."
 
+#:
 msgid "Incidents must have occurred within the past two years."
 msgstr ""
 
+#:
 msgid "Incidents must have occurred within the past year."
 msgstr ""
 
+#:
 msgid "Poor visibility (fog, snow, smoke etc.)"
 msgstr "Visibilité réduite (brouillard, neigeux, enfumé)"
 
+#:
 msgid "On a cycle only path"
 msgstr "Sur une piste cyclable (uniquement)"
 
+#:
 msgid "On a multi-use path"
 msgstr "Sur un sentier polyvalent"
 
+#:
 msgid "On a sidewalk"
 msgstr "Sur le trottoir"
 
+#:
 msgid "On a local street bikeway (bike route)"
 msgstr "Sur une voie cyclable peinte"
 
+#:
 msgid "On a street with no bicycle facility"
 msgstr "Sur une rue sans voie cyclable"
 
+#:
 msgid "On a cycle track (separated bike lane)"
 msgstr "Sur une voie cyclable séparée"
 
+#:
 msgid "Off-Street"
 msgstr "Ailleurs que dans la rue"
 
+#:
 msgid "Where did you first find out about BikeMaps.org?"
 msgstr "Comment avez-vous découvert BikeMaps.org?"
 
+#:
 msgid "Directly from the BikeMaps.org team"
 msgstr "Directement à partir de l'équipe BikeMaps.org"
 
+#:
 msgid "BikeMaps.org swag (e.g., seat cover, water bottle, etc.) without meeting the team"
 msgstr "Reçu un objet publicitaire (par ex.: bouteille d’eau) sans rencontrer l’équipe"
 
+#:
 msgid "Traditional media (newspaper, TV, radio)"
 msgstr "Les médias traditionnels (journal, télé, radio)"
 
+#:
 msgid "Link from another website"
 msgstr "Lien depuis un autre site"
 
+#:
 msgid "Word of mouth"
 msgstr "Bouche à Oreille"
 
+#:
 msgid "Social media (e.g., Twitter, Instagram, Facebook)"
 msgstr "Médias sociaux (par ex.:Twitter, Facebook, Instagram)"
 
+#:
 msgid "What type of bicycle were you riding?"
 msgstr "Quel type de vélo avez-vous roulez?"
 
+#:
 msgid "Personal (my own bicycle or a friend's)"
 msgstr "Personnel (mon propre vélo ou d’un ami)"
 
+#:
 msgid "Bike Share"
 msgstr "Vélopartage"
 
+#:
 #, fuzzy
 msgid "Bike Rental"
 msgstr "Location de vélo"
 
+#:
 msgid "Did the incident involve a pedal-assist electric bike (eBike)?"
 msgstr "Est-ce que l'incident impliquait un vélo à l'assistance électrique (eBike)?"
 
+#:
 msgid "Were you directly involved in the incident?"
 msgstr "Étiez-vous directement impliqués dans cet incident?"
 
+#:
 msgid "Yes, this happened to me"
 msgstr "Oui, cela m'est arrivé"
 
+#:
 msgid "No, I witnessed this happen to someone else"
 msgstr "Non, j'ai été témoin seulement"
 
+#:
 msgid "Bike share"
 msgstr "Vélopartage"
 
+#:
 msgid "Bike rental"
 msgstr "Location de vélo"
 
+#:
 msgid "TIRF - Chief Operating Officer"
 msgstr "Chef de l'exploitation"
 
+#:
 msgid "Do you have a video tutorial?"
 msgstr "Avez-vous un didacticiel vidéo?"
 
+#:
 msgid "Yes! Here’s a %(bikemaps_video_link)slink to a video%(link_end)s that one of our followers made."
 msgstr "Oui oui!"
 
+#:
 msgid "Yes! Here’s a <a href=\"https://www.youtube.com/watch?v=a_gn3k4uoAo\">link to a video</a> that one of our followers made."
 msgstr "Oui! Voici <a href=\"https://www.youtube.com/watch?v=mbdMqBc64z0\">un lien vers une vidéo</a> que l'un de nos adeptes a faite."
 
+#:
 msgid "Partners"
 msgstr "Partenaires"
+
+#:
+msgid "Dr. Heather Woods-Fry is a Research Associate with the Traffic Injury Research Foundation. Heather serves as a coordinator for the collection of qualitative BikeMaps.org data, and is responsible for analyzing the qualitative data as part of the evaluation of the BikeMaps.org Public Health Agency of Canada research project. Heather believes in living a balanced and active lifestyle, and feels that the accessibility of tools such as BikeMaps.org is essential to promote safe cycling for all Canadians."
+msgstr "Heather sert de coordonnatrice pour la collecte de données qualitatives BikeMaps.org et est responsable de l'analyse des données qualitatives dans le cadre de l'évaluation du projet de recherche BikeMaps.org de l'Agence de la santé publique du Canada. Heather croit en un style de vie équilibré et actif et estime que l'accessibilité d'outils tels que BikeMaps.org est essentielle pour promouvoir un cyclisme sécurisé pour tous les Canadiens."
+
+#:
+msgid "Dr. Marisela Mainegra Hing is a research scientist with the Traffic Injury Research Foundation and she is involved in the outreach, data collection and data analysis aspects of the BikeMaps.org Public Health Agency of Canada research project. She is happy to be contributing to BikeMaps.org as a means to make cycling safer and more accessible for all Canadians."
+msgstr "Elle participe aux aspects de la sensibilisation, de la collecte de données et de l'analyse de données du projet de recherche BikeMaps.org, financé par l'Agence de la santé publique du Canada. Elle est heureuse de contribuer à BikeMaps.org afin de rendre le cyclisme plus sûr et plus accessible pour tous les Canadiens."
+
+#:
+msgid "TIRF - Research Scientist"
+msgstr "Chercheuse"
+
+#:
+msgid "TIRF - Research Associate"
+msgstr "Associé de Recherche"
+
+#:
+msgid "A graduate of the Geomatics program at the University of Victoria, Taylor is the developer behind the BikeMaps website. Taylor went on to earn a Master of Mathematics in Computer Science at the University of Waterloo. He is now working at the Hakai Institute where he is creating image classification tools for drone and fixed wing imagery along with various other tools for geospatial applications."
+msgstr "Diplômé du programme de géomatique de l'Université de Victoria, Taylor est le développeur du site web BikeMaps. Taylor a obtenu une maîtrise en mathématiques de l’informatique à l'Université de Waterloo. Il travaille maintenant à l'Institut Hakai où il crée des outils de classification d’images captée par des drones et des appareils à voilures fixes ainsi que divers autres outils pour des applications géospatiales."
+
+#:
+msgid "Colin uses traditional and emerging geographic data to better understand people and their environments. A long-time city and mountain biker, Colin is happy to be part of the BikeMaps.org team as a developer and researcher because it combines his favorite things: maps, apps, people, and bikes!"
+msgstr "Colin utilise des données géographiques traditionnelles et émergentes pour mieux comprendre les gens et leur environnement. Cycliste depuis toujours, en ville comme en montagne, Colin est heureux de faire partie de l'équipe BikeMaps.org en tant que développeur et chercheur; le rôle lui permet de toucher à tout ce qu’il aime le plus : des cartes, des applis, les gens et des vélos!"
+
+#:
+msgid "Michael is currently a Post Doctoral Researcher in the Department of Medicine at the University of British Columbia. As a part of his PhD, Michael used data collected on BikeMaps.org to investigate the link between active transport, health and safety. Michael is looking forward to leveraging the power of crowd-sourced data in order to better understand cycling safety."
+msgstr "Michael est actuellement chercheur postdoctoral au Département de médecine de l'Université de la Colombie-Britannique. Dans le cadre de son doctorat, Michael a utilisé les données collectées sur BikeMaps.org pour étudier le lien entre le transport actif, la santé et la sécurité. Michael souhaite utiliser des données générées par production participative comme levier pour mieux comprendre la sécurité à vélo."
+
+#:
+msgid "Jeneva has an M.Sc. in Urban Analytics from the University of Glasgow, and a Bachelor of Arts and Science from Quest University Canada. Her past research has focused on a range of topics related to active transportation: including the optimization of distance-based transit fares and a user-based incentive approach to rebalancing station-based bike-sharing systems. Jeneva is a former Canadian National Wushu (Chinese martials arts) Team member and enjoys spending time doing anything active."
+msgstr "Jeneva détient une maitrise en analyse urbaine de l'Université de Glasgow et un baccalauréat ès arts et sciences de l'Université Quest Canada. Ses travaux antérieurs ont porté sur une gamme de sujets liés au transport actif, notamment l'optimisation des tarifs de transport en commun en fonction de la distance et le développement d’une approche qui incite les utilisateurs à participer au rééquilibrage des flottes pour le vélopartage en station. Jeneva est une ancienne membre de l'équipe nationale canadienne de Wushu (arts martiaux chinois) et aime tout ce qui lui permet de rester active."
+
+#:
+msgid "Why does the Strava heat map disappear when I zoom in?"
+msgstr "Pourquoi la carte de densité Strava disparaît-elle lorsque j'agrandis la carte?"
+
+#:
+msgid "Strava restricts street-level heat maps due to privacy and security concerns. If you are a registered Strava user, you can explore the heat maps here: strava.com/heatmap."
+msgstr "Strava limite l’accès aux cartes de densité au niveau de la rue en raison d’enjeux de confidentialité et de sécurité. Si vous êtes un utilisateur(trice) Strava enregistré(e), vous pouvez explorer les cartes de densité ici : strava.com/heatmap."
+
+#:
+msgid "Research Assistant - SFU"
+msgstr "Assistante de recherche - SFU"
