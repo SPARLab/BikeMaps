@@ -199,7 +199,7 @@ span.date{
 
 /* Set max height for legend and enable scrolling */
 .leaflet-control-layers{
-  width: 290px;
+  max-width: 290px;
   max-height: 80vh;
   overflow: auto;
 }
