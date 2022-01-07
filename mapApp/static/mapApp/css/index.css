@@ -222,21 +222,6 @@ span.date{
   color: #575757;
 }
 
-.legend-group-title:after {
-    /* symbol for "opening" panels */
-    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
-    font-size: 16px;
-    content: "\e114";    /* adjust as needed, taken from bootstrap.css */
-    padding-right: 10px;
-    float: right;
-}
-
-.legend-group-title.collapsed:after {
-    /* symbol for "collapsed" panels */
-    content: "\e113";    /* adjust as needed, taken from bootstrap.css */
-
-}
-
 #basemap-about{
   padding: 5px 5px 10px 10px;
 }
