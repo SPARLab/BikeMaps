@@ -2448,7 +2448,7 @@ msgid "Language"
 msgstr "Langue"
 
 #:
-msgid "Darren completed his MSc in the SPAR lab in 2017. He continues his involvement with BikeMaps and MobilityAccess.org, maintaining the websites and mobile apps. When not coding away, Darren enjoys mountain biking, skiing and hiking."
+msgid "Darren completed his MSc in the SPAR lab at UVic in 2017. He continues his involvement with BikeMaps and is the lead developer for WalkRollMap.org. When not coding away, Darren enjoys mountain biking, skiing and hiking."
 msgstr "Darren a terminé sa maîtrise au sein du laboratoire SPAR en 2017. Il poursuit son implication avec BikeMaps et onmarcheonroule.org en veillant à la maintenance des sites web et les applications mobiles. Lorsqu'il n’est pas en train de coder, Darren fait du vélo de montagne, du ski et de la randonnée."
 
 #:
