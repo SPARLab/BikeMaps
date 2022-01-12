@@ -56,10 +56,11 @@
        {% endif %}
         <li>{% blocktrans %}<a href="https://bikemaps.org/fr">Français</a>{% endblocktrans %}</li>
         <li>{% blocktrans %}<a href="https://bikemaps.org/is">Íslenska</a>{% endblocktrans %}</li>
+
         {% if LANGUAGE_CODE == 'fr' %}
-          <li><a href="https://onmarcheonroule.org/" class="navbar-icon" style="height:35px; margin-right:0px"><img src="{% static 'mapApp/images/WalkRollMap_FRE_RGB_300dpi.png' %}"></a></li>
+          <li><a href="https://onmarcheonroule.org/" class="navbar-icon" style="height:35px; margin-right:0px"><img src="{% static 'mapApp/images/WalkRollMapLogo.png' %}"></a></li>
         {% else %}
-          <li><a href="https://walkrollmap.org/" class="navbar-icon" style="height:35px; margin-right:0px"><img src="{% static 'mapApp/images/WalkRollMap_ENG_RGB_300dpi.png' %}"></a></li>
+          <li><a href="https://walkrollmap.org/" class="navbar-icon" style="height:35px; margin-right:0px"><img src="{% static 'mapApp/images/WalkRollMapLogo.png' %}"></a></li>
 
         {% endif %}
 
