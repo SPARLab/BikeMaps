@@ -4,6 +4,11 @@ var collisions, nearmisses, hazards, thefts, newInfrastructures;
 //'159.203.2.12' for dev
 var srv = window.location.hostname;
 
+// If running locally, include port in API requests
+if (window.location.port) {
+  srv = srv + ':' + window.location.port;
+}
+
 loadIncidenLayerXHR("/nearmisses_tiny?format=json", "nearmiss", nearmisses);
 loadIncidenLayerXHR("/hazards_tiny?format=json", "hazard", hazards);
 loadIncidenLayerXHR("/thefts_tiny?format=json", "theft", thefts);
