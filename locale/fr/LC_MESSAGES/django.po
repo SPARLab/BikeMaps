@@ -2442,3 +2442,35 @@ msgstr "Strava limite l’accès aux cartes de densité au niveau de la rue en r
 #:
 msgid "Research Assistant - SFU"
 msgstr "Assistante de recherche - SFU"
+
+#:
+msgid "Language"
+msgstr "Langue"
+
+#:
+msgid "Darren completed his MSc in the SPAR lab in 2017. He continues his involvement with BikeMaps and MobilityAccess.org, maintaining the websites and mobile apps. When not coding away, Darren enjoys mountain biking, skiing and hiking."
+msgstr "Darren a terminé sa maîtrise au sein du laboratoire SPAR en 2017. Il poursuit son implication avec BikeMaps et onmarcheonroule.org en veillant à la maintenance des sites web et les applications mobiles. Lorsqu'il n’est pas en train de coder, Darren fait du vélo de montagne, du ski et de la randonnée."
+
+#:
+msgid "Meghan Winters is a Professor in the Faculty of Health Sciences at Simon Fraser University, and a Michael Smith Foundation for Health Research Scholar. Her research focuses on ways that cities and their infrastructure can play a role in promoting healthy and safe transportation, for people of all ages and abilities. She is happiest when working in close collaboration with cities and stakeholders to conduct research and create tools that address real-world challenges."
+msgstr "Meghan Winters est professeure à la Faculté des sciences de la santé de l'Université Simon Fraser et chercheuse à la Fondation Michael-Smith pour la recherche en santé. Ses travaux portent sur les façons dont les villes et leurs infrastructures peuvent jouer un rôle dans la promotion du transport sain et sécuritaire pour tous, quels que soient l’âge et les capacités. Elle trouve son bonheur en travaillant en étroite collaboration avec les villes et les parties prenantes pour mener des recherches et développer des outils qui s’attaquent aux problèmes concrets."
+
+#:
+msgid "Trisalyn is the founder of BikeMaps.org. She is a geography professor at University California Santa Barbara and the Jack and Laura Dangermond Chair of Geography. She is also adjunct faculty at the University of Victoria. As a mom, avid cyclist, and data scientist, Trisalyn's vision for BikeMaps.org is to make bicycling more accessible to more people by improving data for decision making."
+msgstr "Trisalyn est la fondatrice de BikeMaps.org. Elle est professeure de géographie à l'Université de Californie à Santa Barbara et titulaire de la Chaire de géographie Jack et Laura Dangermond. Elle est également professeure auxiliaire à l'Université de Victoria. En tant que mère, cycliste passionnée et spécialiste des données, la vision de Trisalyn pour BikeMaps.org est de rendre le vélo plus accessible à plus de gens en améliorant les données pour la prise de décision."
+
+#:
+msgid "Jaimy joined the BikeMaps team in 2016. She is currently pursuing her PhD with Dr. Meghan Winters at Simon Fraser University. As part of her work, Jaimy will be looking at the link between investment in All Ages and Abilities (AAA) bicycle infrastructure and ridership and safety outcomes. Her work is part of the larger Impacts of Bicycle Infrastructure in Mid-Sized Cities project, and through it she’ll be advancing skills in predictive modelling and spatial analysis approaches to model bicycling exposure and safety."
+msgstr "Jaimy s'est jointe à l'équipe de BikeMaps en 2016. Elle est candidate au doctorat et travaille avec Meghan Winters à son laboratoire de recherche sur les villes, la santé et le transport actif de l'Université Simon Fraser. Elle détient un baccalauréat en géographie avec une concentration en géomatique de l’Université de Victoria. Dans le cadre de ses études supérieures, elle utilise les mégadonnées pour étudier l’impact de l'investissement dans l'infrastructure cyclable pour tous les âges et capacités sur l'achalandage, la sécurité et l’équité pour différents groupes. Elle dirige également un projet de recherche communautaire axé sur la justice en matière de mobilité - une base pour comprendre les différentes façons dont les gens vivent la mobilité, le transport et la sécurité dans la rue. Jaimy est une passionnée du vélo de montagne, d’escalade et de littérature autochtone."
+
+#:
+msgid "Finn studied geography at VIU in Nanaimo and computer science at Concordia in Montreal, and is excited to be contributing to the Bikemaps team as a software developer. Outside the office they enjoy mountain biking, running, and rock climbing."
+msgstr "Finn a étudié la géographie à l’Université de Vancouver Island à Nanaimo et l'informatique à Concordia à Montréal, et est ravix de contribuer son expertise en développement de logiciels à l'équipe Bike Maps. En dehors du bureau, iel pratique le vélo de montagne, la course à pied et l'escalade."
+
+#:
+msgid "Daniel Fuller is a Canada Research Chair in Population Physical Activity in the School of Human Kinetics and Recreation at Memorial University. His research is focused on using wearable technologies to study physical activity, transportation interventions, and equity in urban spaces. Dan has an MSc in Kinesiology from the University of Saskatchewan, a PhD in Public Health from Université de Montréal. Dan is the Principal Investigator on the INTERACT team and Neighbourhood Factors Team co-lead of the Canadian Urban Environmental Health (CANUE) Research Consortium. He spends free time chasing his two rambunctious kids."
+msgstr "Daniel est Chaire de recherche du Canada en activité physique populationnelle de l’Université Memorial de Saint-Jean de Terre-Neuve. Ses recherches portent sur les technologies portables afin d’étudier l’activité physique, les interventions en transports et l’iniquité dans les espaces urbains. Dan est titulaire d’une maîtrise en kinésiologie de l’Université de Saskatchewan et un doctorat en santé publique de l’Université de Montréal. Dan est chercheur principal de l’équipe INTERACT et il est co-chef de l’équipe Neighbourhood Factors du Canadian Urban Environmental Health (CANUE) Research Consortium. Il passe son temps libre à courir après ses deux enfants plein d’énergie."
+
+#:
+msgid "Karen has been part of the BikeMaps.org team since the project began in 2014. She has managed many aspects of the project and has been heavily involved in community outreach and engagement. Karen is also the project coordinator for WalkRollMap.org, CanBICS, and INTERACT Victoria. In her personal life, Karen has gained considerable experience volunteering on numerous boards that support amateur sports or community initiatives. Most weekends, Karen can be found running the beautiful trails around Victoria."
+msgstr "Karen a fait partie de l'équipe BikeMaps.org depuis le début du projet en 2014. Elle a géré de nombreux aspects du projet et a été impliquée dans la sensibilisation et l'engagement communautaire. Karen est aussi la coordinatrice de project pour OnMarcheOnRoule.org, INTERACT, et CanBICS. Dans sa vie personnelle, Karen a acquis beaucoup d'expérience comme bénévole au sein de nombreux conseils qui soutiennent le sport amateur ou des initiatives communautaires . Karen aime se balader du point A à B à pied ou à vélo et serait heureuse de passer tout un samedi à faire de la course en sentier."
