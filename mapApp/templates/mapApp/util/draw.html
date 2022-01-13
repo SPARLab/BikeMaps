@@ -80,12 +80,14 @@ function desktopDrawing(){
     const enableMarkerDrawing = () => {
       markerControlActive = true;
       markerControl.enable();
+      map.removeControl(drawControl);
       $('#startReportButton').addClass("marker-draw-enabled");
     }
 
     const disableMarkerDrawing = () => {
       markerControlActive = false;
       markerControl.disable();
+      map.addControl(drawControl);
       $('#startReportButton').removeClass("marker-draw-enabled");
     }
 
