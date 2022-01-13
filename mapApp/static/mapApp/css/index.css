@@ -207,6 +207,12 @@ span.date{
   padding: 5px 5px 10px 10px;
 }
 
-.marker-draw-enabled {
+#startReportButton.marker-draw-enabled {
   background-color: red;
+}
+
+#startReportButton {
+  background-color: #f18904;
+  margin: 0px;
+  border: 0px;
 }
