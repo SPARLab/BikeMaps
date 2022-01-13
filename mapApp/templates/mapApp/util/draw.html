@@ -41,9 +41,9 @@ function desktopDrawing(){
     L.drawLocal.edit.handlers.edit.tooltip.subtext = "{% trans 'Click cancel to undo changes.' %}";
     L.drawLocal.edit.handlers.remove.tooltip.text = "{% trans 'Click the alert areas to remove' %}";
 
-
     /* ADD THE CONTROL TO LEAFLET MAP */
-    map.addControl(new L.Control.Draw({
+
+    const drawControl = new L.Control.Draw({
         draw: {
             polyline: false,
             rectangle: false,
@@ -64,7 +64,8 @@ function desktopDrawing(){
             {% else %}
             false
             {% endif %}
-    }));
+    })
+    map.addControl(drawControl);
 
     /* ADD THE START REPORT BUTTON TO LEAFLET MAP */
 
@@ -72,12 +73,18 @@ function desktopDrawing(){
     const markerOptions = {
         icon: icons["bikeGreyIcon"]
     };
-    const markerDrawer = new L.Draw.Marker(map, markerOptions);
+    const markerControl = new L.Draw.Marker(map, markerOptions);
 
+    // functions to start and stop drawing
+    const enableMarkerDrawing = () => {
+      markerControl.enable();
+      $('#startReportButton').addClass("marker-draw-enabled");
+    }
 
-
-
-
+    const disableMarkerDrawing = () => {
+      markerControl.disable();
+      $('#startReportButton').removeClass("marker-draw-enabled");
+    }
 
     map.fire('drawControlReady');
 
@@ -86,11 +93,9 @@ function desktopDrawing(){
       // activate drawing a marker when 'start report' button is clicked
       $('#startReportButton').click(function() {
         if ($(this).hasClass("marker-draw-enabled")){
-          markerDrawer.disable();
-          $('#startReportButton').removeClass("marker-draw-enabled");
+          disableMarkerDrawing();
         } else {
-          markerDrawer.enable();
-          $('#startReportButton').addClass("marker-draw-enabled");
+          enableMarkerDrawing();
         }
       });
 
@@ -100,6 +105,7 @@ function desktopDrawing(){
                 layer = e.layer;
 
             if (type === 'marker') {
+                disableMarkerDrawing();
                 // Set form geometry field to click location
                 $('#incidentForm').modal('show');
                 var geom = JSON.stringify(layer.toGeoJSON().geometry);
