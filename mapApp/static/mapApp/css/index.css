@@ -228,6 +228,14 @@ span.date {
   padding: 5px 5px 10px 10px;
 }
 
+#actionContainer {
+  position: absolute;
+  z-index: 1000;
+  padding: 10px;
+  bottom: 0;
+  margin: 10px;
+}
+
 #startReportButton.marker-draw-enabled {
   background-color: red;
 }
@@ -236,4 +244,5 @@ span.date {
   background-color: #f18904;
   margin: 0px;
   border: 0px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 }

@@ -2,14 +2,10 @@
 {% get_current_language as LANGUAGE_CODE %}
 {% cache 500 new_report LANGUAGE_CODE %}
 
-<div id="actionContainer" class="leaflet-container leaflet-control-container">
-  <div class="leaflet-bottom leaflet-left">
-    <div class="leaflet-control-layers leaflet-control">
-      <button type="button" id="startReportButton" class="btn btn-default btn-md">
-        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>{% trans " Start a report" %}
-      </button>
-    </div>
-  </div>
+<div id="actionContainer">
+  <button type="button" id="startReportButton" class="btn btn-default btn-md">
+    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>{% trans " Start a report" %}
+  </button>
 </div>
 
 {% endcache %}
