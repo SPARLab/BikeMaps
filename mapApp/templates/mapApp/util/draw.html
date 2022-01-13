@@ -66,9 +66,28 @@ function desktopDrawing(){
             {% endif %}
     }));
 
+    /* ADD THE START REPORT BUTTON TO LEAFLET MAP */
+
+    // create a drawer that just creates markers
+    const markerOptions = {
+        icon: icons["bikeGreyIcon"]
+    };
+    const markerDrawer = new L.Draw.Marker(map, markerOptions);
+
+
+
+
+
+
     map.fire('drawControlReady');
 
     $(document).ready(function(){
+
+      // activate drawing a marker when 'start report' button is clicked
+      $('#startReportButton').click(function() {
+        console.log('clicked the start report button');
+      });
+
         /* DEFINE ACTIONS TRIGGERED BY NEW DRAWINGS */
         map.on('draw:created', function (e) {
             var type = e.layerType,
