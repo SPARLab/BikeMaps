@@ -85,7 +85,13 @@ function desktopDrawing(){
 
       // activate drawing a marker when 'start report' button is clicked
       $('#startReportButton').click(function() {
-        console.log('clicked the start report button');
+        if ($(this).hasClass("marker-draw-enabled")){
+          markerDrawer.disable();
+          $('#startReportButton').removeClass("marker-draw-enabled");
+        } else {
+          markerDrawer.enable();
+          $('#startReportButton').addClass("marker-draw-enabled");
+        }
       });
 
         /* DEFINE ACTIONS TRIGGERED BY NEW DRAWINGS */

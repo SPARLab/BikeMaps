@@ -206,3 +206,7 @@ span.date{
   width: 190px;
   padding: 5px 5px 10px 10px;
 }
+
+.marker-draw-enabled {
+  background-color: red;
+}
