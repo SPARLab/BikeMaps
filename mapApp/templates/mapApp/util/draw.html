@@ -48,9 +48,8 @@ function desktopDrawing(){
             polyline: false,
             rectangle: false,
             circle: false,
-            marker: {
-                icon:icons["bikeGreyIcon"]
-            },
+            marker: false,
+            circlemarker: false,
             polygon:
                 {% if request.user.is_authenticated %}
                 { allowIntersection: false }
