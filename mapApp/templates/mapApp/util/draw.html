@@ -74,13 +74,17 @@ function desktopDrawing(){
     };
     const markerControl = new L.Draw.Marker(map, markerOptions);
 
+    let markerControlActive = false;
+
     // functions to start and stop drawing
     const enableMarkerDrawing = () => {
+      markerControlActive = true;
       markerControl.enable();
       $('#startReportButton').addClass("marker-draw-enabled");
     }
 
     const disableMarkerDrawing = () => {
+      markerControlActive = false;
       markerControl.disable();
       $('#startReportButton').removeClass("marker-draw-enabled");
     }
@@ -91,7 +95,7 @@ function desktopDrawing(){
 
       // activate drawing a marker when 'start report' button is clicked
       $('#startReportButton').click(function() {
-        if ($(this).hasClass("marker-draw-enabled")){
+        if (markerControlActive){
           disableMarkerDrawing();
         } else {
           enableMarkerDrawing();
