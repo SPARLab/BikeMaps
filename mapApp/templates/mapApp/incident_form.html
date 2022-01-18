@@ -177,9 +177,8 @@
             showMessage(message);
 
 			// Display follow up message in modal if available
-			if (data['provideFollowUpInfo']){
-				var followUpMsg = data['followUpMsg'];
-				showFollowUpInfo(followUpMsg);
+			if (data['followUpMsg']){
+				showFollowUpInfo(data['followUpMsg']);
 			}
 		  }
         }

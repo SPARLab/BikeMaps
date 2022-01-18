@@ -43,7 +43,7 @@ def postPoint(request, Form):
     form = Form(request.POST)
     form.data = form.data.copy()
 
-    provideFollowUpInfo = False
+    followUpMsg = None
 
     # Convert coords to valid geometry
     try:
@@ -58,9 +58,7 @@ def postPoint(request, Form):
 
         #Check if the point was a hazard and in the areas where 311 popups are available
         if "hazard" in str(type(form)):
-            message = threeOneOnePopUp(form.data)
-            if message!=None:
-                provideFollowUpInfo = True
+            followUpMsg = threeOneOnePopUp(form.data)
 
         point = form.save()
 
@@ -68,20 +66,8 @@ def postPoint(request, Form):
         if not settings.DEBUG:
             try: pushNotification.pushNotification(point)
             except: pass
-        if provideFollowUpInfo==False:
             return JsonResponse({
-                'provideFollowUpInfo' : False,
-                'followUpMsg': None,
-                'success': True,
-                'point': GeoJSONSerializer().serialize([point,]),
-                'point_type': point.p_type,
-                'form_html': render_crispy_form(Form())
-            })
-        # If incident was a hazard and a 311 popup was included return this JsonResponse
-        else:
-            return JsonResponse({
-                'provideFollowUpInfo' : True,
-                'followUpMsg': message,
+                'followUpMsg': followUpMsg,
                 'success': True,
                 'point': GeoJSONSerializer().serialize([point,]),
                 'point_type': point.p_type,
