@@ -131,13 +131,13 @@
       $('#message .alert').alert('close');
     }, 7000);
   };
-  
-  function showHazardMessage(message){
+
+  function showFollowUpInfo(message){
     $('#311popUp').append('<div id="popUpMessage">' +
       '<button id="311button" type="button" style="color:white" class="close" onclick=$(this).closest("div").remove();>&times</button>' + message.fontcolor("white") +
       '</div>'
     )};
- 
+
   $(function(){
     // Define ajax submit function
     $('.tab-pane form').submit(function (event){
@@ -175,12 +175,12 @@
             // Print success or failure message
             var message = "<strong>" + '{% trans "Thank you!" %}' + "</strong><br>" + '{% trans "Your incident marker was successfully added." %}';
             showMessage(message);
-          
-			//Print Hazard Popup
-			if (data['hazard']){
-				var hazardPopup = data['hazardMessage'];
-				showHazardMessage(hazardPopup);
-			}			
+
+			// Display follow up message in modal if available
+			if (data['provideFollowUpInfo']){
+				var followUpMsg = data['followUpMsg'];
+				showFollowUpInfo(followUpMsg);
+			}
 		  }
         }
       });
