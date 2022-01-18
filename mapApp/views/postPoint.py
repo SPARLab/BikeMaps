@@ -66,13 +66,13 @@ def postPoint(request, Form):
         if not settings.DEBUG:
             try: pushNotification.pushNotification(point)
             except: pass
-            return JsonResponse({
-                'followUpMsg': followUpMsg,
-                'success': True,
-                'point': GeoJSONSerializer().serialize([point,]),
-                'point_type': point.p_type,
-                'form_html': render_crispy_form(Form())
-            })
+        return JsonResponse({
+            'followUpMsg': followUpMsg,
+            'success': True,
+            'point': GeoJSONSerializer().serialize([point,]),
+            'point_type': point.p_type,
+            'form_html': render_crispy_form(Form())
+        })
     else:
         logger.debug("Form not valid")
 
