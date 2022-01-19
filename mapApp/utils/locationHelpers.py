@@ -18,9 +18,8 @@ def retrieveFollowUpMsg(formType, data):
                 if point_in_poly(longitude, latitude, outsideGreaterVancouver[polygon]["coordinates"]):
                     return outsideGreaterVancouver[polygon]["message"]
     elif (formType == "incident"):
-        for polygon in ontario:
-            if point_in_poly(longitude, latitude, ontario[polygon]["coordinates"]):
-                return ontario[polygon]["message"]
+        if point_in_poly(longitude, latitude, ontario["coordinates"]):
+            return ontario["message"]
 
 
         # Typo for burnaby twice, district of north van already has its own message- what to do with this info?
