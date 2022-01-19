@@ -60,8 +60,6 @@ map.on("locationfound", function (location) {
     if (location.accuracy < 501) {
         userMark.setAccuracy(location.accuracy);
     }
-    // check to see if users current location is within a special zone
-    checkSpecialZone(location.latlng, bboxes[0]);
 });
 
 if (typeof zoom !== 'undefined') {
@@ -85,9 +83,6 @@ geocoder.markGeocode = function (result) {
     geocodeMarker = new L.Marker(result.center, {
         icon: icons["geocodeIcon"]
     }).bindPopup(result.name).addTo(map).openPopup();
-
-    //check to see if they fall in a special zone
-    checkSpecialZone(result.center, bboxes[0]);
 };
 
 // Add scalebar
@@ -404,11 +399,6 @@ map.on('moveend', function (e) {
     var zoom = map.getZoom(),
         center = map.getCenter();
     window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
-
-    // If the view of the map is changed and zoom is at least 11, check if area intersects Winnipeg. Use debounce to prevent many calls in quick succession.
-    if (map.getZoom() >= 11) {
-        checkSpecialZonePolyDebounce(map.getBounds(), bboxes[0], bboxBoundWinnipeg);
-    }
 });
 
 map.on('zoomend', function(e) {
@@ -440,7 +430,6 @@ function loadIncidenLayerXHR(in_relink, in_lyr_type, in_ref_lyr) {
 
 
 function loadInfoDetails(in_pk, ref_popup, in_type, in_url) {
-
     console.log(in_pk)
     $.ajax({
         url: in_url + in_pk,
