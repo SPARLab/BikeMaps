@@ -63,13 +63,13 @@
         </li>
 
         {% if LANGUAGE_CODE == 'fr' %}
-          <li><a href="https://onmarcheonroule.org/" class="navbar-icon" style="height:35px; margin-right:0px"><img src="{% static 'mapApp/images/WalkRollMapLogo.png' %}"></a></li>
+          <li><a href="https://onmarcheonroule.org/" target="_blank" rel="noopener noreferrer" class="navbar-icon" style="height:35px; margin-right:0px"><img src="{% static 'mapApp/images/WalkRollMapLogo.png' %}"></a></li>
         {% else %}
-          <li><a href="https://walkrollmap.org/" class="navbar-icon" style="height:35px; margin-right:0px"><img src="{% static 'mapApp/images/WalkRollMapLogo.png' %}"></a></li>
+          <li><a href="https://walkrollmap.org/" target="_blank" rel="noopener noreferrer" class="navbar-icon" style="height:35px; margin-right:0px"><img src="{% static 'mapApp/images/WalkRollMapLogo.png' %}"></a></li>
         {% endif %}
         <!-- Social media -->
-        <li><a href="https://www.facebook.com/BikeMaps.org" target="_blank"><i class="fa fa-facebook"></i></a></li>
-        <li><a href="https://twitter.com/BikeMapsTeam" target="_blank"><i class="fa fa-twitter" target="_blank"></i></a></li>
+        <li><a href="https://www.facebook.com/BikeMaps.org" target="_blank" rel="noopener noreferrer"><i class="fa fa-facebook"></i></a></li>
+        <li><a href="https://twitter.com/BikeMapsTeam" target="_blank" rel="noopener noreferrer"><i class="fa fa-twitter"></i></a></li>
 
         <!-- Logged in features -->
         {% if request.user.is_authenticated %}
