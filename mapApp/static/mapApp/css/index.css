@@ -234,15 +234,18 @@ span.date {
   padding: 15px 0px 0px 10px;
 }
 
-#startReportButton.marker-draw-enabled {
-  background-color: #575757;
-}
-
 #startReportButton {
   background-color: #f18904;
   margin: 0px;
   border: 0px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+#cancelDrawButton {
+  background-color: #575757;
+  margin-left: -5px;
+  opacity: 0.8;
+  display: none;
 }
 
 /* Move toolbar items in 'top left' container down to make room for report button*/
