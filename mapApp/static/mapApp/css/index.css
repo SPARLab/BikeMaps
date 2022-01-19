@@ -216,6 +216,7 @@ span.date{
   padding: 5px 0px 0px 0px;
 }
 
+/* "shadow" to indicate more scrollable content available in about legend */
 .leaflet-control-layers {
   background-image: linear-gradient(to top, white, white),
     linear-gradient(to top, white, white),
