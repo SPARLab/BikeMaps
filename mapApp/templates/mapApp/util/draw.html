@@ -75,20 +75,23 @@ function desktopDrawing(){
     const markerControl = new L.Draw.Marker(map, markerOptions);
 
     let markerControlActive = false;
+    const buttonEl = $('#startReportButton');
 
     // functions to start and stop drawing
     const enableMarkerDrawing = () => {
       markerControlActive = true;
       markerControl.enable();
       map.removeControl(drawControl);
-      $('#startReportButton').addClass("marker-draw-enabled");
+      buttonEl.addClass("marker-draw-enabled");
+      buttonEl.text(buttonEl.data("text-swap"));
     }
 
     const disableMarkerDrawing = () => {
       markerControlActive = false;
       markerControl.disable();
       map.addControl(drawControl);
-      $('#startReportButton').removeClass("marker-draw-enabled");
+      buttonEl.removeClass("marker-draw-enabled");
+      buttonEl.text(buttonEl.data("text-original"));
     }
 
     map.fire('drawControlReady');

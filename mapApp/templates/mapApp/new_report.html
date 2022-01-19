@@ -3,8 +3,9 @@
 {% cache 500 new_report LANGUAGE_CODE %}
 
 <div id="actionContainer">
-  <button type="button" id="startReportButton" class="btn btn-default btn-md">
-    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>{% trans " Start a report" %}
+  <button type="button" id="startReportButton" class="btn btn-default btn-md" data-text-swap="Click to cancel" data-text-original="Start a report">
+    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+    {% trans "Start a report" %}
   </button>
 </div>
 
