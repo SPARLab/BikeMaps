@@ -107,6 +107,10 @@ span.date{
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff69ff', endColorstr='#8684b1', GradientType=1 );
 }
 
+.strava-gradient-label {
+  padding-top: 4px;
+}
+
 .rainbow-gradient{
     background: red; /* not working, let's see some red */
     background: -moz-linear-gradient( left ,

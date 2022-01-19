@@ -50,7 +50,10 @@
             {% trans "Strava ridership data" %}
             <a data-target="#about-strava" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>
             <div class="legend-subtext collapse in">
-              <small class="strava-gradient gradient-bar">{% trans "less" %} <div class="pull-right">{% trans "more" %}</div></small>
+              <small class="strava-gradient gradient-bar">
+                <div class="pull-left strava-gradient-label">{% trans "less" %}</div>
+                <div class="pull-right strava-gradient-label">{% trans "more" %}</div>
+              </small>
             </div>
           </div>
 
