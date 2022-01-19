@@ -1,21 +1,27 @@
 from django.contrib.gis.geos import GEOSGeometry
 import json, math
-from mapApp.utils.locationPolygons import greaterVancouver, withinGreaterVancouver, outsideGreaterVancouver
+from mapApp.utils.locationPolygons import greaterVancouver, withinGreaterVancouver, outsideGreaterVancouver, ontario
 
-def retrieveFollowUpMsg(data):
+def retrieveFollowUpMsg(formType, data):
     #grab latitude and longitude from form
     longitude =  data['geom'][0]
     latitude = data['geom'][1]
 
-    #Check if point fell in areas
-    if point_in_poly(longitude,latitude,greaterVancouver['coordinates']):
-        for polygon in withinGreaterVancouver:
-            if point_in_poly(longitude, latitude, withinGreaterVancouver[polygon]["coordinates"]):
-                return withinGreaterVancouver[polygon]["message"]
-    else:
-        for polygon in outsideGreaterVancouver:
-            if point_in_poly(longitude, latitude, outsideGreaterVancouver[polygon]["coordinates"]):
-                return outsideGreaterVancouver[polygon]["message"]
+    #Check if hazard point fell in areas
+    if (formType == "hazard"):
+        if point_in_poly(longitude,latitude,greaterVancouver['coordinates']):
+            for polygon in withinGreaterVancouver:
+                if point_in_poly(longitude, latitude, withinGreaterVancouver[polygon]["coordinates"]):
+                    return withinGreaterVancouver[polygon]["message"]
+        else:
+            for polygon in outsideGreaterVancouver:
+                if point_in_poly(longitude, latitude, outsideGreaterVancouver[polygon]["coordinates"]):
+                    return outsideGreaterVancouver[polygon]["message"]
+    elif (formType == "incident"):
+        for polygon in ontario:
+            if point_in_poly(longitude, latitude, ontario[polygon]["coordinates"]):
+                return ontario[polygon]["message"]
+
 
         # Typo for burnaby twice, district of north van already has its own message- what to do with this info?
         # if point_in_poly(longitude,latitude,burnaby):

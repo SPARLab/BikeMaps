@@ -57,10 +57,10 @@ def postPoint(request, Form):
       # Add any follow up modal messages
         # Check if the point was a hazard and in the areas where 311 information is available
         if "hazard" in str(type(form)):
-            followUpMsg = retrieveFollowUpMsg(form.data)
+            followUpMsg = retrieveFollowUpMsg("hazard", form.data)
         # Check if the point was an incident in area where crash info available
         if "incident" in str(type(form)):
-            followUpMsg = crashInfoPopUp(form.data)
+            followUpMsg = retrieveFollowUpMsg("incident", form.data)
 
         point = form.save()
 
