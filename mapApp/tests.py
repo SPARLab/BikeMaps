@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 from mapApp.models import *
 
-from mapApp.utils.locationHelpers import retrieveFollowUpMsg
+from mapApp.utils.geofenceHelpers import retrieveFollowUpMsg
 
 #Create your tests here.
 class GetURLTests(TestCase):

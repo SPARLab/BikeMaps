@@ -1,6 +1,6 @@
 from django.contrib.gis.geos import GEOSGeometry
 import json, math
-from mapApp.utils.locationPolygons import greaterVancouver, withinGreaterVancouver, outsideGreaterVancouver, ontario
+from mapApp.utils.geofencePolygons import greaterVancouver, withinGreaterVancouver, outsideGreaterVancouver, ontario
 
 def retrieveFollowUpMsg(formType, data):
     #grab latitude and longitude from form

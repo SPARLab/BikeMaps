@@ -11,7 +11,7 @@ from mapApp.models import Incident, Hazard, Theft, NewInfrastructure
 from mapApp.forms import IncidentForm, NearmissForm, HazardForm, TheftForm, NewInfrastructureForm
 from mapApp.views import alertUsers, pushNotification
 
-from mapApp.utils.locationHelpers import retrieveFollowUpMsg, normalizeGeometry
+from mapApp.utils.geofenceHelpers import retrieveFollowUpMsg, normalizeGeometry
 
 import logging
 logger = logging.getLogger(__name__)
