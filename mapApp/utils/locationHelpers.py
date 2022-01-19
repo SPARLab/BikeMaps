@@ -21,11 +21,6 @@ def retrieveFollowUpMsg(formType, data):
         if point_in_poly(longitude, latitude, ontario["coordinates"]):
             return ontario["message"]
 
-
-        # Typo for burnaby twice, district of north van already has its own message- what to do with this info?
-        # if point_in_poly(longitude,latitude,burnaby):
-        #     message = "To report this hazard to the City Of North Vancouver authorities: <br> Download the CityFix App from <a href=\"http://www.cnv.org/online-services/city-fix\" style=\"color: white\">here</a>"
-
     return None
 
 def normalizeGeometry(geom):
