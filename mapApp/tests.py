@@ -8,7 +8,9 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 from mapApp.models import *
 
-# Create your tests here.
+from mapApp.utils.locationHelpers import retrieveFollowUpMsg
+
+#Create your tests here.
 class GetURLTests(TestCase):
     """Test getting the urls used in mapApp"""
     def setUp(self):
@@ -346,3 +348,29 @@ def create_user():
 
 def create_superuser():
     return User.objects.create_superuser("test_superuser", email="super_user@bikemaps.org", password="password")
+
+class RetrieveMessagesForSpecialAreasTests(TestCase):
+
+    def test_no_special_area(self):
+        """
+        retrieveFollowUpMsg() returns message of None for locations not in a special area
+        """
+        annArbor = {'geom': [-83.743034,42.280827]}
+        followUpMsg = retrieveFollowUpMsg(annArbor);
+        self.assertEqual(followUpMsg, None)
+
+    def test_area_within_greater_van(self):
+        """
+        retrieveFollowUpMsg() returns the burnaby message for coordiantes that are within burnaby
+        """
+        burnaby = {'geom': [-122.980507,49.248810]}
+        followUpMsg = retrieveFollowUpMsg(burnaby);
+        self.assertEqual(followUpMsg, "Report this hazard to Burnaby authorities by calling 1-604-294-7440")
+
+    def test_area_outside_greater_van(self):
+        """
+        retrieveFollowUpMsg() returns the kelowna message for coordiantes that are within kelowna
+        """
+        kelowna = {'geom': [-119.493500,49.884491]}
+        followUpMsg = retrieveFollowUpMsg(kelowna);
+        self.assertEqual(followUpMsg, "Report this hazard online to Kelowna authorities <a href=\"https://apps.kelowna.ca/iService_Requests/request.cfm?id=265&sid=97\" style=\"color:white\">here</a>")
