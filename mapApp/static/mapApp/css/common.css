@@ -56,6 +56,15 @@ textarea {
 	background-color:#18BC9C;
 }
 
+#popUpMessage a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+#popUpMessage a:hover {
+  color: #2c3e50;
+}
+
 #message {
 	position: fixed;
 	right: 1em;

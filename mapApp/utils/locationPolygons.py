@@ -1,5 +1,4 @@
-#Outlines of districts that 311 info is available for
-
+#Polygon coordinates of areas that have special information to display after a report is made
 greaterVancouver = {
     "coordinates": [
         [-123.2646915875098, 48.93388156887169],
@@ -603,7 +602,7 @@ withinGreaterVancouver = {
 		]
 	},
 	"cityOfNorthVancouver": {
-		"message": "To report this hazard to the City Of North Vancouver authorities: <br> Download the CityFix App from <a href=\"http://www.cnv.org/online-services/city-fix\" style=\"color: white\">here</a>",
+		"message": "To report this hazard to the City Of North Vancouver authorities: <br> Download the CityFix App from <a href=\"http://www.cnv.org/online-services/city-fix\">here</a>",
 		"coordinates": [
 			[-123.0924739549271, 49.3137024996574],
 			[-123.092459468815, 49.31329801964108],
@@ -1544,7 +1543,7 @@ withinGreaterVancouver = {
 		]
 	},
 	"delta": {
-		"message": "To report this hazard to Delta authorities:<br> 1) Call 1-604-946-3260 <br> 2) Report online <a href=\"http://www.delta.ca/your-government/contact-us/talk-to-delta\" style=\"color:white\">here</a>",
+		"message": "To report this hazard to Delta authorities:<br> 1) Call 1-604-946-3260 <br> 2) Report online <a href=\"http://www.delta.ca/your-government/contact-us/talk-to-delta\">here</a>",
 		"coordinates": [
 			[-122.9198808695207, 49.17707442446955],
 			[-122.9233411551117, 49.17721588507659],
@@ -3959,7 +3958,7 @@ withinGreaterVancouver = {
 		]
 	},
 	"mapleRidge": {
-		"message": "Report this hazard online to Maple Ridge authorities <a href=\"http://mapleridge.ca/FormCenter/Service-Request-Form-5/Service-Request-Form-45\" style=\"color:white\">here</a>",
+		"message": "Report this hazard online to Maple Ridge authorities <a href=\"http://mapleridge.ca/FormCenter/Service-Request-Form-5/Service-Request-Form-45\">here</a>",
 		"coordinates": [
 			[-122.4091587945679, 49.26427540842799],
 			[-122.4090041113422, 49.27095790775992],
@@ -4428,7 +4427,7 @@ withinGreaterVancouver = {
 		]
 	},
 	"newWestminster": {
-		"message": "To report this hazard to New Westminster authorities:<br> 1) Report online <a href=\"https://www.newwestcity.ca/services/online-services/report-a-problem\" style=\"color:white\">here</a> <br> 2) Download the SeeClickFix App from <a href=\"http://seeclickfix.com/apps\" style=\"color:white\">here</a>",
+		"message": "To report this hazard to New Westminster authorities:<br> 1) Report online <a href=\"https://www.newwestcity.ca/services/online-services/report-a-problem\">here</a> <br> 2) Download the SeeClickFix App from <a href=\"http://seeclickfix.com/apps\">here</a>",
 		"coordinates": [
 			[-122.8942232996391, 49.23736157817866],
 			[-122.8942092697908, 49.23793250820627],
@@ -6052,7 +6051,7 @@ withinGreaterVancouver = {
 		]
 	},
 	"richmond": {
-		"message": "Report this hazard online to Richmond authorities <a href=\"http://www.richmond.ca/contact/customerfeedback/RequestService.aspx\" style=\"color:white\">here</a>",
+		"message": "Report this hazard online to Richmond authorities <a href=\"http://www.richmond.ca/contact/customerfeedback/RequestService.aspx\">here</a>",
 		"coordinates": [
 			[-123.2463140747865, 49.23788039944994],
 			[-123.2471860541841, 49.23884170539145],
@@ -6697,7 +6696,7 @@ withinGreaterVancouver = {
 		]
 	},
 	"surrey": {
-		"message": "To report this hazard to Surrey authorities:<br> 1) Download the Surrey Request App from <a href=\"http://www.surrey.ca/city-services/12082.aspx\" style=\"color:white\">here</a> <br> 2) Report online <a href=\"http://www.surrey.ca/city-services/667.aspx\" style=\"color:white\">here</a>",
+		"message": "To report this hazard to Surrey authorities:<br> 1) Download the Surrey Request App from <a href=\"http://www.surrey.ca/city-services/12082.aspx\">here</a> <br> 2) Report online <a href=\"http://www.surrey.ca/city-services/667.aspx\">here</a>",
 		"coordinates": [
 			[-122.8565516831049, 49.22065722477078],
 			[-122.8668119858716, 49.22111290060633],
@@ -7618,7 +7617,7 @@ withinGreaterVancouver = {
 		]
 	},
 	"townshipOfLangley": {
-		"message": "Report this hazard online to the Township of Langley authorities <a href\"http://www.tol.ca/Services-Contact/Report-a-Problem\" style=\"color:white\">here</a>",
+		"message": "Report this hazard online to the Township of Langley authorities <a href\"http://www.tol.ca/Services-Contact/Report-a-Problem\">here</a>",
 		"coordinates": [
 			[-122.5887195469562, 49.1982220596372],
 			[-122.5894757244103, 49.19945817060776],
@@ -8262,7 +8261,7 @@ withinGreaterVancouver = {
 		]
 	},
 	"vancouver": {
-		"message": "To report this hazard to Vancouver authorities:<br> 1) Call 3-1-1 <br> 2) Report online <a href=\"http://vancouver.ca/vanconnect-desktop.aspx\" style=\"color:white\">here</a> <br> 3) Download the VanConnect App from <a href=\"http://vancouver.ca/vanconnect.aspx\" style=\"color:white\">here</a>",
+		"message": "To report this hazard to Vancouver authorities:<br> 1) Call 3-1-1 <br> 2) Report online <a href=\"http://vancouver.ca/vanconnect-desktop.aspx\">here</a> <br> 3) Download the VanConnect App from <a href=\"http://vancouver.ca/vanconnect.aspx\">here</a>",
 		"coordinates": [
 			[-123.1710406460292, 49.2717396036775],
 			[-123.1726497452789, 49.27171959449003],
@@ -9739,7 +9738,7 @@ withinGreaterVancouver = {
 
 outsideGreaterVancouver = {
     "edmonton": {
-        "message": "Report this hazard to Edmonton authorities by downloading the 311 App from <a href=\"https://www.edmonton.ca/programs_services/edmonton-311-app.aspx\" style=\"color:white\">here</a>",
+        "message": "Report this hazard to Edmonton authorities by downloading the 311 App from <a href=\"https://www.edmonton.ca/programs_services/edmonton-311-app.aspx\">here</a>",
         "coordinates": [
             [-113.713844010858, 53.57050665620317],
             [-113.7138396046937, 53.5693228961198],
@@ -17203,7 +17202,7 @@ outsideGreaterVancouver = {
         ]
     },
     "kelowna": {
-        "message": "Report this hazard online to Kelowna authorities <a href=\"https://apps.kelowna.ca/iService_Requests/request.cfm?id=265&sid=97\" style=\"color:white\">here</a>",
+        "message": "Report this hazard online to Kelowna authorities <a href=\"https://apps.kelowna.ca/iService_Requests/request.cfm?id=265&sid=97\">here</a>",
         "coordinates": [
             [-119.3954356614158, 50.02322100329821],
             [-119.3954335926355, 50.02401460234149],
@@ -17707,7 +17706,7 @@ outsideGreaterVancouver = {
 # https://nominatim.openstreetmap.org/search?q=ontario&format=xml&polygon_geojson=1&polygon_threshold=0.1
 
 ontario = {
-	"message": "If you have been involved in a collision in Ontario, consider reviewing <a href=\"https://www.thebikinglawyer.ca/post/the-biking-lawyer-s-crash-guide\" style=\"color: white\">this legal guide</a>",
+	"message": "If you have been involved in a collision with a vehicle in Ontario,<br>consider reviewing <a href=\"https://www.thebikinglawyer.ca/post/the-biking-lawyer-s-crash-guide\">this legal guide</a>",
 	"coordinates": [
 			[-95.1537399, 52.6236382],
 			[-95.1533889, 49.3844722],
