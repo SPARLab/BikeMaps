@@ -30,11 +30,13 @@
                 <p>{% trans "Do you have questions, comments, or feedback about bikemaps.org? We would love to hear from you!" %}</p>
                 <p><a class="btn btn-primary btn-md" data-toggle="modal" data-target="#emailForm">{% trans "Contact us!" %}</a></p>
             </div>
-            <div class="col-xs-6">
-                <h1>{% trans "Download the Bikemaps Toolkit!" %}</h1>
-                <p>{% trans "Get the new Bikemaps toolkit with a variety of Bikemaps Factsheets" %}</p>
-                <p><a class="btn btn-primary btn-md" href="https://bikemaps.org/static/mapApp/data/toolkit.zip">{% trans "Download Toolkit Now" %}</a></p>
-            </div>
+            {% if currLangEnglish %}
+              <div class="col-xs-6">
+                  <h1>Download the Bikemaps Toolkit!</h1>
+                  <p>Get the new Bikemaps toolkit with a variety of Bikemaps Factsheets</p>
+                  <p><a class="btn btn-primary btn-md" href="https://bikemaps.org/static/mapApp/data/toolkit.zip">Download Toolkit Now</a></p>
+              </div>
+            {% endif %}
         </div>
         <div class="row">
 
@@ -59,19 +61,12 @@
                 <p><strong>{% blocktrans %}I clicked submit, but noticed that my pin isn't in the right location. How can I fix it?{% endblocktrans %}</strong>
                     <br>{% blocktrans %}Email us at <a href="mailto:info@bikemaps.org">info@bikemaps.org</a> with details about the time and location of your report and we will move it.{% endblocktrans %}</p>
 
-                <p><strong>{% trans "Where do you get the rider volume data?" %}</strong>
-                    <br>{% trans "The data on where cyclists are riding has been provided by Strava." %}</p>
-
-                <p><strong>{% trans "Isn’t Strava data only where recreational cyclists are riding?" %}</strong>
-                    <br>{% blocktrans with percent="%" %}Strava labs estimates that 40{{percent}} of its rider data are commuter traffic, though this likely varies by region.{% endblocktrans %}</p>
-
-                <p><strong>{% trans "Do you have an App?" %}</strong>
-                    <br>
-                    {% blocktrans with '<a href="https://itunes.apple.com/us/app/bikemaps.org/id1011546537?mt=8&ign-mpt=uo%3D4">' as app_store_link and '<a href="https://play.google.com/store/apps/details?id=com.bikemaps.sparlab">' as play_store_link and '</a>' as link_end %}Yes! We have both an {{app_store_link}}iOS app{{link_end}} and an {{play_store_link}}Android app{{link_end}}.{% endblocktrans %}</p>
-
                 <p><strong>{% trans "Do you have a video tutorial?" %}</strong>
                     <br>
                     {% blocktrans %}Yes! Here’s a <a href="https://www.youtube.com/watch?v=a_gn3k4uoAo">link to a video</a> that one of our followers made.{% endblocktrans %}</p>
+
+                <p><strong>{% trans "Why does the Strava heat map disappear when I zoom in?" %}</strong>
+                    <br>{% blocktrans %}Strava restricts street-level heat maps due to privacy and security concerns. If you are a registered Strava user, you can explore the <a href="https://www.strava.com/heatmap">global heatmap</a>.{% endblocktrans %}</p>
 
                 <p><strong>{% trans "How can I get involved?" %}</strong>
                     <br>{% trans "You can share the website on social media, host a mapping demo night, or volunteer to do GIS or development. If you own a bike store or small business, you can advertise BikeMaps.org. We are also on the lookout for more research funding to further develop the technology and expand the study. Or, perhaps your group has GIS data that may improve BikeMaps.org." %}</p>
@@ -86,8 +81,12 @@
           <div class="col-xs-12">
             <ul class="list-group apa-list">
                 <li class="list-group-item">
+                    <a href="https://doi.org/10.1080/21650020.2021.1964376" target="_blank">
+                      Laberee, K., Nelson, T., Branion-Calles, M., Ferster, C., & Winters, M. (2021). <em>Crowdsourced bicycling crashes and near misses: trends in Canadian cities.</em> Urban, Planning and Transport Research 9(1): 450-464. doi.org/10.1080/21650020.2021.1964376
+                </li>
+                <li class="list-group-item">
                     <a href="https://doi.org/10.1016/j.apgeog.2021.102388" target="_blank">
-                        Ferster, C.J., Nelson, T., Laberee, K., & Winters, M. (2021). 
+                        Ferster, C.J., Nelson, T., Laberee, K., & Winters, M. (2021).
                         <em>Mapping bicycling exposure and safety risk using Strava Metro.</em>
                         Applied Geography. doi.org/10.1016/j.apgeog.2021.102388<a>
                     </a>
@@ -179,7 +178,7 @@
             </ul>
           </div>
         </div>
-        
+
         <div class="row" id="supporters">
             <div class="col-xs-12">
                 <h1>{% trans "Supporters" %}</h1>
@@ -200,7 +199,7 @@
                     </a>
                 </div>
             </div><!--
-        
+
             --><div class="vcenter col-xs-6 col-md-3">
                 <div class="frame">
                     <a href="https://www.crd.bc.ca/" target="_blank">
@@ -209,14 +208,6 @@
                 </div>
             </div><!--
 
-            --><div class="vcenter col-xs-6 col-md-3 col-md-3">
-                <div class="frame">
-                    <a href="https://www.statefarm.com/" target="_blank">
-                      <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/StateFarm.png' %}" alt="State Farm">
-                    </a>
-                  </div>
-            </div><!--
-            
             --><div class="vcenter col-xs-6 col-md-3">
                 <div class="frame">
                     <a href="https://www.caa.ca" target="_blank">
@@ -241,14 +232,6 @@
             </div>
             </div><!--
 
-          --><div class="vcenter col-xs-6 col-md-3">
-                <div class="frame">
-                  <a href="http://www.acart.com/" target="_blank">
-                      <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/Acart.png' %}" alt="Acart">
-                  </a>
-                </div>
-            </div><!--
-
             --><div class="vcenter col-xs-6 col-md-3">
                 <div class="frame">
                     <a href="http://www.strava.com/" target="_blank">
@@ -267,14 +250,6 @@
 
           --><div class="vcenter col-xs-6 col-md-3">
                 <div class="frame">
-                  <a href="http://gvcc.bc.ca/" target="_blank">
-                      <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/GVCC.png' %}" alt="Greater Victoria Cycling Coalition">
-                  </a>
-                </div>
-            </div><!--
-
-            --><div class="vcenter col-xs-6 col-md-3">
-                <div class="frame">
                     <a href="https://bikehub.ca/" target="_blank">
                         <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/HUB.png' %}" alt="HUB">
                     </a>
@@ -291,8 +266,8 @@
 
             --><div class="vcenter col-xs-6 col-md-4">
                 <div class="frame">
-                    <a href="https://ottawa.ca/en/residents/transportation-and-parking/road-safety/safer-roads-ottawa-program" target="_blank">
-                        <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/saferroadsOttawa.png' %}" alt="Safer Roads Ottawa">
+                    <a href="https://capitalbike.ca/" target="_blank">
+                        <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/Capital-Bike.png' %}" alt="Capital Bike">
                     </a>
                   </div>
               </div><!--
@@ -302,6 +277,14 @@
                     <a href="https://www.ucsb.edu/" target="_blank">
                         <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/UC_Santa_Barbara_Wordmark_Navy_RGB.png' %}" alt="UC Santa Barbara">
                     </a>
+                  </div>
+              </div><!--
+
+            --><div class="vcenter col-xs-6 col-md-4">
+                <div class="frame">
+                  <a href="https://ottawa.ca/en/residents/transportation-and-parking/road-safety/safer-roads-ottawa-program" target="_blank">
+                      <img class="img-responsive" src="{% static 'mapApp/images/sponsorLogos/saferroadsOttawa.png' %}" alt="Safer Roads Ottawa">
+                  </a>
                   </div>
               </div>
         </div>
@@ -323,7 +306,7 @@
                 <h4><em>{% trans "Metro Vancouver Research Lead" %}</em></h4>
                 <img src="{% static 'mapApp/images/team_photos/meghan.jpg'%}" alt="Meghan Winters" class="img-responsive img-circle center-block" height="200" width="200">
                 <div class="col-xs-12">
-                  <p>{% trans "Health and cycling expert, Dr. Meghan Winters, is an assistant professor in the Faculty of Health Sciences at Simon Fraser University. She works with the <a href='http://cyclingincities.spph.ubc.ca' target='_blank'>Cycling in Cities</a> team and has research projects on public bikeshare, cycling safety, and how changes in the built environment affect the health and mobility of older adults and youth. Meghan heads the BikeMaps.org research for Metro Vancouver." %}</p>
+                  <p>{% trans "Meghan Winters is a Professor in the Faculty of Health Sciences at Simon Fraser University, and a Michael Smith Foundation for Health Research Scholar. Her research focuses on ways that cities and their infrastructure can play a role in promoting healthy and safe transportation, for people of all ages and abilities. She is happiest when working in close collaboration with cities and stakeholders to conduct research and create tools that address real-world challenges." %}</p>
                 </div>
             </div>
             <div class="clearfix hidden-xs"></div>
@@ -332,7 +315,7 @@
                 <h4><em>{% trans "Executive Director" %}</em></h4>
                 <img src="{% static 'mapApp/images/team_photos/karen.jpg' %}" alt="Karen Laberee" class="img-responsive img-circle center-block" height="200" width="200">
                 <div class="col-xs-12">
-                  <p>{% trans "Karen has been part of the BikeMaps.org team since the project began in 2014. She has managed many aspects of the project and has been heavily involved in community outreach and engagement. Prior to the creation of BikeMaps.org, Karen worked at SPAR Lab on a wide variety of research projects. In her personal life, Karen has gained considerable experience volunteering on numerous boards that support amateur sports or community initiatives. In addition to being mom to a bike-crazy family, Karen can be found running the trails around Victoria." %}</p>
+                  <p>{% trans "Karen has been part of the BikeMaps.org team since the project began in 2014. She has managed many aspects of the project and has been heavily involved in community outreach and engagement. Karen is also the project coordinator for WalkRollMap.org, CanBICS, and INTERACT Victoria. In her personal life, Karen has gained considerable experience volunteering on numerous boards that support amateur sports or community initiatives. Most weekends, Karen can be found running the beautiful trails around Victoria." %}</p>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 text-center">
@@ -357,7 +340,7 @@
                 <h4><em>{% trans "Developer" %}</em></h4>
                 <img src="{% static 'mapApp/images/team_photos/darren.jpg' %}" alt="Karen Laberee" class="img-responsive img-circle center-block" height="200" width="200">
                 <div class="col-xs-12">
-                    <p>{% trans "Darren completed his MSc in the SPAR lab in 2017. He continues his involvement with BikeMaps and MobilityAccess.org, maintaining the websites and mobile apps. When not coding away, Darren enjoys mountain biking, skiing and hiking." %}
+                    <p>{% trans "Darren completed his MSc in the SPAR lab at UVic in 2017. He continues his involvement with BikeMaps and is the lead developer for WalkRollMap.org. When not coding away, Darren enjoys mountain biking, skiing and hiking." %}
                 </div>
             </div>
             <div class="clearfix hidden-xs"></div>
@@ -366,7 +349,7 @@
                 <h4><em>{% trans "Research Assistant" %}</em></h4>
                 <img src="{% static 'mapApp/images/team_photos/jaimy.jpg' %}" alt="Jaimy Fischer" class="img-responsive img-circle center-block" height="200" width="200">
                 <div class="col-xs-12">
-                    <p>{% trans "Jaimy joined the BikeMaps team in 2016. She is currently pursuing her MSc with Dr. Meghan Winters at Simon Fraser University. As part of her work, Jaimy will be looking at the link between investment in All Ages and Abilities (AAA) bicycle infrastructure and ridership and safety outcomes. Her work is part of the larger Impacts of Bicycle Infrastructure in Mid-Sized Cities project, and through it she’ll be advancing skills in predictive modelling and spatial analysis approaches to model bicycling exposure and safety." %}</p>
+                    <p>{% trans "Jaimy joined the BikeMaps team in 2016. She is currently pursuing her PhD with Dr. Meghan Winters at Simon Fraser University. As part of her work, Jaimy will be looking at the link between investment in All Ages and Abilities (AAA) bicycle infrastructure and ridership and safety outcomes. Her work is part of the larger Impacts of Bicycle Infrastructure in Mid-Sized Cities project, and through it she’ll be advancing skills in predictive modelling and spatial analysis approaches to model bicycling exposure and safety." %}</p>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 text-center">
@@ -374,7 +357,7 @@
                 <h4><em>{% trans "Atlantic Research Lead" %}</em></h4>
                 <img src="{% static 'mapApp/images/team_photos/dan.jpg' %}" alt="Daniel Fuller" class="img-responsive img-circle center-block" height="200" width="200">
                 <div class="col-xs-12">
-                    <p>{% trans "Daniel Fuller is a Canada Research Chair in Population Physical Activity in the School of Human Kinetics and Recreation at Memorial University. His research is focused on using wearable technologies to study physical activity, transportation interventions, and equity in urban spaces. Dan has an MSc in Kinesiology from the University of Saskatchewan, a PhD in Public Health from Université de Montréal. Dan is the Principal Investigator on the INTERACT team and Neighbourhood Factors Team co-lead of the Canadian Urban Environmental Health (CANUE) Research Consortium. He spends free time chasing his two rambunctious kids, and relives his youth playing recreational basketball on Mondays and Wednesdays." %}</p>
+                    <p>{% trans "Daniel Fuller is a Canada Research Chair in Population Physical Activity in the School of Human Kinetics and Recreation at Memorial University. His research is focused on using wearable technologies to study physical activity, transportation interventions, and equity in urban spaces. Dan has an MSc in Kinesiology from the University of Saskatchewan, a PhD in Public Health from Université de Montréal. Dan is the Principal Investigator on the INTERACT team and Neighbourhood Factors Team co-lead of the Canadian Urban Environmental Health (CANUE) Research Consortium. He spends free time chasing his two rambunctious kids." %}</p>
                 </div>
             </div>
             <div class="clearfix hidden-xs"></div>
@@ -384,23 +367,6 @@
                 <img src="{% static 'mapApp/images/team_photos/michael.jpg' %}" alt="Michael Branion-Calles" class="img-responsive img-circle center-block" height="200" width="200">
                 <div class="col-xs-12">
                     <p>{% trans "Michael is currently a Post Doctoral Researcher in the Department of Medicine at the University of British Columbia. As a part of his PhD, Michael used data collected on BikeMaps.org to investigate the link between active transport, health and safety. Michael is looking forward to leveraging the power of crowd-sourced data in order to better understand cycling safety." %}</p>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 text-center">
-                <h3>Avipsa Roy</h3>
-                <h4><em>{% trans "PhD Student" %}</em></h4>
-                <img src="{% static 'mapApp/images/team_photos/Avipsa.jpg' %}" alt="Avipsa Roy" class="img-responsive img-circle center-block" height="200" width="200">
-                <div class="col-xs-12">
-                    <p>{% trans "Avipsa is a recent graduate student and currently pursuing her PhD with Dr. Trisalyn Nelson at the School of Geographical Sciences and Urban Planning at Arizona State University. As a part of her PhD, Avipsa will be using data collected on BikeMaps.org to investigate the link between active transport, health and safety in integration with Strava Metro data. Avipsa is interested to better understand cycling exposure and risk by means of latest data analytics  and predictive modeling approaches using Python." %}</p>
-                </div>
-            </div>
-            <div class="clearfix hidden-xs"></div>
-            <div class="col-xs-12 col-sm-6 text-center">
-                <h3>Jonathan Slaney</h3>
-                <h4><em>{% trans "Research Assistant" %}</em></h4>
-                <img src="{% static 'mapApp/images/team_photos/jonathan.jpg' %}" alt="Jonathan Slaney" class="img-responsive img-circle center-block" height="200" width="200">
-                <div class="col-xs-12">
-                    <p>{% trans "Jonathan is a Masters Student at Memorial University of Newfoundland in the Walkabilly Lab, sharing the mission of a physically active Canadian Population. Having been on wheels since his earliest ages, he is passionate about cycling culture, safety and efficacy. Being a part of BikeMaps provides a unique research opportunity to improve bike culture and help more people ride bikes (safely) than ever before." %}</p>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 text-center">
@@ -430,14 +396,6 @@
             </div>
             <div class="clearfix hidden-xs"></div>
             <div class="col-xs-12 col-sm-6 text-center">
-                <h3>Zahin Hasan Prangon</h3>
-                <h4><em>{% trans "Developer" %}</em></h4>
-                <img src="{% static 'mapApp/images/team_photos/Zahin.jpg' %}" alt="Zahin Hasan Prangon" class="img-responsive img-circle center-block" height="200" width="200">
-                <div class="col-xs-12">
-                    <p>{% trans "Zahin is a student at the Memorial University of Newfoundland pursuing his BSc in Computer Science. His work at Bike Maps involves development and maintenance of the website. Zahin enjoys biking and playing soccer whenever not in front of his keyboard." %}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 text-center">
                 <h3>Ben Jestico, MSc.</h3>
                 <h4><em>{% trans "Alumni" %}</em></h4>
                 <img src="{% static 'mapApp/images/team_photos/ben.jpg' %}" alt="Ben Jestico" class="img-responsive img-circle center-block" height="200" width="200">
@@ -445,13 +403,21 @@
                     <p>{% trans "Ben was BikeMaps.org’s first graduate student and was instrumental in the successful outreach in the early days of BikeMaps.org. For his MSc research, Ben compared ridership data collected manually to those using crowdsourced apps such as Strava <a href='http://bit.ly/2af2Cpc' target='_blank'>(http://bit.ly/2af2Cpc)</a>. Ben’s research also used data collected on BikeMaps.org to study incidents at multiuse trail and road intersections." %}
                 </div>
             </div>
-            <div class="clearfix hidden-xs"></div>
             <div class="col-xs-12 col-sm-6 text-center">
-                <h3>Taylor Denouden, BSc.</h3>
+                <h3>Taylor Denouden, MMath</h3>
                 <h4><em>{% trans "Alumni, Developer" %}</em></h4>
                 <img src="{% static 'mapApp/images/team_photos/taylor.jpg' %}" alt="Taylor Denouden" class="img-responsive img-circle center-block" height="200" width="200">
                 <div class="col-xs-12">
-                    <p>{% trans "A graduate of the Geomatics program at the University of Victoria, Taylor is the developer behind the BikeMaps website. Taylor worked at the Hakai Institute in Victoria, and he is currently pursuing graduate studies at the University of Waterloo." %}</p>
+                    <p>{% trans "A graduate of the Geomatics program at the University of Victoria, Taylor is the developer behind the BikeMaps website. Taylor went on to earn a Master of Mathematics in Computer Science at the University of Waterloo. He is now working at the Hakai Institute where he is creating image classification tools for drone and fixed wing imagery along with various other tools for geospatial applications." %}</p>
+                </div>
+            </div>
+            <div class="clearfix hidden-xs"></div>
+            <div class="col-xs-12 col-sm-6 text-center">
+                <h3>Finn Short</h3>
+                <h4><em>{% trans "Developer" %}</em></h4>
+                <img src="{% static 'mapApp/images/team_photos/finn.jpg' %}" alt="Finn Short" class="img-responsive img-circle center-block" height="200" width="200">
+                <div class="col-xs-12">
+                    <p>{% trans "Finn studied geography at VIU in Nanaimo and computer science at Concordia in Montreal, and is excited to be contributing to the Bikemaps team as a software developer. Outside the office they enjoy mountain biking, running, and rock climbing." %}</p>
                 </div>
             </div>
     </div>
