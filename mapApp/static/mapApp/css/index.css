@@ -125,21 +125,24 @@ span.date {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff69ff', endColorstr='#8684b1', GradientType=1);
 }
 
-.rainbow-gradient {
-  background: red;
-  /* not working, let's see some red */
-  background: -moz-linear-gradient(left,
-    blue 0%,
-    cyan 25%,
-    lime 50%,
-    yellow 55%,
-    red 100%);
-  background: -webkit-gradient(linear, left bottom, right bottom,
-    color-stop(0%, blue),
-    color-stop(25%, cyan),
-    color-stop(50%, lime),
-    color-stop(55%, yellow),
-    color-stop(100%, red));
+.strava-gradient-label {
+  padding-top: 4px;
+}
+
+.rainbow-gradient{
+    background: red; /* not working, let's see some red */
+    background: -moz-linear-gradient( left ,
+        blue 0%,
+        cyan 25%,
+        lime 50%,
+        yellow 55%,
+        red 100%);
+    background: -webkit-gradient(linear,  left bottom,  right bottom,
+        color-stop(0%, blue),
+        color-stop(25%, cyan),
+        color-stop(50%, lime),
+        color-stop(55%, yellow),
+        color-stop(100%, red));
 }
 
 .gradient-bar {
@@ -218,15 +221,64 @@ span.date {
   padding-top: 15px;
 }
 
-#legend-about {
-  width: 190px;
+/* Set max height for legend and enable scrolling */
+.leaflet-control-layers{
+  max-width: 290px;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.leaflet-control-layers-list{
+  padding-left: 10px;
+}
+
+#legend-about{
+  padding: 5px 0px 0px 0px;
+}
+
+/* "shadow" to indicate more scrollable content available in about legend */
+.leaflet-control-layers {
+  background-image: linear-gradient(to top, white, white),
+    linear-gradient(to top, white, white),
+    linear-gradient(to top, rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0)),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0));
+  background-position: bottom center, top center, bottom center, top center;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-size: 100% 20px, 100% 20px, 100% 10px, 100% 10px;
+  background-attachment: local, local, scroll, scroll;
+}
+
+.legend-group{
+  padding-bottom: 10px;
+}
+
+.legend-group-title{
+  font-weight: bold;
+  font-size: 18px;
+  color: #575757;
+}
+
+#basemap-about{
   padding: 5px 5px 10px 10px;
 }
 
-#basemap-about {
-  width: 190px;
-  padding: 5px 5px 10px 10px;
+/* Increase font size on leaflet text */
+.leaflet-container{
+    font: 14px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+    color: #575757;
 }
+
+/* Make the leaflet popup close button larger and reset location */
+.leaflet-container a.leaflet-popup-close-button{
+	font: 28px/28px Tahoma, Verdana, sans-serif;
+  padding: 8px 28px 0px 0px;
+}
+
+.leaflet-popup-content{
+	margin: 28px 28px 15px 18px;
+}
+
 
 #actionContainer {
   position: absolute;
