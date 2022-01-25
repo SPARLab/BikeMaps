@@ -1,15 +1,15 @@
-{% load i18n %}
-{% load user_agents %}
+{%load i18n %}
+{%load user_agents %}
 
 <!-- Javascript saved as html to allow for use of Django template tags within the code -->
 <script>
-$(document).ready(function(){
-  {% if not request.user_agent.is_mobile %}
-      desktopDrawing();
-  {% else %}
+  $(document).ready(function() {
+    {%if not request.user_agent.is_mobile %}
+    desktopDrawing();
+    {%else %}
       mobileDrawing();
-  {% endif %}
-});
+    {%endif %}
+  });
 
   function desktopDrawing() {
     /* Add i18n zoom control if on desktop */
@@ -19,33 +19,33 @@ $(document).ready(function(){
     }).addTo(map);
 
     /* DRAWING CONTROL TOOLTIPS */
-    L.drawLocal.draw.toolbar.actions.title = "{% trans 'Cancel drawing' %}";
-    L.drawLocal.draw.toolbar.actions.text = "{% trans 'Cancel' %}";
+    L.drawLocal.draw.toolbar.actions.title = "{%trans 'Cancel drawing' %}";
+    L.drawLocal.draw.toolbar.actions.text = "{%trans 'Cancel' %}";
 
-    L.drawLocal.draw.toolbar.undo.title = "{% trans 'Delete last point drawn' %}";
-    L.drawLocal.draw.toolbar.undo.text = "{% trans 'Delete last point' %}";
+    L.drawLocal.draw.toolbar.undo.title = "{%trans 'Delete last point drawn' %}";
+    L.drawLocal.draw.toolbar.undo.text = "{%trans 'Delete last point' %}";
 
-    L.drawLocal.draw.toolbar.buttons.marker = "{% trans 'Add a new marker.' %}";
-    L.drawLocal.draw.toolbar.buttons.polygon = "{% trans 'Trace an area to receive incident alerts.' %}";
+    L.drawLocal.draw.toolbar.buttons.marker = "{%trans 'Add a new marker.' %}";
+    L.drawLocal.draw.toolbar.buttons.polygon = "{%trans 'Trace an area to receive incident alerts.' %}";
 
-    L.drawLocal.draw.handlers.marker.tooltip.start = "{% trans 'Place me where the incident, hazard, or theft occurred.' %}";
-    L.drawLocal.draw.handlers.polygon.tooltip.start = "{% trans 'Trace the area you would like to receive alerts for.' %}";
-    L.drawLocal.draw.handlers.polygon.tooltip.cont = "{% trans 'Click to continue drawing shape.' %}";
-    L.drawLocal.draw.handlers.polygon.tooltip.end = "{% trans 'Click first point to close this shape.' %}";
+    L.drawLocal.draw.handlers.marker.tooltip.start = "{%trans 'Place me where the incident, hazard, or theft occurred.' %}";
+    L.drawLocal.draw.handlers.polygon.tooltip.start = "{%trans 'Trace the area you would like to receive alerts for.' %}";
+    L.drawLocal.draw.handlers.polygon.tooltip.cont = "{%trans 'Click to continue drawing shape.' %}";
+    L.drawLocal.draw.handlers.polygon.tooltip.end = "{%trans 'Click first point to close this shape.' %}";
 
-    L.drawLocal.edit.toolbar.actions.save.title = "{% trans 'Save changes.' %}";
-    L.drawLocal.edit.toolbar.actions.save.text = "{% trans 'Save.' %}";
-    L.drawLocal.edit.toolbar.actions.cancel.title = "{% trans 'Cancel editing, discards all changes.' %}";
-    L.drawLocal.edit.toolbar.actions.cancel.text = "{% trans 'Cancel.' %}";
+    L.drawLocal.edit.toolbar.actions.save.title = "{%trans 'Save changes.' %}";
+    L.drawLocal.edit.toolbar.actions.save.text = "{%trans 'Save.' %}";
+    L.drawLocal.edit.toolbar.actions.cancel.title = "{%trans 'Cancel editing, discards all changes.' %}";
+    L.drawLocal.edit.toolbar.actions.cancel.text = "{%trans 'Cancel.' %}";
 
-    L.drawLocal.edit.toolbar.buttons.edit = "{% trans 'Edit alert area.' %}";
-    L.drawLocal.edit.toolbar.buttons.editDisabled = "{% trans 'No alert areas to edit.' %}";
-    L.drawLocal.edit.toolbar.buttons.remove = "{% trans 'Delete alert areas.' %}";
-    L.drawLocal.edit.toolbar.buttons.removeDisabled = "{% trans 'No alert areas to delete.' %}";
+    L.drawLocal.edit.toolbar.buttons.edit = "{%trans 'Edit alert area.' %}";
+    L.drawLocal.edit.toolbar.buttons.editDisabled = "{%trans 'No alert areas to edit.' %}";
+    L.drawLocal.edit.toolbar.buttons.remove = "{%trans 'Delete alert areas.' %}";
+    L.drawLocal.edit.toolbar.buttons.removeDisabled = "{%trans 'No alert areas to delete.' %}";
 
-    L.drawLocal.edit.handlers.edit.tooltip.text = "{% trans 'Drag handles to edit alert areas. Be sure to save your changes.' %}";
-    L.drawLocal.edit.handlers.edit.tooltip.subtext = "{% trans 'Click cancel to undo changes.' %}";
-    L.drawLocal.edit.handlers.remove.tooltip.text = "{% trans 'Click the alert areas to remove' %}";
+    L.drawLocal.edit.handlers.edit.tooltip.text = "{%trans 'Drag handles to edit alert areas. Be sure to save your changes.' %}";
+    L.drawLocal.edit.handlers.edit.tooltip.subtext = "{%trans 'Click cancel to undo changes.' %}";
+    L.drawLocal.edit.handlers.remove.tooltip.text = "{%trans 'Click the alert areas to remove' %}";
 
     /* ADD THE CONTROL TO LEAFLET MAP */
 
@@ -58,16 +58,16 @@ $(document).ready(function(){
             circlemarker: false,
             polygon:
                 {% if request.user.is_authenticated %}
-                { allowIntersection: false }
+                  { allowIntersection: false }
                 {% else %}
-                false
+                  false
                 {% endif %}
-        },
+          },
         edit:
             {% if request.user.is_authenticated %}
-            { featureGroup: alertAreas }
+              { featureGroup: alertAreas }
             {% else %}
-            false
+              false
             {% endif %}
     })
     map.addControl(drawControl);
@@ -76,7 +76,7 @@ $(document).ready(function(){
 
     // create a drawer that just creates markers
     const markerOptions = {
-        icon: icons["bikeGreyIcon"]
+      icon: icons["bikeGreyIcon"]
     };
     const markerControl = new L.Draw.Marker(map, markerOptions);
 
@@ -99,90 +99,50 @@ $(document).ready(function(){
 
     map.fire('drawControlReady');
 
-    $(document).ready(function(){
+    $(document).ready(function() {
 
       // activate drawing a marker when 'start report' button is clicked
       $('#startReportButton').click(function() {
-        if (!markerControlActive){
+        if (!markerControlActive) {
           enableMarkerDrawing();
         }
       });
       // activate drawing a marker when 'start report' button is clicked
       $('#cancelDrawButton').click(function() {
-        if (markerControlActive){
+        if (markerControlActive) {
           disableMarkerDrawing();
         }
       });
 
-        /* DEFINE ACTIONS TRIGGERED BY NEW DRAWINGS */
-        map.on('draw:created', function (e) {
-            var type = e.layerType,
-                layer = e.layer;
+      /* DEFINE ACTIONS TRIGGERED BY NEW DRAWINGS */
+      map.on('draw:created', function(e) {
+        var type = e.layerType,
+          layer = e.layer;
 
-            if (type === 'marker') {
-                disableMarkerDrawing();
-                // Set form geometry field to click location
-                $('#incidentForm').modal('show');
-                var geom = JSON.stringify(layer.toGeoJSON().geometry);
+        if (type === 'marker') {
+          disableMarkerDrawing();
+          // Set form geometry field to click location
+          $('#incidentForm').modal('show');
+          var geom = JSON.stringify(layer.toGeoJSON().geometry);
 
-                document.getElementById("point").value = geom;
-                document.getElementById("nearmisspoint").value = geom;
-                document.getElementById("hazPoint").value = geom;
-                document.getElementById("theftPoint").value = geom;
+          document.getElementById("point").value = geom;
+          document.getElementById("nearmisspoint").value = geom;
+          document.getElementById("hazPoint").value = geom;
+          document.getElementById("theftPoint").value = geom;
 
 
-                // document.getElementById("newInfraPoint").value = geom;
+          // document.getElementById("newInfraPoint").value = geom;
 
-            }
-            if (type === 'polygon') {
-                var fd = new FormData();
-                fd.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-                fd.append( 'geom', JSON.stringify(layer.toGeoJSON().geometry))
-                fd.append( 'email', "{{ request.user.email }}")
-
-                // Ajax post request to server
-                $.ajax({
-                  url: "{% url 'mapApp:postAlertPolygon' %}",
-                  type: 'POST',
-                  data: fd,
-                  dataType: "json",
-                  processData: false,
-                  contentType: false,
-                  success: function(data) {
-                    if (data['success']) {
-                      // Add geom to map
-                      addAlertAreas(JSON.parse(data['polygon']));
-                      // Print success message
-                      var message = "<strong>" + '{% trans "Success!" %}' + "</strong><br>" + '{% trans "Your riding area was added." %}';
-                      showMessage(message);
-                    }
-                  }
-                });
-            }
-        });
-
-        map.on('draw:edited', function(e) { editRidingArea(e, 'edit'); });
-        map.on('draw:deleted', function(e) { editRidingArea(e, 'delete'); });
-
-        function editRidingArea(e, type){
-          var editPk = "",
-              editGeom = "";
-
-          e.layers.eachLayer(function (layer) {
-              if(layer.options.pk){
-                  editPk += (layer.options.pk + ';');
-                  editGeom += (JSON.stringify(layer.toGeoJSON().geometry) + ";");
-              }
-          });
-
+        }
+        if (type === 'polygon') {
           var fd = new FormData();
-          fd.append('editType', type)
-          fd.append('editPk', editPk)
-          fd.append('editGeom', editGeom)
+          fd.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+          fd.append('geom', JSON.stringify(layer.toGeoJSON().geometry))
+          fd.append('email', "{{ request.user.email }}")
 
           // Ajax post request to server
           $.ajax({
-            url: "{% url 'mapApp:editShape' %}",
+            url: "{%url 'mapApp:postAlertPolygon' %}",
             type: 'POST',
             data: fd,
             dataType: "json",
@@ -190,74 +150,117 @@ $(document).ready(function(){
             contentType: false,
             success: function(data) {
               if (data['success']) {
+                // Add geom to map
+                addAlertAreas(JSON.parse(data['polygon']));
                 // Print success message
-                var message = "<strong>" + '{% trans "Success!" %}' + "</strong><br>" + '{% trans "Your riding area has been modified." %}';
+                var message = "<strong>" + '{%trans "Success!" %}' + "</strong><br>" + '{%trans "Your riding area was added." %}';
                 showMessage(message);
               }
             }
           });
         }
+      });
 
+      map.on('draw:edited', function(e) {
+        editRidingArea(e, 'edit');
+      });
+      map.on('draw:deleted', function(e) {
+        editRidingArea(e, 'delete');
+      });
 
-        //run the geo ip lookup
-        runConsentGeoLookup({ type: 'geoip' });
-    });
-};
+      function editRidingArea(e, type) {
+        var editPk = "",
+          editGeom = "";
 
-function mobileDrawing(){
-    $(document).ready(function(){
-        $('#map').animate({marginTop: "+=23"});
-        $('.tip-msg').hide().animate({height:'show'});
-
-        $('.tip-msg .close').click(function(){
-            $('#map').animate({marginTop: "-=23"});
-            $('.tip-msg').animate({height:'hide'});
+        e.layers.eachLayer(function(layer) {
+          if (layer.options.pk) {
+            editPk += (layer.options.pk + ';');
+            editGeom += (JSON.stringify(layer.toGeoJSON().geometry) + ";");
+          }
         });
+
+        var fd = new FormData();
+        fd.append('editType', type)
+        fd.append('editPk', editPk)
+        fd.append('editGeom', editGeom)
+
+        // Ajax post request to server
+        $.ajax({
+          url: "{%url 'mapApp:editShape' %}",
+          type: 'POST',
+          data: fd,
+          dataType: "json",
+          processData: false,
+          contentType: false,
+          success: function(data) {
+            if (data['success']) {
+              // Print success message
+              var message = "<strong>" + '{%trans "Success!" %}' + "</strong><br>" + '{%trans "Your riding area has been modified." %}';
+              showMessage(message);
+            }
+          }
+        });
+      }
+      //run the geo ip lookup
+      runConsentGeoLookup({
+        type: 'geoip'
+      });
+    });
+  };
+
+  function mobileDrawing() {
+    $(document).ready(function() {
+      $('#map').animate({
+        marginTop: "+=23"
+      });
+      $('.tip-msg').hide().animate({
+        height: 'show'
+      });
+
+      $('.tip-msg .close').click(function() {
+        $('#map').animate({
+          marginTop: "-=23"
+        });
+        $('.tip-msg').animate({
+          height: 'hide'
+        });
+      });
     });
 
     // Allow double click point adding for mobile users
-    map.on('dblclick', function (e){
-        console.log("DOUBLE CLICK");
-        var geom = '{"type":"Point","coordinates":['+e.latlng.lng+','+e.latlng.lat+']}';
-        $('#incidentForm').modal('show');
-        document.getElementById("point").value = geom;
-        document.getElementById("nearmisspoint").value = geom;
-        document.getElementById("hazPoint").value = geom;
-        document.getElementById("theftPoint").value = geom;
+    map.on('dblclick', function(e) {
+      console.log("DOUBLE CLICK");
+      var geom = '{"type":"Point","coordinates":[' + e.latlng.lng + ',' + e.latlng.lat + ']}';
+      $('#incidentForm').modal('show');
+      document.getElementById("point").value = geom;
+      document.getElementById("nearmisspoint").value = geom;
+      document.getElementById("hazPoint").value = geom;
+      document.getElementById("theftPoint").value = geom;
     });
-}
+  }
 
-    function runConsentGeoLookup(args) {
-        if (args.type === 'geoip') {
-
-            $.ajax({
-                url: "https://get.geojs.io/v1/ip/country",
-                dataType: "text"
-            }).done(function (data) {
-                var cc = data.toString().replace(/\W/g, '');
-                if (cc === 'IE') {
-                    //alert(cc);
-                    $("#terms_checkbox").next().html(" I am 18 years of age or older and have read and understood the <a href='/static/files/Letter%20of%20Informed%20Consent_Ireland.pdf' target='_blank'> terms and conditions</a>");
-                }
-                else {
-
-                }
-            });
-
+  function runConsentGeoLookup(args) {
+    if (args.type === 'geoip') {
+      $.ajax({
+        url: "https://get.geojs.io/v1/ip/country",
+        dataType: "text"
+      }).done(function(data) {
+        var cc = data.toString().replace(/\W/g, '');
+        if (cc === 'IE') {
+          //alert(cc);
+          $("#terms_checkbox").next().html(" I am 18 years of age or older and have read and understood the <a href='/static/files/Letter%20of%20Informed%20Consent_Ireland.pdf' target='_blank'> terms and conditions</a>");
+        } else {
 
         }
-        else if (args.type === 'latlon') {
-
-        }
-
-    }
-
+      });
+    } else if (args.type === 'latlon') {}
+  }
 </script>
 
 <!-- Mobile tooltip to explain the double tapping -->
-{% if request.user_agent.is_mobile %}
+{%if request.user_agent.is_mobile %}
 <div class="tip-msg alert-info alert-dismissable">
-    <div class="close">&times;</div>
-    <center>{% trans "Double tap a location to submit a report" %}</center>
+  <div class="close">&times;</div>
+  <center>{%trans "Double tap a location to submit a report" %}</center>
 </div>
-{% endif %}
+{%endif %}
