@@ -1,8 +1,7 @@
-.page-body, #map {
+.page-body,#map{
   height: 100%;
 }
-
-#map {
+#map{
   height: 100%;
   width: 100%;
   float: left;
@@ -10,41 +9,35 @@
 }
 
 /*Legend filter text formatting*/
-span.date {
+span.date{
   margin-left: 44px;
 }
-
-.filter {
+.filter{
   padding: 0 10px;
 }
-
-.date-container {
+.date-container{
   padding: 0 10px;
 }
 
 /* Bootstrap-slider customization */
-.slider {
+.slider{
   margin: 0px 10px;
 }
-
-.slider.slider-horizontal {
+.slider.slider-horizontal{
   width: 130px;
 }
-
 .slider-handle.custom::before {
   line-height: 18px;
   font-size: 22px;
   color: #1a242f;
   font-family: FontAwesome;
-  position: relative;
+  position:relative;
   top: 1px;
 }
-
 .min-slider-handle.custom::before {
   content: '\f10c';
   right: 6px;
 }
-
 .max-slider-handle.custom::before {
   content: '\f111';
   left: 7px;
@@ -53,26 +46,22 @@ span.date {
 .slider-selection {
   background: #18bc9c;
 }
-
-.slider-disabled .slider-selection {
+.slider-disabled .slider-selection{
   opacity: 0.3;
 }
-
-.slider-disabled .slider-handle {
+.slider-disabled .slider-handle{
   background-image: none !important;
   opacity: 0.3;
 }
 
 /* Marker clustering */
-.marker-cluster-pie g.arc {
+.marker-cluster-pie g.arc{
   fill-opacity: 0.8;
 }
-
-.marker-cluster-pie .center {
+.marker-cluster-pie .center{
   fill-opacity: 0.7;
 }
-
-.pieLabel {
+.pieLabel{
   font-family: sans-serif;
 }
 
@@ -80,49 +69,42 @@ span.date {
 .legend-subtext {
   margin-left: 18px;
 }
-
-.marker-group>i {
+.marker-group>i{
   height: 20px;
   width: 20px;
   padding-top: 4px;
   border-radius: 10px;
 }
-
-.marker-group>i.fa-bicycle {
+.marker-group>i.fa-bicycle{
   padding-left: 2.5px;
 }
-
-.marker-group>i.fa-star {
+.marker-group>i.fa-star{
   padding-left: 4px;
 }
-
-.marker-group>i.fa-warning {
+.marker-group>i.fa-warning{
   padding-left: 4px;
 }
-
-.marker-group>i.fa-certificate {
+.marker-group>i.fa-certificate{
   padding-left: 5px;
 }
-
-.marker-group>i.fa-user, .marker-group>i.fa-filter {
+.marker-group>i.fa-user, .marker-group>i.fa-filter{
   padding-left: 5px;
 }
-
-.marker-group span.fa-stack {
+.marker-group span.fa-stack{
   margin-top: -2px;
   margin-left: -2px;
 }
 
 /* Legend gradients*/
-.strava-gradient {
-  background: rgba(255, 102, 17, 0);
-  background: -moz-linear-gradient(left, rgba(255, 105, 255, .3) 10%, rgba(134, 132, 177, 1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(100%, rgba(255, 105, 255, .1)), color-stop(100%, rgba(134, 132, 177, 1)));
-  background: -webkit-linear-gradient(left, rgba(255, 105, 255, .3) 10%, rgba(134, 132, 177, 1) 100%);
-  background: -o-linear-gradient(left, rgba(255, 105, 255, .3) 10%, rgba(134, 132, 177, 1) 100%);
-  background: -ms-linear-gradient(left, rgba(255, 105, 255, .3) 10%, rgba(134, 132, 177, 1) 100%);
-  background: linear-gradient(to right, rgba(255, 105, 255, .3) 10%, rgba(134, 132, 177, 1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff69ff', endColorstr='#8684b1', GradientType=1);
+.strava-gradient{
+  background: rgba(255,102,17,0);
+  background: -moz-linear-gradient(left, rgba(255,105,255,.3) 10%, rgba(134,132,177,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(100%, rgba(255,105,255,.1)), color-stop(100%, rgba(134,132,177,1)));
+  background: -webkit-linear-gradient(left, rgba(255,105,255,.3) 10%, rgba(134,132,177,1) 100%);
+  background: -o-linear-gradient(left, rgba(255,105,255,.3) 10%, rgba(134,132,177,1) 100%);
+  background: -ms-linear-gradient(left, rgba(255,105,255,.3) 10%, rgba(134,132,177,1) 100%);
+  background: linear-gradient(to right, rgba(255,105,255,.3) 10%, rgba(134,132,177,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff69ff', endColorstr='#8684b1', GradientType=1 );
 }
 
 .strava-gradient-label {
@@ -148,76 +130,74 @@ span.date {
 .gradient-bar {
   height: 5px;
   width: 150px;
-  margin-top: 5px;
-  display: inline-block;
+    margin-top: 5px;
+    display: inline-block;
 }
 
-.alert-area-box {
+.alert-area-box{
   background: rgba(59, 153, 114, 0.1);
   border: 2px solid rgba(59, 153, 114, 0.6);
   height: 20px;
-  width: 32.36px;
-  /*THE GOLDEN RATIO*/
-  margin-top: 5px;
-  display: inline-block;
+  width: 32.36px; /*THE GOLDEN RATIO*/
+    margin-top: 5px;
+    display: inline-block;
 }
 
-.bikerack {
-  display: inline-block;
-  background: #666666;
-  width: 5px;
-  height: 5px;
-  border-radius: 5px;
-  border: 1px solid black;
-  opacity: 0.5;
-  /*margin-top: -15px;*/
-  margin-left: 10px;
-  margin-right: 20px;
+.bikerack{
+    display:inline-block;
+    background: #666666;
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    border: 1px solid black;
+    opacity: 0.5;
+    /*margin-top: -15px;*/
+    margin-left: 10px;
+    margin-right: 20px;
 }
 
-.bikelane {
-  display: inline-block;
-  background: #666666;
-  width: 30px;
-  margin-right: 5px;
+.bikelane{
+  display:inline-block;
+    background: #666666;
+    width: 30px;
+    margin-right: 5px;
 }
-
-.solidlane {
-  height: 2px;
+.solidlane{
+  height:2px;
   background: #ff0080;
 }
-
-.thicklane {
+.thicklane{
   height: 3.5px;
-}
 
-.dotlane {
+}
+.dotlane{
   height: 3px;
-  border: 1px solid #ff0080;
-  background: #ff0080;
-  /* not working, let's see some red */
-  background: repeating-linear-gradient(to right,
-    #ff0080,
-    #ff0080 3px,
-    #ffffff 3px,
-    #ffffff 6px);
+   border: 1px solid #ff0080;
+    background: #ff0080; /* not working, let's see some red */
+    background: repeating-linear-gradient(
+      to right,
+      #ff0080,
+      #ff0080 3px,
+      #ffffff 3px,
+      #ffffff 6px
+  );
 }
 
-.modal-dialog {
+.modal-dialog{
   z-index: 4000;
 }
 
-.popup-details {
+.popup-details{
   margin-left: 5px;
   text-indent: -5px;
 }
 
-.no-margins {
+.no-margins{
   margin: 0px;
 }
 
 /*Add padding to next form input after personal details info collapse*/
-.whyPersonalCollapse+.form-group {
+.whyPersonalCollapse + .form-group{
   padding-top: 15px;
 }
 
