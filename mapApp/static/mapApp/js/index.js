@@ -48,12 +48,6 @@ var map = L.map('map', {
     worldCopyJump: true,
 });
 
-// Add i18n zoom control
-L.control.zoom({
-    zoomInTitle: gettext('Zoom in'),
-    zoomOutTitle: gettext('Zoom out'),
-}).addTo(map);
-
 // Set map view
 map.on("locationfound", function (location) {
     var userMark = L.userMarker(location.latlng, { smallIcon: true, circleOpts: { weight: 1, opacity: 0.3, fillOpacity: 0.05 } }).addTo(map);
