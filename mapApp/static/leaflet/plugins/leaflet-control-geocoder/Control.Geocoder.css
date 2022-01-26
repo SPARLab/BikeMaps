@@ -15,6 +15,10 @@
 }
 
 .leaflet-control-geocoder-form {
+	display: none;
+}
+
+.leaflet-control-geocoder-expanded .leaflet-control-geocoder-form {
 	display: inline;
 }
 
@@ -45,8 +49,8 @@
 }
 
 .leaflet-touch .leaflet-control-geocoder-icon {
-	margin-top: 2px;
 	width: 30px;
+	height: 30px;
 }
 
 .leaflet-control-geocoder-throbber .leaflet-control-geocoder-icon {
