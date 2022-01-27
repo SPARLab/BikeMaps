@@ -54,6 +54,8 @@ textarea {
 	text-align:left;
 	border-radius: 15px;
 	background-color:#18BC9C;
+	border-color:#18BC9C;
+	color: #fff;
 }
 
 #popUpMessage a {
