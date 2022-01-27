@@ -133,6 +133,8 @@
   };
 
   function showFollowUpInfo(message){
+    // remove any existing popups before adding a new one
+    $('#popUpMessage').remove();
     $('#followUpMsgPopUp').append(
     `<div id="popUpMessage" class="alert alert-default alert-dismissible" role="alert">
         <button id="closeFollowUpButton" type="button" class="close leaflet-popup-close-button" data-dismiss="alert" aria-label="Close">
