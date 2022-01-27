@@ -100,7 +100,9 @@
           lng = {{ lng|safe }};
     {% endif %}
   </script>
-  <script src="{% static 'mapApp/js/vis.js' %}"></script>
+  <script src="{% static 'mapApp/js/vis/visHelpers.js' %}"></script>
+  <script src="{% static 'mapApp/js/vis/map.js' %}"></script>
+  <script src="{% static 'mapApp/js/vis/vis.js' %}"></script>
 
 {% endblock %}
 {% endcache %}
