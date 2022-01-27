@@ -95,6 +95,13 @@ textarea {
 	margin-right: 5px;
 }
 
+.navbar-icon img{
+	float: left;
+	height: 35px;
+	margin-top: -5px;
+	margin-right: 0px;
+}
+
 .navbar {
 	font-family: faktos;
 }
