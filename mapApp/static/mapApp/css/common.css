@@ -43,19 +43,24 @@ textarea {
 	resize: none; /* removes resize handle from text area inputs */
 }
 
-#popUpMessage{
+#popUpMessage {
 	padding:15px;
-    position: fixed;
+  position: fixed;
 	top: 10%;
-    left: 50%;
-    transform: translate(-50%, 0);
-    z-index:2;
-    width:auto;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index:2;
+  max-width: 400px;
 	text-align:left;
 	border-radius: 15px;
 	background-color:#18BC9C;
 	border-color:#18BC9C;
 	color: #fff;
+
+}
+
+#popUpMessage .leaflet-popup-content {
+	margin: 24px 10px 10px 10px;
 }
 
 #popUpMessage a {
