@@ -133,10 +133,17 @@
   };
 
   function showFollowUpInfo(message){
-    $('#followUpMsgPopUp').append('<div id="popUpMessage">' +
-      '<button id="closeFollowUpButton" type="button" style="color:white" class="close" onclick=$(this).closest("div").remove();>&times</button>' + message.fontcolor("white") +
-      '</div>'
-    )};
+    $('#followUpMsgPopUp').append(
+    `<div id="popUpMessage" class="alert alert-default alert-dismissible" role="alert">
+        <button id="closeFollowUpButton" type="button" class="close leaflet-popup-close-button" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="leaflet-popup-content">
+        ${message}
+        </div>
+      </div>`
+    );
+  };
 
   $(function(){
     // Define ajax submit function
