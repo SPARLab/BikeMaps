@@ -2474,3 +2474,15 @@ msgstr "Daniel est Chaire de recherche du Canada en activité physique populatio
 #:
 msgid "Karen has been part of the BikeMaps.org team since the project began in 2014. She has managed many aspects of the project and has been heavily involved in community outreach and engagement. Karen is also the project coordinator for WalkRollMap.org, CanBICS, and INTERACT Victoria. In her personal life, Karen has gained considerable experience volunteering on numerous boards that support amateur sports or community initiatives. Most weekends, Karen can be found running the beautiful trails around Victoria."
 msgstr "Karen a fait partie de l'équipe BikeMaps.org depuis le début du projet en 2014. Elle a géré de nombreux aspects du projet et a été impliquée dans la sensibilisation et l'engagement communautaire. Karen est aussi la coordinatrice de project pour OnMarcheOnRoule.org, INTERACT, et CanBICS. Dans sa vie personnelle, Karen a acquis beaucoup d'expérience comme bénévole au sein de nombreux conseils qui soutiennent le sport amateur ou des initiatives communautaires . Karen aime se balader du point A à B à pied ou à vélo et serait heureuse de passer tout un samedi à faire de la course en sentier."
+
+#:
+msgid "Start a report"
+msgstr "Commencez un rapport"
+
+#:
+msgid "Date filter"
+msgstr "Filtre de date"
+
+#:
+msgid "Basemap by <a href=\"https://www.cyclosm.org/\">CyclOSM.</a> Report and fix infrastructure data issues on <a href=\"https://www.openstreetmap.org/fixthemap\">OpenStreetMap.</a>"
+msgstr "Carte de base par <a href=\"https://www.cyclosm.org/\">CyclOSM.</a> Signalez et corrigez les problèmes de données d'infrastructure sur <a href=\"https://www.openstreetmap.org/fixthemap\">OpenStreetMap.</a>"
