@@ -281,6 +281,6 @@ span.date{
 }
 
 /* Move toolbar items in 'top left' container down to make room for report button*/
-.leaflet-top.leaflet-left {
+.lower-toolbar {
   top: 60px;
 }

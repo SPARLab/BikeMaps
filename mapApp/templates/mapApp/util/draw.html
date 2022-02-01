@@ -82,6 +82,9 @@ $(document).ready(function(){
 
     let markerControlActive = false;
 
+    // Move leaflet control bar down so that start button can be top left item (desktop only)
+    $(".leaflet-top.leaflet-left").addClass("lower-toolbar");
+
     // functions to start and stop drawing
     const enableMarkerDrawing = () => {
       markerControlActive = true;
