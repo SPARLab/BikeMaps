@@ -155,20 +155,6 @@ body h1{
 	background: none;
 }
 
-/* search control */
-.leaflet-control-geocoder-icon {
-	background-image: url(../images/geocoder_alt.png);
-	background-size: 83%;
-}
-
-.leaflet-control-geocoder{
-	-webkit-box-shadow: rgba(0, 0, 0, 0.65098) 0px 1px 5px 0px;
-}
-
-.leaflet-control-geocoder:hover{
-	background: #f4f4f4;
-}
-
 /* Override spirt user dropdown*/
 .dropdown-menu{
 	font-family: sans-serif;
