@@ -10,7 +10,7 @@ django-allauth==0.44.0
 django-common-helpers==0.9.1
 django-cors-headers==3.7.0
 django-crispy-forms==1.11.1
-django-debug-toolbar==3.2
+django-debug-toolbar==3.2.1
 django-geojson==3.1.0
 django-leaflet==0.22.0
 django-markdown-deux==1.0.5
