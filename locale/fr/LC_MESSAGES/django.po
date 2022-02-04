@@ -2484,5 +2484,5 @@ msgid "Date filter"
 msgstr "Filtre de date"
 
 #:
-msgid "Basemap by <a href=\"https://www.cyclosm.org/\">CyclOSM.</a> Report and fix infrastructure data issues on <a href=\"https://www.openstreetmap.org/fixthemap\">OpenStreetMap.</a>"
-msgstr "Carte de base par <a href=\"https://www.cyclosm.org/\">CyclOSM.</a> Signalez et corrigez les problèmes de données d'infrastructure sur <a href=\"https://www.openstreetmap.org/fixthemap\">OpenStreetMap.</a>"
+msgid "Basemap by <a href='https://www.cyclosm.org/'>CyclOSM.</a> Report and fix infrastructure data issues on <a href='https://www.openstreetmap.org/fixthemap'>OpenStreetMap.</a>"
+msgstr "Carte de base par <a href='https://www.cyclosm.org/'>CyclOSM.</a> Signalez et corrigez les problèmes de données d'infrastructure sur <a href='https://www.openstreetmap.org/fixthemap'>OpenStreetMap.</a>"
