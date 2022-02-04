@@ -4,14 +4,20 @@
 <!-- Javascript saved as html to allow for use of Django template tags within the code -->
 <script>
 $(document).ready(function(){
-  {% if not request.mobile %}
+  {% if not request.user_agent.is_mobile %}
       desktopDrawing();
   {% else %}
       mobileDrawing();
   {% endif %}
 });
 
-function desktopDrawing(){
+  function desktopDrawing() {
+    /* Add i18n zoom control if on desktop */
+    L.control.zoom({
+      zoomInTitle: gettext('Zoom in'),
+      zoomOutTitle: gettext('Zoom out'),
+    }).addTo(map);
+
     /* DRAWING CONTROL TOOLTIPS */
     L.drawLocal.draw.toolbar.actions.title = "{% trans 'Cancel drawing' %}";
     L.drawLocal.draw.toolbar.actions.text = "{% trans 'Cancel' %}";
@@ -41,17 +47,15 @@ function desktopDrawing(){
     L.drawLocal.edit.handlers.edit.tooltip.subtext = "{% trans 'Click cancel to undo changes.' %}";
     L.drawLocal.edit.handlers.remove.tooltip.text = "{% trans 'Click the alert areas to remove' %}";
 
-
     /* ADD THE CONTROL TO LEAFLET MAP */
-    map.addControl(new L.Control.Draw({
+
+    const drawControl = new L.Control.Draw({
         draw: {
             polyline: false,
             rectangle: false,
             circle: false,
+            marker: false,
             circlemarker: false,
-            marker: {
-                icon:icons["bikeGreyIcon"]
-            },
             polygon:
                 {% if request.user.is_authenticated %}
                 { allowIntersection: false }
@@ -65,17 +69,61 @@ function desktopDrawing(){
             {% else %}
             false
             {% endif %}
-    }));
+    })
+    map.addControl(drawControl);
+
+    /* ADD THE START REPORT BUTTON TO LEAFLET MAP */
+
+    // create a drawer that just creates markers
+    const markerOptions = {
+        icon: icons["bikeGreyIcon"]
+    };
+    const markerControl = new L.Draw.Marker(map, markerOptions);
+
+    let markerControlActive = false;
+
+    // Move leaflet control bar down so that start button can be top left item (desktop only)
+    $(".leaflet-top.leaflet-left").addClass("lower-toolbar");
+
+    // functions to start and stop drawing
+    const enableMarkerDrawing = () => {
+      markerControlActive = true;
+      markerControl.enable();
+      map.removeControl(drawControl);
+      $('#cancelDrawButton').css("display", "inline");
+    }
+
+    const disableMarkerDrawing = () => {
+      markerControlActive = false;
+      markerControl.disable();
+      map.addControl(drawControl);
+      $('#cancelDrawButton').css("display", "none");
+    }
 
     map.fire('drawControlReady');
 
     $(document).ready(function(){
+
+      // activate drawing a marker when 'start report' button is clicked
+      $('#startReportButton').click(function() {
+        if (!markerControlActive){
+          enableMarkerDrawing();
+        }
+      });
+      // activate drawing a marker when 'start report' button is clicked
+      $('#cancelDrawButton').click(function() {
+        if (markerControlActive){
+          disableMarkerDrawing();
+        }
+      });
+
         /* DEFINE ACTIONS TRIGGERED BY NEW DRAWINGS */
         map.on('draw:created', function (e) {
             var type = e.layerType,
                 layer = e.layer;
 
             if (type === 'marker') {
+                disableMarkerDrawing();
                 // Set form geometry field to click location
                 $('#incidentForm').modal('show');
                 var geom = JSON.stringify(layer.toGeoJSON().geometry);
@@ -210,7 +258,7 @@ function mobileDrawing(){
 </script>
 
 <!-- Mobile tooltip to explain the double tapping -->
-{% if request.mobile %}
+{% if request.user_agent.is_mobile %}
 <div class="tip-msg alert-info alert-dismissable">
     <div class="close">&times;</div>
     <center>{% trans "Double tap a location to submit a report" %}</center>

@@ -2,7 +2,7 @@
 {% get_current_language as LANGUAGE_CODE %}
 {% cache 500 map_legend LANGUAGE_CODE %}
 
-<div id="legend" class="leaflet-container leaflet-control-container" class="overflow-auto">
+<div id="legend" class="leaflet-container leaflet-control-container overflow-auto">
   <div class="leaflet-top leaflet-right">
     <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
       <a class="leaflet-control-layers-toggle" href="#" title="Layers"></a>
@@ -44,6 +44,7 @@
                 <input class="slider"></input>
               </div>
             </div>
+          </div>
 
           <div class="legend-group">
             <input class="layer-toggle" id="stravaCheckbox" type="checkbox" value="stravaHM" checked>
@@ -66,18 +67,18 @@
             </div>
           </div>
 
-      </div>
-
         <div class="legend-group-title">Attribution</div>
-        <div >
+          <div class="legend-group">
           <div id="basemap-about">
-              {% blocktrans %}Basemap by <a href="https://www.cyclosm.org/">CyclOSM.</a> Report and fix infrastructure data issues on <a href="https://www.openstreetmap.org/fixthemap">OpenStreetMap.</a> {% endblocktrans %}
+              {% trans "Basemap by <a href='https://www.cyclosm.org/'>CyclOSM.</a> Report and fix infrastructure data issues on <a href='https://www.openstreetmap.org/fixthemap'>OpenStreetMap.</a>" %}
           </div>
 
             {% url 'mapApp:disclaimer' as disclaimer_link %}
             <div align="right">
             <a href="{{ disclaimer_link }}" target="_blank ">{% trans "Disclaimer" %}</a>
             </div>
+            </div>
+
           </div>
         </div>
       </form>
