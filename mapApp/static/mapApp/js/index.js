@@ -48,7 +48,7 @@ var map = L.map('map', {
     worldCopyJump: true,
 });
 
-// Set map view
+// If the users location is found, set map view to that location
 map.on("locationfound", function (location) {
     var userMark = L.userMarker(location.latlng, { smallIcon: true, circleOpts: { weight: 1, opacity: 0.3, fillOpacity: 0.05 } }).addTo(map);
     if (location.accuracy < 501) {
@@ -428,7 +428,6 @@ function loadIncidenLayerXHR(in_relink, in_lyr_type, in_ref_lyr) {
 
 
 function loadInfoDetails(in_pk, ref_popup, in_type, in_url) {
-
     console.log(in_pk)
     $.ajax({
         url: in_url + in_pk,
