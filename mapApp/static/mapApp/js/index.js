@@ -4,6 +4,11 @@ var collisions, nearmisses, hazards, thefts, newInfrastructures;
 //'159.203.2.12' for dev
 var srv = window.location.hostname;
 
+// If running locally, include port in API requests
+if (window.location.port) {
+  srv = srv + ':' + window.location.port;
+}
+
 loadIncidenLayerXHR("/nearmisses_tiny?format=json", "nearmiss", nearmisses);
 loadIncidenLayerXHR("/hazards_tiny?format=json", "hazard", hazards);
 loadIncidenLayerXHR("/thefts_tiny?format=json", "theft", thefts);
@@ -43,13 +48,7 @@ var map = L.map('map', {
     worldCopyJump: true,
 });
 
-// Add i18n zoom control
-L.control.zoom({
-    zoomInTitle: gettext('Zoom in'),
-    zoomOutTitle: gettext('Zoom out'),
-}).addTo(map);
-
-// Set map view
+// If the users location is found, set map view to that location
 map.on("locationfound", function (location) {
     var userMark = L.userMarker(location.latlng, { smallIcon: true, circleOpts: { weight: 1, opacity: 0.3, fillOpacity: 0.05 } }).addTo(map);
     if (location.accuracy < 501) {
@@ -84,6 +83,10 @@ geocoder.markGeocode = function (result) {
 L.control.scale({
     position: 'bottomright'
 }).addTo(map);
+
+/* Turn off default mousewheel event (map zoom in / zoom out) when mouse is over the legend. This allows scrolling when contents overflow legend div */
+var elem = L.DomUtil.get('legend');
+L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
 
 // Add all points to map
 //collisions = geojsonMarker(collisions, "collision").addTo(incidentData).getLayers(),
@@ -425,7 +428,6 @@ function loadIncidenLayerXHR(in_relink, in_lyr_type, in_ref_lyr) {
 
 
 function loadInfoDetails(in_pk, ref_popup, in_type, in_url) {
-
     console.log(in_pk)
     $.ajax({
         url: in_url + in_pk,

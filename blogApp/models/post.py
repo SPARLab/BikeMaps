@@ -17,14 +17,14 @@ class Post(models.Model):
         ('en', _('English')),
         ('fr', _('French'))
     )
-    
+
     date = models.DateTimeField(_('Date created'), auto_now_add=True)
 
     title = models.CharField(_('Title'), max_length=100)
     description = models.CharField(_('Description'), max_length=300)
     post_date = models.DateTimeField(_('Date posted'), default=datetime.now)
     slug = models.SlugField(
-        _('Slug'), unique=True, blank=True, max_length=100, unique_for_date='created')
+        _('Slug'), unique=True, blank=True, max_length=100, unique_for_date='date')
     published = models.BooleanField(_('Published'), default=False)
     content = models.TextField(_('Content'), blank=True)
     language = models.CharField(
@@ -33,7 +33,7 @@ class Post(models.Model):
         choices=LANGUAGE_CHOICES,
         default='en'
     )
-    
+
 
     def get_absolute_url(self):
         return reverse('blogApp:view_post', kwargs={'slug': self.slug})
@@ -47,6 +47,9 @@ class Post(models.Model):
 
     # toString()
     def __unicode__(self):
+        return str(self.title)
+
+    def __str__(self):
         return str(self.title)
 
     class Meta:

@@ -2,21 +2,26 @@
 {% get_current_language as LANGUAGE_CODE %}
 {% cache 500 map_legend LANGUAGE_CODE %}
 
-<div id="legend" class="leaflet-container leaflet-control-container">
+<div id="legend" class="leaflet-container leaflet-control-container overflow-auto">
   <div class="leaflet-top leaflet-right">
     <div class="leaflet-control-layers leaflet-control" aria-haspopup="true">
       <a class="leaflet-control-layers-toggle" href="#" title="Layers"></a>
       <form class="leaflet-control-layers-list">
         <div class="leaflet-control-layers-overlays">
 
-          <div id="legend-about" class="hidden-xs hidden-sm">
-            <strong>{% trans "About" %}</strong><br>
+          <span class="hidden-xs hidden-sm">
+            <div id="legend-about" class="legend-group-title">
+            {% trans "About" %}
             {# Translators: This string contains a marker icon and a link to the about page from the text "more info". Please preserve these #}
             {% url 'mapApp:about' as about-link %}
+            </div>
+            <div class="legend-group">
             {% blocktrans %}BikeMaps.org is a crowdsource tool for global mapping of cycling safety. Using the <span class="marker-icon"></span> button, add your own data on cycling crashes, near-misses, hazards, and thefts. <a href="{{ about-link }}">More info</a>{% endblocktrans %}
-          </div>
+            </div>
+          </span>
 
-          <div class="legend-group">
+          <div class="legend-group-title">Layers</div>
+            <div class="legend-group">
             <input class="layer-toggle" type="checkbox" value="incidentData" checked>
             {% trans "Incidents" %}
             <div class="marker-group legend-subtext collapse in">
@@ -30,13 +35,12 @@
                 <span class="fa-stack">
                   <i class="fa fa-filter fa-stack-1x"></i>
                   <i class="fa fa-circle-thin fa-stack-2x"></i>
-                </span></i><small> {% trans "Filter" %}</small>
+                </span></i><small> {% trans "Date filter" %}</small>
               <div class="filter">
                 <div class="date-container">
                   <small><span class="start-date"></span></small>
                   <small><span class="end-date pull-right"></span></small>
                 </div>
-
                 <input class="slider"></input>
               </div>
             </div>
@@ -47,7 +51,10 @@
             {% trans "Strava ridership data" %}
             <a data-target="#about-strava" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>
             <div class="legend-subtext collapse in">
-              <small class="strava-gradient gradient-bar">{% trans "less" %} <div class="pull-right">{% trans "more" %}</div></small>
+              <small class="strava-gradient gradient-bar">
+                <div class="pull-left strava-gradient-label">{% trans "less" %}</div>
+                <div class="pull-right strava-gradient-label">{% trans "more" %}</div>
+              </small>
             </div>
           </div>
 
@@ -60,14 +67,18 @@
             </div>
           </div>
 
+        <div class="legend-group-title">Attribution</div>
+          <div class="legend-group">
           <div id="basemap-about">
-              {% blocktrans %}Basemap by <a href="https://www.cyclosm.org/">CyclOSM.</a> Report and fix infrastructure data issues on <a href="https://www.openstreetmap.org/fixthemap">OpenStreetMap.</a> {% endblocktrans %}
+              {% trans "Basemap by <a href='https://www.cyclosm.org/'>CyclOSM.</a> Report and fix infrastructure data issues on <a href='https://www.openstreetmap.org/fixthemap'>OpenStreetMap.</a>" %}
           </div>
 
             {% url 'mapApp:disclaimer' as disclaimer_link %}
             <div align="right">
             <a href="{{ disclaimer_link }}" target="_blank ">{% trans "Disclaimer" %}</a>
             </div>
+            </div>
+
           </div>
         </div>
       </form>
