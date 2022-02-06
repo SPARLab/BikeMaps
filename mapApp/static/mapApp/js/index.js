@@ -88,19 +88,6 @@ L.control.scale({
 var elem = L.DomUtil.get('legend');
 L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
 
-// Add all points to map
-//collisions = geojsonMarker(collisions, "collision").addTo(incidentData).getLayers(),
-//nearmisses = geojsonMarker(nearmisses, "nearmiss").addTo(incidentData).getLayers(),
-//hazards = geojsonMarker(hazards, "hazard").addTo(incidentData).getLayers(),
-//thefts = geojsonMarker(thefts, "theft").addTo(incidentData).getLayers();
-//newInfrastructures = geojsonMarker(newInfrastructures, "newInfrastructure").addTo(incidentData).getLayers();
-
-
-//add in the xhr layers here
-
-
-
-
 // Add geofence alert areas to map
 addAlertAreas(geofences);
 function addAlertAreas(geofences) {
@@ -116,14 +103,6 @@ function addAlertAreas(geofences) {
         }
     }).eachLayer(function (l) { alertAreas.addLayer(l); });
 }
-
-// Add and remove layers individually from the clusters on checkbox change
-//$("#collisionCheckbox").change(function(){ this.checked ? incidentData.addLayers(collisions) : incidentData.removeLayers(collisions); });
-//$("#nearmissCheckbox").change(function(){ this.checked ? incidentData.addLayers(nearmisses) : incidentData.removeLayers(nearmisses); });
-//$("#hazardCheckbox").change(function(){ this.checked ? incidentData.addLayers(hazards) : incidentData.removeLayers(hazards); });
-//$("#theftCheckbox").change(function(){ this.checked ? incidentData.addLayers(thefts) : incidentData.removeLayers(thefts); });
-//$("#newInfrastructureCheckbox").change(function () { this.checked ? incidentData.addLayers(newInfrastructures) : incidentData.removeLayers(newInfrastructures); });
-
 
 // Initialize the slider
 $("input.slider").ready(function () {
@@ -339,45 +318,6 @@ function pieChart(cluster) {
 };
 
 // HELPER FUNCTIONS
-function getPopup(layer) {
-    var feature = layer.feature,
-        type = layer.options.ftype,
-        popup;
-
-    if (type === "newInfrastructure") {
-        popup = '<strong>' + gettext('New infrastructure') + ':</strong> ' + gettext(feature.properties.infra_type);
-        popup += '<br><strong>' + gettext('Date changed') + ': </strong> ' + moment(feature.properties.dateAdded).locale(LANGUAGE_CODE).format('MMMM YYYY');
-        popup += '<br><div class="popup-details"><strong>' + gettext('Details') + ':</strong> ' + feature.properties.details + '</div>';
-    } else {
-        if (type === "collision" || type === "nearmiss") {
-            popup = '<strong>' + gettext('Type') + ':</strong> ' + gettext(feature.properties.i_type) + '<br><strong>';
-            if (feature.properties.i_type != "Fall") popup += gettext('Incident with');
-            else popup += gettext('Due to');
-            popup += ':</strong> ' + gettext(feature.properties.incident_with)
-
-        } else if (type === "hazard") {
-            popup = '<strong>' + gettext('Hazard type') + ':</strong> ' + gettext(feature.properties.i_type);
-
-        } else if (type === "theft") {
-            popup = '<strong>' + gettext('Theft type') + ':</strong> ' + gettext(feature.properties.i_type);
-
-        }
-        else return "error"; //Return error if type not found
-
-        // Append date
-        popup += '<br><strong>'+gettext('Date')+': </strong> ' + moment(feature.properties.date).locale(LANGUAGE_CODE).format("lll")+'<br>';
-        popup += '<strong>'+gettext('Incident ID')+':</strong> '+ feature.id;
-
-        // Append details if present
-        if (feature.properties.details) {
-            popup += '<br><div class="popup-details"><strong>' + gettext('Details') + ':</strong> ' + feature.properties.details + '</div>';
-        }
-
-        return popup;
-    }
-
-    return popup;
-};
 
 // Purpose: Convert a given geojson dataset to a MakiMarker point layer
 //  and add all latlngs to the heatmap and bind appropriate popups to markers
