@@ -1,19 +1,93 @@
-// Create data feature groups
-var collisions, nearmisses, hazards, thefts, newInfrastructures;
-
-//'159.203.2.12' for dev
-var srv = window.location.hostname;
+/** Host location, port to construct API requests */
+var hostname = window.location.hostname;
 
 // If running locally, include port in API requests
 if (window.location.port) {
-  srv = srv + ':' + window.location.port;
+  hostname = hostname + ':' + window.location.port;
 }
 
-loadIncidentDataByType("/nearmisses_tiny?format=json", "nearmiss", nearmisses);
-loadIncidentDataByType("/hazards_tiny?format=json", "hazard", hazards);
-loadIncidentDataByType("/thefts_tiny?format=json", "theft", thefts);
-loadIncidentDataByType("/collisions_tiny?format=json", "collision", collisions);
-loadIncidentDataByType("/newInfrastructures_tiny?format=json", "newInfrastructure", newInfrastructures);
+/**
+* Map set up
+*/
+
+/** Initialize the map */
+var map = L.map('map', {
+    center: [48, -100],
+    minZoom: 2,
+    zoom: 4,
+    zoomControl: false,
+    layers: [OpenStreetMap, CyclOSM, stravaHM],
+    worldCopyJump: true,
+});
+
+/** Add geocoder control */
+var geocodeMarker;
+var geocoder = L.Control.geocoder({
+    position: "topleft",
+    placeholder: gettext('Search...'),
+    errorMessage: gettext('Nothing found.')
+}).addTo(map);
+geocoder.markGeocode = function (result) {
+    map.fitBounds(result.bbox);
+    geocodeMarker && map.removeLayer(geocodeMarker); //remove old marker if it exists
+
+    geocodeMarker = new L.Marker(result.center, {
+        icon: icons["geocodeIcon"]
+    }).bindPopup(result.name).addTo(map).openPopup();
+};
+
+/** Add scalebar */
+L.control.scale({
+    position: 'bottomright'
+}).addTo(map);
+
+/* Turn off default mousewheel event (map zoom in / zoom out) when mouse is over the legend. This allows scrolling when contents overflow legend div */
+var elem = L.DomUtil.get('legend');
+L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
+
+map.on('moveend', function (e) {
+    var zoom = map.getZoom(),
+        center = map.getCenter();
+    window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
+});
+
+map.on('zoomend', function(e) {
+  if(map.getZoom() >= 13 && map.hasLayer(stravaHM)) {
+    // stravaHM._clearBgBuffer();
+  }
+});
+
+/** Locate user, set map view */
+
+// Find the user via GPS or internet connection.
+// Parameters to determine if the maps view should be set to that location and if the position should be polled and updated
+function locateUser(setView, watch) {
+    this.map.locate({
+        setView: setView,
+        maxZoom: 16,
+        watch: watch,
+        enableHighAccuracy: true
+    });
+};
+
+// If the users location is found, set map view to that location
+map.on("locationfound", function (location) {
+    var userMark = L.userMarker(location.latlng, { smallIcon: true, circleOpts: { weight: 1, opacity: 0.3, fillOpacity: 0.05 } }).addTo(map);
+    if (location.accuracy < 501) {
+        userMark.setAccuracy(location.accuracy);
+    }
+});
+
+if (typeof zoom !== 'undefined') {
+    map.setView(L.latLng(lat, lng), zoom);
+    locateUser(setView = false, watch = false);
+} else {
+    locateUser(setView = true, watch = false);
+}
+
+/**
+* Data fetching
+*/
 
 /**
  * @type {Object[]} - Array of objects
@@ -36,7 +110,15 @@ var incidentData = new L.MarkerClusterGroup({
     iconCreateFunction: pieChart
 });
 
-var alertAreas = L.featureGroup();
+incidentData.addTo(map);
+
+// Create data feature groups
+var collisions, nearmisses, hazards, thefts, newInfrastructures;
+loadIncidentDataByType("/nearmisses_tiny?format=json", "nearmiss", nearmisses);
+loadIncidentDataByType("/hazards_tiny?format=json", "hazard", hazards);
+loadIncidentDataByType("/thefts_tiny?format=json", "theft", thefts);
+loadIncidentDataByType("/collisions_tiny?format=json", "collision", collisions);
+loadIncidentDataByType("/newInfrastructures_tiny?format=json", "newInfrastructure", newInfrastructures);
 
 // Define popup getter function
 incidentData.on('click', function (e) {
@@ -44,55 +126,12 @@ incidentData.on('click', function (e) {
     getXHRPopup(layer);
 });
 
-// Initialize the map
-var map = L.map('map', {
-    center: [48, -100],
-    minZoom: 2,
-    zoom: 4,
-    zoomControl: false,
-    layers: [OpenStreetMap, CyclOSM, stravaHM, incidentData, alertAreas],
-    worldCopyJump: true,
-});
+/**
+* Alert areas
+*/
 
-// If the users location is found, set map view to that location
-map.on("locationfound", function (location) {
-    var userMark = L.userMarker(location.latlng, { smallIcon: true, circleOpts: { weight: 1, opacity: 0.3, fillOpacity: 0.05 } }).addTo(map);
-    if (location.accuracy < 501) {
-        userMark.setAccuracy(location.accuracy);
-    }
-});
-
-if (typeof zoom !== 'undefined') {
-    map.setView(L.latLng(lat, lng), zoom);
-    locateUser(setView = false, watch = false);
-} else {
-    locateUser(setView = true, watch = false);
-}
-
-// Add geocoder control
-var geocoder = L.Control.geocoder({
-    position: "topleft",
-    placeholder: gettext('Search...'),
-    errorMessage: gettext('Nothing found.')
-}).addTo(map);
-var geocodeMarker;
-geocoder.markGeocode = function (result) {
-    map.fitBounds(result.bbox);
-    geocodeMarker && map.removeLayer(geocodeMarker); //remove old marker if it exists
-
-    geocodeMarker = new L.Marker(result.center, {
-        icon: icons["geocodeIcon"]
-    }).bindPopup(result.name).addTo(map).openPopup();
-};
-
-// Add scalebar
-L.control.scale({
-    position: 'bottomright'
-}).addTo(map);
-
-/* Turn off default mousewheel event (map zoom in / zoom out) when mouse is over the legend. This allows scrolling when contents overflow legend div */
-var elem = L.DomUtil.get('legend');
-L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
+var alertAreas = L.featureGroup();
+alertAreas.addTo(map);
 
 // Add geofence alert areas to map
 addAlertAreas(geofences);
@@ -110,7 +149,11 @@ function addAlertAreas(geofences) {
     }).eachLayer(function (l) { alertAreas.addLayer(l); });
 }
 
-// Initialize the slider
+/**
+* Data filtering by date
+*/
+
+/** Initialize the slider */
 $("input.slider").ready(function () {
     var mySlider = $("input.slider").slider({
         step: 1,
@@ -153,6 +196,7 @@ function getIncidentLayer(incLayerId, incLayers) {
     }
     return tempLyr
 }
+
 // function to filter points and redraw map
 function filterPoints(start_date, end_date) {
 
@@ -238,16 +282,6 @@ $("#filterCheckbox").click(function () {
     }
 });
 
-// Purpose: Find the user via GPS or internet connection.
-//      Parameters to determine if the maps view should be set to that location and if the position should be polled and updated
-function locateUser(setView, watch) {
-    this.map.locate({
-        setView: setView,
-        maxZoom: 16,
-        watch: watch,
-        enableHighAccuracy: true
-    });
-};
 
 // pieChart
 // Purpose: Builds svg cluster DivIcons
@@ -339,18 +373,6 @@ function geojsonMarker(data, type) {
     });
 };
 
-map.on('moveend', function (e) {
-    var zoom = map.getZoom(),
-        center = map.getCenter();
-    window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
-});
-
-map.on('zoomend', function(e) {
-  if(map.getZoom() >= 13 && map.hasLayer(stravaHM)) {
-    // stravaHM._clearBgBuffer();
-  }
-});
-
 /**
  * Function to load incident data, convert to geojson feature collection/group, add to incidentData layer, and add to reference layers array
  * TODO break this into smaller funcs
@@ -406,10 +428,10 @@ function getXHRPopup(layer) {
 
     if (type === "newInfrastructure") {
         //there is an extra s in the path
-        loadPopupDetails(feature.properties.pk, popup, type, "//" + srv + "/" + type + "s_xhr?format=json&pk=");
+        loadPopupDetails(feature.properties.pk, popup, type, "//" + hostname + "/" + type + "s_xhr?format=json&pk=");
     }
     else {
-        loadPopupDetails(feature.properties.pk, popup, type, "//" + srv + "/" + type + "_xhr?format=json&pk=");
+        loadPopupDetails(feature.properties.pk, popup, type, "//" + hostname + "/" + type + "_xhr?format=json&pk=");
     }
 };
 
