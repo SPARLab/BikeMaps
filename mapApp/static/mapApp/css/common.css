@@ -1,6 +1,5 @@
 @font-face {
-	font-family: font-family: 'Montserrat', sans-serif;;
-	src: url('../font/faktos.regular.woff') format('woff');
+font-family: 'Carrois Gothic SC', sans-serif;
 }
 
 html, body {
@@ -12,6 +11,11 @@ body {
 	padding: 0px;
 	padding-top: 80px;
 	max-width: 100%;
+	color: #042A2B;
+}
+
+.btn-primary {
+	background-color: #042A2B;
 }
 /*Common background colors*/
 .collision{
@@ -86,7 +90,8 @@ textarea {
 }
 
 .nav{
-	font-size: 17px;
+	font-size: 16px;
+	font-weight: 800;
 }
 
 .nav li{
@@ -96,8 +101,8 @@ textarea {
 
 .navbar-brand {
 	margin-top: 10px;
-	color: #0c2b4a;
-	font-weight: 700;
+	color: #fff;
+	font-weight: 800;
 }
 
 .navbar-brand img{
@@ -115,23 +120,23 @@ textarea {
 }
 
 .navbar {
-	font-family: 'Montserrat', sans-serif;
+	font-family: 'Carrois Gothic SC', 'Times';
 	min-height: 80px;
 }
 
 .navbar-default {
-	background-color: #fff;
+	background-color: #042A2B;
 	border-bottom: 2px solid rgba(0,0,0,0.4);
 
 }
 
 .navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a:focus {
-	color: #00aeac;
+	color: #01adac;
 	font-weight: heavier;
 	/*-webkit-text-stroke: 1px #2c3e50;*/
 }
 .navbar-default .navbar-nav>li>a>span {
-	/*-webkit-text-stroke: 0px;*/
+	/* -webkit-text-stroke: 0px; */
 }
 
 .navbar-default .navbar-nav>li>a:hover,
@@ -140,16 +145,18 @@ textarea {
 .navbar-default .navbar-nav>.open>a,
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:hover {
+	background-color: #042A2B;
 	color: #f18904;
 }
 
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-  color: #fff;
+  color: #f18904;
+	border-bottom: 2px #fff;
 }
 
 body h1{
-	font-family: 'Montserrat', sans-serif;
+	font-family: 'Carrois Gothic SC', sans-serif;
 }
 
 /* Alert bell highlighting*/
