@@ -1,6 +1,6 @@
 // Icon definitions
 var iconColors = {
-    "collision": "pink",
+    "collision": "#d63e2a",
     "nearmiss": "#f3952f",
     "hazard": "#72b026",
     "theft": "#575757",
@@ -21,14 +21,14 @@ L.ExtraMarkers.Icon.prototype.options.prefix = 'fa';
 var icons = {
   "bikeRedIcon": L.ExtraMarkers.icon({
     icon: "fa-bicycle",
-    markerColor: '#785EF0',
+    markerColor: getColor("collision"),
     iconColor: 'black',
-    color: "#785EF0",
+    color: getColor("collision"),
     svg: "true"
   }),
   "bikeYellowIcon": L.ExtraMarkers.icon({
     icon: "fa-bicycle",
-    markerColor: 'orange',
+    markerColor: getColor("nearmiss"),
     iconColor: 'black',
     color: getColor("nearmiss"),
     svg: "true"
@@ -42,14 +42,14 @@ var icons = {
   }),
   "hazardIcon": L.ExtraMarkers.icon({
     icon: "fa-warning",
-    markerColor: 'green',
+    markerColor: getColor("hazard"),
     iconColor: 'black',
     color: getColor("hazard"),
     svg: "true"
   }),
   "theftIcon": L.ExtraMarkers.icon({
     icon: "fa-bicycle",
-    markerColor: 'gray',
+    markerColor: getColor("theft"),
     iconColor: '#cbcbcb',
     color: getColor("theft"),
     svg: "true"
