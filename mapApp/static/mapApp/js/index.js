@@ -18,9 +18,9 @@ loadIncidentDataByType("/newInfrastructures_tiny?format=json", "newInfrastructur
 /**
  * @type {Object[]} - Array of objects
  * @type {string} Object[].id - The type of incident (eg collision, hazard)
- * @type {layer} Object[].lyr - leaflet layer generated from geojson data for one incident type
+ * @type {layer} Object[].layer - leaflet layer generated from geojson data for one incident type
  */
- var refLayers = [];
+ var incidentLayers = [];
 
 /**
 * Group of all the incident layers together.
@@ -144,11 +144,11 @@ var collisionsUnfiltered = collisions,
 newInfrastructuresUnfiltered = newInfrastructures;
 $("input.slider").on("slideStop", function (e) { filterPoints(e.value[0], e.value[1]) });
 
-function getRefLyr(in_lyr_id, in_refLayers) {
+function getIncidentLayer(incLayerId, incLayers) {
     var tempLyr;
-    for (var tlyr in in_refLayers) {
-        if (in_refLayers[tlyr].id === in_lyr_id) {
-            tempLyr = in_refLayers[tlyr].lyr;
+    for (var tlayer in incLayers) {
+        if (incLayers[tlayer].id === incLayerId) {
+            tempLyr = incLayers[tlayer].layer;
         }
     }
     return tempLyr
@@ -162,11 +162,11 @@ function filterPoints(start_date, end_date) {
 
     incidentData.clearLayers();
 
-    collisionsUnfiltered = getRefLyr("collision", refLayers);
-    nearmissesUnfiltered = getRefLyr("nearmiss", refLayers);
-    hazardsUnfiltered = getRefLyr("hazard", refLayers);
-    theftsUnfiltered = getRefLyr("theft", refLayers);
-    newInfrastructuresUnfiltered = getRefLyr("newInfrastructure", refLayers);
+    collisionsUnfiltered = getIncidentLayer("collision", incidentLayers);
+    nearmissesUnfiltered = getIncidentLayer("nearmiss", incidentLayers);
+    hazardsUnfiltered = getIncidentLayer("hazard", incidentLayers);
+    theftsUnfiltered = getIncidentLayer("theft", incidentLayers);
+    newInfrastructuresUnfiltered = getIncidentLayer("newInfrastructure", incidentLayers);
 
     collisions = collisionsUnfiltered.filter(function (feature, layer) {
         d = moment(feature.feature.properties.date);
@@ -353,24 +353,25 @@ map.on('zoomend', function(e) {
 
 /**
  * Function to load incident data, convert to geojson feature collection/group, add to incidentData layer, and add to reference layers array
- * @param {string} request_url - url to request this incident type
- * @param {string} incident_type - type of incident being requested (ie nearmiss, hazard)
+ * TODO break this into smaller funcs
+ * @param {string} requestURL - url to request this incident type
+ * @param {string} incidentType - type of incident being requested (ie nearmiss, hazard)
  */
-function loadIncidentDataByType(request_url, incident_type, in_ref_lyr) {
+function loadIncidentDataByType(requestURL, incidentType, incidentLayer) {
     //https://bikemaps.org/hazards?format=json
     //hazard
     $.ajax({
-        url: request_url,
+        url: requestURL,
         dataType: 'json',
         success: function (response) {
             //console.log('trying to add the xhr layer');
-            in_ref_lyr =
-            geojsonMarker(response, incident_type)
+            incidentLayer =
+            geojsonMarker(response, incidentType)
             .addTo(incidentData)
             .getLayers();
-            $("#" + incident_type + "Checkbox").change(function () { this.checked ? incidentData.addLayers(in_ref_lyr) : incidentData.removeLayers(in_ref_lyr); });
+            $("#" + incidentType + "Checkbox").change(function () { this.checked ? incidentData.addLayers(incidentLayer) : incidentData.removeLayers(incidentLayer); });
 
-            refLayers.push({ id: incident_type, lyr: in_ref_lyr });
+            incidentLayers.push({ id: incidentType, layer: incidentLayer });
         },
         error: function (err) {
             console.log(err);
@@ -378,20 +379,19 @@ function loadIncidentDataByType(request_url, incident_type, in_ref_lyr) {
     });
 }
 
-function loadInfoDetails(in_pk, ref_popup, in_type, in_url) {
-    console.log(in_pk)
+function loadPopupDetails(incidentPk, popup, incidentType, incidentURL) {
+    console.log(incidentPk)
     $.ajax({
-        url: in_url + in_pk,
+        url: incidentURL + incidentPk,
         dataType: 'json',
         success: function (response) {
             //console.log(response);
-            ref_popup.setContent(getPopupText(in_type, response));
+            popup.setContent(getPopupText(incidentType, response));
         },
         error: function (err) {
-            ref_popup.setContent('Could not get Xhr details');
+            popup.setContent('Could not get Xhr details');
         }
     });
-
 }
 
 function getXHRPopup(layer) {
@@ -406,33 +406,33 @@ function getXHRPopup(layer) {
 
     if (type === "newInfrastructure") {
         //there is an extra s in the path
-        loadInfoDetails(feature.properties.pk, popup, type, "//" + srv + "/" + type + "s_xhr?format=json&pk=");
+        loadPopupDetails(feature.properties.pk, popup, type, "//" + srv + "/" + type + "s_xhr?format=json&pk=");
     }
     else {
-        loadInfoDetails(feature.properties.pk, popup, type, "//" + srv + "/" + type + "_xhr?format=json&pk=");
+        loadPopupDetails(feature.properties.pk, popup, type, "//" + srv + "/" + type + "_xhr?format=json&pk=");
     }
 };
 
-function getPopupText(in_type, in_data) {
+function getPopupText(incidentType, in_data) {
     var tempContent = "";
     var tempPath = "";
 
-    if (in_type === "hazard") {
+    if (incidentType === "hazard") {
         tempContent = '<strong>' + gettext('Hazard type') + ':</strong> ' + gettext(in_data.properties.i_type);
         tempPath = "/mapApp/hazard/";
     }
-    else if (in_type === "theft") {
+    else if (incidentType === "theft") {
         tempContent = '<strong>' + gettext('Theft type') + ':</strong> ' + gettext(in_data.properties.i_type);
         tempPath = "/mapApp/theft/"
     }
-    else if (in_type === "collision" || in_type === "nearmiss") {
+    else if (incidentType === "collision" || incidentType === "nearmiss") {
         tempContent = '<strong>' + gettext('Type') + ':</strong> ' + gettext(in_data.properties.i_type) + '<br><strong>';
         if (in_data.properties.i_type != "Fall") tempContent += gettext('Incident with');
         else tempContent += gettext('Due to');
         tempContent += ':</strong> ' + gettext(in_data.properties.incident_with)
         tempPath = "/mapApp/incident/";
     }
-    else if (in_type === "newInfrastructure") {
+    else if (incidentType === "newInfrastructure") {
         tempContent = '<strong>' + gettext('New infrastructure') + ':</strong> ' + gettext(in_data.properties.infra_type);
         tempContent += '<br><strong>' + gettext('Date changed') + ': </strong> ' + moment(in_data.properties.dateAdded).locale(LANGUAGE_CODE).format('MMMM YYYY');
         tempContent += '<br><div class="popup-details"><strong>' + gettext('Details') + ':</strong> ' + in_data.properties.details + '</div>';
