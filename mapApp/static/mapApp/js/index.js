@@ -9,11 +9,11 @@ if (window.location.port) {
   srv = srv + ':' + window.location.port;
 }
 
-loadIncidenLayerXHR("/nearmisses_tiny?format=json", "nearmiss", nearmisses);
-loadIncidenLayerXHR("/hazards_tiny?format=json", "hazard", hazards);
-loadIncidenLayerXHR("/thefts_tiny?format=json", "theft", thefts);
-loadIncidenLayerXHR("/collisions_tiny?format=json", "collision", collisions);
-loadIncidenLayerXHR("/newInfrastructures_tiny?format=json", "newInfrastructure", newInfrastructures);
+loadIncidentDataByType("/nearmisses_tiny?format=json", "nearmiss", nearmisses);
+loadIncidentDataByType("/hazards_tiny?format=json", "hazard", hazards);
+loadIncidentDataByType("/thefts_tiny?format=json", "theft", thefts);
+loadIncidentDataByType("/collisions_tiny?format=json", "collision", collisions);
+loadIncidentDataByType("/newInfrastructures_tiny?format=json", "newInfrastructure", newInfrastructures);
 
 var xhrLayersLoaded = 0;
 var refLayers = [];
@@ -32,11 +32,8 @@ var incidentData = new L.MarkerClusterGroup({
 // Define popup getter function
 incidentData.on('click', function (e) {
     var layer = e.layer;
-    //layer.bindPopup(getPopup(layer)).openPopup();
     getXHRPopup(layer);
 });
-
-
 
 // Initialize the map
 var map = L.map('map', {
@@ -345,27 +342,32 @@ map.on('zoomend', function(e) {
   }
 });
 
-
-function loadIncidenLayerXHR(in_relink, in_lyr_type, in_ref_lyr) {
+/**
+ * Function to load incident data, convert to geojson feature collection/group, add to incidentData layer, and add to reference layers array
+ * @param {string} request_url - url to request this incident type
+ * @param {string} incident_type - type of incident being requested (ie nearmiss, hazard)
+ */
+function loadIncidentDataByType(request_url, incident_type, in_ref_lyr) {
     //https://bikemaps.org/hazards?format=json
     //hazard
     $.ajax({
-        url: in_relink,
+        url: request_url,
         dataType: 'json',
         success: function (response) {
             //console.log('trying to add the xhr layer');
-            in_ref_lyr = geojsonMarker(response, in_lyr_type).addTo(incidentData).getLayers();
-            $("#" + in_lyr_type + "Checkbox").change(function () { this.checked ? incidentData.addLayers(in_ref_lyr) : incidentData.removeLayers(in_ref_lyr); });
-            refLayers.push({ id: in_lyr_type, lyr: in_ref_lyr });
+            in_ref_lyr =
+            geojsonMarker(response, incident_type)
+            .addTo(incidentData)
+            .getLayers();
+            $("#" + incident_type + "Checkbox").change(function () { this.checked ? incidentData.addLayers(in_ref_lyr) : incidentData.removeLayers(in_ref_lyr); });
+
+            refLayers.push({ id: incident_type, lyr: in_ref_lyr });
         },
         error: function (err) {
             console.log(err);
         }
     });
-
 }
-
-
 
 function loadInfoDetails(in_pk, ref_popup, in_type, in_url) {
     console.log(in_pk)
@@ -400,7 +402,6 @@ function getXHRPopup(layer) {
     else {
         loadInfoDetails(feature.properties.pk, popup, type, "//" + srv + "/" + type + "_xhr?format=json&pk=");
     }
-
 };
 
 function getPopupText(in_type, in_data) {
