@@ -15,9 +15,17 @@ loadIncidentDataByType("/thefts_tiny?format=json", "theft", thefts);
 loadIncidentDataByType("/collisions_tiny?format=json", "collision", collisions);
 loadIncidentDataByType("/newInfrastructures_tiny?format=json", "newInfrastructure", newInfrastructures);
 
-var xhrLayersLoaded = 0;
-var refLayers = [];
+/**
+ * @type {Object[]} - Array of objects
+ * @type {string} Object[].id - The type of incident (eg collision, hazard)
+ * @type {layer} Object[].lyr - leaflet layer generated from geojson data for one incident type
+ */
+ var refLayers = [];
 
+/**
+* Group of all the incident layers together.
+* Marker cluster group similar to or extension of layergroup?
+*/
 var incidentData = new L.MarkerClusterGroup({
     maxClusterRadius: 70,
     polygonOptions: {
@@ -26,8 +34,9 @@ var incidentData = new L.MarkerClusterGroup({
     },
     animateAddingMarkers: true,
     iconCreateFunction: pieChart
-}),
-    alertAreas = L.featureGroup();
+});
+
+var alertAreas = L.featureGroup();
 
 // Define popup getter function
 incidentData.on('click', function (e) {
