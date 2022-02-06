@@ -23,18 +23,18 @@ var map = L.map('map', {
 /** Add geocoder control */
 var geocodeMarker;
 var geocoder = L.Control.geocoder({
+    defaultMarkGeocode: false,
     position: "topleft",
     placeholder: gettext('Search...'),
     errorMessage: gettext('Nothing found.')
+}).on('markgeocode', function(result) {
+  console.log(result.geocode);
+  map.fitBounds(result.geocode.bbox);
+  geocodeMarker && map.removeLayer(geocodeMarker); //remove old marker if it exists
+  geocodeMarker = new L.Marker(result.geocode.center, {
+      icon: icons["geocodeIcon"]
+  }).bindPopup(result.geocode.name).addTo(map).openPopup();
 }).addTo(map);
-geocoder.markGeocode = function (result) {
-    map.fitBounds(result.bbox);
-    geocodeMarker && map.removeLayer(geocodeMarker); //remove old marker if it exists
-
-    geocodeMarker = new L.Marker(result.center, {
-        icon: icons["geocodeIcon"]
-    }).bindPopup(result.name).addTo(map).openPopup();
-};
 
 /** Add scalebar */
 L.control.scale({
