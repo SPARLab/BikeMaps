@@ -358,6 +358,45 @@ function pieChart(cluster) {
 };
 
 // HELPER FUNCTIONS
+function getPopup(layer) {
+    var feature = layer.feature,
+        type = layer.options.ftype,
+        popup;
+
+    if (type === "newInfrastructure") {
+        popup = '<strong>' + gettext('New infrastructure') + ':</strong> ' + gettext(feature.properties.infra_type);
+        popup += '<br><strong>' + gettext('Date changed') + ': </strong> ' + moment(feature.properties.dateAdded).locale(LANGUAGE_CODE).format('MMMM YYYY');
+        popup += '<br><div class="popup-details"><strong>' + gettext('Details') + ':</strong> ' + feature.properties.details + '</div>';
+    } else {
+        if (type === "collision" || type === "nearmiss") {
+            popup = '<strong>' + gettext('Type') + ':</strong> ' + gettext(feature.properties.i_type) + '<br><strong>';
+            if (feature.properties.i_type != "Fall") popup += gettext('Incident with');
+            else popup += gettext('Due to');
+            popup += ':</strong> ' + gettext(feature.properties.incident_with)
+
+        } else if (type === "hazard") {
+            popup = '<strong>' + gettext('Hazard type') + ':</strong> ' + gettext(feature.properties.i_type);
+
+        } else if (type === "theft") {
+            popup = '<strong>' + gettext('Theft type') + ':</strong> ' + gettext(feature.properties.i_type);
+
+        }
+        else return "error"; //Return error if type not found
+
+        // Append date
+        popup += '<br><strong>'+gettext('Date')+': </strong> ' + moment(feature.properties.date).locale(LANGUAGE_CODE).format("lll")+'<br>';
+        popup += '<strong>'+gettext('Incident ID')+':</strong> '+ feature.id;
+
+        // Append details if present
+        if (feature.properties.details) {
+            popup += '<br><div class="popup-details"><strong>' + gettext('Details') + ':</strong> ' + feature.properties.details + '</div>';
+        }
+
+        return popup;
+    }
+
+    return popup;
+};
 
 // Purpose: Convert a given geojson dataset to a MakiMarker point layer
 //  and add all latlngs to the heatmap and bind appropriate popups to markers
