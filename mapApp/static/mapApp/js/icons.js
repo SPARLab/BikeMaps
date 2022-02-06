@@ -23,63 +23,63 @@ var icons = {
     icon: "fa-bicycle",
     markerColor: getColor("collision"),
     iconColor: 'black',
-    color: getColor("collision"),
+    pieColor: getColor("collision"),
     svg: "true"
   }),
   "bikeYellowIcon": L.ExtraMarkers.icon({
     icon: "fa-bicycle",
     markerColor: getColor("nearmiss"),
     iconColor: 'black',
-    color: getColor("nearmiss"),
+    pieColor: getColor("nearmiss"),
     svg: "true"
   }),
   "bikeGreyIcon": L.ExtraMarkers.icon({
     icon: "fa-crosshairs",
     markerColor: 'lightblue',
     iconColor: 'black',
-    color: getColor("undefined"),
+    pieColor: getColor("undefined"),
     svg: "true"
   }),
   "hazardIcon": L.ExtraMarkers.icon({
     icon: "fa-warning",
     markerColor: getColor("hazard"),
     iconColor: 'black',
-    color: getColor("hazard"),
+    pieColor: getColor("hazard"),
     svg: "true"
   }),
   "theftIcon": L.ExtraMarkers.icon({
     icon: "fa-bicycle",
     markerColor: getColor("theft"),
     iconColor: '#cbcbcb',
-    color: getColor("theft"),
+    pieColor: getColor("theft"),
     svg: "true"
   }),
   "officialIcon": L.ExtraMarkers.icon({
     icon: "fa-certificate",
     markerColor: 'cadetblue',
     iconColor: 'orange',
-    color: getColor("official"),
+    pieColor: getColor("official"),
     svg: "true"
   }),
   "geocodeIcon": L.ExtraMarkers.icon({
     icon: "fa-flag",
     markerColor: 'darkred',
     iconColor: 'black',
-    color: getColor("geocode"),
+    pieColor: getColor("geocode"),
     svg: "true"
   }),
   "locationIcon": L.ExtraMarkers.icon({
     icon: "fa-user",
     markerColor: 'darkred',
     iconColor: 'black',
-    color: getColor("location"),
+    pieColor: getColor("location"),
     svg: "true"
   }),
     "newInfrastructureIcon": L.ExtraMarkers.icon({
     icon: "fa-star",
     markerColor: 'gray',
     iconColor: 'yellow',
-    color: getColor("newInfrastructure"),
+    pieColor: getColor("newInfrastructure"),
     svg: "true"
   })
 };

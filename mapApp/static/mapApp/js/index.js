@@ -292,8 +292,8 @@ function pieChart(cluster) {
 
     // Count the number of points of each kind in the cluster using underscore.js
     var data = _.chain(children)
-        .countBy(function (i) { return i.options.icon.options.color })
-        .map(function (count, color) { return { "color": color, "count": count } })
+        .countBy(function (i) { return i.options.icon.options.pieColor })
+        .map(function (count, pieColor) { return { "color": pieColor, "count": count } })
         .sortBy(function (i) { return -i.count })
         .value();
 
