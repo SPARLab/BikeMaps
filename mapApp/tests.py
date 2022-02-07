@@ -77,6 +77,12 @@ class GetURLTests(TestCase):
         self.assertEqual(self.client.get('/thefts.json').status_code, 200)
         self.assertEqual(self.client.get('/official.json').status_code, 200)
 
+        self.assertEqual(self.client.get('/collisions_tiny/').status_code, 200)
+        self.assertEqual(self.client.get('/nearmisses_tiny/').status_code, 200)
+        self.assertEqual(self.client.get('/hazards_tiny/').status_code, 200)
+        self.assertEqual(self.client.get('/thefts_tiny/').status_code, 200)
+        self.assertEqual(self.client.get('/newInfrastructures_tiny/').status_code, 200)
+
 
         self.assertEqual(self.client.get('/alertareas.json').status_code, 401)
         self.client.login(username="test_user", password="password")
