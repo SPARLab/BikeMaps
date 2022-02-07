@@ -11,11 +11,11 @@ body {
 	padding: 0px;
 	padding-top: 80px;
 	max-width: 100%;
-	color: #042A2B;
+	color: #041e2b;
 }
 
 .btn-primary {
-	background-color: #042A2B;
+	background-color: #041e2b;
 }
 /*Common background colors*/
 .collision{
@@ -125,7 +125,7 @@ textarea {
 }
 
 .navbar-default {
-	background-color: #042A2B;
+	background-color: #041e2b;
 	border-bottom: 2px solid rgba(0,0,0,0.4);
 
 }
@@ -145,7 +145,7 @@ textarea {
 .navbar-default .navbar-nav>.open>a,
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:hover {
-	background-color: #042A2B;
+	background-color: #041e2b;
 	color: #f18904;
 }
 
