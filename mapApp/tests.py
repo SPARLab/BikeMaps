@@ -161,6 +161,8 @@ class TinyIncidentTests(TestCase):
     # An 'incident' is fall, collision, or nearmiss in the 'incident' table
     # The 'points' table groups falls and collisions together as 'collisions', but keeps nearmisses separate
     # Create 3 incident objects, but collisions and falls are retreived from /collisions and nearmisses from /nearmiss
+    victoriaBboxQuery = '?bbox=-124,48,-123,49'
+
     def setUp(self):
         pnt_geom1 = GEOSGeometry('POINT(-123.5 48.5)')
         pnt_geom2 = GEOSGeometry('POINT(-84.5 42)')
@@ -195,12 +197,26 @@ class TinyIncidentTests(TestCase):
 
         self.assertEqual(2, len(data["features"]))
 
+    def test_tiny_collision_bbox(self):
+        response = self.client.get("/collisions_tiny/" + self.victoriaBboxQuery)
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(1, len(data["features"]))
+
     def test_tiny_nearmiss_get(self):
         response = self.client.get("/nearmisses_tiny/")
         json_string = response.content
         data = json.loads(json_string)
 
         self.assertEqual(1, len(data["features"]))
+
+    def test_tiny_nearmiss_box(self):
+        response = self.client.get("/nearmisses_tiny/" + self.victoriaBboxQuery)
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(0, len(data["features"]))
 
 class HazardTests(TestCase):
     """Test Hazard instantiation and methods"""

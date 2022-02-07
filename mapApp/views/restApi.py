@@ -402,7 +402,8 @@ class TinyCollisionList(APIView):
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
 
-        collisionsQuerySet = Incident.objects.filter(p_type__exact="collision").exclude(infrastructure_changed=True).order_by('-date')[:2500]		
+        collisionsQuerySet = Incident.objects.filter(p_type__exact="collision").filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')[:2500]
+
         serializer = TinyIncidentSerializer(collisionsQuerySet, many=True)
         return Response(serializer.data)
 
@@ -428,7 +429,8 @@ class TinyNearMissList(APIView):
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
 
-        nearmissQuerySet = Incident.objects.filter(p_type__exact="nearmiss").exclude(infrastructure_changed=True).order_by('-date')[:2500]		
+        nearmissQuerySet = Incident.objects.filter(p_type__exact="nearmiss").filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')[:2500]
+        
         serializer = TinyIncidentSerializer(nearmissQuerySet, many=True)
         return Response(serializer.data)
 
