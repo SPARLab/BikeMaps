@@ -374,7 +374,7 @@ class RetrieveMessagesForSpecialAreasTests(TestCase):
         """
         kelowna = {'geom': [-119.493500,49.884491]}
         followUpMsg = retrieveFollowUpMsg("hazard", kelowna);
-        self.assertEqual(followUpMsg, "Report this hazard online to Kelowna authorities <a href=\"https://apps.kelowna.ca/iService_Requests/request.cfm?id=265&sid=97\" style=\"color:white\">here</a>")
+        self.assertEqual(followUpMsg, "Report this hazard online to Kelowna authorities <a href='https://apps.kelowna.ca/iService_Requests/request.cfm?id=265&sid=97' target='_blank' rel='noopener noreferrer'>here</a>")
 
     def test_incident_no_special_area(self):
         """
@@ -390,4 +390,4 @@ class RetrieveMessagesForSpecialAreasTests(TestCase):
         """
         hamilton = {'geom': [-79.8711,43.2557]}
         followUpMsg = retrieveFollowUpMsg("incident", hamilton);
-        self.assertEqual(followUpMsg, "If you have been involved in a collision in Ontario, consider reviewing <a href=\"https://www.thebikinglawyer.ca/post/the-biking-lawyer-s-crash-guide\" style=\"color: white\">this legal guide</a>")
+        self.assertEqual(followUpMsg, "If you have been involved in a collision with a vehicle in Ontario, consider reviewing <a href='https://www.thebikinglawyer.ca/post/the-biking-lawyer-s-crash-guide' target='_blank' rel='noopener noreferrer'>this legal guide</a>")
