@@ -299,11 +299,7 @@ class PostDataTests(TestCase):
         Theft.objects.all().delete()
 
     def test_incident_post(self):
-        response = self.client.post("/incident_submit/", {"geom": self.pnt_geom, "date": self.now_time,
-                                                          "i_type": "Collision with moving object or vehicle",
-                                                          "incident_with": "Vehicle, side",
-                                                          "injury": "Injury, no treatment",
-                                                          "impact": "None"})
+        response = self.client.post("/incident_submit/", {"geom": self.pnt_geom, "date": self.now_time, "i_type": "Collision with moving object or vehicle", "incident_with": "Vehicle, side", "injury": "Injury, no treatment", "impact": "None", "personal_involvement": "Yes"})
         json_string = response.content
         data = json.loads(json_string)
 

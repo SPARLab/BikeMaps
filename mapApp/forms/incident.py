@@ -67,6 +67,7 @@ class IncidentForm(forms.ModelForm):
     def is_valid(self):
 
         # run default, parent validation first
+        # if failed, get results with super(IncidentForm, self).errors
         valid = super(IncidentForm, self).is_valid()
 
         # check date to ensure incident occurred within the past 2 years
