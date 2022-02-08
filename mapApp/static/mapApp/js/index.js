@@ -31,8 +31,8 @@ var map = L.map('map', {
     worldCopyJump: true,
 });
 
-let boundsToLoadDataFor = map.getBounds();
 let loadingDataFlag = 0;
+let boundsOfLoadedData = L.latLngBounds(); // initalize with empty bounds
 
 /** Add geocoder control */
 var geocodeMarker;
@@ -59,6 +59,10 @@ L.control.scale({
 var elem = L.DomUtil.get('legend');
 L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
 
+const loadDataIfBoundsExceedDebounce = debounce(function() {
+    loadDataIfBoundsExceed(map.getBounds());
+}, 1500);
+
 map.on('moveend', function (e) {
     var zoom = map.getZoom(),
         center = map.getCenter();
@@ -67,9 +71,8 @@ map.on('moveend', function (e) {
     console.log('move end');
     // if true, load new data
     console.log('new data load needed?');
-    if (!loadingDataFlag && checkIfNewBoundsExceed(map.getBounds())){
-      console.log("loading new data");
-      loadAllIncidentData(map.getBounds());
+    if (!loadingDataFlag) {
+      loadDataIfBoundsExceedDebounce();
     }
   });
 
@@ -138,7 +141,8 @@ incidentAppliedLayers.addTo(map);
 
 // Create data feature groups
 var collisions, nearmisses, hazards, thefts, newInfrastructures;
-loadAllIncidentData(boundsToLoadDataFor);
+// get current map view for initial data loading
+loadAllIncidentData(map.getBounds());
 
 // Define popup getter function
 incidentAppliedLayers.on('click', function (e) {
@@ -432,12 +436,12 @@ function geojsonMarker(data, type) {
 
 /**
  * Refresh layers for all incident data types for the requested bounds
- * @param {L.bounds} bounds - leaflet type representing area of map to load data for
+ * @param {L.bounds} boundsToLoad - leaflet type representing area of map to load data for
  */
-function loadAllIncidentData(bounds){
+function loadAllIncidentData(boundsToLoad){
   loadingDataFlag = 1;
   const incidentTypeStrings = ['collisions', 'nearmisses', 'hazards', 'thefts', 'newInfrastructures'];
-  let bboxString = getCoordStringFromBounds(bounds);
+  let bboxString = getCoordStringFromBounds(boundsToLoad);
 
   // clear all existing layers
   incidentAppliedLayers.clearLayers();
@@ -451,6 +455,7 @@ function loadAllIncidentData(bounds){
   Promise.all(loadDataPromsies).then(r => {
     console.log('done loading all');
     loadingDataFlag = 0;
+    boundsOfLoadedData = boundsToLoad;
   }).catch(e => {
     loadingDataFlag = 0;
     console.log(e)
@@ -503,16 +508,35 @@ function processLayerFromData(data, incidentType){
   incidentReferenceLayers.push({ id: incidentType, layer: incidentLayer });
 }
 
-/* TODO: add debounce to wait until user stops zooming/scrolling around to load new data */
-function checkIfNewBoundsExceed(bounds){
-  return !boundsToLoadDataFor.contains(bounds);
-}
-
 // URLs use incident types in plural form, checkboxes use singular. Convert between for convenience
 function getIncidentTypeFromURL(URLSubstring){
   if (URLSubstring === "nearmisses") return "nearmiss";
   else return URLSubstring.slice(0, -1);
 }
+
+/* TODO: add debounce to wait until user stops zooming/scrolling around to load new data */
+function loadDataIfBoundsExceed(bounds){
+  // if loaded data bounds are empty or current bounds exceed them, load new data
+  if (!boundsOfLoadedData.isValid() || !boundsOfLoadedData.contains(bounds)){
+    console.log('loading new data');
+    loadAllIncidentData(bounds);
+  }
+}
+
+function debounce(func, wait, immediate) {
+    var timeout;
+    return function () {
+        var context = this, args = arguments;
+        var later = function () {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
+};
 
 function loadPopupDetails(incidentPk, popup, incidentType, incidentURL) {
     console.log(incidentPk)
