@@ -68,9 +68,6 @@ map.on('moveend', function (e) {
     console.log(checkIfNewBoundsExceed(map.getBounds()))});
 
 map.on('zoomend', function(e) {
-  console.log('zoom end');
-  // if true, load new data
-  console.log(checkIfNewBoundsExceed(map.getBounds()))
   if(map.getZoom() >= 13 && map.hasLayer(stravaHM)) {
     // stravaHM._clearBgBuffer();
   }
