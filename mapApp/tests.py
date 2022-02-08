@@ -331,6 +331,41 @@ class TheftTests(TestCase):
     def test_p_type(self):
         self.assertEqual("theft", self._theft.p_type)
 
+class TinyTheftTests(TestCase):
+    """Test Tiny Thefts url & bbox filtering"""
+    santaBarbaraBboxQuery = "?bbox=-121,35,-119,36"
+
+    def setUp(self):
+        pnt_geom = GEOSGeometry('POINT(-123.5 48.5)')
+        now_time = datetime.now()
+
+        # Theft
+        self._theft = Theft.objects.create(geom=pnt_geom, date=now_time,
+                                           i_type="Bike (value < $1000)",
+                                           how_locked="Frame locked",
+                                           lock="U-Lock",
+                                           locked_to="Outdoor bike rack",
+                                           lighting ="Good",
+                                           traffic="Very High")
+
+    def tearDown(self):
+        self._theft.delete()
+
+    def test_tiny_theft_get(self):
+        response = self.client.get("/thefts_tiny/")
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(1, len(data["features"]))
+
+    def test_tiny_hazard_bbox(self):
+        response = self.client.get("/thefts_tiny/" + self.santaBarbaraBboxQuery)
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(0, len(data["features"]))
+
+
 class NewInfrastructureTests(TestCase):
     """Tests of Incident class points instantiation and methods"""
     def setUp(self):
@@ -352,6 +387,33 @@ class NewInfrastructureTests(TestCase):
 
     def test_p_type(self):
         self.assertEqual("newInfrastructure", self._newInfrastructure.p_type)
+
+class TinyNewInfrastructureTests(TestCase):
+    """Test tiny new infrastructures url & bbox filtering"""
+    santaBarbaraBboxQuery = "?bbox=-121,35,-119,36"
+
+    def setUp(self):
+        pnt_geom = GEOSGeometry('POINT(-123.5 48.5)')
+        now_time = datetime.now()
+
+        self._newInfrastructure = NewInfrastructure.objects.create(geom = pnt_geom, date = now_time, dateAdded = now_time, infra_type = "Sepperated bike lane", infraDetails = "New bike lane")
+
+    def tearDown(self):
+        self._newInfrastructure.delete()
+
+    def test_tiny_new_infra_get(self):
+        response = self.client.get("/newInfrastructures_tiny/")
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(1, len(data["features"]))
+
+    def test_tiny_hazard_bbox(self):
+        response = self.client.get("/newInfrastructures_tiny/" + self.santaBarbaraBboxQuery)
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(0, len(data["features"]))
 
 class AlertAreaTests(TestCase):
     """Tests for asserting point intersection works correctly with incident points"""

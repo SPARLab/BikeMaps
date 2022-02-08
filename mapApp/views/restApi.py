@@ -415,7 +415,7 @@ class XHRCollisionInfo(APIView):
 
         # grab the pk and filter and find only the one record that matched
         in_pk = request.GET.get('pk')
-        collisionsQuerySet = Incident.objects.get(pk=in_pk)			
+        collisionsQuerySet = Incident.objects.get(pk=in_pk)
         serializer = TinyXHRIncidentSerializer(collisionsQuerySet, many=False)
         return Response(serializer.data)
 
@@ -430,7 +430,7 @@ class TinyNearMissList(APIView):
         bbox = stringToPolygon(bbstr)
 
         nearmissQuerySet = Incident.objects.filter(p_type__exact="nearmiss").filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')[:2500]
-        
+
         serializer = TinyIncidentSerializer(nearmissQuerySet, many=True)
         return Response(serializer.data)
 
@@ -442,7 +442,7 @@ class XHRNearMissInfo(APIView):
 
         # grab the pk and filter and find only the one record that matched
         in_pk = request.GET.get('pk')
-        collisionsQuerySet = Incident.objects.get(pk=in_pk)			
+        collisionsQuerySet = Incident.objects.get(pk=in_pk)
         serializer = TinyXHRIncidentSerializer(collisionsQuerySet, many=False)
         return Response(serializer.data)
 
@@ -470,7 +470,7 @@ class XHRHazardInfo(APIView):
 
         # grab the pk and filter and find only the one record that matched
         in_pk = request.GET.get('pk')
-        hazardQuerySet = Hazard.objects.get(pk=in_pk)			
+        hazardQuerySet = Hazard.objects.get(pk=in_pk)
         serializer = TinyXHRHazSerializer(hazardQuerySet,many=False)
         return Response(serializer.data)
 
@@ -484,8 +484,8 @@ class TinyTheftList(APIView):
         # Extract bounding box Url parameter
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
-		#select_related('point').
-        theftQuerySet = Theft.objects.select_related('point').all().exclude(infrastructure_changed=True).order_by('-date')[:2500]
+
+        theftQuerySet = Theft.objects.select_related('point').all().filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')[:2500]
         serializer = TinyTheftSerializer(theftQuerySet, many=True)
         return Response(serializer.data)
 
@@ -497,7 +497,7 @@ class XHRTheftInfo(APIView):
 
         # grab the pk and filter and find only the one record that matched
         in_pk = request.GET.get('pk')
-        theftQuerySet = Theft.objects.get(pk=in_pk)			
+        theftQuerySet = Theft.objects.get(pk=in_pk)
         serializer = TinyXHRTheftSerializer(theftQuerySet, many=False)
         return Response(serializer.data)
 
@@ -511,7 +511,7 @@ class TinyNewInfrastructureList(APIView):
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
 		#select_related('point').
-        niQuerySet = NewInfrastructure.objects.select_related('point').exclude(expires_date__lt=datetime.datetime.now()).order_by('-date')[:2500]
+        niQuerySet = NewInfrastructure.objects.select_related('point').filter(geom__within=bbox).exclude(expires_date__lt=datetime.datetime.now()).order_by('-date')[:2500]
         serializer = TinyNewInfrastructureSerializer(niQuerySet, many=True)
         return Response(serializer.data)
 
@@ -523,6 +523,6 @@ class XHRNewInfrastructureInfo(APIView):
 
         # grab the pk and filter and find only the one record that matched
         in_pk = request.GET.get('pk')
-        niQuerySet = NewInfrastructure.objects.get(pk=in_pk)			
+        niQuerySet = NewInfrastructure.objects.get(pk=in_pk)
         serializer = TinyXHRNewInfrastructureSerializer(niQuerySet, many=False)
         return Response(serializer.data)
