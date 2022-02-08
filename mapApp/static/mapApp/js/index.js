@@ -117,13 +117,14 @@ if (typeof zoom !== 'undefined') {
  * @type {string} Object[].id - The type of incident (eg collision, hazard)
  * @type {layer} Object[].layer - leaflet layer generated from geojson data for one incident type
  */
- var incidentLayers = [];
+ var incidentReferenceLayers = [];
 
 /**
 * Group of all the incident layers together.
 * Marker cluster group similar to or extension of layergroup?
+* I think 'incident layers' stores all loaded data layers, while 'incident data' is a subset of incident layers that is currently displayed on the map?
 */
-var incidentData = new L.MarkerClusterGroup({
+var incidentAppliedLayers = new L.MarkerClusterGroup({
     maxClusterRadius: 70,
     polygonOptions: {
         color: '#2c3e50',
@@ -133,7 +134,7 @@ var incidentData = new L.MarkerClusterGroup({
     iconCreateFunction: pieChart
 });
 
-incidentData.addTo(map);
+incidentAppliedLayers.addTo(map);
 
 // Create data feature groups
 var collisions, nearmisses, hazards, thefts, newInfrastructures;
@@ -141,21 +142,21 @@ var collisions, nearmisses, hazards, thefts, newInfrastructures;
 loadIncidentDataWithBbox(boundsToLoadDataFor);
 
 asyncLoadIncidentData("nearmisses", boundsToLoadDataFor).then((data) => {
-  processLayerFromData(data, "nearmiss", nearmisses)
+  processLayerFromData(data, "nearmiss", nearmisses);
 });
 
 function processLayerFromData(data, incidentType, featureGroup){
   let incidentLayer =
     geojsonMarker(data, incidentType)
-    .addTo(incidentData)
+    .addTo(incidentAppliedLayers)
     .getLayers();
 
   $("#" + incidentType + "Checkbox").change(function () {
     this.checked ?
-    incidentData.addLayers(incidentLayer) : incidentData.removeLayers(incidentLayer);
+    incidentAppliedLayers.addLayers(incidentLayer) : incidentAppliedLayers.removeLayers(incidentLayer);
   });
 
-  incidentLayers.push({ id: incidentType, layer: incidentLayer });
+  incidentReferenceLayers.push({ id: incidentType, layer: incidentLayer });
 }
 
 function loadIncidentDataWithBbox(bbox){
@@ -168,7 +169,7 @@ function loadIncidentDataWithBbox(bbox){
 }
 
 // Define popup getter function
-incidentData.on('click', function (e) {
+incidentAppliedLayers.on('click', function (e) {
     var layer = e.layer;
     getXHRPopup(layer);
 });
@@ -251,13 +252,13 @@ function filterPoints(start_date, end_date) {
     start_date = sliderDate(start_date);
     end_date = sliderDate(end_date).add(1, 'M').subtract(1, 'd'); //Get the last day of the month
 
-    incidentData.clearLayers();
+    incidentAppliedLayers.clearLayers();
 
-    collisionsUnfiltered = getIncidentLayer("collision", incidentLayers);
-    nearmissesUnfiltered = getIncidentLayer("nearmiss", incidentLayers);
-    hazardsUnfiltered = getIncidentLayer("hazard", incidentLayers);
-    theftsUnfiltered = getIncidentLayer("theft", incidentLayers);
-    newInfrastructuresUnfiltered = getIncidentLayer("newInfrastructure", incidentLayers);
+    collisionsUnfiltered = getIncidentLayer("collision", incidentReferenceLayers);
+    nearmissesUnfiltered = getIncidentLayer("nearmiss", incidentReferenceLayers);
+    hazardsUnfiltered = getIncidentLayer("hazard", incidentReferenceLayers);
+    theftsUnfiltered = getIncidentLayer("theft", incidentReferenceLayers);
+    newInfrastructuresUnfiltered = getIncidentLayer("newInfrastructure", incidentReferenceLayers);
 
     collisions = collisionsUnfiltered.filter(function (feature, layer) {
         d = moment(feature.feature.properties.date);
@@ -280,28 +281,28 @@ function filterPoints(start_date, end_date) {
         return d >= start_date && d <= end_date;
     });
     // Add filtered layer back if checkbox is checked
-    $("#collisionCheckbox").is(":checked") && incidentData.addLayers(collisions);
-    $("#nearmissCheckbox").is(":checked") && incidentData.addLayers(nearmisses);
-    $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
-    $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
-    $("#newInfrastructureCheckbox").is(":checked") && incidentData.addLayers(newInfrastructures);
+    $("#collisionCheckbox").is(":checked") && incidentAppliedLayers.addLayers(collisions);
+    $("#nearmissCheckbox").is(":checked") && incidentAppliedLayers.addLayers(nearmisses);
+    $("#hazardCheckbox").is(":checked") && incidentAppliedLayers.addLayers(hazards);
+    $("#theftCheckbox").is(":checked") && incidentAppliedLayers.addLayers(thefts);
+    $("#newInfrastructureCheckbox").is(":checked") && incidentAppliedLayers.addLayers(newInfrastructures);
 
 };
 
 // Add unfiltered data back
 function resetPoints() {
-    incidentData.clearLayers();
+    incidentAppliedLayers.clearLayers();
     collisions = collisionsUnfiltered,
         nearmisses = nearmissesUnfiltered,
         hazards = hazardsUnfiltered,
         thefts = theftsUnfiltered;
     newInfrastructures = newInfrastructuresUnfiltered;
 
-    $("#collisionCheckbox").is(":checked") && incidentData.addLayers(collisions);
-    $("#nearmissCheckbox").is(":checked") && incidentData.addLayers(nearmisses);
-    $("#hazardCheckbox").is(":checked") && incidentData.addLayers(hazards);
-    $("#theftCheckbox").is(":checked") && incidentData.addLayers(thefts);
-    $("#newInfrastructureCheckbox").is(":checked") && incidentData.addLayers(newInfrastructures);
+    $("#collisionCheckbox").is(":checked") && incidentAppliedLayers.addLayers(collisions);
+    $("#nearmissCheckbox").is(":checked") && incidentAppliedLayers.addLayers(nearmisses);
+    $("#hazardCheckbox").is(":checked") && incidentAppliedLayers.addLayers(hazards);
+    $("#theftCheckbox").is(":checked") && incidentAppliedLayers.addLayers(thefts);
+    $("#newInfrastructureCheckbox").is(":checked") && incidentAppliedLayers.addLayers(newInfrastructures);
 };
 
 $("input.slider").on("slide", function (e) {
@@ -492,11 +493,11 @@ function loadIncidentDataByType(requestURL, incidentType, incidentLayer) {
             //console.log('trying to add the xhr layer');
             incidentLayer =
             geojsonMarker(response, incidentType)
-            .addTo(incidentData)
+            .addTo(incidentAppliedLayers)
             .getLayers();
-            $("#" + incidentType + "Checkbox").change(function () { this.checked ? incidentData.addLayers(incidentLayer) : incidentData.removeLayers(incidentLayer); });
+            $("#" + incidentType + "Checkbox").change(function () { this.checked ? incidentAppliedLayers.addLayers(incidentLayer) : incidentAppliedLayers.removeLayers(incidentLayer); });
 
-            incidentLayers.push({ id: incidentType, layer: incidentLayer });
+            incidentReferenceLayers.push({ id: incidentType, layer: incidentLayer });
         },
         error: function (err) {
             console.log(err);
@@ -529,7 +530,7 @@ function getXHRPopup(layer) {
         .setContent("Loading data off server ...")
         .openOn(map);
 
-    // PK is stored in under key 'pk' for data loaded from database, 'id' for points just created and added to incidentData from submitted form
+    // PK is stored in under key 'pk' for data loaded from database, 'id' for points just created and added to incidentAppliedLayers from submitted form
     let pk = feature.properties.pk || feature.properties.id;
 
     if (type === "newInfrastructure") {
