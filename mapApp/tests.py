@@ -157,7 +157,7 @@ class IncidentTests(TestCase):
         self.assertEqual("collision", self._fall.p_type)
 
 class TinyIncidentTests(TestCase):
-    """Tests 'tiny' URLs"""
+    """Tests 'tiny' incident URLs and bbox filtering"""
     # An 'incident' is fall, collision, or nearmiss in the 'incident' table
     # The 'points' table groups falls and collisions together as 'collisions', but keeps nearmisses separate
     # Create 3 incident objects, but collisions and falls are retreived from /collisions and nearmisses from /nearmiss
@@ -269,6 +269,42 @@ class HazardTests(TestCase):
     def test_is_expired(self):
         # TODO implement this
         pass
+
+class TinyHazardTests(TestCase):
+    """Test Tiny Hazard url & bbox filtering"""
+    santaBarbaraBboxQuery = "?bbox=-121,35,-119,36"
+
+    def setUp(self):
+        pnt_geom1 = GEOSGeometry('POINT(-123.5 48.5)')
+        pnt_geom2 = GEOSGeometry('POINT(-84.5 42)')
+        pnt_geom3 = GEOSGeometry('POINT(-120 35.5)')
+        now_time = datetime.now()
+
+        # Create hazards that fall into different categories
+        self._infrastructure = Hazard.objects.create(geom=pnt_geom1, date=now_time, i_type="Pothole", hazard_category="infrastructure")
+
+        self._environmental = Hazard.objects.create(geom=pnt_geom2, date=now_time, i_type="Wet leaves", hazard_category="environmental")
+
+        self._human_behaviour = Hazard.objects.create(geom=pnt_geom3, date=now_time, i_type="Driver behaviour", hazard_category="human behaviour")
+
+    def tearDown(self):
+        self._environmental.delete()
+        self._infrastructure.delete()
+        self._human_behaviour.delete()
+
+    def test_tiny_hazard_get(self):
+        response = self.client.get("/hazards_tiny/")
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(3, len(data["features"]))
+
+    def test_tiny_hazard_bbox(self):
+        response = self.client.get("/hazards_tiny/" + self.santaBarbaraBboxQuery)
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(1, len(data["features"]))
 
 class TheftTests(TestCase):
     """Tests of Incident class points instantiation and methods"""

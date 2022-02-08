@@ -457,7 +457,8 @@ class TinyHazardList(APIView):
         bbox = stringToPolygon(bbstr)
 		#select_related('point').
 		#Hazard.objects.select_related('point').exclude(expires_date__lt=now).exclude(hazard_fixed=True).order_by('-date')[:1],
-        hazardQuerySet = Hazard.objects.select_related('point').exclude(expires_date__lt=datetime.datetime.now()).exclude(hazard_fixed=True).order_by('-date')[:2500]
+        hazardQuerySet = Hazard.objects.select_related('point').filter(geom__within=bbox).exclude(expires_date__lt=datetime.datetime.now()).exclude(hazard_fixed=True).order_by('-date')[:2500]
+
         serializer = TinyHazSerializer(hazardQuerySet, many=True)
         return Response(serializer.data)
 
