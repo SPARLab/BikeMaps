@@ -11,14 +11,27 @@ if (window.location.port) {
 */
 
 /** Initialize the map */
+
+// Check if map center and zoom are provided in url, otherwise default to view of north america
+let mapCenter, mapZoom;
+if (typeof lat === 'undefined' || typeof lng === 'undefined' || typeof zoom === 'undefined'){
+  mapCenter = [48, -100];
+  mapZoom = 4;
+} else {
+  mapCenter = [lat, lng];
+  mapZoom = zoom;
+}
+
 var map = L.map('map', {
-    center: [48, -100],
+    center: mapCenter,
     minZoom: 2,
-    zoom: 4,
+    zoom: mapZoom,
     zoomControl: false,
     layers: [OpenStreetMap, CyclOSM, stravaHM],
     worldCopyJump: true,
 });
+
+let initialMapBounds = map.getBounds();
 
 /** Add geocoder control */
 var geocodeMarker;
@@ -48,10 +61,15 @@ L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
 map.on('moveend', function (e) {
     var zoom = map.getZoom(),
         center = map.getCenter();
+        console.log('replacing window history');
     window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
+    console.log('move end');
+    console.log(map.getBounds());
 });
 
 map.on('zoomend', function(e) {
+  console.log('zoom end');
+  console.log(map.getBounds());
   if(map.getZoom() >= 13 && map.hasLayer(stravaHM)) {
     // stravaHM._clearBgBuffer();
   }
@@ -79,6 +97,8 @@ map.on("locationfound", function (location) {
 });
 
 if (typeof zoom !== 'undefined') {
+  console.log("lat");
+  console.log(lat);
     map.setView(L.latLng(lat, lng), zoom);
     locateUser(setView = false, watch = false);
 } else {
@@ -114,11 +134,17 @@ incidentData.addTo(map);
 
 // Create data feature groups
 var collisions, nearmisses, hazards, thefts, newInfrastructures;
-loadIncidentDataByType("/nearmisses_tiny?format=json", "nearmiss", nearmisses);
-loadIncidentDataByType("/hazards_tiny?format=json", "hazard", hazards);
-loadIncidentDataByType("/thefts_tiny?format=json", "theft", thefts);
-loadIncidentDataByType("/collisions_tiny?format=json", "collision", collisions);
-loadIncidentDataByType("/newInfrastructures_tiny?format=json", "newInfrastructure", newInfrastructures);
+
+loadIncidentDataWithBbox(initialMapBounds);
+
+function loadIncidentDataWithBbox(bbox){
+  let bboxString = getCoordStringFromBounds(bbox);
+  loadIncidentDataByType(`/nearmisses_tiny?bbox=${bboxString}&format=json`, `nearmiss`, nearmisses);
+  loadIncidentDataByType(`/hazards_tiny?bbox=${bboxString}&format=json`, `hazard`, hazards);
+  loadIncidentDataByType(`/thefts_tiny?bbox=${bboxString}&format=json`, `theft`, thefts);
+  loadIncidentDataByType(`/collisions_tiny?bbox=${bboxString}&format=json`, `collision`, collisions);
+  loadIncidentDataByType(`/newInfrastructures_tiny?bbox=${bboxString}&format=json`, `newInfrastructure`, newInfrastructures);
+}
 
 // Define popup getter function
 incidentData.on('click', function (e) {
@@ -431,6 +457,9 @@ function loadIncidentDataByType(requestURL, incidentType, incidentLayer) {
             .addTo(incidentData)
             .getLayers();
             $("#" + incidentType + "Checkbox").change(function () { this.checked ? incidentData.addLayers(incidentLayer) : incidentData.removeLayers(incidentLayer); });
+            console.log('number of points loaded for ' + incidentType);
+            console.log(response.features.length);
+
 
             incidentLayers.push({ id: incidentType, layer: incidentLayer });
         },
@@ -519,4 +548,8 @@ function getPopupText(incidentType, in_data) {
     }
 
     return tempContent;
+}
+
+function getCoordStringFromBounds(bounds){
+  return (bounds._southWest.lng + ',' + bounds._southWest.lat + ',' + bounds._northEast.lng + ',' + bounds._northEast.lat);
 }
