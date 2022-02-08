@@ -32,6 +32,7 @@ var map = L.map('map', {
 });
 
 let boundsToLoadDataFor = map.getBounds();
+let loadingDataFlag = 0;
 
 /** Add geocoder control */
 var geocodeMarker;
@@ -65,7 +66,12 @@ map.on('moveend', function (e) {
     window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
     console.log('move end');
     // if true, load new data
-    console.log(checkIfNewBoundsExceed(map.getBounds()))});
+    console.log('new data load needed?');
+    if (!loadingDataFlag && checkIfNewBoundsExceed(map.getBounds())){
+      console.log("loading new data");
+      loadAllIncidentData(map.getBounds());
+    }
+  });
 
 map.on('zoomend', function(e) {
   if(map.getZoom() >= 13 && map.hasLayer(stravaHM)) {
@@ -132,7 +138,6 @@ incidentAppliedLayers.addTo(map);
 
 // Create data feature groups
 var collisions, nearmisses, hazards, thefts, newInfrastructures;
-let loadingDataFlag = 0;
 loadAllIncidentData(boundsToLoadDataFor);
 
 // Define popup getter function
@@ -406,10 +411,8 @@ function getPopup(layer) {
         if (feature.properties.details) {
             popup += '<br><div class="popup-details"><strong>' + gettext('Details') + ':</strong> ' + feature.properties.details + '</div>';
         }
-
         return popup;
     }
-
     return popup;
 };
 
@@ -436,6 +439,9 @@ function loadAllIncidentData(bounds){
   const incidentTypeStrings = ['collisions', 'nearmisses', 'hazards', 'thefts', 'newInfrastructures'];
   let bboxString = getCoordStringFromBounds(bounds);
 
+  // clear all existing layers
+  incidentAppliedLayers.clearLayers();
+
   const loadDataPromsies = incidentTypeStrings.map(i => {
     return asyncLoadIncidentData(i, bboxString).then((data) => {
       processLayerFromData(data, getIncidentTypeFromURL(i));
@@ -443,6 +449,7 @@ function loadAllIncidentData(bounds){
     });
   })
   Promise.all(loadDataPromsies).then(r => {
+    console.log('done loading all');
     loadingDataFlag = 0;
   }).catch(e => {
     loadingDataFlag = 0;
@@ -487,6 +494,11 @@ function processLayerFromData(data, incidentType){
     this.checked ?
     incidentAppliedLayers.addLayers(incidentLayer) : incidentAppliedLayers.removeLayers(incidentLayer);
   });
+
+  // for now, just remove old layer if already exists
+  // TODO: merge old and new data together?
+  let oldLayerIndex = incidentReferenceLayers.findIndex(l => l.incidentType === incidentType)
+  if (oldLayerIndex > -1) incidentReferenceLayers.splice(oldLayerIndex, 1)
 
   incidentReferenceLayers.push({ id: incidentType, layer: incidentLayer });
 }
