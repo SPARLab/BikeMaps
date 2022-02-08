@@ -140,20 +140,23 @@ var collisions, nearmisses, hazards, thefts, newInfrastructures;
 
 loadIncidentDataWithBbox(boundsToLoadDataFor);
 
-asyncLoadIncidentData("nearmisses", boundsToLoadDataFor).then((response) => {
+asyncLoadIncidentData("nearmisses", boundsToLoadDataFor).then((data) => {
+  processLayerFromData(data, "nearmiss", nearmisses)
+});
 
+function processLayerFromData(data, incidentType, featureGroup){
   let incidentLayer =
-    geojsonMarker(response, "nearmiss")
+    geojsonMarker(data, incidentType)
     .addTo(incidentData)
     .getLayers();
 
-  $("#" + nearmisses + "Checkbox").change(function () {
+  $("#" + incidentType + "Checkbox").change(function () {
     this.checked ?
     incidentData.addLayers(incidentLayer) : incidentData.removeLayers(incidentLayer);
   });
 
-  incidentLayers.push({ id: nearmisses, layer: incidentLayer });
-});
+  incidentLayers.push({ id: incidentType, layer: incidentLayer });
+}
 
 function loadIncidentDataWithBbox(bbox){
   let bboxString = getCoordStringFromBounds(bbox);
@@ -492,7 +495,7 @@ function loadIncidentDataByType(requestURL, incidentType, incidentLayer) {
             .addTo(incidentData)
             .getLayers();
             $("#" + incidentType + "Checkbox").change(function () { this.checked ? incidentData.addLayers(incidentLayer) : incidentData.removeLayers(incidentLayer); });
-            
+
             incidentLayers.push({ id: incidentType, layer: incidentLayer });
         },
         error: function (err) {
