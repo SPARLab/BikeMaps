@@ -438,9 +438,11 @@ function geojsonMarker(data, type) {
  * Refresh layers for all incident data types for the requested bounds
  * @param {L.bounds} boundsToLoad - leaflet type representing area of map to load data for
  */
-function loadAllIncidentData(boundsToLoad){
+function loadAllIncidentData(currentMapBounds){
   loadingDataFlag = 1;
   const incidentTypeStrings = ['collisions', 'nearmisses', 'hazards', 'thefts', 'newInfrastructures'];
+  // Load data for area 50% greater than current bounds
+  let boundsToLoad = currentMapBounds.pad(0.5);
 
   // clear all existing layers
   incidentAppliedLayers.clearLayers();
@@ -516,11 +518,10 @@ function getIncidentTypeFromURL(URLSubstring){
 }
 
 /* TODO: add debounce to wait until user stops zooming/scrolling around to load new data */
-function loadDataIfBoundsExceed(bounds){
+function loadDataIfBoundsExceed(currentMapBounds){
   // if loaded data bounds are empty or current bounds exceed them, load new data
-  if (!boundsOfLoadedData.isValid() || !boundsOfLoadedData.contains(bounds)){
-    console.log('loading new data');
-    loadAllIncidentData(bounds);
+  if (!boundsOfLoadedData.isValid() || !boundsOfLoadedData.contains(currentMapBounds)){
+    loadAllIncidentData(currentMapBounds);
   }
 }
 
