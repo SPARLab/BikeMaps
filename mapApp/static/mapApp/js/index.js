@@ -456,6 +456,8 @@ function loadAllIncidentData(boundsToLoad){
     console.log('done loading all');
     loadingDataFlag = 0;
     boundsOfLoadedData = boundsToLoad;
+    // Check if the map moved while the last data was being loaded
+    loadDataIfBoundsExceedDebounce();
   }).catch(e => {
     loadingDataFlag = 0;
     console.log(e)
