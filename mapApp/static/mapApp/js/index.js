@@ -73,11 +73,6 @@ map.on('zoomend', function(e) {
   }
 });
 
-/* TODO: add debounce to wait until user stops zooming/scrolling around to load new data */
-function checkIfNewBoundsExceed(bounds){
-  return !boundsToLoadDataFor.contains(bounds);
-}
-
 /** Locate user, set map view */
 
 // Find the user via GPS or internet connection.
@@ -134,50 +129,11 @@ var incidentAppliedLayers = new L.MarkerClusterGroup({
 });
 
 incidentAppliedLayers.addTo(map);
-let loadingDataFlag = 0;
 
 // Create data feature groups
 var collisions, nearmisses, hazards, thefts, newInfrastructures;
-
-loadData(boundsToLoadDataFor);
-
-function loadData(bounds){
-  loadingDataFlag = 1;
-  const incidentTypeStrings = ['collisions', 'nearmisses', 'hazards', 'thefts', 'newInfrastructures'];
-  let bboxString = getCoordStringFromBounds(bounds);
-
-  const loadDataPromsies = incidentTypeStrings.map(i => {
-    return asyncLoadIncidentData(i, bboxString).then((data) => {
-      processLayerFromData(data, getIncidentTypeFromURL(i));
-      return `finished ${i}`;
-    });
-  })
-  Promise.all(loadDataPromsies).then(r => {
-    loadingDataFlag = 0;
-    console.log('done loading data');
-    console.log(r)
-  })
-}
-
-// URLs use incident types in plural form, checkboxes use singular. Convert between for convenience
-function getIncidentTypeFromURL(URLSubstring){
-  if (URLSubstring === "nearmisses") return "nearmiss";
-  else return URLSubstring.slice(0, -1);
-}
-
-function processLayerFromData(data, incidentType){
-  let incidentLayer =
-    geojsonMarker(data, incidentType)
-    .addTo(incidentAppliedLayers)
-    .getLayers();
-
-  $("#" + incidentType + "Checkbox").change(function () {
-    this.checked ?
-    incidentAppliedLayers.addLayers(incidentLayer) : incidentAppliedLayers.removeLayers(incidentLayer);
-  });
-
-  incidentReferenceLayers.push({ id: incidentType, layer: incidentLayer });
-}
+let loadingDataFlag = 0;
+loadAllIncidentData(boundsToLoadDataFor);
 
 // Define popup getter function
 incidentAppliedLayers.on('click', function (e) {
@@ -471,6 +427,33 @@ function geojsonMarker(data, type) {
     });
 };
 
+/**
+ * Refresh layers for all incident data types for the requested bounds
+ * @param {L.bounds} bounds - leaflet type representing area of map to load data for
+ */
+function loadAllIncidentData(bounds){
+  loadingDataFlag = 1;
+  const incidentTypeStrings = ['collisions', 'nearmisses', 'hazards', 'thefts', 'newInfrastructures'];
+  let bboxString = getCoordStringFromBounds(bounds);
+
+  const loadDataPromsies = incidentTypeStrings.map(i => {
+    return asyncLoadIncidentData(i, bboxString).then((data) => {
+      processLayerFromData(data, getIncidentTypeFromURL(i));
+      return `finished ${i}`;
+    });
+  })
+  Promise.all(loadDataPromsies).then(r => {
+    loadingDataFlag = 0;
+    console.log('done loading data');
+    console.log(r)
+  })
+}
+
+/**
+ * Load data for single incident type within requested bounds
+ * @param {string} incidentType - type to load data for (eg collision, theft)
+ * @param {string} bboxString - bounds converted to string format accepted by restApi.py
+ */
 async function asyncLoadIncidentData(incidentType, bboxString){
   let result;
   const requestURL = `/${incidentType}_tiny?bbox=${bboxString}&format=json`;
@@ -488,31 +471,34 @@ async function asyncLoadIncidentData(incidentType, bboxString){
 };
 
 /**
- * Function to load incident data, convert to geojson feature collection/group, add to incidentData layer, and add to reference layers array
- * TODO break this into smaller funcs
- * @param {string} requestURL - url to request this incident type
- * @param {string} incidentType - type of incident being requested (ie nearmiss, hazard)
+ * Actions to take after new incident data is loaded:
+ * Convert retreived data to geojson feature collection/group, add layer to incidentAppliedLayers group as well as reference layers array, conditionally apply to map based on checkbox status
+ * @param {Obj} data - data for single incident type retreived from db
+ * @param {string} incidentType - incident type of data
  */
-function loadIncidentDataByType(requestURL, incidentType, incidentLayer) {
-    //https://bikemaps.org/hazards?format=json
-    //hazard
-    $.ajax({
-        url: requestURL,
-        dataType: 'json',
-        success: function (response) {
-            //console.log('trying to add the xhr layer');
-            incidentLayer =
-            geojsonMarker(response, incidentType)
-            .addTo(incidentAppliedLayers)
-            .getLayers();
-            $("#" + incidentType + "Checkbox").change(function () { this.checked ? incidentAppliedLayers.addLayers(incidentLayer) : incidentAppliedLayers.removeLayers(incidentLayer); });
+function processLayerFromData(data, incidentType){
+  let incidentLayer =
+    geojsonMarker(data, incidentType)
+    .addTo(incidentAppliedLayers)
+    .getLayers();
 
-            incidentReferenceLayers.push({ id: incidentType, layer: incidentLayer });
-        },
-        error: function (err) {
-            console.log(err);
-        }
-    });
+  $("#" + incidentType + "Checkbox").change(function () {
+    this.checked ?
+    incidentAppliedLayers.addLayers(incidentLayer) : incidentAppliedLayers.removeLayers(incidentLayer);
+  });
+
+  incidentReferenceLayers.push({ id: incidentType, layer: incidentLayer });
+}
+
+/* TODO: add debounce to wait until user stops zooming/scrolling around to load new data */
+function checkIfNewBoundsExceed(bounds){
+  return !boundsToLoadDataFor.contains(bounds);
+}
+
+// URLs use incident types in plural form, checkboxes use singular. Convert between for convenience
+function getIncidentTypeFromURL(URLSubstring){
+  if (URLSubstring === "nearmisses") return "nearmiss";
+  else return URLSubstring.slice(0, -1);
 }
 
 function loadPopupDetails(incidentPk, popup, incidentType, incidentURL) {
