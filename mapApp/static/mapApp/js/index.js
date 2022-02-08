@@ -439,13 +439,14 @@ function loadAllIncidentData(bounds){
   const loadDataPromsies = incidentTypeStrings.map(i => {
     return asyncLoadIncidentData(i, bboxString).then((data) => {
       processLayerFromData(data, getIncidentTypeFromURL(i));
-      return `finished ${i}`;
+      return `finished loading ${i}`;
     });
   })
   Promise.all(loadDataPromsies).then(r => {
     loadingDataFlag = 0;
-    console.log('done loading data');
-    console.log(r)
+  }).catch(e => {
+    loadingDataFlag = 0;
+    console.log(e)
   })
 }
 
