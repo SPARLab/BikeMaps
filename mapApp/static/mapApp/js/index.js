@@ -441,13 +441,12 @@ function geojsonMarker(data, type) {
 function loadAllIncidentData(boundsToLoad){
   loadingDataFlag = 1;
   const incidentTypeStrings = ['collisions', 'nearmisses', 'hazards', 'thefts', 'newInfrastructures'];
-  let bboxString = getCoordStringFromBounds(boundsToLoad);
 
   // clear all existing layers
   incidentAppliedLayers.clearLayers();
 
   const loadDataPromsies = incidentTypeStrings.map(i => {
-    return asyncLoadIncidentData(i, bboxString).then((data) => {
+    return asyncLoadIncidentData(i, boundsToLoad.toBBoxString()).then((data) => {
       processLayerFromData(data, getIncidentTypeFromURL(i));
       return `finished loading ${i}`;
     });
@@ -619,8 +618,4 @@ function getPopupText(incidentType, in_data) {
     }
 
     return tempContent;
-}
-
-function getCoordStringFromBounds(bounds){
-  return (bounds._southWest.lng + ',' + bounds._southWest.lat + ',' + bounds._northEast.lng + ',' + bounds._northEast.lat);
 }
