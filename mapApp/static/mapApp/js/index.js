@@ -31,7 +31,7 @@ var map = L.map('map', {
     worldCopyJump: true,
 });
 
-let initialMapBounds = map.getBounds();
+let boundsToLoadDataFor = map.getBounds();
 
 /** Add geocoder control */
 var geocodeMarker;
@@ -64,16 +64,22 @@ map.on('moveend', function (e) {
         console.log('replacing window history');
     window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
     console.log('move end');
-    console.log(map.getBounds());
-});
+    // if true, load new data
+    console.log(checkIfNewBoundsExceed(map.getBounds()))});
 
 map.on('zoomend', function(e) {
   console.log('zoom end');
-  console.log(map.getBounds());
+  // if true, load new data
+  console.log(checkIfNewBoundsExceed(map.getBounds()))
   if(map.getZoom() >= 13 && map.hasLayer(stravaHM)) {
     // stravaHM._clearBgBuffer();
   }
 });
+
+/* TODO: add debounce to wait until user stops zooming/scrolling around to load new data */
+function checkIfNewBoundsExceed(bounds){
+  return !boundsToLoadDataFor.contains(bounds);
+}
 
 /** Locate user, set map view */
 
@@ -135,7 +141,7 @@ incidentData.addTo(map);
 // Create data feature groups
 var collisions, nearmisses, hazards, thefts, newInfrastructures;
 
-loadIncidentDataWithBbox(initialMapBounds);
+loadIncidentDataWithBbox(boundsToLoadDataFor);
 
 function loadIncidentDataWithBbox(bbox){
   let bboxString = getCoordStringFromBounds(bbox);
