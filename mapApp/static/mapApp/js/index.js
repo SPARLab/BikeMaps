@@ -140,9 +140,24 @@ var collisions, nearmisses, hazards, thefts, newInfrastructures;
 
 loadIncidentDataWithBbox(boundsToLoadDataFor);
 
+asyncLoadIncidentData("nearmisses", boundsToLoadDataFor).then((response) => {
+
+  let incidentLayer =
+    geojsonMarker(response, "nearmiss")
+    .addTo(incidentData)
+    .getLayers();
+
+  $("#" + nearmisses + "Checkbox").change(function () {
+    this.checked ?
+    incidentData.addLayers(incidentLayer) : incidentData.removeLayers(incidentLayer);
+  });
+
+  incidentLayers.push({ id: nearmisses, layer: incidentLayer });
+});
+
 function loadIncidentDataWithBbox(bbox){
   let bboxString = getCoordStringFromBounds(bbox);
-  loadIncidentDataByType(`/nearmisses_tiny?bbox=${bboxString}&format=json`, `nearmiss`, nearmisses);
+  // loadIncidentDataByType(`/nearmisses_tiny?bbox=${bboxString}&format=json`, `nearmiss`, nearmisses);
   loadIncidentDataByType(`/hazards_tiny?bbox=${bboxString}&format=json`, `hazard`, hazards);
   loadIncidentDataByType(`/thefts_tiny?bbox=${bboxString}&format=json`, `theft`, thefts);
   loadIncidentDataByType(`/collisions_tiny?bbox=${bboxString}&format=json`, `collision`, collisions);
@@ -441,6 +456,23 @@ function geojsonMarker(data, type) {
     });
 };
 
+async function asyncLoadIncidentData(incidentType, bbox){
+  let result;
+  let bboxString = getCoordStringFromBounds(bbox);
+  const requestURL = `/${incidentType}_tiny?bbox=${bboxString}&format=json`;
+
+  try {
+    result = await $.ajax({
+            type: 'GET',
+            url: requestURL,
+            dataType: 'json'
+          });
+      return result;
+  } catch(error) {
+    console.log(error);
+  }
+};
+
 /**
  * Function to load incident data, convert to geojson feature collection/group, add to incidentData layer, and add to reference layers array
  * TODO break this into smaller funcs
@@ -460,10 +492,7 @@ function loadIncidentDataByType(requestURL, incidentType, incidentLayer) {
             .addTo(incidentData)
             .getLayers();
             $("#" + incidentType + "Checkbox").change(function () { this.checked ? incidentData.addLayers(incidentLayer) : incidentData.removeLayers(incidentLayer); });
-            console.log('number of points loaded for ' + incidentType);
-            console.log(response.features.length);
-
-
+            
             incidentLayers.push({ id: incidentType, layer: incidentLayer });
         },
         error: function (err) {
