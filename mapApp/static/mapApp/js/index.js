@@ -120,9 +120,8 @@ if (typeof zoom !== 'undefined') {
  var incidentReferenceLayers = [];
 
 /**
-* Group of all the incident layers together.
-* Marker cluster group similar to or extension of layergroup?
-* I think 'incident layers' stores all loaded data layers, while 'incident data' is a subset of incident layers that is currently displayed on the map?
+* incidentAppliedLayers is an instance of MarkerClusterGroup, a plugin type that extends FeatureGroup, which itself extends Layergroup. groups several layers and handles as one
+* 'incidentReferenceLayers' stores the loaded layer data, while incidentAppliedLayers is one grouped layer that can be filtered, subsets added/removed to map with checkboxes
 */
 var incidentAppliedLayers = new L.MarkerClusterGroup({
     maxClusterRadius: 70,
@@ -135,17 +134,38 @@ var incidentAppliedLayers = new L.MarkerClusterGroup({
 });
 
 incidentAppliedLayers.addTo(map);
+let loadingDataFlag = 0;
 
 // Create data feature groups
 var collisions, nearmisses, hazards, thefts, newInfrastructures;
 
-loadIncidentDataWithBbox(boundsToLoadDataFor);
+loadData(boundsToLoadDataFor);
 
-asyncLoadIncidentData("nearmisses", boundsToLoadDataFor).then((data) => {
-  processLayerFromData(data, "nearmiss", nearmisses);
-});
+function loadData(bounds){
+  loadingDataFlag = 1;
+  const incidentTypeStrings = ['collisions', 'nearmisses', 'hazards', 'thefts', 'newInfrastructures'];
+  let bboxString = getCoordStringFromBounds(bounds);
 
-function processLayerFromData(data, incidentType, featureGroup){
+  const loadDataPromsies = incidentTypeStrings.map(i => {
+    return asyncLoadIncidentData(i, bboxString).then((data) => {
+      processLayerFromData(data, getIncidentTypeFromURL(i));
+      return `finished ${i}`;
+    });
+  })
+  Promise.all(loadDataPromsies).then(r => {
+    loadingDataFlag = 0;
+    console.log('done loading data');
+    console.log(r)
+  })
+}
+
+// URLs use incident types in plural form, checkboxes use singular. Convert between for convenience
+function getIncidentTypeFromURL(URLSubstring){
+  if (URLSubstring === "nearmisses") return "nearmiss";
+  else return URLSubstring.slice(0, -1);
+}
+
+function processLayerFromData(data, incidentType){
   let incidentLayer =
     geojsonMarker(data, incidentType)
     .addTo(incidentAppliedLayers)
@@ -157,15 +177,6 @@ function processLayerFromData(data, incidentType, featureGroup){
   });
 
   incidentReferenceLayers.push({ id: incidentType, layer: incidentLayer });
-}
-
-function loadIncidentDataWithBbox(bbox){
-  let bboxString = getCoordStringFromBounds(bbox);
-  // loadIncidentDataByType(`/nearmisses_tiny?bbox=${bboxString}&format=json`, `nearmiss`, nearmisses);
-  loadIncidentDataByType(`/hazards_tiny?bbox=${bboxString}&format=json`, `hazard`, hazards);
-  loadIncidentDataByType(`/thefts_tiny?bbox=${bboxString}&format=json`, `theft`, thefts);
-  loadIncidentDataByType(`/collisions_tiny?bbox=${bboxString}&format=json`, `collision`, collisions);
-  loadIncidentDataByType(`/newInfrastructures_tiny?bbox=${bboxString}&format=json`, `newInfrastructure`, newInfrastructures);
 }
 
 // Define popup getter function
@@ -232,7 +243,7 @@ var collisionsUnfiltered = collisions,
     nearmissesUnfiltered = nearmisses,
     hazardsUnfiltered = hazards,
     theftsUnfiltered = thefts;
-newInfrastructuresUnfiltered = newInfrastructures;
+    newInfrastructuresUnfiltered = newInfrastructures;
 $("input.slider").on("slideStop", function (e) { filterPoints(e.value[0], e.value[1]) });
 
 function getIncidentLayer(incLayerId, incLayers) {
@@ -460,9 +471,8 @@ function geojsonMarker(data, type) {
     });
 };
 
-async function asyncLoadIncidentData(incidentType, bbox){
+async function asyncLoadIncidentData(incidentType, bboxString){
   let result;
-  let bboxString = getCoordStringFromBounds(bbox);
   const requestURL = `/${incidentType}_tiny?bbox=${bboxString}&format=json`;
 
   try {
