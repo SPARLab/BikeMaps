@@ -14,13 +14,18 @@ if (window.location.port) {
 
 // Check if map center and zoom are provided in url, otherwise default to view of north america
 let mapCenter, mapZoom;
-if (typeof lat === 'undefined' || typeof lng === 'undefined' || typeof zoom === 'undefined'){
+let locationNotSetInURL = (typeof lat === 'undefined' || typeof lng === 'undefined' || typeof zoom === 'undefined');
+if (locationNotSetInURL){
   mapCenter = [48, -100];
   mapZoom = 4;
 } else {
   mapCenter = [lat, lng];
   mapZoom = zoom;
 }
+
+//
+let loadingDataFlag = 0;
+let boundsOfLoadedData = L.latLngBounds(); // initalize with empty bounds
 
 var map = L.map('map', {
     center: mapCenter,
@@ -31,8 +36,10 @@ var map = L.map('map', {
     worldCopyJump: true,
 });
 
-let loadingDataFlag = 0;
-let boundsOfLoadedData = L.latLngBounds(); // initalize with empty bounds
+// If lat/long/zoom have been passed into the URL, set view to that location
+// Locate the user either way, but if view was already set don't change view to users location
+console.log(`is location set in url? ${!locationNotSetInURL}`)
+locateUser(setView = locationNotSetInURL, watch = false);
 
 /** Add geocoder control */
 var geocodeMarker;
@@ -86,6 +93,7 @@ map.on('zoomend', function(e) {
 
 // Find the user via GPS or internet connection.
 // Parameters to determine if the maps view should be set to that location and if the position should be polled and updated
+// If successful, fires a 'locationfound' event
 function locateUser(setView, watch) {
     this.map.locate({
         setView: setView,
@@ -97,20 +105,12 @@ function locateUser(setView, watch) {
 
 // If the users location is found, set map view to that location
 map.on("locationfound", function (location) {
+  console.log('location found code executing');
     var userMark = L.userMarker(location.latlng, { smallIcon: true, circleOpts: { weight: 1, opacity: 0.3, fillOpacity: 0.05 } }).addTo(map);
     if (location.accuracy < 501) {
         userMark.setAccuracy(location.accuracy);
     }
 });
-
-if (typeof zoom !== 'undefined') {
-  console.log("lat");
-  console.log(lat);
-    map.setView(L.latLng(lat, lng), zoom);
-    locateUser(setView = false, watch = false);
-} else {
-    locateUser(setView = true, watch = false);
-}
 
 /**
 * Data fetching
@@ -141,8 +141,10 @@ incidentAppliedLayers.addTo(map);
 
 // Create data feature groups
 var collisions, nearmisses, hazards, thefts, newInfrastructures;
-// get current map view for initial data loading
-loadAllIncidentData(map.getBounds());
+
+// Loads data for map view that was loaded when site first visited
+// Sometimes site goes to default location and then switches to users location right away, causing an apparent double loading.
+if (!loadingDataFlag) loadAllIncidentData(map.getBounds());
 
 // Define popup getter function
 incidentAppliedLayers.on('click', function (e) {
