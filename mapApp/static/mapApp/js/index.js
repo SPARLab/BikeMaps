@@ -114,7 +114,16 @@ map.on("locationfound", function (location) {
  * @type {string} Object[].id - The type of incident (eg collision, hazard)
  * @type {layer} Object[].layer - leaflet layer generated from geojson data for one incident type
  */
- var incidentReferenceLayers = [];
+ // Create data feature groups
+ const incidentTypeStrings = ['collisions', 'nearmisses', 'hazards', 'thefts', 'newInfrastructures'];
+ var collisions, nearmisses, hazards, thefts, newInfrastructures;
+ let incidentReferenceLayers = new Map();
+incidentReferenceLayers.set('collisions', collisions);
+incidentReferenceLayers.set('nearmisses', nearmisses);
+incidentReferenceLayers.set('hazards', hazards);
+incidentReferenceLayers.set('thefts', thefts);
+incidentReferenceLayers.set('newInfrastructures', newInfrastructures);
+incidentReferenceLayers.set('test', new L.geoJson());
 
 /**
 * incidentAppliedLayers is an instance of MarkerClusterGroup, a plugin type that extends FeatureGroup, which itself extends Layergroup. groups several layers and handles as one
@@ -132,8 +141,7 @@ var incidentAppliedLayers = new L.MarkerClusterGroup({
 
 incidentAppliedLayers.addTo(map);
 
-// Create data feature groups
-var collisions, nearmisses, hazards, thefts, newInfrastructures;
+
 
 // Loads data for map view that was loaded when site first visited
 // Sometimes site goes to default location and then switches to users location right away, causing an apparent double loading.
@@ -206,16 +214,6 @@ var collisionsUnfiltered = collisions,
     newInfrastructuresUnfiltered = newInfrastructures;
 $("input.slider").on("slideStop", function (e) { filterPoints(e.value[0], e.value[1]) });
 
-function getIncidentLayer(incLayerId, incLayers) {
-    var tempLyr;
-    for (var tlayer in incLayers) {
-        if (incLayers[tlayer].id === incLayerId) {
-            tempLyr = incLayers[tlayer].layer;
-        }
-    }
-    return tempLyr
-}
-
 // function to filter points and redraw map
 function filterPoints(start_date, end_date) {
 
@@ -225,11 +223,11 @@ function filterPoints(start_date, end_date) {
 
     incidentAppliedLayers.clearLayers();
 
-    collisionsUnfiltered = getIncidentLayer("collision", incidentReferenceLayers);
-    nearmissesUnfiltered = getIncidentLayer("nearmiss", incidentReferenceLayers);
-    hazardsUnfiltered = getIncidentLayer("hazard", incidentReferenceLayers);
-    theftsUnfiltered = getIncidentLayer("theft", incidentReferenceLayers);
-    newInfrastructuresUnfiltered = getIncidentLayer("newInfrastructure", incidentReferenceLayers);
+    collisionsUnfiltered = incidentReferenceLayers.get('collisions');
+    nearmissesUnfiltered = incidentReferenceLayers.get('nearmisses');
+    hazardsUnfiltered = incidentReferenceLayers.get('hazards');
+    theftsUnfiltered = incidentReferenceLayers.get('thefts');
+    newInfrastructuresUnfiltered = incidentReferenceLayers.get('newInfrastructures');
 
     collisions = collisionsUnfiltered.filter(function (feature, layer) {
         d = moment(feature.feature.properties.date);
@@ -258,6 +256,9 @@ function filterPoints(start_date, end_date) {
     $("#theftCheckbox").is(":checked") && incidentAppliedLayers.addLayers(thefts);
     $("#newInfrastructureCheckbox").is(":checked") && incidentAppliedLayers.addLayers(newInfrastructures);
 
+    console.log('filter points');
+    printData();
+
 };
 
 // Add unfiltered data back
@@ -274,6 +275,9 @@ function resetPoints() {
     $("#hazardCheckbox").is(":checked") && incidentAppliedLayers.addLayers(hazards);
     $("#theftCheckbox").is(":checked") && incidentAppliedLayers.addLayers(thefts);
     $("#newInfrastructureCheckbox").is(":checked") && incidentAppliedLayers.addLayers(newInfrastructures);
+
+    console.log('reset points');
+    printData();
 };
 
 $("input.slider").on("slide", function (e) {
@@ -435,7 +439,6 @@ function geojsonMarker(data, type) {
  */
 function loadAllIncidentData(currentMapBounds){
   loadingDataFlag = 1;
-  const incidentTypeStrings = ['collisions', 'nearmisses', 'hazards', 'thefts', 'newInfrastructures'];
   // Load data for area 50% greater than current bounds
   let boundsToLoad = currentMapBounds.pad(0.5);
 
@@ -444,12 +447,15 @@ function loadAllIncidentData(currentMapBounds){
 
   const loadDataPromsies = incidentTypeStrings.map(i => {
     return asyncLoadIncidentData(i, boundsToLoad.toBBoxString()).then((data) => {
-      processLayerFromData(data, convertPluralToSingular(i));
+      processLayerFromData(data, i);
     });
   })
   Promise.all(loadDataPromsies).then(r => {
     loadingDataFlag = 0;
     boundsOfLoadedData = boundsToLoad;
+
+    console.log('finished loading all the data');
+    printData();
     // Check if the map moved while the last data was being loaded
     loadDataIfBoundsExceedDebounce();
   }).catch(e => {
@@ -486,22 +492,31 @@ async function asyncLoadIncidentData(incidentType, bboxString){
  * @param {string} incidentType - incident type of data
  */
 function processLayerFromData(data, incidentType){
-  let incidentLayer =
-    geojsonMarker(data, incidentType)
-    .addTo(incidentAppliedLayers)
-    .getLayers();
+  let incTypeSingular = convertPluralToSingular(incidentType);
 
-  $("#" + incidentType + "Checkbox").change(function () {
+  // L.geoJson featurelayer type, gets added to incidentAppliedLayers markerClusterGroup
+  let incidentGeoJson = geojsonMarker(data, incTypeSingular);
+    incidentGeoJson.addTo(incidentAppliedLayers);
+
+  // Returns an array of all the layers in incidentGeoJson and stores in incidentLayer
+  let incidentLayer = incidentGeoJson.getLayers();
+
+    // addLayers (with an S!) is specific to markerClusterGroup extension, accepts array of markers to add to mCG
+    // don't confuse with leaflet 'addLayer' which adds a layer to map or feature group
+    // this defines the checkbox function- will be able to access each 'incidentLayer' for each incidentType without unique names for each incidentLayer
+  $("#" + incTypeSingular + "Checkbox").change(function () {
+
     this.checked ?
     incidentAppliedLayers.addLayers(incidentLayer) : incidentAppliedLayers.removeLayers(incidentLayer);
+    console.log(`clicked a checkbox for ${incTypeSingular}`);
+    printData();
+
   });
 
   // for now, just remove old layer if already exists
   // TODO: merge old and new data together?
-  let oldLayerIndex = incidentReferenceLayers.findIndex(l => l.incidentType === incidentType)
-  if (oldLayerIndex > -1) incidentReferenceLayers.splice(oldLayerIndex, 1)
-
-  incidentReferenceLayers.push({ id: incidentType, layer: incidentLayer });
+  // add the array of layers to the reference layers map
+  incidentReferenceLayers.set(incidentType, incidentLayer);
 }
 
 // URLs use incident types in plural form, checkboxes use singular. Convert between for convenience
@@ -610,4 +625,20 @@ function getPopupText(incidentType, in_data) {
     }
 
     return tempContent;
+}
+
+function printData() {
+  console.log(`appliedLayers: ${incidentAppliedLayers.getLayers().length}`);
+  console.log(`sum of everything in reference layers: ${
+    incidentReferenceLayers.get('collisions').length +
+    incidentReferenceLayers.get('nearmisses').length +
+    incidentReferenceLayers.get('hazards').length +
+    incidentReferenceLayers.get('thefts').length +
+    incidentReferenceLayers.get('newInfrastructures').length}`);
+  console.log(`
+    collisions: ${incidentReferenceLayers.get('collisions').length}
+    nearmisses: ${incidentReferenceLayers.get('nearmisses').length}
+    hazards: ${incidentReferenceLayers.get('hazards').length}
+    thefts: ${incidentReferenceLayers.get('thefts').length}
+    newInfrastructures: ${incidentReferenceLayers.get('newInfrastructures').length}`);
 }
