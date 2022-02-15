@@ -23,9 +23,17 @@ if (locationNotSetInURL){
   mapZoom = zoom;
 }
 
-//
+// Initalize data loading vars
 let loadingDataFlag = 0;
 let boundsOfLoadedData = L.latLngBounds(); // initalize with empty bounds
+  // TODO: get 'top' value that works for all screen sizes
+let mapSpinOpts = {
+  radius: 20,
+  length: 20,
+  lines: 16,
+  top: window.innerHeight*.75,
+  left: 10
+}
 
 var map = L.map('map', {
     center: mapCenter,
@@ -432,13 +440,14 @@ function geojsonMarker(data, type) {
     });
 };
 
+
 /**
  * Refresh layers for all incident data types for the requested bounds
  * @param {L.bounds} boundsToLoad - leaflet type representing area of map to load data for
  */
 function loadAllIncidentData(currentMapBounds){
   loadingDataFlag = 1;
-  map.spin(true, {radius: 20, length: 20, lines: 16});
+  map.spin(true, mapSpinOpts);
   // Load data for area 50% greater than current bounds
   let boundsToLoad = currentMapBounds.pad(0.5);
 
