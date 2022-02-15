@@ -116,14 +116,13 @@ map.on("locationfound", function (location) {
  */
  // Create data feature groups
  const incidentTypeStrings = ['collisions', 'nearmisses', 'hazards', 'thefts', 'newInfrastructures'];
- var collisions, nearmisses, hazards, thefts, newInfrastructures;
+ var collisions = [], nearmisses = [], hazards = [], thefts = [], newInfrastructures = [];
  let incidentReferenceLayers = new Map();
 incidentReferenceLayers.set('collisions', collisions);
 incidentReferenceLayers.set('nearmisses', nearmisses);
 incidentReferenceLayers.set('hazards', hazards);
 incidentReferenceLayers.set('thefts', thefts);
 incidentReferenceLayers.set('newInfrastructures', newInfrastructures);
-incidentReferenceLayers.set('test', new L.geoJson());
 
 /**
 * incidentAppliedLayers is an instance of MarkerClusterGroup, a plugin type that extends FeatureGroup, which itself extends Layergroup. groups several layers and handles as one
@@ -442,9 +441,6 @@ function loadAllIncidentData(currentMapBounds){
   // Load data for area 50% greater than current bounds
   let boundsToLoad = currentMapBounds.pad(0.5);
 
-  // clear all existing layers
-  incidentAppliedLayers.clearLayers();
-
   const loadDataPromsies = incidentTypeStrings.map(i => {
     return asyncLoadIncidentData(i, boundsToLoad.toBBoxString()).then((data) => {
       processLayerFromData(data, i);
@@ -495,6 +491,7 @@ function processLayerFromData(data, incidentType){
   let incTypeSingular = convertPluralToSingular(incidentType);
 
   // L.geoJson featurelayer type, gets added to incidentAppliedLayers markerClusterGroup
+  incidentAppliedLayers.removeLayers(incidentReferenceLayers.get(incidentType));
   let incidentGeoJson = geojsonMarker(data, incTypeSingular);
     incidentGeoJson.addTo(incidentAppliedLayers);
 
@@ -515,6 +512,7 @@ function processLayerFromData(data, incidentType){
 
   // for now, just remove old layer if already exists
   // TODO: merge old and new data together?
+  
   // add the array of layers to the reference layers map
   incidentReferenceLayers.set(incidentType, incidentLayer);
 }
