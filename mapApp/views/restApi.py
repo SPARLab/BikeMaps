@@ -402,7 +402,7 @@ class TinyCollisionList(APIView):
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
 
-        collisionsQuerySet = Incident.objects.filter(p_type__exact="collision").filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')[:2500]
+        collisionsQuerySet = Incident.objects.filter(p_type__exact="collision").filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')
 
         serializer = TinyIncidentSerializer(collisionsQuerySet, many=True)
         return Response(serializer.data)
@@ -429,7 +429,7 @@ class TinyNearMissList(APIView):
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
 
-        nearmissQuerySet = Incident.objects.filter(p_type__exact="nearmiss").filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')[:2500]
+        nearmissQuerySet = Incident.objects.filter(p_type__exact="nearmiss").filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')
 
         serializer = TinyIncidentSerializer(nearmissQuerySet, many=True)
         return Response(serializer.data)
@@ -457,7 +457,7 @@ class TinyHazardList(APIView):
         bbox = stringToPolygon(bbstr)
 		#select_related('point').
 		#Hazard.objects.select_related('point').exclude(expires_date__lt=now).exclude(hazard_fixed=True).order_by('-date')[:1],
-        hazardQuerySet = Hazard.objects.select_related('point').filter(geom__within=bbox).exclude(expires_date__lt=datetime.datetime.now()).exclude(hazard_fixed=True).order_by('-date')[:2500]
+        hazardQuerySet = Hazard.objects.select_related('point').filter(geom__within=bbox).exclude(expires_date__lt=datetime.datetime.now()).exclude(hazard_fixed=True).order_by('-date')
 
         serializer = TinyHazSerializer(hazardQuerySet, many=True)
         return Response(serializer.data)
@@ -485,7 +485,7 @@ class TinyTheftList(APIView):
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
 
-        theftQuerySet = Theft.objects.select_related('point').all().filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')[:2500]
+        theftQuerySet = Theft.objects.select_related('point').all().filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')
         serializer = TinyTheftSerializer(theftQuerySet, many=True)
         return Response(serializer.data)
 
@@ -511,7 +511,7 @@ class TinyNewInfrastructureList(APIView):
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
 		#select_related('point').
-        niQuerySet = NewInfrastructure.objects.select_related('point').filter(geom__within=bbox).exclude(expires_date__lt=datetime.datetime.now()).order_by('-date')[:2500]
+        niQuerySet = NewInfrastructure.objects.select_related('point').filter(geom__within=bbox).exclude(expires_date__lt=datetime.datetime.now()).order_by('-date')
         serializer = TinyNewInfrastructureSerializer(niQuerySet, many=True)
         return Response(serializer.data)
 
