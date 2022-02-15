@@ -117,7 +117,7 @@ map.on("locationfound", function (location) {
 * Data fetching
 */
 
-
+// TODO: Should 'incidentReferenceLayers' store the geojson data layer instead? Then any time the array of markers is needed it can be converted with 'getLayers()' on the fly
 
  /** Initialize incident data storage
  *
