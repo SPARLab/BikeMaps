@@ -38,7 +38,6 @@ var map = L.map('map', {
 
 // If lat/long/zoom have been passed into the URL, set view to that location
 // Locate the user either way, but if view was already set don't change view to users location
-console.log(`is location set in url? ${!locationNotSetInURL}`)
 locateUser(setView = locationNotSetInURL, watch = false);
 
 /** Add geocoder control */
@@ -49,7 +48,6 @@ var geocoder = L.Control.geocoder({
     placeholder: gettext('Search...'),
     errorMessage: gettext('Nothing found.')
 }).on('markgeocode', function(result) {
-  console.log(result.geocode);
   map.fitBounds(result.geocode.bbox);
   geocodeMarker && map.removeLayer(geocodeMarker); //remove old marker if it exists
   geocodeMarker = new L.Marker(result.geocode.center, {
@@ -73,11 +71,7 @@ const loadDataIfBoundsExceedDebounce = debounce(function() {
 map.on('moveend', function (e) {
     var zoom = map.getZoom(),
         center = map.getCenter();
-        console.log('replacing window history');
     window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
-    console.log('move end');
-    // if true, load new data
-    console.log('new data load needed?');
     if (!loadingDataFlag) {
       loadDataIfBoundsExceedDebounce();
     }
@@ -105,7 +99,6 @@ function locateUser(setView, watch) {
 
 // If the users location is found, set map view to that location
 map.on("locationfound", function (location) {
-  console.log('location found code executing');
     var userMark = L.userMarker(location.latlng, { smallIcon: true, circleOpts: { weight: 1, opacity: 0.3, fillOpacity: 0.05 } }).addTo(map);
     if (location.accuracy < 501) {
         userMark.setAccuracy(location.accuracy);
@@ -455,7 +448,6 @@ function loadAllIncidentData(currentMapBounds){
     });
   })
   Promise.all(loadDataPromsies).then(r => {
-    console.log('done loading all');
     loadingDataFlag = 0;
     boundsOfLoadedData = boundsToLoad;
     // Check if the map moved while the last data was being loaded
@@ -542,12 +534,10 @@ function debounce(func, wait, immediate) {
 };
 
 function loadPopupDetails(incidentPk, popup, incidentType, incidentURL) {
-    console.log(incidentPk)
     $.ajax({
         url: incidentURL + incidentPk,
         dataType: 'json',
         success: function (response) {
-            //console.log(response);
             popup.setContent(getPopupText(incidentType, response));
         },
         error: function (err) {
