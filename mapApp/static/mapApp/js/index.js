@@ -438,6 +438,7 @@ function geojsonMarker(data, type) {
  */
 function loadAllIncidentData(currentMapBounds){
   loadingDataFlag = 1;
+  map.spin(true, {radius: 20, length: 20, lines: 16});
   // Load data for area 50% greater than current bounds
   let boundsToLoad = currentMapBounds.pad(0.5);
 
@@ -448,6 +449,7 @@ function loadAllIncidentData(currentMapBounds){
   })
   Promise.all(loadDataPromsies).then(r => {
     loadingDataFlag = 0;
+    map.spin(false);
     boundsOfLoadedData = boundsToLoad;
 
     console.log('finished loading all the data');
@@ -456,6 +458,7 @@ function loadAllIncidentData(currentMapBounds){
     loadDataIfBoundsExceedDebounce();
   }).catch(e => {
     loadingDataFlag = 0;
+    map.spin(false);
     console.log(e)
   })
 }
@@ -512,7 +515,7 @@ function processLayerFromData(data, incidentType){
 
   // for now, just remove old layer if already exists
   // TODO: merge old and new data together?
-  
+
   // add the array of layers to the reference layers map
   incidentReferenceLayers.set(incidentType, incidentLayer);
 }
