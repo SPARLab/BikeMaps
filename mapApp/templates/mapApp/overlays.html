@@ -1,11 +1,11 @@
 {% load i18n cache %}
 {% load user_agents %}
 {% get_current_language as LANGUAGE_CODE %}
-{% cache 500 new_report LANGUAGE_CODE %}
+{% cache 500 overlays LANGUAGE_CODE %}
 
 <!-- Use 'start report' button on web app, double tap action on mobile -->
 {% if not request.user_agent.is_mobile %}
-<div id="actionContainer">
+<div id="startButtonContainer">
   <button type="button" id="startReportButton" class="btn btn-default btn-md">
     <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
     {% trans "Start a report" %}
@@ -13,6 +13,9 @@
   <button type="button" id="cancelDrawButton" class="btn btn-default btn-md">
     {% trans "Cancel" %}
   </button>
+</div>
+<div id="pointCounterContainer" class="leaflet-container leaflet-bottom leaflet-left">
+  <p>Markers loaded: <span id="markersLoaded"></span> Markers displayed: <span id="markersApplied"</span></p>
 </div>
 {% endif %}
 
