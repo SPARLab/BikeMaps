@@ -117,12 +117,14 @@ map.on("locationfound", function (location) {
 * Data fetching
 */
 
-/**
- * @type {Object[]} - Array of objects
- * @type {string} Object[].id - The type of incident (eg collision, hazard)
- * @type {layer} Object[].layer - leaflet layer generated from geojson data for one incident type
+
+
+ /** Initialize incident data storage
+ *
+ * 'incidentReferenceLayers' stores the loaded layer data, while 'incidentAppliedLayers' is one grouped layer that can be filtered, subsets added/removed to map with checkboxes
+ *
+ * 'incidentAppliedLayers' is an instance of MarkerClusterGroup, a plugin type that extends FeatureGroup, which itself extends Layergroup. groups several layers and handles as one
  */
- // Create data feature groups
  const incidentTypeStrings = ['collisions', 'nearmisses', 'hazards', 'thefts', 'newInfrastructures'];
  var collisions = [], nearmisses = [], hazards = [], thefts = [], newInfrastructures = [];
  let incidentReferenceLayers = new Map();
@@ -132,10 +134,6 @@ incidentReferenceLayers.set('hazards', hazards);
 incidentReferenceLayers.set('thefts', thefts);
 incidentReferenceLayers.set('newInfrastructures', newInfrastructures);
 
-/**
-* incidentAppliedLayers is an instance of MarkerClusterGroup, a plugin type that extends FeatureGroup, which itself extends Layergroup. groups several layers and handles as one
-* 'incidentReferenceLayers' stores the loaded layer data, while incidentAppliedLayers is one grouped layer that can be filtered, subsets added/removed to map with checkboxes
-*/
 var incidentAppliedLayers = new L.MarkerClusterGroup({
     maxClusterRadius: 70,
     polygonOptions: {
@@ -151,7 +149,7 @@ incidentAppliedLayers.addTo(map);
 
 
 // Loads data for map view that was loaded when site first visited
-// Sometimes site goes to default location and then switches to users location right away, causing an apparent double loading.
+// Sometimes site goes to default location and then receives 'locationfound' event and switches to users location right away, causing an apparent double loading. Don't want to wait for location found to load data so don't think this is a bug, but maybe a better way of doing it?
 if (!loadingDataFlag) loadAllIncidentData(map.getBounds());
 
 // Define popup getter function
@@ -474,7 +472,7 @@ function loadAllIncidentData(currentMapBounds){
 
 /**
  * Load data for single incident type within requested bounds
- * @param {string} incidentType - type to load data for (eg collision, theft)
+ * @param {string} incidentType - type to load data for (eg collisions, thefts)
  * @param {string} bboxString - bounds converted to string format accepted by restApi.py
  */
 async function asyncLoadIncidentData(incidentType, bboxString){
@@ -502,28 +500,26 @@ async function asyncLoadIncidentData(incidentType, bboxString){
 function processLayerFromData(data, incidentType){
   let incTypeSingular = convertPluralToSingular(incidentType);
 
-  // L.geoJson featurelayer type, gets added to incidentAppliedLayers markerClusterGroup
+  // for now, just remove old layer if already exists
+  // TODO: merge old and new data together?
   incidentAppliedLayers.removeLayers(incidentReferenceLayers.get(incidentType));
-  let incidentGeoJson = geojsonMarker(data, incTypeSingular);
-    incidentGeoJson.addTo(incidentAppliedLayers);
 
-  // Returns an array of all the layers in incidentGeoJson and stores in incidentLayer
+  // incidentGeoJson is an L.geoJson featurelayer type, gets added to incidentAppliedLayers markerClusterGroup
+  let incidentGeoJson = geojsonMarker(data, incTypeSingular);
+  incidentGeoJson.addTo(incidentAppliedLayers);
+
+  // Return an array of all the layers in incidentGeoJson and store in incidentLayer- this is the format incidentReferenceLayers uses
   let incidentLayer = incidentGeoJson.getLayers();
 
     // addLayers (with an S!) is specific to markerClusterGroup extension, accepts array of markers to add to mCG
     // don't confuse with leaflet 'addLayer' which adds a layer to map or feature group
-    // this defines the checkbox function- will be able to access each 'incidentLayer' for each incidentType without unique names for each incidentLayer
+    // by defining checkbox function here, we can pass 'incidentLayer' data that is unique for each incidentType
   $("#" + incTypeSingular + "Checkbox").change(function () {
-
     this.checked ?
     incidentAppliedLayers.addLayers(incidentLayer) : incidentAppliedLayers.removeLayers(incidentLayer);
     console.log(`clicked a checkbox for ${incTypeSingular}`);
     printData();
-
   });
-
-  // for now, just remove old layer if already exists
-  // TODO: merge old and new data together?
 
   // add the array of layers to the reference layers map
   incidentReferenceLayers.set(incidentType, incidentLayer);
