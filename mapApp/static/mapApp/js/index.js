@@ -451,8 +451,7 @@ function loadAllIncidentData(currentMapBounds){
 
   const loadDataPromsies = incidentTypeStrings.map(i => {
     return asyncLoadIncidentData(i, boundsToLoad.toBBoxString()).then((data) => {
-      processLayerFromData(data, getIncidentTypeFromURL(i));
-      return `finished loading ${i}`;
+      processLayerFromData(data, convertPluralToSingular(i));
     });
   })
   Promise.all(loadDataPromsies).then(r => {
@@ -514,9 +513,9 @@ function processLayerFromData(data, incidentType){
 }
 
 // URLs use incident types in plural form, checkboxes use singular. Convert between for convenience
-function getIncidentTypeFromURL(URLSubstring){
-  if (URLSubstring === "nearmisses") return "nearmiss";
-  else return URLSubstring.slice(0, -1);
+function convertPluralToSingular(pluralIncidentType){
+  if (pluralIncidentType === "nearmisses") return "nearmiss";
+  else return pluralIncidentType.slice(0, -1);
 }
 
 /* TODO: add debounce to wait until user stops zooming/scrolling around to load new data */
