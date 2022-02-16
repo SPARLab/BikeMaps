@@ -44,6 +44,10 @@ L.control.scale({
 /* Turn off default mousewheel event (map zoom in / zoom out) when mouse is over the legend. This allows scrolling when contents overflow legend div */
 var elem = L.DomUtil.get('legend');
 L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
+// Disallow panning when mouse is on about legend or using the date filter
+L.DomEvent.on(elem, 'mouseover', () => map.dragging.disable());
+L.DomEvent.on(elem, 'mouseleave', ()=> map.dragging.enable());
+
 
 map.on('moveend', function (e) {
     var zoom = map.getZoom(),
