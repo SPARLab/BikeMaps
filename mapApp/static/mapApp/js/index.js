@@ -55,7 +55,7 @@ map.on('moveend', function (e) {
     window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
 });
 
-/** Locate user, set map view */
+/** Locate user, set map's view */
 
 // Find the user via GPS or internet connection.
 // Parameters to determine if the maps view should be set to that location and if the position should be polled and updated
@@ -439,7 +439,6 @@ function loadIncidentDataByType(requestURL, incidentType, incidentLayer) {
 }
 
 function loadPopupDetails(incidentPk, popup, incidentType, incidentURL) {
-    console.log(incidentPk)
     $.ajax({
         url: incidentURL + incidentPk,
         dataType: 'json',
