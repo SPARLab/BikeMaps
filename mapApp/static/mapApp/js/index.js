@@ -51,12 +51,6 @@ map.on('moveend', function (e) {
     window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
 });
 
-map.on('zoomend', function(e) {
-  if(map.getZoom() >= 13 && map.hasLayer(stravaHM)) {
-    // stravaHM._clearBgBuffer();
-  }
-});
-
 /** Locate user, set map view */
 
 // Find the user via GPS or internet connection.
