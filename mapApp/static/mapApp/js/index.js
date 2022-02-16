@@ -466,13 +466,7 @@ function getXHRPopup(layer) {
     // PK is stored in under key 'pk' for data loaded from database, 'id' for points just created and added to incidentData from submitted form
     let pk = feature.properties.pk || feature.properties.id;
 
-    if (type === "newInfrastructure") {
-        //there is an extra s in the path
-        loadPopupDetails(pk, popup, type, "//" + hostname + "/" + type + "s_xhr?format=json&pk=");
-    }
-    else {
-        loadPopupDetails(pk, popup, type, "//" + hostname + "/" + type + "_xhr?format=json&pk=");
-    }
+    loadPopupDetails(pk, popup, type, "//" + hostname + "/" + type + "_xhr?format=json&pk=");
 };
 
 function getPopupText(incidentType, in_data) {
