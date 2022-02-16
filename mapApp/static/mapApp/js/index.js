@@ -71,6 +71,10 @@ L.control.scale({
 /* Turn off default mousewheel event (map zoom in / zoom out) when mouse is over the legend. This allows scrolling when contents overflow legend div */
 var elem = L.DomUtil.get('legend');
 L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
+// Disallow panning when mouse is on about legend or using the date filter
+L.DomEvent.on(elem, 'mouseover', () => map.dragging.disable());
+L.DomEvent.on(elem, 'mouseleave', ()=> map.dragging.enable());
+
 
 const loadDataIfBoundsExceedDebounce = debounce(function() {
     loadDataIfBoundsExceed(map.getBounds());
@@ -85,13 +89,7 @@ map.on('moveend', function (e) {
     }
   });
 
-map.on('zoomend', function(e) {
-  if(map.getZoom() >= 13 && map.hasLayer(stravaHM)) {
-    // stravaHM._clearBgBuffer();
-  }
-});
-
-/** Locate user, set map view */
+/** Locate user, set map's view */
 
 // Find the user via GPS or internet connection.
 // Parameters to determine if the maps view should be set to that location and if the position should be polled and updated
@@ -587,13 +585,7 @@ function getXHRPopup(layer) {
     // PK is stored in under key 'pk' for data loaded from database, 'id' for points just created and added to incidentAppliedLayers from submitted form
     let pk = feature.properties.pk || feature.properties.id;
 
-    if (type === "newInfrastructure") {
-        //there is an extra s in the path
-        loadPopupDetails(pk, popup, type, "//" + hostname + "/" + type + "s_xhr?format=json&pk=");
-    }
-    else {
-        loadPopupDetails(pk, popup, type, "//" + hostname + "/" + type + "_xhr?format=json&pk=");
-    }
+    loadPopupDetails(pk, popup, type, "//" + hostname + "/" + type + "_xhr?format=json&pk=");
 };
 
 function getPopupText(incidentType, in_data) {
