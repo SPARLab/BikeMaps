@@ -70,5 +70,8 @@ urlpatterns += format_suffix_patterns([
 	url(r'^thefts_tiny/?$', views.TinyTheftList.as_view(), name='tiny-thefts-list'),
 	url(r'^theft_xhr/?$', views.XHRTheftInfo.as_view(), name='xhr-thefts-detail'),
 	url(r'^newInfrastructures_tiny/?$', views.TinyNewInfrastructureList.as_view(), name='tiny-newInfrastructures-list'),
+	
+	# Added 'newInfrastructure_xhr' endpoint for consistency with singular pattern for XHR requests. Keeping 'newInfrastructures_xhr' for backwards compatibility in case anyone is consuming the URL, as it's a public API.
 	url(r'^newInfrastructure_xhr/?$', views.XHRNewInfrastructureInfo.as_view(), name='xhr-newInfrastructures-detail'),
+	url(r'^newInfrastructures_xhr/?$', views.XHRNewInfrastructureInfo.as_view(), name='xhr-newInfrastructures-detail'),
 ], allowed=['json'])
