@@ -131,13 +131,22 @@
       $('#message .alert').alert('close');
     }, 7000);
   };
-  
-  function showHazardMessage(message){
-    $('#311popUp').append('<div id="popUpMessage">' +
-      '<button id="311button" type="button" style="color:white" class="close" onclick=$(this).closest("div").remove();>&times</button>' + message.fontcolor("white") +
-      '</div>'
-    )};
- 
+
+  function showFollowUpInfo(message){
+    // remove any existing popups before adding a new one
+    $('#popUpMessage').remove();
+    $('#followUpMsgPopUp').append(
+    `<div id="popUpMessage" class="alert alert-default alert-dismissible" role="alert">
+        <button id="closeFollowUpButton" type="button" class="close leaflet-popup-close-button" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="leaflet-popup-content">
+        ${message}
+        </div>
+      </div>`
+    );
+  };
+
   $(function(){
     // Define ajax submit function
     $('.tab-pane form').submit(function (event){
@@ -175,12 +184,11 @@
             // Print success or failure message
             var message = "<strong>" + '{% trans "Thank you!" %}' + "</strong><br>" + '{% trans "Your incident marker was successfully added." %}';
             showMessage(message);
-          
-			//Print Hazard Popup
-			if (data['hazard']){
-				var hazardPopup = data['hazardMessage'];
-				showHazardMessage(hazardPopup);
-			}			
+
+			// Display follow up message in modal if available
+			if (data['followUpMsg']){
+				showFollowUpInfo(data['followUpMsg']);
+			}
 		  }
         }
       });

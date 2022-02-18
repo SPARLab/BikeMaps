@@ -43,17 +43,33 @@ textarea {
 	resize: none; /* removes resize handle from text area inputs */
 }
 
-#popUpMessage{
+#popUpMessage {
 	padding:15px;
-    position: fixed;
+  position: fixed;
 	top: 10%;
-    left: 50%;
-    transform: translate(-50%, 0);
-    z-index:2;
-    width:auto;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index:2;
+  max-width: 400px;
 	text-align:left;
 	border-radius: 15px;
 	background-color:#18BC9C;
+	border-color:#18BC9C;
+	color: #fff;
+
+}
+
+#popUpMessage .leaflet-popup-content {
+	margin: 18px 10px 10px 10px;
+}
+
+#popUpMessage a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+#popUpMessage a:hover {
+  color: #2c3e50;
 }
 
 #message {
@@ -153,20 +169,6 @@ body h1{
 
 #cogsDropdown{
 	background: none;
-}
-
-/* search control */
-.leaflet-control-geocoder-icon {
-	background-image: url(../images/geocoder_alt.png);
-	background-size: 83%;
-}
-
-.leaflet-control-geocoder{
-	-webkit-box-shadow: rgba(0, 0, 0, 0.65098) 0px 1px 5px 0px;
-}
-
-.leaflet-control-geocoder:hover{
-	background: #f4f4f4;
 }
 
 /* Override spirt user dropdown*/

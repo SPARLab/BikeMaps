@@ -62,8 +62,8 @@
     {% endif %}
   </div>
 
-<!-- container for 311 popUp-->
-  <div id="311popUp">
+<!-- container for message after report submitted popUp-->
+  <div id="followUpMsgPopUp">
     {% if messages %}
     {% endif %}
   </div>
@@ -73,6 +73,7 @@
 
   <!-- EXTERNAL JS -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}">  </script>
   {% block footerJS %}{% endblock %}
 </body>
 
