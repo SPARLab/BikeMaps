@@ -449,8 +449,9 @@ function geojsonMarker(data, type) {
 function loadAllIncidentData(currentMapBounds){
   loadingDataFlag = 1;
   map.spin(true, mapSpinOpts);
-  // Load data for area 50% greater than current bounds
-  let boundsToLoad = currentMapBounds.pad(0.5);
+  // Load more data than the currently in the screen view to allow for some panning without reloading data. use exponential formula to determine how much more
+  let percentPadding = 0.03 * (1.35**map.getZoom());
+  let boundsToLoad = currentMapBounds.pad(percentPadding);
 
   const loadDataPromsies = incidentTypeStrings.map(i => {
     return asyncLoadIncidentData(i, boundsToLoad.toBBoxString()).then((data) => {
