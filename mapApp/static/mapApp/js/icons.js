@@ -16,62 +16,71 @@ function getColor(t) {
   return iconColors[t];
 };
 
+L.ExtraMarkers.Icon.prototype.options.prefix = 'fa';
 // Icon definitions
-L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
 var icons = {
-  "bikeRedIcon": L.AwesomeMarkers.icon({
+  "bikeRedIcon": L.ExtraMarkers.icon({
     icon: "fa-bicycle",
-    markerColor: 'red',
+    markerColor: getColor("collision"),
     iconColor: 'black',
-    color: getColor("collision")
+    pieColor: getColor("collision"),
+    svg: "true"
   }),
-  "bikeYellowIcon": L.AwesomeMarkers.icon({
+  "bikeYellowIcon": L.ExtraMarkers.icon({
     icon: "fa-bicycle",
-    markerColor: 'orange',
+    markerColor: getColor("nearmiss"),
     iconColor: 'black',
-    color: getColor("nearmiss")
+    pieColor: getColor("nearmiss"),
+    svg: "true"
   }),
-  "bikeGreyIcon": L.AwesomeMarkers.icon({
+  "bikeGreyIcon": L.ExtraMarkers.icon({
     icon: "fa-crosshairs",
     markerColor: 'lightblue',
     iconColor: 'black',
-    color: getColor("undefined")
+    pieColor: getColor("undefined"),
+    svg: "true"
   }),
-  "hazardIcon": L.AwesomeMarkers.icon({
+  "hazardIcon": L.ExtraMarkers.icon({
     icon: "fa-warning",
-    markerColor: 'green',
+    markerColor: getColor("hazard"),
     iconColor: 'black',
-    color: getColor("hazard")
+    pieColor: getColor("hazard"),
+    svg: "true"
   }),
-  "theftIcon": L.AwesomeMarkers.icon({
+  "theftIcon": L.ExtraMarkers.icon({
     icon: "fa-bicycle",
-    markerColor: 'gray',
+    markerColor: getColor("theft"),
     iconColor: '#cbcbcb',
-    color: getColor("theft")
+    pieColor: getColor("theft"),
+    svg: "true"
   }),
-  "officialIcon": L.AwesomeMarkers.icon({
+  "officialIcon": L.ExtraMarkers.icon({
     icon: "fa-certificate",
     markerColor: 'cadetblue',
     iconColor: 'orange',
-    color: getColor("official")
+    pieColor: getColor("official"),
+    svg: "true"
   }),
-  "geocodeIcon": L.AwesomeMarkers.icon({
+  "geocodeIcon": L.ExtraMarkers.icon({
     icon: "fa-flag",
     markerColor: 'darkred',
     iconColor: 'black',
-    color: getColor("geocode")
+    pieColor: getColor("geocode"),
+    svg: "true"
   }),
-  "locationIcon": L.AwesomeMarkers.icon({
+  "locationIcon": L.ExtraMarkers.icon({
     icon: "fa-user",
     markerColor: 'darkred',
     iconColor: 'black',
-    color: getColor("location")
+    pieColor: getColor("location"),
+    svg: "true"
   }),
-    "newInfrastructureIcon": L.AwesomeMarkers.icon({
+    "newInfrastructureIcon": L.ExtraMarkers.icon({
     icon: "fa-star",
     markerColor: 'gray',
     iconColor: 'yellow',
-    color: getColor("newInfrastructure")
+    pieColor: getColor("newInfrastructure"),
+    svg: "true"
   })
 };
 
