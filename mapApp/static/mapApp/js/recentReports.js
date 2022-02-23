@@ -3,7 +3,7 @@ var collisionsLayer, nearmissesLayer, hazardsLayer, theftsLayer;
 
 // Initialize the leaflet map
   map = L.map('map', {
-      layers: [Esri_Streets_Basemap],
+      layers: [OpenStreetMap],
       worldCopyJump: true,
   });
 
