@@ -1,5 +1,5 @@
 // Leaflet heatmap
-var heatLayer = new HeatmapOverlay({ "radius": 40, "maxOpacity": 0.3 });
+var heatLayer = new HeatmapOverlay({ "radius": 20, "maxOpacity": 0.3 });
 var heat_data;
 var map = L.map('map', {
   center: [15,6],

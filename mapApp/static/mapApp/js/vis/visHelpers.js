@@ -86,7 +86,8 @@ function changeMap(){
       'value': 1
     });
   });
-  heatLayer.setData({ data: heat_data });
+  heatLayer.setData({ max:1, data: heat_data });
+
 };
 
 function mapFilter(){
