@@ -1,7 +1,6 @@
 // Leaflet heatmap
 var heatLayer = new HeatmapOverlay({ "radius": 40, "maxOpacity": 0.3 });
 var heat_data;
-var Esri_Streets_Basemap_Vis = L.esri.basemapLayer("Streets");
 var map = L.map('map', {
   center: [15,6],
   zoom: 1,
@@ -9,7 +8,7 @@ var map = L.map('map', {
   zoomControl: false,
   scrollWheelZoom: true,
   worldCopyJump: true,
-  layers: [Esri_Streets_Basemap_Vis, heatLayer]
+  layers: [OpenStreetMap, heatLayer]
 }).on('load', changeMap())
   .on('moveend', mapFilter);
 
