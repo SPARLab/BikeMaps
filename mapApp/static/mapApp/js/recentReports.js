@@ -33,7 +33,6 @@ function addData(data){
   theftsLayer = geojsonCircleMarker( data.thefts , "theft").addTo(map);
   rois = geojsonPolygonMarker(data.rois);
   rois.addTo(map);
-  console.log(data.rois);
   // Fit map extent to alert areas boundary
   if (rois.getBounds().isValid()){
     map.fitBounds(rois.getBounds());
