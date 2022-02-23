@@ -116,7 +116,10 @@ $(function(){
   geofences = geojsonPolygonMarker(geofences);
   geofences.setStyle({color: "blue"});
   geofences.addTo(map);
-  map.fitBounds(geofences);
+  if (geofences.getBounds().isValid()){
+    map.fitBounds(geofences.getBounds());
+
+  }
 
   for (var i = 0; i < dc.chartRegistry.list().length; i++) {
     var chartI = dc.chartRegistry.list()[i];

@@ -31,10 +31,13 @@ function addData(data){
   nearmissesLayer = geojsonCircleMarker( data.nearmisses , "nearmiss").addTo(map);
   hazardsLayer = geojsonCircleMarker( data.hazards , "hazard").addTo(map);
   theftsLayer = geojsonCircleMarker( data.thefts , "theft").addTo(map);
-  rois = geojsonPolygonMarker(data.rois).addTo(map);
-
+  rois = geojsonPolygonMarker(data.rois);
+  rois.addTo(map);
+  console.log(data.rois);
   // Fit map extent to alert areas boundary
-  map.fitBounds(rois);
+  if (rois.getBounds().isValid()){
+    map.fitBounds(rois.getBounds());
+  }
 
   // Add text to data column
   pprint("Collisions", data.collisions);
