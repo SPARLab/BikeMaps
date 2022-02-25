@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block headerCSS %}
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.css">
+  <link rel="stylesheet" href="https://unpkg.com/dc@4/dist/style/dc.css">
   <link rel="stylesheet" href="{% static 'mapApp/css/vis.css' %}">
 {% endblock %}
 
@@ -69,7 +69,7 @@
 
 {% block footerJS %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.11/crossfilter.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.js"></script>
+  <script src="https://unpkg.com/dc@4/dist/dc.js"></script>
   <script src="{% static 'leaflet/plugins/leaflet-heatmap/heatmap.min.js' %}"></script>
   <script src="{% static 'leaflet/plugins/leaflet-heatmap/leaflet-heatmap.js' %}"></script>
   <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
