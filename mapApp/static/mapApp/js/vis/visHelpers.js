@@ -23,14 +23,14 @@ moment.locale(LANGUAGE_CODE)
 // Define crossfilter dataset
 var xf = crossfilter(data);
 
-// Define dimensions
+// Define dimensions to filter according to defined value accessor functions
 var p_typeDimension = xf.dimension(function(d) {return d.properties.p_type;}),
     weekdayDimension = xf.dimension(function(d) {return (moment(d.properties.date).weekday()+6)%7 }),
     dateDimension = xf.dimension(function(d){ return moment(d.properties.date).diff(moment(), "days"); }),
     geomDimension = xf.dimension(function(d){ return {'lat': d.geometry.coordinates[1], 'lng': d.geometry.coordinates[0]} }),
     hourDimension = xf.dimension(function(d){ return moment(d.properties.date).hour(); });
 
-// Define groups
+// Define groups to count records
 var all = xf.groupAll(),
     countTypes = p_typeDimension.group().reduceCount(),
     weekdayCount = weekdayDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount()),

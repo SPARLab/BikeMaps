@@ -1,9 +1,9 @@
 dc.dataCount('.dc-data-count')
-  .dimension(xf)
-  .group(all);
+  .crossfilter(xf)
+  .groupAll(all);
 
 // Bar chart for counts by type
-var barTypes = dc.barChart('#barTypes');
+var barTypes = new dc.BarChart('#barTypes');
 barTypes
   .width(400)
   .height(200)
@@ -23,7 +23,7 @@ barTypes.xAxis()
 barTypes.render();
 
 // Bar chart for reports this week
-var barWeek = dc.barChart("#barWeek");
+var barWeek = new dc.BarChart("#barWeek");
 barWeek
   .width(400)
   .height(200)
@@ -47,7 +47,7 @@ barWeek.xAxis()
 barWeek.render();
 
 // Bar chart for reports by hour of day
-var barHour = dc.barChart("#barHour");
+var barHour = new dc.BarChart("#barHour");
 barHour
   .width(400)
   .height(200)
@@ -71,7 +71,7 @@ barHour.yAxis()
 barHour.render();
 
 // bar chart of total reports per day
-var barDate = dc.barChart("#barDate");
+var barDate = new dc.BarChart("#barDate");
 barDate
   .width(575)
   .height(200)
