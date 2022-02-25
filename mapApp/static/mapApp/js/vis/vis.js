@@ -54,7 +54,6 @@ barHour
   .height(200)
   .x(d3.scaleLinear().domain([0,24]))
   .yAxisLabel(gettext("Count"))
-  // .centerBar(true)
   .elasticY(true)
   .dimension(hourDimension)
   .group(countPerHour, "Collisions").valueAccessor(function(d){return d.value.collision; })
@@ -67,9 +66,6 @@ barHour
 barHour.yAxis()
   .tickFormat(d3.format("d"))
   .ticks(6);
-// barHour.xAxis()
-//   .tickValues([0,1,2,3,4,5,6])
-//   .tickFormat(function(v){ return weekdayScale((v+1)%7); });
 barHour.render();
 
 // bar chart of total reports per day
