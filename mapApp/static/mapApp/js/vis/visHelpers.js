@@ -9,11 +9,12 @@ var labels = {
 }
 // Define scales
 // map p_type to appropriate colors
-var colorScale = d3.scale.ordinal()
+var colorScale = d3.scaleOrdinal()
     .domain(["collision", "nearmiss", "hazard", "theft"])
     .range([iconColors.collision, iconColors.nearmiss, iconColors.hazard, iconColors.theft]);
-var weekdayScale = d3.scale.quantize()
-    .domain([0,1,2,3,4,5,6])
+
+var weekdayScale = d3.scaleQuantize()
+    .domain([0,6])
     .range(moment.weekdaysShort());
 
 // Set date formats to local language

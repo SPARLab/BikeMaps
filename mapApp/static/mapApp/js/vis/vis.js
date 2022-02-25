@@ -7,7 +7,7 @@ var barTypes = dc.barChart('#barTypes');
 barTypes
   .width(400)
   .height(200)
-  .x(d3.scale.ordinal().domain(["collision", "nearmiss", "hazard", "theft"]))
+  .x(d3.scaleBand().domain(["collision", "nearmiss", "hazard", "theft"]))
   .xUnits(dc.units.ordinal)
   .yAxisLabel(gettext("Count"))
   .centerBar(true)
@@ -27,7 +27,7 @@ var barWeek = dc.barChart("#barWeek");
 barWeek
   .width(400)
   .height(200)
-  .x(d3.scale.linear().domain([-0.5,6.5]))
+  .x(d3.scaleLinear().domain([-0.5,6.5]))
   .yAxisLabel(gettext("Count"))
   .centerBar(true)
   .elasticY(true)
@@ -52,7 +52,7 @@ var barHour = dc.barChart("#barHour");
 barHour
   .width(400)
   .height(200)
-  .x(d3.scale.linear().domain([0,24]))
+  .x(d3.scaleLinear().domain([0,24]))
   .yAxisLabel(gettext("Count"))
   // .centerBar(true)
   .elasticY(true)
@@ -77,7 +77,7 @@ var barDate = dc.barChart("#barDate");
 barDate
   .width(575)
   .height(200)
-  .x(d3.scale.linear().domain([-360, 0]))
+  .x(d3.scaleLinear().domain([-360, 0]))
   .yAxisLabel(gettext("Count"))
   .centerBar(true)
   .elasticY(true)
