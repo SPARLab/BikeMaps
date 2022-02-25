@@ -15,8 +15,8 @@ barTypes
   .title(function(d){ return d.value; })
   .dimension(p_typeDimension)
   .group(countTypes)
-  .colors(colorScale.range())
-  .colorAccessor(function(d){return colorScale.domain().indexOf(d.data.key);})
+  .colors(colorScale)
+  .colorAccessor(function(d){return (d.key);})
   .on('filtered', changeMap);
 barTypes.xAxis()
   .tickFormat(function(v){ return labels[v]; });
@@ -37,8 +37,7 @@ barWeek
   .stack(weekdayCount, gettext("Hazards"), function(d){ return d.value.hazard; })
   .stack(weekdayCount, gettext("Thefts"), function(d){ return d.value.theft; })
   .brushOn(true)
-  .colors(colorScale.range())
-  .colorAccessor(function(d){return d.layer;})
+  .colors(colorScale)
   .on('filtered', changeMap);
 barWeek.yAxis()
   .tickFormat(d3.format("d"));
@@ -62,8 +61,7 @@ barHour
   .stack(countPerHour, "Hazards", function(d){ return d.value.hazard; })
   .stack(countPerHour, "Thefts", function(d){ return d.value.theft; })
   .brushOn(true)
-  .colors(colorScale.range())
-  .colorAccessor(function(d){return d.layer;})
+  .colors(colorScale)
   .on('filtered', changeMap);
 barHour.yAxis()
   .tickFormat(d3.format("d"));
