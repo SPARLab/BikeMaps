@@ -10,7 +10,6 @@ barTypes
   .x(d3.scaleBand().domain(["collision", "nearmiss", "hazard", "theft"]))
   .xUnits(dc.units.ordinal)
   .yAxisLabel(gettext("Count"))
-  .centerBar(true)
   .elasticY(true)
   .title(function(d){ return d.value; })
   .dimension(p_typeDimension)
@@ -20,6 +19,7 @@ barTypes
   .on('filtered', changeMap);
 barTypes.xAxis()
   .tickFormat(function(v){ return labels[v]; });
+barTypes.yAxis().ticks(6);
 barTypes.render();
 
 // Bar chart for reports this week
@@ -40,7 +40,8 @@ barWeek
   .colors(colorScale)
   .on('filtered', changeMap);
 barWeek.yAxis()
-  .tickFormat(d3.format("d"));
+  .tickFormat(d3.format("d"))
+  .ticks(6);
 barWeek.xAxis()
   .tickValues([0,1,2,3,4,5,6])
   .tickFormat(function(v){ return weekdayScale((v+1)%7); });
@@ -64,7 +65,8 @@ barHour
   .colors(colorScale)
   .on('filtered', changeMap);
 barHour.yAxis()
-  .tickFormat(d3.format("d"));
+  .tickFormat(d3.format("d"))
+  .ticks(6);
 // barHour.xAxis()
 //   .tickValues([0,1,2,3,4,5,6])
 //   .tickFormat(function(v){ return weekdayScale((v+1)%7); });
@@ -84,7 +86,8 @@ barDate
   .brushOn(true)
   .on('filtered', changeMap);
 barDate.yAxis()
-  .tickFormat(d3.format("d"));
+  .tickFormat(d3.format("d"))
+  .ticks(4);
 barDate.xAxis()
   .tickFormat(function(v){ return moment().add(v, "days").format("ll").slice(0, -5); })
   .tickValues(function(){
