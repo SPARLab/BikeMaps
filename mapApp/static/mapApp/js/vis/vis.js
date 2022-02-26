@@ -19,7 +19,7 @@ barTypes
   .on('filtered', changeMap);
 barTypes.xAxis()
   .tickFormat(function(v){ return labels[v]; });
-barTypes.yAxis().ticks(6);
+barTypes.yAxis().ticks(6).tickSizeOuter(0);
 barTypes.render();
 
 // Bar chart for reports this week
@@ -41,6 +41,7 @@ barWeek
   .on('filtered', changeMap);
 barWeek.yAxis()
   .tickFormat(d3.format("d"))
+  .tickSizeOuter(0)
   .ticks(6);
 barWeek.xAxis()
   .tickValues([0,1,2,3,4,5,6])
@@ -65,6 +66,7 @@ barHour
   .on('filtered', changeMap);
 barHour.yAxis()
   .tickFormat(d3.format("d"))
+  .tickSizeOuter(0)
   .ticks(6);
 barHour.render();
 
@@ -83,6 +85,7 @@ barDate
   .on('filtered', changeMap);
 barDate.yAxis()
   .tickFormat(d3.format("d"))
+  .tickSizeOuter(0)
   .ticks(4);
 barDate.xAxis()
   .tickFormat(function(v){ return moment().add(v, "days").format("ll").slice(0, -5); })
