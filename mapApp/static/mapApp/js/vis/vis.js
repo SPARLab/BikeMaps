@@ -5,8 +5,9 @@ dc.dataCount('.dc-data-count')
 // Bar chart for counts by type
 var barTypes = new dc.BarChart('#barTypes');
 barTypes
-  .width(400)
-  .height(200)
+  .width(null) // setting height & width to null tells them to fit to the size of the parent div
+  .height(null)
+  .margins({top: 10, right: 50, bottom: 30, left: 40})
   .x(d3.scaleBand().domain(["collision", "nearmiss", "hazard", "theft"]))
   .xUnits(dc.units.ordinal)
   .yAxisLabel(gettext("Count"))
@@ -25,8 +26,9 @@ barTypes.render();
 // Bar chart for reports this week
 var barWeek = new dc.BarChart("#barWeek");
 barWeek
-  .width(400)
-  .height(200)
+  .width(null)
+  .height(null)
+  .margins({top: 10, right: 50, bottom: 30, left: 40})
   .x(d3.scaleLinear().domain([-0.5,6.5]))
   .yAxisLabel(gettext("Count"))
   .centerBar(true)
@@ -51,8 +53,9 @@ barWeek.render();
 // Bar chart for reports by hour of day
 var barHour = new dc.BarChart("#barHour");
 barHour
-  .width(400)
-  .height(200)
+  .width(null)
+  .height(null)
+  .margins({top: 10, right: 50, bottom: 30, left: 40})
   .x(d3.scaleLinear().domain([0,24]))
   .yAxisLabel(gettext("Count"))
   .elasticY(true)
