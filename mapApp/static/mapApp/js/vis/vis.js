@@ -89,6 +89,7 @@ barDate
   .dimension(dateDimension)
   .group(countPerDay)
   .brushOn(true)
+  .colors(d3.schemeSet2)
   .on('filtered', changeMap);
 barDate.yAxis()
   .tickFormat(d3.format("d"))
