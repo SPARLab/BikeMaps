@@ -44,7 +44,6 @@ barWeek
   .colors(colorScale)
   .on('filtered', changeMap);
 barWeek.yAxis()
-  .tickFormat(d3.format("d"))
   .tickSizeOuter(0)
   .ticks(6);
 barWeek.xAxis()
@@ -72,7 +71,6 @@ barHour
   .colors(colorScale)
   .on('filtered', changeMap);
 barHour.yAxis()
-  .tickFormat(d3.format("d"))
   .tickSizeOuter(0)
   .ticks(6);
 barHour.render();
@@ -91,10 +89,7 @@ barDate
   .brushOn(true)
   .colors(d3.schemeSet2)
   .on('filtered', changeMap);
-barDate.yAxis()
-  .tickFormat(d3.format("d"))
-  .tickSizeOuter(0)
-  .ticks(4);
+barDate.yAxis().ticks(3);
 barDate.xAxis()
   .tickFormat(function(v){
     return moment().add(v, "days").format("ll").slice(0, -5);
