@@ -7,7 +7,12 @@ body {
   padding-bottom: 200px;
 }
 
-
+.chart-title {
+  padding: 12px;
+  text-align: left;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #EBEFF2;
+}
 .center-chart{
   width: 100%;
   display: block;
