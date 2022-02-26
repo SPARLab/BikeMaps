@@ -95,13 +95,11 @@ barDate.yAxis()
   .tickSizeOuter(0)
   .ticks(4);
 barDate.xAxis()
-  .tickFormat(function(v){ return moment().add(v, "days").format("ll").slice(0, -5); })
-  .tickValues(function(){
-    var firsts = [];
-    // Calculate the day difference between now and the first of every month
-    for(var i = 0; i<12; i++) firsts.push(moment().subtract(moment().date()-1, "days").subtract(i, "months").diff(moment(), "days"));
-    return firsts;
-  });
+  .tickFormat(function(v){
+    return moment().add(v, "days").format("ll").slice(0, -5);
+  })
+  .tickValues(dateTickValues());
+
 barDate.render();
 
 // Fit map extent to alert areas boundary

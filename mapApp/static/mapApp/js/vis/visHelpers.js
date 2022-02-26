@@ -20,6 +20,15 @@ var weekdayScale = d3.scaleQuantize()
 // Set date formats to local language
 moment.locale(LANGUAGE_CODE)
 
+const dateTickValues = () => {
+  var firsts = [];
+  // Calculate the day difference between now and the first of every month
+  for(var i = 0; i<12; i++) {
+        firsts.push(moment().subtract(moment().date()-1, "days").subtract(i, "months").diff(moment(), "days"));
+  }
+  return firsts;
+}
+
 // Define crossfilter dataset
 var xf = crossfilter(data);
 
