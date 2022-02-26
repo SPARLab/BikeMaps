@@ -62,7 +62,7 @@ barHour
   .stack(countPerHour, "Hazards", function(d){ return d.value.hazard; })
   .stack(countPerHour, "Thefts", function(d){ return d.value.theft; })
   .brushOn(true)
-  .colors(colorScale)
+  .colors(colorScaleHour)
   .on('filtered', changeMap);
 barHour.yAxis()
   .tickFormat(d3.format("d"))
