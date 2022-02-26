@@ -8,6 +8,10 @@ body {
   padding-bottom: 200px;
 }
 
+.row{
+  margin: 15px;
+}
+
 .chart-title {
   padding: 12px;
   text-align: left;
@@ -21,7 +25,8 @@ body {
   margin-right: auto;
   padding: 8px;
   background: #fff;
-  margin: 10px;
+  border: 1px solid #c5d1d8;
+  border-radius: 5px;
 }
 
 #barTypes .x.axis path {
