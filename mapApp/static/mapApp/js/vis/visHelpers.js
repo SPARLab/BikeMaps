@@ -13,11 +13,6 @@ var colorScale = d3.scaleOrdinal()
     .domain(["collision", "nearmiss", "hazard", "theft"])
     .range([iconColors.collision, iconColors.nearmiss, iconColors.hazard, iconColors.theft]);
 
-// Temporary bug fix/hack: on french site only, nearmiss and collision are grouped as same color. removing custom colorscale shows nothing wrong with the data. unclear why identical colorscale fixes issue or why only present on french site.
-var colorScaleHour = d3.scaleOrdinal()
-    .domain(["collision", "nearmiss", "hazard", "theft"])
-    .range([iconColors.collision, iconColors.nearmiss, iconColors.hazard, iconColors.theft]);
-
 var weekdayScale = d3.scaleQuantize()
     .domain([0,6])
     .range(moment.weekdaysShort());
