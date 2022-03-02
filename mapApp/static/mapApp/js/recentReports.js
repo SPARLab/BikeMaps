@@ -34,7 +34,7 @@ function addData(data){
   rois = geojsonPolygonMarker(data.rois);
   rois.addTo(map);
   // Fit map extent to alert areas boundary
-  if (rois.getBounds().isValid()){
+  if (rois && rois.getBounds().isValid()){
     map.fitBounds(rois.getBounds());
   }
 
