@@ -15,7 +15,7 @@ var MapQuestOpen_OSM = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z
     canBICS = L.esri.featureLayer({
       url: 'https://services.arcgis.com/E5vyYQKPMX5X3R3H/arcgis/rest/services/OSM_CAN_BICS_V1/FeatureServer/0',
       style: {
-        color: "#BA55D3",
+        color: "#386cb0",
         weight: 2
       }
     }),
