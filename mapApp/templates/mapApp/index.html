@@ -13,8 +13,11 @@
   crossorigin=""/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.0/MarkerCluster.Default.css" integrity="sha512-6ZCLMiYwTeli2rVh3XAPxy3YoR5fVxGdH/pz+KMCzRY2M65Emgkw00Yqmhh8qLGeYQ3LbVZGdmOX9KUjSKr0TA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" integrity="sha512-gc3xjCmIy673V6MyOAZhIW93xhM9ei1I+gLbmFjUHIjocENRsLX/QUE1htk5q1XV2D/iie/VQ8DXI6Vu8bexvQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.css' %}">
-    <link rel="stylesheet" href="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css' %}">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
+    />
+    <link rel="stylesheet" href="{% static 'leaflet/plugins/extra-markers/css/leaflet.extra-markers.min.css' %}">
     <link rel="stylesheet" href="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.css' %}">
     <link rel="stylesheet" href="{% static 'mapApp/css/index.css' %}">
 
@@ -34,19 +37,20 @@
   <div class="page-body">
       <div id="map">
         {% include 'mapApp/map_legend.html' %}
+        {% include 'mapApp/new_report.html' %}
       </div>
   </div>
 {% endblock %}
 
 {% block footerJS %}
 {% cache 300 index_js_scripts LANGUAGE_CODE %}
-  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}">  </script>
   <script src="{% static 'bootstrap-slider/bootstrap-slider.js' %}"></script>
   <script src="{% static 'datetimepicker/js/bootstrap-datetimepicker.js' %}"></script>
   <script src="{% static 'datetimepicker/js/locales/bootstrap-datetimepicker.de.js' %}" charset="UTF-8"></script>
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.0/leaflet.markercluster.js" integrity="sha512-pWPELjRaw2ZdoT0PDi7iRpRlk1XX3rtnfejJ/HwskyojpHei+9hKpwdphC4yssNt4FM0TjMQOmMrk6ZYSn274w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js" integrity="sha512-ozq8xQKq6urvuU6jNgkfqAmT7jKN2XumbrX1JiB3TnF7tI48DPI4Gy1GXKD/V3EExgAs1V+pRO7vwtS1LHg0Gw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="{% static 'leaflet/plugins/leaflet-heat/leaflet-heat.js' %}"></script>
@@ -54,12 +58,11 @@
   <script src="https://unpkg.com/esri-leaflet@3.0.2/dist/esri-leaflet.js"
     integrity="sha512-myckXhaJsP7Q7MZva03Tfme/MSF5a6HC2xryjAM4FxPLHGqlh5VALCbywHnzs2uPoF/4G/QVXyYDDSkp5nPfig=="
     crossorigin=""></script>
-  <script src="{% static 'leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.min.js' %}"></script>
+  <script src="{% static 'leaflet/plugins/extra-markers/js/leaflet.extra-markers.min.js' %}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
   <script src="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.js' %}"></script>
-  <script src="{% static 'leaflet/plugins/leaflet-control-geocoder/Control.Geocoder.js' %}"></script>
   <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
   <script type="text/javascript">
       var LANGUAGE_CODE = "{{LANGUAGE_CODE}}";

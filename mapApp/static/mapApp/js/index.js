@@ -1,55 +1,74 @@
-// Create data feature groups
-var collisions, nearmisses, hazards, thefts, newInfrastructures;
+/** Host location, port to construct API requests */
+var hostname = window.location.hostname;
 
-//'159.203.2.12' for dev
-var srv = window.location.hostname;
+// If running locally, include port in API requests
+if (window.location.port) {
+  hostname = hostname + ':' + window.location.port;
+}
 
-loadIncidenLayerXHR("/nearmisses_tiny?format=json", "nearmiss", nearmisses);
-loadIncidenLayerXHR("/hazards_tiny?format=json", "hazard", hazards);
-loadIncidenLayerXHR("/thefts_tiny?format=json", "theft", thefts);
-loadIncidenLayerXHR("/collisions_tiny?format=json", "collision", collisions);
-loadIncidenLayerXHR("/newInfrastructures_tiny?format=json", "newInfrastructure", newInfrastructures);
+/**
+* Map set up
+*/
 
-var xhrLayersLoaded = 0;
-var refLayers = [];
-
-var incidentData = new L.MarkerClusterGroup({
-    maxClusterRadius: 70,
-    polygonOptions: {
-        color: '#2c3e50',
-        weight: 3
-    },
-    animateAddingMarkers: true,
-    iconCreateFunction: pieChart
-}),
-    alertAreas = L.featureGroup();
-
-// Define popup getter function
-incidentData.on('click', function (e) {
-    var layer = e.layer;
-    //layer.bindPopup(getPopup(layer)).openPopup();
-    getXHRPopup(layer);
-});
-
-
-
-// Initialize the map
+/** Initialize the map */
 var map = L.map('map', {
     center: [48, -100],
     minZoom: 2,
     zoom: 4,
     zoomControl: false,
-    layers: [OpenStreetMap, CyclOSM, canBICS, stravaHM, incidentData, alertAreas],
+    layers: [OpenStreetMap, CyclOSM, canBICS, stravaHM],
     worldCopyJump: true,
 });
 
-// Add i18n zoom control
-L.control.zoom({
-    zoomInTitle: gettext('Zoom in'),
-    zoomOutTitle: gettext('Zoom out'),
+/** Add geocoder control */
+var geocodeMarker;
+var geocoder = L.Control.geocoder({
+    defaultMarkGeocode: false,
+    position: "topleft",
+    placeholder: gettext('Search...'),
+    errorMessage: gettext('Nothing found.')
+}).on('markgeocode', function(result) {
+  console.log(result.geocode);
+  map.fitBounds(result.geocode.bbox);
+  geocodeMarker && map.removeLayer(geocodeMarker); //remove old marker if it exists
+  geocodeMarker = new L.Marker(result.geocode.center, {
+      icon: icons["geocodeIcon"]
+  }).bindPopup(result.geocode.name).addTo(map).openPopup();
 }).addTo(map);
 
-// Set map view
+/** Add scalebar */
+L.control.scale({
+    position: 'bottomright'
+}).addTo(map);
+
+/* Turn off default mousewheel event (map zoom in / zoom out) when mouse is over the legend. This allows scrolling when contents overflow legend div */
+var elem = L.DomUtil.get('legend');
+L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
+// Disallow panning when mouse is on about legend or using the date filter
+L.DomEvent.on(elem, 'mouseover', () => map.dragging.disable());
+L.DomEvent.on(elem, 'mouseleave', ()=> map.dragging.enable());
+
+
+map.on('moveend', function (e) {
+    var zoom = map.getZoom(),
+        center = map.getCenter();
+    window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
+});
+
+/** Locate user, set map's view */
+
+// Find the user via GPS or internet connection.
+// Parameters to determine if the maps view should be set to that location and if the position should be polled and updated
+function locateUser(setView, watch) {
+    this.map.locate({
+        setView: setView,
+        maxZoom: 16,
+        watch: watch,
+        enableHighAccuracy: true
+    });
+};
+
+// If the users location is found, set map view to that location
 map.on("locationfound", function (location) {
     var userMark = L.userMarker(location.latlng, { smallIcon: true, circleOpts: { weight: 1, opacity: 0.3, fillOpacity: 0.05 } }).addTo(map);
     if (location.accuracy < 501) {
@@ -64,39 +83,53 @@ if (typeof zoom !== 'undefined') {
     locateUser(setView = true, watch = false);
 }
 
-// Add geocoder control
-var geocoder = L.Control.geocoder({
-    position: "topleft",
-    placeholder: gettext('Search...'),
-    errorMessage: gettext('Nothing found.')
-}).addTo(map);
-var geocodeMarker;
-geocoder.markGeocode = function (result) {
-    map.fitBounds(result.bbox);
-    geocodeMarker && map.removeLayer(geocodeMarker); //remove old marker if it exists
+/**
+* Data fetching
+*/
 
-    geocodeMarker = new L.Marker(result.center, {
-        icon: icons["geocodeIcon"]
-    }).bindPopup(result.name).addTo(map).openPopup();
-};
+/**
+ * @type {Object[]} - Array of objects
+ * @type {string} Object[].id - The type of incident (eg collision, hazard)
+ * @type {layer} Object[].layer - leaflet layer generated from geojson data for one incident type
+ */
+ var incidentLayers = [];
 
-// Add scalebar
-L.control.scale({
-    position: 'bottomright'
-}).addTo(map);
+/**
+* Group of all the incident layers together.
+* Marker cluster group similar to or extension of layergroup?
+*/
+var incidentData = new L.MarkerClusterGroup({
+    maxClusterRadius: 70,
+    polygonOptions: {
+        color: '#2c3e50',
+        weight: 3
+    },
+    animateAddingMarkers: true,
+    iconCreateFunction: pieChart
+});
 
-// Add all points to map
-//collisions = geojsonMarker(collisions, "collision").addTo(incidentData).getLayers(),
-//nearmisses = geojsonMarker(nearmisses, "nearmiss").addTo(incidentData).getLayers(),
-//hazards = geojsonMarker(hazards, "hazard").addTo(incidentData).getLayers(),
-//thefts = geojsonMarker(thefts, "theft").addTo(incidentData).getLayers();
-//newInfrastructures = geojsonMarker(newInfrastructures, "newInfrastructure").addTo(incidentData).getLayers();
+incidentData.addTo(map);
 
+// Create data feature groups
+var collisions, nearmisses, hazards, thefts, newInfrastructures;
+loadIncidentDataByType("/nearmisses_tiny?format=json", "nearmiss", nearmisses);
+loadIncidentDataByType("/hazards_tiny?format=json", "hazard", hazards);
+loadIncidentDataByType("/thefts_tiny?format=json", "theft", thefts);
+loadIncidentDataByType("/collisions_tiny?format=json", "collision", collisions);
+loadIncidentDataByType("/newInfrastructures_tiny?format=json", "newInfrastructure", newInfrastructures);
 
-//add in the xhr layers here
+// Define popup getter function
+incidentData.on('click', function (e) {
+    var layer = e.layer;
+    getXHRPopup(layer);
+});
 
+/**
+* Alert areas
+*/
 
-
+var alertAreas = L.featureGroup();
+alertAreas.addTo(map);
 
 // Add geofence alert areas to map
 addAlertAreas(geofences);
@@ -114,15 +147,11 @@ function addAlertAreas(geofences) {
     }).eachLayer(function (l) { alertAreas.addLayer(l); });
 }
 
-// Add and remove layers individually from the clusters on checkbox change
-//$("#collisionCheckbox").change(function(){ this.checked ? incidentData.addLayers(collisions) : incidentData.removeLayers(collisions); });
-//$("#nearmissCheckbox").change(function(){ this.checked ? incidentData.addLayers(nearmisses) : incidentData.removeLayers(nearmisses); });
-//$("#hazardCheckbox").change(function(){ this.checked ? incidentData.addLayers(hazards) : incidentData.removeLayers(hazards); });
-//$("#theftCheckbox").change(function(){ this.checked ? incidentData.addLayers(thefts) : incidentData.removeLayers(thefts); });
-//$("#newInfrastructureCheckbox").change(function () { this.checked ? incidentData.addLayers(newInfrastructures) : incidentData.removeLayers(newInfrastructures); });
+/**
+* Data filtering by date
+*/
 
-
-// Initialize the slider
+/** Initialize the slider */
 $("input.slider").ready(function () {
     var mySlider = $("input.slider").slider({
         step: 1,
@@ -156,15 +185,16 @@ var collisionsUnfiltered = collisions,
 newInfrastructuresUnfiltered = newInfrastructures;
 $("input.slider").on("slideStop", function (e) { filterPoints(e.value[0], e.value[1]) });
 
-function getRefLyr(in_lyr_id, in_refLayers) {
+function getIncidentLayer(incLayerId, incLayers) {
     var tempLyr;
-    for (var tlyr in in_refLayers) {
-        if (in_refLayers[tlyr].id === in_lyr_id) {
-            tempLyr = in_refLayers[tlyr].lyr;
+    for (var tlayer in incLayers) {
+        if (incLayers[tlayer].id === incLayerId) {
+            tempLyr = incLayers[tlayer].layer;
         }
     }
     return tempLyr
 }
+
 // function to filter points and redraw map
 function filterPoints(start_date, end_date) {
 
@@ -174,11 +204,11 @@ function filterPoints(start_date, end_date) {
 
     incidentData.clearLayers();
 
-    collisionsUnfiltered = getRefLyr("collision", refLayers);
-    nearmissesUnfiltered = getRefLyr("nearmiss", refLayers);
-    hazardsUnfiltered = getRefLyr("hazard", refLayers);
-    theftsUnfiltered = getRefLyr("theft", refLayers);
-    newInfrastructuresUnfiltered = getRefLyr("newInfrastructure", refLayers);
+    collisionsUnfiltered = getIncidentLayer("collision", incidentLayers);
+    nearmissesUnfiltered = getIncidentLayer("nearmiss", incidentLayers);
+    hazardsUnfiltered = getIncidentLayer("hazard", incidentLayers);
+    theftsUnfiltered = getIncidentLayer("theft", incidentLayers);
+    newInfrastructuresUnfiltered = getIncidentLayer("newInfrastructure", incidentLayers);
 
     collisions = collisionsUnfiltered.filter(function (feature, layer) {
         d = moment(feature.feature.properties.date);
@@ -250,16 +280,6 @@ $("#filterCheckbox").click(function () {
     }
 });
 
-// Purpose: Find the user via GPS or internet connection.
-//      Parameters to determine if the maps view should be set to that location and if the position should be polled and updated
-function locateUser(setView, watch) {
-    this.map.locate({
-        setView: setView,
-        maxZoom: 16,
-        watch: watch,
-        enableHighAccuracy: true
-    });
-};
 
 // pieChart
 // Purpose: Builds svg cluster DivIcons
@@ -270,8 +290,8 @@ function pieChart(cluster) {
 
     // Count the number of points of each kind in the cluster using underscore.js
     var data = _.chain(children)
-        .countBy(function (i) { return i.options.icon.options.color })
-        .map(function (count, color) { return { "color": color, "count": count } })
+        .countBy(function (i) { return i.options.icon.options.pieColor })
+        .map(function (count, pieColor) { return { "color": pieColor, "count": count } })
         .sortBy(function (i) { return -i.count })
         .value();
 
@@ -390,55 +410,46 @@ function geojsonMarker(data, type) {
     });
 };
 
-map.on('moveend', function (e) {
-    var zoom = map.getZoom(),
-        center = map.getCenter();
-    window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
-});
-
-map.on('zoomend', function(e) {
-  if(map.getZoom() >= 13 && map.hasLayer(stravaHM)) {
-    // stravaHM._clearBgBuffer();
-  }
-});
-
-
-function loadIncidenLayerXHR(in_relink, in_lyr_type, in_ref_lyr) {
+/**
+ * Function to load incident data, convert to geojson feature collection/group, add to incidentData layer, and add to reference layers array
+ * TODO break this into smaller funcs
+ * @param {string} requestURL - url to request this incident type
+ * @param {string} incidentType - type of incident being requested (ie nearmiss, hazard)
+ */
+function loadIncidentDataByType(requestURL, incidentType, incidentLayer) {
     //https://bikemaps.org/hazards?format=json
     //hazard
     $.ajax({
-        url: in_relink,
+        url: requestURL,
         dataType: 'json',
         success: function (response) {
             //console.log('trying to add the xhr layer');
-            in_ref_lyr = geojsonMarker(response, in_lyr_type).addTo(incidentData).getLayers();
-            $("#" + in_lyr_type + "Checkbox").change(function () { this.checked ? incidentData.addLayers(in_ref_lyr) : incidentData.removeLayers(in_ref_lyr); });
-            refLayers.push({ id: in_lyr_type, lyr: in_ref_lyr });
+            incidentLayer =
+            geojsonMarker(response, incidentType)
+            .addTo(incidentData)
+            .getLayers();
+            $("#" + incidentType + "Checkbox").change(function () { this.checked ? incidentData.addLayers(incidentLayer) : incidentData.removeLayers(incidentLayer); });
+
+            incidentLayers.push({ id: incidentType, layer: incidentLayer });
         },
         error: function (err) {
             console.log(err);
         }
     });
-
 }
 
-
-
-function loadInfoDetails(in_pk, ref_popup, in_type, in_url) {
-
-    console.log(in_pk)
+function loadPopupDetails(incidentPk, popup, incidentType, incidentURL) {
     $.ajax({
-        url: in_url + in_pk,
+        url: incidentURL + incidentPk,
         dataType: 'json',
         success: function (response) {
             //console.log(response);
-            ref_popup.setContent(getPopupText(in_type, response));
+            popup.setContent(getPopupText(incidentType, response));
         },
         error: function (err) {
-            ref_popup.setContent('Could not get Xhr details');
+            popup.setContent('Could not get Xhr details');
         }
     });
-
 }
 
 function getXHRPopup(layer) {
@@ -451,36 +462,32 @@ function getXHRPopup(layer) {
         .setContent("Loading data off server ...")
         .openOn(map);
 
-    if (type === "newInfrastructure") {
-        //there is an extra s in the path
-        loadInfoDetails(feature.properties.pk, popup, type, "//" + srv + "/" + type + "s_xhr?format=json&pk=");
-    }
-    else {
-        loadInfoDetails(feature.properties.pk, popup, type, "//" + srv + "/" + type + "_xhr?format=json&pk=");
-    }
+    // PK is stored in under key 'pk' for data loaded from database, 'id' for points just created and added to incidentData from submitted form
+    let pk = feature.properties.pk || feature.properties.id;
 
+    loadPopupDetails(pk, popup, type, "//" + hostname + "/" + type + "_xhr?format=json&pk=");
 };
 
-function getPopupText(in_type, in_data) {
+function getPopupText(incidentType, in_data) {
     var tempContent = "";
     var tempPath = "";
 
-    if (in_type === "hazard") {
+    if (incidentType === "hazard") {
         tempContent = '<strong>' + gettext('Hazard type') + ':</strong> ' + gettext(in_data.properties.i_type);
         tempPath = "/mapApp/hazard/";
     }
-    else if (in_type === "theft") {
+    else if (incidentType === "theft") {
         tempContent = '<strong>' + gettext('Theft type') + ':</strong> ' + gettext(in_data.properties.i_type);
         tempPath = "/mapApp/theft/"
     }
-    else if (in_type === "collision" || in_type === "nearmiss") {
+    else if (incidentType === "collision" || incidentType === "nearmiss") {
         tempContent = '<strong>' + gettext('Type') + ':</strong> ' + gettext(in_data.properties.i_type) + '<br><strong>';
         if (in_data.properties.i_type != "Fall") tempContent += gettext('Incident with');
         else tempContent += gettext('Due to');
         tempContent += ':</strong> ' + gettext(in_data.properties.incident_with)
         tempPath = "/mapApp/incident/";
     }
-    else if (in_type === "newInfrastructure") {
+    else if (incidentType === "newInfrastructure") {
         tempContent = '<strong>' + gettext('New infrastructure') + ':</strong> ' + gettext(in_data.properties.infra_type);
         tempContent += '<br><strong>' + gettext('Date changed') + ': </strong> ' + moment(in_data.properties.dateAdded).locale(LANGUAGE_CODE).format('MMMM YYYY');
         tempContent += '<br><div class="popup-details"><strong>' + gettext('Details') + ':</strong> ' + in_data.properties.details + '</div>';

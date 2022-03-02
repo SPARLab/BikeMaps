@@ -30,9 +30,9 @@
         <span class="icon-bar"></span>
       </button>
       {% if LANGUAGE_CODE != 'fr' %}
-        <a href="{{ index }}" class="navbar-brand"><img src="{% static 'mapApp/images/BikeMapsORG_Logo_notxt_sm.png' %}"> BikeMaps.org</a>
+      <a href="{{ index }}" class="navbar-brand"><img src="{% static 'mapApp/images/BikeMapsORG_Logo_notxt_sm.png' %}"> BikeMaps.org</a>
       {% else %}
-        <a href="{{ index }}" class="navbar-brand"><img src="{% static 'mapApp/images/BikeMaps_French_crop_sm.png' %}"></a>
+      <a href="{{ index }}" class="navbar-brand"><img src="{% static 'mapApp/images/BikeMaps_French_crop_sm.png' %}"></a>
       {% endif %}
     </div>
 
@@ -44,55 +44,70 @@
         <li {% ifequal request.path vis %} class="active" {% endifequal %}><a href="{{ vis }}">{% trans "Visualization" %} <span class="fa fa-bar-chart"></span></a></li>
         <li {% ifequal request.path blog %} class="active" {% endifequal %}><a href="{{ blog }}">{% trans "Blog" %} <span class="fa fa-newspaper-o"></span></a></li>
         <li {% ifequal request.path about %} class="active" {% endifequal %}><a href="{{ about }}">{% trans "About" %} <span class="fa fa-leaf"></span></a></li>
-        <!--<li style="display:none; color:#f18904;"  class="active wpgRaffleNav"><a href="https://bikemaps.org/static/wpgraffle" target="_blank">Winnipeg Raffle <span class="fa fa-gift"></span></a></li>-->
-
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        {% if LANGUAGE_CODE == 'es' %}
-          <li>{% blocktrans %}<a href="https://bikemaps.org">English</a>{% endblocktrans %}</li>
-       {% else %}
-          <li>{% blocktrans %}<a href="https://bikemaps.org/es">Español</a>{% endblocktrans %}</li>
-       {% endif %}
-        <li>{% blocktrans %}<a href="https://bikemaps.org/fr">Français</a>{% endblocktrans %}</li>
-        <li>{% blocktrans %}<a href="https://bikemaps.org/is">Íslenska</a>{% endblocktrans %}</li>
-        <li><a href="https://www.facebook.com/BikeMaps.org" target="_blank"><i class="fa fa-facebook"></i></a></li>
-        <li><a href="https://twitter.com/BikeMapsTeam" target="_blank"><i class="fa fa-twitter" target="_blank"></i></a></li>
 
-        {% if request.user.is_authenticated %}
-          <!-- Caching this lookup causes weird behaviour. Set cache to 0 to prevent caching -->
-          {% cache 0 user_alerts_count %}
-            {% reports_this_week request.user as has_notifications %}
-          {% endcache %}
-          <li><a href="{{ alerts }}"><span class="fa fa-bell {% if has_notifications %} is-highlighted{% endif %}"></span></a></li>
-          <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user"></span> {{ request.user }}<span class="caret"></span></a>
+        <!-- brute force method of changing language -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-globe"></span> {% trans "Language" %}<span class="caret"></span></a>
 
-              <ul class="user-menu dropdown-menu" role="menu">
-                <li><a href="{{ profile }}">{% trans "Profile" %}</a></li>
-                <li><a href="{{ logout }}?next={{ request.path }}">{% trans "Log out" %}</a></li>
+          <ul class="dropdown-menu" role="menu">
+            <li>{% blocktrans %}<a href="https://bikemaps.org">English</a>{% endblocktrans %}</li>
+            <li>{% blocktrans %}<a href="https://bikemaps.org/es">Español</a>{% endblocktrans %}</li>
+            <li>{% blocktrans %}<a href="https://bikemaps.org/fr">Français</a>{% endblocktrans %}</li>
+            <li>{% blocktrans %}<a href="https://bikemaps.org/is">Íslenska</a>{% endblocktrans %}</li>
+          </ul>
+        </li>
 
-                {% if request.user.is_staff %}
-                  <li role="presentation" class="divider"></li>
-                  <li role="presentation" class="dropdown-header">{% trans "Admin options" %}</li>
-                  <li><a href="{{ admin }}"><small><span class="fa fa-wrench"></span> {% trans "Admin" %}</small></a></li>
-                  <li><a href="{{ incidentWeatherList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Incidents + Weather" %}</small></a></li>
-                  <li><a href="{{ collisionList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Collisions" %}</small></a></li>
-                  <li><a href="{{ nearmissList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Nearmisses" %}</small></a></li>
-                  <li><a href="{{ hazardList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Hazards" %}</small></a></li>
-                  <li><a href="{{ theftList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Thefts" %}</small></a></li>
-                {% endif %}
-              </ul>
-          </li>
+        {% if LANGUAGE_CODE == 'fr' %}
+          <li><a href="https://onmarcheonroule.org/" target="_blank" rel="noopener noreferrer" class="navbar-icon" style="height:35px; margin-right:0px"><img src="{% static 'mapApp/images/WalkRollMapLogo.png' %}"></a></li>
         {% else %}
-          <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user"></span> {% trans "Guest" %}<span class="caret"></span></a>
+          <li><a href="https://walkrollmap.org/" target="_blank" rel="noopener noreferrer" class="navbar-icon" style="height:35px; margin-right:0px"><img src="{% static 'mapApp/images/WalkRollMapLogo.png' %}"></a></li>
+        {% endif %}
+        <!-- Social media -->
+        <li><a href="https://www.facebook.com/BikeMaps.org" target="_blank" rel="noopener noreferrer"><i class="fa fa-facebook"></i></a></li>
+        <li><a href="https://twitter.com/BikeMapsTeam" target="_blank" rel="noopener noreferrer"><i class="fa fa-twitter"></i></a></li>
 
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ login }}?next={{ request.path }}">{% trans "Log in" %}</a></li>
-                <li><a href="{{ register }}">{% trans "Register" %}</a></li>
-              </ul>
-          </li>
+        <!-- Logged in features -->
+        {% if request.user.is_authenticated %}
+        <!-- Caching this lookup causes weird behaviour. Set cache to 0 to prevent caching -->
+        {% cache 0 user_alerts_count %}
+        {% reports_this_week request.user as has_notifications %}
+        {% endcache %}
+
+        <!-- Notifications -->
+        <li><a href="{{ alerts }}"><span class="fa fa-bell {% if has_notifications %} is-highlighted{% endif %}"></span></a></li>
+
+        <!-- Login and admin functions -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user"></span> {{ request.user }}<span class="caret"></span></a>
+
+          <ul class="user-menu dropdown-menu" role="menu">
+            <li><a href="{{ profile }}">{% trans "Profile" %}</a></li>
+            <li><a href="{{ logout }}?next={{ request.path }}">{% trans "Log out" %}</a></li>
+
+            {% if request.user.is_staff %}
+            <li role="presentation" class="divider"></li>
+            <li role="presentation" class="dropdown-header">{% trans "Admin options" %}</li>
+            <li><a href="{{ admin }}"><small><span class="fa fa-wrench"></span> {% trans "Admin" %}</small></a></li>
+            <li><a href="{{ incidentWeatherList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Incidents + Weather" %}</small></a></li>
+            <li><a href="{{ collisionList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Collisions" %}</small></a></li>
+            <li><a href="{{ nearmissList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Nearmisses" %}</small></a></li>
+            <li><a href="{{ hazardList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Hazards" %}</small></a></li>
+            <li><a href="{{ theftList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Thefts" %}</small></a></li>
+            {% endif %}
+          </ul>
+        </li>
+        {% else %}
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user"></span> {% trans "Guest" %}<span class="caret"></span></a>
+
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="{{ login }}?next={{ request.path }}">{% trans "Log in" %}</a></li>
+            <li><a href="{{ register }}">{% trans "Register" %}</a></li>
+          </ul>
+        </li>
         {% endif %}
 
       </ul>

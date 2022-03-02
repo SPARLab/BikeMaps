@@ -61,19 +61,19 @@
         {% endfor %}
     {% endif %}
   </div>
- 
-<!-- container for 311 popUp-->
-  <div id="311popUp">
+
+<!-- container for message after report submitted popUp-->
+  <div id="followUpMsgPopUp">
     {% if messages %}
-    {% endif %}  
-  </div>    
+    {% endif %}
+  </div>
 
 
   {% block body %}{% endblock %}
 
   <!-- EXTERNAL JS -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}">  </script>
   {% block footerJS %}{% endblock %}
 </body>
 

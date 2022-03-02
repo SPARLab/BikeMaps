@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, get_language
 from django.shortcuts import render
 
 from django.views.decorators.http import require_POST
@@ -10,10 +10,14 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 
 from mapApp.forms import EmailForm
 
+# default language is 'en-ca' (see VicBikeMap/settings/base.py) but want to be able to capture other english language codes (such as en-us, en-gb, en-au)
+def isCurrLangEnglish(currLang):
+	return currLang.startswith('en')
+
 # @cache_page(60 * 60)
 @xframe_options_exempt
 def about(request):
-	return render(request, 'mapApp/about.html', {"emailForm": EmailForm()})
+	return render(request, 'mapApp/about.html', {"emailForm": EmailForm(), "currLangEnglish": isCurrLangEnglish(get_language())})
 
 @require_POST
 def contact(request):
@@ -37,4 +41,4 @@ def contact(request):
 		except BadHeaderError:
 			messages.error(request, '<strong>'+ _('Invalid Header.') + '</strong>' + _('Illegal characters found.'))
 
-	return render(request, 'mapApp/about.html', {"emailForm": emailForm})
+	return render(request, 'mapApp/about.html', {"emailForm": emailForm, "currLangEnglish": isCurrLangEnglish(get_language())})
