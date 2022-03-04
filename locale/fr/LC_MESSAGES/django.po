@@ -1419,8 +1419,8 @@ msgid "Our rider density data comes directly from the Strava cycling and running
 msgstr "Nos données sur le volume de cyclistes proviennent directement de l’application mobile de localisation de Strava pour les cyclistes et les coureurs. Grâce à Strava, vous pouvez suivre vos déplacements et vos promenades à vélo sur votre appareil Android ou votre iPhone."
 
 #: .\mapApp\templates\mapApp\util\tips.html:61
-msgid "The Canadian Bikeway Comfort and Safety Classification (<a href='https://chatrlab.ca/projects/the-canadian-bikeway-comfort-and-safety-can-bics-classification-system/'>Can-BICS</a>) assigns bicycling facilities into three categories (low, medium, or high) based on user comfort and safety."
-msgstr "Le Système de classification du confort et de la sécurité des voies cyclables canadiennes  (<a href='https://chatrlab.ca/projects/the-canadian-bikeway-comfort-and-safety-can-bics-classification-system/can-bics-francais/'>Can-BICS</a>) classe les installations cyclables en trois catégories (faible, moyen ou élevé) en fonction du confort et de la sécurité des cyclistes."
+msgid "The Canadian Bikeway Comfort and Safety Classification (<a href='https://chatrlab.ca/projects/the-canadian-bikeway-comfort-and-safety-can-bics-classification-system/' target='_blank' rel='noopener noreferrer'>Can-BICS</a>) assigns bicycling facilities into three categories (low, medium, or high) based on user comfort and safety."
+msgstr "Le Système de classification du confort et de la sécurité des voies cyclables canadiennes  (<a href='https://chatrlab.ca/projects/the-canadian-bikeway-comfort-and-safety-can-bics-classification-system/can-bics-francais/' target='_blank' rel='noopener noreferrer'>Can-BICS</a>) classe les installations cyclables en trois catégories (faible, moyen ou élevé) en fonction du confort et de la sécurité des cyclistes."
 
 #: .\mapApp\templates\mapApp\vis.html:8
 msgid "Bikemaps Data Visualization"
