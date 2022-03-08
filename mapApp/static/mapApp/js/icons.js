@@ -1,9 +1,9 @@
 // Icon definitions
 var iconColors = {
-    "collision": "#d63e2a",
-    "nearmiss": "#f3952f",
-    "hazard": "#72b026",
-    "theft": "#575757",
+    "collision": "#fe6100",
+    "nearmiss": "#ffb000",
+    "hazard": "#648fff",
+    "theft": "#785ef0",
     "official": "#436978",
     "undefined": "#a3a3a3",
     "geocode": "#a23336",
@@ -48,7 +48,7 @@ var icons = {
     svg: "true"
   }),
   "theftIcon": L.ExtraMarkers.icon({
-    icon: "fa-bicycle",
+    icon: "fa-unlock",
     markerColor: getColor("theft"),
     iconColor: '#cbcbcb',
     pieColor: getColor("theft"),
