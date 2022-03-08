@@ -16,7 +16,7 @@ var map = L.map('map', {
     minZoom: 2,
     zoom: 4,
     zoomControl: false,
-    layers: [OpenStreetMap, CyclOSM, stravaHM],
+    layers: [HOTOSM, stravaHM],
     worldCopyJump: true,
 });
 
