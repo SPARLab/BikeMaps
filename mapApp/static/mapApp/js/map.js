@@ -10,8 +10,7 @@ var MapQuestOpen_OSM = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z
     CyclOSM = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', {
         minZoom: 14,
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    })
-    Esri_Streets_Basemap = L.esri.basemapLayer("Streets"),
+    }),
     Mapnik_BW = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
       attribution: '<a href="https://openstreetmap.org/">&copy OpenStreetMap contributors, CC-BY-SA</a>',
       subdomains: '1234'
@@ -22,10 +21,6 @@ var MapQuestOpen_OSM = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z
       maxNativeZoom: 11,
       opacity: 0.8,
       attribution: '<a href=http://labs.strava.com/heatmap/>http://labs.strava.com/heatmap/</a>'
-    }),
-    infrastructure = L.esri.dynamicMapLayer({
-        url: 'https://grs.asurite.ad.asu.edu/server/rest/services/Bikemaps/InfrastructureARCFGDB_Cache/MapServer',
-        opacity: 0.7
     });
 
 var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
