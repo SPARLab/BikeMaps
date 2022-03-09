@@ -12,11 +12,7 @@ var MapQuestOpen_OSM = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }),
     canBICS = L.esri.featureLayer({
-      url: 'https://services.arcgis.com/E5vyYQKPMX5X3R3H/arcgis/rest/services/OSM_CAN_BICS_V1/FeatureServer/0',
-      style: {
-        color: "#386cb0",
-        weight: 2
-      }
+      url: 'https://services.arcgis.com/E5vyYQKPMX5X3R3H/arcgis/rest/services/national/FeatureServer/0',
     }),
     Mapnik_BW = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
       attribution: '<a href="https://openstreetmap.org/">&copy OpenStreetMap contributors, CC-BY-SA</a>',
