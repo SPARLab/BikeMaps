@@ -3,7 +3,7 @@ var collisionsLayer, nearmissesLayer, hazardsLayer, theftsLayer;
 
 // Initialize the leaflet map
   map = L.map('map', {
-      layers: [Esri_Streets_Basemap],
+      layers: [OpenStreetMap],
       worldCopyJump: true,
   });
 
@@ -31,10 +31,12 @@ function addData(data){
   nearmissesLayer = geojsonCircleMarker( data.nearmisses , "nearmiss").addTo(map);
   hazardsLayer = geojsonCircleMarker( data.hazards , "hazard").addTo(map);
   theftsLayer = geojsonCircleMarker( data.thefts , "theft").addTo(map);
-  rois = geojsonPolygonMarker(data.rois).addTo(map);
-
+  rois = geojsonPolygonMarker(data.rois);
+  rois.addTo(map);
   // Fit map extent to alert areas boundary
-  map.fitBounds(rois);
+  if (rois && rois.getBounds().isValid()){
+    map.fitBounds(rois.getBounds());
+  }
 
   // Add text to data column
   pprint("Collisions", data.collisions);
