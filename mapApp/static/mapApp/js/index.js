@@ -28,7 +28,6 @@ var geocoder = L.Control.geocoder({
     placeholder: gettext('Search...'),
     errorMessage: gettext('Nothing found.')
 }).on('markgeocode', function(result) {
-  console.log(result.geocode);
   map.fitBounds(result.geocode.bbox);
   geocodeMarker && map.removeLayer(geocodeMarker); //remove old marker if it exists
   geocodeMarker = new L.Marker(result.geocode.center, {
