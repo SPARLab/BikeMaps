@@ -68,7 +68,7 @@ $(function(){
   var map = L.map('map', {
       center: [48, -100],
       zoom: 4,
-      layers: [Esri_Streets_Basemap, hazardsNotFixed, hazardsFixed],
+      layers: [OpenStreetMap, hazardsNotFixed, hazardsFixed],
       worldCopyJump: true,
   }).on('load', changeMap)
     .on('moveend', mapFilter);
@@ -116,7 +116,9 @@ $(function(){
   geofences = geojsonPolygonMarker(geofences);
   geofences.setStyle({color: "blue"});
   geofences.addTo(map);
-  map.fitBounds(geofences);
+  if (geofences && geofences.getBounds().isValid()){
+    map.fitBounds(geofences.getBounds());
+  }
 
   for (var i = 0; i < dc.chartRegistry.list().length; i++) {
     var chartI = dc.chartRegistry.list()[i];
