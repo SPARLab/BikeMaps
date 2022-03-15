@@ -10,17 +10,32 @@ if (window.location.port) {
 * Map set up
 */
 
-/** Initialize the map */
+/** Initialize the map location */
 
-// Check if map center and zoom are provided in url, otherwise default to view of north america
+// lat, lng, zoom are retreived from URL and will be undefined if not set. Last known lat, long, zoom are from local storage and will be null if not set.
 let mapCenter, mapZoom;
 let locationNotSetInURL = (typeof lat === 'undefined' || typeof lng === 'undefined' || typeof zoom === 'undefined');
-if (locationNotSetInURL){
-  mapCenter = [48, -100];
-  mapZoom = 4;
-} else {
+
+let lastKnownLat = localStorage.getItem('lastKnownLat');
+let lastKnownLng = localStorage.getItem('lastKnownLng');
+let lastKnownZoom = localStorage.getItem('lastKnownZoom');
+
+let haveLastKnownLocation = (lastKnownLat && lastKnownLng && lastKnownZoom);
+
+// 1. If location is in URL, go there
+if (!locationNotSetInURL) {
   mapCenter = [lat, lng];
   mapZoom = zoom;
+}
+// 2. If last known lat, long, zoom are available, go there
+else if (haveLastKnownLocation) {
+  mapCenter = [lastKnownLat, lastKnownLng];
+  mapZoom = lastKnownZoom;
+}
+// 3. If no location info, default to North America
+else {
+  mapCenter = [48, -100];
+  mapZoom = 4;
 }
 
 // Initalize data loading vars
@@ -46,7 +61,9 @@ var map = L.map('map', {
 
 // If lat/long/zoom have been passed into the URL, set view to that location
 // Locate the user either way, but if view was already set don't change view to users location
-locateUser(setView = locationNotSetInURL, watch = false);
+
+/** TEMPORARILY TURN OFF GEOLOCATION WHILE WORKING ON LOCAL STORAGE **/
+// locateUser(setView = locationNotSetInURL, watch = false);
 
 /** Add geocoder control */
 var geocodeMarker;
@@ -81,9 +98,15 @@ const loadDataIfBoundsExceedDebounce = debounce(function() {
 }, 1500);
 
 map.on('moveend', function (e) {
-    var zoom = map.getZoom(),
-        center = map.getCenter();
-    window.history.replaceState({}, "", "@" + center.lat.toFixed(7) + "," + center.lng.toFixed(7) + "," + zoom + "z");
+    let center = map.getCenter();
+    lastKnownZoom = map.getZoom();
+    lastKnownLat = center.lat;
+    lastKnownLng = center.lng;
+
+    localStorage.setItem('lastKnownZoom', lastKnownZoom);
+    localStorage.setItem('lastKnownLat', lastKnownLat);
+    localStorage.setItem('lastKnownLng', lastKnownLng);
+    window.history.replaceState({}, "", "@" + lastKnownLat.toFixed(7) + "," + lastKnownLng.toFixed(7) + "," + lastKnownZoom + "z");
     if (!loadingDataFlag) {
       loadDataIfBoundsExceedDebounce();
     }
