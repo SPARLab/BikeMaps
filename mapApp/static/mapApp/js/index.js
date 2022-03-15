@@ -31,6 +31,7 @@ if (!locationNotSetInURL) {
 else if (haveLastKnownLocation) {
   mapCenter = [lastKnownLat, lastKnownLng];
   mapZoom = lastKnownZoom;
+  window.history.replaceState({}, "", "@" + Number(lastKnownLat).toFixed(7) + "," + Number(lastKnownLng).toFixed(7) + "," + Number(lastKnownZoom) + "z");
 }
 // 3. If no location info, default to North America
 else {
