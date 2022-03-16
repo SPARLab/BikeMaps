@@ -60,12 +60,6 @@ var map = L.map('map', {
     worldCopyJump: true,
 });
 
-// If lat/long/zoom have been passed into the URL, set view to that location
-// Locate the user either way, but if view was already set don't change view to users location
-
-/** TEMPORARILY TURN OFF GEOLOCATION WHILE WORKING ON LOCAL STORAGE **/
-// locateUser(setView = locationNotSetInURL, watch = false);
-
 /** Add geocoder control */
 var geocodeMarker;
 var geocoder = L.Control.geocoder({
@@ -79,6 +73,20 @@ var geocoder = L.Control.geocoder({
   geocodeMarker = new L.Marker(result.geocode.center, {
       icon: icons["geocodeIcon"]
   }).bindPopup(result.geocode.name).addTo(map).openPopup();
+}).addTo(map);
+
+// If lat/long/zoom have been passed into the URL, set view to that location
+// Locate the user either way, but if view was already set don't change view to users location
+
+/** TEMPORARILY TURN OFF GEOLOCATION WHILE WORKING ON LOCAL STORAGE **/
+// locateUser(setView = locationNotSetInURL, watch = false);
+const lc = L.control.locate({
+    strings: {
+      title: "Go to my location"
+    },
+    locateOptions: {
+      maxZoom: 16
+    }
 }).addTo(map);
 
 /** Add scalebar */
