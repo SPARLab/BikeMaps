@@ -12,7 +12,6 @@ from ratelimit.decorators import ratelimit
 from django.forms.utils import ErrorList
 
 from .forms import MyUserCreationForm, UserProfileForm
-from .utils import ReCaptcha
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -42,7 +41,6 @@ def register(request):
 
         try:
             if form.is_valid():
-                if ReCaptcha(request).is_valid() or settings.DEBUG:
                     # Create user
                     new_user = form.save()
                     messages.info(request, _("Thanks for registering. You are now logged in."))
@@ -51,9 +49,6 @@ def register(request):
                     new_user = authenticate(username=request.POST['username'], password=request.POST['password1'])
                     login(request, new_user)
                     return redirect(reverse("mapApp:index"))
-                else:
-                    # Google reCAPTCHA failure
-                    messages.error(request, _("Captcha failure. It looks like you're a robot."))
         except KeyError as e:
             errors = form._errors.setdefault("username", ErrorList())
             errors.append(_("Username already exists."))

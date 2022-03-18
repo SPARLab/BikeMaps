@@ -2,7 +2,6 @@
 {% load static crispy_forms_tags i18n %}
 
 {% block headerCSS %}
-<script src='https://www.google.com/recaptcha/api.js'></script>
 {% endblock %}
 
 {% block body %}
@@ -20,7 +19,6 @@
       <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        <div class="g-recaptcha" data-sitekey="6LcM9_AeAAAAABtJ0a0cbV5SmTHDKOXwdpPaEyVQ"></div>
         <button class="btn btn-primary pull-right" type="submit" name="login">{% trans "Register" %}</button>
       </form>
     </div>
