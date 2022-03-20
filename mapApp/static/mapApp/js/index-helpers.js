@@ -10,6 +10,8 @@ if (window.location.port) {
 let map;
 let mapCenter, mapZoom;
 let alertAreas = L.featureGroup();
+// Initalize data loading vars
+let loadingDataFlag = 0;
 let boundsOfLoadedData = L.latLngBounds(); // initalize with empty bounds
 
 /**
@@ -263,7 +265,7 @@ function pieChart(cluster) {
     });
 };
 
-/** Alert areas **/ 
+/** Alert areas **/
 
 function addAlertAreas(geofences) {
   L.geoJson(geofences, {
