@@ -12,11 +12,6 @@ $(document).ready(function(){
 });
 
   function desktopDrawing() {
-    /* Add i18n zoom control if on desktop */
-    L.control.zoom({
-      zoomInTitle: gettext('Zoom in'),
-      zoomOutTitle: gettext('Zoom out'),
-    }).addTo(map);
 
     /* DRAWING CONTROL TOOLTIPS */
     L.drawLocal.draw.toolbar.actions.title = "{% trans 'Cancel drawing' %}";
