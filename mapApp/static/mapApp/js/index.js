@@ -96,7 +96,13 @@ loadAllIncidentData(map.getBounds());
     }).bindPopup(result.geocode.name).addTo(map).openPopup();
   }).addTo(map);
 
-  $('.leaflet-control-geocoder').tooltip({placement:'right', delay:400, title: function(){ return gettext("Search for an address")}});
+  $('.leaflet-control-geocoder').tooltip({
+    placement: 'right',
+    delay: 400,
+    title: function() {
+      return gettext("Search for an address")
+    }
+  });
 
   // If lat/long/zoom have been passed into the URL, set view to that location
   // Locate the user either way, but if view was already set don't change view to users location
@@ -112,7 +118,7 @@ loadAllIncidentData(map.getBounds());
     }
   }).addTo(map);
 
-/** Add zoom control */
+  /** Add zoom control */
   L.control.zoom({
     zoomInTitle: gettext('Zoom in'),
     zoomOutTitle: gettext('Zoom out'),
@@ -146,9 +152,13 @@ loadAllIncidentData(map.getBounds());
     }
   });
 
-  map.on('drawControlReady', function(){
+  // Style map control tooltips
+  map.on('drawControlReady', function() {
     // All left side controls
-    $('.leaflet-left .leaflet-control a').tooltip({placement:'right', delay: 400});
+    $('.leaflet-left .leaflet-control a').tooltip({
+      placement: 'right',
+      delay: 400
+    });
   });
 
   // /** Locate user, set map's view */
@@ -236,6 +246,5 @@ async function initializeMapLocation() {
       console.error(error);
       trySettingLocationFromStorage();
     }
-
   }
 }
