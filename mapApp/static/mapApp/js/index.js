@@ -65,6 +65,9 @@ function setDefaultLocation() {
   mapZoom = 4;
 }
 
+const mapInitializedEvent = new Event('mapInitializedEvent', {
+  bubbles: true,
+});
 
 initializeMapLocation().then(() => {
   console.log('got initial location');
@@ -79,6 +82,12 @@ initializeMapLocation().then(() => {
     layers: [OpenStreetMap, CyclOSM, stravaHM],
     worldCopyJump: true,
   });
+
+// Trigger an event to let 'draw.html' know the map is initalized and the draw functions can be added. Only run once document is ready to make sure listener has been added.
+  $(document).ready(function() {
+    document.dispatchEvent(mapInitializedEvent);
+  });
+
 // Initial data load
 loadAllIncidentData(map.getBounds());
 
