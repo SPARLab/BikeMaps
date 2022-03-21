@@ -31,12 +31,13 @@ function getUserLocation() {
     navigator.geolocation.getCurrentPosition(
       pos => {
         resolve(pos);
-        // test this function rejecting
-        // reject(pos);
       },
       err => {
         reject(err);
-      });
+      }, {
+        timeout: 5000
+      }
+    );
   });
 }
 
