@@ -78,6 +78,8 @@ initializeMapLocation().then(() => {
     layers: [OpenStreetMap, CyclOSM, stravaHM],
     worldCopyJump: true,
   });
+// Initial data load
+loadAllIncidentData(map.getBounds());
 
   /** Add geocoder control */
   var geocodeMarker;
@@ -139,7 +141,7 @@ initializeMapLocation().then(() => {
     localStorage.setItem('lastKnownLat', lastKnownLat);
     localStorage.setItem('lastKnownLng', lastKnownLng);
     window.history.replaceState({}, "", "@" + lastKnownLat.toFixed(7) + "," + lastKnownLng.toFixed(7) + "," + lastKnownZoom + "z");
-    if (!loadingDataFlag) {
+    if (!loadingDataFlag && initialDataLoaded) {
       loadDataIfBoundsExceedDebounce();
     }
   });

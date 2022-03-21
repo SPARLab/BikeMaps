@@ -12,6 +12,7 @@ let mapCenter, mapZoom;
 let alertAreas = L.featureGroup();
 // Initalize data loading vars
 let loadingDataFlag = 0;
+let initialDataLoaded = 0;
 let boundsOfLoadedData = L.latLngBounds(); // initalize with empty bounds
 
 /**
@@ -358,6 +359,8 @@ function loadAllIncidentData(currentMapBounds){
     });
   })
   Promise.all(loadDataPromsies).then(r => {
+    // initialDataLoaded flag should be 0 for page load and always 1 after that
+    initialDataLoaded = 1;
     loadingDataFlag = 0;
     map.spin(false);
     boundsOfLoadedData = boundsToLoad;
