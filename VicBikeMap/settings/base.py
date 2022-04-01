@@ -197,6 +197,7 @@ PUSH_NOTIFICATIONS_SETTINGS = {
 
 REST_SESSION_LOGIN = False
 
+# site_id 2 is 'bikemaps.org'- check in admin page under 'sites'
 SITE_ID = 2
 
 # Cross Origin Access Control
