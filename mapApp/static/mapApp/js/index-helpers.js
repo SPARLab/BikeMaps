@@ -130,7 +130,7 @@ function filterPoints(start_date, end_date) {
     $("#newInfrastructureCheckbox").is(":checked") && incidentAppliedLayers.addLayers(newInfrastructures);
 
     console.log('filter points');
-    updateCounter();
+    // updateCounter();
     printData();
 
 };
@@ -150,7 +150,7 @@ function resetPoints() {
     $("#theftCheckbox").is(":checked") && incidentAppliedLayers.addLayers(thefts);
     $("#newInfrastructureCheckbox").is(":checked") && incidentAppliedLayers.addLayers(newInfrastructures);
 
-    updateCounter()
+    // updateCounter()
     console.log('reset points');
     printData();
 };
@@ -416,14 +416,14 @@ function processLayerFromData(data, incidentType){
   $("#" + incTypeSingular + "Checkbox").change(function () {
     this.checked ?
     incidentAppliedLayers.addLayers(incidentLayer) : incidentAppliedLayers.removeLayers(incidentLayer);
-    updateCounter();
+    // updateCounter();
     console.log(`clicked a checkbox for ${incTypeSingular}`);
     printData();
   });
 
   // add the array of layers to the reference layers map
   incidentReferenceLayers.set(incidentType, incidentLayer);
-  updateCounter()
+  // updateCounter()
 }
 
 // URLs use incident types in plural form, checkboxes use singular. Convert between for convenience
@@ -528,6 +528,8 @@ function getPopupText(incidentType, in_data) {
     return tempContent;
 }
 
+/* Function used to display number of markers loaded to map- helpful for debugging / watching data load. Also uncomment pointCounterContainer in overlays.html to use
+*/
 function updateCounter(){
   let loaded = incidentReferenceLayers.get('collisions').length +
   incidentReferenceLayers.get('nearmisses').length +
