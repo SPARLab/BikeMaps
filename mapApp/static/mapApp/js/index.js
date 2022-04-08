@@ -79,7 +79,6 @@ initializeMapLocation().then(() => {
     minZoom: 2,
     zoom: mapZoom,
     zoomControl: false,
-    loadingControl: true,
     layers: [OpenStreetMap, CyclOSM, stravaHM],
     worldCopyJump: true,
   });
@@ -135,16 +134,6 @@ initializeMapLocation().then(() => {
     zoomOutTitle: gettext('Zoom out'),
   });
   map.addControl(zoomControl);
-
-  /** Add loading indicator control */
-  const loadingControl = L.Control.loading({
-    separate: true,
-    // 5 second delay when showing the loading indicator
-    // loadingControl options do not seem to respond to these options as documented, I changed them directly in mapApp/static/leaflet/plugins/leaflet.loading/Control.Loading.js to get it to work
-    delayIndicator: 4000,
-    position: 'bottomleft',
-  });
-  map.addControl(loadingControl);
 
   /** Add scalebar */
   L.control.scale({
