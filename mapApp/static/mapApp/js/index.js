@@ -79,17 +79,18 @@ initializeMapLocation().then(() => {
     minZoom: 2,
     zoom: mapZoom,
     zoomControl: false,
+    loadingControl: true,
     layers: [OpenStreetMap, CyclOSM, stravaHM],
     worldCopyJump: true,
   });
 
-// Trigger an event to let 'draw.html' know the map is initalized and the draw functions can be added. Only run once document is ready to make sure listener has been added.
+  // Trigger an event to let 'draw.html' know the map is initalized and the draw functions can be added. Only run once document is ready to make sure listener has been added.
   $(document).ready(function() {
     document.dispatchEvent(mapInitializedEvent);
   });
 
-// Initial data load
-loadAllIncidentData(map.getBounds());
+  // Initial data load
+  loadAllIncidentData(map.getBounds());
 
   /** Add geocoder control */
   var geocodeMarker;
@@ -129,10 +130,21 @@ loadAllIncidentData(map.getBounds());
   }).addTo(map);
 
   /** Add zoom control */
-  L.control.zoom({
+  const zoomControl = L.control.zoom({
     zoomInTitle: gettext('Zoom in'),
     zoomOutTitle: gettext('Zoom out'),
-  }).addTo(map);
+  });
+  map.addControl(zoomControl);
+
+  /** Add loading indicator control */
+  const loadingControl = L.Control.loading({
+    separate: true,
+    // 5 second delay when showing the loading indicator
+    // loadingControl options do not seem to respond to these options as documented, I changed them directly in mapApp/static/leaflet/plugins/leaflet.loading/Control.Loading.js to get it to work
+    delayIndicator: 4000,
+    position: 'bottomleft',
+  });
+  map.addControl(loadingControl);
 
   /** Add scalebar */
   L.control.scale({

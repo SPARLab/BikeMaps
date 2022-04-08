@@ -53,15 +53,6 @@ var incidentAppliedLayers = new L.MarkerClusterGroup({
     iconCreateFunction: pieChart
 });
 
-// TODO: get 'top' value that works for all screen sizes
-let mapSpinOpts = {
-radius: 20,
-length: 20,
-lines: 16,
-top: window.innerHeight*.75,
-left: 10
-}
-
 /**
 * Data filtering by date
 */
@@ -348,7 +339,8 @@ const loadDataIfBoundsExceedDebounce = debounce(function() {
  */
 function loadAllIncidentData(currentMapBounds){
   loadingDataFlag = 1;
-  map.spin(true, mapSpinOpts);
+  // Fire event to trigger loading spin indicator
+  map.fireEvent('dataloading', event);
   // Load more data than the currently in the screen view to allow for some panning without reloading data. use exponential formula to determine how much more
   let percentPadding = 0.03 * (1.35**map.getZoom());
   let boundsToLoad = currentMapBounds.pad(percentPadding);
@@ -362,7 +354,7 @@ function loadAllIncidentData(currentMapBounds){
     // initialDataLoaded flag should be 0 for page load and always 1 after that
     initialDataLoaded = 1;
     loadingDataFlag = 0;
-    map.spin(false);
+    map.fireEvent('dataload', event);
     boundsOfLoadedData = boundsToLoad;
 
     console.log('finished loading all the data');
@@ -371,7 +363,8 @@ function loadAllIncidentData(currentMapBounds){
     loadDataIfBoundsExceedDebounce();
   }).catch(e => {
     loadingDataFlag = 0;
-    map.spin(false);
+    // Turn off loading indicator if data load failed
+    map.fireEvent('dataload', event);
     console.log(e)
   })
 }
