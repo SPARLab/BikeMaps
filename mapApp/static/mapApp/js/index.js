@@ -94,8 +94,10 @@ initializeMapLocation().then(() => {
   L.DomEvent.on(elem, 'mouseover', () => map.dragging.disable());
   L.DomEvent.on(elem, 'mouseleave', () => map.dragging.enable());
 
-  /** When user has finished panning or jumping to a new location, the map center and zoom level are updated in the URL. They are also saved to local storage, which can be used to set the initial map location if the user revisits the site */
+  /** Actions to take when user has panned or jumped to a new location */
   map.on('moveend', function(e) {
+
+    /** Map center and zoom level are updated in the URL. They are also saved to local storage, which can be used to set the initial map location if the user revisits the site */
     let center = map.getCenter();
     lastKnownZoom = map.getZoom();
     lastKnownLat = center.lat;
@@ -105,6 +107,8 @@ initializeMapLocation().then(() => {
     localStorage.setItem('lastKnownLat', lastKnownLat);
     localStorage.setItem('lastKnownLng', lastKnownLng);
     window.history.replaceState({}, "", "@" + lastKnownLat.toFixed(7) + "," + lastKnownLng.toFixed(7) + "," + lastKnownZoom + "z");
+
+    /** Load new data if new map bounds exceed the area we currently have data loaded for. Won't run if a data load is already running (!loadingDataFlag) and debounce delays execution in case user is panning around and firing many 'moveend' events */
     if (!loadingDataFlag && initialDataLoaded) {
       loadDataIfBoundsExceedDebounce();
     }

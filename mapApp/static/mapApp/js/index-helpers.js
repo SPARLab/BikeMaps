@@ -1,3 +1,6 @@
+/** This file contains all the variable and function definitions that are used by index.js but are not directly related to the initalization of the map location.
+*/
+
 /** Host location, port to construct API requests */
 var hostname = window.location.hostname;
 
@@ -6,24 +9,23 @@ if (window.location.port) {
   hostname = hostname + ':' + window.location.port;
 }
 
-// define variables used in other files
+/**
+ * Variable declarations for map and data loading
+ */
 let map;
 let mapCenter, mapZoom;
 let alertAreas = L.featureGroup();
-// Initalize data loading vars
 let loadingDataFlag = 0;
 let initialDataLoaded = 0;
 let boundsOfLoadedData = L.latLngBounds(); // initalize with empty bounds
 
-/**
-* Data fetching variables set up
-*/
+
 
 // TODO: Should 'incidentReferenceLayers' store the geojson data layer instead? Then any time the array of markers is needed it can be converted with 'getLayers()' on the fly
 
  /** Initialize incident data storage
  *
- * 'incidentReferenceLayers' stores the loaded layer data, while 'incidentAppliedLayers' is one grouped layer that can be filtered, subsets added/removed to map with checkboxes
+ * 'incidentReferenceLayers' stores the loaded layer data, while 'incidentAppliedLayers' is one grouped layer that can be filtered. Subsets are added or removed to map with checkboxes in the 'about'
  *
  * 'incidentAppliedLayers' is an instance of MarkerClusterGroup, a plugin type that extends FeatureGroup, which itself extends Layergroup. groups several layers and handles as one
  */
@@ -35,13 +37,6 @@ incidentReferenceLayers.set('nearmisses', nearmisses);
 incidentReferenceLayers.set('hazards', hazards);
 incidentReferenceLayers.set('thefts', thefts);
 incidentReferenceLayers.set('newInfrastructures', newInfrastructures);
-
-// definitions for slider filtering
-var collisionsUnfiltered = collisions,
-    nearmissesUnfiltered = nearmisses,
-    hazardsUnfiltered = hazards,
-    theftsUnfiltered = thefts;
-    newInfrastructuresUnfiltered = newInfrastructures;
 
 var incidentAppliedLayers = new L.MarkerClusterGroup({
     maxClusterRadius: 70,
@@ -56,6 +51,13 @@ var incidentAppliedLayers = new L.MarkerClusterGroup({
 /**
 * Data filtering by date
 */
+
+/** Variable declarations for slider filtering */
+ var collisionsUnfiltered = collisions,
+    nearmissesUnfiltered = nearmisses,
+    hazardsUnfiltered = hazards,
+    theftsUnfiltered = thefts;
+    newInfrastructuresUnfiltered = newInfrastructures;
 
 /** Initialize the slider */
 $("input.slider").ready(function () {
@@ -129,9 +131,8 @@ function filterPoints(start_date, end_date) {
     $("#theftCheckbox").is(":checked") && incidentAppliedLayers.addLayers(thefts);
     $("#newInfrastructureCheckbox").is(":checked") && incidentAppliedLayers.addLayers(newInfrastructures);
 
-    console.log('filter points');
     // updateCounter();
-    printData();
+    // printData();
 
 };
 
@@ -151,8 +152,7 @@ function resetPoints() {
     $("#newInfrastructureCheckbox").is(":checked") && incidentAppliedLayers.addLayers(newInfrastructures);
 
     // updateCounter()
-    console.log('reset points');
-    printData();
+    // printData();
 };
 
 $("input.slider").on("slide", function (e) {
@@ -275,7 +275,8 @@ function addAlertAreas(geofences) {
   });
 }
 
-// HELPER FUNCTIONS
+/** All other helper functions */
+
 function getPopup(layer) {
     var feature = layer.feature,
         type = layer.options.ftype,
@@ -328,6 +329,7 @@ function geojsonMarker(data, type) {
     });
 };
 
+/** Function to debounce loading data function. This prevents a new data request from executing every time the user lets go of the mouse while panning around the map- instead it gives user a chance to get to the intended location and then load the data for the area of interest. */
 const loadDataIfBoundsExceedDebounce = debounce(function() {
   loadDataIfBoundsExceed(map.getBounds());
 }, 1500);
@@ -338,17 +340,9 @@ const loadDataIfBoundsExceedDebounce = debounce(function() {
  * @param {L.bounds} boundsToLoad - leaflet type representing area of map to load data for
  */
 function loadAllIncidentData(currentMapBounds){
-  // Fire event to trigger loading spin indicator if data isn't already loading
-  console.log('loadAllIncidentData function');
-  console.log(loadingDataFlag);
-  if (!loadingDataFlag) {
-    console.log('firing dataloading event ')
-
-    map.fireEvent('dataloading', event);
-  }
   loadingDataFlag = 1;
 
-  // Load more data than the currently in the screen view to allow for some panning without reloading data. use exponential formula to determine how much more
+  // Load more data than the currently in the screen view to allow for some panning without reloading data. Use exponential formula to determine how much more- just fetch a small addition percent for low zoom values, while higher zoom values can fetch more to allow for panning around a detailed area.
   let percentPadding = 0.03 * (1.35**map.getZoom());
   let boundsToLoad = currentMapBounds.pad(percentPadding);
 
@@ -361,17 +355,13 @@ function loadAllIncidentData(currentMapBounds){
     // initialDataLoaded flag should be 0 for page load and always 1 after that
     initialDataLoaded = 1;
     loadingDataFlag = 0;
-    map.fireEvent('dataload', event);
     boundsOfLoadedData = boundsToLoad;
 
-    console.log('finished loading all the data');
-    printData();
+    // printData();
     // Check if the map moved while the last data was being loaded
     loadDataIfBoundsExceedDebounce();
   }).catch(e => {
     loadingDataFlag = 0;
-    // Turn off loading indicator if data load failed
-    map.fireEvent('dataload', event);
     console.log(e)
   })
 }
@@ -424,8 +414,7 @@ function processLayerFromData(data, incidentType){
     this.checked ?
     incidentAppliedLayers.addLayers(incidentLayer) : incidentAppliedLayers.removeLayers(incidentLayer);
     // updateCounter();
-    console.log(`clicked a checkbox for ${incTypeSingular}`);
-    printData();
+    // printData();
   });
 
   // add the array of layers to the reference layers map
@@ -439,14 +428,14 @@ function convertPluralToSingular(pluralIncidentType){
   else return pluralIncidentType.slice(0, -1);
 }
 
-/* TODO: add debounce to wait until user stops zooming/scrolling around to load new data */
+/** Function to load new data if current loaded data bounds are empty or current bounds exceed them */
 function loadDataIfBoundsExceed(currentMapBounds){
-  // if loaded data bounds are empty or current bounds exceed them, load new data
   if (!boundsOfLoadedData.isValid() || !boundsOfLoadedData.contains(currentMapBounds)){
     loadAllIncidentData(currentMapBounds);
   }
 }
 
+/** Debounce delays function execution */
 function debounce(func, wait, immediate) {
     var timeout;
     return function () {
@@ -527,7 +516,7 @@ function getPopupText(incidentType, in_data) {
         tempContent += '<br><div class="popup-details"><strong>' + gettext('Details') + ':</strong> ' + in_data.properties.details + '</div>';
     }
 
-    //Append the data for editing if in role
+    // Append the data for editing if in role
     if (typeof checkEdit === "function") {
         tempContent += checkEdit(in_data, tempPath);
     }
@@ -535,7 +524,7 @@ function getPopupText(incidentType, in_data) {
     return tempContent;
 }
 
-/* Function used to display number of markers loaded to map- helpful for debugging / watching data load. Also uncomment pointCounterContainer in overlays.html to use
+/* Function used to display number of markers loaded to map- helpful for debugging or watching data load. Uncomment instances of updateCounter as well as pointCounterContainer in overlays.html to enable.
 */
 function updateCounter(){
   let loaded = incidentReferenceLayers.get('collisions').length +
