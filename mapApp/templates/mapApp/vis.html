@@ -44,33 +44,33 @@
 
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-0">
           <div class="text-center center-chart">
+          <div id="barTypes" >
             <div class="chart-title">
               <strong>{% trans "Total reports by type" %}</strong>
-              <a class='reset btn btn-danger btn-xs' href='javascript:barTypes.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
+              <a class='reset btn btn-danger btn-xs pull-right' href='javascript:barTypes.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
             </div>
-            <div id="barTypes" >
             </div>
           </div>
         </div>
 
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-0">
           <div class="text-center center-chart">
+            <div id="barWeek" >
             <div class="chart-title">
             <strong>{% trans "Reports summary by weekday" %}</strong>
-            <a class='reset btn btn-danger btn-xs' href='javascript:barWeek.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
+            <a class='reset btn btn-danger btn-xs pull-right' href='javascript:barWeek.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
             </div>
-          <div id="barWeek" >
           </div>
         </div>
         </div>
 
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-0">
           <div class="text-center center-chart">
+            <div id="barHour" >
             <div class="chart-title">
               <strong>{% trans "Number of incident by hour of day" %}</strong>
-              <a class='reset btn btn-danger btn-xs' href='javascript:barHour.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
+              <a class='reset btn btn-danger btn-xs pull-right' href='javascript:barHour.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
             </div>
-            <div id="barHour" >
             </div>
           </div>
         </div>
