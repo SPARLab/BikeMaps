@@ -338,9 +338,16 @@ const loadDataIfBoundsExceedDebounce = debounce(function() {
  * @param {L.bounds} boundsToLoad - leaflet type representing area of map to load data for
  */
 function loadAllIncidentData(currentMapBounds){
+  // Fire event to trigger loading spin indicator if data isn't already loading
+  console.log('loadAllIncidentData function');
+  console.log(loadingDataFlag);
+  if (!loadingDataFlag) {
+    console.log('firing dataloading event ')
+
+    map.fireEvent('dataloading', event);
+  }
   loadingDataFlag = 1;
-  // Fire event to trigger loading spin indicator
-  map.fireEvent('dataloading', event);
+
   // Load more data than the currently in the screen view to allow for some panning without reloading data. use exponential formula to determine how much more
   let percentPadding = 0.03 * (1.35**map.getZoom());
   let boundsToLoad = currentMapBounds.pad(percentPadding);

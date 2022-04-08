@@ -43,7 +43,8 @@
                 if (this.options.spinjs && (typeof Spinner !== 'function')) {
                     return console.error("Leaflet.loading cannot load because you didn't load spin.js (http://fgnass.github.io/spin.js/), even though you set it in options.");
                 }
-                this._addLayerListeners(map);
+                // Don't add layer listeners: only want spinner for data requests, not tile loading
+                // this._addLayerListeners(map);
                 this._addMapListeners(map);
 
                 // Try to set the zoom control this control is attached to from the map
