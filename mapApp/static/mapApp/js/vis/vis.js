@@ -33,8 +33,8 @@ barWeek
   .yAxisLabel(gettext("Count"))
   .centerBar(true)
   .elasticY(true)
-  // .renderTitle(true)
-  // .title(function(d){return `${this.layer}: ${this.y1 - this.y0}`})
+  .renderTitle(true)
+  .title(function(d){return `Day of the week: ${weekdayScale(this.x)}\n${this.layer}: ${this.y1 - this.y0}`})
   .brushOn(true)
   .dimension(weekdayDimension)
   .group(weekdayCount, gettext("Collisions")).valueAccessor(function(d){
@@ -65,10 +65,8 @@ barHour
   .elasticY(true)
   .renderTitle(true)
   .title(function(d){
-    // console.log(d);
-    // console.log(this);
-    return `${this.layer}: ${this.y1 - this.y0}`})
-  .brushOn(false)
+    return `Hour of day: ${this.x}\n${this.layer}: ${this.y1 - this.y0}`})
+  .brushOn(true)
   .dimension(hourDimension)
   .group(countPerHour, gettext("Collisions")).valueAccessor(function(d){return d.value.collision; })
   .stack(countPerHour, gettext("Nearmisses"), function(d){ return d.value.nearmiss; })
