@@ -59,8 +59,9 @@ var all = xf.groupAll(),
     countTypes = p_typeDimension.group().reduceCount(),
     weekdayCount = weekdayDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount()),
     countPerHour = hourDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount()),
-    countPerDay = dateDimension.group().reduceCount();
-    countPerMonth = monthDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount());
+    countPerDay = dateDimension.group().reduceCount(),
+    countPerMonth = monthDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount()),
+    totalPerMonth = monthDimension.group().reduceCount();
 
 /** DATA FILTER FUNCTIONS **/
 // Reusable reduce function for counting different types of reports

@@ -132,9 +132,7 @@ lineDate
     .margins({top: 0, right: 50, bottom: 30, left: 40})
     .dimension(monthDimension)
     .colors("#00aeac")
-    .group(countPerMonth, gettext("Collisions")).valueAccessor(function(d) {
-      return d.value.collision;
-    })
+    .group(totalPerMonth)
     .centerBar(true)
     .gap(1)
     .x(timeScale)
