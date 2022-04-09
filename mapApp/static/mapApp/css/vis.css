@@ -18,6 +18,22 @@ body {
   margin: 15px;
 }
 
+/* axis */
+.dc-chart .axis path {
+  stroke: #59717F;
+}
+
+/* ticks */
+.dc-chart .axis line {
+  stroke: #59717F;
+}
+
+/* axis label */
+.dc-chart .axis {
+  color: #59717F;
+}
+
+
 .chart-title {
   padding: 12px;
   text-align: left;
