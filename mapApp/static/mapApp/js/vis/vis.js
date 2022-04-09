@@ -79,11 +79,13 @@ barHour.yAxis()
   .ticks(6);
 barHour.render();
 
+var volumeChart = new dc.BarChart('#monthly-volume-chart');
 var lineDate = new dc.CompositeChart("#lineDate");
 lineDate
   .width(null)
   .height(null)
   .x(timeScale)
+  .rangeChart(volumeChart)
   .round(d3.timeMonth.round)
   .xUnits(d3.timeMonths)
   .yAxisLabel(gettext("Count"))
@@ -123,6 +125,22 @@ lineDate
   ])
 
   lineDate.yAxis().tickSizeOuter(0);
+
+  volumeChart
+    .width(null)
+    .height(60)
+    .margins({top: 0, right: 50, bottom: 20, left: 40})
+    .dimension(monthDimension)
+    .colors("#00aeac")
+    .group(countPerMonth, gettext("Collisions")).valueAccessor(function(d) {
+      return d.value.collision;
+    })
+    .centerBar(true)
+    .gap(1)
+    .x(timeScale)
+    .round(d3.timeMonth.round)
+    .alwaysUseRounding(true)
+    .xUnits(d3.timeMonths);
 
 // Fit map extent to alert areas boundary
 if (alertAreas.getLayers().length > 0) {
