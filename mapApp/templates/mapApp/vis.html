@@ -31,10 +31,30 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-5">
           <div id="vis-info" class="center-chart" style="height: 450px;">
+            <h4>
+               Use this dashboard to explore the report data!
+            </h4>
+            <p>
+               Any filters you apply to the charts or the map will affect the output of all the visualizations.
+            </p>
+            <p>
+               To get started, try this example query:
+            <ol>
+               <li>Zoom in to your city on the map</li>
+               <li>Select "Collisions" and "Nearmisses" on the total reports type chart</li>
+               <li>Highlight "Mon-Fri" to view the workweek on the weekly chart</li>
+               <li>Highlight the last few years on the Incidents per Month chart to get the most recent results</li>
+            </ol>
+            Then review the combined results of your selection!
+            </p>
+            <p>
+               Use the 'reset' buttons on each chart to remove individual filters, or 'reset all' to undo all your filtering. Happy exploring!
+            </p>
             <span class="dc-data-count pull-left text-info">
-              {% blocktrans with '<span class="filter-count"></span>' as some and '<span class="total-count"></span>' as total %}{{some}} of {{total}} shown{% endblocktrans %}
+              {% blocktrans with '<span class="filter-count"></span>' as some and '<span class="total-count"></span>' as total %}{{some}} of {{total}} total reports shown{% endblocktrans %}
             </span>
-            <a class='reset btn btn-danger btn-sm pull-right' href='javascript:dc.filterAll();dc.renderAll();'>{% trans "reset all" %}</a>          </div>
+            <a class='reset btn btn-danger btn-sm pull-right' href='javascript:dc.filterAll();dc.renderAll();'>{% trans "reset all" %}</a>
+          </div>
         </div>
       </div>
 
