@@ -129,7 +129,7 @@ lineDate
   volumeChart
     .width(null)
     .height(60)
-    .margins({top: 0, right: 50, bottom: 20, left: 40})
+    .margins({top: 0, right: 50, bottom: 30, left: 40})
     .dimension(monthDimension)
     .colors("#00aeac")
     .group(countPerMonth, gettext("Collisions")).valueAccessor(function(d) {
