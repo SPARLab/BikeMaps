@@ -8,6 +8,12 @@ body {
   padding-bottom: 200px;
 }
 
+.vis-title{
+	font-family: 'Carrois Gothic SC', sans-serif;
+	font-weight: 700;
+	color: #2c3e50;
+}
+
 .row{
   margin: 15px;
 }
