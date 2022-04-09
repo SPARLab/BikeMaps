@@ -104,7 +104,7 @@ barDate.xAxis()
 
 barDate.render();
 
-var lineDate = new dc.LineChart("#lineDate");
+var lineDate = new dc.CompositeChart("#lineDate");
 lineDate
   .width(null)
   .height(null)
@@ -113,32 +113,38 @@ lineDate
   .xUnits(d3.timeMonths)
   .yAxisLabel(gettext("Count"))
   .elasticY(true)
-  .dimension(monthDimension)
-  .group(countPerMonth, gettext("Collisions")).valueAccessor(function(d){
-    // console.log(d);
-    return d.value.collision; })
-  .stack(countPerMonth, gettext("Nearmisses"), function(d){ return d.value.nearmiss; })
-  .stack(countPerMonth, gettext("Hazards"), function(d){ return d.value.hazard; })
-  .stack(countPerMonth, gettext("Thefts"), function(d){ return d.value.theft; })
   .colors(colorScale)
-  .renderDataPoints(true)
   .renderTitle(true)
-  .title(function(d){
-    console.log(d);
-    console.log(this);
-    return `${this.layer}: ${this.y1 - this.y0}`})
+  .title(function(d) {
+    return `${moment(this.x).format('MMM YYYY')}\n${this.layer}: ${this.y1 - this.y0}`
+  })
   .brushOn(false)
-
-//   .compose([
-//     dc.lineChart(lineDate).group(countPerMonth, gettext("Collisions")).valueAccessor(function(d){
-//         return d.value.collision; }),
-//     dc.lineChart(lineDate).group(countPerMonth, gettext("Nearmisses")).valueAccessor(function(d){
-//         return d.value.nearmiss; }),
-//     dc.lineChart(lineDate).group(countPerMonth, gettext("Hazards")).valueAccessor(function(d){
-//         return d.value.hazard; }),
-//     dc.lineChart(lineDate).group(countPerMonth, gettext("Thefts")).valueAccessor(function(d){
-//         return d.value.theft; }),
-// ])
+  .compose([
+    new dc.LineChart(lineDate)
+    .dimension(monthDimension)
+    .colors(colorScale)
+    .group(countPerMonth, gettext("Collisions")).valueAccessor(function(d) {
+      return d.value.collision;
+    }),
+    new dc.LineChart(lineDate)
+    .dimension(monthDimension)
+    .colors(colorScale)
+    .group(countPerMonth, gettext("Nearmisses")).valueAccessor(function(d) {
+      return d.value.nearmiss;
+    }),
+    new dc.LineChart(lineDate)
+    .dimension(monthDimension)
+    .colors(colorScale)
+    .group(countPerMonth, gettext("Hazards")).valueAccessor(function(d) {
+      return d.value.hazard;
+    }),
+    new dc.LineChart(lineDate)
+    .dimension(monthDimension)
+    .colors(colorScale)
+    .group(countPerMonth, gettext("Thefts")).valueAccessor(function(d) {
+      return d.value.theft;
+    }),
+  ])
 
 // Fit map extent to alert areas boundary
 if (alertAreas.getLayers().length > 0) {
