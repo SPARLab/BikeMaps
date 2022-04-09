@@ -79,29 +79,6 @@ barHour.yAxis()
   .ticks(6);
 barHour.render();
 
-// bar chart of total reports per day
-var barDate = new dc.BarChart("#barDate");
-barDate
-  .width(575)
-  .height(200)
-  .x(d3.scaleLinear().domain([-360, 0]))
-  .yAxisLabel(gettext("Count"))
-  .centerBar(true)
-  .elasticY(true)
-  .dimension(dateDimension)
-  .group(countPerDay)
-  .brushOn(true)
-  .colors(d3.schemeSet2)
-  .on('filtered', changeMap);
-barDate.yAxis().ticks(3);
-barDate.xAxis()
-  .tickFormat(function(v){
-    return moment().add(v, "days").format("ll").slice(0, -6);
-  })
-  .tickValues(dateTickValues());
-
-barDate.render();
-
 var lineDate = new dc.CompositeChart("#lineDate");
 lineDate
   .width(null)
@@ -112,6 +89,7 @@ lineDate
   .yAxisLabel(gettext("Count"))
   .elasticY(true)
   .colors(colorScale)
+  .on('filtered', changeMap)
   .renderTitle(true)
   .title(function(d) {
     return `${moment(this.x).format('MMM YYYY')}\n${this.layer}: ${this.y1 - this.y0}`

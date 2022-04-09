@@ -99,7 +99,7 @@
       </div>
     </div>
 
-    <!--Fifth Row: date charts -->
+    <!--Fourth Row: date charts -->
     <div class="row">
       <div class="hidden-xs col-sm-12 col-md-12">
         <div class="text-center center-chart">
@@ -113,16 +113,6 @@
     </div>
   </div>
 
-  <!--Fourth Row: date charts -->
-  <div class="row">
-    <div class="hidden-xs col-sm-12 col-md-8 col-md-offset-2">
-      <div id="barDate" class="text-center center-chart">
-          <strong>{% trans "Incidents per day for the past year" %}</strong>
-          <a class='reset btn btn-danger btn-xs' href='javascript:barDate.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
-          <br>
-      </div>
-    </div>
-  </div>
 {% endblock %}
 
 {% block footerJS %}
