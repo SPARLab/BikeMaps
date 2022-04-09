@@ -50,10 +50,13 @@
             <p>
                Use the 'reset' buttons on each chart to remove individual filters, or 'reset all' to undo all your filtering. Happy exploring!
             </p>
+            <br>
+            <div>
             <span class="dc-data-count pull-left text-info">
               {% blocktrans with '<span class="filter-count"></span>' as some and '<span class="total-count"></span>' as total %}{{some}} of {{total}} total reports shown{% endblocktrans %}
             </span>
             <a class='reset btn btn-danger btn-sm pull-right' href='javascript:dc.filterAll();dc.renderAll();'>{% trans "reset all" %}</a>
+            </div>
           </div>
         </div>
       </div>
