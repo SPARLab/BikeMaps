@@ -146,6 +146,8 @@ lineDate
     }),
   ])
 
+  lineDate.yAxis().tickSizeOuter(0);
+
 // Fit map extent to alert areas boundary
 if (alertAreas.getLayers().length > 0) {
   map.fitBounds(alertAreas.getBounds());
