@@ -33,6 +33,11 @@ body {
   color: #59717F;
 }
 
+/* Hide y axis on monthly colume chart */
+#monthly-volume-chart g.y {
+    display: none;
+}
+
 
 .chart-title {
   padding: 12px;
