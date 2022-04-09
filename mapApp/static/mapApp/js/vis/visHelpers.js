@@ -1,5 +1,8 @@
 /** SET UP **/
 
+// Set date formats to local language
+moment.locale(LANGUAGE_CODE)
+
 // map p_types of points to nice labels
 var labels = {
   "collision": gettext("Collisions"),
@@ -17,27 +20,39 @@ var weekdayScale = d3.scaleQuantize()
     .domain([0,6])
     .range(moment.weekdaysShort());
 
-// Set date formats to local language
-moment.locale(LANGUAGE_CODE)
+// var timeScale = d3.scaleTime()
+    // .domain(d3.extent(data, d => d.momentDate));
+
+var timeScale = d3.scaleTime().domain([new Date(2012, 0, 1), new Date(2022, 05, 31)])
+
+data.forEach(d => {
+    d.momentDate = moment(d.properties.date);
+    d.month = d3.timeMonth(d.momentDate); // pre-calculate month for better performance
+});
 
 const dateTickValues = () => {
   var firsts = [];
   // Calculate the day difference between now and the first of every month
   for(var i = 0; i<12; i++) {
-        firsts.push(moment().subtract(moment().date()-1, "days").subtract(i, "months").diff(moment(), "days"));
+        firsts.push(moment()
+        .subtract(moment().date()-1, "days")
+        .subtract(i, "months")
+        .diff(moment(), "days"));
   }
   return firsts;
 }
 
 // Define crossfilter dataset
 var xf = crossfilter(data);
+console.log(data[0])
 
 // Define dimensions to filter according to defined value accessor functions
-var p_typeDimension = xf.dimension(function(d) {return d.properties.p_type;}),
-    weekdayDimension = xf.dimension(function(d) {return (moment(d.properties.date).weekday()+6)%7 }),
-    dateDimension = xf.dimension(function(d){ return moment(d.properties.date).diff(moment(), "days"); }),
-    geomDimension = xf.dimension(function(d){ return {'lat': d.geometry.coordinates[1], 'lng': d.geometry.coordinates[0]} }),
-    hourDimension = xf.dimension(function(d){ return moment(d.properties.date).hour(); });
+var p_typeDimension = xf.dimension(d=> d.properties.p_type),
+    weekdayDimension = xf.dimension(d => (d.momentDate.weekday()+6)%7),
+    dateDimension = xf.dimension(d => d.momentDate.diff(moment(), "days")),
+    geomDimension = xf.dimension(d => ({'lat': d.geometry.coordinates[1], 'lng': d.geometry.coordinates[0]})),
+    hourDimension = xf.dimension(d => d.momentDate.hour()),
+    monthDimension = xf.dimension(d => d.month);
 
 // Define groups to count records
 var all = xf.groupAll(),
@@ -45,6 +60,7 @@ var all = xf.groupAll(),
     weekdayCount = weekdayDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount()),
     countPerHour = hourDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount()),
     countPerDay = dateDimension.group().reduceCount();
+    countPerMonth = monthDimension.group().reduce(reduceAddTypeCount(), reduceRemoveTypeCount(), reduceInitTypeCount());
 
 /** DATA FILTER FUNCTIONS **/
 // Reusable reduce function for counting different types of reports

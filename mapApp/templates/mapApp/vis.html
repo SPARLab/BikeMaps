@@ -89,6 +89,17 @@
       </div>
 
     </div>
+    <!--Fifth Row: date charts -->
+    <div class="row">
+      <div class="hidden-xs col-sm-12 col-md-8 col-md-offset-2">
+        <div id="lineDate" class="text-center center-chart">
+            <strong>Incidents per month</strong>
+            <a class='reset btn btn-danger btn-xs' href='javascript:lineDate.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
+            <br>
+        </div>
+      </div>
+
+    </div>
   </div>
 {% endblock %}
 

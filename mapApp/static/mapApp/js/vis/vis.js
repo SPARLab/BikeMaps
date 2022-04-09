@@ -37,7 +37,10 @@ barWeek
   // .title(function(d){return `${this.layer}: ${this.y1 - this.y0}`})
   .brushOn(true)
   .dimension(weekdayDimension)
-  .group(weekdayCount, gettext("Collisions")).valueAccessor(function(d){return d.value.collision; })
+  .group(weekdayCount, gettext("Collisions")).valueAccessor(function(d){
+    // console.log(d);
+
+    return d.value.collision; })
   .stack(weekdayCount, gettext("Nearmisses"), function(d){ return d.value.nearmiss; })
   .stack(weekdayCount, gettext("Hazards"), function(d){ return d.value.hazard; })
   .stack(weekdayCount, gettext("Thefts"), function(d){ return d.value.theft; })
@@ -60,9 +63,12 @@ barHour
   .x(d3.scaleLinear().domain([0,24]))
   .yAxisLabel(gettext("Count"))
   .elasticY(true)
-  // .renderTitle(true)
-  // .title(function(d){return `${this.layer}: ${this.y1 - this.y0}`})
-  .brushOn(true)
+  .renderTitle(true)
+  .title(function(d){
+    // console.log(d);
+    // console.log(this);
+    return `${this.layer}: ${this.y1 - this.y0}`})
+  .brushOn(false)
   .dimension(hourDimension)
   .group(countPerHour, gettext("Collisions")).valueAccessor(function(d){return d.value.collision; })
   .stack(countPerHour, gettext("Nearmisses"), function(d){ return d.value.nearmiss; })
@@ -92,11 +98,47 @@ barDate
 barDate.yAxis().ticks(3);
 barDate.xAxis()
   .tickFormat(function(v){
-    return moment().add(v, "days").format("ll").slice(0, -5);
+    return moment().add(v, "days").format("ll").slice(0, -6);
   })
   .tickValues(dateTickValues());
 
 barDate.render();
+
+var lineDate = new dc.LineChart("#lineDate");
+lineDate
+  .width(null)
+  .height(null)
+  .x(timeScale)
+  .round(d3.timeMonth.round)
+  .xUnits(d3.timeMonths)
+  .yAxisLabel(gettext("Count"))
+  .elasticY(true)
+  .dimension(monthDimension)
+  .group(countPerMonth, gettext("Collisions")).valueAccessor(function(d){
+    // console.log(d);
+    return d.value.collision; })
+  .stack(countPerMonth, gettext("Nearmisses"), function(d){ return d.value.nearmiss; })
+  .stack(countPerMonth, gettext("Hazards"), function(d){ return d.value.hazard; })
+  .stack(countPerMonth, gettext("Thefts"), function(d){ return d.value.theft; })
+  .colors(colorScale)
+  .renderDataPoints(true)
+  .renderTitle(true)
+  .title(function(d){
+    console.log(d);
+    console.log(this);
+    return `${this.layer}: ${this.y1 - this.y0}`})
+  .brushOn(false)
+
+//   .compose([
+//     dc.lineChart(lineDate).group(countPerMonth, gettext("Collisions")).valueAccessor(function(d){
+//         return d.value.collision; }),
+//     dc.lineChart(lineDate).group(countPerMonth, gettext("Nearmisses")).valueAccessor(function(d){
+//         return d.value.nearmiss; }),
+//     dc.lineChart(lineDate).group(countPerMonth, gettext("Hazards")).valueAccessor(function(d){
+//         return d.value.hazard; }),
+//     dc.lineChart(lineDate).group(countPerMonth, gettext("Thefts")).valueAccessor(function(d){
+//         return d.value.theft; }),
+// ])
 
 // Fit map extent to alert areas boundary
 if (alertAreas.getLayers().length > 0) {
