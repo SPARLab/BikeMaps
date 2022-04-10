@@ -79,13 +79,13 @@ barHour.yAxis()
   .ticks(6);
 barHour.render();
 
-var volumeChart = new dc.BarChart('#monthly-volume-chart');
+var lineDateOverviewChart = new dc.BarChart('#lineDateOverview');
 var lineDate = new dc.CompositeChart("#lineDate");
 lineDate
   .width(null)
   .height(null)
   .x(timeScale)
-  .rangeChart(volumeChart)
+  .rangeChart(lineDateOverviewChart)
   .round(d3.timeMonth.round)
   .xUnits(d3.timeMonths)
   .yAxisLabel(gettext("Count"))
@@ -126,21 +126,22 @@ lineDate
 
   lineDate.yAxis().tickSizeOuter(0);
 
-  volumeChart
+  lineDateOverviewChart
     .width(null)
     .height(60)
     .margins({top: 0, right: 50, bottom: 30, left: 40})
     .dimension(monthDimension)
-    .colors("#00aeac")
     .group(totalPerMonth)
+    .colors("#00aeac")
     .centerBar(true)
     .gap(1)
     .x(timeScaleOverview)
+    .brushOn(true)
     .round(d3.timeMonth.round)
     .alwaysUseRounding(true)
     .xUnits(d3.timeMonths);
 
-    volumeChart.yAxis().ticks(0).tickSizeOuter(0);
+    lineDateOverviewChart.yAxis().ticks(0).tickSizeOuter(0);
 
 // Fit map extent to alert areas boundary
 if (alertAreas.getLayers().length > 0) {

@@ -109,7 +109,7 @@
         <div id="lineDate">
           <div class="chart-title" style="text-align: center">
             <strong>Incidents per month</strong>
-            <a class='reset btn btn-danger btn-xs pull-right' href='javascript:lineDate.filterAll();volumeChart.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
+            <a class='reset btn btn-danger btn-xs pull-right' href='javascript:lineDate.filterAll();lineDateOverviewChart.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
         </div>
       </div>
       </div>
@@ -119,7 +119,7 @@
   <div class="row">
     <div class="hidden-xs col-sm-12 col-md-12">
       <div class="text-center center-chart">
-        <div id="monthly-volume-chart">
+        <div id="lineDateOverview">
       </div>
       <p class="muted pull-right" style="margin-right: 15px;margin-top: -15px;">select a time range to zoom in</p>
     </div>
