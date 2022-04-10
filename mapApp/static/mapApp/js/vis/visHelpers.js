@@ -24,6 +24,7 @@ var weekdayScale = d3.scaleQuantize()
     // .domain(d3.extent(data, d => d.momentDate));
 
 var timeScale = d3.scaleTime().domain([new Date(2010, 0, 1), new Date()])
+var timeScaleOverview = d3.scaleTime().domain([new Date(2010, 0, 1), new Date()])
 
 data.forEach(d => {
     d.momentDate = moment(d.properties.date);

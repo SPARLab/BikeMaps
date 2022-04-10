@@ -135,7 +135,7 @@ lineDate
     .group(totalPerMonth)
     .centerBar(true)
     .gap(1)
-    .x(timeScale)
+    .x(timeScaleOverview)
     .round(d3.timeMonth.round)
     .alwaysUseRounding(true)
     .xUnits(d3.timeMonths);
