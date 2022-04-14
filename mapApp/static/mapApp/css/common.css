@@ -19,19 +19,19 @@ body {
 }
 /*Common background colors*/
 .collision{
-	background: #fe6100;
+	background: #D73027;
 	color: black;
 }
 .nearmiss{
-	background: #ffb000;
+	background: #F46D43;
 	color: black;
 }
 .hazard{
-	background: #648fff;
+	background: #74ADD1;
 	color: black;
 }
 .theft{
-	background: #785ef0;
+	background: #4575B4;
 	color: #cbcbcb;
 }
 .newInfrastructure{
