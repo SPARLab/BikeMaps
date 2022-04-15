@@ -21,3 +21,19 @@ var map = L.map('map', {
 if (typeof zoom !== 'undefined') {
   map.setView(L.latLng(lat, lng), zoom);
 }
+
+/** Add geocoder control */
+var geocodeMarker;
+var geocoder = L.Control.geocoder({
+    defaultMarkGeocode: false,
+    position: "topleft",
+    placeholder: gettext('Search...'),
+    errorMessage: gettext('Nothing found.')
+}).on('markgeocode', function(result) {
+  console.log(result.geocode);
+  map.fitBounds(result.geocode.bbox);
+  geocodeMarker && map.removeLayer(geocodeMarker); //remove old marker if it exists
+  geocodeMarker = new L.Marker(result.geocode.center, {
+      icon: icons["geocodeIcon"]
+  }).bindPopup(result.geocode.name).addTo(map).openPopup();
+}).addTo(map);
