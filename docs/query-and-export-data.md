@@ -1,5 +1,5 @@
 # Exporting subsets of Bikemaps data - example based approach
-There isn't a way to externally connect to the remote Bikemaps database. Data must either be exported directly using command line psql on the server, or all of the data can be exported in json format using the Django Admin page and filtered with a script.
+BikeMaps data can be accessed by exporting in json format using the Django Admin page and then doing any required filtering with a script afterwards, or by accessing the database directly and using psql to query before exporting. Contact the BikeMaps team if you require database or admin access.
 
 This query has a geographic component, so I wanted to be able to use some built in PostGIS functions and am using the directly psql option.
 
@@ -97,7 +97,7 @@ The psql command 'copy' was used to output the results to a csv file:
 
 The file was then copied to my local using rsync.
 ``` bash
-rsync -a username@remote_host:/home/bm_admin/NA_ebike_data.csv /Users/finn
+rsync -a username@remote_host:/path/on/server/NA_ebike_data.csv /path/to/local/directory
 ```
 
 ### Notes
