@@ -1,7 +1,13 @@
-# Exporting subsets of Bikemaps data - example based approach
-BikeMaps data can be accessed by exporting in json format using the Django Admin page and then doing any required filtering with a script afterwards, or by accessing the database directly and using psql to query before exporting. Contact the BikeMaps team if you require database or admin access.
+# Exporting subsets of BikeMaps data
+BikeMaps data can be exported as geoJson from the Admin page, or by querying the database directly using psql. Contact the BikeMaps team if you require database or admin access.
 
-This query has a geographic component, so I wanted to be able to use some built in PostGIS functions and am using the directly psql option.
+## GUI Admin Account Option
+Data can be output by logging into an admin account and selecting the relevant "Export" link under the user dropdown menu in the navbar. Any required filtering or transformation can be applied with a script afterwards.
+
+This geojson data can be used directly by QGis or converted to a shapefile using ogr2ogr tools. The easiest method to convert the output geojson text to a shapefile is to copy it from the webpage and paste into the "Convert from GeoJSON" box at [Ogre](http://ogre.adc4gis.com/).
+
+## Database Export Option
+The following documentation walks through an example of writing a psql query using some PostGIS functionality and exporting that data from the server.
 
 ## Query generation
 The data request was for any data from North America that includes e-bikes or e-scooters. The geographic data and details field (a description of the incident) are in the 'mapApp_point' table, while other fields relating to ebikes and escooters were in the 'mapApp_incident' table. The incident table includes both 'collision or fall' and 'near miss' incidents. I didn't see any ebike related fields in the hazards or theft tables so these are omitted for now. All queries are run against a view that combines the incident and points table.

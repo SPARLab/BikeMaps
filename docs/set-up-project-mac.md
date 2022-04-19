@@ -55,7 +55,7 @@ View tables: `\dt+`
 
 Exit: `\q`
 
-Postgres.app includes the postgis extension out of the box, but if necessary install with: `psql -U postgres -d bikeDB -c "CREATE EXTENSON postgis;"`
+Postgres.app includes the postgis extension out of the box, but if necessary install with: `psql -U postgres -d bikeDB -c "CREATE EXTENSION postgis;"`
 
 ## Run Django project
 
