@@ -1,6 +1,5 @@
 # Run BikeMaps.org locally on a Mac
-
-This doc summarizes how I set up Bikemaps.org on my local machine. It could eventually be moved to the readme but the instructions are pretty platform specific so I'd like to include alternative instructions for anything that wouldn't work on Windows or Linux.
+This doc summarizes setting up BikeMaps locally for project development on a mac.
 
 ## Install Python 3
 
@@ -45,7 +44,7 @@ To exit the venv: `deactivate`
 
 I've found the easiest way to run a PostgreSQL server is with <a href='https://postgresapp.com/'>Postgres.app</a>.
 
-Once the server is running, create the bikemaps database with 'postgres' as the user:
+Once the server is running using PostgreSQL 13, create the bikemaps database with 'postgres' as the user:
 ``` bash
 createdb -U postgres bikeDB
 ```
@@ -83,6 +82,3 @@ To access the admin page, create a superuser account to log in with.
 ``` bash
 ./manage.py createsuperuser
 ```
-
-## To do
-verify exact python & postgres versions that should be used once server is upgraded to accommodate most recent bikemaps version (current docs say Postgres 9.3 and Python 2.7)
