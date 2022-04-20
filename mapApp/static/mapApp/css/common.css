@@ -27,16 +27,16 @@ body {
 	color: black;
 }
 .hazard{
-	background: #74ADD1;
+	background: #FEE090;
 	color: black;
 }
 .theft{
-	background: #4575B4;
-	color: #cbcbcb;
+	background: #74ADD1;
+	color: black;
 }
 .newInfrastructure{
-	background: #575757;
-	color: yellow;
+	background: #4575B4;
+	color: #FEE090;
 }
 
 button {

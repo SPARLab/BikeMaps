@@ -2,13 +2,13 @@
 var iconColors = {
     "collision": "#D73027",
     "nearmiss": "#F46D43",
-    "hazard": "#74ADD1",
-    "theft": "#4575B4",
+    "hazard": "#FEE090",
+    "theft": "#74ADD1",
     "official": "#436978",
     "undefined": "#a3a3a3",
-    "geocode": "#a23336",
-    "location": "#a23336",
-    "newInfrastructure": "#ffff00"
+    "geocode": "#313695",
+    "location": "#313695",
+    "newInfrastructure": "#4575B4"
 };
 
 // Given type, return the icon color as defined in iconColors
@@ -84,7 +84,7 @@ var icons = {
   "theftIcon": L.ExtraMarkers.icon({
     icon: "fa-unlock",
     markerColor: getColor("theft"),
-    iconColor: '#cbcbcb',
+    iconColor: 'black',
     pieColor: getColor("theft"),
     svg: "true"
   }),
@@ -97,22 +97,22 @@ var icons = {
   }),
   "geocodeIcon": L.ExtraMarkers.icon({
     icon: "fa-flag",
-    markerColor: 'darkred',
-    iconColor: 'black',
+    markerColor: '#313695',
+    iconColor: '#cbcbcb',
     pieColor: getColor("geocode"),
     svg: "true"
   }),
   "locationIcon": L.ExtraMarkers.icon({
     icon: "fa-user",
-    markerColor: 'darkred',
-    iconColor: 'black',
+    markerColor: '#313695',
+    iconColor: '#cbcbcb',
     pieColor: getColor("location"),
     svg: "true"
   }),
     "newInfrastructureIcon": L.ExtraMarkers.icon({
     icon: "fa-star",
-    markerColor: 'gray',
-    iconColor: 'yellow',
+    markerColor: '#4575B4',
+    iconColor: '#FEE090',
     pieColor: getColor("newInfrastructure"),
     svg: "true"
   })
