@@ -27,7 +27,7 @@ body {
 	color: black;
 }
 .hazard{
-	background: #FEE090;
+	background: #FECE54;
 	color: black;
 }
 .theft{
@@ -36,7 +36,7 @@ body {
 }
 .newInfrastructure{
 	background: #4575B4;
-	color: #FEE090;
+	color: #FECE54;
 }
 
 button {

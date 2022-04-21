@@ -2,7 +2,7 @@
 var iconColors = {
     "collision": "#D73027",
     "nearmiss": "#F46D43",
-    "hazard": "#FEE090",
+    "hazard": "#FECE54",
     "theft": "#74ADD1",
     "official": "#436978",
     "undefined": "#a3a3a3",
