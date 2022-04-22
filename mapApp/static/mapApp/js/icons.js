@@ -55,7 +55,7 @@ var icons = {
 
   "bikeRedIcon": L.ExtraMarkers.icon({
     icon: "fa-bicycle",
-    iconColor: 'black',
+    iconColor: 'white',
     markerColor: getColor("collision"),
     pieColor: getColor("collision"),
     svg: "true"
