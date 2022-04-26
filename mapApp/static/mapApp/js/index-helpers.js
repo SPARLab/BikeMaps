@@ -14,7 +14,7 @@ if (window.location.port) {
  */
 let map;
 let mapCenter, mapZoom;
-let alertAreas = L.featureGroup();
+const alertAreas = L.featureGroup();
 let loadingDataFlag = 0;
 let initialDataLoaded = 0;
 let boundsOfLoadedData = L.latLngBounds(); // initalize with empty bounds
