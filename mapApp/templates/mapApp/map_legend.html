@@ -59,6 +59,15 @@
           </div>
 
           <div class="legend-group">
+            <input class="layer-toggle" id="canBICSCheckbox" type="checkbox" value="canBICS" checked>
+            {% trans "Can-BICS" %}
+            <a data-target="#about-canbics" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>
+            <div class="legend-subtext collapse in">
+              <small class="canBICS-line"></small>
+            </div>
+          </div>
+
+          <div class="legend-group">
             <input class="layer-toggle" type="checkbox" value="alertAreas" checked>
             {% trans "Alert Areas" %}
             <a data-target="#about-alert-areas" data-toggle="modal" href="#"><i class="fa fa-question-circle fa-1x"></i></a><br>

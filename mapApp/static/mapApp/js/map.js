@@ -11,6 +11,9 @@ var MapQuestOpen_OSM = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z
         minZoom: 14,
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }),
+    canBICS = L.esri.featureLayer({
+      url: 'https://services.arcgis.com/E5vyYQKPMX5X3R3H/arcgis/rest/services/national/FeatureServer/0',
+    }),
     Mapnik_BW = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
       attribution: '<a href="https://openstreetmap.org/">&copy OpenStreetMap contributors, CC-BY-SA</a>',
       subdomains: '1234'
