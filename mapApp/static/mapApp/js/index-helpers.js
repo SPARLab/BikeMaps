@@ -535,7 +535,7 @@ function getPopupText(incidentType, in_data) {
   return tempContent;
 }
 
-/* Function used to display number of markers loaded to map- helpful for debugging or watching data load. Uncomment instances of updateCounter as well as pointCounterContainer in overlays.html to enable.
+/* Function used to display number of markers loaded to map- helpful for debugging or watching data load. Uncomment calls to updateCounter in index-helpers.js as well as pointCounterContainer in overlays.html to enable.
  */
 function updateCounter() {
   let loaded = incidentReferenceLayers.get('collisions').length +
