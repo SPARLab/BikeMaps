@@ -27,10 +27,6 @@ var MapQuestOpen_OSM = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z
       maxNativeZoom: 11,
       opacity: 0.8,
       attribution: '<a href=http://labs.strava.com/heatmap/>http://labs.strava.com/heatmap/</a>'
-    }),
-    infrastructure = L.esri.dynamicMapLayer({
-        url: 'https://grs.asurite.ad.asu.edu/server/rest/services/Bikemaps/InfrastructureARCFGDB_Cache/MapServer',
-        opacity: 0.7
     });
 
 var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
