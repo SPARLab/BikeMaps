@@ -1,6 +1,11 @@
 # Run BikeMaps.org locally on a Mac
 This doc summarizes setting up BikeMaps locally for project development on a mac.
 
+## Clone (copy) the BikeMaps repo
+Learn more about cloning <a href='https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-clone'>here</a> or enter the desired directory in your terminal and run:
+
+`git clone https://github.com/SPARLab/BikeMaps.git`
+
 ## Install Python 3
 
 <a href='https://docs.python-guide.org/starting/install3/osx/'>Instructions for a system install of Python 3 here</a>
