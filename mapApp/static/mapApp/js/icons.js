@@ -21,10 +21,9 @@ L.ExtraMarkers.Icon.prototype.options.prefix = 'fa';
 var icons = {
   "bikeRedIcon": L.ExtraMarkers.icon({
     // icon: "fa-bicycle",
-    // innerHTML: '<img src="{% static \'mapApp/images/bike_crash.png\' %}">',
-    innerHTML: '<img src="/media/mapApp/collision_teardrop_with_shadow.png" width=\'45px\' height=\'43px\' >',
+    innerHTML: '<img src="{% static \'mapApp/images/bike_crash.png\' %} width=\'45px\' height=\'43px\'">',
+    // innerHTML: '<img src="/media/mapApp/collision_teardrop_with_shadow.png"  >',
       pieColor: getColor("collision"),
-    // shape: 'circle',
     svg: "false"
   }),
   // "bikeYellowIcon": L.ExtraMarkers.icon({
