@@ -14,104 +14,104 @@
 {% endblock %}
 
 {% block body %}
-  <div class="container" style="margin-top: 15px;">
+<div class="container" style="margin-top: 15px;">
 
-    <!--First Row: Title -->
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12">
-        <h3 class="vis-title">{% trans "Explore Incident Report Data" %}</h4>
+  <!--First Row: Title -->
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <h3 class="vis-title">{% trans "Explore Incident Report Data" %}</h4>
+    </div>
+  </div>
+
+  <!--Second Row: Map & info box -->
+  <div class="row">
+    <!-- Map -->
+    <div class="col-xs-12 col-sm-12 col-md-7" style="height: 450px;">
+      <div id="map" class="center-chart"></div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-5">
+      <div id="vis-info" class="center-chart" style="height: 450px;">
+        <h4>
+          {% trans "Use this dashboard to explore the report data!" %}
+        </h4>
+        <p>
+          {% trans "Any filters you apply to the charts or the map will affect the output of all the visualizations." %}
+        </p>
+        <p>
+          {% trans "To get started, try this example query:" %}
+          <ol>
+            <li>{% trans "Zoom in to your city on the map" %}</li>
+            <li>{% trans "Select 'Collisions' and 'Nearmisses' on the total reports type chart" %}</li>
+            <li>{% trans "Highlight 'Mon-Fri' to view the workweek on the weekly chart" %}</li>
+            <li>{% trans "Highlight the last few years on the Incidents per Month chart to get the most recent results" %}</li>
+          </ol>
+          {% trans "Then review the combined results of your selection!" %}
+        </p>
+        <p>
+          {% trans "Use the 'reset' buttons on each chart to remove individual filters, or 'reset all' to undo all your filtering. Happy exploring!" %}
+        </p>
+        <br>
+        <div>
+          <span class="dc-data-count pull-left text-info">
+            {% blocktrans with '<span class="filter-count"></span>' as some and '<span class="total-count"></span>' as total %}{{some}} of {{total}} total reports shown{% endblocktrans %}
+          </span>
+          <a class='reset btn btn-danger btn-sm pull-right' href='javascript:dc.filterAll();dc.renderAll();'>{% trans "reset all" %}</a>
+        </div>
       </div>
     </div>
+  </div>
 
-      <!--Second Row: Map & info box -->
-      <div class="row">
-        <!-- Map -->
-        <div class="col-xs-12 col-sm-12 col-md-7" style="height: 450px;">
-          <div id="map" class="center-chart"></div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-5">
-          <div id="vis-info" class="center-chart" style="height: 450px;">
-            <h4>
-               Use this dashboard to explore the report data!
-            </h4>
-            <p>
-               Any filters you apply to the charts or the map will affect the output of all the visualizations.
-            </p>
-            <p>
-               To get started, try this example query:
-            <ol>
-               <li>Zoom in to your city on the map</li>
-               <li>Select "Collisions" and "Nearmisses" on the total reports type chart</li>
-               <li>Highlight "Mon-Fri" to view the workweek on the weekly chart</li>
-               <li>Highlight the last few years on the Incidents per Month chart to get the most recent results</li>
-            </ol>
-            Then review the combined results of your selection!
-            </p>
-            <p>
-               Use the 'reset' buttons on each chart to remove individual filters, or 'reset all' to undo all your filtering. Happy exploring!
-            </p>
-            <br>
-            <div>
-            <span class="dc-data-count pull-left text-info">
-              {% blocktrans with '<span class="filter-count"></span>' as some and '<span class="total-count"></span>' as total %}{{some}} of {{total}} total reports shown{% endblocktrans %}
-            </span>
-            <a class='reset btn btn-danger btn-sm pull-right' href='javascript:dc.filterAll();dc.renderAll();'>{% trans "reset all" %}</a>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!--Third Row: charts-->
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
 
-      <!--Third Row: charts-->
-      <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12">
-
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-0">
-          <div class="text-center center-chart">
-          <div id="barTypes" >
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-0">
+        <div class="text-center center-chart">
+          <div id="barTypes">
             <div class="chart-title">
               <strong>{% trans "Total reports by type" %}</strong>
               <a class='reset btn btn-danger btn-xs pull-right' href='javascript:barTypes.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
             </div>
-            </div>
           </div>
         </div>
+      </div>
 
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-0">
-          <div class="text-center center-chart">
-            <div id="barWeek" >
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-0">
+        <div class="text-center center-chart">
+          <div id="barWeek">
             <div class="chart-title">
-            <strong>{% trans "Reports summary by weekday" %}</strong>
-            <a class='reset btn btn-danger btn-xs pull-right' href='javascript:barWeek.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
+              <strong>{% trans "Reports summary by weekday" %}</strong>
+              <a class='reset btn btn-danger btn-xs pull-right' href='javascript:barWeek.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
             </div>
           </div>
         </div>
-        </div>
+      </div>
 
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-0">
-          <div class="text-center center-chart">
-            <div id="barHour" >
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-0">
+        <div class="text-center center-chart">
+          <div id="barHour">
             <div class="chart-title">
               <strong>{% trans "Number of incident by hour of day" %}</strong>
               <a class='reset btn btn-danger btn-xs pull-right' href='javascript:barHour.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
             </div>
-            </div>
           </div>
         </div>
-
-
       </div>
-    </div>
 
-    <!--Fourth Row: date charts -->
-    <div class="row">
-      <div class="hidden-xs col-sm-12 col-md-12">
-        <div class="text-center center-chart">
+
+    </div>
+  </div>
+
+  <!--Fourth Row: date charts -->
+  <div class="row">
+    <div class="hidden-xs col-sm-12 col-md-12">
+      <div class="text-center center-chart">
         <div id="lineDate">
           <div class="chart-title" style="text-align: center">
             <strong>Incidents per month</strong>
             <a class='reset btn btn-danger btn-xs pull-right' href='javascript:lineDate.filterAll();lineDateOverviewChart.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
+          </div>
         </div>
-      </div>
       </div>
     </div>
   </div>
@@ -120,15 +120,15 @@
     <div class="hidden-xs col-sm-12 col-md-12">
       <div class="text-center center-chart">
         <div id="lineDateOverview">
+        </div>
+        <p class="muted pull-right" style="margin-right: 15px;margin-top: -15px;">select a time range to zoom in</p>
       </div>
-      <p class="muted pull-right" style="margin-right: 15px;margin-top: -15px;">select a time range to zoom in</p>
     </div>
   </div>
-</div>
 
-{% endblock %}
+  {% endblock %}
 
-{% block footerJS %}
+  {% block footerJS %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.11/crossfilter.js"></script>
   <script src="https://unpkg.com/dc@4/dist/dc.js"></script>
   <script src="{% static 'leaflet/plugins/leaflet-heatmap/heatmap.min.js' %}"></script>
@@ -157,5 +157,5 @@
   <script src="{% static 'mapApp/js/vis/map.js' %}"></script>
   <script src="{% static 'mapApp/js/vis/vis.js' %}"></script>
 
-{% endblock %}
-{% endcache %}
+  {% endblock %}
+  {% endcache %}
