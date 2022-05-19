@@ -19,15 +19,14 @@ function getColor(t) {
 L.ExtraMarkers.Icon.prototype.options.prefix = 'fa';
 // Icon definitions
 var icons = {
-  // "bikeRedIcon": L.ExtraMarkers.icon({
-  //   // icon: "fa-bicycle",
-  //   // innerHTML: '<img src="{% static \'mapApp/images/bike_crash.png\' %}">',
-  //   innerHTML: '<img src="/media/mapApp/bike_crash.png" width=\'25px\' height=\'14px\' style=\'margin-top:11px\'>',
-  //   markerColor: "orange",
-  //   shape: 'circle',
-  //   iconColor: 'black',
-  //   svg: "false"
-  // }),
+  "bikeRedIcon": L.ExtraMarkers.icon({
+    // icon: "fa-bicycle",
+    // innerHTML: '<img src="{% static \'mapApp/images/bike_crash.png\' %}">',
+    innerHTML: '<img src="/media/mapApp/collision_teardrop_with_shadow.png" width=\'45px\' height=\'43px\' >',
+      pieColor: getColor("collision"),
+    // shape: 'circle',
+    svg: "false"
+  }),
   // "bikeYellowIcon": L.ExtraMarkers.icon({
   //   innerHTML: '<img src="/media/mapApp/bike_near_miss.png" width=\'19px\' height=\'15px\' style=\'margin-top:11px\'>',
   //   markerColor: "yellow",
@@ -53,13 +52,13 @@ var icons = {
   // }),
   // standard collision / near miss icons
 
-  "bikeRedIcon": L.ExtraMarkers.icon({
-    icon: "fa-bicycle",
-    iconColor: 'white',
-    markerColor: getColor("collision"),
-    pieColor: getColor("collision"),
-    svg: "true"
-  }),
+  // "bikeRedIcon": L.ExtraMarkers.icon({
+  //   icon: "fa-bicycle",
+  //   iconColor: 'white',
+  //   markerColor: getColor("collision"),
+  //   pieColor: getColor("collision"),
+  //   svg: "true"
+  // }),
   "bikeYellowIcon": L.ExtraMarkers.icon({
     icon: "fa-bicycle",
     iconColor: 'black',
