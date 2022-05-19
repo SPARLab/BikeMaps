@@ -2501,19 +2501,19 @@ msgstr "Pour commencer, essayez cet exemple de requête:"
 
 #:
 msgid "Zoom in to your city on the map"
-msgstr "1. Zoomez sur votre ville sur la carte."
+msgstr "Zoomez sur votre ville sur la carte."
 
 #:
 msgid "Select 'Collisions' and 'Nearmisses' on the total reports type chart"
-msgstr "2. Sélectionnez « Collisions » et « Quasi-collisions » sur le tableau des types de rapports."
+msgstr "Sélectionnez « Collisions » et « Quasi-collisions » sur le tableau des types de rapports."
 
 #:
 msgid "Highlight 'Mon-Fri' to view the workweek on the weekly chart"
-msgstr "3. Mettez en surbrillance « Lun-Ven » pour afficher la semaine de travail sur le graphique hebdomadaire."
+msgstr "Mettez en surbrillance « Lun-Ven » pour afficher la semaine de travail sur le graphique hebdomadaire."
 
 #:
 msgid "Highlight the last few years on the Incidents per Month chart to get the most recent results"
-msgstr "4. Mettez en surbrillance les dernières années sur le graphique « Incidents par mois » pour obtenir les résultats les plus récents."
+msgstr "Mettez en surbrillance les dernières années sur le graphique « Incidents par mois » pour obtenir les résultats les plus récents."
 
 #:
 msgid "Then review the combined results of your selection!"
