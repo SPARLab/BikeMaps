@@ -36,7 +36,7 @@ olefile==0.46
 Pillow==8.1.0
 psycopg2==2.8.6
 pycparser==2.20
-PyJWT==1.7.1
+PyJWT==2.4.0
 python-openid==2.2.5
 pytz==2020.4
 requests==2.18.3
