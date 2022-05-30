@@ -143,8 +143,8 @@ textarea {
 .navbar-default .navbar-nav>.open>a,
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:hover {
-	background-color: #041e2b;
 	color: #f18904;
+	background-color: rgba(4, 30, 60, 0);
 }
 
 .navbar-default .navbar-brand:hover,
