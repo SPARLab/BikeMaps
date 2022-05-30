@@ -20,50 +20,14 @@ L.ExtraMarkers.Icon.prototype.options.prefix = 'fa';
 // Icon definitions
 var icons = {
   "bikeRedIcon": L.ExtraMarkers.icon({
-    // icon: "fa-bicycle",
-    innerHTML: '<img src="{% static \'mapApp/images/bike_crash.png\' %} width=\'45px\' height=\'43px\'">',
-    // innerHTML: '<img src="/media/mapApp/collision_teardrop_with_shadow.png"  >',
-      pieColor: getColor("collision"),
+    innerHTML: '<img src="/media/mapApp/collision_teardrop.png" width=\'27px\' height=\'36px\' style=\'margin-top:5px\'>',
+    pieColor: getColor("collision"),
     svg: "false"
   }),
-  // "bikeYellowIcon": L.ExtraMarkers.icon({
-  //   innerHTML: '<img src="/media/mapApp/bike_near_miss.png" width=\'19px\' height=\'15px\' style=\'margin-top:11px\'>',
-  //   markerColor: "yellow",
-  //   shape: 'circle',
-  //   iconColor: 'black',
-  //   pieColor: getColor("nearmiss"),
-  //   svg: "false"
-  // }),
-
-
-  // custom collison / near miss icons
-  // "bikeRedIcon": L.ExtraMarkers.icon({
-  //   markerColor: "orange",
-  //   shape: 'circle',
-  //   innerHTML: "<img src=\'/media/mapApp/bike_crash.png\' width=\'22px\' height=\'12.6px\' style=\'margin-top:11px\'>",
-  //   pieColor: getColor("collision"),
-  // }),
-  // "bikeYellowIcon": L.ExtraMarkers.icon({
-  //   shape: 'circle',
-  //   markerColor: 'yellow',
-  //   innerHTML: "<img src=\'/media/mapApp/bike_near_miss.png\' width=\'17px\' height=\'13.4px\' style=\'margin-top:11px\'>",
-  //   pieColor: getColor("nearmiss"),
-  // }),
-  // standard collision / near miss icons
-
-  // "bikeRedIcon": L.ExtraMarkers.icon({
-  //   icon: "fa-bicycle",
-  //   iconColor: 'white',
-  //   markerColor: getColor("collision"),
-  //   pieColor: getColor("collision"),
-  //   svg: "true"
-  // }),
   "bikeYellowIcon": L.ExtraMarkers.icon({
-    icon: "fa-bicycle",
-    iconColor: 'black',
-    markerColor: getColor("nearmiss"),
+    innerHTML: '<img src="/media/mapApp/nearmiss_teardrop.png" width=\'27px\' height=\'36px\' style=\'margin-top:5px\'>',
     pieColor: getColor("nearmiss"),
-    svg: "true"
+    svg: "false"
   }),
   "bikeGreyIcon": L.ExtraMarkers.icon({
     icon: "fa-crosshairs",
