@@ -75,11 +75,18 @@ class GetURLTests(TestCase):
         self.assertEqual(self.client.get('/hazards.json').status_code, 200)
         self.assertEqual(self.client.get('/thefts/').status_code, 200)
         self.assertEqual(self.client.get('/thefts.json').status_code, 200)
-        self.assertEqual(self.client.get('/official/.json').status_code, 200)
+        self.assertEqual(self.client.get('/official.json').status_code, 200)
 
-        self.assertEqual(self.client.get('/alertareas/.json').status_code, 401)
+        self.assertEqual(self.client.get('/collisions_tiny/').status_code, 200)
+        self.assertEqual(self.client.get('/nearmisses_tiny/').status_code, 200)
+        self.assertEqual(self.client.get('/hazards_tiny/').status_code, 200)
+        self.assertEqual(self.client.get('/thefts_tiny/').status_code, 200)
+        self.assertEqual(self.client.get('/newInfrastructures_tiny/').status_code, 200)
+
+
+        self.assertEqual(self.client.get('/alertareas.json').status_code, 401)
         self.client.login(username="test_user", password="password")
-        self.assertEqual(self.client.get('/alertareas/.json').status_code, 401)
+        self.assertEqual(self.client.get('/alertareas.json').status_code, 401)
         # TODO: Who needs to be authenticated to access the alertareas api?
         # self.client.login(username="test_superuser", password="password")
         # self.assertEqual(self.client.get('/alertareas/.json').status_code, 200)
@@ -149,6 +156,68 @@ class IncidentTests(TestCase):
         self.assertEqual("nearmiss", self._nearmiss.p_type)
         self.assertEqual("collision", self._fall.p_type)
 
+class TinyIncidentTests(TestCase):
+    """Tests 'tiny' incident URLs and bbox filtering"""
+    # An 'incident' is fall, collision, or nearmiss in the 'incident' table
+    # The 'points' table groups falls and collisions together as 'collisions', but keeps nearmisses separate
+    # Create 3 incident objects, but collisions and falls are retreived from /collisions and nearmisses from /nearmiss
+    victoriaBboxQuery = '?bbox=-124,48,-123,49'
+
+    def setUp(self):
+        pnt_geom1 = GEOSGeometry('POINT(-123.5 48.5)')
+        pnt_geom2 = GEOSGeometry('POINT(-84.5 42)')
+        pnt_geom3 = GEOSGeometry('POINT(-120 35.5)')
+        now_time = datetime.now()
+
+        # Collision
+        self._collision = Incident.objects.create(geom=pnt_geom1, date=now_time,
+                                                  i_type="Collision with moving object or vehicle",
+                                                  incident_with="Vehicle, side",
+                                                  injury="Injury, no treatment")
+        # Nearmiss
+        self._nearmiss = Incident.objects.create(geom=pnt_geom2, date=now_time,
+                                                 i_type="Near collision with stationary object or vehicle",
+                                                 incident_with="Vehicle, side",
+                                                 injury="Injury, no treatment")
+        # Fall
+        self._fall = Incident.objects.create(geom=pnt_geom3, date=now_time,
+                                             i_type="Fall",
+                                             incident_with="Vehicle, side",
+                                             injury="Injury, no treatment")
+
+    def tearDown(self):
+        self._collision.delete()
+        self._nearmiss.delete()
+        self._fall.delete()
+
+    def test_tiny_collision_get(self):
+        response = self.client.get("/collisions_tiny/")
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(2, len(data["features"]))
+
+    def test_tiny_collision_bbox(self):
+        response = self.client.get("/collisions_tiny/" + self.victoriaBboxQuery)
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(1, len(data["features"]))
+
+    def test_tiny_nearmiss_get(self):
+        response = self.client.get("/nearmisses_tiny/")
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(1, len(data["features"]))
+
+    def test_tiny_nearmiss_box(self):
+        response = self.client.get("/nearmisses_tiny/" + self.victoriaBboxQuery)
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(0, len(data["features"]))
+
 class HazardTests(TestCase):
     """Test Hazard instantiation and methods"""
     def setUp(self):
@@ -201,6 +270,42 @@ class HazardTests(TestCase):
         # TODO implement this
         pass
 
+class TinyHazardTests(TestCase):
+    """Test Tiny Hazard url & bbox filtering"""
+    santaBarbaraBboxQuery = "?bbox=-121,35,-119,36"
+
+    def setUp(self):
+        pnt_geom1 = GEOSGeometry('POINT(-123.5 48.5)')
+        pnt_geom2 = GEOSGeometry('POINT(-84.5 42)')
+        pnt_geom3 = GEOSGeometry('POINT(-120 35.5)')
+        now_time = datetime.now()
+
+        # Create hazards that fall into different categories
+        self._infrastructure = Hazard.objects.create(geom=pnt_geom1, date=now_time, i_type="Pothole", hazard_category="infrastructure")
+
+        self._environmental = Hazard.objects.create(geom=pnt_geom2, date=now_time, i_type="Wet leaves", hazard_category="environmental")
+
+        self._human_behaviour = Hazard.objects.create(geom=pnt_geom3, date=now_time, i_type="Driver behaviour", hazard_category="human behaviour")
+
+    def tearDown(self):
+        self._environmental.delete()
+        self._infrastructure.delete()
+        self._human_behaviour.delete()
+
+    def test_tiny_hazard_get(self):
+        response = self.client.get("/hazards_tiny/")
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(3, len(data["features"]))
+
+    def test_tiny_hazard_bbox(self):
+        response = self.client.get("/hazards_tiny/" + self.santaBarbaraBboxQuery)
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(1, len(data["features"]))
+
 class TheftTests(TestCase):
     """Tests of Incident class points instantiation and methods"""
     def setUp(self):
@@ -226,6 +331,41 @@ class TheftTests(TestCase):
     def test_p_type(self):
         self.assertEqual("theft", self._theft.p_type)
 
+class TinyTheftTests(TestCase):
+    """Test Tiny Thefts url & bbox filtering"""
+    santaBarbaraBboxQuery = "?bbox=-121,35,-119,36"
+
+    def setUp(self):
+        pnt_geom = GEOSGeometry('POINT(-123.5 48.5)')
+        now_time = datetime.now()
+
+        # Theft
+        self._theft = Theft.objects.create(geom=pnt_geom, date=now_time,
+                                           i_type="Bike (value < $1000)",
+                                           how_locked="Frame locked",
+                                           lock="U-Lock",
+                                           locked_to="Outdoor bike rack",
+                                           lighting ="Good",
+                                           traffic="Very High")
+
+    def tearDown(self):
+        self._theft.delete()
+
+    def test_tiny_theft_get(self):
+        response = self.client.get("/thefts_tiny/")
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(1, len(data["features"]))
+
+    def test_tiny_hazard_bbox(self):
+        response = self.client.get("/thefts_tiny/" + self.santaBarbaraBboxQuery)
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(0, len(data["features"]))
+
+
 class NewInfrastructureTests(TestCase):
     """Tests of Incident class points instantiation and methods"""
     def setUp(self):
@@ -247,6 +387,33 @@ class NewInfrastructureTests(TestCase):
 
     def test_p_type(self):
         self.assertEqual("newInfrastructure", self._newInfrastructure.p_type)
+
+class TinyNewInfrastructureTests(TestCase):
+    """Test tiny new infrastructures url & bbox filtering"""
+    santaBarbaraBboxQuery = "?bbox=-121,35,-119,36"
+
+    def setUp(self):
+        pnt_geom = GEOSGeometry('POINT(-123.5 48.5)')
+        now_time = datetime.now()
+
+        self._newInfrastructure = NewInfrastructure.objects.create(geom = pnt_geom, date = now_time, dateAdded = now_time, infra_type = "Sepperated bike lane", infraDetails = "New bike lane")
+
+    def tearDown(self):
+        self._newInfrastructure.delete()
+
+    def test_tiny_new_infra_get(self):
+        response = self.client.get("/newInfrastructures_tiny/")
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(1, len(data["features"]))
+
+    def test_tiny_hazard_bbox(self):
+        response = self.client.get("/newInfrastructures_tiny/" + self.santaBarbaraBboxQuery)
+        json_string = response.content
+        data = json.loads(json_string)
+
+        self.assertEqual(0, len(data["features"]))
 
 class AlertAreaTests(TestCase):
     """Tests for asserting point intersection works correctly with incident points"""
@@ -298,11 +465,7 @@ class PostDataTests(TestCase):
         Theft.objects.all().delete()
 
     def test_incident_post(self):
-        response = self.client.post("/incident_submit/", {"geom": self.pnt_geom, "date": self.now_time,
-                                                          "i_type": "Collision with moving object or vehicle",
-                                                          "incident_with": "Vehicle, side",
-                                                          "injury": "Injury, no treatment",
-                                                          "impact": "None"})
+        response = self.client.post("/incident_submit/", {"geom": self.pnt_geom, "date": self.now_time, "i_type": "Collision with moving object or vehicle", "incident_with": "Vehicle, side", "injury": "Injury, no treatment", "impact": "None", "personal_involvement": "Yes"})
         json_string = response.content
         data = json.loads(json_string)
 
@@ -373,7 +536,7 @@ class RetrieveMessagesForSpecialAreasTests(TestCase):
         """
         kelowna = {'geom': [-119.493500,49.884491]}
         followUpMsg = retrieveFollowUpMsg("hazard", kelowna);
-        self.assertEqual(followUpMsg, "Report this hazard online to Kelowna authorities <a href=\"https://apps.kelowna.ca/iService_Requests/request.cfm?id=265&sid=97\" style=\"color:white\">here</a>")
+        self.assertEqual(followUpMsg, "Report this hazard online to Kelowna authorities <a href='https://apps.kelowna.ca/iService_Requests/request.cfm?id=265&sid=97' target='_blank' rel='noopener noreferrer'>here</a>")
 
     def test_incident_no_special_area(self):
         """
@@ -389,4 +552,4 @@ class RetrieveMessagesForSpecialAreasTests(TestCase):
         """
         hamilton = {'geom': [-79.8711,43.2557]}
         followUpMsg = retrieveFollowUpMsg("incident", hamilton);
-        self.assertEqual(followUpMsg, "If you have been involved in a collision in Ontario, consider reviewing <a href=\"https://www.thebikinglawyer.ca/post/the-biking-lawyer-s-crash-guide\" style=\"color: white\">this legal guide</a>")
+        self.assertEqual(followUpMsg, "If you have been involved in a collision with a vehicle in Ontario, consider reviewing <a href='https://www.thebikinglawyer.ca/post/the-biking-lawyer-s-crash-guide' target='_blank' rel='noopener noreferrer'>this legal guide</a>")

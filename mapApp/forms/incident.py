@@ -66,7 +66,7 @@ class IncidentForm(forms.ModelForm):
 
     def is_valid(self):
 
-        # run default, parent validation first
+        # run default, parent validation first. To debug a failing validation, review the errors stored in `super(IncidentForm, self).errors`
         valid = super(IncidentForm, self).is_valid()
 
         # check date to ensure incident occurred within the past 2 years

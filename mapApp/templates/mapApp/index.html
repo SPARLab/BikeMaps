@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" integrity="sha512-gc3xjCmIy673V6MyOAZhIW93xhM9ei1I+gLbmFjUHIjocENRsLX/QUE1htk5q1XV2D/iie/VQ8DXI6Vu8bexvQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <link rel="stylesheet" href="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.css" />
   <!-- Internal -->
     <link rel="stylesheet" href="{% static 'mapApp/css/index.css' %}">
 
@@ -33,7 +34,7 @@
   <div class="page-body">
       <div id="map">
         {% include 'mapApp/map_legend.html' %}
-        {% include 'mapApp/new_report.html' %}
+        {% include 'mapApp/overlays.html' %}
       </div>
   </div>
 {% endblock %}
@@ -49,6 +50,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.0/leaflet.markercluster.js" integrity="sha512-pWPELjRaw2ZdoT0PDi7iRpRlk1XX3rtnfejJ/HwskyojpHei+9hKpwdphC4yssNt4FM0TjMQOmMrk6ZYSn274w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js" integrity="sha512-ozq8xQKq6urvuU6jNgkfqAmT7jKN2XumbrX1JiB3TnF7tI48DPI4Gy1GXKD/V3EExgAs1V+pRO7vwtS1LHg0Gw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="{% static 'leaflet/plugins/usermarker/leaflet.usermarker.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/src/L.Control.Locate.min.js"></script>
   <!--Referencing the 3.0.2 version of the Esri-Leaflet plugin for compatibility with Leaflet 1.7.1 -->
   <script src="https://unpkg.com/esri-leaflet@3.0.2/dist/esri-leaflet.js"
     integrity="sha512-myckXhaJsP7Q7MZva03Tfme/MSF5a6HC2xryjAM4FxPLHGqlh5VALCbywHnzs2uPoF/4G/QVXyYDDSkp5nPfig=="
@@ -58,7 +60,6 @@
   <script type="text/javascript">
       var LANGUAGE_CODE = "{{LANGUAGE_CODE}}";
   </script>
-  <script src="{% static 'mapApp/js/tooltips.js' %}"></script>
   <script src="{% static 'mapApp/js/icons.js' %}"></script>
   <script src="{% static 'mapApp/js/map.js' %}"></script>
 {% endcache %}
@@ -95,6 +96,7 @@
     {% endif %}
     {% endcache %}
   </script>
+  <script src="{% static 'mapApp/js/index-helpers.js' %}"></script>
   <script src="{% static 'mapApp/js/index.js' %}"></script>
   <script src="{% static 'mapApp/js/legend_collapse.js' %}"></script>
 
