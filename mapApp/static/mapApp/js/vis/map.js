@@ -1,6 +1,7 @@
 // Leaflet heatmap
 var heatLayer = new HeatmapOverlay({ "radius": 20, "maxOpacity": 0.3 });
 var heat_data;
+
 var map = L.map('map', {
   center: [15,6],
   zoom: 1,
@@ -8,7 +9,7 @@ var map = L.map('map', {
   zoomControl: false,
   scrollWheelZoom: true,
   worldCopyJump: true,
-  layers: [OpenStreetMap, heatLayer]
+  layers: [OpenStreetMapNoZoom, heatLayer]
 }).on('load', changeMap())
   .on('moveend', mapFilter);
 
