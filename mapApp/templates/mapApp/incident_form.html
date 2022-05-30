@@ -173,7 +173,7 @@
             // Add point to map
             var point = geojsonMarker(JSON.parse(data['point']), data['point_type'])
             point.bindPopup(getPopup(point.getLayers()[0]));
-            incidentData.addLayer(point);
+            incidentAppliedLayers.addLayer(point);
 
             // Pan to point
             map.setView(point.getBounds().getCenter(), 18, {'animate': true});

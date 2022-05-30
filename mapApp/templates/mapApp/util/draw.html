@@ -3,20 +3,16 @@
 
 <!-- Javascript saved as html to allow for use of Django template tags within the code -->
 <script>
-$(document).ready(function(){
-  {% if not request.user_agent.is_mobile %}
-      desktopDrawing();
-  {% else %}
-      mobileDrawing();
-  {% endif %}
-});
+    document.addEventListener('mapInitializedEvent', (e)=> {
+      {% if not request.user_agent.is_mobile %}
+          desktopDrawing();
+      {% else %}
+          mobileDrawing();
+      {% endif %}
+    });
+
 
   function desktopDrawing() {
-    /* Add i18n zoom control if on desktop */
-    L.control.zoom({
-      zoomInTitle: gettext('Zoom in'),
-      zoomOutTitle: gettext('Zoom out'),
-    }).addTo(map);
 
     /* DRAWING CONTROL TOOLTIPS */
     L.drawLocal.draw.toolbar.actions.title = "{% trans 'Cancel drawing' %}";
