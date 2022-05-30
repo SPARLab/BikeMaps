@@ -1,4 +1,4 @@
-{% load i18n cache %}
+{% load static i18n cache %}
 {% get_current_language as LANGUAGE_CODE %}
 {% cache 500 map_legend LANGUAGE_CODE %}
 
@@ -25,8 +25,8 @@
             <input class="layer-toggle" type="checkbox" value="incidentData" checked>
             {% trans "Incidents" %}
             <div class="marker-group legend-subtext collapse in">
-              <input type="checkbox" id="collisionCheckbox" checked> <i class="collision fa fa-bicycle"></i><small> {% trans "Citizen collision report" %}</small><br>
-              <input type="checkbox" id="nearmissCheckbox" checked> <i class="nearmiss fa fa-bicycle"></i><small> {% trans "Citizen near miss report" %}</small><br>
+              <input type="checkbox" id="collisionCheckbox" checked><img src="{% static 'mapApp/images/custom_icons/collision_icon.png' %}" alt="Collision icon" class="img-responsive img-circle center-block" height="20" width="20" style="display: inline; margin-left: 4px;"><small> {% trans "Citizen collision report" %}</small><br>
+              <input type="checkbox" id="nearmissCheckbox" checked><img src="{% static 'mapApp/images/custom_icons/nearmiss_icon.png' %}" alt="Nearmiss icon" class="img-responsive img-circle center-block" height="20" width="20" style="display: inline; margin-left: 4px;"><small> {% trans "Citizen near miss report" %}</small><br>
               <input type="checkbox" id="hazardCheckbox"checked> <i class="hazard fa fa-warning"></i><small> {% trans "Cyclist hazard" %}</small><br>
               <input type="checkbox" id="theftCheckbox"checked> <i class="theft fa fa-unlock"></i><small> {% trans "Bike theft" %}</small><br>
               <input type="checkbox" id="newInfrastructureCheckbox"checked> <i class="newInfrastructure fa fa-star"></i><small> {% trans "New infrastructure" %}</small><br>
