@@ -1,12 +1,59 @@
 #map{
   height: 100%;
 }
+
+/* https://medium.com/ge-design/iot-cool-gray-is-a-great-background-color-for-data-visualization-ebf18c318418 */
+body {
+  background: #EBEFF2;
+  padding-bottom: 200px;
+}
+
+.vis-title{
+	font-family: 'Carrois Gothic SC', sans-serif;
+	font-weight: 700;
+	color: #2c3e50;
+}
+
+.row{
+  margin: 15px;
+}
+
+/* axis */
+.dc-chart .axis path {
+  stroke: #59717F;
+}
+
+/* ticks */
+.dc-chart .axis line {
+  stroke: #59717F;
+}
+
+/* axis label */
+.dc-chart .axis {
+  color: #59717F;
+}
+
+/* Hide y axis on monthly colume chart */
+#monthly-volume-chart g.y {
+    display: none;
+}
+
+
+.chart-title {
+  padding: 12px;
+  text-align: left;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #EBEFF2;
+}
 .center-chart{
   width: 100%;
   display: block;
   margin-left: auto;
   margin-right: auto;
   padding: 8px;
+  background: #fff;
+  border: 1px solid #c5d1d8;
+  border-radius: 5px;
 }
 
 #barTypes .x.axis path {
