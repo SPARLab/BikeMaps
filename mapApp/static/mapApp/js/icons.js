@@ -1,14 +1,14 @@
 // Icon definitions
 var iconColors = {
-    "collision": "#d63e2a",
-    "nearmiss": "#f3952f",
-    "hazard": "#72b026",
-    "theft": "#575757",
+    "collision": "#D73027",
+    "nearmiss": "#F46D43",
+    "hazard": "#FECE54",
+    "theft": "#74ADD1",
     "official": "#436978",
     "undefined": "#a3a3a3",
-    "geocode": "#a23336",
-    "location": "#a23336",
-    "newInfrastructure": "#ffff00"
+    "geocode": "#313695",
+    "location": "#313695",
+    "newInfrastructure": "#4575B4"
 };
 
 // Given type, return the icon color as defined in iconColors
@@ -20,18 +20,14 @@ L.ExtraMarkers.Icon.prototype.options.prefix = 'fa';
 // Icon definitions
 var icons = {
   "bikeRedIcon": L.ExtraMarkers.icon({
-    icon: "fa-bicycle",
-    markerColor: getColor("collision"),
-    iconColor: 'black',
+    innerHTML: '<img src="/media/mapApp/collision_teardrop.png" width=\'27px\' height=\'36px\' style=\'margin-top:5px\'>',
     pieColor: getColor("collision"),
-    svg: "true"
+    svg: "false"
   }),
   "bikeYellowIcon": L.ExtraMarkers.icon({
-    icon: "fa-bicycle",
-    markerColor: getColor("nearmiss"),
-    iconColor: 'black',
+    innerHTML: '<img src="/media/mapApp/nearmiss_teardrop.png" width=\'27px\' height=\'36px\' style=\'margin-top:5px\'>',
     pieColor: getColor("nearmiss"),
-    svg: "true"
+    svg: "false"
   }),
   "bikeGreyIcon": L.ExtraMarkers.icon({
     icon: "fa-crosshairs",
@@ -48,9 +44,9 @@ var icons = {
     svg: "true"
   }),
   "theftIcon": L.ExtraMarkers.icon({
-    icon: "fa-bicycle",
+    icon: "fa-unlock",
     markerColor: getColor("theft"),
-    iconColor: '#cbcbcb',
+    iconColor: 'black',
     pieColor: getColor("theft"),
     svg: "true"
   }),
@@ -63,22 +59,22 @@ var icons = {
   }),
   "geocodeIcon": L.ExtraMarkers.icon({
     icon: "fa-flag",
-    markerColor: 'darkred',
-    iconColor: 'black',
+    markerColor: '#313695',
+    iconColor: '#cbcbcb',
     pieColor: getColor("geocode"),
     svg: "true"
   }),
   "locationIcon": L.ExtraMarkers.icon({
     icon: "fa-user",
-    markerColor: 'darkred',
-    iconColor: 'black',
+    markerColor: '#313695',
+    iconColor: '#cbcbcb',
     pieColor: getColor("location"),
     svg: "true"
   }),
     "newInfrastructureIcon": L.ExtraMarkers.icon({
     icon: "fa-star",
-    markerColor: 'gray',
-    iconColor: 'yellow',
+    markerColor: '#4575B4',
+    iconColor: '#FEE090',
     pieColor: getColor("newInfrastructure"),
     svg: "true"
   })

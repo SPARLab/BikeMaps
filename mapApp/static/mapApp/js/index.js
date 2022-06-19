@@ -9,7 +9,7 @@ initializeMapLocation().then(() => {
     minZoom: 2,
     zoom: mapZoom,
     zoomControl: false,
-    layers: [OpenStreetMap, CyclOSM, stravaHM],
+    layers: [OpenStreetMap, HOTOSM, CyclOSM, stravaHM],
     worldCopyJump: true,
   });
 
