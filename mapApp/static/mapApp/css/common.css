@@ -193,6 +193,7 @@ body h1{
 /* Override spirt user dropdown*/
 .dropdown-menu{
 	font-family: sans-serif;
+	min-width: 120px;
 }
 
 .dropdown-menu>.divider{
@@ -202,6 +203,13 @@ body h1{
 
 .dropdown-menu>li>a{
 	width: 100%;
+	color: #575757;
+}
+
+.dropdown-menu>li>a:hover{
+	text-decoration: underline;
+	color: #575757;
+	background-color: #fff;
 }
 .dropdown-menu>li{
 	width: 100%;
