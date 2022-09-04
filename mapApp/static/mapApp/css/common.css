@@ -125,7 +125,7 @@ textarea {
 }
 
 .navbar-default {
-	background: linear-gradient(0deg, #000, #041e3c 30%);
+	background-color: #041e3c;
 }
 
 .navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a:focus {
