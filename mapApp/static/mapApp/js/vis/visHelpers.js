@@ -45,7 +45,6 @@ const dateTickValues = () => {
 
 // Define crossfilter dataset
 var xf = crossfilter(data);
-console.log(data[0])
 
 // Define dimensions to filter according to defined value accessor functions
 var p_typeDimension = xf.dimension(d=> d.properties.p_type),
