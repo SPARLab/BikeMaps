@@ -55,6 +55,9 @@ body {
   border: 1px solid #c5d1d8;
   border-radius: 5px;
 }
+.panel {
+  border: 1px solid #c5d1d8;
+}
 
 #barTypes .x.axis path {
   display: none;
