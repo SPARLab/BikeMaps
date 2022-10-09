@@ -26,11 +26,12 @@
   <!--Second Row: Map & info box -->
   <div class="row">
     <!-- Map -->
-    <div class="col-xs-12 col-sm-12 col-md-7" style="height: 450px;">
-      <div id="map" class="center-chart"></div>
+    <div class="col-xs-12 col-sm-12 col-md-7 panel panel-default" style="min-height: 464px;" id="map">
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-5">
-      <div id="vis-info" class="center-chart" style="height: 450px;">
+    <!-- Info box -->
+    <div class="col-xs-12 col-sm-12 col-md-5" id="vis-info" style="min-height: 450px;">
+      <div class="panel panel-default">
+      <div class = "panel-body">
         <h4>
           {% trans "Use this dashboard to explore the report data!" %}
         </h4>
@@ -51,14 +52,15 @@
           {% trans "Use the 'reset' buttons on each chart to remove individual filters, or 'reset all' to undo all your filtering. Happy exploring!" %}
         </p>
         <br>
-        <div>
+        <span>
           <span class="dc-data-count pull-left text-info">
             {% blocktrans with '<span class="filter-count"></span>' as some and '<span class="total-count"></span>' as total %}{{some}} of {{total}} total reports shown{% endblocktrans %}
           </span>
           <a class='reset btn btn-danger btn-sm pull-right' href='javascript:dc.filterAll();dc.renderAll();'>{% trans "reset all" %}</a>
-        </div>
+        </span>
       </div>
     </div>
+  </div>
   </div>
 
   <!--Third Row: charts-->
@@ -66,8 +68,8 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
 
       <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-0">
-        <div class="text-center center-chart">
-          <div id="barTypes">
+        <div class="text-center panel panel-default">
+          <div class="panel-body" id="barTypes">
             <div class="chart-title">
               <strong>{% trans "Total reports by type" %}</strong>
               <a class='reset btn btn-danger btn-xs pull-right' href='javascript:barTypes.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
@@ -77,8 +79,8 @@
       </div>
 
       <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-0">
-        <div class="text-center center-chart">
-          <div id="barWeek">
+        <div class="text-center panel panel-default">
+          <div class="panel-body" id="barWeek">
             <div class="chart-title">
               <strong>{% trans "Reports summary by weekday" %}</strong>
               <a class='reset btn btn-danger btn-xs pull-right' href='javascript:barWeek.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
@@ -88,8 +90,8 @@
       </div>
 
       <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-0">
-        <div class="text-center center-chart">
-          <div id="barHour">
+        <div class="text-center panel panel-default">
+          <div class="panel-body" id="barHour">
             <div class="chart-title">
               <strong>{% trans "Number of incident by hour of day" %}</strong>
               <a class='reset btn btn-danger btn-xs pull-right' href='javascript:barHour.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
@@ -105,8 +107,8 @@
   <!--Fourth Row: date charts -->
   <div class="row">
     <div class="hidden-xs col-sm-12 col-md-12">
-      <div class="text-center center-chart">
-        <div id="lineDate">
+      <div class="text-center panel panel-default">
+        <div class="panel-body" id="lineDate">
           <div class="chart-title" style="text-align: center">
             <strong>Incidents per month</strong>
             <a class='reset btn btn-danger btn-xs pull-right' href='javascript:lineDate.filterAll();lineDateOverviewChart.filterAll();dc.redrawAll();' style='display: none;'>{% trans "reset" %}</a>
@@ -118,10 +120,12 @@
 
   <div class="row">
     <div class="hidden-xs col-sm-12 col-md-12">
-      <div class="text-center center-chart">
+      <div class="text-center panel panel-default">
+        <div class="panel-body">
         <div id="lineDateOverview">
         </div>
-        <p class="muted pull-right" style="margin-right: 15px;margin-top: -15px;">select a time range to zoom in</p>
+        <p class="muted pull-right" style="margin-right: 15px;margin-top: -15px;margin-bottom:-25px">select a time range to zoom in</p>
+        </div>
       </div>
     </div>
   </div>
