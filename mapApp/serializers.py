@@ -53,7 +53,7 @@ class IncidentWeatherSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Incident
         geo_field = 'geom'
-        fields = ('i_type', 'incident_with', 'date', 'p_type','personal_involvement',
+        fields = ('i_type', 'incident_with', 'date', 'report_date', 'p_type','personal_involvement',
                   'details', 'injury', 'trip_purpose',
                   'regular_cyclist', 'helmet', 'road_conditions',
                   'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain', 'aggressive', 'intersection',
