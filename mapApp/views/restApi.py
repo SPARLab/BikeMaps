@@ -366,6 +366,22 @@ class APNSDeviceDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class IncidentOnlyList(APIView):
+    """
+    Lists incidents without joining weather data.
+    """
+    def get(self, request, format=None):
+
+        # Extract bounding box Url parameter
+        bbstr = request.GET.get('bbox', '-180,-90,180,90')
+        bbox = stringToPolygon(bbstr)
+
+        incidents = list(Incident.objects.filter(geom__within=bbox))
+
+        serializer = IncidentSerializer(incidents, many=True)
+        return Response(serializer.data)
+
+
 class IncidentList(APIView):
     """
     Old way to list all incident and weather data.

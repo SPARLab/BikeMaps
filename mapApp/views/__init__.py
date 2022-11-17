@@ -10,7 +10,7 @@ from .recentReports import recentReports
 from .restApi import (AlertAreaDetail, AlertAreaList, APNSDeviceDetail,
                       APNSDeviceList, CollisionList, FilteredHazardList,
                       FilteredTheftList, GCMDeviceDetail, GCMDeviceList,
-                      HazardList, IncidentList, IncidentWeatherList, NearmissList, OfficialList,
+                      HazardList, IncidentOnlyList, IncidentList, IncidentWeatherList, NearmissList, OfficialList,
                       TheftList, TinyCollisionList, TinyHazardList,
                       TinyNearMissList, TinyNewInfrastructureList,
                       TinyTheftList, UserDetail, UserList, XHRCollisionInfo,

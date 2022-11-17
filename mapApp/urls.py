@@ -43,6 +43,7 @@ urlpatterns = [
 ]
 
 urlpatterns += format_suffix_patterns([
+    url(r'^incidents-only/?$', views.IncidentOnlyList.as_view(), name='incident-only-list'),
     url(r'^old-incidents/?$', views.IncidentList.as_view(), name='old-incident-list'),
     url(r'^incidents/?$', views.IncidentWeatherList.as_view(), name='incident-list'),
     url(r'^collisions/?$', views.CollisionList.as_view(), name='collision-list'),
