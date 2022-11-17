@@ -1,5 +1,5 @@
 from mapApp.models import Incident, Hazard, Theft, Official, AlertArea, NewInfrastructure
-from mapApp.serializers import IncidentSerializer, HazardSerializer, TheftSerializer, FilteredHazardSerializer, FilteredTheftSerializer, OfficialSerializer, AlertAreaSerializer, UserSerializer, GCMDeviceSerializer, APNSDeviceSerializer, IncidentWeatherSerializer,TinyIncidentSerializer,TinyXHRIncidentSerializer,TinyHazSerializer,TinyXHRHazSerializer,TinyTheftSerializer,TinyXHRTheftSerializer,TinyNewInfrastructureSerializer,TinyXHRNewInfrastructureSerializer
+from mapApp.serializers import IncidentSerializer, HazardSerializer, TheftSerializer, FilteredHazardSerializer, FilteredTheftSerializer, OfficialSerializer, AlertAreaSerializer, UserSerializer, GCMDeviceSerializer, APNSDeviceSerializer, OldIncidentWeatherSerializer,TinyIncidentSerializer,TinyXHRIncidentSerializer,TinyHazSerializer,TinyXHRHazSerializer,TinyTheftSerializer,TinyXHRTheftSerializer,TinyNewInfrastructureSerializer,TinyXHRNewInfrastructureSerializer
 from django.http import Http404
 from django.contrib.gis.geos import Polygon
 from rest_framework.views import APIView
@@ -368,7 +368,7 @@ class APNSDeviceDetail(APIView):
 
 class IncidentList(APIView):
     """
-    List all incidents with all weather and point data.
+    Old way to list all incident and weather data.
     """
     def get(self, request, format=None):
 
@@ -378,7 +378,7 @@ class IncidentList(APIView):
 
         incidents = list(Incident.objects.filter(geom__within=bbox))
 
-        serializer = IncidentWeatherSerializer(incidents, many=True)
+        serializer = OldIncidentWeatherSerializer(incidents, many=True)
         return Response(serializer.data)
 
 

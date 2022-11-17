@@ -32,7 +32,7 @@ class IncidentSerializer(GeoFeatureModelSerializer):
                   'infrastructure_changed_date')
 
 
-class IncidentWeatherSerializer(GeoFeatureModelSerializer):
+class OldIncidentWeatherSerializer(GeoFeatureModelSerializer):
     # HACK There's no elegant way to serialize a one-to-one field that I could find :(
     # Nested relationships makes it hard to analyze the exported data
     weather_summary = serializers.CharField(source='weather.summary')
