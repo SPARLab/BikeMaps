@@ -1,5 +1,5 @@
-from mapApp.models import Incident, Hazard, Theft, Official, AlertArea, NewInfrastructure
-from mapApp.serializers import IncidentSerializer, HazardSerializer, TheftSerializer, FilteredHazardSerializer, FilteredTheftSerializer, OfficialSerializer, AlertAreaSerializer, UserSerializer, GCMDeviceSerializer, APNSDeviceSerializer, OldIncidentWeatherSerializer,TinyIncidentSerializer,TinyXHRIncidentSerializer,TinyHazSerializer,TinyXHRHazSerializer,TinyTheftSerializer,TinyXHRTheftSerializer,TinyNewInfrastructureSerializer,TinyXHRNewInfrastructureSerializer
+from mapApp.models import Incident, Hazard, Theft, Official, AlertArea, NewInfrastructure, Weather
+from mapApp.serializers import IncidentSerializer, HazardSerializer, TheftSerializer, FilteredHazardSerializer, FilteredTheftSerializer, OfficialSerializer, AlertAreaSerializer, UserSerializer, GCMDeviceSerializer, APNSDeviceSerializer, OldIncidentWeatherSerializer,TinyIncidentSerializer,TinyXHRIncidentSerializer,TinyHazSerializer,TinyXHRHazSerializer,TinyTheftSerializer,TinyXHRTheftSerializer,TinyNewInfrastructureSerializer,TinyXHRNewInfrastructureSerializer, WeatherSerializer
 from django.http import Http404
 from django.contrib.gis.geos import Polygon
 from rest_framework.views import APIView
@@ -379,6 +379,18 @@ class IncidentList(APIView):
         incidents = list(Incident.objects.filter(geom__within=bbox))
 
         serializer = OldIncidentWeatherSerializer(incidents, many=True)
+        return Response(serializer.data)
+
+class IncidentWeatherList(APIView):
+    """
+    Faster incident weather view
+    """
+    def get(self, request):
+        # Extract bounding box Url parameter
+        bbstr = request.GET.get('bbox', '-180,-90,180,90')
+        bbox = stringToPolygon(bbstr)
+        queryset = Weather.objects.select_related('incident').filter(incident__geom__within=bbox)
+        serializer = WeatherSerializer(queryset, many=True)
         return Response(serializer.data)
 
 

@@ -31,6 +31,12 @@ class IncidentSerializer(GeoFeatureModelSerializer):
                   'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact','infrastructure_changed',
                   'infrastructure_changed_date')
 
+class WeatherSerializer(serializers.ModelSerializer):
+    incident = IncidentSerializer()
+    class Meta:
+        model = Weather
+        fields = '__all__'
+
 
 class OldIncidentWeatherSerializer(GeoFeatureModelSerializer):
     # HACK There's no elegant way to serialize a one-to-one field that I could find :(
