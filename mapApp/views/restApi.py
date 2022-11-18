@@ -401,7 +401,7 @@ class IncidentWeatherList(APIView):
     """
     Faster incident weather view
     """
-    def get(self, request):
+    def get(self, request, format=None):
         # Extract bounding box Url parameter
         bbstr = request.GET.get('bbox', '-180,-90,180,90')
         bbox = stringToPolygon(bbstr)
