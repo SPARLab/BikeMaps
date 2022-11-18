@@ -2484,5 +2484,41 @@ msgid "Date filter"
 msgstr "Filtre de date"
 
 #:
-msgid "Basemap by <a href='https://www.cyclosm.org/'>CyclOSM.</a> Report and fix infrastructure data issues on <a href='https://www.openstreetmap.org/fixthemap'>OpenStreetMap.</a>"
-msgstr "Carte de base par <a href='https://www.cyclosm.org/'>CyclOSM.</a> Signalez et corrigez les problèmes de données d'infrastructure sur <a href='https://www.openstreetmap.org/fixthemap'>OpenStreetMap.</a>"
+msgid "Basemaps by <a href='https://www.cyclosm.org/'>CyclOSM</a> and <a href='https://www.hotosm.org/'>HotOSM</a>. Report and fix infrastructure data issues on <a href='https://www.openstreetmap.org/fixthemap'>OpenStreetMap.</a>"
+msgstr "Cartes de base par <a href='https://www.cyclosm.org/'>CyclOSM</a> et <a href='https://www.hotosm.org/'>HotOSM</a>. Signalez et corrigez les problèmes de données d'infrastructure sur <a href='https://www.openstreetmap.org/fixthemap'>OpenStreetMap.</a>"
+
+#:
+msgid "Use this dashboard to explore the report data!"
+msgstr "Utilisez ce tableau de bord pour explorer les données!"
+
+#:
+msgid "Any filters you apply to the charts or the map will affect the output of all the visualizations."
+msgstr "Tous les filtres que vous appliquez aux graphiques ou à la carte affecteront les visualisations."
+
+#:
+msgid "To get started, try this example query:"
+msgstr "Pour commencer, essayez cet exemple de requête:"
+
+#:
+msgid "Zoom in to your city on the map"
+msgstr "Zoomez sur votre ville sur la carte."
+
+#:
+msgid "Select 'Collisions' and 'Nearmisses' on the total reports type chart"
+msgstr "Sélectionnez « Collisions » et « Quasi-collisions » sur le tableau des types de rapports."
+
+#:
+msgid "Highlight 'Mon-Fri' to view the workweek on the weekly chart"
+msgstr "Mettez en surbrillance « Lun-Ven » pour afficher la semaine de travail sur le graphique hebdomadaire."
+
+#:
+msgid "Highlight the last few years on the Incidents per Month chart to get the most recent results"
+msgstr "Mettez en surbrillance les dernières années sur le graphique « Incidents par mois » pour obtenir les résultats les plus récents."
+
+#:
+msgid "Then review the combined results of your selection!"
+msgstr "Ensuite, examinez les résultats combinés de votre sélection!"
+
+#:
+msgid "Use the 'reset' buttons on each chart to remove individual filters, or 'reset all' to undo all your filtering. Happy exploring!"
+msgstr "Utilisez les boutons \"réinitialiser\" sur chaque graphique pour supprimer des filtres individuels, ou \"tout réinitialiser\" pour annuler tous vos filtrages. Bonne exploration!"

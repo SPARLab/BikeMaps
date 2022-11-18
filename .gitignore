@@ -12,7 +12,7 @@
 *.pyc
 */settings/prod.py
 /static/
-/media/
+/media/blogApp/
 /.idea
 .DS_store
 *.po

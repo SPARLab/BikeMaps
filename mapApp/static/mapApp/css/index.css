@@ -84,6 +84,9 @@ span.date{
 .marker-group>i.fa-warning{
   padding-left: 4px;
 }
+.marker-group>i.fa-unlock{
+  padding-left: 4px;
+}
 .marker-group>i.fa-certificate{
   padding-left: 5px;
 }

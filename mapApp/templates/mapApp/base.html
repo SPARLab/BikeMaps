@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
   <!-- Leaflet plugins -->
   <link rel="stylesheet" href="{% static 'leaflet/plugins/extra-markers/css/leaflet.extra-markers.min.css' %}">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
   <link href="{% static 'mapApp/css/common.css' %}" rel="stylesheet">
   {% block headerCSS %}{% endblock %}
 
@@ -84,9 +85,10 @@
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
   <script src="{% static 'leaflet/plugins/extra-markers/js/leaflet.extra-markers.min.js' %}"></script>
   <!-- D3 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+  <script src="https://d3js.org/d3.v5.js"></script>
   <!-- Moment -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
   {% block footerJS %}{% endblock %}

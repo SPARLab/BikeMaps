@@ -215,11 +215,11 @@ function pieChart(cluster) {
   outerR = (total >= 10 ? (total < 50 ? 20 : 25) : 15),
     innerR = (total >= 10 ? (total < 50 ? 10 : 13) : 7);
 
-  var arc = d3.svg.arc()
+  var arc = d3.arc()
     .outerRadius(outerR)
     .innerRadius(innerR);
 
-  var pie = d3.layout.pie()
+  var pie = d3.pie()
     .sort(null)
     .value(function(d) {
       return d.count;
@@ -228,9 +228,8 @@ function pieChart(cluster) {
   // Define the svg layer
   var width = 50,
     height = 50;
-  var svg = document.createElementNS(d3.ns.prefix.svg, 'svg');
+  var svg = document.createElementNS(d3.namespaces.svg, 'svg');
   var vis = d3.select(svg)
-    .data(data)
     .attr('class', 'marker-cluster-pie')
     .attr('width', width)
     .attr('height', height)
