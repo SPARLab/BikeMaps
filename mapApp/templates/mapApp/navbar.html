@@ -10,6 +10,7 @@
 {% url 'admin:index' as admin %}
 {% url 'mapApp:collision-list' as collisionList %}
 {% url 'mapApp:incident-list' as incidentWeatherList %}
+{% url 'mapApp:incident-only-list' as incidentOnlyList %}
 {% url 'mapApp:nearmiss-list' as nearmissList %}
 {% url 'mapApp:hazard-list' as hazardList %}
 {% url 'mapApp:theft-list' as theftList %}
@@ -92,6 +93,7 @@
             <li role="presentation" class="dropdown-header">{% trans "Admin options" %}</li>
             <li><a href="{{ admin }}"><small><span class="fa fa-wrench"></span> {% trans "Admin" %}</small></a></li>
             <li><a href="{{ incidentWeatherList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Incidents + Weather" %}</small></a></li>
+            <li><a href="{{ incidentOnlyList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Incidents (no weather)" %}</small></a></li>
             <li><a href="{{ collisionList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Collisions" %}</small></a></li>
             <li><a href="{{ nearmissList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Nearmisses" %}</small></a></li>
             <li><a href="{{ hazardList }}.json"><small><span class="fa fa-download"></span> {% trans "Export Hazards" %}</small></a></li>
