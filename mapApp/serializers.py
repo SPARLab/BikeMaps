@@ -4,7 +4,7 @@ from django.forms import widgets
 from push_notifications.models import GCMDevice, APNSDevice
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
-from mapApp.models import Point, Incident, Hazard, Theft, Official, AlertArea,NewInfrastructure
+from mapApp.models import Point, Incident, Hazard, Theft, Official, AlertArea,NewInfrastructure, Weather
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -23,16 +23,23 @@ class IncidentSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Incident
         geo_field = 'geom'
-        fields = ('i_type', 'incident_with', 'date', 'p_type', 'personal_involvement',
+        fields = ('i_type', 'incident_with', 'date', 'report_date',
+        'p_type', 'personal_involvement',
                   'details', 'injury', 'trip_purpose',
                   'regular_cyclist', 'helmet', 'road_conditions',
                   'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain', 'aggressive', 'intersection',
-                  'witness_vehicle','bicycle_type',
+                  'witness_vehicle','bicycle_type',  'ebike',
                   'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact','infrastructure_changed',
                   'infrastructure_changed_date')
 
+class WeatherSerializer(serializers.ModelSerializer):
+    incident = IncidentSerializer()
+    class Meta:
+        model = Weather
+        fields = '__all__'
 
-class IncidentWeatherSerializer(GeoFeatureModelSerializer):
+
+class OldIncidentWeatherSerializer(GeoFeatureModelSerializer):
     # HACK There's no elegant way to serialize a one-to-one field that I could find :(
     # Nested relationships makes it hard to analyze the exported data
     weather_summary = serializers.CharField(source='weather.summary')
@@ -53,11 +60,11 @@ class IncidentWeatherSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Incident
         geo_field = 'geom'
-        fields = ('i_type', 'incident_with', 'date', 'p_type','personal_involvement',
+        fields = ('i_type', 'incident_with', 'date', 'report_date', 'p_type','personal_involvement',
                   'details', 'injury', 'trip_purpose',
                   'regular_cyclist', 'helmet', 'road_conditions',
                   'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain', 'aggressive', 'intersection',
-                  'witness_vehicle','bicycle_type',
+                  'witness_vehicle','bicycle_type', 'ebike',
                   'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact', 'weather_summary',
                   'weather_sunrise_time', 'weather_sunset_time', 'weather_dawn', 'weather_dusk',
                   'weather_precip_intensity', 'weather_precip_probability', 'weather_precip_type',

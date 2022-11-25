@@ -1,5 +1,5 @@
-from mapApp.models import Incident, Hazard, Theft, Official, AlertArea, NewInfrastructure
-from mapApp.serializers import IncidentSerializer, HazardSerializer, TheftSerializer, FilteredHazardSerializer, FilteredTheftSerializer, OfficialSerializer, AlertAreaSerializer, UserSerializer, GCMDeviceSerializer, APNSDeviceSerializer, IncidentWeatherSerializer,TinyIncidentSerializer,TinyXHRIncidentSerializer,TinyHazSerializer,TinyXHRHazSerializer,TinyTheftSerializer,TinyXHRTheftSerializer,TinyNewInfrastructureSerializer,TinyXHRNewInfrastructureSerializer
+from mapApp.models import Incident, Hazard, Theft, Official, AlertArea, NewInfrastructure, Weather
+from mapApp import serializers as s
 from django.http import Http404
 from django.contrib.gis.geos import Polygon
 from rest_framework.views import APIView
@@ -26,11 +26,11 @@ class CollisionList(APIView):
 
         collisions = list(Incident.objects.filter(p_type__exact="collision").filter(geom__within=bbox))
 
-        serializer = IncidentSerializer(collisions, many=True)
+        serializer = s.IncidentSerializer(collisions, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = IncidentSerializer(data=request.data)
+        serializer = s.IncidentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             if serializer.data['properties'] is not None:
@@ -57,11 +57,11 @@ class NearmissList(APIView):
         bbox = stringToPolygon(bbstr)
 
         nearmiss = list(Incident.objects.filter(p_type__exact="nearmiss").filter(geom__within=bbox))
-        serializer = IncidentSerializer(nearmiss, many=True)
+        serializer = s.IncidentSerializer(nearmiss, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = IncidentSerializer(data=request.data)
+        serializer = s.IncidentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             if serializer.data['properties'] is not None:
@@ -88,11 +88,11 @@ class HazardList(APIView):
         bbox = stringToPolygon(bbstr)
 
         hazards = list(Hazard.objects.exclude(expires_date__lt=datetime.datetime.now()).exclude(hazard_fixed=True).filter(geom__within=bbox))
-        serializer = HazardSerializer(hazards, many=True)
+        serializer = s.HazardSerializer(hazards, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = HazardSerializer(data=request.data)
+        serializer = s.HazardSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             if serializer.data['properties'] is not None:
@@ -119,11 +119,11 @@ class TheftList(APIView):
         bbox = stringToPolygon(bbstr)
 
         thefts = list(Theft.objects.filter(geom__within=bbox))
-        serializer = TheftSerializer(thefts, many=True)
+        serializer = s.TheftSerializer(thefts, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = TheftSerializer(data=request.data)
+        serializer = s.TheftSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             if serializer.data['properties'] is not None:
@@ -149,7 +149,7 @@ class FilteredHazardList(APIView):
         bbstr = request.GET.get('bbox', '0,0,0,0')
         bbox = stringToPolygon(bbstr)
         hazards = list(Hazard.objects.filter(geom__within=bbox))
-        serializer = FilteredHazardSerializer(hazards, many=True)
+        serializer = s.FilteredHazardSerializer(hazards, many=True)
         return Response(serializer.data)
 
 class FilteredTheftList(APIView):
@@ -165,7 +165,7 @@ class FilteredTheftList(APIView):
         bbox = stringToPolygon(bbstr)
 
         thefts = list(Theft.objects.filter(geom__within=bbox))
-        serializer = FilteredTheftSerializer(thefts, many=True)
+        serializer = s.FilteredTheftSerializer(thefts, many=True)
         return Response(serializer.data)
 
 class OfficialList(APIView):
@@ -179,12 +179,12 @@ class OfficialList(APIView):
         bbox = stringToPolygon(bbstr)
 
         official = list(Official.objects.filter(geom__within=bbox))
-        serializer = OfficialSerializer(official, many=True)
+        serializer = s.OfficialSerializer(official, many=True)
         return Response(serializer.data)
 
     """ No need to allow submission of official data through the API yet
     def post(self, request, format=None):
-        serializer = OfficialSerializer(data=request.data)
+        serializer = s.OfficialSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -201,11 +201,11 @@ class AlertAreaList(APIView):
 
     def get(self, request, format=None):
         alertareas = list(AlertArea.objects.filter(user=request.user))
-        serializer = AlertAreaSerializer(alertareas, many=True)
+        serializer = s.AlertAreaSerializer(alertareas, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = AlertAreaSerializer(data=request.data)
+        serializer = s.AlertAreaSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user=self.request.user, email=self.request.user.email)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -227,12 +227,12 @@ class AlertAreaDetail(APIView):
 
     def get(self, request, pk, format=None):
         alertarea = self.get_object(pk)
-        serializer = AlertAreaSerializer(alertarea)
+        serializer = s.AlertAreaSerializer(alertarea)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
         alertarea = self.get_object(pk)
-        serializer = AlertAreaSerializer(alertarea, data=request.data)
+        serializer = s.AlertAreaSerializer(alertarea, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -246,12 +246,12 @@ class AlertAreaDetail(APIView):
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = s.UserSerializer
 
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = s.UserSerializer
 
 
 class GCMDeviceList(APIView):
@@ -264,11 +264,11 @@ class GCMDeviceList(APIView):
     def get(self, request, format=None):
         #gcmDevices = list(GCMDevice.objects.filter(user=request.user))
         gcmDevices = list(GCMDevice.objects.all())
-        serializer = GCMDeviceSerializer(gcmDevices, many=True)
+        serializer = s.GCMDeviceSerializer(gcmDevices, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = GCMDeviceSerializer(data=request.data)
+        serializer = s.GCMDeviceSerializer(data=request.data)
         if serializer.is_valid():
             # Ensure the registration_id is only in the GCMDevice table once
             if GCMDevice.objects.filter(registration_id = request.data['registration_id']) is not None:
@@ -293,12 +293,12 @@ class GCMDeviceDetail(APIView):
 
     def get(self, request, registration_id, format=None):
         gcmDevice = self.get_object(registration_id)
-        serializer = GCMDeviceSerializer(gcmDevice)
+        serializer = s.GCMDeviceSerializer(gcmDevice)
         return Response(serializer.data)
 
     def put(self, request, registration_id, format=None):
         gcmDevice = self.get_object(registration_id)
-        serializer = GCMDeviceSerializer(gcmDevice, data=request.data)
+        serializer = s.GCMDeviceSerializer(gcmDevice, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -320,11 +320,11 @@ class APNSDeviceList(APIView):
     def get(self, request, format=None):
         #gcmDevices = list(GCMDevice.objects.filter(user=request.user))
         apnsDevices = list(APNSDevice.objects.all())
-        serializer = APNSDeviceSerializer(apnsDevices, many=True)
+        serializer = s.APNSDeviceSerializer(apnsDevices, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = APNSDeviceSerializer(data=request.data)
+        serializer = s.APNSDeviceSerializer(data=request.data)
         if serializer.is_valid():
             # Ensure the registration_id is only in the APNSDevice table once
             if APNSDevice.objects.filter(registration_id = request.data['registration_id']) is not None:
@@ -349,12 +349,12 @@ class APNSDeviceDetail(APIView):
 
     def get(self, request, registration_id, format=None):
         apnsDevice = self.get_object(registration_id)
-        serializer = APNSDeviceSerializer(apnsDevice)
+        serializer = s.APNSDeviceSerializer(apnsDevice)
         return Response(serializer.data)
 
     def put(self, request, registration_id, format=None):
         apnsDevice = self.get_object(registration_id)
-        serializer = APNSDeviceSerializer(apnsDevice, data=request.data)
+        serializer = s.APNSDeviceSerializer(apnsDevice, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -366,9 +366,9 @@ class APNSDeviceDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class IncidentList(APIView):
+class IncidentOnlyList(APIView):
     """
-    List all incidents with all weather and point data.
+    Lists incidents without joining weather data.
     """
     def get(self, request, format=None):
 
@@ -378,7 +378,35 @@ class IncidentList(APIView):
 
         incidents = list(Incident.objects.filter(geom__within=bbox))
 
-        serializer = IncidentWeatherSerializer(incidents, many=True)
+        serializer = s.IncidentSerializer(incidents, many=True)
+        return Response(serializer.data)
+
+
+class IncidentList(APIView):
+    """
+    Old way to list all incident and weather data.
+    """
+    def get(self, request, format=None):
+
+        # Extract bounding box Url parameter
+        bbstr = request.GET.get('bbox', '-180,-90,180,90')
+        bbox = stringToPolygon(bbstr)
+
+        incidents = list(Incident.objects.filter(geom__within=bbox))
+
+        serializer = s.OldIncidentWeatherSerializer(incidents, many=True)
+        return Response(serializer.data)
+
+class IncidentWeatherList(APIView):
+    """
+    Faster incident weather view
+    """
+    def get(self, request, format=None):
+        # Extract bounding box Url parameter
+        bbstr = request.GET.get('bbox', '-180,-90,180,90')
+        bbox = stringToPolygon(bbstr)
+        queryset = Weather.objects.select_related('incident').filter(incident__geom__within=bbox)
+        serializer = s.WeatherSerializer(queryset, many=True)
         return Response(serializer.data)
 
 
@@ -404,7 +432,7 @@ class TinyCollisionList(APIView):
 
         collisionsQuerySet = Incident.objects.filter(p_type__exact="collision").filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')
 
-        serializer = TinyIncidentSerializer(collisionsQuerySet, many=True)
+        serializer = s.TinyIncidentSerializer(collisionsQuerySet, many=True)
         return Response(serializer.data)
 
 class XHRCollisionInfo(APIView):
@@ -416,7 +444,7 @@ class XHRCollisionInfo(APIView):
         # grab the pk and filter and find only the one record that matched
         in_pk = request.GET.get('pk')
         collisionsQuerySet = Incident.objects.get(pk=in_pk)
-        serializer = TinyXHRIncidentSerializer(collisionsQuerySet, many=False)
+        serializer = s.TinyXHRIncidentSerializer(collisionsQuerySet, many=False)
         return Response(serializer.data)
 
 class TinyNearMissList(APIView):
@@ -431,7 +459,7 @@ class TinyNearMissList(APIView):
 
         nearmissQuerySet = Incident.objects.filter(p_type__exact="nearmiss").filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')
 
-        serializer = TinyIncidentSerializer(nearmissQuerySet, many=True)
+        serializer = s.TinyIncidentSerializer(nearmissQuerySet, many=True)
         return Response(serializer.data)
 
 class XHRNearMissInfo(APIView):
@@ -443,7 +471,7 @@ class XHRNearMissInfo(APIView):
         # grab the pk and filter and find only the one record that matched
         in_pk = request.GET.get('pk')
         collisionsQuerySet = Incident.objects.get(pk=in_pk)
-        serializer = TinyXHRIncidentSerializer(collisionsQuerySet, many=False)
+        serializer = s.TinyXHRIncidentSerializer(collisionsQuerySet, many=False)
         return Response(serializer.data)
 
 class TinyHazardList(APIView):
@@ -459,7 +487,7 @@ class TinyHazardList(APIView):
 		#Hazard.objects.select_related('point').exclude(expires_date__lt=now).exclude(hazard_fixed=True).order_by('-date')[:1],
         hazardQuerySet = Hazard.objects.select_related('point').filter(geom__within=bbox).exclude(expires_date__lt=datetime.datetime.now()).exclude(hazard_fixed=True).order_by('-date')
 
-        serializer = TinyHazSerializer(hazardQuerySet, many=True)
+        serializer = s.TinyHazSerializer(hazardQuerySet, many=True)
         return Response(serializer.data)
 
 class XHRHazardInfo(APIView):
@@ -471,7 +499,7 @@ class XHRHazardInfo(APIView):
         # grab the pk and filter and find only the one record that matched
         in_pk = request.GET.get('pk')
         hazardQuerySet = Hazard.objects.get(pk=in_pk)
-        serializer = TinyXHRHazSerializer(hazardQuerySet,many=False)
+        serializer = s.TinyXHRHazSerializer(hazardQuerySet,many=False)
         return Response(serializer.data)
 
 
@@ -486,7 +514,7 @@ class TinyTheftList(APIView):
         bbox = stringToPolygon(bbstr)
 
         theftQuerySet = Theft.objects.select_related('point').all().filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')
-        serializer = TinyTheftSerializer(theftQuerySet, many=True)
+        serializer = s.TinyTheftSerializer(theftQuerySet, many=True)
         return Response(serializer.data)
 
 class XHRTheftInfo(APIView):
@@ -498,7 +526,7 @@ class XHRTheftInfo(APIView):
         # grab the pk and filter and find only the one record that matched
         in_pk = request.GET.get('pk')
         theftQuerySet = Theft.objects.get(pk=in_pk)
-        serializer = TinyXHRTheftSerializer(theftQuerySet, many=False)
+        serializer = s.TinyXHRTheftSerializer(theftQuerySet, many=False)
         return Response(serializer.data)
 
 class TinyNewInfrastructureList(APIView):
@@ -512,7 +540,7 @@ class TinyNewInfrastructureList(APIView):
         bbox = stringToPolygon(bbstr)
 		#select_related('point').
         niQuerySet = NewInfrastructure.objects.select_related('point').filter(geom__within=bbox).exclude(expires_date__lt=datetime.datetime.now()).order_by('-date')
-        serializer = TinyNewInfrastructureSerializer(niQuerySet, many=True)
+        serializer = s.TinyNewInfrastructureSerializer(niQuerySet, many=True)
         return Response(serializer.data)
 
 class XHRNewInfrastructureInfo(APIView):
@@ -524,5 +552,5 @@ class XHRNewInfrastructureInfo(APIView):
         # grab the pk and filter and find only the one record that matched
         in_pk = request.GET.get('pk')
         niQuerySet = NewInfrastructure.objects.get(pk=in_pk)
-        serializer = TinyXHRNewInfrastructureSerializer(niQuerySet, many=False)
+        serializer = s.TinyXHRNewInfrastructureSerializer(niQuerySet, many=False)
         return Response(serializer.data)
