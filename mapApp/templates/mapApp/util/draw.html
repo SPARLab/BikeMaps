@@ -228,18 +228,15 @@ function mobileDrawing(){
 }
 
     function runConsentGeoLookup(geom) {
-
-
       const multipolygon = turf.helpers.multiPolygon(US_Boundary.features[0].geometry.coordinates);
-
       const turfPoint = turf.helpers.point(geom.coordinates);
-
       const withinUS = turf.booleanWithin.default(turfPoint, multipolygon);
 
-      console.log(withinUS)
-
-      if(withinUS) {
-                            $("#terms_checkbox").next().html(" I am 18 years of age or older and have read and understood the <a href='/static/files/Letter_of_informed_consent_BikeMaps_age13.pdf' target='_blank'> terms and conditions</a>");
+      if (withinUS) {
+        const englishFormName = `Letter_of_informed_consent_BikeMaps_age13.pdf`
+        const spanishFormName = `Carta_de_consentimiento_informado_BikeMaps_edad13.pdf`
+        formName = LANGUAGE_CODE.toUpperCase() == 'ES' ? spanishFormName : englishFormName
+        $("#terms_checkbox").next().html(`I am 18 years of age or older and have read and understood the <a href='/static/files/${formName}' target='_blank'> terms and conditions</a>`);
       }
     }
 
