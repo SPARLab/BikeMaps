@@ -58,6 +58,11 @@
   <script type="text/javascript">
       var LANGUAGE_CODE = "{{LANGUAGE_CODE}}";
   </script>
+
+  <!-- Turf spatial analysis library -->
+  <!-- <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script> -->
+  <script src="{% static 'mapApp/js/geofence/outTurf.js' %}"></script>
+
   <script src="{% static 'mapApp/js/icons.js' %}"></script>
   <script src="{% static 'mapApp/js/map.js' %}"></script>
 {% endcache %}

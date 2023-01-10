@@ -1,5 +1,4 @@
-{% load i18n %}
-{% load user_agents %}
+{% load static user_agents i18n %}
 
 <!-- Javascript saved as html to allow for use of Django template tags within the code -->
 <script>
@@ -129,6 +128,8 @@
                 document.getElementById("hazPoint").value = geom;
                 document.getElementById("theftPoint").value = geom;
 
+                runConsentGeoLookup(layer.toGeoJSON().geometry);
+
 
                 // document.getElementById("newInfraPoint").value = geom;
 
@@ -199,7 +200,7 @@
 
 
         //run the geo ip lookup
-        runConsentGeoLookup({ type: 'geoip' });
+        // runConsentGeoLookup({ type: 'geoip' });
     });
 };
 
@@ -226,29 +227,20 @@ function mobileDrawing(){
     });
 }
 
-    function runConsentGeoLookup(args) {
-        if (args.type === 'geoip') {
-
-            $.ajax({
-                url: "https://get.geojs.io/v1/ip/country",
-                dataType: "text"
-            }).done(function (data) {
-                var cc = data.toString().replace(/\W/g, '');
-                if (cc === 'IE') {
-                    //alert(cc);
-                    $("#terms_checkbox").next().html(" I am 18 years of age or older and have read and understood the <a href='/static/files/Letter%20of%20Informed%20Consent_Ireland.pdf' target='_blank'> terms and conditions</a>");
-                }
-                else {
-
-                }
-            });
+    function runConsentGeoLookup(geom) {
 
 
-        }
-        else if (args.type === 'latlon') {
+      const multipolygon = turf.helpers.multiPolygon(US_Boundary.features[0].geometry.coordinates);
 
-        }
+      const turfPoint = turf.helpers.point(geom.coordinates);
 
+      const withinUS = turf.booleanWithin.default(turfPoint, multipolygon);
+
+      console.log(withinUS)
+
+      if(withinUS) {
+                            $("#terms_checkbox").next().html(" I am 18 years of age or older and have read and understood the <a href='/static/files/Letter_of_informed_consent_BikeMaps_age13.pdf' target='_blank'> terms and conditions</a>");
+      }
     }
 
 </script>
@@ -260,3 +252,13 @@ function mobileDrawing(){
     <center>{% trans "Double tap a location to submit a report" %}</center>
 </div>
 {% endif %}
+
+{% block footerJS %}
+<!-- <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script> -->
+<!-- <script src="{% static 'mapApp/js/geofence/outTurf.js' %}"></script> -->
+<script src="{% static 'mapApp/js/geofence/US_Boundary.js' %}"></script>
+<script type="text/javascript">
+  {% get_current_language as LANGUAGE_CODE %}
+    var LANGUAGE_CODE = "{{LANGUAGE_CODE}}";
+</script>
+{% endblock %}
