@@ -4,7 +4,7 @@ from django.forms import widgets
 from push_notifications.models import GCMDevice, APNSDevice
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
-from mapApp.models import Point, Incident, Hazard, Theft, Official, AlertArea,NewInfrastructure, Weather
+from mapApp.models import Point, Incident, Hazard, Theft, Official, AlertArea, NewInfrastructure, Weather
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -24,16 +24,18 @@ class IncidentSerializer(GeoFeatureModelSerializer):
         model = Incident
         geo_field = 'geom'
         fields = ('i_type', 'incident_with', 'date', 'report_date',
-        'p_type', 'personal_involvement',
+                  'p_type', 'personal_involvement',
                   'details', 'injury', 'trip_purpose',
                   'regular_cyclist', 'helmet', 'road_conditions',
                   'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain', 'aggressive', 'intersection',
-                  'witness_vehicle','bicycle_type',  'ebike',
-                  'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact','infrastructure_changed',
+                  'witness_vehicle', 'bicycle_type',  'ebike', 'ebike_class', 'ebike_speed', 'direction',
+                  'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact', 'infrastructure_changed',
                   'infrastructure_changed_date')
+
 
 class WeatherSerializer(serializers.ModelSerializer):
     incident = IncidentSerializer()
+
     class Meta:
         model = Weather
         fields = '__all__'

@@ -31,6 +31,8 @@ class IncidentForm(forms.ModelForm):
                 Field('incident_with', id='incident_incident_with'),
                 Field('bicycle_type', id='incident_bicycle_type'),
                 Field('ebike', id='incident_ebike'),
+                Field('ebike_class', id='incident_ebike_class'),
+                Field('ebike_speed', id='incident_ebike_speed'),
                 Field('injury', id='incident_injury'),
                 Field('impact', id='incident_impact'),
                 Field('trip_purpose', id='incident_trip_purpose'),
