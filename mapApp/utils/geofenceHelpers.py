@@ -2,6 +2,7 @@ from django.contrib.gis.geos import GEOSGeometry
 import json, math
 from mapApp.utils.geofencePolygonsHazards import greaterVancouver, withinGreaterVancouver, outsideGreaterVancouver, ontario
 from mapApp.utils.geofencePolygonsRaffle import santaBarbara
+from mapApp.utils.sbSimple import sb
 
 def retrieveFollowUpMsg(formType, data):
     #grab latitude and longitude from form
@@ -25,18 +26,20 @@ def retrieveFollowUpMsg(formType, data):
     # Check if point of any type falls within active raffle area
         # Note: This raffle doesn't overlap with any of the existing geofences, otherwise would need to handle returning two popups
 
-    print(santaBarbara["features"][0]["geometry"]["coordinates"][0])
+    print(sb["coordinates"])
+    if point_in_poly(longitude, latitude, sb["coordinates"]):
+        return sb["message"]
 
     #  Question: does point in poly work for multipolygons? no
-    if point_in_poly(longitude, latitude, santaBarbara["features"][0]["geometry"]["coordinates"][0]):
-        print('in first poly')
-        return santaBarbara["message"]
-    if point_in_poly(longitude, latitude, santaBarbara["features"][0]["geometry"]["coordinates"][1]):
-        print('in second poly')
-        return santaBarbara["message"]
-    if point_in_poly(longitude, latitude, santaBarbara["features"][0]["geometry"]["coordinates"][2]):
-        print('in third poly')
-        return santaBarbara["message"]
+    # if point_in_poly(longitude, latitude, santaBarbara["features"][0]["geometry"]["coordinates"][0]):
+    #     print('in first poly')
+    #     return santaBarbara["message"]
+    # if point_in_poly(longitude, latitude, santaBarbara["features"][0]["geometry"]["coordinates"][1]):
+    #     print('in second poly')
+    #     return santaBarbara["message"]
+    # if point_in_poly(longitude, latitude, santaBarbara["features"][0]["geometry"]["coordinates"][2]):
+    #     print('in third poly')
+    #     return santaBarbara["message"]
 
 
     return None
