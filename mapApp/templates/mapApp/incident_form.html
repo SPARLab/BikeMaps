@@ -78,6 +78,15 @@
     else $(".submit-btn").addClass("disabled");
   });
 
+  //  Hide follow up ebike questions unless ebike==yes
+  $("#incident_ebike").change(function() {
+    if (this.value !== 'Yes') {
+      $("#div_id_ebike_class, #div_id_ebike_speed").hide();
+    } else {
+      $("#div_id_ebike_class, #div_id_ebike_speed").show();
+    }
+  });
+
   function close_modal(){
     $('#incidentForm').modal('hide');
     $('.modal-backdrop').hide();
