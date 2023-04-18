@@ -62,16 +62,17 @@ class OldIncidentWeatherSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Incident
         geo_field = 'geom'
-        fields = ('i_type', 'incident_with', 'date', 'report_date', 'p_type','personal_involvement',
+        fields = ('i_type', 'incident_with', 'date', 'report_date', 'p_type', 'personal_involvement',
                   'details', 'injury', 'trip_purpose',
                   'regular_cyclist', 'helmet', 'road_conditions',
                   'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain', 'aggressive', 'intersection',
-                  'witness_vehicle','bicycle_type', 'ebike',
+                  'witness_vehicle', 'bicycle_type', 'ebike', 'ebike_class', 'ebike_speed',
                   'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact', 'weather_summary',
                   'weather_sunrise_time', 'weather_sunset_time', 'weather_dawn', 'weather_dusk',
                   'weather_precip_intensity', 'weather_precip_probability', 'weather_precip_type',
                   'weather_temperature', 'weather_black_ice_risk', 'weather_wind_speed',
                   'weather_wind_bearing', 'weather_wind_bearing_str', 'weather_visibility_km')
+
 
 class HazardSerializer(GeoFeatureModelSerializer):
     class Meta:
