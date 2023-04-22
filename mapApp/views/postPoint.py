@@ -61,8 +61,12 @@ def postPoint(request, Form):
         # Check if the point was an incident in area where crash info available
         if "incident" in str(type(form)):
             followUpMsg = retrieveFollowUpMsg("incident", form.data)
-
         point = form.save()
+        print('data after saving')
+        print(point)
+        print(point.__dict__)
+        delattr(point, 'gender')
+        print(point.__dict__)
 
         # Errors with push notifications should not affect reporting
         if not settings.DEBUG:
@@ -71,7 +75,7 @@ def postPoint(request, Form):
         return JsonResponse({
             'followUpMsg': followUpMsg,
             'success': True,
-            'point': GeoJSONSerializer().serialize([point,]),
+            # 'point': GeoJSONSerializer().serialize([point,]),
             'point_type': point.p_type,
             'form_html': render_crispy_form(Form())
         })

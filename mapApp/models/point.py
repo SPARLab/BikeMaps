@@ -7,6 +7,7 @@ from django.db.models import Manager as GeoManager
 
 import datetime
 from time import strftime, gmtime
+from .gender import Gender
 
 ##########
 # Point class.
@@ -106,6 +107,8 @@ class Point(models.Model):
         blank=True,
         null=True
     )
+
+    gender = models.ManyToManyField(Gender)
 
     details = models.TextField(
         _('Please give a brief description of the incident'),

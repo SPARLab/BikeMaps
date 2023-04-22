@@ -1,12 +1,18 @@
 from django.contrib.gis import admin
 
 # Register models
-from mapApp.models import Point, Incident, Hazard, Theft, Official, AdministrativeArea, Weather, NewInfrastructure
+from mapApp.models import Point, Incident, Hazard, Theft, Official, AdministrativeArea, Weather, NewInfrastructure, Gender
 
 # We need to get the OpenLayers API over HTTPS. By default GeoDjango uses HTTP, so we need to
 # subclass OSMGeoAdmin and override the URL source for the API
 class SecureOSMGeoAdmin(admin.OSMGeoAdmin):
 	openlayers_url='https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/OpenLayers.js'
+
+class GenderAdmin(admin.ModelAdmin):
+	# use default config
+    pass
+
+admin.site.register(Gender, GenderAdmin)
 
 # admin.site.register(Official)
 class PointAdmin(SecureOSMGeoAdmin):
@@ -23,7 +29,7 @@ class PointAdmin(SecureOSMGeoAdmin):
 	    ('Location', {'fields': ['geom']}),
 	    ('Point', {'fields': ['date', 'p_type']}),
 	    ('Detail', {'fields': ['details'], 'classes':['collapse']}),
-	    ('Personal', {'fields': ['age', 'birthmonth', 'sex', ], 'classes':['collapse']})
+	    ('Personal', {'fields': ['age', 'birthmonth', 'gender', ], 'classes':['collapse']})
 	]
 admin.site.register(Point, PointAdmin)
 
@@ -35,7 +41,7 @@ class IncidentAdmin(PointAdmin):
 	    ('Location', {'fields': ['geom']}),
 	    ('Incident', {'fields': ['date', 'i_type', 'incident_with', 'injury', 'impact', 'trip_purpose','infrastructure_changed','infrastructure_changed_date']}),
 	    ('Detail', {'fields': ['details'], 'classes':['collapse']}),
-	    ('Personal', {'fields': ['age', 'birthmonth', 'sex', 'regular_cyclist', 'helmet', 'intoxicated'], 'classes':['collapse']}),
+	    ('Personal', {'fields': ['age', 'birthmonth', 'gender', 'regular_cyclist', 'helmet', 'intoxicated'], 'classes':['collapse']}),
 	    ('Conditions', {'fields': ['road_conditions', 'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain', 'direction', 'turning'], 'classes':['collapse']}),
 	]
 	inlines = [

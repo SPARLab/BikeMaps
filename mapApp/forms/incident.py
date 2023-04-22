@@ -4,20 +4,28 @@ from django import forms
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, HTML, Div
-from crispy_forms.bootstrap import Accordion, AccordionGroup
+from crispy_forms.bootstrap import Accordion, AccordionGroup, InlineCheckboxes
 
-from mapApp.models import Incident
+from mapApp.models import Incident, Gender
 import datetime
 
 why_personal_link = format_lazy('<a class="text-info" data-toggle="collapse" aria-expanded="false" aria-controls="why-personal" href=".tab-pane.active .why-personal"><span class="glyphicon glyphicon-question-sign"></span> <strong>{why} </strong></a>', why=_("Why are we asking for personal details?"))
 
 why_personal_well = _("Personal details such as age and gender are routinely collected in health research including studies examining cycling injuries (e.g., Cripton et al. 2015). In addition, details such as rider experience and gender have been shown to be important predictors of cycling safety and risk (Beck et al. 2007). The goal of BikeMaps.org is to gather more comprehensive data to better assess cycling safety and risk. Providing personal details will allow us to more accurately fill in these data gaps.")
 
+class FieldWCustomLabel(forms.ModelMultipleChoiceField):
+    def label_from_instance(self, gender):
+        return f'{gender.gender}'
 
 class IncidentForm(forms.ModelForm):
     helper = FormHelper()
     helper.form_tag = False # removes auto-inclusion of form tag in template
     helper.disable_csrf = True
+
+    gender = FieldWCustomLabel(
+        queryset=Gender.objects.all(),
+        widget=forms.CheckboxSelectMultiple
+    )
 
     helper.layout = Layout(
         Accordion(
@@ -58,16 +66,23 @@ class IncidentForm(forms.ModelForm):
                 Field('source', id='incident_source'),
                 Field('age', id='incident_age'),
                 Field('birthmonth', id='incident_birthmonth'),
-                Field('sex', id='incident_sex'),
+                # InlineCheckboxes('gender_old', id='incident_gender_old'),
+                InlineCheckboxes('gender', id='incident_gender'),
+                Field('gender_additional', id='incident_gender_additional', rows='1'),
                 Field('regular_cyclist', id='incident_regular_cyclist'),
                 Field('helmet', id='incident_helmet'),
+                # MultiField('gender', id='incident_gender'),
+                # gender = forms.MultipleChoiceField(
+                #     required=False,
+                #     widget=forms.CheckboxSelectMultiple,
+                #     choices=GENDER_CHOICES,
+                # ),
                 css_id='incident-personal-details',
             ),
         )
     )
 
     def is_valid(self):
-
         # run default, parent validation first. To debug a failing validation, review the errors stored in `super(IncidentForm, self).errors`
         valid = super(IncidentForm, self).is_valid()
 
