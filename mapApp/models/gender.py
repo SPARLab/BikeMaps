@@ -1,9 +1,15 @@
 from django.contrib.gis.db import models
 
 class Gender(models.Model):
-    gender = models.CharField(
+    value = models.CharField(
         blank=False,
-        max_length=50
+        max_length=10,
     )
+
+    label = models.CharField(
+        blank=False,
+        max_length=50,
+    )
+    
     def __str__(self):
-         return self.gender
+         return self.value

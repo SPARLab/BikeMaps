@@ -15,7 +15,7 @@ why_personal_well = _("Personal details such as age and gender are routinely col
 
 class FieldWCustomLabel(forms.ModelMultipleChoiceField):
     def label_from_instance(self, gender):
-        return f'{gender.gender}'
+        return f'{gender.label}'
 
 class IncidentForm(forms.ModelForm):
     helper = FormHelper()
@@ -66,17 +66,10 @@ class IncidentForm(forms.ModelForm):
                 Field('source', id='incident_source'),
                 Field('age', id='incident_age'),
                 Field('birthmonth', id='incident_birthmonth'),
-                # InlineCheckboxes('gender_old', id='incident_gender_old'),
                 InlineCheckboxes('gender', id='incident_gender'),
                 Field('gender_additional', id='incident_gender_additional', rows='1'),
                 Field('regular_cyclist', id='incident_regular_cyclist'),
                 Field('helmet', id='incident_helmet'),
-                # MultiField('gender', id='incident_gender'),
-                # gender = forms.MultipleChoiceField(
-                #     required=False,
-                #     widget=forms.CheckboxSelectMultiple,
-                #     choices=GENDER_CHOICES,
-                # ),
                 css_id='incident-personal-details',
             ),
         )

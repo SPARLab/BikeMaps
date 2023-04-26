@@ -75,6 +75,7 @@ def postPoint(request, Form):
         return JsonResponse({
             'followUpMsg': followUpMsg,
             'success': True,
+            # TODO: fix serializer error here
             # 'point': GeoJSONSerializer().serialize([point,]),
             'point_type': point.p_type,
             'form_html': render_crispy_form(Form())

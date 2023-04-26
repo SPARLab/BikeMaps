@@ -19,19 +19,20 @@ class PointSerializer(GeoFeatureModelSerializer):
         fields = ('i_type', 'incident_with', 'date', 'p_type',
                   'details')
 
-# class GenderSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Gender
-#         fields = ('gender',)
-#
+class GenderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Gender
+        fields = ('gender',)
+
 # tags = serializers.ListField(source='tag').
 # https://www.django-rest-framework.org/api-guide/relations/#custom-relational-fields
 class GenderListingField(serializers.RelatedField):
     def to_representation(self, value):
-        return value.gender
+        return value.value
 
 class IncidentSerializer(GeoFeatureModelSerializer):
     gender = GenderListingField(read_only=True, many=True)
+    # gender = GenderSerializer()
 
     class Meta:
         model = Incident
