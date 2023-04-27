@@ -180,7 +180,7 @@
             $('#incidentForm').modal('hide');
 
             // Add point to map
-            var point = geojsonMarker(JSON.parse(data['point']), data['point_type'])
+            var point = geojsonMarker((data['point']), data['point_type'])
             point.bindPopup(getPopup(point.getLayers()[0]));
             incidentAppliedLayers.addLayer(point);
 

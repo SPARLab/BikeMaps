@@ -3,13 +3,12 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
-from djgeojson.serializers import Serializer as GeoJSONSerializer
-
 from  crispy_forms.utils import render_crispy_form
 
-from mapApp.models import Incident, Hazard, Theft, NewInfrastructure
+from mapApp.models import Incident, Hazard, Theft, NewInfrastructure, Gender
 from mapApp.forms import IncidentForm, NearmissForm, HazardForm, TheftForm, NewInfrastructureForm
 from mapApp.views import alertUsers, pushNotification
+from mapApp import serializers as s
 
 from mapApp.utils.geofenceHelpers import retrieveFollowUpMsg, normalizeGeometry
 
@@ -57,16 +56,17 @@ def postPoint(request, Form):
       # Add any follow up modal messages
         # Check if the point was a hazard and in the areas where 311 information is available
         if "hazard" in str(type(form)):
+            print(str(type(form)))
+            print(form.data)
             followUpMsg = retrieveFollowUpMsg("hazard", form.data)
         # Check if the point was an incident in area where crash info available
         if "incident" in str(type(form)):
             followUpMsg = retrieveFollowUpMsg("incident", form.data)
+
         point = form.save()
-        print('data after saving')
-        print(point)
-        print(point.__dict__)
-        delattr(point, 'gender')
-        print(point.__dict__)
+
+        # TODO- this works for incident, need to adjust for hazards, thefts, new infrastructure
+        serialized_point = s.IncidentSerializer(point)
 
         # Errors with push notifications should not affect reporting
         if not settings.DEBUG:
@@ -75,8 +75,7 @@ def postPoint(request, Form):
         return JsonResponse({
             'followUpMsg': followUpMsg,
             'success': True,
-            # TODO: fix serializer error here
-            # 'point': GeoJSONSerializer().serialize([point,]),
+            'point': serialized_point.data,
             'point_type': point.p_type,
             'form_html': render_crispy_form(Form())
         })
