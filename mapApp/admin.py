@@ -33,7 +33,7 @@ class WeatherInline(admin.StackedInline):
 class IncidentAdmin(PointAdmin):
 	fieldsets = [
 	    ('Location', {'fields': ['geom']}),
-	    ('Incident', {'fields': ['date', 'i_type', 'incident_with', 'injury', 'impact', 'trip_purpose','infrastructure_changed','infrastructure_changed_date']}),
+	    ('Incident', {'fields': ['date', 'i_type', 'incident_with', 'ebike', 'ebike_class', 'ebike_speed', 'injury', 'impact', 'trip_purpose','infrastructure_changed','infrastructure_changed_date']}),
 	    ('Detail', {'fields': ['details'], 'classes':['collapse']}),
 	    ('Personal', {'fields': ['age', 'birthmonth', 'sex', 'regular_cyclist', 'helmet', 'intoxicated'], 'classes':['collapse']}),
 	    ('Conditions', {'fields': ['road_conditions', 'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain', 'direction', 'turning'], 'classes':['collapse']}),
