@@ -100,6 +100,7 @@ class Point(models.Model):
         blank=True,
         null=True
     )
+
     sex = models.CharField(
         _('Please select your sex'),
         max_length=10,
@@ -108,7 +109,19 @@ class Point(models.Model):
         null=True
     )
 
-    gender = models.ManyToManyField(Gender)
+    gender = models.ManyToManyField(
+        Gender,
+        blank=True,
+        null=True
+    )
+
+    gender_additional = models.TextField(
+        _("If you selected 'another option', optionally describe here:"),
+        max_length=100,
+        default='',
+        blank=True,
+        null=True
+    )
 
     details = models.TextField(
         _('Please give a brief description of the incident'),
