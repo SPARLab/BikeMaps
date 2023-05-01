@@ -130,6 +130,7 @@
 
                 runConsentGeoLookup(layer.toGeoJSON().geometry);
 
+                // FS 2023-04-30  This was commented out in f7a5dacadc84de49c4ea9f87821cbf75d9d8af34, unclear why? point geom not being passed into new infrastructure form, can't make submissions. Didn't find a quick fix. Uncommenting passed in "'{"type":"Point","coordinates":[-119.715754,34.421266]}'" instead of a Point objects as per other forms.
 
                 // document.getElementById("newInfraPoint").value = geom;
 

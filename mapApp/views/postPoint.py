@@ -40,7 +40,7 @@ get_form_type = {
     "<class 'mapApp.forms.nearmiss.NearmissForm'>": "nearmiss",
     "<class 'mapApp.forms.hazard.HazardForm'>": "hazard",
     "<class 'mapApp.forms.theft.TheftForm'>": "theft",
-    "<class 'mapApp.forms.newinfrastructure.NewInfrastructureForm'>": "newinfrastructure",
+    "<class 'mapApp.forms.newInfrastructure.NewInfrastructureForm'>": "newinfrastructure",
 }
 
 def postPoint(request, Form):
@@ -80,14 +80,6 @@ def postPoint(request, Form):
             serialized_point = s.TheftSerializer(point)
         elif (form_type == 'newinfrastructure'):
             serialized_point = s.PointSerializer(point)
-
-        print(serialized_point)
-
-
-        # TODO- this works for incident, need to adjust for hazards, thefts, new infrastructure
-        # incident serializer for nearmiss and collision
-        # hazard, theft have their own
-
 
         # Errors with push notifications should not affect reporting
         if not settings.DEBUG:
