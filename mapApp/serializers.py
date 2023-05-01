@@ -43,7 +43,7 @@ class IncidentSerializer(GeoFeatureModelSerializer):
                   'regular_cyclist', 'helmet', 'road_conditions',
                   'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain', 'aggressive', 'intersection',
                   'witness_vehicle', 'bicycle_type',  'ebike', 'ebike_class', 'ebike_speed', 'direction',
-                  'turning', 'age', 'birthmonth', 'gender', 'pk', 'impact', 'infrastructure_changed',
+                  'turning', 'age', 'birthmonth', 'gender', 'gender_additional', 'pk', 'impact', 'infrastructure_changed',
                   'infrastructure_changed_date')
 
 
@@ -81,7 +81,7 @@ class OldIncidentWeatherSerializer(GeoFeatureModelSerializer):
                   'regular_cyclist', 'helmet', 'road_conditions',
                   'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain', 'aggressive', 'intersection',
                   'witness_vehicle', 'bicycle_type', 'ebike', 'ebike_class', 'ebike_speed',
-                  'direction', 'turning', 'age', 'birthmonth', 'gender', 'pk', 'impact', 'weather_summary',
+                  'direction', 'turning', 'age', 'birthmonth', 'gender', 'gender_additional', 'pk', 'impact', 'weather_summary',
                   'weather_sunrise_time', 'weather_sunset_time', 'weather_dawn', 'weather_dusk',
                   'weather_precip_intensity', 'weather_precip_probability', 'weather_precip_type',
                   'weather_temperature', 'weather_black_ice_risk', 'weather_wind_speed',
@@ -93,7 +93,7 @@ class HazardSerializer(GeoFeatureModelSerializer):
         model = Hazard
         geo_field = 'geom'
         fields = ('i_type', 'date', 'p_type',
-                  'details', 'age', 'birthmonth', 'gender', 'regular_cyclist', 'pk')
+                  'details', 'age', 'birthmonth', 'gender', 'gender_additional', 'regular_cyclist', 'pk')
 
 
 class TheftSerializer(GeoFeatureModelSerializer):

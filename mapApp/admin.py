@@ -29,7 +29,7 @@ class PointAdmin(SecureOSMGeoAdmin):
 	    ('Location', {'fields': ['geom']}),
 	    ('Point', {'fields': ['date', 'p_type']}),
 	    ('Detail', {'fields': ['details'], 'classes':['collapse']}),
-	    ('Personal', {'fields': ['age', 'birthmonth', 'gender', ], 'classes':['collapse']})
+	    ('Personal', {'fields': ['age', 'birthmonth', 'gender', 'gender_additional', ], 'classes':['collapse']})
 	]
 admin.site.register(Point, PointAdmin)
 
@@ -41,7 +41,7 @@ class IncidentAdmin(PointAdmin):
 	    ('Location', {'fields': ['geom']}),
 	    ('Incident', {'fields': ['date', 'i_type', 'incident_with', 'injury', 'impact', 'trip_purpose','infrastructure_changed','infrastructure_changed_date']}),
 	    ('Detail', {'fields': ['details'], 'classes':['collapse']}),
-	    ('Personal', {'fields': ['age', 'birthmonth', 'gender', 'regular_cyclist', 'helmet', 'intoxicated'], 'classes':['collapse']}),
+	    ('Personal', {'fields': ['age', 'birthmonth', 'gender', 'gender_additional', 'regular_cyclist', 'helmet', 'intoxicated'], 'classes':['collapse']}),
 	    ('Conditions', {'fields': ['road_conditions', 'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain', 'direction', 'turning'], 'classes':['collapse']}),
 	]
 	inlines = [
@@ -55,7 +55,7 @@ class HazardAdmin(PointAdmin):
 	    ('Location', {'fields': ['geom']}),
 	    ('Hazard', {'fields': ['date', 'i_type', 'hazard_category', 'hazard_fixed', 'hazard_fixed_date', 'expires_date']}),
 	    ('Detail', {'fields': ['details'], 'classes':['collapse']}),
-	    ('Personal', {'fields': ['age', 'birthmonth', 'sex', 'regular_cyclist'], 'classes':['collapse']})
+	    ('Personal', {'fields': ['age', 'birthmonth', 'gender', 'gender_additional', 'regular_cyclist'], 'classes':['collapse']})
 	]
 admin.site.register(Hazard, HazardAdmin)
 
