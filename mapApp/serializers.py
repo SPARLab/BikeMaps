@@ -32,7 +32,6 @@ class GenderListingField(serializers.RelatedField):
 
 class IncidentSerializer(GeoFeatureModelSerializer):
     gender = GenderListingField(read_only=True, many=True)
-    # gender = GenderSerializer()
 
     class Meta:
         model = Incident
@@ -89,6 +88,7 @@ class OldIncidentWeatherSerializer(GeoFeatureModelSerializer):
 
 
 class HazardSerializer(GeoFeatureModelSerializer):
+    gender = GenderListingField(read_only=True, many=True)
     class Meta:
         model = Hazard
         geo_field = 'geom'
