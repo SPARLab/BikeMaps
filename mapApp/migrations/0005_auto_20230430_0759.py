@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='point',
             name='gender',
-            field=models.ManyToManyField(blank=True, null=True, to='mapApp.Gender'),
+            field=models.ManyToManyField(blank=True, to='mapApp.Gender'),
         ),
     ]

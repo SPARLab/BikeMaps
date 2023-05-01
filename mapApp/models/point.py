@@ -109,10 +109,10 @@ class Point(models.Model):
         null=True
     )
 
+    # blank=True should make this field not required, but it's not working right now
     gender = models.ManyToManyField(
         Gender,
         blank=True,
-        null=True
     )
 
     gender_additional = models.TextField(
