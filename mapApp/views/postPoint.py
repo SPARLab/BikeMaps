@@ -35,6 +35,14 @@ def postTheft(request):
 def postNewInfrastructure(request):
     return postPoint(request, NewInfrastructureForm)
 
+get_form_type = {
+    "<class 'mapApp.forms.incident.Incidentform'>": "incident",
+    "<class 'mapApp.forms.nearmiss.NearmissForm'>": "nearmiss",
+    "<class 'mapApp.forms.hazard.HazardForm'>": "hazard",
+    "<class 'mapApp.forms.theft.TheftForm'>": "theft",
+    "<class 'mapApp.forms.newinfrastructure.NewInfrastructureForm'>": "newinfrastructure",
+}
+
 def postPoint(request, Form):
     """Submit a user point submission to the database. Normalize geometry and activate push notifications."""
     form = Form(request.POST)
@@ -52,21 +60,34 @@ def postPoint(request, Form):
 
     # Validate and submit to db
     if form.is_valid():
+        form_type = get_form_type[str(type(form))]
+        point = form.save()
 
       # Add any follow up modal messages
         # Check if the point was a hazard and in the areas where 311 information is available
-        if "hazard" in str(type(form)):
-            print(str(type(form)))
-            print(form.data)
+        if form_type == 'hazard':
             followUpMsg = retrieveFollowUpMsg("hazard", form.data)
         # Check if the point was an incident in area where crash info available
-        if "incident" in str(type(form)):
+        if form_type == 'incident':
             followUpMsg = retrieveFollowUpMsg("incident", form.data)
 
-        point = form.save()
+        # Serialize data to be returned- used to add new point to map without refreshing page
+        if (form_type == 'incident' or form_type == 'nearmiss'):
+            serialized_point = s.IncidentSerializer(point)
+        elif (form_type == 'hazard'):
+            serialized_point = s.HazardSerializer(point)
+        elif (form_type == 'theft'):
+            serialized_point = s.TheftSerializer(point)
+        elif (form_type == 'newinfrastructure'):
+            serialized_point = s.PointSerializer(point)
+
+        print(serialized_point)
+
 
         # TODO- this works for incident, need to adjust for hazards, thefts, new infrastructure
-        serialized_point = s.IncidentSerializer(point)
+        # incident serializer for nearmiss and collision
+        # hazard, theft have their own
+
 
         # Errors with push notifications should not affect reporting
         if not settings.DEBUG:

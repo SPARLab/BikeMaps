@@ -1,6 +1,6 @@
 import datetime
 
-from crispy_forms.bootstrap import Accordion, AccordionGroup
+from crispy_forms.bootstrap import Accordion, AccordionGroup, InlineCheckboxes
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import HTML, Div, Field, Layout
 from django import forms
@@ -35,7 +35,8 @@ class HazardForm(forms.ModelForm):
                 Field('source', id='hazard_source'),
                 Field('age', id='hazard_age'),
                 Field('birthmonth', id='hazard_birthmonth'),
-                Field('sex', id='hazard_sex'),
+                InlineCheckboxes('gender', id='hazard_gender'),
+                Field('gender_additional', id='hazard_gender_additional', rows='1'),
                 Field('regular_cyclist', id='hazard_regular_cyclist'),
                 css_id='hazard-personal-details',
             ),
