@@ -69,3 +69,6 @@ class HazardForm(forms.ModelForm):
     class Meta:
         model = Hazard
         exclude = ['p_type', 'hazard_fixed', 'expires_date']
+        labels = {
+            'gender': _('Please select gender (choose all that apply)'),
+        }

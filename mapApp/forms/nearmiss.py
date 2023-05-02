@@ -90,3 +90,6 @@ class NearmissForm(forms.ModelForm):
     class Meta:
         model = Incident
         exclude = ['p_type']
+        labels = {
+            'gender': _('Please select gender (choose all that apply)'),
+        }
