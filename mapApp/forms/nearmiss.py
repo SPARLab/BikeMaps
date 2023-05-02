@@ -12,6 +12,9 @@ why_personal_link = format_lazy('<a class="text-info" data-toggle="collapse" ari
 
 why_personal_well = _("Personal details such as age and gender are routinely collected in health research including studies examining cycling injuries (e.g., Cripton et al. 2015). In addition, details such as rider experience and gender have been shown to be important predictors of cycling safety and risk (Beck et al. 2007). The goal of BikeMaps.org is to gather more comprehensive data to better assess cycling safety and risk. Providing personal details will allow us to more accurately fill in these data gaps.")
 
+class FieldWCustomLabel(forms.ModelMultipleChoiceField):
+    def label_from_instance(self, gender):
+        return f'{gender.label}'
 
 class NearmissForm(forms.ModelForm):
     [...]
@@ -20,6 +23,11 @@ class NearmissForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_tag = False # removes auto-inclusion of form tag in template
         self.helper.disable_csrf = True
+
+        gender = FieldWCustomLabel(
+            queryset=Gender.objects.all(),
+            widget=forms.CheckboxSelectMultiple
+        )
 
         self.helper.layout = Layout(
             Accordion(
