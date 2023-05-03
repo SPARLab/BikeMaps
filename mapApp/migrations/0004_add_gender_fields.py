@@ -2,7 +2,6 @@
 
 from django.db import migrations, models
 
-
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -21,6 +20,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='point',
             name='gender',
-            field=models.ManyToManyField(to='mapApp.Gender'),
+            field=models.ManyToManyField(blank=True, to='mapApp.Gender'),
+        ),
+        migrations.AddField(
+            model_name='point',
+            name='gender_additional',
+            field=models.TextField(blank=True, default='', max_length=100, null=True, verbose_name="If you selected 'another option', optionally describe here:"),
         ),
     ]
