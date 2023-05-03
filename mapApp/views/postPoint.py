@@ -36,7 +36,7 @@ def postNewInfrastructure(request):
     return postPoint(request, NewInfrastructureForm)
 
 get_form_type = {
-    "<class 'mapApp.forms.incident.Incidentform'>": "incident",
+    "<class 'mapApp.forms.incident.IncidentForm'>": "incident",
     "<class 'mapApp.forms.nearmiss.NearmissForm'>": "nearmiss",
     "<class 'mapApp.forms.hazard.HazardForm'>": "hazard",
     "<class 'mapApp.forms.theft.TheftForm'>": "theft",
