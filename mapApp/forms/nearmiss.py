@@ -41,6 +41,8 @@ class NearmissForm(forms.ModelForm):
                     Field('incident_with', id='nearmiss_incident_with'),
                     Field('bicycle_type', id='nearmiss_bicycle_type'),
                     Field('ebike', id='nearmiss_ebike'),
+                    Field('ebike_class', id='nearmiss_ebike_class'),
+                    Field('ebike_speed', id='nearmiss_ebike_speed'),
                     Field('injury', id='nearmiss_injury'),
                     Field('impact', id='nearmiss_impact'),
                     Field('trip_purpose', id='nearmiss_trip_purpose'),
