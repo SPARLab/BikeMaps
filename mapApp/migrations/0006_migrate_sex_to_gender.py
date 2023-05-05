@@ -11,7 +11,7 @@ def move_sex_to_gender(apps, schema_editor):
         point.gender.add(gender_f)
     for point in Point.objects.filter(sex='M'):
         point.gender.add(gender_m)
-    for point in Point.objects.filter(sex='O'):
+    for point in Point.objects.filter(sex='Other'):
         point.gender.add(gender_o)
 
 class Migration(migrations.Migration):
