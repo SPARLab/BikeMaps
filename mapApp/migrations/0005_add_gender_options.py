@@ -21,7 +21,11 @@ def populate_gender_options(apps, schema_editor):
 
 def remove_gender_options(apps, schema_editor):
     for opt in gender_options:
-        Gender.objects.get(value=opt[0]).delete()
+        try:
+            Gender.objects.get(value=opt[0]).delete()
+        # Allow migration to roll back if option has already been deleted
+        except Gender.DoesNotExist:
+            pass
 
 class Migration(migrations.Migration):
 
