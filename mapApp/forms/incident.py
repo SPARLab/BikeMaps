@@ -18,62 +18,60 @@ class FieldWCustomLabel(forms.ModelMultipleChoiceField):
         return f'{gender.label}'
 
 class IncidentForm(forms.ModelForm):
-    helper = FormHelper()
-    helper.form_tag = False # removes auto-inclusion of form tag in template
-    helper.disable_csrf = True
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False # removes auto-inclusion of form tag in template
+        self.helper.disable_csrf = True
+        self.fields['gender'].label_from_instance = lambda g: "%s" % g.label
 
-    gender = FieldWCustomLabel(
-        queryset=Gender.objects.all(),
-        widget=forms.CheckboxSelectMultiple
-    )
-
-    helper.layout = Layout(
-        Accordion(
-            AccordionGroup(
-                _('Collision Details'),
-                Field('geom', type='hidden', id='point'),
-                Field('personal_involvement', id='incident_personal_involvement'),
-                Field('witness_vehicle', id='incident_witness_vehicle'),
-                Field('date', id='incident_date', template='mapApp/util/%s_datepicker.html', autocomplete='off'),
-                Field('i_type', id='incident_i_type'),
-                Field('incident_with', id='incident_incident_with'),
-                Field('bicycle_type', id='incident_bicycle_type'),
-                Field('ebike', id='incident_ebike'),
-                Field('ebike_class', id='incident_ebike_class'),
-                Field('ebike_speed', id='incident_ebike_speed'),
-                Field('injury', id='incident_injury'),
-                Field('impact', id='incident_impact'),
-                Field('trip_purpose', id='incident_trip_purpose'),
-                Field('details', id='collision_details', placeholder=_('required'))
-            ),
-            AccordionGroup(
-                _('Conditions'),
-                Field('road_conditions', id='incident_road_conditions'),
-                Field('sightlines', id='incident_sightlines'),
-                Field('cars_on_roadside', id='incident_cars_on_roadside'),
-                Field('bike_lights', id='incident_bike_lights'),
-                Field('terrain', id='incident_terrain'),
-                Field('direction', id='incident_direction'),
-                Field('turning', id='incident_turning'),
-                Field('intersection', id='incident_intersection'),
-                Field('aggressive', id='incident_aggressive'),
-                css_id='incident-conditions',
-            ),
-            AccordionGroup(
-                _('Personal Details'),
-                HTML(why_personal_link),
-                Div( Div(HTML(why_personal_well), css_class="well"), css_class='why-personal collapse' ),
-                Field('source', id='incident_source'),
-                Field('age', id='incident_age'),
-                Field('birthmonth', id='incident_birthmonth'),
-                InlineCheckboxes('gender', id='incident_gender'),
-                Field('gender_additional', id='incident_gender_additional', rows='1'),
-                Field('regular_cyclist', id='incident_regular_cyclist'),
-                Field('helmet', id='incident_helmet'),
-                css_id='incident-personal-details',
-            ),
+        self.helper.layout = Layout(
+            Accordion(
+                AccordionGroup(
+                    _('Collision Details'),
+                    Field('geom', type='hidden', id='point'),
+                    Field('personal_involvement', id='incident_personal_involvement'),
+                    Field('witness_vehicle', id='incident_witness_vehicle'),
+                    Field('date', id='incident_date', template='mapApp/util/%s_datepicker.html', autocomplete='off'),
+                    Field('i_type', id='incident_i_type'),
+                    Field('incident_with', id='incident_incident_with'),
+                    Field('bicycle_type', id='incident_bicycle_type'),
+                    Field('ebike', id='incident_ebike'),
+                    Field('ebike_class', id='incident_ebike_class'),
+                    Field('ebike_speed', id='incident_ebike_speed'),
+                    Field('injury', id='incident_injury'),
+                    Field('impact', id='incident_impact'),
+                    Field('trip_purpose', id='incident_trip_purpose'),
+                    Field('details', id='collision_details', placeholder=_('required'))
+                ),
+                AccordionGroup(
+                    _('Conditions'),
+                    Field('road_conditions', id='incident_road_conditions'),
+                    Field('sightlines', id='incident_sightlines'),
+                    Field('cars_on_roadside', id='incident_cars_on_roadside'),
+                    Field('bike_lights', id='incident_bike_lights'),
+                    Field('terrain', id='incident_terrain'),
+                    Field('direction', id='incident_direction'),
+                    Field('turning', id='incident_turning'),
+                    Field('intersection', id='incident_intersection'),
+                    Field('aggressive', id='incident_aggressive'),
+                    css_id='incident-conditions',
+                ),
+                AccordionGroup(
+                    _('Personal Details'),
+                    HTML(why_personal_link),
+                    Div( Div(HTML(why_personal_well), css_class="well"), css_class='why-personal collapse' ),
+                    Field('source', id='incident_source'),
+                    Field('age', id='incident_age'),
+                    Field('birthmonth', id='incident_birthmonth'),
+                    InlineCheckboxes('gender', id='incident_gender'),
+                    Field('gender_additional', id='incident_gender_additional', rows='1'),
+                    Field('regular_cyclist', id='incident_regular_cyclist'),
+                    Field('helmet', id='incident_helmet'),
+                    css_id='incident-personal-details',
+                ),
+            )
         )
-    )
 
     def is_valid(self):
         # run default, parent validation first. To debug a failing validation, review the errors stored in `super(IncidentForm, self).errors`
@@ -98,5 +96,5 @@ class IncidentForm(forms.ModelForm):
         model = Incident
         exclude = ['p_type']
         labels = {
-            'gender': _('Please select gender (choose all that apply)'),
+            'gender': _('Please select your gender (choose all that apply)'),
         }
