@@ -21,5 +21,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(move_sex_to_gender)
+        migrations.RunPython(move_sex_to_gender, migrations.RunPython.noop)
     ]
