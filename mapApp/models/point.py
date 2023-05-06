@@ -7,6 +7,7 @@ from django.db.models import Manager as GeoManager
 
 import datetime
 from time import strftime, gmtime
+from .gender import Gender
 
 ##########
 # Point class.
@@ -99,10 +100,24 @@ class Point(models.Model):
         blank=True,
         null=True
     )
+
     sex = models.CharField(
         _('Please select your sex'),
         max_length=10,
         choices=SEX_CHOICES,
+        blank=True,
+        null=True
+    )
+
+    gender = models.ManyToManyField(
+        Gender,
+        blank=True,
+    )
+
+    gender_additional = models.TextField(
+        _("If you selected 'another option', optionally describe here:"),
+        max_length=100,
+        default='',
         blank=True,
         null=True
     )

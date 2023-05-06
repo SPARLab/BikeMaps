@@ -1,4 +1,5 @@
 from .point import Point
+from .gender import Gender
 from .incident import Incident
 from .hazard import Hazard
 from .theft import Theft
