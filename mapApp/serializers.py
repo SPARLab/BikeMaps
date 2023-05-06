@@ -4,13 +4,14 @@ from django.forms import widgets
 from push_notifications.models import GCMDevice, APNSDevice
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
-from mapApp.models import Point, Incident, Hazard, Theft, Official, AlertArea,NewInfrastructure, Weather
+from mapApp.models import Point, Incident, Hazard, Theft, Official, AlertArea, NewInfrastructure, Weather, Gender
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
 # Serializers for use by restAPI view
 
+# https://stackoverflow.com/questions/33182092/django-rest-framework-serializing-many-to-many-field
 class PointSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Point
@@ -18,22 +19,36 @@ class PointSerializer(GeoFeatureModelSerializer):
         fields = ('i_type', 'incident_with', 'date', 'p_type',
                   'details')
 
+class GenderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Gender
+        fields = ('gender',)
+
+# tags = serializers.ListField(source='tag').
+# https://www.django-rest-framework.org/api-guide/relations/#custom-relational-fields
+class GenderListingField(serializers.RelatedField):
+    def to_representation(self, value):
+        return value.value
 
 class IncidentSerializer(GeoFeatureModelSerializer):
+    gender = GenderListingField(read_only=True, many=True)
+
     class Meta:
         model = Incident
         geo_field = 'geom'
         fields = ('i_type', 'incident_with', 'date', 'report_date',
-        'p_type', 'personal_involvement',
+                  'p_type', 'personal_involvement',
                   'details', 'injury', 'trip_purpose',
                   'regular_cyclist', 'helmet', 'road_conditions',
                   'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain', 'aggressive', 'intersection',
-                  'witness_vehicle','bicycle_type',  'ebike',
-                  'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact','infrastructure_changed',
+                  'witness_vehicle', 'bicycle_type',  'ebike', 'ebike_class', 'ebike_speed', 'direction',
+                  'turning', 'age', 'birthmonth', 'gender', 'gender_additional', 'pk', 'impact', 'infrastructure_changed',
                   'infrastructure_changed_date')
+
 
 class WeatherSerializer(serializers.ModelSerializer):
     incident = IncidentSerializer()
+
     class Meta:
         model = Weather
         fields = '__all__'
@@ -60,23 +75,25 @@ class OldIncidentWeatherSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Incident
         geo_field = 'geom'
-        fields = ('i_type', 'incident_with', 'date', 'report_date', 'p_type','personal_involvement',
+        fields = ('i_type', 'incident_with', 'date', 'report_date', 'p_type', 'personal_involvement',
                   'details', 'injury', 'trip_purpose',
                   'regular_cyclist', 'helmet', 'road_conditions',
                   'sightlines', 'cars_on_roadside', 'bike_lights', 'terrain', 'aggressive', 'intersection',
-                  'witness_vehicle','bicycle_type', 'ebike',
-                  'direction', 'turning', 'age', 'birthmonth', 'sex', 'pk', 'impact', 'weather_summary',
+                  'witness_vehicle', 'bicycle_type', 'ebike', 'ebike_class', 'ebike_speed',
+                  'direction', 'turning', 'age', 'birthmonth', 'gender', 'gender_additional', 'pk', 'impact', 'weather_summary',
                   'weather_sunrise_time', 'weather_sunset_time', 'weather_dawn', 'weather_dusk',
                   'weather_precip_intensity', 'weather_precip_probability', 'weather_precip_type',
                   'weather_temperature', 'weather_black_ice_risk', 'weather_wind_speed',
                   'weather_wind_bearing', 'weather_wind_bearing_str', 'weather_visibility_km')
 
+
 class HazardSerializer(GeoFeatureModelSerializer):
+    gender = GenderListingField(read_only=True, many=True)
     class Meta:
         model = Hazard
         geo_field = 'geom'
         fields = ('i_type', 'date', 'p_type',
-                  'details', 'age', 'birthmonth', 'sex', 'regular_cyclist', 'pk')
+                  'details', 'age', 'birthmonth', 'gender', 'gender_additional', 'regular_cyclist', 'pk')
 
 
 class TheftSerializer(GeoFeatureModelSerializer):

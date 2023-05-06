@@ -1,6 +1,7 @@
 from django.contrib.gis.geos import GEOSGeometry
-import json, math
-from mapApp.utils.geofencePolygons import greaterVancouver, withinGreaterVancouver, outsideGreaterVancouver, ontario
+import json, math, datetime
+from mapApp.utils.geofencePolygonsHazards import greaterVancouver, withinGreaterVancouver, outsideGreaterVancouver, ontario
+from mapApp.utils.geofencePolygonsRaffle import santaBarbara
 
 def retrieveFollowUpMsg(formType, data):
     #grab latitude and longitude from form
@@ -20,6 +21,16 @@ def retrieveFollowUpMsg(formType, data):
     elif (formType == "incident"):
         if point_in_poly(longitude, latitude, ontario["coordinates"]):
             return ontario["message"]
+
+    # Check if point of any type falls within active raffle area
+        # Note: This raffle doesn't overlap with any of the existing geofences, otherwise would need to handle returning two popups
+
+    # Close the raffle on June 1 2023
+    now = datetime.datetime.now()
+    raffle_deadline = datetime.datetime(2023,6,1)
+
+    if (now < raffle_deadline) and (point_in_poly(longitude, latitude, santaBarbara["coordinates"])):
+        return santaBarbara["message"]
 
     return None
 

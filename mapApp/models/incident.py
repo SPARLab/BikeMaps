@@ -157,6 +157,17 @@ class Incident(Point):
         ('No', _('No')),
         ('I don\'t know', _('I don\'t know'))
     )
+    EBIKE_CLASS_CHOICES = (
+        ('Pedal assist under 20 mph', _('Pedal assist up to 20 mph (32 km/h)')),
+        ('Throttle assist under 20 mph', _('Throttle assist up to 20 mph (32 km/h)')),
+        ('Pedal or throttle assist over 20mph', _('Pedal or throttle assist over 20 mph (32 km/h)'))
+    )
+    EBIKE_SPEED_CHOICES = (
+        ('Under 5 mph', _('Under 5 mph (8 km/h)')),
+        ('Between 5-20 mph', _('Between 5-20mph (8-32 km/h)')),
+        ('Over 20 mph', _('Over 20mph (32 km/h)'))
+    )
+
     PERSONAL_INVOLVEMENT_CHOICES = (
         ('Yes', _('Yes, this happened to me')),
         ('No', _('No, I witnessed this happen to someone else'))
@@ -317,6 +328,22 @@ class Incident(Point):
         _('Did the incident involve a pedal-assist electric bike (eBike)?'),
         max_length=20,
         choices=EBIKE_CHOICES,
+        blank=True,
+        null=True
+    )
+
+    ebike_class = models.CharField(
+        _('What class of e-bike were you riding?'),
+        max_length=40,
+        choices=EBIKE_CLASS_CHOICES,
+        blank=True,
+        null=True
+    )
+
+    ebike_speed = models.CharField(
+        _('Approximately what speed was your e-bike traveling at the time?'),
+        max_length=20,
+        choices=EBIKE_SPEED_CHOICES,
         blank=True,
         null=True
     )

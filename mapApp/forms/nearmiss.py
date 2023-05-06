@@ -1,17 +1,16 @@
 import datetime
 
-from crispy_forms.bootstrap import Accordion, AccordionGroup
+from crispy_forms.bootstrap import Accordion, AccordionGroup, InlineCheckboxes
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import HTML, Div, Field, Layout
 from django import forms
 from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy as _
-from mapApp.models import Incident
+from mapApp.models import Incident, Gender
 
 why_personal_link = format_lazy('<a class="text-info" data-toggle="collapse" aria-expanded="false" aria-controls="why-personal" href=".tab-pane.active .why-personal"><span class="glyphicon glyphicon-question-sign"></span> <strong>{why}</strong></a>', why=_("Why are we asking for personal details?"))
 
 why_personal_well = _("Personal details such as age and gender are routinely collected in health research including studies examining cycling injuries (e.g., Cripton et al. 2015). In addition, details such as rider experience and gender have been shown to be important predictors of cycling safety and risk (Beck et al. 2007). The goal of BikeMaps.org is to gather more comprehensive data to better assess cycling safety and risk. Providing personal details will allow us to more accurately fill in these data gaps.")
-
 
 class NearmissForm(forms.ModelForm):
     [...]
@@ -20,6 +19,7 @@ class NearmissForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_tag = False # removes auto-inclusion of form tag in template
         self.helper.disable_csrf = True
+        self.fields['gender'].label_from_instance = lambda g: "%s" % g.label
 
         self.helper.layout = Layout(
             Accordion(
@@ -33,6 +33,8 @@ class NearmissForm(forms.ModelForm):
                     Field('incident_with', id='nearmiss_incident_with'),
                     Field('bicycle_type', id='nearmiss_bicycle_type'),
                     Field('ebike', id='nearmiss_ebike'),
+                    Field('ebike_class', id='nearmiss_ebike_class'),
+                    Field('ebike_speed', id='nearmiss_ebike_speed'),
                     Field('injury', id='nearmiss_injury'),
                     Field('impact', id='nearmiss_impact'),
                     Field('trip_purpose', id='nearmiss_trip_purpose'),
@@ -58,7 +60,8 @@ class NearmissForm(forms.ModelForm):
                     Field('source', id='nearmiss_source'),
                     Field('age', id='nearmiss_age'),
                     Field('birthmonth', id='nearmiss_birthmonth'),
-                    Field('sex', id='nearmiss_sex'),
+                    InlineCheckboxes('gender', id='nearmiss_gender'),
+                    Field('gender_additional', id='nearmiss_gender_additional', rows='1'),
                     Field('regular_cyclist', id='nearmiss_regular_cyclist'),
                     Field('helmet', id='nearmiss_helmet'),
                     css_id='nearmiss-personal-details',
@@ -89,3 +92,6 @@ class NearmissForm(forms.ModelForm):
     class Meta:
         model = Incident
         exclude = ['p_type']
+        labels = {
+            'gender': _('Please select your gender (choose all that apply)'),
+        }

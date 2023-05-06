@@ -78,6 +78,18 @@
     else $(".submit-btn").addClass("disabled");
   });
 
+  function toggle_ebike_fields() {
+    if (this.value !== 'Yes') {
+      $("#div_id_ebike_class, #div_id_ebike_speed").hide();
+    } else {
+      $("#div_id_ebike_class, #div_id_ebike_speed").show();
+    }
+  }
+
+  //  Hide follow up ebike questions unless ebike==yes
+  $("#incident_ebike").change(toggle_ebike_fields);
+  $("#nearmiss_ebike").change(toggle_ebike_fields);
+
   function close_modal(){
     $('#incidentForm').modal('hide');
     $('.modal-backdrop').hide();
@@ -171,7 +183,7 @@
             $('#incidentForm').modal('hide');
 
             // Add point to map
-            var point = geojsonMarker(JSON.parse(data['point']), data['point_type'])
+            var point = geojsonMarker((data['point']), data['point_type'])
             point.bindPopup(getPopup(point.getLayers()[0]));
             incidentAppliedLayers.addLayer(point);
 
