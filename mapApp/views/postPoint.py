@@ -70,6 +70,12 @@ def postPoint(request, Form):
         # Check if the point was an incident in area where crash info available
         if form_type == 'incident':
             followUpMsg = retrieveFollowUpMsg("incident", form.data)
+        # quick fix to apply raffle to nearmisses + thefts
+        # should change to followUpMsg = retrieveFollowUpMsg(form_type, form.data)
+        if form_type == 'nearmiss':
+            followUpMsg = retrieveFollowUpMsg("nearmiss", form.data)
+        if form_type == 'theft':
+            followUpMsg = retrieveFollowUpMsg("theft", form.data)
 
         # Serialize data to be returned- used to add new point to map without refreshing page
         if (form_type == 'incident' or form_type == 'nearmiss'):
