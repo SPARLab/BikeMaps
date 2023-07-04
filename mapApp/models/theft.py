@@ -102,9 +102,10 @@ class Theft(Point):
         choices=TRAFFIC_CHOICES
     )
 
-    police_report = models.NullBooleanField(
+    police_report = models.BooleanField(
         _('Did you file a report with the police?'),
-        choices=((True, _('Yes')),(False, _('No')))
+        choices=((True, _('Yes')),(False, _('No'))),
+        null=True,
     )
 
     police_report_num = models.CharField(
@@ -114,9 +115,10 @@ class Theft(Point):
         null=True
     )
 
-    insurance_claim = models.NullBooleanField(
+    insurance_claim = models.BooleanField(
         _('Did you file an insurance claim?'),
-        choices=((True, _('Yes')),(False, _('No')))
+        choices=((True, _('Yes')),(False, _('No'))),
+        null=True
     )
 
     insurance_claim_num = models.CharField(
