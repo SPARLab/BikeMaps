@@ -422,7 +422,7 @@ def stringToPolygon(bbstr):
         xmin, ymin, xmax, ymax = [float(x) for x in bbsplt]
         polygon = Polygon.from_bbox((xmin, ymin, xmax, ymax))
     except:
-        raise ValidationError(f"There was a validation error parsing your bounding box, bbox={bbstr}. Please entry your query param as a valid polygon in the format bbox=-180,-90,180,90."
+        raise ValidationError(f"There was a validation error parsing your bounding box, 'bbox={bbstr}'. Please entry your query param as a valid polygon in the format xmin, ymin, xmax, ymax. For example, 'bbox=-123,48,-122,49'. There should not be any parentheses or quotes in the query."
         )
 
     return polygon
