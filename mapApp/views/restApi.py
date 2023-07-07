@@ -1,3 +1,4 @@
+import datetime
 
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
@@ -9,14 +10,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, generics, permissions, status
 
-from mapApp.permissions import IsOwnerOrReadOnly
-from push_notifications.models import GCMDevice, APNSDevice
-
-from mapApp.models import Incident, Hazard, Theft, Official, AlertArea, NewInfrastructure, Weather
 from mapApp import serializers as s
+from mapApp.models import Incident, Hazard, Theft, Official, AlertArea, NewInfrastructure, Weather
+from mapApp.permissions import IsOwnerOrReadOnly
 from mapApp.views import alertUsers, pushNotification
 
-import datetime
+from push_notifications.models import GCMDevice, APNSDevice
+
 User = get_user_model()
 
 class CollisionList(APIView):
