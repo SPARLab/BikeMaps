@@ -1,13 +1,14 @@
 
-from django.http import Http404
 from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
 from django.contrib.gis.geos import Polygon
+from django.http import Http404
+from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, generics, permissions, status
 
-from django.views.decorators.csrf import csrf_exempt
 from mapApp.permissions import IsOwnerOrReadOnly
 from push_notifications.models import GCMDevice, APNSDevice
 
@@ -15,7 +16,6 @@ from mapApp.models import Incident, Hazard, Theft, Official, AlertArea, NewInfra
 from mapApp import serializers as s
 from mapApp.views import alertUsers, pushNotification
 
-from django.contrib.auth import get_user_model
 import datetime
 User = get_user_model()
 
