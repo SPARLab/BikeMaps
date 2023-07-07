@@ -1,6 +1,7 @@
 from mapApp.models import Incident, Hazard, Theft, Official, AlertArea, NewInfrastructure, Weather
 from mapApp import serializers as s
 from django.http import Http404
+from django.core.exceptions import ValidationError
 from django.contrib.gis.geos import Polygon
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -403,19 +404,28 @@ class IncidentWeatherList(APIView):
     """
     def get(self, request, format=None):
         # Extract bounding box Url parameter
-        bbstr = request.GET.get('bbox', '-180,-90,180,90')
-        bbox = stringToPolygon(bbstr)
-        queryset = Weather.objects.select_related('incident').filter(incident__geom__within=bbox)
-        serializer = s.WeatherSerializer(queryset, many=True)
-        return Response(serializer.data)
+        try:
+            bbstr = request.GET.get('bbox', '-180,-90,180,90')
+            bbox = stringToPolygon(bbstr)
+            queryset = Weather.objects.select_related('incident').filter(incident__geom__within=bbox)
+            serializer = s.WeatherSerializer(queryset, many=True)
+            return Response(serializer.data)
+        except ValidationError as err:
+            return Response(err, status=status.HTTP_400_BAD_REQUEST)
 
 
 # Helper - Create bounding box as a polygon
 def stringToPolygon(bbstr):
-    bbsplt = bbstr.split(',')
-    xmin, ymin, xmax, ymax = [float(x) for x in bbsplt]
+    try:
+        bbsplt = bbstr.split(',')
+        # error here
+        xmin, ymin, xmax, ymax = [float(x) for x in bbsplt]
+        polygon = Polygon.from_bbox((xmin, ymin, xmax, ymax))
+    except:
+        raise ValidationError(f"There was a validation error parsing your bounding box, bbox={bbstr}. Please entry your query param as a valid polygon in the format bbox=-180,-90,180,90."
+        )
 
-    return Polygon.from_bbox((xmin, ymin, xmax, ymax))
+    return polygon
 
 #Changes made by Ayan 02/20/18
 #added 2 REST API endpoints
