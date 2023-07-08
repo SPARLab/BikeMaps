@@ -24,15 +24,17 @@ class CollisionList(APIView):
     List all collisions, or create a new collision.
     """
     def get(self, request, format=None):
+        try:
+            # Extract bounding box Url parameter
+            bbstr = request.GET.get('bbox', '-180,-90,180,90')
+            bbox = stringToPolygon(bbstr)
 
-        # Extract bounding box Url parameter
-        bbstr = request.GET.get('bbox', '-180,-90,180,90')
-        bbox = stringToPolygon(bbstr)
+            collisions = list(Incident.objects.filter(p_type__exact="collision").filter(geom__within=bbox))
 
-        collisions = list(Incident.objects.filter(p_type__exact="collision").filter(geom__within=bbox))
-
-        serializer = s.IncidentSerializer(collisions, many=True)
-        return Response(serializer.data)
+            serializer = s.IncidentSerializer(collisions, many=True)
+            return Response(serializer.data)
+        except ValidationError as err:
+            return Response(err, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, format=None):
         serializer = s.IncidentSerializer(data=request.data)
@@ -56,14 +58,16 @@ class NearmissList(APIView):
     List all hazards, or create a new hazard.
     """
     def get(self, request, format=None):
+        try:
+            # Extract bounding box Url parameter
+            bbstr = request.GET.get('bbox', '-180,-90,180,90')
+            bbox = stringToPolygon(bbstr)
 
-        # Extract bounding box Url parameter
-        bbstr = request.GET.get('bbox', '-180,-90,180,90')
-        bbox = stringToPolygon(bbstr)
-
-        nearmiss = list(Incident.objects.filter(p_type__exact="nearmiss").filter(geom__within=bbox))
-        serializer = s.IncidentSerializer(nearmiss, many=True)
-        return Response(serializer.data)
+            nearmiss = list(Incident.objects.filter(p_type__exact="nearmiss").filter(geom__within=bbox))
+            serializer = s.IncidentSerializer(nearmiss, many=True)
+            return Response(serializer.data)
+        except ValidationError as err:
+            return Response(err, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, format=None):
         serializer = s.IncidentSerializer(data=request.data)
@@ -87,14 +91,16 @@ class HazardList(APIView):
     List all hazards, or create a new hazard.
     """
     def get(self, request, format=None):
+        try:
+            # Extract bounding box Url parameter
+            bbstr = request.GET.get('bbox', '-180,-90,180,90')
+            bbox = stringToPolygon(bbstr)
 
-        # Extract bounding box Url parameter
-        bbstr = request.GET.get('bbox', '-180,-90,180,90')
-        bbox = stringToPolygon(bbstr)
-
-        hazards = list(Hazard.objects.exclude(expires_date__lt=datetime.datetime.now()).exclude(hazard_fixed=True).filter(geom__within=bbox))
-        serializer = s.HazardSerializer(hazards, many=True)
-        return Response(serializer.data)
+            hazards = list(Hazard.objects.exclude(expires_date__lt=datetime.datetime.now()).exclude(hazard_fixed=True).filter(geom__within=bbox))
+            serializer = s.HazardSerializer(hazards, many=True)
+            return Response(serializer.data)
+        except ValidationError as err:
+            return Response(err, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, format=None):
         serializer = s.HazardSerializer(data=request.data)
@@ -118,14 +124,16 @@ class TheftList(APIView):
     List all thefts, or create a new theft.
     """
     def get(self, request, format=None):
+        try:
+            # Extract bounding box Url parameter
+            bbstr = request.GET.get('bbox', '-180,-90,180,90')
+            bbox = stringToPolygon(bbstr)
 
-        # Extract bounding box Url parameter
-        bbstr = request.GET.get('bbox', '-180,-90,180,90')
-        bbox = stringToPolygon(bbstr)
-
-        thefts = list(Theft.objects.filter(geom__within=bbox))
-        serializer = s.TheftSerializer(thefts, many=True)
-        return Response(serializer.data)
+            thefts = list(Theft.objects.filter(geom__within=bbox))
+            serializer = s.TheftSerializer(thefts, many=True)
+            return Response(serializer.data)
+        except ValidationError as err:
+            return Response(err, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, format=None):
         serializer = s.TheftSerializer(data=request.data)
@@ -150,12 +158,15 @@ class FilteredHazardList(APIView):
     Initial use case is for the provision of data to Biko.
     """
     def get(self, request, format=None):
-        # Extract bounding box Url parameter
-        bbstr = request.GET.get('bbox', '0,0,0,0')
-        bbox = stringToPolygon(bbstr)
-        hazards = list(Hazard.objects.filter(geom__within=bbox))
-        serializer = s.FilteredHazardSerializer(hazards, many=True)
-        return Response(serializer.data)
+        try:
+            # Extract bounding box Url parameter
+            bbstr = request.GET.get('bbox', '0,0,0,0')
+            bbox = stringToPolygon(bbstr)
+            hazards = list(Hazard.objects.filter(geom__within=bbox))
+            serializer = s.FilteredHazardSerializer(hazards, many=True)
+            return Response(serializer.data)
+        except ValidationError as err:
+            return Response(err, status=status.HTTP_400_BAD_REQUEST)
 
 class FilteredTheftList(APIView):
     """
@@ -164,28 +175,32 @@ class FilteredTheftList(APIView):
     Initial use case is for the provision of data to Biko.
     """
     def get(self, request, format=None):
+        try:
+            # Extract bounding box Url parameter
+            bbstr = request.GET.get('bbox', '0,0,0,0')
+            bbox = stringToPolygon(bbstr)
 
-        # Extract bounding box Url parameter
-        bbstr = request.GET.get('bbox', '0,0,0,0')
-        bbox = stringToPolygon(bbstr)
-
-        thefts = list(Theft.objects.filter(geom__within=bbox))
-        serializer = s.FilteredTheftSerializer(thefts, many=True)
-        return Response(serializer.data)
+            thefts = list(Theft.objects.filter(geom__within=bbox))
+            serializer = s.FilteredTheftSerializer(thefts, many=True)
+            return Response(serializer.data)
+        except ValidationError as err:
+            return Response(err, status=status.HTTP_400_BAD_REQUEST)
 
 class OfficialList(APIView):
     """
     List all thefts, or create a new theft.
     """
     def get(self, request, format=None):
+        try:
+            # Extract bounding box Url parameter
+            bbstr = request.GET.get('bbox', '-180,-90,180,90')
+            bbox = stringToPolygon(bbstr)
 
-        # Extract bounding box Url parameter
-        bbstr = request.GET.get('bbox', '-180,-90,180,90')
-        bbox = stringToPolygon(bbstr)
-
-        official = list(Official.objects.filter(geom__within=bbox))
-        serializer = s.OfficialSerializer(official, many=True)
-        return Response(serializer.data)
+            official = list(Official.objects.filter(geom__within=bbox))
+            serializer = s.OfficialSerializer(official, many=True)
+            return Response(serializer.data)
+        except ValidationError as err:
+            return Response(err, status=status.HTTP_400_BAD_REQUEST)
 
     """ No need to allow submission of official data through the API yet
     def post(self, request, format=None):
@@ -376,15 +391,17 @@ class IncidentOnlyList(APIView):
     Lists incidents without joining weather data.
     """
     def get(self, request, format=None):
+        try:
+            # Extract bounding box Url parameter
+            bbstr = request.GET.get('bbox', '-180,-90,180,90')
+            bbox = stringToPolygon(bbstr)
 
-        # Extract bounding box Url parameter
-        bbstr = request.GET.get('bbox', '-180,-90,180,90')
-        bbox = stringToPolygon(bbstr)
+            incidents = list(Incident.objects.filter(geom__within=bbox))
 
-        incidents = list(Incident.objects.filter(geom__within=bbox))
-
-        serializer = s.IncidentSerializer(incidents, many=True)
-        return Response(serializer.data)
+            serializer = s.IncidentSerializer(incidents, many=True)
+            return Response(serializer.data)
+        except ValidationError as err:
+            return Response(err, status=status.HTTP_400_BAD_REQUEST)
 
 
 class IncidentList(APIView):
@@ -392,15 +409,17 @@ class IncidentList(APIView):
     Old way to list all incident and weather data.
     """
     def get(self, request, format=None):
+        try:
+            # Extract bounding box Url parameter
+            bbstr = request.GET.get('bbox', '-180,-90,180,90')
+            bbox = stringToPolygon(bbstr)
 
-        # Extract bounding box Url parameter
-        bbstr = request.GET.get('bbox', '-180,-90,180,90')
-        bbox = stringToPolygon(bbstr)
+            incidents = list(Incident.objects.filter(geom__within=bbox))
 
-        incidents = list(Incident.objects.filter(geom__within=bbox))
-
-        serializer = s.OldIncidentWeatherSerializer(incidents, many=True)
-        return Response(serializer.data)
+            serializer = s.OldIncidentWeatherSerializer(incidents, many=True)
+            return Response(serializer.data)
+        except ValidationError as err:
+            return Response(err, status=status.HTTP_400_BAD_REQUEST)
 
 class IncidentWeatherList(APIView):
     """
@@ -439,15 +458,17 @@ class TinyCollisionList(APIView):
     List all collisions
     """
     def get(self, request, format=None):
+        try:
+            # Extract bounding box Url parameter
+            bbstr = request.GET.get('bbox', '-180,-90,180,90')
+            bbox = stringToPolygon(bbstr)
 
-        # Extract bounding box Url parameter
-        bbstr = request.GET.get('bbox', '-180,-90,180,90')
-        bbox = stringToPolygon(bbstr)
+            collisionsQuerySet = Incident.objects.filter(p_type__exact="collision").filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')
 
-        collisionsQuerySet = Incident.objects.filter(p_type__exact="collision").filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')
-
-        serializer = s.TinyIncidentSerializer(collisionsQuerySet, many=True)
-        return Response(serializer.data)
+            serializer = s.TinyIncidentSerializer(collisionsQuerySet, many=True)
+            return Response(serializer.data)
+        except ValidationError as err:
+            return Response(err, status=status.HTTP_400_BAD_REQUEST)
 
 class XHRCollisionInfo(APIView):
     """
@@ -466,19 +487,21 @@ class TinyNearMissList(APIView):
     List all Near Misses
     """
     def get(self, request, format=None):
+        try:
+            # Extract bounding box Url parameter
+            bbstr = request.GET.get('bbox', '-180,-90,180,90')
+            bbox = stringToPolygon(bbstr)
 
-        # Extract bounding box Url parameter
-        bbstr = request.GET.get('bbox', '-180,-90,180,90')
-        bbox = stringToPolygon(bbstr)
+            nearmissQuerySet = Incident.objects.filter(p_type__exact="nearmiss").filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')
 
-        nearmissQuerySet = Incident.objects.filter(p_type__exact="nearmiss").filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')
-
-        serializer = s.TinyIncidentSerializer(nearmissQuerySet, many=True)
-        return Response(serializer.data)
+            serializer = s.TinyIncidentSerializer(nearmissQuerySet, many=True)
+            return Response(serializer.data)
+        except ValidationError as err:
+            return Response(err, status=status.HTTP_400_BAD_REQUEST)
 
 class XHRNearMissInfo(APIView):
     """
-    List detailed info for a collision
+    List detailed info for a near miss
     """
     def get(self, request, format=None):
 
@@ -490,23 +513,25 @@ class XHRNearMissInfo(APIView):
 
 class TinyHazardList(APIView):
     """
-    List all collisions
+    List all hazards
     """
     def get(self, request, format=None):
+        try:
+            # Extract bounding box Url parameter
+            bbstr = request.GET.get('bbox', '-180,-90,180,90')
+            bbox = stringToPolygon(bbstr)
+    		#select_related('point').
+    		#Hazard.objects.select_related('point').exclude(expires_date__lt=now).exclude(hazard_fixed=True).order_by('-date')[:1],
+            hazardQuerySet = Hazard.objects.select_related('point').filter(geom__within=bbox).exclude(expires_date__lt=datetime.datetime.now()).exclude(hazard_fixed=True).order_by('-date')
 
-        # Extract bounding box Url parameter
-        bbstr = request.GET.get('bbox', '-180,-90,180,90')
-        bbox = stringToPolygon(bbstr)
-		#select_related('point').
-		#Hazard.objects.select_related('point').exclude(expires_date__lt=now).exclude(hazard_fixed=True).order_by('-date')[:1],
-        hazardQuerySet = Hazard.objects.select_related('point').filter(geom__within=bbox).exclude(expires_date__lt=datetime.datetime.now()).exclude(hazard_fixed=True).order_by('-date')
-
-        serializer = s.TinyHazSerializer(hazardQuerySet, many=True)
-        return Response(serializer.data)
+            serializer = s.TinyHazSerializer(hazardQuerySet, many=True)
+            return Response(serializer.data)
+        except ValidationError as err:
+            return Response(err, status=status.HTTP_400_BAD_REQUEST)
 
 class XHRHazardInfo(APIView):
     """
-    List detailed info for a collision
+    List detailed info for a hazard
     """
     def get(self, request, format=None):
 
@@ -522,18 +547,20 @@ class TinyTheftList(APIView):
     List all collisions
     """
     def get(self, request, format=None):
+        try:
+            # Extract bounding box Url parameter
+            bbstr = request.GET.get('bbox', '-180,-90,180,90')
+            bbox = stringToPolygon(bbstr)
 
-        # Extract bounding box Url parameter
-        bbstr = request.GET.get('bbox', '-180,-90,180,90')
-        bbox = stringToPolygon(bbstr)
-
-        theftQuerySet = Theft.objects.select_related('point').all().filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')
-        serializer = s.TinyTheftSerializer(theftQuerySet, many=True)
-        return Response(serializer.data)
+            theftQuerySet = Theft.objects.select_related('point').all().filter(geom__within=bbox).exclude(infrastructure_changed=True).order_by('-date')
+            serializer = s.TinyTheftSerializer(theftQuerySet, many=True)
+            return Response(serializer.data)
+        except ValidationError as err:
+            return Response(err, status=status.HTTP_400_BAD_REQUEST)
 
 class XHRTheftInfo(APIView):
     """
-    List detailed info for a collision
+    List detailed info for a theft
     """
     def get(self, request, format=None):
 
@@ -548,14 +575,16 @@ class TinyNewInfrastructureList(APIView):
     List all new infrastructures
     """
     def get(self, request, format=None):
-
-        # Extract bounding box Url parameter
-        bbstr = request.GET.get('bbox', '-180,-90,180,90')
-        bbox = stringToPolygon(bbstr)
-		#select_related('point').
-        niQuerySet = NewInfrastructure.objects.select_related('point').filter(geom__within=bbox).exclude(expires_date__lt=datetime.datetime.now()).order_by('-date')
-        serializer = s.TinyNewInfrastructureSerializer(niQuerySet, many=True)
-        return Response(serializer.data)
+        try:
+            # Extract bounding box Url parameter
+            bbstr = request.GET.get('bbox', '-180,-90,180,90')
+            bbox = stringToPolygon(bbstr)
+    		#select_related('point').
+            niQuerySet = NewInfrastructure.objects.select_related('point').filter(geom__within=bbox).exclude(expires_date__lt=datetime.datetime.now()).order_by('-date')
+            serializer = s.TinyNewInfrastructureSerializer(niQuerySet, many=True)
+            return Response(serializer.data)
+        except ValidationError as err:
+            return Response(err, status=status.HTTP_400_BAD_REQUEST)
 
 class XHRNewInfrastructureInfo(APIView):
     """
