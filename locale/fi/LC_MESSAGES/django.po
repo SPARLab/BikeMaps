@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-27 15:40-0700\n"
+"POT-Creation-Date: 2023-09-27 15:43-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2003,58 +2003,59 @@ msgid "<a href=\"https://bikemaps.org/fr\">Français</a>"
 msgstr ""
 
 #: mapApp/templates/mapApp/navbar.html:60
+#: mapApp/templates/mapApp/navbar.html:61
 msgid "<a href=\"https://bikemaps.org/is\">Íslenska</a>"
 msgstr ""
 
-#: mapApp/templates/mapApp/navbar.html:88
+#: mapApp/templates/mapApp/navbar.html:89
 msgid "Profile"
 msgstr ""
 
-#: mapApp/templates/mapApp/navbar.html:89
+#: mapApp/templates/mapApp/navbar.html:90
 msgid "Log out"
 msgstr ""
 
-#: mapApp/templates/mapApp/navbar.html:93
+#: mapApp/templates/mapApp/navbar.html:94
 msgid "Admin options"
 msgstr ""
 
-#: mapApp/templates/mapApp/navbar.html:94
+#: mapApp/templates/mapApp/navbar.html:95
 msgid "Admin"
 msgstr ""
 
-#: mapApp/templates/mapApp/navbar.html:95
+#: mapApp/templates/mapApp/navbar.html:96
 msgid "Export Incidents + Weather"
 msgstr ""
 
-#: mapApp/templates/mapApp/navbar.html:96
+#: mapApp/templates/mapApp/navbar.html:97
 msgid "Export Incidents (no weather)"
 msgstr ""
 
-#: mapApp/templates/mapApp/navbar.html:97
+#: mapApp/templates/mapApp/navbar.html:98
 msgid "Export Collisions"
 msgstr ""
 
-#: mapApp/templates/mapApp/navbar.html:98
+#: mapApp/templates/mapApp/navbar.html:99
 msgid "Export Nearmisses"
 msgstr ""
 
-#: mapApp/templates/mapApp/navbar.html:99
+#: mapApp/templates/mapApp/navbar.html:100
 msgid "Export Hazards"
 msgstr ""
 
-#: mapApp/templates/mapApp/navbar.html:100
+#: mapApp/templates/mapApp/navbar.html:101
 msgid "Export Thefts"
 msgstr ""
 
-#: mapApp/templates/mapApp/navbar.html:106
+#: mapApp/templates/mapApp/navbar.html:107
 msgid "Guest"
 msgstr ""
 
-#: mapApp/templates/mapApp/navbar.html:109
+#: mapApp/templates/mapApp/navbar.html:110
 msgid "Log in"
 msgstr ""
 
-#: mapApp/templates/mapApp/navbar.html:110
+#: mapApp/templates/mapApp/navbar.html:111
 #: mapApp/templates/mapApp/util/tips.html:22
 #: userApp/templates/userApp/register.html:13
 #: userApp/templates/userApp/register.html:24
