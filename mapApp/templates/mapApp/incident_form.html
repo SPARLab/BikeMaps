@@ -170,9 +170,10 @@
         processData: false,
         contentType: false,
         success: function(data) {
-          // Re-enable submit button
+          // Re-enable submit button and uncheck terms & conditions
           $(".submit-btn").removeClass("disabled");
           $(".cancel-btn").removeClass("disabled");
+          $('#terms_checkbox').prop('checked', false);
 
           // Show errors or clean and reset form
           $('.tab-pane.active form div:first').replaceWith(data['form_html']);
