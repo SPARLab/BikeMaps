@@ -232,7 +232,7 @@ body h1{
 /* Mobile info popup on mobile phones */
 .tip-msg{
 	position: absolute;
-	top: 60px;
+	top: 80px;
 	left: 0px;
 	right: 0px;
 	height: 23px;

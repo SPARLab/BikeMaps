@@ -246,7 +246,7 @@ function mobileDrawing(){
 
 <!-- Mobile tooltip to explain the double tapping -->
 {% if request.user_agent.is_mobile %}
-<div class="tip-msg alert-info alert-dismissable">
+<div class="tip-msg alert-info alert-dismissible mb-1">
     <div class="close">&times;</div>
     <center>{% trans "Double tap a location to submit a report" %}</center>
 </div>
