@@ -9,15 +9,15 @@ msgstr ""
 
 #: VicBikeMap/settings/base.py:49 blogApp/models/post.py:17
 msgid "English"
-msgstr ""
+msgstr "englanti"
 
 #: VicBikeMap/settings/base.py:50 blogApp/models/post.py:18
 msgid "French"
-msgstr ""
+msgstr "ranska"
 
 #: VicBikeMap/settings/base.py:51
 msgid "German"
-msgstr ""
+msgstr "saksa"
 
 #: VicBikeMap/settings/base.py:52
 msgid "Dutch"
@@ -25,54 +25,54 @@ msgstr "hollanti"
 
 #: VicBikeMap/settings/base.py:53
 msgid "Finnish"
-msgstr ""
+msgstr "suomi"
 
 #: templates/admin/base_site.html:4
 msgid "Django site admin"
-msgstr ""
+msgstr "Django sivuston ylläpitäjä"
 
 #: templates/admin/base_site.html:7
 msgid "BikeMap Administration"
-msgstr ""
+msgstr "BikeMap Ylläpito"
 
 #. format as follows:
 #. 
 #. Translate %(name)s translate
 #: templates/admin/index.html:21
 msgid "Models in the %(name)s application"
-msgstr ""
+msgstr "Mallit %(name)s -applikaatiossa"
 
 #: templates/admin/index.html:22
 msgid "%(name)s"
-msgstr ""
+msgstr "%(name)s"
 
 #: templates/admin/index.html:34
 msgid "Add"
-msgstr ""
+msgstr "Lisää"
 
-#: .\templates\admin\index.html:40
+#: templates/admin/index.html:40
 msgid "Change"
-msgstr ""
+msgstr "Muuta"
 
-#: .\templates\admin\index.html:50
+#: templates/admin/index.html:50
 msgid "You don't have permission to edit anything."
-msgstr ""
+msgstr "Sinulla ei ole oikeuksia muokata mitään."
 
-#: .\templates\admin\index.html:58
+#: templates/admin/index.html:58
 msgid "Recent Actions"
-msgstr ""
+msgstr "Viimeaikaiset toiminnot"
 
-#: .\templates\admin\index.html:59
+#: templates/admin/index.html:59
 msgid "My Actions"
-msgstr ""
+msgstr "Toimintoni"
 
-#: .\templates\admin\index.html:63
+#: templates/admin/index.html:63
 msgid "None available"
-msgstr ""
+msgstr "Ei saatavilla"
 
-#: .\templates\admin\index.html:77
+#: templates/admin/index.html:77
 msgid "Unknown content"
-msgstr ""
+msgstr "Tuntematon sisältö"
 
 #: blogApp/forms/post.py:16
 msgid "Create a blog post"
@@ -546,7 +546,7 @@ msgstr "En muista"
 
 #: mapApp/models/incident.py:98
 msgid "No obstructions"
-msgstr "Ei esteitä"
+msgstr "Esteetön"
 
 #: mapApp/models/incident.py:99
 msgid "View obstructed"
@@ -646,11 +646,11 @@ msgstr "Suoraan eteenpäin"
 
 #: mapApp/models/incident.py:40 mapApp/models/incident.py:136
 msgid "Turning left"
-msgstr "Vasemmalle käännyttäessä"
+msgstr "Käännös vasemmalle"
 
 #: mapApp/models/incident.py:39 mapApp/models/incident.py:137
 msgid "Turning right"
-msgstr "Oikealle käännyttäessä"
+msgstr "Käännös oikealle"
 
 #: mapApp/models/incident.py:207
 msgid "What type of incident was it?"
@@ -980,7 +980,7 @@ msgstr "Meistä"
 
 #: mapApp/templates/mapApp/about.html:22
 msgid "At BikeMaps we love biking as much as we love maps! Our goal is to map your cycling experience to make biking safer. You know your local cycling trouble spots and we want you to map them. Your knowledge of cycling safety, hazards, and even bike thefts will be analyzed using GIS and statistics to identify hot spots of cycling safety, risk, and crime.  We are constantly updating our maps and technology, so send us feedback.  And stay tuned for updated safety maps generated from YOUR biking experience."
-msgstr "Me BikeMaps:ssa rakastamme pyöräilyä yhtä paljon kuin rakastamme karttoja! Tavoitteenamme on kartoittaa pyöräilykokemuksesi tehdäksemme pyöräilystä turvallisempaa. Tunnet paikalliset pyöräilyn ongelmapaikat ja haluamme että merkitset ne kartalle. Tietämyksesi pyöräilyturvallisuudesta, vaaroista ja jopa pyörävarkauksista analysoidaan GIS:n ja tilastotieteen avulla tunnistaaksemme pyöräilyturvallisuuden, riskien ja rikollisuuden ongelma-alueet. Päivitämme jatkuvasti karttojamme ja teknologiaamme, joten lähetä meille palautetta. Pysy myös kuulolla päivitetyistä turvallisuuskartoista, jotka on luotu SINUN pyöräilykokemuksiesi perusteella."
+msgstr "Me BikeMaps:ssa rakastamme pyöräilyä yhtä paljon kuin rakastamme karttoja! Tavoitteenamme on kartoittaa pyöräilykokemuksesi tehdäksemme pyöräilystä turvallisempaa. Tunnet paikalliset pyöräilyn ongelmapaikat ja haluamme että merkitset ne kartalle. Tietämyksesi pyöräilyturvallisuudesta, vaaroista ja jopa pyörävarkauksista analysoidaan GIS:n ja tilastotieteen avulla, jotta voimme tunnistaa pyöräilyturvallisuuden, riskien ja rikollisuuden ongelma-alueet. Päivitämme jatkuvasti karttojamme ja teknologiaamme, joten lähetä meille palautetta. Pysy myös kuulolla päivitetyistä turvallisuuskartoista, jotka on luotu SINUN pyöräilykokemuksiesi perusteella."
 
 #: mapApp/templates/mapApp/about.html:29
 msgid "Contact"
@@ -1004,7 +1004,7 @@ msgstr "Mitä teette näillä tiedoilla?"
 
 #: mapApp/templates/mapApp/about.html:52
 msgid "The BikeMaps.org team will analyze data to determine factors that influence cycling safety. We also have plans to build tools to help people plan safer routes and to transfer these to planners in your area."
-msgstr "BikeMaps.org-tiimi analysoi datan tunnistaakseen tekijöitä, jotka vaikuttavat pyöräilyturvallisuuteen. Meillä on myös suunnitelmia rakentaa työkaluja auttaaksemme ihmisiä suunnittelemaan turvallisempia reittejä, sekä näiden toimittamiseksi suunnittelijoille alueellasi."
+msgstr "BikeMaps.org-tiimi analysoi datan tunnistaakseen tekijöitä, jotka vaikuttavat pyöräilyturvallisuuteen. Meillä on myös suunnitelmia rakentaa työkaluja turvallisempien reittien suunnittelun avuksi, sekä näiden toimittamiseksi suunnittelijoille alueellasi."
 
 #: mapApp/templates/mapApp/about.html:54
 msgid "How can citizens and municipalities monitor areas of interest to them?"
@@ -1023,7 +1023,7 @@ msgstr "Kuinka voin osallistua toimintaan?"
 
 #: mapApp/templates/mapApp/about.html:72
 msgid "You can share the website on social media, host a mapping demo night, or volunteer to do GIS or development. If you own a bike store or small business, you can advertise BikeMaps.org. We are also on the lookout for more research funding to further develop the technology and expand the study. Or, perhaps your group has GIS data that may improve BikeMaps.org."
-msgstr "Voit jakaa sivuston sosiaalisessa mediassa, järjestää kohteiden kartoitusdemoillan, tai tarjoutua tekemään GIS- tai muuta kehitystyötä. Jos omistat pyöräliikkeen tai pienen yrityksen, voit mainostaa BikeMaps.org:ia. Etsimme myös lisää tutkimusrahoitusta kehittääksemme käyttämäämme teknologiaa ja laajentaaksemme tutkimusta. Tai kenties ryhmälläsi on GIS-dataa, joka voi parantaa BikeMaps.org:ia."
+msgstr "Voit jakaa sivuston sosiaalisessa mediassa, järjestää demoillan kohteiden kartoitukseen, tai tarjoutua tekemään GIS- tai muuta kehitystyötä. Jos omistat pyöräliikkeen tai pienen yrityksen, voit mainostaa BikeMaps.org:ia. Etsimme myös lisää tutkimusrahoitusta kehittääksemme käyttämäämme teknologiaa ja laajentaaksemme tutkimustamme. Tai kenties ryhmälläsi on GIS-dataa, joka voi parantaa BikeMaps.org:ia."
 
 #: mapApp/templates/mapApp/about.html:81
 msgid "Publications"
@@ -1031,7 +1031,7 @@ msgstr "Julkaisut"
 
 #: mapApp/templates/mapApp/about.html:82
 msgid "Check out our published work for a more in depth description of our project"
-msgstr "Katso julkaisumme saadaksesi paremman kuvan projektistamme"
+msgstr "Katso julkaisumme saadaksesi paremman kuvan projektistamme:"
 
 #: mapApp/templates/mapApp/about.html:187
 msgid "Supporters"
@@ -1043,12 +1043,12 @@ msgstr "Tiimi"
 
 #: mapApp/templates/mapApp/about.html:309
 msgid "Metro Vancouver Research Lead"
-msgstr "Metro Vancouverin tutkimusjohtaja"
+msgstr "Metro Vancouver Research Lead"
 
 #: mapApp/templates/mapApp/about.html:361
 #: mapApp/templates/mapApp/about.html:370
 msgid "Developer"
-msgstr "Kehittäjä"
+msgstr "Developer"
 
 #: mapApp/templates/mapApp/edit_hazards.html:6
 msgid "BikeMaps Hazard Tool"
@@ -1126,7 +1126,7 @@ msgstr "Onnettomuusmerkintäsi lisättiin onnistuneesti."
 #. Translation<span class="marker-icon"></span> translation. <a href="%(about-link)s">translation</a>
 #: mapApp/templates/mapApp/map_legend.html:19
 msgid "BikeMaps.org is a crowdsource tool for global mapping of cycling safety. Using the <span class=\"marker-icon\"></span> button, add your own data on cycling crashes, near-misses, hazards, and thefts. <a href=\"%(about-link)s\">More info</a>"
-msgstr "BikeMaps.org on joukkoistettu työkalu globaalin pyöräilyturvallisuuden kartoittamiseksi. Käyttämällä <span class=\"marker-icon\"></span> painiketta, lisää omat tietosi koskien pyöräilyonnettomuuksia, läheltä piti -tilanteita, vaaroja ja varkauksia. <a href=\"%(about-link)s\">Lisätietoja</a>"
+msgstr "BikeMaps.org on joukkoistettu työkalu globaalin pyöräilyturvallisuuden kartoittamiseksi. Käyttämällä <span class=\"marker-icon\"></span> -painiketta, lisää omat tietosi koskien pyöräilyonnettomuuksia, läheltä piti -tilanteita, vaaroja ja varkauksia. <a href=\"%(about-link)s\">Lisätietoja</a>"
 
 #: mapApp/templates/mapApp/map_legend.html:26
 msgid "Incidents"
@@ -1146,7 +1146,7 @@ msgstr "Pyöräilyvaara"
 
 #: mapApp/templates/mapApp/map_legend.html:51
 msgid "Strava ridership data"
-msgstr "Strava ajodata"
+msgstr "Strava pyöräilijämäärät"
 
 #: mapApp/templates/mapApp/map_legend.html:55
 msgid "less"
@@ -1319,7 +1319,7 @@ msgstr "Kirjaudu sisään"
 
 #: mapApp/templates/mapApp/util/tips.html:36
 msgid "Rider density"
-msgstr "Ajajatiheys"
+msgstr "Pyöräilijöiden määrä"
 
 #: mapApp/templates/mapApp/vis.html:8
 msgid "Bikemaps Data Visualization"
@@ -1331,7 +1331,7 @@ msgstr "nollaa kaikki"
 
 #: mapApp/templates/mapApp/vis.html:74
 msgid "Total reports by type"
-msgstr "Ilmoitusten kokonaismäärä tyypeittäin"
+msgstr "Ilmoitusten määrä tyypeittäin"
 
 #: mapApp/templates/mapApp/vis.html:75 mapApp/templates/mapApp/vis.html:86
 #: mapApp/templates/mapApp/vis.html:97 mapApp/templates/mapApp/vis.html:114
@@ -1340,11 +1340,11 @@ msgstr "nollaa"
 
 #: mapApp/templates/mapApp/vis.html:85
 msgid "Reports summary by weekday"
-msgstr "Ilmoituskooste viikonpäivittäin"
+msgstr "Ilmoitusten määrä viikonpäivittäin"
 
 #: mapApp/templates/mapApp/vis.html:96
 msgid "Number of incident by hour of day"
-msgstr "Onnettomuuksien määrä tunneittain"
+msgstr "Ilmoitusten määrä kellonajoittain"
 
 #: mapApp/views/about.py:39
 msgid "We'll do our best to get back to you soon."
@@ -1720,7 +1720,7 @@ msgstr "Peruuta."
 
 #: mapApp/templates/mapApp/about.html:49
 msgid "Only ~30%(percent)s of bike collision data are collected and there is no centralized reporting system. BikeMaps.org is a unique tool that let's citizens build a database by mapping their riding experience."
-msgstr "Vain ~30% prosenttia pyöräilyonnettomuustiedoista kerätään eikä datalle ole keskitettyä raportointijärjestelmää. BikeMaps.org on ainutlaatuinen työkalu, joka mahdollistaa kansalaisille tietovaraston rakentamisen kartoittamalla omat pyöräilykokemuksensa."
+msgstr "Vain ~30%(percent)s prosenttia pyöräilyonnettomuustiedoista kerätään eikä datalle ole keskitettyä raportointijärjestelmää. BikeMaps.org on ainutlaatuinen työkalu, joka mahdollistaa kansalaisille tietovaraston rakentamisen kartoittamalla omat pyöräilykokemuksensa."
 
 #: mapApp/models/hazard.py:26
 msgid "Blind corner or turn"
@@ -1812,11 +1812,11 @@ msgstr "Kuinka tämä onnettomuus vaikutti pyöräilyysi?"
 
 #: mapApp/templates/mapApp/about.html:335
 msgid "Communication and Outreach, Metro Vancouver"
-msgstr "Viestintä ja sidosryhmäyhteistyö, Metro Vancouver"
+msgstr "Communication and Outreach, Metro Vancouver"
 
 #: mapApp/templates/mapApp/about.html:338
 msgid "Moreno joined the BikeMaps team in Fall of 2015. He is based in Vancouver and helps coordinate BikeMaps.org promotion and community outreach efforts in the region. A graduate of SFU’s Faculty of Health Sciences, Moreno completed his thesis research on the impending Vancouver public bike share system. Moreno views cycling as a solution to many health, social, and environmental problems, and as the centrepiece of a more sustainable, egalitarian, and inclusive society."
-msgstr "Moreno liittyi BikeMaps-tiimiin syksyllä 2015. Hän työskentelee Vancouverissa ja auttaa koordinoimaan BikeMaps.org:n markkinointia ja sidosryhmäyhteistyötä alueella. Valmistuttuaan SFU:n terveystieteiden tiedekunnasta, Moreno teki pro gradu -tutkimuksensa Vancouverin tulevasta kaupunkipyöräjärjestelmästä. Moreno näkee pyöräilyn ratkaisuna moniin terveydellisiin, sosiaalisiin ja ympäristöllisiin ongelmiin sekä kestävämmän, tasa-arvoisemman ja inklusiivisemman yhteiskunnan keskipisteenä."
+msgstr "Moreno liittyi BikeMaps-tiimiin syksyllä 2015. Hän työskentelee Vancouverissa ja auttaa koordinoimaan BikeMaps.org:n viestintää ja sidosryhmäyhteistyötä alueella. Valmistuttuaan SFU:n terveystieteiden tiedekunnasta, Moreno teki pro gradu -tutkimuksensa Vancouverin tulevasta kaupunkipyöräjärjestelmästä. Moreno näkee pyöräilyn ratkaisuna moniin terveydellisiin, sosiaalisiin ja ympäristöllisiin ongelmiin sekä kestävämmän, tasa-arvoisemman ja inklusiivisemman yhteiskunnan keskipisteenä."
 
 #: mapApp/templates/mapApp/about.html:326
 msgid "Post-Doctoral Research Associate"
@@ -1869,7 +1869,7 @@ msgstr "Ben oli BikeMaps.org:n ensimmäinen jatko-opiskelija ja hänellä oli ke
 
 #: mapApp/templates/mapApp/about.html:301
 msgid "Founder of BikeMaps.org"
-msgstr "BikeMaps.org:n perustaja"
+msgstr "Founder of BikeMaps.org"
 
 #: mapApp/templates/mapApp/about.html:318
 msgid "Executive Director"
@@ -1997,7 +1997,7 @@ msgstr "Michael toimii tällä hetkellä postdoc-tutkijana Lääketieteen laitok
 
 #: mapApp/templates/mapApp/about.html:398
 msgid "Jeneva has an M.Sc. in Urban Analytics from the University of Glasgow, and a Bachelor of Arts and Science from Quest University Canada. Her past research has focused on a range of topics related to active transportation: including the optimization of distance-based transit fares and a user-based incentive approach to rebalancing station-based bike-sharing systems. Jeneva is a former Canadian National Wushu (Chinese martials arts) Team member and enjoys spending time doing anything active."
-msgstr "Jenevalla on M.Sc. Glasgow'n yliopistosta (Urban Analytics) sekä kandidaatin tutkinto Quest University Canadasta (Bachelor of Arts and Science). Hänen aikaisempi tutkimuksensa on keskittynyt joukkoon aiheita, jotka liittyvät aktiiviseen liikenteeseen: mukaan lukien etäisyyteen perustuvien joukkoliikennemaksujen optimointi ja käyttäjäperustainen kannustinlähestymistapa asemakohtaisten pyöränjakojärjestelmien tasapainottamiseen. Jeneva on entinen Wushun (kiinalainen kamppailulaji) Kanadan maajoukkueen jäsen ja nauttii ajastaan tehden mitä tahansa aktiivista."
+msgstr "Jenevalla on M.Sc. Glasgow'n yliopistosta (Urban Analytics) sekä kandidaatin tutkinto Quest University Canadasta (Bachelor of Arts and Science). Hänen aikaisempi tutkimuksensa on keskittynyt joukkoon aiheita, jotka liittyvät aktiiviseen liikenteeseen: mukaan lukien etäisyyteen perustuvien joukkoliikennemaksujen optimointi ja käyttäjäperusteinen kannustinlähestymistapa asemapohjaisten yhteiskäyttöpyöräjärjestelmien tasapainottamiseen. Jeneva on entinen Wushun (kiinalainen kamppailulaji) Kanadan maajoukkueen jäsen ja nauttii ajastaan tehden mitä tahansa aktiivista."
 
 #: mapApp/templates/mapApp/about.html:68
 msgid "Why does the Strava heat map disappear when I zoom in?"
@@ -2021,7 +2021,7 @@ msgstr "Trisalyn on BikeMaps.org:in perustaja. Hän on maantieteen professori Un
 
 #: mapApp/templates/mapApp/about.html:347
 msgid "Jaimy joined the BikeMaps team in 2016. She is currently pursuing her PhD with Dr. Meghan Winters at Simon Fraser University. As part of her work, Jaimy will be looking at the link between investment in All Ages and Abilities (AAA) bicycle infrastructure and ridership and safety outcomes. Her work is part of the larger Impacts of Bicycle Infrastructure in Mid-Sized Cities project, and through it she’ll be advancing skills in predictive modelling and spatial analysis approaches to model bicycling exposure and safety."
-msgstr "Jaimy liittyi BikeMaps-tiimiin vuonna 2016. Hän suorittaa parhaillaan tohtorin tutkintoaan Dr. Meghan Wintersin johdolla Simon Fraser -yliopistossa. Työnsä osana Jaimy tarkastelee suhdetta kaiken ikäisten ja kykyjen (All Ages and Abilities, AAA) pyöräilyinfrastruktuuriin sijoittamisen ja pyöräilyn määrän sekä turvallisuustulosten välillä. Hänen työnsä on osa laajempaa keskikokoisten kaupunkien pyöräilyinfrastruktuurin vaikutukset -projektia (Impacts of Bicycle Infrastructure in Mid-Sized Cities), ja sen kautta hän kehittää taitojaan ennakoivassa mallinnuksessa ja spatiaalisen analyysin menetelmissä pyöräilyn määrän ja turvallisuuden mallintamiseksi."
+msgstr "Jaimy liittyi BikeMaps-tiimiin vuonna 2016. Hän suorittaa parhaillaan tohtorin tutkintoaan tohtori Meghan Wintersin johdolla Simon Fraser -yliopistossa. Työnsä osana Jaimy tarkastelee suhdetta kaiken ikäisten ja kykyjen (All Ages and Abilities, AAA) pyöräilyinfrastruktuuriin sijoittamisen ja pyöräilyn määrän sekä turvallisuustulosten välillä. Hänen työnsä on osa laajempaa keskikokoisten kaupunkien pyöräilyinfrastruktuurin vaikutukset -projektia (Impacts of Bicycle Infrastructure in Mid-Sized Cities), ja sen kautta hän kehittää taitojaan ennakoivassa mallinnuksessa ja spatiaalisen analyysin menetelmissä pyöräilyn määrän ja turvallisuuden mallintamiseksi."
 
 #: mapApp/templates/mapApp/about.html:364
 msgid "Finn studied geography at VIU in Nanaimo and computer science at Concordia in Montreal, and is excited to be contributing to the Bikemaps team as a software developer. Outside the office they enjoy mountain biking, running, and rock climbing."
@@ -2037,7 +2037,7 @@ msgstr "Karen on ollut osa BikeMaps.org-tiimiä siitä lähtien, kun projekti al
 
 #: mapApp/templates/mapApp/overlays.html:11
 msgid "Start a report"
-msgstr "Aloita ilmoitus"
+msgstr "Luo ilmoitus"
 
 #: mapApp/templates/mapApp/map_legend.html:38
 msgid "Date filter"
@@ -2045,7 +2045,7 @@ msgstr "Päivämääräsuodatin"
 
 #: mapApp/templates/mapApp/vis.html:36
 msgid "Use this dashboard to explore the report data!"
-msgstr "Käytä tätä hallintapaneelia tutkiaksesi ilmoitustietoja!"
+msgstr "Käytä tätä hallintapaneelia tarkastellaksesi ilmoitustietoja!"
 
 #: mapApp/templates/mapApp/vis.html:39
 msgid "Any filters you apply to the charts or the map will affect the output of all the visualizations."
@@ -2053,11 +2053,11 @@ msgstr "Jos lisäät suodattimia kaavioihin tai karttaan, vaikuttaa se kaikkiin 
 
 #: mapApp/templates/mapApp/vis.html:44
 msgid "Zoom in to your city on the map"
-msgstr "Tarkenna kaupunkiisi kartalla"
+msgstr "Tarkenna kotikaupunkiisi kartalla"
 
 #: mapApp/templates/mapApp/vis.html:47
 msgid "Highlight the last few years on the Incidents per Month chart to get the most recent results"
-msgstr "Korosta viimeiset vuodet Onnettomuudet Kuukausittain -taulukossa saadaksesi viimeisimmät tulokset"
+msgstr "Korosta viimeiset vuodet Ilmoitusten määrä kuukausittain -taulukossa saadaksesi viimeisimmät tulokset"
 
 #: mapApp/templates/mapApp/vis.html:49
 msgid "Then review the combined results of your selection!"
@@ -2240,7 +2240,7 @@ msgstr "Tutkimuksessa kerätty data mahdollistaa pyöräilyonnettomuuksien ja l�
 
 #: mapApp/templates/mapApp/ethics.html:20
 msgid "Funding for this research project has previously been provided by an NSERC Engage grant to Dr. Trisalyn Nelson and a Public Health Agency of Canada grant to the Traffic Injury Research Foundation (TIRF). Other project partners providing in kind support include: the Captial Regional District (CRD); the Canadian Automobile Association; Strava.com, and the Traffic Injury Research Foundation (TIRF). If you have any questions regarding this research, please contact Dr. Trisalyn Nelson, "
-msgstr "Tämän tutkimusprojektin rahoitus on aikaisemmin saatu NSERC Engage -apurahasta Dr. Trisalyn Nelsonille ja Public Health Agency of Canadan myöntämästä apurahasta Traffic Injury Research Foundationille (TIRF). Muita projektikumppaneita jotka tarjoavat tukea ovat: Capital Regional District (CRD); the Canadian Automobile Association; Strava.com ja Traffic Injury Research Foundation (TIRF). Jos sinulla on kysyttävää tästä tutkimuksesta, ota yhteyttä tohtori Trisalyn Nelsoniin, "
+msgstr "Tämän tutkimusprojektin rahoitus on aikaisemmin saatu NSERC Engage -apurahasta tohtori Trisalyn Nelsonille ja Public Health Agency of Canadan myöntämästä apurahasta Traffic Injury Research Foundationille (TIRF). Muita projektikumppaneita jotka tarjoavat tukea ovat: Capital Regional District (CRD); the Canadian Automobile Association; Strava.com ja Traffic Injury Research Foundation (TIRF). Jos sinulla on kysyttävää tästä tutkimuksesta, ota yhteyttä tohtori Trisalyn Nelsoniin, "
 
 #. Keep <p> in translation
 #: mapApp/templates/mapApp/ethics.html:22
@@ -2443,11 +2443,11 @@ msgstr "Vie Onnettomuudet (ei säätä)"
 #. Translate . <br><br> Translate<a href="https://www.strava.com/heatmap">Translate</a>. Translate <a href="https://blog.strava.com/en/press/heatmap-updates/">Translate</a> translate.
 #: mapApp/templates/mapApp/util/tips.html:42
 msgid "Our rider density data comes directly from the Strava cycling and running mobile tracker application. Using Strava, you can track your cycling commutes and recreational rides using your Android or iPhone. <br><br> Street-level Heatmap data are available to registered users at the <a href=\"https://www.strava.com/heatmap\">Strava Global Heatmap</a>. See the <a href=\"https://blog.strava.com/en/press/heatmap-updates/\">Strava Blog</a> for more information."
-msgstr "Ajajatiheystietomme tulevat suoraan Strava-mobiilisovelluksesta, jolla käyttäjät voivat kerätä tietoja juoksu- ja pyörämatkoistaan. Käyttämällä Stravaa voit seurata pyörällä kulkemiasi työ- tai koulumatkoja sekä vapaa-ajan ajeluja Androidilla tai iPhonella. <br><br> Katutason lämpökarttatiedot ovat saatavilla rekisteröidyille käyttäjille <a href=\"https://www.strava.com/heatmap\">Strava Global Heatmap</a>-sivustolla. Lisätietoja on saatavilla <a href=\"https://blog.strava.com/en/press/heatmap-updates/\">Strava Blogissa</a>."
+msgstr "Tietomme pyöräilijöiden määrästä tulevat suoraan Strava-mobiilisovelluksesta, jolla käyttäjät voivat kerätä tietoja juoksu- ja pyörämatkoistaan. Käyttämällä Stravaa voit seurata pyörällä kulkemiasi työ- tai koulumatkoja sekä vapaa-ajan ajeluja Androidilla tai iPhonella. <br><br> Katutason lämpökarttatiedot ovat saatavilla rekisteröidyille käyttäjille <a href=\"https://www.strava.com/heatmap\">Strava Global Heatmap</a>-sivustolla. Lisätietoja on saatavilla <a href=\"https://blog.strava.com/en/press/heatmap-updates/\">Strava Blogissa</a>."
 
 #: mapApp/templates/mapApp/vis.html:22
 msgid "Explore Incident Report Data"
-msgstr "Tutki Onnettomuusraporttien Tietoja"
+msgstr "Tutki ilmoitusdataa"
 
 #: mapApp/templates/mapApp/vis.html:42
 msgid "To get started, try this example query:"
@@ -2455,22 +2455,22 @@ msgstr "Aloittaaksesi, kokeile tätä esimerkkikyselyä:"
 
 #: mapApp/templates/mapApp/vis.html:45
 msgid "Click on the bars labelled 'Collisions' and 'Nearmisses' on the 'Total reports by type' chart"
-msgstr "Klikkaa palkkeja \"Törmäykset\" ja \"Läheltä piti -tilanteet\" \"kaikki ilmoitukset tyypeittäin\" -taulukossa"
+msgstr "Klikkaa palkkeja \"Törmäykset\" ja \"Läheltä piti -tilanteet\" \"Ilmoitusten määrä tyypeittäin\" -taulukossa"
 
 #: mapApp/templates/mapApp/vis.html:46
 msgid "Click and drag over 'Mon-Fri' on the 'Reports summary by weekday' to select the workweek"
-msgstr "Klikkaa ja rahaa \"Mon-Fri\" \"Ilmoituskooste viikonpäivittäin\" -päälle valitaksesi työviikon"
+msgstr "Klikkaa ja rahaa \"ma-pe\" \"Ilmoitusten määrä viikonpäivittäin\" -päälle valitaksesi työviikon"
 
 #: mapApp/templates/mapApp/vis.html:52
 msgid "Use the 'reset' buttons on each chart to remove individual filters, or 'reset all' to undo all your filtering. Happy exploring!"
-msgstr "Käytä \"nollaa\" painikkeita taulukoissa poistaaksesi yksittäisiä suodattimia, tai \"nollaa kaikki\" poistaaksesi kaikki suodattimet. Hauskaa tutkimusta!"
+msgstr "Käytä \"nollaa\" painikkeita taulukoissa poistaaksesi yksittäisiä suodattimia, tai \"nollaa kaikki\" poistaaksesi kaikki suodattimet. Mukavia tutkimushetkiä!"
 
 #. format as follows:
 #. 
 #. %(some)s translate %(total)s translate
 #: mapApp/templates/mapApp/vis.html:57
 msgid "%(some)s of %(total)s total reports shown"
-msgstr "%(some)s %(total)s kaikista raporteista näytetään"
+msgstr "%(some)s %(total)s kaikista ilmoituksista näytetään"
 
 #: userApp/templates/userApp/profile.html:22
 msgid "Password:"
@@ -2479,4 +2479,48 @@ msgstr "Salasana:"
 #: userApp/views.py:59
 msgid "Username already exists."
 msgstr "Käyttäjänimi on jo olemassa."
+
+#: mapApp/templates/mapApp/map_legend.html:23
+msgid "Layers"
+msgstr "Karttatasot"
+
+#: mapApp/templates/mapApp/map_legend.html:70
+msgid "Attribution"
+msgstr "Attribuutio"
+
+#: mapApp/migrations/0005_add_gender_options.py:6
+msgid "Woman"
+msgstr "Nainen"
+
+#: mapApp/migrations/0005_add_gender_options.py:7
+msgid "Man"
+msgstr "Mies"
+
+#: mapApp/migrations/0005_add_gender_options.py:8
+msgid "Non-binary"
+msgstr "Ei-binäärinen"
+
+#: mapApp/migrations/0005_add_gender_options.py:9
+msgid "Genderfluid or Gender nonconforming"
+msgstr "Muunsukupuolinen"
+
+#: mapApp/migrations/0005_add_gender_options.py:10
+msgid "Two-Spirit"
+msgstr "Kaksihenkinen"
+
+#: mapApp/migrations/0005_add_gender_options.py:11
+msgid "Transgender"
+msgstr "Transsukupuolinen"
+
+#: mapApp/migrations/0005_add_gender_options.py:12
+msgid "Agender"
+msgstr "Sukupuoleton"
+
+#: mapApp/migrations/0005_add_gender_options.py:13
+msgid "Prefer not to say"
+msgstr "Jätän mieluiten vastaamatta"
+
+#: mapApp/migrations/0005_add_gender_options.py:14
+msgid "Another option not listed here"
+msgstr "Muu"
 
