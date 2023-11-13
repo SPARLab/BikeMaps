@@ -39,9 +39,6 @@ AUTH_USER_MODEL = 'spirit.User'
 LOGIN_URL = 'userApp:login'
 LOGIN_REDIRECT_URL = 'mapApp:index'
 
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
-
 POSTGIS_VERSION = (2, 1, 3)
 
 # Internationalization
@@ -220,4 +217,3 @@ CORS_ALLOW_HEADERS = (
     'authorization',
     'X-CSRFToken'
 )
-
