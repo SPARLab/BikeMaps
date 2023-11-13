@@ -1366,6 +1366,29 @@ msgstr "Virhe"
 msgid "Invalid geometry data."
 msgstr "Virheellinen geometriadata."
 
+#: mapApp/static/mapApp/js/vis/visHelpers.js:8
+msgid "Collisions"
+msgstr "Törmäykset"
+
+#: mapApp/static/mapApp/js/vis/visHelpers.js:9
+msgid "Nearmisses"
+msgstr "Läheltä piti -tilanteet"
+
+#: mapApp/static/mapApp/js/vis/visHelpers.js:10
+msgid "Hazards"
+msgstr "Vaarat"
+
+#: mapApp/static/mapApp/js/vis/visHelpers.js:11
+msgid "Thefts"
+msgstr "Varkaudet"
+
+#: mapApp/static/mapApp/js/vis/vis.js:13
+#: mapApp/static/mapApp/js/vis/vis.js:33
+#: mapApp/static/mapApp/js/vis/vis.js:64
+#: mapApp/static/mapApp/js/vis/vis.js:91
+msgid "Count"
+msgstr "Lukumäärä"
+
 #: spirit/models/user.py:16
 msgid "username"
 msgstr "käyttäjänimi"
@@ -2115,7 +2138,7 @@ msgstr "Olen nyt varovaisempi missä/milloin/miten pyöräilen"
 msgid "I'm now more careful about where/when/how I ride AND I bike less"
 msgstr "Olen nyt varovaisempi missä/milloin/miten pyöräilen JA pyöräilen vähemmän"
 
-#: mapApp/models/incident.py:147
+#: mapApp/models/incident.py:147 mapApp/templates/mapApp/incident_form.html:319
 msgid "I was not directly involved"
 msgstr "En ollut suoraan osallisena"
 
@@ -2488,39 +2511,92 @@ msgstr "Karttatasot"
 msgid "Attribution"
 msgstr "Attribuutio"
 
-#: mapApp/migrations/0005_add_gender_options.py:6
+#: mapApp/forms/incident.py:70
 msgid "Woman"
 msgstr "Nainen"
 
-#: mapApp/migrations/0005_add_gender_options.py:7
+#: mapApp/forms/incident.py:71
 msgid "Man"
 msgstr "Mies"
 
-#: mapApp/migrations/0005_add_gender_options.py:8
+#: mapApp/forms/incident.py:72
 msgid "Non-binary"
 msgstr "Ei-binäärinen"
 
-#: mapApp/migrations/0005_add_gender_options.py:9
+#: mapApp/forms/incident.py:73
 msgid "Genderfluid or Gender nonconforming"
 msgstr "Muunsukupuolinen"
 
-#: mapApp/migrations/0005_add_gender_options.py:10
+#: mapApp/forms/incident.py:74
 msgid "Two-Spirit"
 msgstr "Kaksihenkinen"
 
-#: mapApp/migrations/0005_add_gender_options.py:11
+#: mapApp/forms/incident.py:75
 msgid "Transgender"
 msgstr "Transsukupuolinen"
 
-#: mapApp/migrations/0005_add_gender_options.py:12
+#: mapApp/forms/incident.py:76
 msgid "Agender"
 msgstr "Sukupuoleton"
 
-#: mapApp/migrations/0005_add_gender_options.py:13
+#: mapApp/forms/incident.py:77
 msgid "Prefer not to say"
 msgstr "Jätän mieluiten vastaamatta"
 
-#: mapApp/migrations/0005_add_gender_options.py:14
+#: mapApp/forms/incident.py:78
 msgid "Another option not listed here"
 msgstr "Muu"
+
+#: mapApp/templates/mapApp/incident_form.html:406
+#: mapApp/templates/mapApp/incident_form.html:427
+msgid "When was the incident?*"
+msgstr "Onnettomuuden ajankohta"
+
+#: mapApp/templates/mapApp/incident_form.html:308
+msgid "What sort of object did the rider collide or nearly collide with?*"
+msgstr "Minkä tyyppisen objektin kanssa pyöräilijä törmäsi tai melkein törmäsi?*"
+
+#: mapApp/templates/mapApp/incident_form.html:325
+msgid "What type of bicycle was involved in the incident?"
+msgstr "Minkä tyyppinen polkupyörä oli osallisena onnettomuudessa?"
+
+#: mapApp/templates/mapApp/incident_form.html:331
+msgid "What sort of object did you collide or nearly collide with?*"
+msgstr "Minkä tyyppisen objektin kanssa pyöräilijä törmäsi tai melkein törmäsi?*"
+
+#: mapApp/templates/mapApp/incident_form.html:332
+msgid "Were you injured?*"
+msgstr "Loukkaannuitko?*"
+
+#: mapApp/templates/mapApp/incident_form.html:309
+msgid "Was the rider injured?*"
+msgstr "Loukkaantuiko pyöräilijä?*"
+
+#: mapApp/templates/mapApp/incident_form.html:322
+msgid "Was the rider using bike lights?"
+msgstr "Käyttikö pyöräilijä polkupyörässään valoja?"
+
+#: mapApp/templates/mapApp/incident_form.html:323
+msgid "What direction was the rider heading?"
+msgstr "Mihin suuntaan pyöräilijä oli etenemässä?"
+
+#: mapApp/templates/mapApp/incident_form.html:324
+msgid "How was the rider moving?"
+msgstr "Kuinka pyöräilijä liikkui?"
+
+#: mapApp/templates/mapApp/incident_form.html:391
+msgid "When did you notice the hazard?*"
+msgstr "Milloin havaitsit vaaran?*"
+
+#: mapApp/templates/mapApp/incident_form.html:436
+msgid "When was the theft?*"
+msgstr "Milloin varkaus tapahtui?*"
+
+#: mapApp/templates/mapApp/vis.html:113
+msgid "Incidents per month"
+msgstr "Ilmoitusten määrä kuukausittain"
+
+#: mapApp/templates/mapApp/vis.html:127
+msgid "select a time range to zoom in"
+msgstr "Valitse tarkennettava päivämääräväli"
 
