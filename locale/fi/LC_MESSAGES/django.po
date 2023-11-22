@@ -2511,38 +2511,47 @@ msgstr "Karttatasot"
 msgid "Attribution"
 msgstr "Attribuutio"
 
+#: mapApp/migrations/0005_add_gender_options.py:6
 #: mapApp/forms/incident.py:70
 msgid "Woman"
 msgstr "Nainen"
 
+#: mapApp/migrations/0005_add_gender_options.py:7
 #: mapApp/forms/incident.py:71
 msgid "Man"
 msgstr "Mies"
 
+#: mapApp/migrations/0005_add_gender_options.py:8
 #: mapApp/forms/incident.py:72
 msgid "Non-binary"
 msgstr "Ei-binäärinen"
 
+#: mapApp/migrations/0005_add_gender_options.py:9
 #: mapApp/forms/incident.py:73
 msgid "Genderfluid or Gender nonconforming"
 msgstr "Muunsukupuolinen"
 
+#: mapApp/migrations/0005_add_gender_options.py:10
 #: mapApp/forms/incident.py:74
 msgid "Two-Spirit"
 msgstr "Kaksihenkinen"
 
+#: mapApp/migrations/0005_add_gender_options.py:11
 #: mapApp/forms/incident.py:75
 msgid "Transgender"
 msgstr "Transsukupuolinen"
 
+#: mapApp/migrations/0005_add_gender_options.py:12
 #: mapApp/forms/incident.py:76
 msgid "Agender"
 msgstr "Sukupuoleton"
 
+#: mapApp/migrations/0005_add_gender_options.py:13
 #: mapApp/forms/incident.py:77
 msgid "Prefer not to say"
 msgstr "Jätän mieluiten vastaamatta"
 
+#: mapApp/migrations/0005_add_gender_options.py:14
 #: mapApp/forms/incident.py:78
 msgid "Another option not listed here"
 msgstr "Muu"

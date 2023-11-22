@@ -23,7 +23,7 @@ class IncidentForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_tag = False # removes auto-inclusion of form tag in template
         self.helper.disable_csrf = True
-        self.fields['gender'].label_from_instance = lambda g: "%s" % g.label
+        self.fields['gender'].label_from_instance = lambda g: _("%s" % g.label)
 
         self.helper.layout = Layout(
             Accordion(
