@@ -23,7 +23,7 @@ class IncidentForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_tag = False # removes auto-inclusion of form tag in template
         self.helper.disable_csrf = True
-        self.fields['gender'].label_from_instance = lambda g: "%s" % g.label
+        self.fields['gender'].label_from_instance = lambda g: _("%s" % g.label)
 
         self.helper.layout = Layout(
             Accordion(
@@ -64,7 +64,20 @@ class IncidentForm(forms.ModelForm):
                     Field('source', id='incident_source'),
                     Field('age', id='incident_age'),
                     Field('birthmonth', id='incident_birthmonth'),
-                    InlineCheckboxes('gender', id='incident_gender'),
+                    InlineCheckboxes(
+                        'gender', 
+                        id='incident_gender',
+                        choices=[('F', _('Woman')),
+                                ('M', _('Man')),
+                                ('NBY', _('Non-binary')),
+                                ('GNC', _('Genderfluid or Gender nonconforming')),
+                                ('TS', _('Two-Spirit')),
+                                ('T', _('Transgender')),
+                                ('A', _('Agender')),
+                                ('P', _('Prefer not to say')),
+                                ('O', _('Another option not listed here'))],
+                        
+                        ),
                     Field('gender_additional', id='incident_gender_additional', rows='1'),
                     Field('regular_cyclist', id='incident_regular_cyclist'),
                     Field('helmet', id='incident_helmet'),

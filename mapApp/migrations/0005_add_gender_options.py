@@ -1,17 +1,17 @@
-
+from django.utils.translation import ugettext_lazy as _
 from django.db import migrations, models
 from mapApp.models import Gender
 
 gender_options = [
-    ['F', 'Woman'],
-    ['M', 'Man'],
-    ['NBY', 'Non-binary'],
-    ['GNC', 'Genderfluid or Gender nonconforming'],
-    ['TS', 'Two-Spirit'],
-    ['T', 'Transgender'],
-    ['A', 'Agender'],
-    ['P', 'Prefer not to say'],
-    ['O', 'Another option not listed here'],
+    ['F', _('Woman')],
+    ['M', _('Man')],
+    ['NBY', _('Non-binary')],
+    ['GNC', _('Genderfluid or Gender nonconforming')],
+    ['TS', _('Two-Spirit')],
+    ['T', _('Transgender')],
+    ['A', _('Agender')],
+    ['P', _('Prefer not to say')],
+    ['O', _('Another option not listed here')],
 ]
 
 def populate_gender_options(apps, schema_editor):
