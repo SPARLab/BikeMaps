@@ -45,3 +45,4 @@ For a more in depth tutorial on querying and exporting data, please refer to the
   + Finn Short (Developer)
   + Darren Boss (Developer)
   + Taylor Denouden (Developer)
+  + Dan Willett (Developer)
