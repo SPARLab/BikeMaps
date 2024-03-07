@@ -1830,8 +1830,7 @@ msgid "What were you riding?"
 msgstr "Que conduisiez-vous?"
 
 #: 
-msgid "Bicycle\n"
-""
+msgid "Bicycle"
 msgstr "Bicyclette"
 
 #: 
@@ -1879,8 +1878,8 @@ msgid "What type of bicycle was involved in the incident?"
 msgstr "Quel type de vélo était en cause dans l'incident?"
 
 #: 
-msgid "When did you notice the hazard?"
-msgstr "Quand avez-vous remarqué le danger?"
+msgid "When did you notice the hazard?*"
+msgstr "Quand avez-vous remarqué le danger?*"
 
 #: 
 msgid "Turning right"
@@ -1923,6 +1922,17 @@ msgid "Bike theft"
 msgstr "Vol de vélo"
 
 #: 
-msgid "When was the theft?"
-msgstr "Quand le vol a-t-il eu lieu?"
+msgid "When was the theft?*"
+msgstr "Quand le vol a-t-il eu lieu?*"
 
+#:
+msgid "Were you injured?*"
+msgstr "Vous êtes-vous blessé(e)?*"
+
+#:
+msgid "When was the incident?*"
+msgstr "Quand était l’incident?*"
+
+#:
+msgid "What sort of object did you collide or nearly collide with?*"
+msgstr "Quelle sorte d'objet avez-vous heurté ou failli heurter?*"
