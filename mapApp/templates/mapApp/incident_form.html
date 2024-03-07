@@ -114,13 +114,13 @@
     } else {
         // styling to indicate required field
         if(tabId === 'incidentReport') {
-            $("#collision-details").find("#div_id_details").addClass("form-group has-error");
+            $("#collision_details").closest("#div_id_details").addClass("form-group has-error");
         } else if(tabId === 'nearmissReport') {
-            $("#near-miss-details").find("#div_id_details").addClass("form-group has-error");
+            $("#near_miss_details").closest("#div_id_details").addClass("form-group has-error");
         } else if(tabId === 'hazardReport') {
-            $("#hazard-details").find("#div_id_details").addClass("form-group has-error");
+            $("#hazard_details").closest("#div_id_details").addClass("form-group has-error");
         } else if(tabId === 'theftReport') {
-            $("#theft-details").find("#div_id_details").addClass("form-group has-error");
+            $("#theft_details").closest("#div_id_details").addClass("form-group has-error");
         }
         return false;
     }
