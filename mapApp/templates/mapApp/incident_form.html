@@ -114,13 +114,13 @@
     } else {
         // styling to indicate required field
         if(tabId === 'incidentReport') {
-            $("#collision-details").find("#div_id_details").addClass("form-group has-error");
+            $("#collision_details").closest("#div_id_details").addClass("form-group has-error");
         } else if(tabId === 'nearmissReport') {
-            $("#near-miss-details").find("#div_id_details").addClass("form-group has-error");
+            $("#near_miss_details").closest("#div_id_details").addClass("form-group has-error");
         } else if(tabId === 'hazardReport') {
-            $("#hazard-details").find("#div_id_details").addClass("form-group has-error");
+            $("#hazard_details").closest("#div_id_details").addClass("form-group has-error");
         } else if(tabId === 'theftReport') {
-            $("#theft-details").find("#div_id_details").addClass("form-group has-error");
+            $("#theft_details").closest("#div_id_details").addClass("form-group has-error");
         }
         return false;
     }
@@ -194,7 +194,7 @@
             }, 300);
 
             // Print success or failure message
-            var message = "<strong>" + '{% trans "Thank you!" %}' + "</strong><br>" + '{% trans "Your incident marker was successfully added." %}';
+            var message = "<strong>" + "{% trans 'Thank you!' %}" + "</strong><br>" + "{% trans 'Your incident marker was successfully added.' %}";
             showMessage(message);
 
 			// Display follow up message in modal if available
@@ -305,8 +305,8 @@
             if(personalInvolvement == 'No'){
                 $('#near-miss-details').find('#div_id_witness_vehicle').show();
                 $('#collision-details').find('#div_id_witness_vehicle').show();
-                $('#div_id_incident_with > label').text('{% trans "What sort of object did the rider collide or nearly collide with?*" %}');
-                $('#div_id_injury > label').text('{% trans "Was the rider injured?*" %}');
+                $('#div_id_incident_with > label').text("{% trans 'What sort of object did the rider collide or nearly collide with?*' %}");
+                $('#div_id_injury > label').text("{% trans 'Was the rider injured?*' %}");
                 $('select optgroup[label="Unknown"]').show();
                 $('select option[label="Unknown"]').show();
                 $('#near-miss-details').find('#div_id_trip_purpose').hide();
@@ -316,20 +316,20 @@
                 $('#collision-details').find('#div_id_impact').hide();
                 // add in the option for witnesses for impact
                 var witness = new Option("I was not directly involved", "Witness");
-                $(witness).html('{% trans "I was not directly involved" %}');
+                $(witness).html("{% trans 'I was not directly involved' %}");
                 $("#div_id_impact select").append(witness);
                 $("#div_id_impact select").val('Witness').change();
-                $('#div_id_bike_lights > label').text('{% trans "Was the rider using bike lights?" %}');
-                $('#div_id_direction > label').text('{% trans "What direction was the rider heading?" %}');
-                $('#div_id_turning > label').text('{% trans "How was the rider moving?" %}');
-                $('#div_id_bicycle_type > label').text('{% trans "What type of bicycle was involved in the incident?" %}');
+                $('#div_id_bike_lights > label').text("{% trans 'Was the rider using bike lights?' %}");
+                $('#div_id_direction > label').text("{% trans 'What direction was the rider heading?' %}");
+                $('#div_id_turning > label').text("{% trans 'How was the rider moving?' %}");
+                $('#div_id_bicycle_type > label').text("{% trans 'What type of bicycle was involved in the incident?' %}");
                 $('#div_id_helmet > label').text(gettext("Was the rider wearing a helmet?"));
             } else {
                 $('#near-miss-details').find('#div_id_witness_vehicle').hide();
                 $('#collision-details').find('#div_id_witness_vehicle').hide();
                 $("#div_id_witness_vehicle select").val('NA');
-                $('#div_id_incident_with > label').text('{% trans "What sort of object did you collide or nearly collide with?*" %}');
-                $('#div_id_injury > label').text('{% trans "Were you injured?*" %}');
+                $('#div_id_incident_with > label').text("{% trans 'What sort of object did you collide or nearly collide with?*' %}");
+                $('#div_id_injury > label').text("{% trans 'Were you injured?*' %}");
                 $('select optgroup[label="Unknown"]').hide();
                 $("#div_id_injury select").val('NA');
                 $('#near-miss-details').find('#div_id_trip_purpose').show();
@@ -338,11 +338,11 @@
                 $('#collision-details').find('#div_id_impact').show();
                 $("#div_id_impact select").val('NA');
                 $('select option[value="Witness"]').remove();
-                $('#div_id_bike_lights > label').text('{% trans "Were you using bike lights?" %}');
-                $('#div_id_direction > label').text('{% trans "What direction were you heading?" %}');
-                $('#div_id_turning > label').text('{% trans "How were you moving?" %}');
-                $('#div_id_bicycle_type > label').text('{% trans "What type of bicycle were you riding?" %}');
-                $('#div_id_helmet > label').text('{% trans "Were you wearing a helmet?" %}');
+                $('#div_id_bike_lights > label').text("{% trans 'Were you using bike lights?' %}");
+                $('#div_id_direction > label').text("{% trans 'What direction were you heading?' %}");
+                $('#div_id_turning > label').text("{% trans 'How were you moving?' %}");
+                $('#div_id_bicycle_type > label').text("{% trans 'What type of bicycle were you riding?' %}");
+                $('#div_id_helmet > label').text("{% trans 'Were you wearing a helmet?' %}");
             }
        }
 
@@ -388,7 +388,7 @@
           $('select optgroup[label="Menschliches Verhalten"]').remove();
           $('select option[value="Island"]').remove();
           $('select option[value="Insel"]').remove();
-          $('#div_id_date > label').text('{% trans "When did you notice the hazard?*" %}');
+          $('#div_id_date > label').text("{% trans 'When did you notice the hazard?*' %}");
       }
 
       // Only display collision options on Collision form
@@ -403,7 +403,7 @@
           $('select optgroup[label="Sturz"]').show();
           $('select optgroup[label^="Beinahzusammensto"]').hide();
 
-          $('#div_id_date > label').text('{% trans "When was the incident?*" %}');
+          $('#div_id_date > label').text("{% trans 'When was the incident?*' %}");
           updateWitnessChoices($("#div_id_personal_involvement select").val());
           updateVehicleChoices($("#div_id_incident_with select").val());
 
@@ -424,7 +424,7 @@
           $('select optgroup[label="Kollision"]').hide();
           $('select optgroup[label="Sturz"]').hide();
 
-          $('#div_id_date > label').text('{% trans "When was the incident?*" %}');
+          $('#div_id_date > label').text("{% trans 'When was the incident?*' %}");
           updateWitnessChoices($('#nearmiss_personal_involvment').val());
           updateVehicleChoices($('#nearmiss_incident_with').val());
 
@@ -433,7 +433,7 @@
           $('select option[value="Vehicle, angle"]').remove();
       }
       function updateTheftChoices() {
-          $('#div_id_date > label').text('{% trans "When was the theft?*" %}');
+          $('#div_id_date > label').text("{% trans 'When was the theft?*' %}");
       }
 
 
