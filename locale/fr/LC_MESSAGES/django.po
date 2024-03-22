@@ -2223,6 +2223,11 @@ msgid "Email us at <a href=\"mailto:info@bikemaps.org\">info@bikemaps.org</a> wi
 msgstr "Écrivez-nous à l’adresse <a href=\"mailto:info@bikemaps.org\">info@bikemaps.org</a> en précisant l’heure et l’emplacement de votre signalement. Nous déplacerons l’épingle pour vous."
 
 #:
+msgid "Email us at <a href=\"mailto:info@bikemaps.org\">info@bikemaps.org</a>."
+msgstr "Écrivez-nous à l’adresse <a href=\"mailto:info@bikemaps.org\">info@bikemaps.org</a>."
+
+
+#:
 msgid "Password"
 msgstr "Mot de passe"
 
