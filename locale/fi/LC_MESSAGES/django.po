@@ -1870,6 +1870,9 @@ msgstr "Lisäsin kohteen kartalle, mutta huomasin ettei se ole oikeassa sijainni
 msgid "Email us at <a href=\"mailto:info@bikemaps.org\">info@bikemaps.org</a> with details about the time and location of your report and we will move it."
 msgstr "Lähetä meille sähköpostia osoitteeseen <a href=\"mailto:info@bikemaps.org\">info@bikemaps.org</a>  ja kerro tiedot ilmoituksesi ajasta ja sijainnista, niin siirrämme sen."
 
+msgid "Email us at <a href=\"mailto:info@bikemaps.org\">info@bikemaps.org</a>."
+msgstr "Lähetä meille sähköpostia osoitteeseen <a href=\"mailto:info@bikemaps.org\">info@bikemaps.org</a>."
+
 #. format as follows:
 #. 
 #. <a href="https://bikemaps.org">translate</a>
