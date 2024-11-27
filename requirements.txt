@@ -1,7 +1,7 @@
 apns2==0.7.2
 asymmetric-jwt-auth==0.5.0
 certbot-django==0.2.0
-certifi==2020.12.5
+certifi==2022.12.7
 cffi==1.14.4
 chardet==3.0.4
 cryptography==3.2.1
