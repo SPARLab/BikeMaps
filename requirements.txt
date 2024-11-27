@@ -39,7 +39,7 @@ pycparser==2.20
 PyJWT==1.7.1
 python-openid==2.2.5
 pytz==2020.4
-requests==2.18.3
+requests==2.20.0
 requests-oauthlib==0.8.0
 six==1.15.0
 solid-i18n==1.4.2
