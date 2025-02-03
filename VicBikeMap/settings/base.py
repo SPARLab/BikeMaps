@@ -53,6 +53,7 @@ LANGUAGES = (
     ('fi', _('Finnish')),
     ('is', _('Icelandic')),
     ('es', _('Spanish')),
+    ('da', _('Dannish')),
 )
 
 TIME_ZONE = 'America/Vancouver'
