@@ -11,6 +11,15 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 from VicBikeMap.settings.base import *
 import os
 
+GDAL_LIBRARY_PATH = os.environ.get(
+    'GDAL_LIBRARY_PATH',
+    '/Applications/Postgres.app/Contents/Versions/latest/lib/libgdal.dylib',
+)
+GEOS_LIBRARY_PATH = os.environ.get(
+    'GEOS_LIBRARY_PATH',
+    '/Applications/Postgres.app/Contents/Versions/latest/lib/libgeos_c.dylib',
+)
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '$e05l@n&nv*zh@m=4dgx8j-rj^$w2ugj%$&*99=p$vwd5%ya53'
 
